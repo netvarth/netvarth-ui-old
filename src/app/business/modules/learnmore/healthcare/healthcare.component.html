@@ -318,7 +318,7 @@
                                         <h6>Jaldee Search Keywords</h6>
                                         <span>Jaldee Search Keyword is common keywords. A patient generally uses such
                                             keywords to search for a
-                                            service provider.
+                                            service doctor.
                                             Buying relevant keywords that a prospective patient would be searching
                                             on Jaldee. For
                                             example,
@@ -1353,7 +1353,7 @@
                                         <div class="helpcontent">
                                             <span>
                                                     What is Jaldee Business ID?
-                                                <li>Jaldee Business ID is a feature which provides the service provider with a <strong>sharable professional business website</strong> and <strong>QR Code </strong>with customers as well as the public.
+                                                <li>Jaldee Business ID is a feature which provides the service doctor with a <strong>sharable professional business website</strong> and <strong>QR Code </strong>with Patients as well as the public.
                                                 </li>
                                                </span>
                                                <section>
@@ -1545,7 +1545,7 @@
                                     </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion *ngIf="show_brnch_accordion">
-                                <mat-expansion-panel [expanded]="showserviceprovider && showgeneral">
+                                <mat-expansion-panel [expanded]="showservicedoctor && showgeneral">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
@@ -1560,7 +1560,7 @@
                                         settings)registered in
                                         Jaldee will be listed here. And the corporate account can add and manage
                                         doctors here and
-                                        the newly added doctors can act as an individual service provider in
+                                        the newly added doctors can act as an individual service doctor in
                                         Jaldee.<br>
                                         <strong>How to add a Doctor in Jaldee?</strong>
                                         <ol>
@@ -1594,7 +1594,7 @@
                                     <div class="helpcontent">
                                         <span><strong>What is Jaldee Livetracking?</strong></span>
                                         <li>
-                                            Jaldee Livetracking enables the service provider to know the location and the time taken by the consumer
+                                            Jaldee Livetracking enables the service doctor to know the location and the time taken by the consumer
                                         </li>
                                         <span><strong>How to activate Livetracking?
                                             </strong></span>
@@ -1602,9 +1602,9 @@
                                                 Go to <strong>license</strong>,upgrade your license to <strong>premium</strong> or above and then in <strong>General</strong> options, click on Livetracking and ON the toggle button
                                         </li>
                                         <span><strong>How Livetracking works?</strong></span>
-                                        <li>After enabling the Livetracking feature, a service provider can click ON the <strong>ENABLE LIVETRACK</strong> option under additional info of a service </li>
+                                        <li>After enabling the Livetracking feature, a service doctor can click ON the <strong>ENABLE LIVETRACK</strong> option under additional info of a service </li>
                                         <li>
-                                            To track a consumer after a checkin/appointment, a service provider can click on the <strong>“Where is my customer” option which shows the distance and time to reach provider
+                                            To track a consumer after a checkin/appointment, a service doctor can click on the <strong>“Where is my Patient” option which shows the distance and time to reach doctor
                                             </strong>    
                                         </li>  
                                     </div>
@@ -1736,7 +1736,7 @@
 
                                     <div class="helpcontent">
                                         <span><strong>What is JALDEE CustomView?</strong></span>
-                                        <li>Jaldee CustomView is a feature which provides the service provider to view the selected Check-ins/tokens or Appoinments on the dashboard
+                                        <li>Jaldee CustomView is a feature which provides the service doctor to view the selected Check-ins/tokens or Appoinments on the dashboard
                                         </li>
                                         <span><strong>How to setup CustomView?</strong></span>
                                         <ul class="ul-normal">
@@ -1745,14 +1745,14 @@
                                             </li>
                                             <li>Give the Name for the view</li>
                                             <li>Select whether <strong>Check-in/Token</strong> or <strong>Appointment</strong></li>
-                                            <li>Choose the <strong>services</strong> or <strong>schedules</strong>(a provider can choose one service or multiple services)
+                                            <li>Choose the <strong>services</strong> or <strong>schedules</strong>(a doctor can choose one service or multiple services)
                                             </li>
                                             <li>Choose the Queues and save
 
                                             </li>
                                         </ul>
                                         <span><strong>How to initiate CustomView?</strong></span>
-                                        <li>After setup, service provider can select the custom view option from 
+                                        <li>After setup, service doctor can select the custom view option from 
                                            <strong> “My view”</strong> which is in the top of the dashboard
                                             </li>
                                          <span><strong>How to add and update/delete a CustomView</strong></span> 
@@ -1800,9 +1800,33 @@
                                 <ul class="ul-normal">
                                     <li>Jaldee Qmanager manages the working hours, wait-time calculation, services, service-time window and waitlist
                                         </li>
-                                    <li>Provider can give permissions to online check-ins for Today and Future
+                                    <li>Doctor can give permissions to online check-ins for Today and Future
                                     </li>
                                 </ul>
+                                <section>
+                                        <span><strong>How to activate the Jaldee Qmanager?</strong>   
+                                        </span>
+                                        <ul class="ul-normal">
+                                            <li>Go to Jaldee Qmanager, click on the <strong>Jaldee Qmanager toggle button</strong>
+                                                </li>
+                                            <li> Doctor can set the Queue system as <strong>TOKEN</strong> 
+                                            </li>
+                                            <ul class="ul-normal">
+                                                    <span> <strong>TOKEN System</strong></span>
+                                                    <li>Patient will receive a token number
+                                                        </li>
+                                                        <li>To activate, Go to Jaldee Qmanager and click on Token System
+                                                            </li>
+                                                            <span>Select the preferred options from<br>
+                                                            Token Number<br>
+                                                            Waiting time</span>
+                                                            <li>Patient can see the selected options by doctor</li>
+                                                            <li>Doctor can enable Online tokens for Today and Future(Patients can get tokens via Jaldee app,Jaldee.com,Scanning Jaldee doctor QR code and using the link shared with patient)
+                                                                </li>
+
+                                                </ul>
+                                        </ul>
+                                    </section>  
                             </div>
                             <!-- <mat-accordion>
                                 <mat-expansion-panel [expanded]="false">
@@ -1972,8 +1996,8 @@
                                         <ul class="ul-normal">
                                             <li>Go to Jaldee Qmanager and select Services
                                             </li>
-                                            <li>Default service will be given, provider can edit/disable this service or create a new service</li>
-                                            <li>Provider can create a new service by clicking on the Add Service
+                                            <li>Default service will be given, doctor can edit/disable this service or create a new service</li>
+                                            <li>Doctor can create a new service by clicking on the Add Service
                                             </li>
                                             <li>Give service name</li>
                                             <li>Select the type of service (Onsiteservice/teleservice)
@@ -2007,7 +2031,7 @@
                                                             </mat-expansion-panel>
                                                         </mat-accordion>
                                             <li>Set the Estimated time</li>
-                                            <li> Click on <strong>Enable Prepayment toggle button ,if the provider is accepting the payment online in advance</strong>
+                                            <li> Click on <strong>Enable Prepayment toggle button ,if the doctor is accepting the payment online in advance</strong>
                                                 </li> 
                                             <li> Select the <strong>Additional info to enable the service price,LiveTracking, tax applicable and notification of service completion(via Push notification or Email)</strong></li>
                                              <li>Click <strong>save</strong>
@@ -2110,16 +2134,16 @@
                                         <ul class="ul-normal">
                                             <li>Go to Jaldee Qmanager and select Qboard</li>
                                             <li>Click on Create Qboard</li>
-                                            <li>For Qboard creation,provider should buy <strong>Add-ONs</strong> from the license section
+                                            <li>For Qboard creation,doctor should buy <strong>Add-ONs</strong> from the license section
                                             </li>
                                             <li>Set the Qboard query</li>
                                             <li>Give name for Query and choose the options for display(service or queue)
                                             </li>
                                             <li> Choose <strong>Service’s</strong> and it’s<strong> Queue’s</strong>
                                             </li>
-                                            <li>Setup the Waitlist status(provider can select from checked-in, arrived,started,completed or multiple options from this four)
+                                            <li>Setup the Waitlist status(doctor can select from checked-in, arrived,started,completed or multiple options from this four)
                                             </li>
-                                            <li>Select the Qboard fields to be displayed and can edit the name of fields to be displayed by provider</li>
+                                            <li>Select the Qboard fields to be displayed and can edit the name of fields to be displayed by doctor</li>
                                             <li>Select the order of Qboard fields</li>
                                             <li> Click Create
                                             </li>
@@ -2151,7 +2175,7 @@
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
                                 <span><strong>What is JALDEE APPOINTMENT?</strong><br>
-                                    Jaldee appointment helps a service provider to manage the working hours, appointment services, schedules and QBoards.
+                                    Jaldee appointment helps a service doctor to manage the working hours, appointment services, schedules and QBoards.
                                     </span>
                                     <section>
                                             <span><strong>How to activate Jaldee Appointment?
@@ -2160,7 +2184,7 @@
                                         
                                             <ul class="ul-normal">
                                                 <li>Go to Jaldee appointment, click on the Appointment manager toggle button</li>
-                                                <li> Provider can give permission to online appointments for Today and Future
+                                                <li> Doctor can give permission to online appointments for Today and Future
                                                 </li>
                                             </ul>
                                         </section>
@@ -2195,8 +2219,8 @@
                                         <ul class="ul-normal">
                                             <li>Go to Jaldee Appointment and select Services
                                             </li>
-                                            <li>Default service will be given, provider can edit/disable this service or create a new service</li>
-                                            <li> Provider can create a new service by clicking on the Add Service
+                                            <li>Default service will be given, doctor can edit/disable this service or create a new service</li>
+                                            <li> Doctor can create a new service by clicking on the Add Service
                                                 </li>
                                             <li>Give service name
                                                 </li>
@@ -2230,7 +2254,7 @@
                                                                     </div>
                                                             </mat-expansion-panel>
                                                         </mat-accordion>
-                                                   <li>Click on <strong>Enable Prepayment</strong> toggle button ,if the provider is accepting the payment in advance
+                                                   <li>Click on <strong>Enable Prepayment</strong> toggle button ,if the doctor is accepting the payment in advance
                                                     </li>
                                                     <li>Select the <strong>Additional info</strong> to enable the service price,LiveTracking, tax applicable and notification of service completion(via Push notification or Email) 
                                                         </li>
@@ -2253,7 +2277,7 @@
                                     <div class="helpcontent">
                                         <!-- <section>
                                             <span>In this section, a doctor can schedule the Appointments and also book
-                                                a future date for [customer]'s appointment here.
+                                                a future date for [Patient]'s appointment here.
                                                 Also schedule the queue and disable the queue.
                                                 A doctor can manage the schedules for his/her appointments.
                                             </span>
@@ -2448,7 +2472,7 @@
                                                 <li> Go to Jaldee Appointment and select Qboard
                                                     </li>
                                                 <li>Click on Create Qboard</li>
-                                                <li>For Qboard creation,provider should buy <strong>Add-ONs</strong> from the license section
+                                                <li>For Qboard creation,doctor should buy <strong>Add-ONs</strong> from the license section
                                                 </li>
                                                 <li>Set the Qboard query</li>
                                                 <li>Give name for Query and choose the options for display
@@ -2456,9 +2480,9 @@
                                                 <li> Choose <strong>Service’s</strong> and it’s<strong> Schedule’s
                                                     </strong>
                                                 </li>
-                                                <li>Setup the Waitlist status(provider can select from checked-in, arrived,started,completed or multiple options from this four)
+                                                <li>Setup the Waitlist status(doctor can select from checked-in, arrived,started,completed or multiple options from this four)
                                                 </li>
-                                                <li>Select the Qboard fields to be displayed and can edit the name of fields to be displayed by provider</li>
+                                                <li>Select the Qboard fields to be displayed and can edit the name of fields to be displayed by doctor</li>
                                                 <li>Select the order of Qboard fields</li>
                                                 <li> Click Create
                                                 </li>
@@ -2599,7 +2623,7 @@
                                                     <ul class="ul-normal">
                                                         <li>To enable online payments using any payment system, a doctor has to switch
                                                             on the
-                                                            "Customer's Self pay�? mode. Initially, this is set to off mode.</li>
+                                                            "Patient's Self pay�? mode. Initially, this is set to off mode.</li>
                                                         <li>If a doctor has not entered an email address before, click on the link
                                                             <strong>“Go
                                                                 To
@@ -3053,7 +3077,7 @@
                                             <span><strong>What is  is JALDEE PAY?
                                             </strong>  
                                             </span>
-                                            <li>Jaldee pay enables the service provider to accept online payment from the consumers</li>
+                                            <li>Jaldee pay enables the service doctor to accept online payment from the consumers</li>
                                         </section>
                                         <section>
                                             <span><strong>How to activate 
@@ -3083,11 +3107,11 @@
                                             <section>
                                                   
                                                    <span>
-                                                        <strong>Provider can enable the payment mode as “Jaldee Bank” or “My own Bank account”</strong></span>
+                                                        <strong>Doctor can enable the payment mode as “Jaldee Bank” or “My own Bank account”</strong></span>
                                                         <ul> 
-                                                                <li><strong>Jaldee Bank</strong>- Payments will be directed to the jaldee account and will be fully reimbursed to the Service provider</li>
-                                                                <li><strong>My own Bank account</strong>- Service provider can setup own account(CC/DC/UPI/Netbanking) Paytm or both for online transactions</li>
-                                                            <ol>Paytm <span>This is an effortless mode of online payment commonly used these days. If the provider has a business Paytm account, he/she needs to provide the following details (Login to Paytm to get these production keys):
+                                                                <li><strong>Jaldee Bank</strong>- Payments will be directed to the jaldee account and will be fully reimbursed to the Service doctor</li>
+                                                                <li><strong>My own Bank account</strong>- Service doctor can setup own account(CC/DC/UPI/Netbanking) Paytm or both for online transactions</li>
+                                                            <ol>Paytm <span>This is an effortless mode of online payment commonly used these days. If the doctor has a business Paytm account, he/she needs to provide the following details (Login to Paytm to get these production keys):
                                                                 </span>
                                                                 <ul>
                                                                 <li>Mobile Number</li>
@@ -3099,7 +3123,7 @@
                                                                 </ul>
                                                                 </ol>
                                                                 <ol>CC/DC/Net Banking/UPI 
-                                                                        <span>To settle the bill using this mode of payment, provider has to provide the following information:
+                                                                        <span>To settle the bill using this mode of payment, doctor has to provide the following information:
                                                                     </span>
                                                                     <ul>
                                                                     <li>Account Holder Name
@@ -3263,11 +3287,11 @@
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
                                             <section>
-                                                    <span>Before setting up the taxes, ensure that one is familiar with the tax requirements of one’s business.<br> The following instructions will help the Provider through the tax setup of the business services in Jaldee:
+                                                    <span>Before setting up the taxes, ensure that one is familiar with the tax requirements of one’s business.<br> The following instructions will help the Doctor through the tax setup of the business services in Jaldee:
                                                     </span>
                                                     <ul class="ul-normal">
                                                        
-                                                        <li>When the provider clicks on the tax from Jaldee pay , window appears. The provider is required to fill the textbox (Enter the GST number of the business and the tax percentage for the respective sector here)
+                                                        <li>When the doctor clicks on the tax from Jaldee pay , window appears. The doctor is required to fill the textbox (Enter the GST number of the business and the tax percentage for the respective sector here)
                                                         </li>
                                                         <li>Enter the GST number of the business.
                                                         </li>
@@ -3277,7 +3301,7 @@
                                                             </li>
                                                             <li>This tax will be applied to the services offered, only if the “Tax Applicable" toggle button is enabled in the respective section (i.e. Settings -> QManager ->Services)
                                                                 </li>
-                                                            <li>Jaldee has no role in paying taxes paid by the consumer to the service provider</li>
+                                                            <li>Jaldee has no role in paying taxes paid by the consumer to the service doctor</li>
                                                     </ul>
                                                 </section>
                                     </div>
@@ -3374,20 +3398,20 @@
                                     <div class="helpcontent">
                                             <section>
                                                     <ul class="ul-normal">
-                                                        <li>Service provider can Add and Manage the Donation related causes </li>
+                                                        <li>Service doctor can Add and Manage the Donation related causes </li>
                                                         <li>Go to Causes,click on <strong>Add Cause</strong></li>
                                                         <li>Add and describe the cause</li>
                                                         <li>Set the amount and save</li>
-                                                        <li>Provider can notify the consumer after receiving the donation by Clicking on the<strong> Notify patient when donation is received</strong>
+                                                        <li>Doctor can notify the consumer after receiving the donation by Clicking on the<strong> Notify patient when donation is received</strong>
                                                             toggle button(via Email or App notification)</li>
                                                       
                                                     </ul>
                                                 </section>
                                                 <section>
                                                         <ul class="ul-normal">
-                                                            <span>For Provider Notification</span>
+                                                            <span>For Doctor Notification</span>
                                                             <li>Go to Communications and Notifications</li>
-                                                            <li>In Notification(Provider), Click on the<strong> Notify whenever Donation is received</strong> toggle button</li>
+                                                            <li>In Notification(Doctor), Click on the<strong> Notify whenever Donation is received</strong> toggle button</li>
                                                         </ul> 
                                                 </section>
                                     </div>
@@ -3644,37 +3668,37 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
-                   <mat-accordion [ngClass]="{'learnmore_active' : showcustomers}" >
-                        <mat-expansion-panel [expanded]='showcustomers'>
+                   <mat-accordion [ngClass]="{'learnmore_active' : showpatients}" >
+                        <mat-expansion-panel [expanded]='showpatients'>
                             <mat-expansion-panel-header class="accordion">
-                                <mat-panel-title class="accordion-title" (click)="menu('customers')">
-                                    Customers
+                                <mat-panel-title class="accordion-title" (click)="menu('patients')">
+                                    Patients
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
                                     <span>
-                                            <strong>    What is Jaldee Customers?</strong>
+                                            <strong>    What is Jaldee Patients?</strong>
 
-                                               <li>Jaldee customer is a feature that allows the customers to view their walkin check-ins</li>
+                                               <li>Jaldee Patient is a feature that allows the Patients to view their walkin check-ins</li>
                                         </span>
                             </div>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="showcustomersid && showcustomers">
+                                <mat-expansion-panel [expanded]="showpatientsid && showpatients">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                                (click)="handleScroll('custid-settings', 'customers')">How to enable customer ID?
+                                                (click)="handleScroll('custid-settings', 'patients')">How to enable Patient ID?
                                             </span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
                                        <section>
                                             <ul class="ul-normal">
-                                                <li>Go to customers , click on Customer ID </li>
-                                                <li>Provider can set either in Manual or Auto(once set into manual,it cannot be switched to auto)</li>
-                                                <li>In auto , provider can set Prefix and suffix for the ID</li>
-                                                <li>Provider can view ID from Customers tab list</li>
+                                                <li>Go to Patients , click on Patient ID </li>
+                                                <li>Doctor can set either in Manual or Auto(once set into manual,it cannot be switched to auto)</li>
+                                                <li>In auto , doctor can set Prefix and suffix for the ID</li>
+                                                <li>Doctor can view ID from Patients tab list</li>
                                             </ul>
                                         </section>
                                         </div>
@@ -3712,7 +3736,7 @@
                                                 <strong>What is Jaldee Teleservice?</strong>
                                            
                                                 <br>
-                                                <span>Teleservice promotes social distancing and allows you to communicate with the customers remotely via 
+                                                <span>Teleservice promotes social distancing and allows you to communicate with the Patients remotely via 
                                                     various digital platforms like Zoom, Google Meet, WhatsApp as well as Skype.
                                                 </span>
                                         </section>
@@ -3806,15 +3830,15 @@
                                     </mat-expansion-panel-header>
             
                                     <div class="helpcontent">
-                                        <span>Notifications are information the provider send and receive, it can be reminders,
+                                        <span>Notifications are information the doctor send and receive, it can be reminders,
                                             communication
-                                            from customers, or other timely information</span><br>
+                                            from Patients, or other timely information</span><br>
                                         <strong><u>Enable SMS Notification</u></strong><br>
-                                        This is a global notification toggle button which can only be enabled, if the provider
+                                        This is a global notification toggle button which can only be enabled, if the doctor
                                         has
-                                        purchased any of the Jaldee Messaging add-ons available. Once the provider turn on
+                                        purchased any of the Jaldee Messaging add-ons available. Once the doctor turn on
                                         “Enable
-                                        SMS Notification�?, the provider can see the available SMS credits for the respective
+                                        SMS Notification�?, the doctor can see the available SMS credits for the respective
                                         add-on
                                         bought, under the label “Remaining SMS credits“. And the remaining SMS credits will be
                                         updated according to the usage of SMS.
@@ -3826,23 +3850,23 @@
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
                                                     <span class="helpcontent">
-                                                        Customer Notifications</span>
+                                                        Patient Notifications</span>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
             
                                             <div class="helpcontent">
-                                                <span>Deliver timely information to your customers like, the number of customers
+                                                <span>Deliver timely information to your Patients like, the number of Patients
                                                     ahead of a particular
-                                                    customer in line, when the customer is second next in line and also when the
-                                                    customer is next in line for the actual appointment.</span>
+                                                    Patient in line, when the Patient is second next in line and also when the
+                                                    Patient is next in line for the actual appointment.</span>
                                                 <ol>
                                                     <li><strong>Early Notification:</strong><br>
-                                                        Notify a customer, the number of people ahead of him/her in line via
-                                                        SMS/Email/Notifications. First the provider has to enter a customer number
+                                                        Notify a Patient, the number of people ahead of him/her in line via
+                                                        SMS/Email/Notifications. First the doctor has to enter a Patient number
                                                         to whom you
                                                         wish to send a notification. Enable the following modes of channel through
                                                         which you
-                                                        wish to send notifications to your customer.
+                                                        wish to send notifications to your Patient.
                                                         <ul>
                                                             <li>Via SMS</li>
                                                             <li>Via Email</li>
@@ -3855,11 +3879,11 @@
                                                         <strong>
                                                             Pre Final Notification
                                                         </strong><br>
-                                                        Notify a customer when he is second next in line via
+                                                        Notify a Patient when he is second next in line via
                                                         SMS/Email/Notifications.
                                                         Enable the following modes of channel through which you wish to send
                                                         notifications to your
-                                                        customer.
+                                                        Patient.
                                                         <ul>
                                                             <li>Via SMS</li>
                                                             <li>Via Email</li>
@@ -3872,9 +3896,9 @@
                                                         <strong>
                                                             Final Notification
                                                         </strong><br>
-                                                        Notify a customer when he is next in line via SMS/Email/Notifications.
+                                                        Notify a Patient when he is next in line via SMS/Email/Notifications.
                                                         Enable the following modes of channel through which you wish to send
-                                                        notifications to your customer.
+                                                        notifications to your Patient.
                                                         <ul>
                                                             <li>Via SMS</li>
                                                             <li>Via Email</li>
@@ -3894,18 +3918,18 @@
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
                                                     <span class="helpcontent">
-                                                        Provider Notifications</span>
+                                                        Doctor Notifications</span>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
             
                                             <div class="helpcontent">
-                                                <span>It is important to receive notifications for the provider when a customer
-                                                    checks-in or when a customer check-in is cancelled.
+                                                <span>It is important to receive notifications for the doctor when a Patient
+                                                    checks-in or when a Patient check-in is cancelled.
                                                 </span>
                                                 <ul>
                                                     <li>
                                                         <strong>Notify whenever check-in happens:</strong><br>
-                                                        When a customer checks-in with the provider, the provider can receive
+                                                        When a Patient checks-in with the doctor, the doctor can receive
                                                         notifications in the following ways:
                                                         <ul>
                                                             <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
@@ -3917,7 +3941,7 @@
                                                     </li>
                                                     <li>
                                                         <strong>Notify whenever check-in gets cancelled:</strong><br>
-                                                        When a customer checks-in gets cancelled with the provider, the provider can
+                                                        When a patient checks-in gets cancelled with the doctor, the doctor can
                                                         receive notifications in the following ways:
                                                         <ul>
                                                             <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
@@ -4446,7 +4470,7 @@
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <div class="helpcontent">
-                                    <span>A provider can take an  appointment for a customer for service.
+                                    <span>A doctor can take an  appointment for a patient for service.
                                     </span>
                                 </div>
                                         <mat-accordion>
@@ -4461,17 +4485,17 @@
                                                
                                                 <div class="helpcontent">
                                                     <ul class="ul-normal">
-                                                        <li>A provider can create and check-in a customer for service.</li>
-                                                        <li>To search for a customer and to check whether he/she has already been registered
+                                                        <li>A doctor can create and check-in a patient for service.</li>
+                                                        <li>To search for a patient and to check whether he/she has already been registered
                                                             with
-                                                            Jaldee, the provider can use the customer's mobile number, his/her first
+                                                            Jaldee, the doctor can use the patient's mobile number, his/her first
                                                             name/last
                                                             name.
                                                         </li>
-                                                        <li>In case, the customer's data does not exist in the Jaldee database, the provider
+                                                        <li>In case, the patient's data does not exist in the Jaldee database, the doctor
                                                             can input
                                                             the
-                                                            details of the customer and get him/her registered with Jaldee.com.</li>
+                                                            details of the patient and get him/her registered with Jaldee.com.</li>
                                                     </ul>
                     
                     
@@ -4480,14 +4504,14 @@
                                                             <li>In the check-in/get token window, first, select the service from the
                                                                 drop-down menu
                                                                 that
-                                                                a customer wishes to avail. In case, the provider has only one default
+                                                                a patient wishes to avail. In case, the doctor has only one default
                                                                 service,
                                                                 then
                                                                 there
                                                                 will be no drop-down menu.</li>
                                                             <li>Check-in/Get Token/Order window has a feature to add or change a family
                                                                 member whom the
-                                                                customer wishes to do a check-in for. Click “Add/Change Member“ to add a new
+                                                                patient wishes to do a check-in for. Click “Add/Change Member“ to add a new
                                                                 member
                                                                 with
                                                                 the first name and the last name. In case the family member is already
@@ -4498,21 +4522,21 @@
                                                                     with a
                                                                     single
                                                                     check-in.</strong></li>
-                                                            <li>If a customer has any note, the provider can click <strong>“If you have a
+                                                            <li>If a patient has any note, the doctor can click <strong>“If you have a
                                                                     note,
                                                                     Click
                                                                     here
                                                                     (+)�? to write the message in the textbox.</strong></li>
-                                                            <li>With all this information the provider can now proceed with the check-in
+                                                            <li>With all this information the doctor can now proceed with the check-in
                                                                 process of
                                                                 the
-                                                                walk-in customer by clicking on <strong>“Confirm Check-in“.</strong></li>
-                                                            <li>App message will be sent to the customer's mobile and an email notification
+                                                                walk-in patient by clicking on <strong>“Confirm Check-in“.</strong></li>
+                                                            <li>App message will be sent to the patient's mobile and an email notification
                                                                 to the
                                                                 registered email address regarding the information of check-in.</li>
                                                             <li>Future Check-in can be done in the same way as that of Check-in. The only
                                                                 difference
-                                                                between these check-ins is that the provider needs to select a date of
+                                                                between these check-ins is that the doctor needs to select a date of
                                                                 check-ins in
                                                                 the
                                                                 Future Check-in.</li>
@@ -4533,7 +4557,7 @@
                                                 <div class="helpcontent">
                                                     <span>Delay can be caused by any reason. This interferes with the smooth functioning of
                                                         the
-                                                        business.Delay option helps the provider to set a delay to the current or an earliest
+                                                        business.Delay option helps the doctor to set a delay to the current or an earliest
                                                         working
                                                         hour.</span>
                                                     <ol class="ol-normal adjust-delay-num">
@@ -4546,15 +4570,15 @@
                                                         </li>
                                                         <li>Delay cannot be greater than the available working hours.
                                                         </li>
-                                                        <li>In case if the provider wants to inform the customer about the delay, click
+                                                        <li>In case if the doctor wants to inform the patient about the delay, click
                                                             <strong>"Send
-                                                                Message“.</strong> A default message will be sent to the customers informing
+                                                                Message“.</strong> A default message will be sent to the patients informing
                                                             that
                                                             the
                                                             wait time has been extended for some time along with the new estimated waiting
                                                             time.
                                                         </li>
-                                                        <li>The provider can also send a personalized message. Enter the message in the
+                                                        <li>The doctor can also send a personalized message. Enter the message in the
                                                             given
                                                             text
                                                             box.
@@ -4578,7 +4602,7 @@
                                                             After receiving an appointment, there are two options available- <strong>START button</strong> and <strong>TELESERVICE button.
                                                         </strong>
                                                             </li>
-                                                            <li><strong>START BUTTON </strong>allows you to move the customer to <strong>“STARTED”</strong> status.</li>
+                                                            <li><strong>START BUTTON </strong>allows you to move the patient to <strong>“STARTED”</strong> status.</li>
                                                             <li><strong>TELESERVICE BUTTON</strong> shows a pop-up which has different options regarding teleservice. The different options are:-
             
                                                                 <ul class="normal-abc">
@@ -4600,9 +4624,9 @@
                                                                                 <li>App Notifications</li>
                                                                                  <li>E-Mail</li>  
                                                                             </ul>
-                                                                            <li><strong>Meeting details -</strong> Click on<strong> ““Meeting Details””</strong> will give you details for Appointment, Service, Date & Time, Service Provider, Location, Join Zoom Meeting.
+                                                                            <li><strong>Meeting details -</strong> Click on<strong> ““Meeting Details””</strong> will give you details for Appointment, Service, Date & Time, Service Doctor, Location, Join Zoom Meeting.
                                                                                  <ul class="normal-abc">
-                                                                                        <li><u>Share</u> - Click on <strong> SHARE</strong> to send the meeting details to the customer
+                                                                                        <li><u>Share</u> - Click on <strong> SHARE</strong> to send the meeting details to the patient
                                                                                         </li>  
                                                                                         <li><u>CopyInfo</u> - Click on <strong>COPY INFO</strong> to copy the link to the clipboard.</li>  
                                                                                     </ul> 
@@ -4638,19 +4662,19 @@
 
                                     <div class="helpcontent">
                                         <ul class="ul-normal">
-                                            <li>A provider can create and check-in a customer for service.</li>
-                                            <li>To search for a customer and to check whether he/she has already been
+                                            <li>A doctor can create and check-in a patient for service.</li>
+                                            <li>To search for a patient and to check whether he/she has already been
                                                 registered
                                                 with
-                                                Jaldee, the provider can use the customer's mobile number, his/her first
+                                                Jaldee, the doctor can use the patient's mobile number, his/her first
                                                 name/last
                                                 name.
                                             </li>
-                                            <li>In case, the customer's data does not exist in the Jaldee database, the
-                                                provider
+                                            <li>In case, the patient's data does not exist in the Jaldee database, the
+                                                doctor
                                                 can input
                                                 the
-                                                details of the customer and get him/her registered with Jaldee.com.</li>
+                                                details of the patient and get him/her registered with Jaldee.com.</li>
                                         </ul>
 
 
@@ -4659,7 +4683,7 @@
                                                 <li>In the check-in/get token window, first, select the service from the
                                                     drop-down menu
                                                     that
-                                                    a customer wishes to avail. In case, the provider has only one
+                                                    a patient wishes to avail. In case, the doctor has only one
                                                     default
                                                     service,
                                                     then
@@ -4668,7 +4692,7 @@
                                                 <li>Check-in/Get Token/Order window has a feature to add or change a
                                                     family
                                                     member whom the
-                                                    customer wishes to do a check-in for. Click “Add/Change Member“ to
+                                                    patient wishes to do a check-in for. Click “Add/Change Member“ to
                                                     add a new
                                                     member
                                                     with
@@ -4682,26 +4706,26 @@
                                                         with a
                                                         single
                                                         check-in.</strong></li>
-                                                <li>If a customer has any note, the provider can click <strong>“If you
+                                                <li>If a patient has any note, the doctor can click <strong>“If you
                                                         have a
                                                         note,
                                                         Click
                                                         here
                                                         (+)“ to write the message in the textbox.</strong></li>
-                                                <li>With all this information the provider can now proceed with the
+                                                <li>With all this information the doctor can now proceed with the
                                                     check-in
                                                     process of
                                                     the
-                                                    walk-in customer by clicking on <strong>“Confirm Check-in“.</strong>
+                                                    walk-in patient by clicking on <strong>“Confirm Check-in“.</strong>
                                                 </li>
-                                                <li>App message will be sent to the customer's mobile and an email
+                                                <li>App message will be sent to the patient's mobile and an email
                                                     notification
                                                     to the
                                                     registered email address regarding the information of check-in.</li>
                                                 <li>Future Check-in can be done in the same way as that of Check-in. The
                                                     only
                                                     difference
-                                                    between these check-ins is that the provider needs to select a date
+                                                    between these check-ins is that the doctor needs to select a date
                                                     of
                                                     check-ins in
                                                     the
@@ -4724,7 +4748,7 @@
                                         <span>Delay can be caused by any reason. This interferes with the smooth
                                             functioning of
                                             the
-                                            business.Delay option helps the provider to set a delay to the current or an
+                                            business.Delay option helps the doctor to set a delay to the current or an
                                             earliest
                                             working
                                             hour.</span>
@@ -4738,10 +4762,10 @@
                                             </li>
                                             <li>Delay cannot be greater than the available working hours.
                                             </li>
-                                            <li>In case if the provider wants to inform the customer about the delay,
+                                            <li>In case if the doctor wants to inform the patient about the delay,
                                                 click
                                                 <strong>"Send
-                                                    Message“.</strong> A default message will be sent to the customers
+                                                    Message“.</strong> A default message will be sent to the patients
                                                 informing
                                                 that
                                                 the
@@ -4749,7 +4773,7 @@
                                                 waiting
                                                 time.
                                             </li>
-                                            <li>The provider can also send a personalized message. Enter the message in
+                                            <li>The doctor can also send a personalized message. Enter the message in
                                                 the
                                                 given
                                                 text
@@ -4775,7 +4799,7 @@
                                                 After receiving a check-in, there are two options available- <strong>START button</strong> and <strong>TELESERVICE button.
                                             </strong>
                                                 </li>
-                                                <li><strong>START BUTTON </strong>allows you to move the customer to <strong>“STARTED”</strong> status.</li>
+                                                <li><strong>START BUTTON </strong>allows you to move the patient to <strong>“STARTED”</strong> status.</li>
                                                 <li><strong>TELESERVICE BUTTON</strong> shows a pop-up which has different options regarding teleservice. The different options are:-
 
                                                     <ul class="normal-abc">
@@ -4797,9 +4821,9 @@
                                                                     <li>App Notifications</li>
                                                                      <li>E-Mail</li>  
                                                                 </ul>
-                                                                <li><strong>Meeting details -</strong> Click on<strong> ““Meeting Details””</strong> will give you details for Appointment, Service, Date & Time, Service Provider, Location, Join Zoom Meeting.
+                                                                <li><strong>Meeting details -</strong> Click on<strong> ““Meeting Details””</strong> will give you details for Appointment, Service, Date & Time, Service Doctor, Location, Join Zoom Meeting.
                                                                      <ul class="normal-abc">
-                                                                            <li><u>Share</u> - Click on <strong> SHARE</strong> to send the meeting details to the customer
+                                                                            <li><u>Share</u> - Click on <strong> SHARE</strong> to send the meeting details to the patient
                                                                             </li>  
                                                                             <li><u>CopyInfo</u> - Click on <strong>COPY INFO</strong> to copy the link to the clipboard.</li>  
                                                                         </ul> 
@@ -4826,10 +4850,10 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
-                    <mat-accordion  [ngClass]="{'learnmore_active' : showcustomer}">
-                        <mat-expansion-panel [expanded]='showcustomer'>
+                    <mat-accordion  [ngClass]="{'learnmore_active' : showpatient}">
+                        <mat-expansion-panel [expanded]='showpatient'>
                             <mat-expansion-panel-header class="accordion">
-                                <mat-panel-title class="accordion-title" (click)="handleScroll('customer', 'customer')">
+                                <mat-panel-title class="accordion-title" (click)="handleScroll('patient', 'patient')">
                                     Create patient
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
@@ -5009,13 +5033,13 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="helpcontent">
-                            <span> Here the provider can view the activities done
+                            <span> Here the doctor can view the activities done
                                 by
                                 him/her.
                                 The details appear with a date and time stamp. It also shows the actions
                                 completed
                                 by
-                                the provider along with a little description.</span>
+                                the doctor along with a little description.</span>
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
@@ -5030,7 +5054,7 @@
                             <span> All the Jaldee Broadcasts are shown here. These
                                 are the
                                 Jaldee
-                                provided notifications. Here a provider can learn about new coupons or any
+                                provided notifications. Here a doctor can learn about new coupons or any
                                 other such
                                 information directly from Jaldee Super admin.</span>
                     </div>
@@ -5224,7 +5248,7 @@
                                                                 the <strong>“Payments
                                                                     History“</strong>
                                                                 section.</li>
-                                                            <li>doctors using Jaldee Provider App, kindly visit <span
+                                                            <li>doctors using Jaldee Doctor App, kindly visit <span
                                                                     class="linkb">www.jaldee.com</span> to complete the
                                                                 invoice payment.
                                                             </li>
@@ -5429,7 +5453,7 @@
                                                                     <td class="th5 light-col long">Yes </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th class="th3 headcol">Live Track customer ETAs</th>
+                                                                    <th class="th3 headcol">Live Track patient ETAs</th>
                                                                     <td class="th2 light-col long">No</td>
                                                                     <td class="brozelicensecol long"><strong>No</strong></td>
                                                                     <td class="th3 light-col long">Yes </td>
@@ -5500,44 +5524,44 @@
             the license package.
             Here
             a
-            provider can see the starting date of the current license package, it’s
+            doctor can see the starting date of the current license package, it’s
             expiry date (only if
             upgraded to higher grades), and the status of the license package either
             active or
             expired.</span>
-        <span>A provider can also downgrade the license via Jaldee support. The
+        <span>A doctor can also downgrade the license via Jaldee support. The
             effects of this on the
             bill is
             reflected from the next bill cycle (next month) onwards.</span>
 
         <h6>2. License Usage</h6>
-        <span>Here a provider can track the license usage. This section shows the
+        <span>Here a doctor can track the license usage. This section shows the
             following
             information:</span>
         <ul class="ul-normal">
             <li><strong>Number of business profile views :</strong> This refers to
                 the number of
-                customers
-                who have clicked for a detailed view of the provider.</li>
+                patients
+                who have clicked for a detailed view of the doctor.</li>
             <li><strong>Transactions :</strong> This refers to the number of
                 check-ins.</li>
             <li><strong>Profile gallery storage :</strong> This shows the total
                 storage space given to
                 the
-                provider under the availed license package.</li>
+                doctor under the availed license package.</li>
             <li><strong>Jaldee-Keyords :</strong> This shows the total number of
                 Jaldee-Keyords allowed
                 for
                 the availed package.</li>
         </ul>
-        <span>A provider also gets to know whether the usages are in compliance with
+        <span>A doctor also gets to know whether the usages are in compliance with
             the current license
             package.
             The data until yesterday is updated here.</span>
 
         <h6>3.License Statement</h6>
 
-        <span>Here a provider can view the entire statement of the payments done to
+        <span>Here a doctor can view the entire statement of the payments done to
             Jaldee so far.</span>
     </div>
 
@@ -5570,10 +5594,10 @@
                 <div class="helpcontent">
                 <h6>Add-on</h6>
                 <span>Add-ons are used when a license package reaches its maximum limit and
-                    a provider wants to
+                    a doctor wants to
                     add
                     more features.
-                    With the help of add-ons, a provider can avail additional features
+                    With the help of add-ons, a doctor can avail additional features
                     without
                     upgrading the
                     license.
@@ -5790,7 +5814,7 @@
     <mat-accordion [ngClass]="{'learnmore_active' : showprofile}">
         <mat-expansion-panel [expanded]='showprofile'>
             <mat-expansion-panel-header class="accordion">
-                <mat-panel-title class="accordion-title" (click)="menu('providerprofile')">
+                <mat-panel-title class="accordion-title" (click)="menu('doctorprofile')">
                     Doctor Profile
                 </mat-panel-title>
             </mat-expansion-panel-header>
@@ -5856,7 +5880,7 @@
                             view the license history, its usage, payment history and upgrade the current
                             License
                             package.</li>
-                            <li><strong>Messages:</strong> Here the provider can view all the messages .
+                            <li><strong>Messages:</strong> Here the doctor can view all the messages .
                             </li>
                     </ul>
                 </ul>
