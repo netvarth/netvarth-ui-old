@@ -1,25 +1,24 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
 <section>
-    <div class="content loc-list">
-        <div class="card p0" *ngIf="api_loading">
-            <app-common-innerloading-spinner></app-common-innerloading-spinner>
-        </div>
-        <div class="col-md-12 no-padding-small" *ngIf="location_data && action === 'view' && !api_loading">
-            <div class="row">
-                <div class="card p0">
-                    <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
-                            <div class="cl1">
-                                <span class="editbt" (click)="editLocation()"></span>
-                                <div class="cop-l">
-                                    <span class="bse-lcn-label"
-                                        *ngIf="location_data.baseLocation">{{base_loca_cap}}</span>
-                                    <h4>{{location_data.place | capitalizeFirst}}</h4>
-                                    <span>{{location_data.address | capitalizeFirst}}</span>
-                                    <!-- <div class="locSchedule" *ngIf="display_schedule.length > 0"
+  <div class="content loc-list">
+    <div class="card p0" *ngIf="api_loading">
+      <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+    <div class="col-md-12 no-padding-small" *ngIf="location_data && action === 'view' && !api_loading">
+      <div class="row">
+        <div class="card p0">
+          <div class="copy locd">
+            <div class="lbl col-sm-12 col-md-8 col-lg-8">
+              <div class="cl1">
+                <span class="editbt" (click)="editLocation()"></span>
+                <div class="cop-l">
+                  <span class="bse-lcn-label" *ngIf="location_data.baseLocation">{{base_loca_cap}}</span>
+                  <h4>{{location_data.place | capitalizeFirst}}</h4>
+                  <span>{{location_data.address | capitalizeFirst}}</span>
+                  <!-- <div class="locSchedule" *ngIf="display_schedule.length > 0"
                                         style="margin-top: 20px">
                                         <span class="sub-title">{{loca_hours}}</span>
                                         <ul>
@@ -30,237 +29,211 @@
                                             </li>
                                         </ul>
                                     </div> -->
-                                </div>
-                                <div class="cop-r">
-                                    <iframe width="100%" height="100%" frameborder="0" style="border:0" [src]="mapurl"
-                                        allowfullscreen *ngIf="mapurl"></iframe>
-                                    <div class="gps gpspace" *ngIf="location_data.longitude != '' &&
+                </div>
+                <div class="cop-r">
+                  <iframe width="100%" height="100%" frameborder="0" style="border:0" [src]="mapurl" allowfullscreen *ngIf="mapurl"></iframe>
+                  <div class="gps gpspace" *ngIf="location_data.longitude != '' &&
                                             location_data.lattitude != ''">
-                                        {{longitude_cap}} <span>{{location_data.longitude}}</span><br>
-                                        {{latitude_cap}} <span>{{location_data.lattitude}}</span>
-                                    </div>
-                                </div>
-                                <div class="btm-ctrl" *ngIf="!location_data.baseLocation">
-                                    <div class="ctrl enable-disable" *ngIf="!location_data.baseLocation">
-                                        <span class="ttle">{{loc_status_cap}}</span>
-                                        <span>
-                                            <mat-slide-toggle [checked]="location_data.status=='ACTIVE'"
-                                                (click)="changeProviderLocationStatus(location_data)">
-                                            </mat-slide-toggle>
-                                        </span>
-                                        <span class='enabled'
-                                            *ngIf="location_data.status=='ACTIVE'">{{enable_cap}}</span>
-                                        <span class='disabled'
-                                            *ngIf="location_data.status=='INACTIVE'">{{disable_cap}}</span>
-                                    </div>
-                                    <div class="ctrl bse-lcn"
-                                        *ngIf="location_data.status=='ACTIVE' && !location_data.baseLocation">
-                                        <span class="cs-btn bt8"
-                                            (click)="changeProviderBaseLocationStatus(location_data)">
-                                            {{set_base_loc_cap}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="lbr col-sm-12 col-md-4 col-lg-4">
-                            <div class="cr1">
-                                <span class="editbt" (click)="editLocation('badge')" *ngIf="objectKeys(location_data.locationVirtualFields).length > 0 ||
+                    {{longitude_cap}}
+                    <span>{{location_data.longitude}}</span>
+                    <br> {{latitude_cap}}
+                    <span>{{location_data.lattitude}}</span>
+                  </div>
+                </div>
+                <div class="btm-ctrl" *ngIf="!location_data.baseLocation">
+                  <div class="ctrl enable-disable" *ngIf="!location_data.baseLocation">
+                    <span class="ttle">{{loc_status_cap}}</span>
+                    <span>
+                      <mat-slide-toggle [checked]="location_data.status=='ACTIVE'" (click)="changeProviderLocationStatus(location_data)">
+                      </mat-slide-toggle>
+                    </span>
+                    <span class='enabled' *ngIf="location_data.status=='ACTIVE'">{{enable_cap}}</span>
+                    <span class='disabled' *ngIf="location_data.status=='INACTIVE'">{{disable_cap}}</span>
+                  </div>
+                  <div class="ctrl bse-lcn" *ngIf="location_data.status=='ACTIVE' && !location_data.baseLocation">
+                    <span class="cs-btn bt8" (click)="changeProviderBaseLocationStatus(location_data)">
+                      {{set_base_loc_cap}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="lbr col-sm-12 col-md-4 col-lg-4">
+              <div class="cr1">
+                <span class="editbt" (click)="editLocation('badge')" *ngIf="objectKeys(location_data.locationVirtualFields).length > 0 ||
                                     location_data.open24hours ||
                                     location_data.parkingType"></span>
-                                <h5>{{loc_amenities_cap}}</h5>
-                                <ul class="amt-list">
-                                    <li [matTooltip]="'Parking Type: ' + location_data.parkingType"
-                                        [class]="badgeIcons['parkingtype']['class']"
-                                        *ngIf="location_data.parkingType && location_data.parkingType !='none'"></li>
-                                    <li [matTooltip]="'24 hours Open'" [class]="badgeIcons['24hour']['class']"
-                                        *ngIf="location_data.open24hours"></li>
-                                    <ng-container *ngIf="location_data.locationVirtualFields">
-                                        <ng-container
-                                            *ngFor="let locvirtual of objectKeys(location_data.locationVirtualFields)">
-                                            <li [matTooltip]="badge_map_arr[locvirtual]"
-                                                [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['none']['class']">
-                                            </li>
-                                        </ng-container>
-                                    </ng-container>
-                                </ul>
-                                <ng-container *ngIf=" objectKeys(location_data.locationVirtualFields).length == 0 &&
+                <h5>{{loc_amenities_cap}}</h5>
+                <ul class="amt-list">
+                  <li [matTooltip]="'Parking Type: ' + location_data.parkingType" [class]="badgeIcons['parkingtype']['class']" *ngIf="location_data.parkingType && location_data.parkingType !='none'"></li>
+                  <li [matTooltip]="'24 hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="location_data.open24hours"></li>
+                  <ng-container *ngIf="location_data.locationVirtualFields">
+                    <ng-container *ngFor="let locvirtual of objectKeys(location_data.locationVirtualFields)">
+                      <li [matTooltip]="badge_map_arr[locvirtual]" [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['none']['class']">
+                      </li>
+                    </ng-container>
+                  </ng-container>
+                </ul>
+                <ng-container *ngIf=" objectKeys(location_data.locationVirtualFields).length == 0 &&
                                         !location_data.open24hours &&
                                         !location_data.parkingType
                                         ">
-                                    <div class="no-dta">
-                                        <p>{{you_havent_cap}} {{loc_amenities_cap}}. </p>
-                                        <span class="cs-btn bt3"
-                                            (click)="editLocation('badge')">{{add_it_now_cap}}</span>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                  <div class="no-dta">
+                    <p>{{you_havent_cap}} {{loc_amenities_cap}}. </p>
+                    <span class="cs-btn bt3" (click)="editLocation('badge')">{{add_it_now_cap}}</span>
+                  </div>
+                </ng-container>
+              </div>
             </div>
-            <mat-accordion class="row cst-acc loc-detail">
-                <mat-expansion-panel class="card p0" hideToggle="{{(queues.length == 0) ? true : false}}"
-                    disabled="{{(queues.length == 0) ? true : false}}"
-                    expanded="{{(queues.length == 0) ? false : true}}">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title class="lc-title">
-                            <h5>{{queues_cap}} <span class="count">{{queues.length}}</span><span class="addbt"
-                                    (click)="addEditProviderQueue('add')"></span></h5>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <p class="form-level-settings">{{waitlist_cap}}</p>
-                    <div class="table-outer q-tbl">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>{{serv_window_cap}}</th>
-                                    <th>{{schedule_cap}}</th>
-                                    <th>{{status_cap}}</th>
-                                    <th>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let queue of queues" [class.disabled]="queue.queueState=='DISABLED'">
-                                    <td [class.disabled]="queue.queueState=='DISABLED'" data-title="Queue"
-                                        class="pointer-cursor" (click)="goQueueDetail(queue)"
-                                        [matTooltip]="'Click here to view queue'">
-                                        {{queue.name | capitalizeFirst}}</td>
-                                    <td data-title="Schedule">
-                                        <div class="schtd">
-                                            <ng-container *ngFor="let schedule of queue.displayschedule">
-                                                <span class="day">{{schedule.dstr}}:</span> <span
-                                                    class="time">{{schedule.time}}</span>
-                                            </ng-container>
-                                        </div>
-                                    </td>
-                                    <td data-title="Status" class="status">
-                                        <span class="icon-enable" *ngIf="queue.queueState=='ENABLED'">
-                                            {{enable_cap}}</span>
-                                        <span class="icon-disable" *ngIf="queue.queueState=='DISABLED'">
-                                            {{disable_cap}}</span>
-                                    </td>
-                                    <td>
-                                        <span class="mbt">
-                                            <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
-                                                <mat-icon>more_vert</mat-icon>
-                                            </button>
-                                            <mat-menu #appMenu="matMenu">
-                                                <button type="button" (click)="addEditProviderQueue('edit',queue)"
-                                                    *ngIf="queue.queueState=='ENABLED'" mat-menu-item>
-                                                    <i class="icon-edit"></i>
-                                                    <span>Edit</span>
-                                                </button>
-                                                <button type="button" (click)="changeProviderQueueStatus(queue)"
-                                                    mat-menu-item>
-                                                    <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i>
-                                                    <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
-                                                    <span>
-                                                        {{(queue.queueState=='ENABLED') ? 'Disable' :' Enable'}}</span>
-                                                </button>
-                                            </mat-menu>
-                                        </span>
-                                        <span class="mbt-mobile-show">
-                                            <button class="editcls editbutton" type="button"
-                                                *ngIf="queue.queueState=='ENABLED'"
-                                                (click)="addEditProviderQueue('edit',queue)"><i
-                                                    class="icon-edit"></i>&nbsp;Edit</button>
-                                            <button [class.enableicon]="queue.queueState=='DISABLED'"
-                                                [class.disableicon]="queue.queueState=='ENABLED'" type="button"
-                                                (click)="changeProviderQueueStatus(queue)">{{(queue.queueState=='ENABLED')
-                                                ? 'Disable' :' Enable'}}</button>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <span class="addbt d-block d-md-none" (click)="addEditProviderQueue('add')"></span>
-                    </div>
-                </mat-expansion-panel>
-            </mat-accordion>
+          </div>
         </div>
+      </div>
+      <mat-accordion class="row cst-acc loc-detail">
+        <mat-expansion-panel class="card p0" hideToggle="{{(queues.length == 0) ? true : false}}" disabled="{{(queues.length == 0) ? true : false}}"
+          expanded="{{(queues.length == 0) ? false : true}}">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="lc-title">
+              <h5>{{queues_cap}}
+                <span class="count">{{queues.length}}</span>
+                <span class="addbt" (click)="addEditProviderQueue('add')"></span>
+              </h5>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p class="form-level-settings">{{waitlist_cap}}</p>
+          <div class="table-outer q-tbl">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>{{serv_window_cap}}</th>
+                  <th>{{schedule_cap}}</th>
+                  <th>{{status_cap}}</th>
+                  <th>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let queue of queues" [class.disabled]="queue.queueState=='DISABLED'">
+                  <td [class.disabled]="queue.queueState=='DISABLED'" data-title="Queue" class="pointer-cursor" (click)="goQueueDetail(queue)"
+                    [matTooltip]="'Click here to view queue'">
+                    {{queue.name | capitalizeFirst}}</td>
+                  <td data-title="Schedule">
+                    <div class="schtd">
+                      <ng-container *ngFor="let schedule of queue.displayschedule">
+                        <span class="day">{{schedule.dstr}}:</span>
+                        <span class="time">{{schedule.time}}</span>
+                      </ng-container>
+                    </div>
+                  </td>
+                  <td data-title="Status" class="status">
+                    <span class="icon-enable" *ngIf="queue.queueState=='ENABLED'">
+                      {{enable_cap}}</span>
+                    <span class="icon-disable" *ngIf="queue.queueState=='DISABLED'">
+                      {{disable_cap}}</span>
+                  </td>
+                  <td>
+                    <span class="mbt">
+                      <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #appMenu="matMenu">
+                        <button type="button" (click)="addEditProviderQueue('edit',queue)" *ngIf="queue.queueState=='ENABLED'" mat-menu-item>
+                          <i class="icon-edit"></i>
+                          <span>Edit</span>
+                        </button>
+                        <button type="button" (click)="changeProviderQueueStatus(queue)" mat-menu-item>
+                          <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i>
+                          <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
+                          <span>
+                            {{(queue.queueState=='ENABLED') ? 'Disable' :' Enable'}}</span>
+                        </button>
+                      </mat-menu>
+                    </span>
+                    <span class="mbt-mobile-show">
+                      <button class="editcls editbutton" type="button" *ngIf="queue.queueState=='ENABLED'" (click)="addEditProviderQueue('edit',queue)">
+                        <i class="icon-edit"></i>&nbsp;Edit</button>
+                      <button [class.enableicon]="queue.queueState=='DISABLED'" [class.disableicon]="queue.queueState=='ENABLED'" type="button"
+                        (click)="changeProviderQueueStatus(queue)">{{(queue.queueState=='ENABLED') ? 'Disable' :' Enable'}}</button>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <span class="addbt d-block d-md-none" (click)="addEditProviderQueue('add')"></span>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
 
-        <div class="col-md-12 no-padding-small" *ngIf="action !== 'view' && !api_loading">
-            <div class="row">
-                <div class="card">
-                    <div class="copy ynw-common-form-nm">
-                        <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" class="ynw-common-form">
-                            <ng-container>
-                                <div class="form-group mapselection">
-                                    <button type="button" (click)="showGooglemap()" class="cs-btn bt3" tabindex="-1"><i
-                                            data-icon="j"></i>{{location_map_cap}}</button>
-                                    <span class="expl">{{location_map_message}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <mat-form-field>
-                                        <input class="form-control" matInput formControlName="locname"
-                                            autocomplete="off" maxlength="50" placeholder="{{loc_placeholder}} *">
-                                    </mat-form-field>
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')"
-                                        [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
+    <div class="col-md-12 no-padding-small" *ngIf="action !== 'view' && !api_loading">
+      <div class="row">
+        <div class="card">
+          <div class="copy ynw-common-form-nm">
+            <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
+              <ng-container>
+                <div class="form-group mapselection">
+                  <button type="button" (click)="showGooglemap()" class="cs-btn bt3" tabindex="-1">
+                    <i data-icon="j"></i>{{location_map_cap}}</button>
+                  <span class="expl">{{location_map_message}}</span>
+                </div>
+                <div class="form-group">
+                  <mat-form-field>
+                    <input class="form-control" matInput formControlName="locname" autocomplete="off" maxlength="50" placeholder="{{loc_placeholder}} *">
+                  </mat-form-field>
+                  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locname',
             {
             'required' : 'Please enter the location name',
             'pattern' : 'Please enter the location name'
             })">
-                                    </app-field-error-display>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-12 no-padding-small">
-                                        <div class="form-group">
-                                            <mat-form-field class="example-full-width">
-                                                <input matInput type="text" placeholder="{{latitude_cap}}"
-                                                    formControlName="loclattitude" autocomplete="off">
-                                            </mat-form-field>
-                                            <app-field-error-display
-                                                [displayError]="fed_service.isFieldValid(amForm,'loclattitude')"
-                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'loclattitude',
+                  </app-field-error-display>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-12 no-padding-small">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" placeholder="{{latitude_cap}}" formControlName="loclattitude" autocomplete="off">
+                      </mat-form-field>
+                      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclattitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclattitude',
                     {
                     'required' : 'Please enter the latitude',
                     'pattern' : 'Please enter a valid lattitude'
                     })">
-                                            </app-field-error-display>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12 no-padding-small">
-                                        <div class="form-group">
-                                            <mat-form-field class="example-full-width">
-                                                <input matInput type="text" placeholder="{{longitude_cap}}"
-                                                    formControlName="loclongitude" autocomplete="off">
-                                            </mat-form-field>
-                                            <app-field-error-display
-                                                [displayError]="fed_service.isFieldValid(amForm,'loclongitude')"
-                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'loclongitude',
+                      </app-field-error-display>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12 no-padding-small">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" placeholder="{{longitude_cap}}" formControlName="loclongitude" autocomplete="off">
+                      </mat-form-field>
+                      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'loclongitude')" [errorMsgs]="fed_service.getErrorMessage(amForm,'loclongitude',
                     {
                     'required' : 'Please enter the longitude',
                     'pattern' : 'Please enter a valid longitude'
                     })">
-                                            </app-field-error-display>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <mat-form-field class="example-full-width">
-                                        <textarea matInput placeholder="{{address_cap}}" formControlName="locaddress"
-                                            row="4"></textarea>
-                                    </mat-form-field>
-                                    <app-field-error-display
-                                        [displayError]="fed_service.isFieldValid(amForm,'locaddress')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locaddress',
+                      </app-field-error-display>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <mat-form-field class="example-full-width">
+                    <textarea matInput placeholder="{{address_cap}}" formControlName="locaddress" row="4"></textarea>
+                  </mat-form-field>
+                  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locaddress')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locaddress',
             {
             'required' : 'Please enter address',
             'maxlength' : 'Please enter less than 200 characters'
             })">
-                                    </app-field-error-display>
-                                </div>
-                                <div class="form-group">
-                                    <mat-form-field class="example-full-width">
-                                        <label class="labelstyle">{{map_url_cap}}</label>
-                                        <input class="nofocus" matInput type="text" formControlName="locmapurl"
-                                            autocomplete="off" tabindex="-1">
-                                    </mat-form-field>
-                                </div>
-                                <!-- <div class="form-group mb0">
+                  </app-field-error-display>
+                </div>
+                <div class="form-group">
+                  <mat-form-field class="example-full-width">
+                    <label class="labelstyle">{{map_url_cap}}</label>
+                    <input class="nofocus" matInput type="text" formControlName="locmapurl" autocomplete="off" tabindex="-1">
+                  </mat-form-field>
+                </div>
+
+                <!-- <div class="form-group mb0">
                                     <label class="labelstyle">{{loca_hours}}</label>
                                 </div>
                                 <div class="pro-schedule">
@@ -268,19 +241,43 @@ onSubmit(amForm.value)" class="ynw-common-form">
                                         [hidecancelbutton]="'1'" providerStatus="INACTIVE"
                                         (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>
                                 </div> -->
-                            </ng-container>
-                            <div class="actiondiv col-md-12" style="margin-top: 15px;display: inline-flex;">
-                                <button type="button" (click)="closeClick()" class="cs-btn bt2"
-                                    [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
-                                <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
-                                    class="cs-btn bt1">{{save_btn}}
-                                </button>
-                            </div>
-                        </form>
+              </ng-container>
+              <ng-container>
+                <label class="labelstyle">Location Amenities</label>
+                <form [formGroup]="locamForm" class="ynw-common-form">
+                  <div class="form-group">
+
+                    <mat-checkbox class="smallFont" formControlName="open24hours">{{open_cap}}</mat-checkbox>
+
+                  </div>
+
+                  <div>
+                    <div class="form-group" *ngFor="let badge of loc_badges">
+                      <mat-checkbox (change)="handle_badge_click(badge)" [checked]="checkbadgealreadyselected(badge)">
+                        {{badge.displayName}}</mat-checkbox>
                     </div>
-                </div>
-            </div>
+                  </div>
+                  <div class="form-group" #badgediv>
+                    <mat-form-field>
+                      <mat-select placeholder="Select Parking Type*" formControlName="parkingType">
+                        <mat-option *ngFor="let ptype of parking_types" [value]="ptype.value">
+                          {{ptype.displayName }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </form>
+              </ng-container>
+              <div class="actiondiv col-md-12" style="margin-top: 15px;display: inline-flex;">
+                <button type="button" (click)="closeClick()" class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
+                <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{save_btn}}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="clearfix"></div>
+      </div>
     </div>
+    <div class="clearfix"></div>
+  </div>
 </section>

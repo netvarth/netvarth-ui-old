@@ -359,6 +359,12 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   image_list: any = [];
   user_accountType;
   aboutmefilled = false;
+  locationFilled = false;
+  specializationFilled = false;
+  languagesKnownFilled = false;
+  contactInfoFilled = false;
+  galleryandmediaFilled = false;
+
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -1033,6 +1039,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       });
   }
   editLocation(badge?) {
+
+
     if (badge) {
       this.loceditdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
         width: '50%',
