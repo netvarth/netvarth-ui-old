@@ -7450,8 +7450,10 @@ label.filterHeaders {
 
 .filterClosebtn {
   /* color: white; */
-  margin-top: 8px;
-  margin-left: 18px;
+  /* margin-top: 8px;
+  margin-left: 18px; */
+  padding: 15px;
+  background: #ddd;
 }
 
 board-box {
@@ -9134,7 +9136,8 @@ owl-carousel .bt3.active {
   color: black !important;
 }
 
-.tok-db i.fa-eye {
+.tok-db i.fa-eye,
+.tok-db i.fa-user {
   color: #3c8dbc !important;
   margin-top: 20px !important;
 }
@@ -10865,4 +10868,6 @@ a {
     font-weight: 500;
     padding-left: 10px;
   }
-   
+   .pd-btm-30 {
+     padding-bottom: 30px !important;
+   }

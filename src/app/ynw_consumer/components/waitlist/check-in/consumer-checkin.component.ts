@@ -505,9 +505,12 @@ export class ConsumerCheckinComponent implements OnInit {
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
         this.queueQryExecuted = false;
         if (locid && servid) {
+            console.log(locid);
+            console.log(servid);
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
+                    console.log(this.queuejson);
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
@@ -1224,6 +1227,7 @@ export class ConsumerCheckinComponent implements OnInit {
                             }
                         }
                     }
+                    console.log(this.users);
                     if (found) {
                         // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
                         this.users.push(this.userN);
@@ -1275,6 +1279,8 @@ export class ConsumerCheckinComponent implements OnInit {
         //     this.queuejson = [];
         //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
         // }
+        console.log(this.selected_dept);
+        console.log(this.selectedUser);
     }
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;

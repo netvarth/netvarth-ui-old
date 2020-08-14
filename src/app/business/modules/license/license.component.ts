@@ -403,9 +403,9 @@ export class LicenseComponent implements OnInit, OnDestroy {
     getInvoicePay(invoice, payMentShow) {
         const invoiceJson = JSON.stringify(invoice);
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
-        if (this.corpSettings && this.corpSettings.isCentralised) {
-            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-        } else {
+        // if (this.corpSettings && this.corpSettings.isCentralised) {
+        //     this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        // } else {
             this.temp1 = JSON.parse(invoiceJson);
             const navigationExtras: NavigationExtras = {
                 queryParams: {
@@ -417,7 +417,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
 
             };
             this.router.navigate(['provider', 'license', 'Statements'], navigationExtras);
-        }
+        // }
     }
     openAnnualSection() {
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {

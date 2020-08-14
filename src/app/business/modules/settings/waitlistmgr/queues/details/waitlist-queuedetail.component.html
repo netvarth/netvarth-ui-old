@@ -293,7 +293,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
             })">
                                 </app-field-error-display>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-md-12 no-padding">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="{{capacitylimit}}" maxlength="4" type="text"
                                         class="form-control number-ip-sm"
@@ -309,7 +309,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
         })">
                                 </app-field-error-display>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-md-12 no-padding">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm"
                                         placeholder="{{customer_label | capitalizeFirst}}s served at a time *"
@@ -351,7 +351,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         errorMsg="Please enter the location">
                                     </app-field-error-display>
                                 </div> -->
-                            <div class="form-group">
+                            <div class="form-group col-md-12 no-padding">
                                 <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
                             </div>
                             <div class="form-group row" *ngIf="showAdvancedSettings">

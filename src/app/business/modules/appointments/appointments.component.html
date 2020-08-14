@@ -311,8 +311,8 @@
                         <div class="pull-right">
                           <aside class="filterSidebar" *ngIf="filter_sidebar">
                             <section id="filterContainer" class="sidebar sidebar-bottom">
-                              <div class="filterClosebtn">
-                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
+                              <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
+                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                                   (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                                   [matTooltip]="'Close filter window'"></i>
                                 <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
@@ -742,8 +742,8 @@
                         <div class="pull-right">
                           <aside class="filterSidebar" *ngIf="filter_sidebar">
                             <section id="filterContainer" class="sidebar sidebar-bottom">
-                              <div class="filterClosebtn">
-                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
+                              <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
+                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                                   (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                                   [matTooltip]="'Close filter window'"></i>
                                 <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
@@ -820,6 +820,24 @@
                                       Female</mat-checkbox>
                                   </li>
                                 </div> -->
+
+                                <div *ngIf="schedules.length > 0 && time_type === 3">
+                                  <label class="filterHeaders">schedules</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox [checked]="allScheduleSelected"
+                                      (change)="setFilterDataCheckbox('schedule', 'all', $event)">
+                                      All</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox *ngFor="let q of schedules"
+                                      [checked]="filteredSchedule.indexOf(q.id) !== -1"
+                                      (change)="setFilterDataCheckbox('schedule', q.id, $event)">
+                                      {{q.name}}</mat-checkbox>
+                                  </li>
+                                </div>
+
                                 <div *ngIf="service_list.length > 0">
                                   <label class="filterHeaders">Services</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">

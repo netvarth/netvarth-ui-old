@@ -92,7 +92,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     phone_number: '',
     appointmentEncId: '',
     appointmentMode: 'all',
-    queue: 'all',
+    schedule: 'all',
     service: 'all',
     apptStatus: 'all',
     payment_status: 'all',
@@ -111,7 +111,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     phone_number: false,
     appointmentEncId: false,
     appointmentMode: false,
-    queue: false,
+    schedule: false,
     service: false,
     apptStatus: false,
     payment_status: false,
@@ -309,6 +309,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   message = '';
   message1 = '';
   showDashbard = true;
+  filteredSchedule: any = [];
+  allScheduleSelected = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -818,7 +820,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       phone_number: false,
       appointmentEncId: false,
       appointmentMode: false,
-      queue: false,
+      schedule: false,
       service: false,
       apptStatus: false,
       payment_status: false,
@@ -834,7 +836,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       phone_number: '',
       appointmentEncId: '',
       appointmentMode: 'all',
-      queue: 'all',
+      schedule: 'all',
       service: 'all',
       apptStatus: 'all',
       payment_status: 'all',
@@ -1210,9 +1212,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
       }
-      if (queueid && queueid.length > 0) {
-        Mfilter['schedule-eq'] = queueid.toString();
-      }
+      // if (queueid && queueid.length > 0) {
+      //   Mfilter['schedule-eq'] = queueid.toString();
+      // }
       no_filter = true;
     }
     if (this.filter.apptStatus === 'all') {
@@ -1440,9 +1442,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryAppointments() {
     let Mfilter = this.setFilterForApi();
-    if (this.selQidsforHistory.length !== 0) {
-      Mfilter['schedule-eq'] = this.selQidsforHistory.toString();
-    }
+    // if (this.selQidsforHistory.length !== 0) {
+    //   Mfilter['schedule-eq'] = this.selQidsforHistory.toString();
+    // }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending';
     }
@@ -1578,6 +1580,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.time_type === 3) {
+       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
+      api_filter['schedule-eq'] = this.filteredSchedule.toString();
+    }
       if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
         api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
       }
@@ -1626,7 +1631,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.service !== 'all' ||
-      this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelMultiCtrl.length > 0 || this.filter.apptStatus !== 'all') {
       this.filterapplied = true;
     } else {
@@ -2103,11 +2108,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.genderList = [];
     this.services = [];
     this.apptStatuses = [];
+    this.filteredSchedule = [];
     this.paymentStatuses = [];
     this.apptModes = [];
     this.allAgeSlected = false;
     this.allGenderSlected = false;
     this.allServiceSelected = false;
+    this.allScheduleSelected = false;
     this.allApptStatusSelected = false;
     this.allPayStatusSelected = false;
     this.allModeSelected = false;
@@ -2258,6 +2265,32 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.services.length === this.service_list.length) {
         this.filter['service'] = 'all';
         this.allServiceSelected = true;
+      }
+    }
+    if (type === 'schedule') {
+      if (value === 'all') {
+        this.filteredSchedule = [];
+        this.allScheduleSelected = false;
+        if (event.checked) {
+          for (const service of this.schedules) {
+            if (this.filteredSchedule.indexOf(service.id) === -1) {
+              this.filteredSchedule.push(service.id);
+            }
+          }
+          this.allScheduleSelected = true;
+        }
+      } else {
+        this.allScheduleSelected = false;
+        const indx = this.filteredSchedule.indexOf(value);
+        if (indx === -1) {
+          this.filteredSchedule.push(value);
+        } else {
+          this.filteredSchedule.splice(indx, 1);
+        }
+      }
+      if (this.filteredSchedule.length === this.schedules.length) {
+        this.filter['schedule'] = 'all';
+        this.allScheduleSelected = true;
       }
     }
     this.doSearch();
