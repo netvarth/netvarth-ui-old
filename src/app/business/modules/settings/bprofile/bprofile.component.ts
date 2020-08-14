@@ -32,9 +32,8 @@ import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
   selector: 'app-bprofile',
   templateUrl: './bprofile.component.html',
   styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss']
-
-
 })
+
 
 export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, AfterContentInit {
 
