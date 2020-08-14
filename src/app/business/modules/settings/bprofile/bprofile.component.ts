@@ -356,6 +356,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   normal_specilization_show = 1;
   image_list: any = [];
   user_accountType;
+  aboutmefilled = false;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -803,6 +804,9 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       .then(
         data => {
           this.bProfile = data;
+          if (this.bProfile.businessName && this.bProfile.businessDesc) {
+            this.aboutmefilled = true;
+          }
           console.log('businessprofile..' + JSON.stringify(this.bProfile));
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
@@ -1127,7 +1131,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
-
       return this.item_pic.base64;
     } else {
       if (this.blogo[0]) {
@@ -2133,5 +2136,12 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.notedialogRef.afterClosed().subscribe(result => {
       this.getBusinessProfile();
     });
+  }
+
+  gotoAboutMe() {
+    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'aboutme']);
+  }
+  gotoGlryMedia() {
+    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'gallerymedia']);
   }
 }
