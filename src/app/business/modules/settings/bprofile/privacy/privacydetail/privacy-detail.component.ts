@@ -338,6 +338,7 @@ export class PrivacyDetailComponent implements OnInit {
     return rettxt;
   }
   backPage() {
-    this._location.back();
+    this.router.navigate(['provider', 'settings', 'bprofile', 'privacy']);
+    // this._location.back();
   }
 }

@@ -1184,7 +1184,7 @@ export const Messages = {
 
   // Jaldee Online
   'JALDEE_ONLINE_DISABLED_MSG': 'Your [customer]s cannot  see you or access you online',
-  'JALDEEONLINE_ENABLED_MSG':'Your [customer]s can see you online',
+  'JALDEEONLINE_ENABLED_MSG': 'Your [customer]s can see you online',
   'JALDEE_ONLINE_ENABLED_MSG': 'Your [customer]s can see you online by scanning Jaldee QR code and link ',
   'REMEM_MSG_CAP': 'Default bank account selected for online payment is Jaldee bank, if applicable you can set your own bank account from Payment settings.',
   'PROFILE_ENABLED_MSG': 'Your [customer]s can search and find you on Jaldee.com',
@@ -1375,7 +1375,7 @@ export const Messages = {
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG': 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking/UPI for transaction process.',
   'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up and turn on tax configuration.',
   'JALDEE_PAY_MSG': 'Enable Jaldee Pay to accept online payments from [customer]s',
-  'FRM_LEVEL_PREPAYMENT_SETTINGS_MSG': 'If you are experiencing no showups , Jaldee recommends you to setup the advance payment at your own responsibility.' ,
+  'FRM_LEVEL_PREPAYMENT_SETTINGS_MSG': 'If you are experiencing no showups , Jaldee recommends you to setup the advance payment at your own responsibility.',
   // form-level-provider-license and invoice
   'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage the license history, its usage, and payment history and also upgrade your license here.',
   'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG': 'To avail the additional features of Jaldee.com, click here. ',
@@ -1414,8 +1414,8 @@ export const Messages = {
   'FRM_LEVEL_CREATE_CUSTOMER_MSG_TWO': 'if not found, enter the [customer] details ',
   'FRM_LEVEL_CREATE_CUSTOMER_MSG_THREE': 'for creating a [customer] base.',
   'FRM_LEVEL_ADJ_DELAY_MSG': 'Manage the delay for the below shown working hour selected from the dashboard and notify the checked in [customer]s about the delay.',
-  'FRM_LEVEL_ADJ_DELAY_MSG_CNGE' : 'Are you running late? Inform your upcoming patients about any delay.',
-  
+  'FRM_LEVEL_ADJ_DELAY_MSG_CNGE': 'Are you running late? Inform your upcoming patients about any delay.',
+
   'CHECKED_IN_LABEL': 'Checked in',
   'VERIFIED_LEVEL': 'Your verified level',
   'WAIT_TIME': 'Wait Time',

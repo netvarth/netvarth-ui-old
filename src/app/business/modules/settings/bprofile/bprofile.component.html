@@ -27,11 +27,11 @@
                   <div class="ctrl" *ngIf="showIncompleteButton">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <!-- <h3 class="bus-prof-head">Business Profile</h3> -->
-                      <h6 *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">Profile Strength-
+                      <h6 hidden class="bus-prof-strength">Profile Strength-
                         <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
-                      </h6>
+                      </h6> 
 
-                      <div class="">
+                      <div style="line-height: 25px;">
                         <span>Your Business Profile is Incomplete&nbsp;&nbsp;</span>
                         <button (click)="scroll(basicInfoSection)" type="button"
                           [className]="' btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
@@ -42,7 +42,7 @@
                   <div class="ctrl" *ngIf="!showIncompleteButton">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <!-- <h3 class="bus-prof-head">Business Profile</h3> -->
-                      <h6 *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">Profile Strength-
+                      <h6 style="margin-top: 0 !important;" *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">Profile Strength-
                         <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
                       </h6>
 
@@ -402,7 +402,7 @@
                         (click)="gotoAboutMe()">
                         <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
                         <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red" aria-hidden="true"></i>
-                        <span class="fontstyl">Name and About Me</span>
+                        <span class="fontstyl">About Me</span>
                       </div>
                     </div>
 
@@ -442,6 +442,8 @@
                               (click)="!fields['value'] ? addDynamicField(fields, 'domain_questions'):(fields.dataType=='Gender') ?editDynamicField(fields.name, 'domain_questions'):false"
                               [ngClass]="{'div-grn-outline':fields['value'],'div-red-outline':!fields['value'] }">
                               <i *ngIf="fields['value']" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                              <i *ngIf="!fields['value']" class="fa fa-exclamation-circle fa-lg fa-red"
+                          aria-hidden="true"></i>
                               <span class="fontstyl">{{fields.displayName}} </span>
                               <div>
                                 <!-- <div class="custom_business">
@@ -557,8 +559,8 @@
                                   </ng-container>
 
                                   <ng-container *ngSwitchCase="'DataGrid'">
-                                    <div class="table-outer">
-                                      <table class="table table-striped">
+                                    <div class="table-outer" *ngIf="fields['value']">
+                                      <table  class="table table-striped">
                                         <thead class="cf" *ngIf="fields['value']">
                                           <tr>
                                             <th class="cth" *ngFor="let column of fields.Columns">
@@ -623,6 +625,8 @@
                               (click)="!fields['value'] ? addDynamicField(fields, 'subdomain_questions'):(fields.dataType=='Gender') ?editDynamicField(fields.name, 'subdomain_questions'):false"
                               [ngClass]="{'div-grn-outline':fields['value'],'div-red-outline':!fields['value'] }">
                               <i *ngIf="fields['value']" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                              <i *ngIf="!fields['value']" class="fa fa-exclamation-circle fa-lg fa-red"
+                          aria-hidden="true"></i>
                               <span class="fontstyl">{{fields.displayName}} </span>
 
 
@@ -742,8 +746,8 @@
                                 </ng-container>
 
                                 <ng-container *ngSwitchCase="'DataGrid'">
-                                  <div class="table-outer">
-                                    <table class="table table-striped">
+                                  <div class="table-outer"  *ngIf="fields['value']">
+                                    <table class="table table-striped" >
                                       <thead class="cf" *ngIf="fields['value']">
                                         <tr>
                                           <th class="cth" *ngFor="let column of fields.Columns">

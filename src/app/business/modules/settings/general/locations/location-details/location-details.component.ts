@@ -85,6 +85,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   disableButton = false;
   checked_sel_badges = false;
   params;
+  src: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -101,6 +102,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     });
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
+      if (this.params && this.params.src) {
+        this.src = this.params.src;
+      }
       if (this.params.action === 'editbase') {
         this.action = 'edit';
       } else {
@@ -142,10 +146,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     });
     this.locamForm = this.fb.group({
       open24hours: [''],
-      parkingType: ['']
+      parkingType: ['none']
     });
     if (this.action === 'edit') {
-
       this.updateForm();
     }
   }
@@ -289,8 +292,12 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     }
   }
   goBack() {
-    this.router.navigate(['provider', 'settings', 'general',
+    if (this.src === 'h') {
+    this.backPage();
+    } else {
+      this.router.navigate(['provider', 'settings', 'general',
       'locations']);
+    }
   }
   editLocation(badge?) {
     if (badge) {
@@ -538,7 +545,8 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                   this.getLocationDetail();
                   this.getLocationBadges();
                   this.disableButton = false;
-                    this.router.navigate(['provider', 'settings', 'bprofile']);
+                  this.goBack();
+                  // this.router.navigate(['provider', 'settings', 'bprofile']);
 
 
                 },

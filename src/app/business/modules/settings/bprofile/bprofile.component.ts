@@ -1081,8 +1081,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       });
   }
   editLocation(badge?) {
-
-
     if (badge) {
       this.loceditdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
         width: '50%',
@@ -1094,7 +1092,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
           badges: this.loc_badges,
           type: 'edit',
           source: 'waitlist',
-          forbadge: true
+          forbadge: true,
+          src: 'h'
         }
       });
       this.loceditdialogRef.afterClosed().subscribe(result => {
@@ -1109,14 +1108,14 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       const locid = this.bProfile.baseLocation.id;
       if (locid) {
         const navigationExtras: NavigationExtras = {
-          queryParams: { action: 'editbase' }
+          queryParams: { action: 'editbase', src: 'h' }
         };
         this.routerobj.navigate(['provider', 'settings', 'general',
           'locations', locid], navigationExtras);
       }
     } else {
       const navigationExtras: NavigationExtras = {
-        queryParams: { action: 'add' }
+        queryParams: { action: 'add', src: 'h' }
       };
       this.routerobj.navigate(['provider', 'settings', 'general',
         'locations', 'add'], navigationExtras);

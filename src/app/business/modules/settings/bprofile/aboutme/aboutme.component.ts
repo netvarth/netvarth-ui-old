@@ -150,7 +150,7 @@ export class AboutMeComponent implements OnInit {
              // this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
               this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_UPDATED);
               setTimeout(() => {
-                this._location.back();
+                this.redirecToBprofile();
               }, projectConstants.TIMEOUT_DELAY);
             },
             error => {
@@ -184,8 +184,8 @@ export class AboutMeComponent implements OnInit {
       }
 
       redirecToBprofile() {
-       // this.routerobj.navigate(['provider', 'settings', 'bprofile']);
-       this._location.back();
+       this.routerobj.navigate(['provider', 'settings', 'bprofile']);
+      //  this._location.back();
         }
         // get the logo url for the provider
       getProviderLogo() {
