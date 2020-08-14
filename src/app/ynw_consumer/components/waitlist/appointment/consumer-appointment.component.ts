@@ -1549,7 +1549,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                                 this.selected_user = userDetail[0];
                                 this.handleUserSelection(this.selected_user);
                             } else {
-                                this.selected_user = this.users[0];
+                                this.selected_user = this.userN;
                                 this.handleUserSelection(this.selected_user);
                             }
                         }
