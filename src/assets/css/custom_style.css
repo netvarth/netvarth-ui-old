@@ -10801,8 +10801,22 @@ a {
   .cd-b .div-grn-outline {
     border: 2px solid rgb(0, 128, 0) !important;
   }
-  .cd-b .div-outline .fa-lge{
+  .cd-b .div-red-outline {
+    border: 2px solid rgb(244, 67, 54) !important;
+  }
+  .cd-b .div-org-outline {
+    border: 2px solid rgb(247, 108, 41) !important;
+  }
+  .cd-b .div-outline .fa-grn{
     color: rgb(0, 128, 0) !important;
+    padding-right: 10px !important;
+  }
+  .cd-b .div-outline .fa-red{
+    color: rgb(244, 67, 54) !important;
+    padding-right: 10px !important;
+  }
+  .cd-b .div-outline .fa-org{
+    color: rgb(247, 108, 41) !important;
     padding-right: 10px !important;
   }
   .cd-b .div-outline .fontstyl {
