@@ -113,7 +113,7 @@ export class ProviderNotificationUserComponent implements OnInit {
         }, () => {
       });
   }
-  getUser() {
+  getUser() { 
     this.provider_services.getUser(this.userId)
       .subscribe((data: any) => {
         const breadcrumbs = [];

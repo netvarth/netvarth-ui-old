@@ -112,7 +112,7 @@ export class ConsumerNotificationsComponent implements OnInit {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
         }, () => {
-      });
+      }); 
   }
   // isNumeric(evt) {
   //   return this.sharedfunctionObj.isNumeric(evt);
