@@ -30,13 +30,16 @@ import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 
 @Component({
   selector: 'app-bprofile',
-  templateUrl: './bprofile.component.html'
+  templateUrl: './bprofile.component.html',
+  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss']
 
 
 })
 
 export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, AfterContentInit {
 
+  domain_fields_nonmandatory: any;
+  subdomain_fields_nonmandatory: any[];
   logoExist = false;
   jaldee_online_disabled_msg: string;
   jaldee_online_enabled_msg: string;
@@ -356,6 +359,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   normal_specilization_show = 1;
   image_list: any = [];
   user_accountType;
+  aboutmefilled = false;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -803,6 +807,9 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       .then(
         data => {
           this.bProfile = data;
+          if (this.bProfile.businessName && this.bProfile.businessDesc) {
+            this.aboutmefilled = true;
+          }
           console.log('businessprofile..' + JSON.stringify(this.bProfile));
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
@@ -1127,7 +1134,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
-
       return this.item_pic.base64;
     } else {
       if (this.blogo[0]) {
@@ -1627,6 +1633,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
           let mandatorydomainFilled = false;
           let additionalInfoFilledStatus = false;
           this.domain_fields = data['fields'];
+          this.domain_fields_nonmandatory = this.domain_fields.filter(dom => dom.mandatory === false);
           this.domain_questions = data['questions'] || [];
           this.domain_fields.forEach(subdomain => {
             checkArray.push(subdomain);
@@ -1791,6 +1798,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
           let mandatorySubDomainFilled = false;
           let additionalInfoFilledStatus = false;
           this.subdomain_fields = data['fields'];
+          this.subdomain_fields_nonmandatory = this.subdomain_fields.filter(dom => dom.mandatory === false);
           this.subdomain_fields.forEach(subdomain => {
             checkArray.push(subdomain);
           });
@@ -2133,5 +2141,12 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.notedialogRef.afterClosed().subscribe(result => {
       this.getBusinessProfile();
     });
+  }
+
+  gotoAboutMe() {
+    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'aboutme']);
+  }
+  gotoGlryMedia() {
+    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'gallerymedia']);
   }
 }
