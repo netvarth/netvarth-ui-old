@@ -794,7 +794,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.routerobj.navigate(['provider', 'settings', 'appointmentmanager']);
         break;
       case 'schedules':
-        this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
+          if (this.locationExists) {
+            this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
+          } else if (this.bprofileLoaded) {
+            this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+          }
         break;
       case 'appservices':
         this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'services']);

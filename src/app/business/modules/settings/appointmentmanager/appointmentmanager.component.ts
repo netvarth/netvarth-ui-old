@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
 
 @Component({
     selector: 'app-appointmentmanager',
@@ -38,6 +39,8 @@ export class AppointmentmanagerComponent implements OnInit {
     futureapptlist_statusstr = 'off';
     breadcrumb_moreoptions: any = [];
     frm_set_ser_cap = '';
+    bProfile = null;
+    locationExists = false;
 
     constructor(
         private router: Router,
@@ -45,11 +48,13 @@ export class AppointmentmanagerComponent implements OnInit {
         public shared_functions: SharedFunctions,
         private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
+        private provider_datastorage: ProviderDataStorageService,
     ) {
         this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
         this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
     }
     ngOnInit() {
+        this.getBusinessProfile();
         this.getDomainSubdomainSettings();
         this.getOnlinePresence();
         this.getServiceCount();
@@ -60,8 +65,28 @@ export class AppointmentmanagerComponent implements OnInit {
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
     }
+    getBusinessProfile() {
+        this.provider_services.getBussinessProfile()
+            .subscribe(
+                data => {
+                    console.log(data);
+                    this.bProfile = data;
+                    if (this.bProfile.baseLocation) {
+                        this.locationExists = true;
+                    } else {
+                        this.locationExists = false;
+                    }
+                    this.provider_datastorage.set('bProfile', data);
+
+                });
+    }
     gotoschedules() {
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
+        if (this.locationExists) {
+            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
+        } else {
+            this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+        }
+        
     }
     gotoservices() {
         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'services']);
