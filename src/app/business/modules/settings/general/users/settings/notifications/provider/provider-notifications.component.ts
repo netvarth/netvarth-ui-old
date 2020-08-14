@@ -81,6 +81,7 @@ export class ProviderNotificationUserComponent implements OnInit {
   donations_status: any;
   settings: any = [];
   showToken = false;
+  api_loading = true;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -143,6 +144,7 @@ export class ProviderNotificationUserComponent implements OnInit {
         this.appointment_status = data.appointment;
         this.waitlistStatus = data.waitlist;
         this.donations_status = data.donationFundRaising;
+        this.api_loading = false;
       });
   }
   getNotificationList() {

@@ -77,11 +77,12 @@ export class ConsumerNotificationsComponent implements OnInit {
   donations_status: any;
   settings: any = [];
   showToken = false;
+  api_loading = true;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
     public provider_services: ProviderServices,
-    private provider_datastorage: ProviderDataStorageService) {
+    private provider_datastorage: ProviderDataStorageService) { 
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
 
@@ -110,7 +111,6 @@ export class ConsumerNotificationsComponent implements OnInit {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        console.log(this.showToken);
         }, () => {
       });
   }
@@ -131,7 +131,9 @@ export class ConsumerNotificationsComponent implements OnInit {
         this.appointment_status = data.appointment;
         this.waitlistStatus = data.waitlist;
         this.donations_status = data.donationFundRaising;
+        this.api_loading = false;
       });
+      
   }
 
   getNotificationList() {

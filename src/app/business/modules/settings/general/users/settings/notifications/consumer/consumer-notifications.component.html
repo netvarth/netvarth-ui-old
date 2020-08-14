@@ -2,14 +2,21 @@
   <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
     (performAction)="performActions($event)"></app-breadcrumb>
 </section>
-<section *ngIf="!waitlistStatus && !appointment_status">
+<section>
+  <div class="row col-md-12 m0 no-padding-small" *ngIf="api_loading">
+    <div class="card">
+            <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+</div>
+</section>
+<section *ngIf="!waitlistStatus && !appointment_status && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
   <div class="token-appt">
     Enable Jaldee Appointment Manager or Q Manager in your settings to access Notifications. 
   </div>
 </div>
 </section>
-<section class="content comn-cls lic-page notifications" *ngIf="waitlistStatus || appointment_status">
+<section class="content comn-cls lic-page notifications" *ngIf="(waitlistStatus || appointment_status) && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 no-padding-small  ynw-common-form-nm">
     <div class="row">
       <div class="card w-dta p0">
