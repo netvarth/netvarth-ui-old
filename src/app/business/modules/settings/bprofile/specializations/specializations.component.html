@@ -1,49 +1,41 @@
-<section>
-    <app-breadcrumb (performAction)="performActions()" [breadcrumbs]="breadcrumbs"
-    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section>
-<section>
-    <div class="content w-manager settings comn-cls lic-page">
-        <div class="col-md-12 no-padding-small">
-            <div class="w-dta">
+    <section class="">
+        <div class="card title-gb">
+            <h5 class="mgn-up-10"><i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true" (click)="goBack()"></i>Specializations</h5>
+        </div>
+    </section>
+    <section>
+        <div class="content loc-list">
+            <div class="col-md-8 col-xs-10 col-sm-10 col-lg-9 no-padding-small">
                 <div class="row">
-                    <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
-                        <div class="card p0 w-dta active">
-                            <mat-accordion>
-                                <mat-expansion-panel [expanded]="true">
-                                    <mat-expansion-panel-header class="min90">
-                                        <mat-panel-title class="block-level">
-                                            {{special_cap}}
-                                            <p class="form-level-settings">{{frm_specialization_cap}}
-                                                <!-- <a
-                                                    class="learnmore-pointer" id="customer-help"
-                                                    (click)="learnmore_clicked('specializations', $event)">Learn
-                                                    More</a> -->
-                                            </p>
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div class="no-dta" *ngIf="normal_specilization_show==1">
-                                        <app-innerloading-spinner spinnerParams="loadingParams">
-                                        </app-innerloading-spinner>
-                                    </div>
-                                    <div class="no-dta" *ngIf="normal_specilization_show==2">
-                                        <p>{{have_not_add_cap}} {{special_cap}}.</p>
-                                        <span (click)="handleSpecialization()"
-                                            class="cs-btn bt3">{{add_it_cap}}</span>
-                                    </div>
-                                    <div class="special-dta"
-                                        *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
-                                        <span class="editbt" (click)="handleSpecialization()"></span>
-                                        <div *ngFor="let spec of bProfile.specialization">
-                                            {{getSpecializationName(spec)}}
+                    <div class="card p0">
+                        <div class="copy locd">
+                            <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                                <label class="specializations-label">{{specializations_cap}} </label>
+                                        <div class="form-group">
+                                            <div class="specializationouter" *ngIf="specialization_arr.length > 0" >  
+                                                <div *ngFor= "let spec of specialization_arr">
+                                                    <mat-checkbox style="padding-left: 10px;"
+                                                      (change)="specializationSel(spec.name)" 
+                                                       [checked]="checkspecializationExists(spec.name)">{{spec.displayName}}
+                                                    </mat-checkbox>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </mat-expansion-panel>
-                            </mat-accordion>
+                                    <div class="actiondiv col-md-12" style="margin-top: 15px;display: inline-flex;">
+                                        <button  type="button" (click)="cancel()" class="cs-btn bt2"
+                                         [disabled]="disableButton">{{cancel_btn_cap}}</button>&nbsp;
+                                        <button (click)="saveSpecializations()" type="button" mat-button class="cs-btn bt1"
+                                         [disabled]="specialization_arr.length==0 || disableButton">{{save_btn_cap}}</button>
+                                    </div> 
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
+            </div>    
+        <div class="clearfix"></div>
+    </section>
+
+    
+                           
+      

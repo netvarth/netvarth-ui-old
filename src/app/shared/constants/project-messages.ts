@@ -99,7 +99,7 @@ export const Messages = {
   'BPROFILE_SOCIAL_URL_VALID': 'Please enter a valid URL',
   'BPROFILE_LOCNAME_BLANK': 'Please enter the location name',
   // 'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
-  'BPROFILE_LANGUAGE_SAVED': 'Saved successfully',
+  'BPROFILE_LANGUAGE_SAVED': 'Languages saved successfully',
   'BPROFILE_SPECIALIZATION_SAVED': 'Specializations saved successfully',
   'BUSINESS_NAME_MAX_LENGTH_MSG': 'Business name can contain only 50 characters',
   'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 2000 characters',
@@ -670,12 +670,12 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-bprofile-specializations
   'SPECIALIZATIONS_CAP': 'Specializations',
-  'SPECIALIZATIONS_CHOOSE': ' Select your Specializations',
+  'SPECIALIZATIONS_CHOOSE': ' Select Your Specializations',
   'SPECIALIZATIONS_CAPS': 'Choose your specializations from the list below',
   'NO_SPECI_FOUND_CAP': 'Sorry no specializations found.',
 
   // App-ynw_provider-components-add-provider-bprofile-spoken-languages
-  'LANG_KNOWN_CAP': 'Languages Known',
+  'LANG_KNOWN_CAP': 'Select Your Languages Known',
   'NO_LANG_FOUND_CAP': 'Sorry no languages found.',
 
   // App-ynw_provider-components-add-provider-coupons

@@ -10891,3 +10891,9 @@ a {
 .qtime-size {
   font-size: 0.6rem;
 }
+.specializations-label{
+  color: #3c8dbc !important;
+  padding-left:10px;
+  margin-top:20px ;
+  margin-bottom: 20px;
+}

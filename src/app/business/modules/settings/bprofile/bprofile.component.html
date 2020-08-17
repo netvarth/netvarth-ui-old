@@ -417,7 +417,7 @@
                     </div>
 
                     <!-- Specialization -->
-                    <div class="cd-b" (click)="handleSpecialization()">
+                    <div class="cd-b" (click)="  gotoSpecializations()">
                       <div class="div-outline custId-cursor"
                         [ngClass]="{'div-grn-outline':specializeFilled,'div-red-outline':!specializeFilled }">
                         <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
@@ -808,7 +808,7 @@
                     <!--end mandatory fields -->
 
                     <!-- Languages Known -->
-                    <div class="cd-b" (click)="handleSpokenLanguages()">
+                    <div class="cd-b" (click)="gotoLanguages()">
                       <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':languageFilled}">
                         <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
                         <span class="fontstyl">Languages Known</span>
