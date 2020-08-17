@@ -5,13 +5,13 @@
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
-  <div class="token-appt" *ngIf="message">
-    {{message}} Go to <a class="underline" (click)="gotoSettings()"> Settings</a>
+    <div class="token-appt" *ngIf="message">
+      {{message}} Go to <a class="underline" (click)="gotoSettings()"> Settings</a>
+    </div>
+    <div class="token-appt" *ngIf="message1">
+      {{message1}} Go to <a class="underline" (click)="gotoAppt()"> Jaldee Appointment Manager</a>
+    </div>
   </div>
-  <div class="token-appt" *ngIf="message1">
-    {{message1}} Go to <a class="underline" (click)="gotoAppt()"> Jaldee Appointment Manager</a>
-  </div>
-</div>
 </section>
 <section class="dashboard content pro-dash" *ngIf="showDashbard && !apiloading">
   <div class="col-md-12 no-padding-small">
@@ -341,7 +341,8 @@
                                 <div class="filterTextinput" *ngIf="time_type != 3">
                                   <li class="filterli">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
-                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Status code">
+                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox"
+                                      placeholder="Status code">
                                   </li>
                                 </div>
                                 <div *ngIf="service_list.length > 0">
@@ -772,7 +773,8 @@
                                 <div class="filterTextinput" *ngIf="time_type != 3">
                                   <li class="filterli">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
-                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Status code">
+                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox"
+                                      placeholder="Status code">
                                   </li>
                                 </div>
                                 <!-- <div *ngIf="time_type == 3">
@@ -834,7 +836,10 @@
                                     <mat-checkbox *ngFor="let q of schedules"
                                       [checked]="filteredSchedule.indexOf(q.id) !== -1"
                                       (change)="setFilterDataCheckbox('schedule', q.id, $event)">
-                                      {{q.name}}</mat-checkbox>
+                                      {{q.name}} <span
+                                        class="qtime-size">[{{q.apptSchedule.timeSlots[0]['sTime'] + ' - ' + q.apptSchedule.timeSlots[0]['eTime']}}]
+                                      </span>
+                                    </mat-checkbox>
                                   </li>
                                 </div>
 
@@ -1009,7 +1014,7 @@
                               style="font-size: 20px;" class="material-icons">attach_file</i></span>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
-                        *ngIf="!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')">
+                          *ngIf="!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')">
                           <span class="" style="font-size: smaller;">
                             {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
                           </span>

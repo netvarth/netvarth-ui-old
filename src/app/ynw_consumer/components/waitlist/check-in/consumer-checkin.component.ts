@@ -505,12 +505,9 @@ export class ConsumerCheckinComponent implements OnInit {
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
         this.queueQryExecuted = false;
         if (locid && servid) {
-            console.log(locid);
-            console.log(servid);
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
-                    console.log(this.queuejson);
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
@@ -547,6 +544,7 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     handleUserSelection(user) {
         this.selectedUser = user;
+        console.log(this.selectedUser);
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
         if (user && user.id && user.id !== 0) {
@@ -779,6 +777,7 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
         }
+        console.log(this.selectedUser);
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
@@ -1204,6 +1203,8 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     handleDeptSelction(obj) {
         this.api_error = '';
+        this.selected_user = null;
+        this.selectedUser = null;
         this.selected_dept = obj;
         this.servicesjson = this.serviceslist;
         // if (obj === 'None') {
@@ -1232,6 +1233,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
                         this.users.push(this.userN);
                     }
+                    console.log(this.selectedUserParam);
                     if (this.selectedUserParam) {
                         const userDetail = this.users.filter(user => user.id === JSON.parse(this.selectedUserParam));
                         this.selected_user = userDetail[0];
@@ -1266,6 +1268,8 @@ export class ConsumerCheckinComponent implements OnInit {
                             }
                         }
                     }
+                    console.log(this.selected_user);
+                    console.log(this.selectedUser);
                 });
             // }
         }
@@ -1279,7 +1283,6 @@ export class ConsumerCheckinComponent implements OnInit {
         //     this.queuejson = [];
         //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
         // }
-        console.log(this.selected_dept);
         console.log(this.selectedUser);
     }
     getServicebyLocationId(locid, pdate) {

@@ -422,7 +422,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     // this.getBusinessProfile();
     this.subscription = this.galleryService.getMessage().subscribe(input => {
       if (input.ttype === 'image-upload') {
-        console.log(input);
         this.provider_services.uploadGalleryImages(input.value)
           .subscribe(
             () => {
@@ -560,6 +559,9 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       this.qrdialogRef.close();
     }
     // this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 

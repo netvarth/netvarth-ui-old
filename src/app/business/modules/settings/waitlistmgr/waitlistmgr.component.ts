@@ -154,7 +154,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                         // if (this.domain === 'healthCare') {
                         //     this.qSystem = 'token';
                         // } else {
-                        //     this.qSystem = 'fifo';
+                            this.qSystem = 'fifo';
                         // }
                         if (this.waitlist_manager.calculationMode === 'Fixed') {
                             this.calcMode = 'manual';
