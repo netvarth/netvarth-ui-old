@@ -467,7 +467,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.frm_adword_cap = Messages.FRM_LEVEL_ADWORDS_MSG.replace('[customer]', this.customer_label);
     this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
-     this.businessProfile_show = 1;
+      this.businessProfile_show = 1;
       this.businessweightageArray = result;
       console.log(JSON.stringify(this.businessweightageArray));
 
@@ -673,23 +673,23 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.licenseMetadata = this.shared_functions.getitemfromLocalStorage('license-metadata');
     // this.provider_services.getLicenseMetadata().subscribe(data => {
     //   this.licenseMetadata = data;
-      for (let i = 0; i < this.licenseMetadata.length; i++) {
+    for (let i = 0; i < this.licenseMetadata.length; i++) {
 
-        if (this.licenseMetadata[i].pkgId === pkgId) {
-          for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
-            if (this.licenseMetadata[i].metrics[k].id === 13) {
-              if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
-                this.showCustomId = true;
-                return;
-              } else {
-                this.showCustomId = false;
-                return;
-              }
+      if (this.licenseMetadata[i].pkgId === pkgId) {
+        for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+          if (this.licenseMetadata[i].metrics[k].id === 13) {
+            if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+              this.showCustomId = true;
+              return;
+            } else {
+              this.showCustomId = false;
+              return;
             }
           }
         }
       }
-   // });
+    }
+    // });
   }
   getAdwordDisplayName(name) {
     return name.split(projectConstants.ADWORDSPLIT).join(' ');
@@ -1446,7 +1446,14 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.is_customized = false;
   }
   add_updateCustomId(submit_data) {
-    const customId = submit_data.customid;
+    // const customId = submit_data.customid;
+    let customId;
+    const tempCustomId = submit_data.customid;
+    if (tempCustomId.charAt(tempCustomId.length - 1) === '-') {
+      customId = tempCustomId.substr(0, tempCustomId.length - 1);
+    } else {
+      customId = tempCustomId;
+    }
     if (this.editMode === 0) {
       this.provider_services.addCustomId(customId).subscribe(
         data => {
@@ -2197,7 +2204,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       this.getBusinessProfile();
     });
   }
-  redirecToSettings () {
+  redirecToSettings() {
     this.routerobj.navigate(['provider', 'settings']);
     // this._location.back();
   }
