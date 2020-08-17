@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
@@ -66,6 +66,9 @@ export class DonationsComponent implements OnInit {
     locations: any;
     selected_loc_id: any;
     services: any = [];
+    selected_location = null;
+    screenWidth;
+    small_device_display = false;
     constructor(private provider_services: ProviderServices,
         private router: Router,
         private provider_shared_functions: ProviderSharedFuctions,
@@ -73,12 +76,26 @@ export class DonationsComponent implements OnInit {
         private routerobj: Router,
         private shared_functions: SharedFunctions) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.onResize();
         // this.breadcrumbs_init = [
         //     {
         //         title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's'
         //     }
         // ];
         // this.breadcrumbs = this.breadcrumbs_init;
+    }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+      this.screenWidth = window.innerWidth;
+      if (this.screenWidth <= 767) {
+      } else {
+        this.small_device_display = false;
+      }
+      if (this.screenWidth <= 1040) {
+        this.small_device_display = true;
+      } else {
+        this.small_device_display = false;
+      }
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -157,13 +174,14 @@ export class DonationsComponent implements OnInit {
         }
         this.doSearch();
     }
-    getDonationsList(from_oninit = false, loc_id?) {
+    getDonationsList(from_oninit = false, loc?) {
         let filter = this.setFilterForApi();
         filter['donationStatus-eq'] = 'SUCCESS';
-        if (loc_id) {
-            filter['location-eq'] = loc_id;
+        if (loc && loc.id) {
+            filter['location-eq'] = loc.id;
             this.show_loc = false;
         }
+        this.locationSelected(loc);
         this.getDonationsCount(filter)
             .then(
                 result => {
@@ -173,8 +191,8 @@ export class DonationsComponent implements OnInit {
                         .subscribe(
                             data => {
                                 this.donations = data;
-                                if (loc_id) {
-                                    this.selected_loc_id = loc_id;
+                                if (loc && loc.id) {
+                                    this.selected_loc_id = loc.id;
                                 }
                                 this.loadComplete = true;
                             },
@@ -301,12 +319,72 @@ export class DonationsComponent implements OnInit {
         }
     }
     getLocationList() {
-        this.provider_services.getProviderLocations()
-            .subscribe((data: any) => {
-                this.locations = data;
-            }
-            );
+        const self = this;
+        // this.provider_services.getProviderLocations()
+        //     .subscribe((data: any) => {
+        //         this.locations = data;
+        //     }
+        //     );
+        return new Promise(function (resolve, reject) {
+            self.selected_location = null;
+            self.provider_services.getProviderLocations()
+              .subscribe(
+                (data: any) => {
+                  const locations = data;
+                  self.locations = [];
+                  for (const loc of locations) {
+                    if (loc.status === 'ACTIVE') {
+                      self.locations.push(loc);
+                    }
+                  }
+                  const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
+                  if (cookie_location_id === '') {
+                    if (self.locations[0]) {
+                      self.locationSelected(self.locations[0]).then(
+                        (schedules: any) => {
+                        }
+                      );
+                    }
+                  } else {
+                    self.selectLocationFromCookies(parseInt(cookie_location_id, 10));
+                  }
+                  resolve();
+                },
+                () => {
+                  reject();
+                },
+                () => {
+                }
+              );
+          },
+          );
     }
+    locationSelected(location) {
+        this.selected_location = location;
+        const _this = this;
+        if (this.selected_location) {
+          this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
+        }
+        this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
+        return new Promise(function (resolve, reject) {
+        });
+      }
+      selectLocationFromCookies(cookie_location_id) {
+        this.locationSelected(this.selectLocationFromCookie(cookie_location_id)).then(
+          (schedules: any) => {
+          }
+        );
+      }
+      selectLocationFromCookie(cookie_location_id) {
+        let selected_location = null;
+        for (const location of this.locations) {
+          if (location.id === cookie_location_id) {
+            selected_location = location;
+          }
+        }
+        return (selected_location !== null) ? selected_location : this.locations[0];
+      }
+
     showFilterLocation() {
         this.filter_sidebar = false;
         this.show_loc = !this.show_loc;
