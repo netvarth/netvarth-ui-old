@@ -74,7 +74,6 @@ export class CustomerDetailComponent implements OnInit {
     customerId;
     customer;
     customerName;
-    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -327,14 +326,15 @@ export class CustomerDetailComponent implements OnInit {
                 'dob': form_data.dob,
                 'gender': form_data.gender,
                 'phoneNo': form_data.mobile_number,
+                'email': form_data.email_id,
                 'address': form_data.address,
                 //   }
             }; if (form_data.mobile_number) {
                 post_data['countryCode'] = '+91';
             }
-            if (form_data.email_id && form_data.email_id !== '') {
-                post_data['email'] = form_data.email_id;
-            }
+            // if (form_data.email_id && form_data.email_id !== '') {
+            //     post_data['email'] = form_data.email_id;
+            // }
             if (form_data.customer_id) {
                 post_data['jaldeeId'] = form_data.customer_id;
             }
