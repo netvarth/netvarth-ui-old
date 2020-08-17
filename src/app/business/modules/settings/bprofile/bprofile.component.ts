@@ -2196,6 +2196,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     });
   }
   redirecToSettings () {
-    this._location.back();
+    this.routerobj.navigate(['provider', 'settings']);
+    // this._location.back();
   }
 }
