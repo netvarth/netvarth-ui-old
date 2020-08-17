@@ -129,8 +129,8 @@ export class CustomerSearchComponent implements OnInit {
     checkinsCaption = Messages.CHECKINS_TIME_CAPTION;
 
     mobile_cap = Messages.MOBILE_CAP;
-    f_name_cap = Messages.F_NAME_CAP;
-    l_name_cap = Messages.L_NAME_CAP;
+    f_name_cap = Messages.FIRST_NAME_CAP;
+    l_name_cap = Messages.LAST_NAME_CAP;
     email_cap = Messages.EMAIL_ID_CAP;
     gender_cap = Messages.GENDER_CAP;
     male_cap = Messages.MALE_CAP;
@@ -417,9 +417,9 @@ export class CustomerSearchComponent implements OnInit {
             this.amForm = this.fb.group({
                 mobile_number: ['', Validators.compose([Validators.maxLength(10),
                 Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
-                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+                first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
                 customer_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
-                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+                last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
                 email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
                 dob: [''],
                 gender: [''],

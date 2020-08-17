@@ -506,9 +506,13 @@
                                     type="checkbox" class="ckbx pull-left"
                                     (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
                                 <td class="parent-selection parent-title td-one">
-                                  <div class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)">
+                                  <div class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)"
+                                  *ngIf="appt.appmtFor[0].firstName">
                                     {{appt.appmtFor[0].firstName}}
                                     {{appt.appmtFor[0].lastName}}</div>
+                                    <div class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)"
+                                    *ngIf="!appt.appmtFor[0].firstName">
+                                      {{appt.providerConsumer.jaldeeId}}</div>
                                 </td>
                                 <td class="title td-two">
                                   <div class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3"
@@ -980,9 +984,13 @@
                           {{appt.appmtDate | date: display_dateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date greenc bold" *ngIf="time_type!=3">
                           {{getSingleTime(appt.appmtTime)}}</div>
-                        <div class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)">
+                        <div class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
+                        *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">
                           {{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}</div>
+                          <div class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
+                          *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
+                            {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{appt.service.name}}</div>

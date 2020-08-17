@@ -377,6 +377,13 @@
                                                     <li *ngIf="loc?.locationVirtualFields?.firstaid=='true'"
                                                         [matTooltip]="'First Aid'"><span class="icon-first-aid"></span>
                                                     </li>
+                                                    <li *ngIf="loc?.locationVirtualFields?.onlinereports"
+                                                        [matTooltip]="'Online Reports'"><span
+                                                            class="fa fa-file-pdf-o"></span></li>
+                                                    <li *ngIf="loc?.locationVirtualFields?.homesamplecollection"
+                                                        [matTooltip]="'Home Sample Collection'"><span
+                                                            class="fa fa fa-flask"></span>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>

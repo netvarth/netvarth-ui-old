@@ -61,6 +61,8 @@
                                                     *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span> -->
                                             </li>
                                         </ng-container>
+                                        <li>
+                                           {{customer_label | capitalizeFirst}} id:  {{customer_data.jaldeeId | capitalizeFirst}}</li>
                                     </ul>
                                     <div class="date-outer" *ngIf="partySizeRequired">
                                         <div class="form-group party-size">

@@ -16,10 +16,18 @@
               </div>
               <h2>{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
               <div class="tp" *ngIf="waitlist_data">
-                <div class="item"><span class="ttle">{{name_cap}}</span>
+                <div class="item"
+                  *ngIf="waitlist_data.providerConsumer.firstName || waitlist_data.providerConsumer.lastName"><span
+                    class="ttle">{{name_cap}}</span>
                   <span>
                     {{waitlist_data.providerConsumer.firstName | capitalizeFirst}}
                     {{waitlist_data.providerConsumer.lastName | capitalizeFirst}}</span></div>
+
+                <div class="item" *ngIf="waitlist_data.providerConsumer.jaldeeId"><span
+                    class="ttle">{{customer_label | capitalizeFirst}} id</span>
+                  <span>
+                    {{waitlist_data.providerConsumer.jaldeeId}}</span></div>
+
                 <div class="item">
                   <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data) && pdtype !== 2">{{getAppxTime(waitlist_data,
                     true)}}</span>
@@ -57,11 +65,13 @@
                 <div class="item"><span class="ttle">{{location_cap}}</span>
                   <span *ngIf="waitlist_data.location">{{waitlist_data.location.place
                       | capitalizeFirst}}</span></div>
-                <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
-                  <span class="waitlist_for" *ngFor="let user of waitlist_data.appmtFor">
-                    {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                    <span
-                      *ngIf="user.primaryMobileNo && user.primaryMobileNo.length === 10">({{user.primaryMobileNo}})</span>
+                <div class="item" *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
+                <span class="ttle">{{waitlist_for_cap}}</span>
+                  <span class="waitlist_for">
+                    {{waitlist_data.appmtFor[0].firstName | capitalizeFirst}}
+                    {{waitlist_data.appmtFor[0].lastName | capitalizeFirst}}
+                  <span
+                    *ngIf="waitlist_data.appmtFor[0].primaryMobileNo && waitlist_data.appmtFor[0].primaryMobileNo.length === 10">({{waitlist_data.appmtFor[0].primaryMobileNo}})</span>
                   </span>
                 </div>
                 <div class="item"><span class="ttle">{{service_cap}}</span><span> {{waitlist_data.service.name |
@@ -82,8 +92,8 @@
                         class="text">Refund</span></span>
                   </ng-container>
                 </div>
-                <div class="item" *ngIf="waitlist_data.phoneNumber"><span
-                    class="ttle">Phone number</span><span>{{waitlist_data.phoneNumber}}</span></div>
+                <div class="item" *ngIf="waitlist_data.phoneNumber"><span class="ttle">Phone
+                    number</span><span>{{waitlist_data.phoneNumber}}</span></div>
                 <div class="item" *ngIf="userDet['sector'] == 'foodJoints' && waitlist_data.partySize"><span
                     class="ttle">{{party_size_cap}}</span><span>
                     {{waitlist_data.partySize}}</span></div>
