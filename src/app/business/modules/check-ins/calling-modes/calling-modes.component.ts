@@ -242,6 +242,9 @@ export class CallingModesComponent implements OnInit {
                 }, 5000);
             });
     }
+    dataChanged(evt) {
+       this.msg_to_user = evt;
+    }
     changeWaitlistStatus(qdata, action) {
         qdata.disableStartbtn = true;
         if (this.data.type === 'checkin') {

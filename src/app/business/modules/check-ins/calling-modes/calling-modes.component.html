@@ -89,11 +89,11 @@
             </div>
             <mat-form-field class="example-full-width" style="padding-top: 30px;">
                 <div class="telemode-msg">Message to {{customer_label}}</div>
-                <textarea class="tele_srv_txtarea" matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
+                <textarea class="tele_srv_txtarea" matInput placeholder="" [(ngModel)]="msg_to_user" (ngModelChange)="dataChanged($event)"></textarea>
             </mat-form-field>
             <div class="mgtop40 form-group">
                 Send message via
-                <div class="coupon-outer">
+                <div class="coupon-outer"> 
                     <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
                         SMS
                     </mat-checkbox>
@@ -106,7 +106,7 @@
             </div>
         </mat-dialog-content>
         <mat-dialog-actions>
-            <button type="button" class="cs-btn bt1" (click)="sendMessage()">Send</button>
+            <button type="button" mat-button [disabled]="msg_to_user ===''"class="cs-btn bt1" (click)="sendMessage()">Send</button>
             <button type="button" class="cs-btn bt2 travelmodeEdit" (click)="back()">Cancel</button>
         </mat-dialog-actions>
     </div>
@@ -117,7 +117,7 @@
             </div>
             <mat-form-field class="example-full-width" style="padding-top: 30px;">
                 <div class="telemode-msg">Message to {{customer_label}}</div>
-                <textarea class="tele_srv_txtarea" matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
+                <textarea class="tele_srv_txtarea" matInput placeholder="" [(ngModel)]="msg_to_user" (ngModelChange)="dataChanged($event)"></textarea>
             </mat-form-field>
             <div class="mgtop40 form-group">
                 Send message via
@@ -134,7 +134,7 @@
             </div>
         </mat-dialog-content>
         <mat-dialog-actions>
-            <button type="button" class="cs-btn bt1" (click)="sendMessage()">Send</button>
+            <button type="button" mat-button [disabled]="msg_to_user ===''" class="cs-btn bt1" (click)="sendMessage()">Send</button>
             <button type="button" class="cs-btn bt2 travelmodeEdit" (click)="back()">Cancel</button>
         </mat-dialog-actions>
     </div>
