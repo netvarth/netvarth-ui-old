@@ -19,7 +19,7 @@
         <div class="mgtop40 form-group" *ngIf="!api_loading && typeOfMsg === 'multiple' || !api_loading &&  source ==='provider-waitlist' || !api_loading && data.source === 'customer-list'">
             Send message via
             <div class="coupon-outer">
-                <mat-checkbox [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && source ==='provider-waitlist' && (!phone || phone === 'null')"   class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+                <mat-checkbox [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && source ==='provider-waitlist' && ((!phone && !phone_history )|| phone === 'null' )"   class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                     SMS
                 </mat-checkbox>
                 <mat-checkbox [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id" class="mgright50 example-margin" [(ngModel)]="email"
@@ -31,7 +31,7 @@
                 </mat-checkbox>
             </div>
         </div>
-        <div style="color: red;" *ngIf = "typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && (!phone || phone === 'null')">{{SEND_MESSAGE}}</div>
+        <div style="color: red;" *ngIf = "typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && ((!phone && !phone_history ) || phone === 'null')">{{SEND_MESSAGE}}</div>
         <div *ngIf = "!api_loading &&  source ==='provider-waitlist' && selectedMessage.files.length !== 0"><i class="fa fa-bell-o"></i>&nbsp;Messages with attachments will be send to Jaldee inbox.</div>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>
