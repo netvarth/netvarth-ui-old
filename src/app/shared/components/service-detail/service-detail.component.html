@@ -6,12 +6,12 @@
 <mat-dialog-content>
     <div class="servicedet_outer" *ngIf="service.name !==''">
         <div class="img-outer" *ngIf="!image_list_popup || image_list_popup.length==0">
-            <div class="galbx" *ngIf="!service.servicegallery">
+            <div class="galbx" *ngIf="!service.servicegallery && !is_donation_serv">
                 <img src="../../assets/images/img-null.svg" alt=""
                     style="width:80px;height:80px;background-color: gainsboro">
             </div>
         </div>
-        <div class="img-outer" *ngIf="image_list_popup && image_list_popup.length>0">
+        <div class="img-outer" *ngIf="image_list_popup && image_list_popup.length>0 && !is_donation_serv">
             <ul class="gal" *ngIf="service.servicegallery.length >0">
                 <li>
                     <div class="galbx">
