@@ -39,10 +39,10 @@
                                                                 class="dynamic">{{billdate}}
                                                                 {{billtime}}</span>
                                                         </span> <span class="columns" *ngIf="billnumber"> <span
-                                                                class="title">{{bill_no_cap}}</span>
+                                                                class="dynamic">{{bill_no_cap}} </span>
                                                             <span class="dynamic">{{billnumber}}</span>
                                                         </span> <span class="columns rightalign" *ngIf="gstnumber">
-                                                            <span class="title">{{gstin_cap}}</span>
+                                                            <span class="dynamic">{{gstin_cap}} </span>
                                                             <span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
                                                         </span>
                                                     </div>
