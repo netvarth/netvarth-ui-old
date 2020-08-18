@@ -799,12 +799,12 @@
                             &nbsp;Call</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('STARTED', checkin)"
-                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && !checkin.virtualService"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService || (checkin.virtualService && time_type==3))"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="showCallingModes(checkin, 'normalStart')"
-                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && checkin.virtualService"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type==1 && checkin.virtualService"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
