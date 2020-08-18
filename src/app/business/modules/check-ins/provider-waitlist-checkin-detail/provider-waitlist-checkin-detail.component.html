@@ -19,9 +19,14 @@
               <h2 *ngIf="!showToken">{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
               <h2 *ngIf="showToken">Token {{details_cap}}</h2>
               <div class="tp" *ngIf="waitlist_data">
-                <div class="item"><span class="ttle">{{name_cap}}</span> <span>
+                <div class="item" *ngIf="waitlist_data.consumer.firstName || waitlist_data.consumer.lastName"><span
+                    class="ttle">{{name_cap}}</span> <span>
                     {{waitlist_data.consumer.firstName | capitalizeFirst}}
                     {{waitlist_data.consumer.lastName | capitalizeFirst}}</span></div>
+                <div class="item" *ngIf="waitlist_data.consumer.jaldeeId"><span
+                    class="ttle">{{customer_label | capitalizeFirst}} id</span>
+                  <span>
+                    {{waitlist_data.consumer.jaldeeId}}</span></div>
                 <!-- <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div> -->
                 <div class="item">
                   <!-- <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">Date/Est Service time:</span> -->
@@ -108,8 +113,8 @@
                         class="text">Refund</span></span>
                   </ng-container>
                 </div>
-                <div class="item" *ngIf="waitlist_data.waitlistPhoneNumber"><span
-                    class="ttle">Phone number</span><span>{{waitlist_data.waitlistPhoneNumber}}</span></div>
+                <div class="item" *ngIf="waitlist_data.waitlistPhoneNumber"><span class="ttle">Phone
+                    number</span><span>{{waitlist_data.waitlistPhoneNumber}}</span></div>
                 <div class="item" *ngIf="userDet['sector'] == 'foodJoints'"><span
                     class="ttle">{{party_size_cap}}</span><span>
                     {{waitlist_data.partySize}}</span></div>
