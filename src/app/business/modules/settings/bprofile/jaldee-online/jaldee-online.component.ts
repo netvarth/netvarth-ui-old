@@ -288,6 +288,7 @@ export class JaldeeOnlineComponent implements OnInit {
         error => {
           this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.normal_customid_show = 2;
+          this.is_customized = false;
         });
     } else {
       this.provider_services.editCustomId(customId).subscribe(
