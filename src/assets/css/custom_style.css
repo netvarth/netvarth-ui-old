@@ -9566,7 +9566,7 @@ button.cust-button-3 {
 }
 
 button.cust-button-1.active, button.cust-button-2.active, button.cust-button-3.active {
-  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 10px 0px #3c8dbc;
+  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 20px 0px #3c8dbc;
 }
 
 button.cust-button-1::-moz-focus-inner, button.cust-button-2::-moz-focus-inner, button.cust-button-3::-moz-focus-inner {
