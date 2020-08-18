@@ -9,12 +9,15 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { Router } from '@angular/router';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
+import { QRCodeGeneratorComponent } from '../qrcodegenerator/qrcodegenerator.component';
+import { MatDialog } from '@angular/material';
 @Component({
   selector: 'app-jaldeeonline',
   templateUrl: './jaldee-online.component.html'
 })
 export class JaldeeOnlineComponent implements OnInit {
 
+  listmyprofile_status_str: string;
   jaldee_online_disabled_msg: string;
   jaldee_online_enabled_msg: string;
   custm_id: string;
@@ -42,6 +45,7 @@ export class JaldeeOnlineComponent implements OnInit {
   verified_level_basicplus = Messages.VERIFIED_LEVEL_BASICPLUS;
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   customer_label = '';
+  qrdialogRef: any;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -49,7 +53,8 @@ export class JaldeeOnlineComponent implements OnInit {
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private fb: FormBuilder,
-    private routerobj: Router) {
+    private routerobj: Router,
+    private dialog: MatDialog) {
       this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
 
   }
@@ -73,15 +78,62 @@ export class JaldeeOnlineComponent implements OnInit {
   });
   }
 
+
+  copyInputMessage(valuetocopy) {
+    const path = projectConstants.PATH + valuetocopy;
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = path;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.shared_functions.openSnackBar('Link copied to clipboard');
+  }
+  copyProfileId(valuetocopy) {
+    const path = valuetocopy;
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = path;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.shared_functions.openSnackBar('Profile ID copied to clipboard');
+  }
+  qrCodegeneraterOnlineID(accEncUid) {
+    this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        accencUid: accEncUid,
+        path: this.wndw_path
+      }
+    });
+
+    this.qrdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.getBusinessProfile();
+      }
+    });
+  }
   getPublicSearch() {
     this.provider_services.getPublicSearch()
       .subscribe(
         data => {
           this.public_search = (data && data.toString() === 'true') ? true : false;
-          this.jaldee_online_status_str = (this.public_search === true) ? 'On' : 'Off';
-          this.jaldee_online_status = this.public_search;
-          // this.jaldee_online_status_str = (this.public_search) ? 'On' : 'Off';
-          this.normal_search_active = this.public_search;
+          this.listmyprofile_status_str = (this.public_search === true) ? 'On' : 'Off';
+          this.listmyprofile_status = this.public_search;
+
         },
         () => {
         }
@@ -144,14 +196,16 @@ export class JaldeeOnlineComponent implements OnInit {
     const changeTostatus = (this.listmyprofile_status === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe(() => {
-        this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + changeTostatus.toLowerCase() + 'd successfully', { ' panelclass': 'snackbarerror' });
+        const status = (this.listmyprofile_status === true) ? 'disable' : 'enable';
+
+        this.listmyprofile_status = !this.listmyprofile_status;
+        this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
         this.getPublicSearch();
       }, error => {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
       });
   }
-
 
   getJaldeeIntegrationSettings() {
     this.provider_services.getJaldeeIntegrationSettings().subscribe(

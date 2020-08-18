@@ -34,7 +34,7 @@
 
 
 
-                  <div *ngIf="!bProfile.customId && !is_customized">
+                  <div *ngIf="!bProfile.customId && !is_customized && normal_customid_show!=1">
                     <div class="bus-prof-qr-sec">
 
                       <ul class="sbl">
@@ -137,7 +137,7 @@
                     </form>
                   </div>
 
-                  <div *ngIf="bProfile.customId">
+                  <div *ngIf="bProfile.customId  && normal_customid_show!=1">
                     <div class="bus-prof-qr-sec">
                       <ul class="sbl">
                         <!-- <li class="acc-url-li">
