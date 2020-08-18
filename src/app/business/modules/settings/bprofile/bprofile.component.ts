@@ -38,7 +38,12 @@ import { Location } from '@angular/common';
 
 export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, AfterContentInit {
 
+  listmyprofile_status: boolean;
+  onlinepresence_status_str: string;
+  subdomainVirtualFieldFilledStatus: any;
+  domainVirtualFieldFilledStatus: any;
   showIncompleteButton = true;
+  
   domain_fields_nonmandatory: any;
   subdomain_fields_nonmandatory: any[];
   logoExist = false;
@@ -417,7 +422,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
     this.getProviderLocations();
-    // this.initSpecializations();
+
     this.getGalleryImages();
     // this.getBusinessProfile();
     this.subscription = this.galleryService.getMessage().subscribe(input => {
@@ -603,7 +608,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       this.showIncompleteButton = true;
       return businessProfileWeightageText;
     } else if
-      (weightage >= 50 && weightage < 75) {
+    (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
       this.weightageClass = 'info';
@@ -718,108 +723,75 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
 
         });
   }
-  confirm_searchStatus() {
-    if (this.normal_search_active) {
-      this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
-      // this.getPublicSearch();
-    } else {
+  confirm_listmyprofileStatus(e) {
+    if (this.listmyprofile_status) {
+      e.source.checked = true;
+      this.sharedfunctionobj.confirmSearchChangeStatus(this, this.listmyprofile_status);
+    } else if (!this.listmyprofile_status) {
+      e.source.checked = false;
       this.handle_searchstatus();
     }
   }
-  confirm_opsearchStatus() {
+  confirm_opsearchStatus(e) {
     if (this.onlinepresence_status) {
+      e.source.checked = true;
       this.sharedfunctionobj.confirmOPSearchChangeStatus(this, this.onlinepresence_status);
-    } else {
-      this.handle_jaldeeOnlinePresence();
+    } else if (!this.onlinepresence_status) {
+      e.source.checked = false;
+      this.handle_jaldeeOnlinePresence(e);
     }
   }
-  // regular button
+
   handle_searchstatus() {
-    // const is_jaldee_online = (event.checked) ? 'Enable' : 'Disable';
-    const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
+    const changeTostatus = (this.listmyprofile_status === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe(() => {
-        // this.jaldee_online_status=this.normal_search_active;
-        const status = (this.normal_search_active === true) ? 'disable' : 'enable';
-        // this.jaldee_online_status_str=(this.normal_search_active === true) ? 'on' : 'off';
-        this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
-        // this.getJaldeeOnlineStatus();
+        this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + changeTostatus.toLowerCase() + 'd successfully', { ' panelclass': 'snackbarerror' });
         this.getPublicSearch();
-
       }, error => {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        // this.getJaldeeOnlineStatus();
-        this.getPublicSearch();
+
       });
   }
 
-  // without toggle
-  // handle_searchstatus(event) {
-  //   const is_jaldee_online = (event.checked) ? 'Enable' : 'Disable';
-  //  // const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
-  //   this.provider_services.updatePublicSearch(is_jaldee_online)
-  //     .subscribe(() => {
-  //      // const status = (this.normal_search_active === true) ? 'disable' : 'enable';
-  //       this.shared_functions.openSnackBar('Public Search ' + is_jaldee_online + 'd successfully', { ' panelclass': 'snackbarerror' });
-  //      // this.getJaldeeOnlineStatus();
-  //       this.getPublicSearch();
 
-  //     }, error => {
-  //       this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       //this.getJaldeeOnlineStatus();
-  //       this.getPublicSearch();
-  //     });
-  // }
-
-  getJaldeeIntegrationSettings() {
+    getJaldeeIntegrationSettings() {
     this.provider_services.getJaldeeIntegrationSettings().subscribe(
       (data: any) => {
         this.onlinepresence_status = data.onlinePresence;
-        // this.walkinConsumer_status = data.walkinConsumer;
-        // this.jaldeeintegration_status = data.onlinePresence;
-        // this.walkinConsumer_statusstr = (this.walkinConsumer_status) ? 'On' : 'Off';
-        this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
-        this.profile_status = this.onlinepresence_status ? true : false;
-        this.profile_status_str = this.profile_status ? 'On' : 'Off';
-        // if (this.profile_status === false && this.normal_search_active) {
-        //   this.handle_searchstatus();
-        // }
+        this.onlinepresence_status_str = this.onlinepresence_status ? 'On' : 'Off';
         this.getPublicSearch();
 
-        // this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
       }
     );
   }
-  handle_jaldeeOnlinePresence() {
-
+  handle_jaldeeOnlinePresence(e) {
     const is_check = this.onlinepresence_status ? 'Disable' : 'Enable';
-
-    // this.businessProfile_status=(is_check==='Disable'? false: true);
-    // this.businessProfile_status_str=(this.businessProfile_status===true? 'On':'Off');
     const data = {
       'onlinePresence': !this.onlinepresence_status
     };
     this.provider_services.setJaldeeIntegration(data)
       .subscribe(
         () => {
+          this.onlinepresence_status = ! this.onlinepresence_status;
           this.shared_functions.openSnackBar('Jaldee Online ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          this.getJaldeeIntegrationSettings();
         }
       );
   }
-  handle_opsearchstatus() {
-    const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
-    this.provider_services.updatePublicSearch(changeTostatus)
-      .subscribe(() => {
-        this.getPublicSearch();
-      }, error => {
-        this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-  }
+
+  // handle_opsearchstatus() {
+  //   const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
+  //   this.provider_services.updatePublicSearch(changeTostatus)
+  //     .subscribe(() => {
+  //       this.getPublicSearch();
+  //     }, error => {
+  //       this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     });
+  // }
   getBusinessProfile() {
     this.aboutmefilled = false;
     this.locationFilled = false;
@@ -834,8 +806,23 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       .then(
         data => {
           this.bProfile = data;
-          if (this.bProfile.businessName && this.bProfile.businessDesc) {
-            this.aboutmefilled = true;
+          if (this.bProfile.businessName) {
+            this.domainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfDomain();
+            this.subdomainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfSubDomain();
+
+            if (this.domainVirtualFieldFilledStatus != null || this.subdomainVirtualFieldFilledStatus != null) {
+              if (this.domainVirtualFieldFilledStatus.mandatoryDomain === true || this.subdomainVirtualFieldFilledStatus.mandatorySubDomain === true) {
+                if ((this.domainVirtualFieldFilledStatus.mandatoryDomain && this.domainVirtualFieldFilledStatus.mandatoryDomainFilledStatus) || (this.subdomainVirtualFieldFilledStatus.mandatorySubDomain && this.subdomainVirtualFieldFilledStatus.mandatorySubDomainFilledStatus)) {
+                  this.aboutmefilled = true;
+                } else {
+                  this.aboutmefilled = false;
+                }
+              } else {
+                this.aboutmefilled = true;
+              }
+            } else {
+              this.aboutmefilled = true;
+            }
           }
           if (this.bProfile.baseLocation) {
             this.locationFilled = true;
@@ -1050,6 +1037,9 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
         () => { },
         () => { }
       );
+  }
+  reDirectToJaldeeOnline() {
+    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldeeonline']);
   }
 
   showBPrimary() {
@@ -1636,48 +1626,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
         return this.specialization_arr[i].displayName;
       }
     }
-  }
-
-  handleSpecialization() {
-    let holdselspec;
-    if (this.bProfile && this.bProfile.specialization) {
-      holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
-    } else {
-      holdselspec = [];
-    }
-
-    const bprof = holdselspec;
-    const special = this.specialization_arr;
-    this.specialdialogRef = this.dialog.open(AddProviderBprofileSpecializationsComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-      disableClose: true,
-      autoFocus: false,
-      data: {
-        selspecializations: bprof,
-        specializations: special
-      }
-    });
-
-    this.specialdialogRef.afterClosed().subscribe(result => {
-      this.getBusinessProfile();
-      if (result) {
-        if (result['mod'] === 'reloadlist') {
-          // this.getBusinessProfile();
-          this.bProfile = result['data'];
-          this.initSpecializations();
-          if (this.bProfile && this.bProfile.selspecializations) {
-            if (this.bProfile.selspecializations.length > 0) {
-              this.normal_specilization_show = 3;
-            } else {
-              this.normal_specilization_show = 2;
-            }
-          } else {
-            this.normal_specilization_show = 2;
-          }
-        }
-      }
-    });
   }
 
 

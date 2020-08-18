@@ -1,0 +1,315 @@
+<section class="">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true" (click)="redirecToBprofile()"></i>Jaldee Profile Settings</h5>
+  </div>
+</section>
+<section class="jaldeeonline">
+  <div class="content w-manager settings comn-cls lic-page">
+    <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+      <div class="w-dta ">
+        <div class="row">
+            <div class="copy one col-xs-12 col-sm-12 no-padding">
+                <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card p0">
+
+
+                <div class="pubs card w-dta bprof" *ngIf="bProfile">
+                  <div class="ctrl">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+                      <h2 class="mb-0" style="color:black;">Jaldee Online &nbsp;&nbsp;
+
+                        <mat-slide-toggle  [checked]="onlinepresence_status" (change)="confirm_opsearchStatus($event)">
+                          </mat-slide-toggle>
+                          &nbsp;{{onlinepresence_status_str}}</h2>
+                          <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
+                            <span class="inactive" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </span>
+                            <span class="active" *ngIf="onlinepresence_status">{{jaldee_online_enabled_msg}}</span>
+                          </div>
+
+                    </div>
+
+                  </div>
+
+
+
+
+                  <div *ngIf="!bProfile.customId && !is_customized">
+                    <div class="bus-prof-qr-sec">
+
+                      <ul class="sbl">
+                        <!-- <li class="acc-url-li">
+
+                          <strong> Here is your QR Code :- </strong>
+
+                          <span class="custid qrcode-icon">
+                            <i class="fa fa-qrcode custId-cursor" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
+                              [matTooltip]="'Generate QR code'"></i>
+                          </span>
+                        </li> -->
+
+                        <!-- <p class="head-level-settings mgn-up-5">
+                          <span class="inactive" *ngIf="!profile_status">
+                            <i class="fa fa-times"></i> Inactive</span>
+                          <span class="active" *ngIf="profile_status">
+                            <i class="fa fa-check"></i> Active</span>
+
+                        </p> -->
+
+                        <li class="acc-url-li mgn-up-10">
+
+                          <strong> Jaldee QR code and link &nbsp;&nbsp;</strong>
+                          <span class="pad-top-5">
+                            <span class="custid jld-link" rel="noopener" target="_blank">
+
+                              {{wndw_path}}{{bProfile.accEncUid}}
+
+                            </span>
+                            <span class="custid">
+                              <i class="fa fa-qrcode custId-cursor pad-left-20 font-lrge"
+                                (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
+                                [matTooltip]="'Generate QR code'"></i>
+                            </span>
+                            <span class="custid">
+                              <i class="fa fa-copy custId-cursor pad-left-20 font-lrge"
+                                (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
+                            </span>
+                            <span class="custbtn pad-left-20" *ngIf="!bProfile.customId && profile_status">
+                              <button class="btn btn-info jld-lnk-btn" (click)="customizeId()">
+                                Personalize
+                              </button>
+                            </span>
+                          </span>
+                          <br>
+                        </li>
+                        <p class="head-level-settings mt-xs-3">
+                            <span class="inactive" *ngIf="!onlinepresence_status">
+                            <i class="fa fa-times"></i> Inactive</span>
+                          <span class="active" *ngIf="onlinepresence_status">
+                            <i class="fa fa-check"></i> Active</span>
+
+
+
+                        </p>
+                        <!-- <li class="acc-url-li mgn-up-10">
+                          <strong> Jaldee Provider Id :</strong>
+                        <span class="jld-link consumr-loc-icon" rel="noopener" target="_blank">{{bProfile.accEncUid}}</span>
+                        <span class="custid">
+                          <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyProfileId(bProfile.accEncUid)"
+                            [matTooltip]="'Copy Id'"></i>
+                        </span>
+                        </li> -->
+                      </ul>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-12" *ngIf="normal_customid_show==1">
+                    <form [formGroup]="customForm" class="ynw-common-form-nm change-mob-style custId-flex-form"
+                      *ngIf="editMode==1 || editMode==0">
+                      <div class="form-group custId-flex">
+                        <mat-form-field class="custId-ip-wdth">
+                          <input matInput type="text" minlength="4" maxlength="25" class="form-control"
+                            autocomplete="off" value="www.jaldee.com/" [readonly]="true" style="color: #a5a2a2;">
+                        </mat-form-field>
+                        <mat-form-field>
+                          <input matInput type="text" minlength="4" maxlength="25"
+                            class="form-control custId-ip-max-wdth" id="customid" formControlName="customid"
+                            autocomplete="off">
+                          <app-field-error-display [displayError]="fed_service.isFieldValid(customForm,'customid')"
+                            [errorMsgs]="fed_service.getErrorMessage(customForm,'customid',
+                                                                    {
+                                                                    'required' : 'Please enter your Custom Business ID',
+                                                                    'minlength' : 'Minimum 4 characters are required',
+                                                                    'maxlength' : 'Maximum 25 characters are allowed',
+                                                                    'pattern' : 'Only alphabet,numbers and hyphen are allowed'
+                                                                    })">
+                          </app-field-error-display>
+                        </mat-form-field>
+
+                      </div>
+                      <div class="form-group custId-btns">
+                        <button (click)="cancelCusUpdt()" class="cs-btn bt2 custId-btn-bt2">Cancel</button>
+                        <button (click)="add_updateCustomId(customForm.value)" mat-button [disabled]="!customForm.valid"
+                          class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
+                      </div>
+
+                    </form>
+                  </div>
+
+                  <div *ngIf="bProfile.customId">
+                    <div class="bus-prof-qr-sec">
+                      <ul class="sbl">
+                        <!-- <li class="acc-url-li">
+
+                          <strong> Here is your QR Code :- </strong>
+
+                          <span class="custid qrcode-icon">
+                            <i class="fa fa-qrcode custId-cursor " (click)="qrCodegeneraterOnlineID(bProfile.customId)"
+                              [matTooltip]="'Generate QR code'"></i>
+                          </span>
+                        </li> -->
+
+                        <!-- <p class="head-level-settings mgn-up-5">
+                          <span class="inactive" *ngIf="!profile_status">
+                            <i class="fa fa-times"></i> Inactive</span>
+                          <span class="active" *ngIf="profile_status">
+                            <i class="fa fa-check"></i> Active</span>
+
+                        </p> -->
+
+                        <li class="acc-url-li h-xs-0 h-sm-0 mgn-up-10">
+                          <strong> Jaldee QR code and link &nbsp;&nbsp; </strong>
+                          <span class="pad-top-5">
+                            <span class="custid jld-link" rel="noopener" target="_blank">
+                              {{wndw_path}}{{bProfile.customId}}
+                            </span>
+                            <span class="custid">
+                              <i class="fa fa-qrcode custId-cursor pad-left-20 font-lrge"
+                                (click)="qrCodegeneraterOnlineID(bProfile.customId)"
+                                [matTooltip]="'Generate QR code'"></i>
+                            </span>
+                            <span class="custid">
+                              <i class="fa fa-copy custId-cursor pad-left-20 font-lrge"
+                                (click)="copyInputMessage(bProfile.customId)" [matTooltip]="'Copy link'"></i>
+                            </span>
+                            <!-- <span class="custid custId-icon">
+                              <button class="custId-edtbtn" type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                <mat-icon>more_vert</mat-icon>
+                              </button>
+                              <mat-menu #menu="matMenu">
+                                <button type="button" (click)="editCustomId(bProfile.customId)" mat-menu-item>
+                                  <i class="icon-edit"></i>
+                                  <span>{{edit_cap}}</span>
+                                </button>
+                                <button type="button" (click)="deleteCustomId(bProfile.customId)" mat-menu-item>
+                                  <i class="icon-delete"></i>
+                                  <span>{{delete_btn}}</span>
+                                </button>
+                              </mat-menu>
+                            </span> -->
+                            <span class="custbtn pad-left-20">
+                              <button class="btn btn-info jld-lnk-btn" (click)="editCustomId(bProfile.customId)">
+                                Personalize
+                              </button>
+                            </span>
+                          </span>
+                          <br>
+                        </li>
+                        <p class="head-level-settings mgn-up-5">
+                            <span class="inactive" *ngIf="!onlinepresence_status">
+                            <i class="fa fa-times"></i> Inactive</span>
+                          <span class="active" *ngIf="onlinepresence_status">
+                            <i class="fa fa-check"></i> Active</span>
+
+
+                        </p>
+
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="coupon-outer" *ngIf="!bProfile.customId">
+                    <div class="duration instantQ" *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
+                      You are not allowed to do this operation. Please upgrade license package
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+                <div class="pubs card w-dta bprof" *ngIf="!showIncompleteButton">
+                    <div class="ctrl">
+                        <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+                          <h2 class="mb-0" style="color:black;">List my profile on jaldee.com&nbsp;&nbsp;
+                           <mat-slide-toggle [checked]="listmyprofile_status"(change)="confirm_listmyprofileStatus($event);">
+                            </mat-slide-toggle> {{listmyprofile_status_str}} </h2>
+                          <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
+                            <span class="inactive" *ngIf="!listmyprofile_status">Your profile is not listed in
+                              jaldee.com</span>
+                            <span class="active" *ngIf="listmyprofile_status">Your profile is listed in jaldee.com</span>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+
+                  <!-- <p class="form-level-settings" *ngIf="!normal_search_active">
+                                            {{frm_public_search_cap}}
+                                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('public-search', $event)">Learn More
+                                            </a>
+                                        </p>
+                                        <p class="form-level-settings" *ngIf="normal_search_active">
+                                            {{frm_public_search_off_cap}}
+                                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('public-search', $event)">Learn More
+                                            </a>
+                                        </p>
+
+
+                                            <br> -->
+
+
+
+
+
+                </div>
+                <div class="pubs card w-dta bprof" *ngIf="!showIncompleteButton">
+                  <div class="ctrl">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+
+                      <i *ngIf="bProfile && bProfile.verifyLevel =='NONE'" class="fa fa-star" style="color:grey"> </i>
+                      <span *ngIf="bProfile && bProfile.verifyLevel =='NONE'" class="bold">
+                        {{verified_level_change}}.
+                      </span>
+                      <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'">
+                        <img height="80" width="70" src="./assets/images/BasicOrg.png" alt="Basic">
+                      </span>
+                      <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'">
+                        <img height="80" width="70" src="./assets/images/BasicPlsOrg.png" alt="Basic Plus">
+                      </span>
+                      <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'">
+                        <img height="80" width="70" src="./assets/images/PremiumOrg.png" alt="Advanced">
+                      </span>
+                      <i *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'" class="fa fa-star-half-o"
+                        style="color:goldenrod"></i>
+                      <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'" class="bold">
+                        {{verified_level_basic}}.
+                      </span>
+                      <i *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'" class="fa fa-star-half-o"
+                        style="color:goldenrod"></i>
+                      <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'" class="bold">
+                        {{verified_level_basicplus}}.
+                      </span>
+                      <i *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'" class="fa fa-star"
+                        style="color:goldenrod"></i>
+                      <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'" class="bold">
+                        {{verified_level_premium}}.
+                      </span>
+                      <br>
+
+                      <span *ngIf="bProfile && bProfile.verifyLevel != 'ADVANCED'"
+                        class="form-level-settings">{{frm_verified_cap}}
+                        <a class="learnmore-pointer" id="verified-levels"
+                          (click)="learnmore_clicked('verified-levels', $event)">Learn More
+                        </a>
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</section>
