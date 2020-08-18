@@ -424,16 +424,16 @@
 
                         <!--end mandatory fields -->
                       </div>
+                      <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
+                        style="display: inline-flex;">
+                        <button type="button" class="cs-btn bt2" [disabled]="disableButton"
+                          (click)="redirecToBprofile()">{{cancel_btn_cap}}</button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button type="submit" [disabled]="!aboutmeForm.valid || disableButton" class="cs-btn bt1"
+                          mat-button>{{save_btn_cap}}</button>
+                      </div>
                     </form>
                   </div>
-                </div>
-                <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
-                  style="display: inline-flex;">
-                  <button type="button" class="cs-btn bt2" [disabled]="disableButton"
-                    (click)="redirecToBprofile()">{{cancel_btn_cap}}</button>
-                  &nbsp;&nbsp;&nbsp;
-                  <button type="submit" [disabled]="!aboutmeForm.valid || disableButton" class="cs-btn bt1"
-                    mat-button>{{save_btn_cap}}</button>
                 </div>
               </div>
             </div>
