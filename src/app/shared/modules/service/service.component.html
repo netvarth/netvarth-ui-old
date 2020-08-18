@@ -327,7 +327,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     'maxlength' : 'Only 4 digits are allowed'})">
                 </app-field-error-display>
             </div>
-            <div class="form-group" *ngIf="is_donation">
+            <!-- <div class="form-group" *ngIf="is_donation">
                 <div class="form-group inline">
                     <label class="col-form-label">{{end_cause_notify_cap}}</label>
                     <mat-slide-toggle class="example-margin" formControlName="notification"
@@ -339,7 +339,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
                     <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
                 </mat-radio-group>
-            </div>
+            </div> -->
             <div class="mgn-bt-20">
                 <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
                     style="font-size: 1.1rem;">
@@ -403,14 +403,14 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <!-- </mat-expansion-panel>
 </mat-accordion> -->
             </div>
-            <div class="mgn-bt-20">
+            <!-- <div class="mgn-bt-20" *ngIf="!is_virtual_serv && is_lvtrack_enable">
                 <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
                     style="font-size: 1.1rem;">
                     Additional Info</a>
                 <div class="settings_info" *ngIf="!is_donation"> 
                     Live tracking and more</div>
-            </div>
-            <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings && !is_donation">
+            </div> -->
+            <div class="row mgn-lt-5 mgn-up-20" *ngIf="!is_donation">
                 <!-- <section class="mgn-bt-30">
                     <label style="margin-bottom: 0 !important" class="col-form-label">Service Price</label>
                     <div class="settings_info">
@@ -437,17 +437,17 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         </mat-slide-toggle>
                     </div>
                 </section> -->
-                <div class="form-group inline" *ngIf="!is_donation">
+                <!-- <div class="form-group inline" *ngIf="!is_donation">
                     <label class="col-form-label">{{end_service_notify_cap}}</label>
                     <mat-slide-toggle class="example-margin" formControlName="notification"
                         (change)="changeNotification()">
                     </mat-slide-toggle>
-                </div>
-                <mat-radio-group *ngIf="serviceForm.get('notification').value === true"
+                </div> -->
+                <!-- <mat-radio-group *ngIf="serviceForm.get('notification').value === true"
                     formControlName="notificationType">
                     <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
                     <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
-                </mat-radio-group>
+                </mat-radio-group> -->
                 <div class="form-group inline" *ngIf="!is_virtual_serv && is_lvtrack_enable">
                     <label class="col-form-label">Enable Live Track</label>
                     <mat-slide-toggle class="example-margin" formControlName="livetrack">

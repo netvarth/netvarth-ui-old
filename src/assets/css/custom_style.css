@@ -10446,8 +10446,8 @@ a {
 }
 
 .sticky {
-  position: fixed;
-  top: 0;
+  /* position: fixed; */
+  /* top: 0; */
   width: 100%;
   /* -webkit-transform: translate3d(0, 0, 0); */
 }
