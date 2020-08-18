@@ -1,6 +1,8 @@
     <section class="">
         <div class="card title-gb">
-            <h5 class="mgn-up-10"><i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true" (click)="goBack()"></i>Specializations</h5>
+            <h5 class="mgn-up-10"> <button type="button" class="btn default" (click)="goBack()">
+                <span class="fa fa-chevron-left">Back</span>
+              </button>&nbsp;&nbsp;&nbsp;Specializations</h5>
         </div>
     </section>
     <section>
@@ -12,10 +14,10 @@
                             <div class="lbl col-sm-12 col-md-8 col-lg-8">
                                 <label class="specializations-label">{{specializations_cap}} </label>
                                         <div class="form-group">
-                                            <div class="specializationouter" *ngIf="specialization_arr.length > 0" >  
+                                            <div class="specializationouter" *ngIf="specialization_arr.length > 0" >
                                                 <div *ngFor= "let spec of specialization_arr">
                                                     <mat-checkbox style="padding-left: 10px;"
-                                                      (change)="specializationSel(spec.name)" 
+                                                      (change)="specializationSel(spec.name)"
                                                        [checked]="checkspecializationExists(spec.name)">{{spec.displayName}}
                                                     </mat-checkbox>
                                                 </div>
@@ -26,16 +28,16 @@
                                          [disabled]="disableButton">{{cancel_btn_cap}}</button>&nbsp;
                                         <button (click)="saveSpecializations()" type="button" mat-button class="cs-btn bt1"
                                          [disabled]="specialization_arr.length==0 || disableButton">{{save_btn_cap}}</button>
-                                    </div> 
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
         <div class="clearfix"></div>
     </section>
 
-    
-                           
-      
+
+
+

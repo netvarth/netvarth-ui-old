@@ -23,6 +23,7 @@ import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/funct
 })
 export class AboutMeComponent implements OnInit {
 
+
   subdomain_fields_mandatory: any[];
   domain_fields_mandatory: any;
   dynamicdialogRef: MatDialogRef<ProviderBprofileSearchDynamicComponent, any>;
@@ -36,7 +37,7 @@ export class AboutMeComponent implements OnInit {
     api_error = null;
     api_success = null;
     show_schedule_selection = false;
-    bProfile: any = [];
+    bProfile = null;
     formfields;
     disabled_field = false;
     prov_curstatus = '';
@@ -145,20 +146,26 @@ export class AboutMeComponent implements OnInit {
             // ,
             // 'shortName': form_data.shortname
           };
+          console.log('bProdile..' + this.bProfile);
+          if (this.bProfile.businessName) {
+            this.UpdatePrimaryFields(post_itemdata);
+          } else {
+            this.createPrimaryFields(post_itemdata);
+          }
           // calling the method to update the primarty fields in bProfile edit page
-          this.UpdatePrimaryFields(post_itemdata);
+
         }
       }
       // saving the primary fields from the bprofile create page
       createPrimaryFields(pdata) {
-        this.provider_services.createPrimaryFields(pdata)
+        this.provider_services.updatePrimaryFields(pdata)
           .subscribe(
             () => {
-              this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_CREATED');
+              this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_CREATED);
               this.getBusinessProfile();
             },
             error => {
-              this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+              this.sharedfunctionObj.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
             }
           );
       }
@@ -183,7 +190,7 @@ export class AboutMeComponent implements OnInit {
               }, projectConstants.TIMEOUT_DELAY);
             },
             error => {
-              this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+              this.sharedfunctionObj.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
               this.disableButton = false;
             }
           );

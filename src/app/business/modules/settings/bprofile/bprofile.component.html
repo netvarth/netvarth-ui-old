@@ -69,7 +69,7 @@
 
                   </div>
                   <br>
-                  <div class="cd-b">
+                  <div class="cd-b" *ngIf="!showIncompleteButton">
                       <div class="div-outline custId-cursor"
                       [ngClass]="{'div-grn-outline':onlinepresence_status,'div-red-outline':!onlinepresence_status }" (click)="reDirectToJaldeeOnline();">
                       <span class="fontstyl">Jaldee Online &nbsp;&nbsp;</span>
@@ -169,8 +169,8 @@
                         <span class="fontstyl">Specializations</span>
                       </div>
                     </div>
-                    
-                    
+
+
 
 
 

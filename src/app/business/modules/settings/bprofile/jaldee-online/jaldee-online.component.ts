@@ -78,6 +78,10 @@ export class JaldeeOnlineComponent implements OnInit {
   });
   }
 
+  // learnmore_clicked(mod, e) {
+  //   e.stopPropagation();
+  //   this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
+  // }
 
   copyInputMessage(valuetocopy) {
     const path = projectConstants.PATH + valuetocopy;
