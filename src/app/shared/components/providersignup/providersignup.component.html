@@ -59,7 +59,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     target="_blank">{{terms_cond_cap}}</a></span>
                         </div>
                         <div class="form-group form-button">
-                            <input type="submit" name="signup" id="signup" class="form-submit" value="Register"
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Next"
                                 [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid"
                                 (click)="registerClicked()">
                         </div>
@@ -139,32 +139,9 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                             color: green;
                         ">Congratulations!</h1>
                         <!-- <h2 class="form-title">You have become a Jaldee partner.</h2> -->
-                        <h3 class="form-title">Please set your password and enter otp to finish sign up process.</h3>
+                        <h3 class="form-title">Please enter otp and set your password to finish sign up process.</h3>
                         <form method="POST" [formGroup]="spForm" class="register-form" id="register-form">
-                            <div class="form-group">
-                                <label for="password"></label>
-                                <input type="password" formControlName="new_password" name="name" id="name"
-                                    placeholder="Enter password" />
-                                <app-field-error-display
-                                    [displayError]="fed_service.isFieldValid(spForm,'new_password')"
-                                    [errorMsgs]="fed_service.getErrorMessage(spForm,'new_password',
-                                    {'required' : 'Password is required',
-                                    'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
-                                </app-field-error-display>
-                            </div>
-                            <div class="form-group">
-                                <label for="re-enter"></label>
-                                <input type="password" formControlName="confirm_password" name="passsword" id="password"
-                                    placeholder="Re-enter password*" (keyup)="keyPressed($event)" />
-                                <app-field-error-display
-                                    [displayError]="fed_service.isFieldValid(spForm,'confirm_password')" [errorMsgs]="fed_service.getErrorMessage(spForm,'confirm_password',
-                                    {'required' : 'Re-enter Password'})">
-                                </app-field-error-display>
-                                <app-field-error-display [displayError]="!isValidConfirm_pw"
-                                    errorMsg="Enter Password and Re-entered Password do not match">
-                                </app-field-error-display>
-                            </div>
-
+                            
                             <div class="otpsection ynw-common-form-nm">
                                 <div *ngIf="showOTPContainer">
                                     <!-- <div class="form-row">
@@ -194,11 +171,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                             {{seconds_cap}}
                                         </div>
                                     </mat-dialog-actions>
-                                    <div class="form-group form-button">
-                                        <input type="submit" [disabled]="!spForm.valid || joinClicked" name="signup" id="signup"
-                                            class="form-submit" value="Join Jaldee"
-                                            (click)="onPasswordSubmit()">
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <ng-container *ngIf="showOTPEmailContainer">
@@ -221,6 +194,36 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     </mat-dialog-actions>
                                 </div>
                             </ng-container>
+                            
+                            <div class="form-group">
+                                <label for="password"></label>
+                                <input type="password" formControlName="new_password" name="name" id="name"
+                                    placeholder="Enter password" />
+                                <app-field-error-display
+                                    [displayError]="fed_service.isFieldValid(spForm,'new_password')"
+                                    [errorMsgs]="fed_service.getErrorMessage(spForm,'new_password',
+                                    {'required' : 'Password is required',
+                                    'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
+                                </app-field-error-display>
+                            </div>
+                            <div class="form-group">
+                                <label for="re-enter"></label>
+                                <input type="password" formControlName="confirm_password" name="passsword" id="password"
+                                    placeholder="Re-enter password*" (keyup)="keyPressed($event)" />
+                                <app-field-error-display
+                                    [displayError]="fed_service.isFieldValid(spForm,'confirm_password')" [errorMsgs]="fed_service.getErrorMessage(spForm,'confirm_password',
+                                    {'required' : 'Re-enter Password'})">
+                                </app-field-error-display>
+                                <app-field-error-display [displayError]="!isValidConfirm_pw"
+                                    errorMsg="Enter Password and Re-entered Password do not match">
+                                </app-field-error-display>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" [disabled]="!spForm.valid || joinClicked" name="signup" id="signup"
+                                    class="form-submit" value="Join Jaldee"
+                                    (click)="onPasswordSubmit()">
+                            </div>
+                            
                         </form>
 
                     </div>
