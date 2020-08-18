@@ -153,7 +153,6 @@ export class JaldeeOnlineComponent implements OnInit {
     this.getBussinessProfileApi()
       .then(
         data => {
-          console.log('data..' + JSON.stringify(data));
           this.bProfile = data;
         });
       }
