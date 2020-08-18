@@ -11,10 +11,13 @@
                             <div class="mainouter checkin-page ">
                                 <div class="servicefor-outer btborder">
                                     <div >
-                                        <ng-container
+                                        <!-- <ng-container
                                             *ngFor="let waitfor of this.activeWt.waitlistingFor; let i = index">
                                             {{waitfor.firstName | capitalizeFirst}}
                                             {{waitfor.lastName | capitalizeFirst}}
+                                        </ng-container> -->
+                                         <ng-container *ngIf="consumer_name">
+                                            {{consumer_name}}
                                         </ng-container>
                                     </div>
                                 </div>

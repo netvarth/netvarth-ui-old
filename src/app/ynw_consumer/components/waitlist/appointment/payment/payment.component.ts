@@ -39,6 +39,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
     origin: string;
     pGateway: any;
     livetrack: any;
+    consumer_name: any;
 
     constructor(public router: Router,
         public route: ActivatedRoute,
@@ -66,6 +67,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
         this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
+                this.consumer_name = this.activeWt.appmtFor[0].userName;
                 this.livetrack = this.activeWt.service.livetrack;
                 this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.activeWt.appmtFor.length;
                 this.waitlistDetails = {

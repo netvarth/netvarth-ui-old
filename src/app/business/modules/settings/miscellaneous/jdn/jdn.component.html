@@ -75,7 +75,7 @@
                             <label class="col-form-label" *ngIf="rewrite ==='edit' || status ==='Create'">Note</label>
                             <div *ngIf="rewrite !='edit'&& status !='Create'">{{jdndisplayNote}}</div>
                             <textarea *ngIf="rewrite ==='edit' || status ==='Create'" [disabled]="status === 'DISABLED'"
-                                placeholder="Enter the message for your {{cust_label}}s to see" class="form-control" [(ngModel)]="jdndisplayNote"
+                                placeholder="Enter the message for your {{cust_label}}s" class="form-control" [(ngModel)]="jdndisplayNote"
                                 id="jdndisplayNote" maxlength="500">
                             </textarea>
                         </div>
