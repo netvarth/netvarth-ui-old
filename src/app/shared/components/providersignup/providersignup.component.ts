@@ -750,5 +750,6 @@ export class ProvidersignupComponent implements OnInit {
     this.showOTPContainer = true;
     this.resetCounterVal = 0;
     this.otp_mobile = null;
+    this.hideOtpSection = true;
   }
 }
