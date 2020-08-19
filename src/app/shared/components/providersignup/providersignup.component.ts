@@ -293,6 +293,7 @@ export class ProvidersignupComponent implements OnInit {
             this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
           }
           this.active_step = 3;
+          this.hideOtpSection = true;
           this.showOTPContainer = true;
           this.showOTPEmailContainer = false;
           if (user_details.userProfile.email) {
@@ -722,6 +723,7 @@ export class ProvidersignupComponent implements OnInit {
     this.resetCounterVal = val;
   }
   setResendViaEmail() {
+    this.hideOtpSection = false;
     this.doshowOTPEmailContainer();
     this.resetApiErrors();
     if (this.user_details.userProfile && this.user_details.userProfile.email) {
