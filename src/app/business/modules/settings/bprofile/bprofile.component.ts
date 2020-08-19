@@ -611,6 +611,8 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
   }
 
 
+
+
   getBusinessProfile() {
     this.aboutmefilled = false;
     this.locationFilled = false;
