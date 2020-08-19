@@ -481,9 +481,9 @@ export class ProvidersignupComponent implements OnInit {
     this.joinClicked = true;
     this.api_loading = true;
     this.resetApiErrors();
-    if (this.otp) {
+    // if (this.otp) {
       if (this.isValidConfirm_pw) {
-        this.onOtpSubmit().then(data => {
+        // this.onOtpSubmit().then(data => {
           this.saveReferralInfo().then(
             () => {
               this.setPassword();
@@ -493,20 +493,20 @@ export class ProvidersignupComponent implements OnInit {
               this.api_loading = false;
               this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
-        },
-          (error) => {
-            this.joinClicked = false;
-            this.api_loading = false;
-          });
+        // },
+        //   (error) => {
+        //     this.joinClicked = false;
+        //     this.api_loading = false;
+        //   });
       } else {
         this.joinClicked = false;
         this.api_loading = false;
       }
-    } else {
-      this.joinClicked = false;
-      this.api_loading = false;
-      this.shared_functions.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
-    }
+    // } else {
+    //   this.joinClicked = false;
+    //   this.api_loading = false;
+    //   this.shared_functions.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
+    // }
   }
   resetApiErrors() {
     this.api_error = null;
