@@ -681,9 +681,9 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
           'eTime': endtime_format
         }]
       };
-      if (this.action === 'edit') {
-        schedulejson.startDate = this.queue_data.apptSchedule.startDate;
-      }
+      // if (this.action === 'edit') {
+      //   schedulejson.startDate = this.queue_data.apptSchedule.startDate;
+      // }
       // generating the data to be posted
       const post_data = {
         'name': form_data.qname,
