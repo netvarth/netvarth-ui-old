@@ -10549,6 +10549,9 @@ a {
     width: 140px !important;
     height: 140px !important;
   }
+  .content .col-md-12 .w-dta .row .copy .bill-width {
+    width: 100% !important;
+  }
 }
 .grid-btn {
   background: none;
@@ -10900,4 +10903,8 @@ a {
 .profile-back {
   background: white !important;
   border: 1px solid #03A9F4 !important;
+  color: #03a9f4 !important;
+}
+.content .col-md-12 .w-dta .row .copy .bill-width {
+  width: auto;
 }

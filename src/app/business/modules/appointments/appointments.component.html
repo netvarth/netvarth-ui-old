@@ -990,7 +990,7 @@
                           {{appt.appmtFor[0].lastName}}</div>
                           <div class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
                           *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
-                            {{appt.providerConsumer.jaldeeId}}</div>
+                          {{customer_label}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{appt.service.name}}</div>

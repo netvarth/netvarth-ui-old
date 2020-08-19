@@ -46,6 +46,7 @@ export class JaldeeOnlineComponent implements OnInit {
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   customer_label = '';
   qrdialogRef: any;
+  showIncompleteButton = false;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -278,7 +279,7 @@ export class JaldeeOnlineComponent implements OnInit {
     this.is_customized = false;
   }
   add_updateCustomId(submit_data) {
-    const customId = submit_data.customid;
+    const customId = submit_data.customid.trim();
     if (this.editMode === 0) {
       this.provider_services.addCustomId(customId).subscribe(
         data => {

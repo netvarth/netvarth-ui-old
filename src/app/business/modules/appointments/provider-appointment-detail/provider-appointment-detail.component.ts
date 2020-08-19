@@ -81,6 +81,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   availableSlots: any = [];
   availableSlotDetails: any = [];
   callingModes = projectConstants.CALLING_MODES;
+  pos = false;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -103,6 +104,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit() {
+    this.getPos();
     this.api_loading = true;
     this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
@@ -409,5 +411,10 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   getSingleTime(slot) {
     const slots = slot.split('-');
     return this.shared_Functionsobj.convert24HourtoAmPm(slots[0]);
+  }
+  getPos() {
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos = data['enablepos'];
+    });
   }
 }
