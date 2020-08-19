@@ -216,6 +216,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
   isNumeric(evt) {
     return this.shared_Functionsobj.isNumeric(evt);
   }
+  isNumericforToken(evt) {
+    return this.shared_Functionsobj.isNumericforToken(evt);
+  }
   changetime(src, passtime) {
     switch (src) {
       case 'start':

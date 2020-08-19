@@ -22,6 +22,7 @@
                 <i class="icon-location" [matTooltipClass]="tooltipcls"
                 [matTooltip]="'Change location'">
                 </i>
+                <span *ngIf="selected_location && !small_device_display">&nbsp;&nbsp; {{selected_location.place | capitalizeFirst}}</span>
               </a>
             </li> 
           
@@ -32,7 +33,7 @@
             <ul class="sidebar-menu">
               <div class="filterTextinput">
                   <li class="filterli" *ngFor="let location of locations;let i = index" [(value)]="i">
-                    <a class="pointer-cursor" (click)="getDonationsList('true',location.id)">
+                    <a class="pointer-cursor" (click)="getDonationsList('true',location)">
                       <span class="donate-loc" [ngClass]="{'donate-sel-loc': (selected_loc_id === location.id)}" *ngIf="location.place.length>='27'">
                         {{ location.place.substring(0,24) | capitalizeFirst }}...</span>
                       <span class="donate-loc" [ngClass]="{'donate-sel-loc': (selected_loc_id === location.id)}" *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</span>

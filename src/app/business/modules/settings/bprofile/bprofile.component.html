@@ -4,7 +4,11 @@
 </section> -->
 <section class="">
   <div class="card title-gb">
-      <h5 class="mgn-up-10"><i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true" (click)="redirecToSettings()"></i>Jaldee Profile</h5>
+      <h5 class="mgn-up-10">
+        <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
+          <span class="fa fa-chevron-left">&nbsp;Back</span>
+        </button>&nbsp;&nbsp;&nbsp;
+        Jaldee Profile</h5>
   </div>
 </section>
 <section>
@@ -29,7 +33,7 @@
                       <!-- <h3 class="bus-prof-head">Business Profile</h3> -->
                       <h6 hidden class="bus-prof-strength">Profile Strength-
                         <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
-                      </h6> 
+                      </h6>
 
                       <div style="line-height: 25px;">
                         <span>Your Business Profile is Incomplete&nbsp;&nbsp;</span>
@@ -62,8 +66,33 @@
                             [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
                         </div>
                       </div>
+
                     </div>
+
+
+
                   </div>
+                  <br>
+                  <div class="cd-b" *ngIf="!showIncompleteButton">
+                      <div class="div-outline custId-cursor"
+                      [ngClass]="{'div-grn-outline':onlinepresence_status,'div-red-outline':!onlinepresence_status }" (click)="reDirectToJaldeeOnline();">
+                      <span class="fontstyl">Jaldee Online &nbsp;&nbsp;</span>
+                        <span class="head-level-settings"><span class="inactive " *ngIf="!onlinepresence_status">
+                          <i class="fa fa-times"></i> Inactive</span>
+                        <span class="active " *ngIf="onlinepresence_status">
+                          <i class="fa fa-check"></i> Active</span></span>
+
+
+                      <p class="head-level-settings">
+
+                          <span class="inactive" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </span>
+                          <span class="active" *ngIf="onlinepresence_status">{{jaldee_online_enabled_msg}}</span>
+
+                        </p>
+
+                      </div>
+
+                    </div>
                 </div>
                 <!-- <div class="col-md-12 ct-l col-xs-12 no-padding">
                                     </div> -->
@@ -88,293 +117,11 @@
                 <!-- </div> -->
                 <!--TEsting-->
                 <div class="pubs card w-dta bprof" *ngIf="!showIncompleteButton">
-                  <div class="ctrl">
-                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
-                      <h2 class="mb-0" style="color:black;">Jaldee Online &nbsp;&nbsp;
-                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="profile_status"
-                          (change)="confirm_opsearchStatus()">
-                        </mat-slide-toggle>
-                        &nbsp;{{profile_status_str}}</h2>
-                      <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
-                        <span class="inactive" *ngIf="!profile_status">{{jaldee_online_disabled_msg}} </span>
-                        <span class="active" *ngIf="profile_status">{{jaldee_online_enabled_msg}}</span>
-                      </div>
-
-                    </div>
-
-                  </div>
-
-
-
-
-                  <div *ngIf="!bProfile.customId && !is_customized">
-                    <div class="bus-prof-qr-sec">
-
-                      <ul class="sbl">
-                        <!-- <li class="acc-url-li">
-
-                          <strong> Here is your QR Code :- </strong>
-
-                          <span class="custid qrcode-icon">
-                            <i class="fa fa-qrcode custId-cursor" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
-                              [matTooltip]="'Generate QR code'"></i>
-                          </span>
-                        </li> -->
-
-                        <!-- <p class="head-level-settings mgn-up-5">
-                          <span class="inactive" *ngIf="!profile_status">
-                            <i class="fa fa-times"></i> Inactive</span>
-                          <span class="active" *ngIf="profile_status">
-                            <i class="fa fa-check"></i> Active</span>
-
-                        </p> -->
-
-                        <li class="acc-url-li mgn-up-10">
-
-                          <strong> Jaldee QR code and link &nbsp;&nbsp;</strong>
-                          <span class="pad-top-5">
-                            <span class="custid jld-link" rel="noopener" target="_blank">
-
-                              {{wndw_path}}{{bProfile.accEncUid}}
-
-                            </span>
-                            <span class="custid">
-                              <i class="fa fa-qrcode custId-cursor pad-left-20 font-lrge"
-                                (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
-                                [matTooltip]="'Generate QR code'"></i>
-                            </span>
-                            <span class="custid">
-                              <i class="fa fa-copy custId-cursor pad-left-20 font-lrge"
-                                (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
-                            </span>
-                            <span class="custbtn pad-left-20" *ngIf="!bProfile.customId && profile_status">
-                              <button class="btn btn-info jld-lnk-btn" (click)="customizeId()">
-                                Personalize
-                              </button>
-                            </span>
-                          </span>
-                          <br>
-                        </li>
-                        <p class="head-level-settings mt-xs-3">
-                          <span class="inactive" *ngIf="!profile_status">
-                            <i class="fa fa-times"></i> Inactive</span>
-                          <span class="active" *ngIf="profile_status">
-                            <i class="fa fa-check"></i> Active</span>
-                        </p>
-                        <!-- <li class="acc-url-li mgn-up-10">
-                          <strong> Jaldee Provider Id :</strong>
-                        <span class="jld-link consumr-loc-icon" rel="noopener" target="_blank">{{bProfile.accEncUid}}</span>
-                        <span class="custid">
-                          <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyProfileId(bProfile.accEncUid)"
-                            [matTooltip]="'Copy Id'"></i>
-                        </span>
-                        </li> -->
-                      </ul>
-
-                    </div>
-                  </div>
-
-                  <div class="col-md-12 col-12" *ngIf="normal_customid_show==1">
-                    <form [formGroup]="customForm" class="ynw-common-form-nm change-mob-style custId-flex-form"
-                      *ngIf="editMode==1 || editMode==0">
-                      <div class="form-group custId-flex">
-                        <mat-form-field class="custId-ip-wdth">
-                          <input matInput type="text" minlength="4" maxlength="25" class="form-control"
-                            autocomplete="off" value="www.jaldee.com/" [readonly]="true" style="color: #a5a2a2;">
-                        </mat-form-field>
-                        <mat-form-field>
-                          <input matInput type="text" minlength="4" maxlength="25"
-                            class="form-control custId-ip-max-wdth" id="customid" formControlName="customid"
-                            autocomplete="off">
-                          <app-field-error-display [displayError]="fed_service.isFieldValid(customForm,'customid')"
-                            [errorMsgs]="fed_service.getErrorMessage(customForm,'customid',
-                                                                    {
-                                                                    'required' : 'Please enter your Custom Business ID',
-                                                                    'minlength' : 'Minimum 4 characters are required',
-                                                                    'maxlength' : 'Maximum 25 characters are allowed',
-                                                                    'pattern' : 'Only alphabet,numbers and hyphen are allowed'
-                                                                    })">
-                          </app-field-error-display>
-                        </mat-form-field>
-
-                      </div>
-                      <div class="form-group custId-btns">
-                        <button (click)="cancelCusUpdt()" class="cs-btn bt2 custId-btn-bt2">Cancel</button>
-                        <button (click)="add_updateCustomId(customForm.value)" mat-button [disabled]="!customForm.valid"
-                          class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
-                      </div>
-
-                    </form>
-                  </div>
-
-                  <div *ngIf="normal_customid_show==3">
-                    <div class="bus-prof-qr-sec">
-                      <ul class="sbl">
-                        <!-- <li class="acc-url-li">
-
-                          <strong> Here is your QR Code :- </strong>
-
-                          <span class="custid qrcode-icon">
-                            <i class="fa fa-qrcode custId-cursor " (click)="qrCodegeneraterOnlineID(bProfile.customId)"
-                              [matTooltip]="'Generate QR code'"></i>
-                          </span>
-                        </li> -->
-
-                        <!-- <p class="head-level-settings mgn-up-5">
-                          <span class="inactive" *ngIf="!profile_status">
-                            <i class="fa fa-times"></i> Inactive</span>
-                          <span class="active" *ngIf="profile_status">
-                            <i class="fa fa-check"></i> Active</span>
-
-                        </p> -->
-
-                        <li class="acc-url-li h-xs-0 h-sm-0 mgn-up-10">
-                          <strong> Jaldee QR code and link &nbsp;&nbsp; </strong>
-                          <span class="pad-top-5">
-                            <span class="custid jld-link" rel="noopener" target="_blank">
-                              {{wndw_path}}{{bProfile.customId}}
-                            </span>
-                            <span class="custid">
-                              <i class="fa fa-qrcode custId-cursor pad-left-20 font-lrge"
-                                (click)="qrCodegeneraterOnlineID(bProfile.customId)"
-                                [matTooltip]="'Generate QR code'"></i>
-                            </span>
-                            <span class="custid">
-                              <i class="fa fa-copy custId-cursor pad-left-20 font-lrge"
-                                (click)="copyInputMessage(bProfile.customId)" [matTooltip]="'Copy link'"></i>
-                            </span>
-                            <!-- <span class="custid custId-icon">
-                              <button class="custId-edtbtn" type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                <mat-icon>more_vert</mat-icon>
-                              </button>
-                              <mat-menu #menu="matMenu">
-                                <button type="button" (click)="editCustomId(bProfile.customId)" mat-menu-item>
-                                  <i class="icon-edit"></i>
-                                  <span>{{edit_cap}}</span>
-                                </button>
-                                <button type="button" (click)="deleteCustomId(bProfile.customId)" mat-menu-item>
-                                  <i class="icon-delete"></i>
-                                  <span>{{delete_btn}}</span>
-                                </button>
-                              </mat-menu>
-                            </span> -->
-                            <span class="custbtn pad-left-20">
-                              <button class="btn btn-info jld-lnk-btn" (click)="editCustomId(bProfile.customId)">
-                                Personalize
-                              </button>
-                            </span>
-                          </span>
-                          <br>
-                        </li>
-                        <p class="head-level-settings mt-xs-3">
-                          <span class="inactive" *ngIf="!profile_status">
-                            <i class="fa fa-times"></i> Inactive</span>
-                          <span class="active" *ngIf="profile_status">
-                            <i class="fa fa-check"></i> Active</span>
-
-                        </p>
-                        <!-- <li class="acc-url-li mgn-up-10">
-                          <strong> Jaldee Provider Id :</strong>
-                        <span class="jld-link consumr-loc-icon" rel="noopener" target="_blank">{{bProfile.customId}}</span>
-                        <span class="custid">
-                          <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyProfileId(bProfile.customId)"
-                            [matTooltip]="'Copy Id'"></i>
-                        </span>
-                        </li> -->
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div class="coupon-outer" *ngIf="!bProfile.customId">
-                    <div class="duration instantQ" *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
-                      You are not allowed to do this operation. Please upgrade license package
-                    </div>
-                  </div>
 
                 </div>
 
 
 
-                <div class="pubs card w-dta bprof" *ngIf="!showIncompleteButton">
-                  <div class="ctrl">
-                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
-                      <h2 class="mb-0" style="color:black;">List my profile on jaldee.com&nbsp;&nbsp;
-                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="jaldee_online_status"
-                          (change)="confirm_searchStatus();">
-                        </mat-slide-toggle>&nbsp;{{jaldee_online_status_str}} </h2>
-                      <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
-                        <span class="inactive" *ngIf="!jaldee_online_status">{{profile_disabled_msg}}</span>
-                        <span class="active" *ngIf="jaldee_online_status">{{profile_enabled_msg}}</span>
-                      </div>
-                    </div>
-                  </div>
-
-
-
-
-                  <!-- <p class="form-level-settings" *ngIf="!normal_search_active">
-                                            {{frm_public_search_cap}}
-                                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('public-search', $event)">Learn More
-                                            </a>
-                                        </p>
-                                        <p class="form-level-settings" *ngIf="normal_search_active">
-                                            {{frm_public_search_off_cap}}
-                                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('public-search', $event)">Learn More
-                                            </a>
-                                        </p>
-
-
-                                            <br> -->
-
-
-
-
-
-                </div>
-                <div class="pubs card w-dta bprof" *ngIf="!showIncompleteButton">
-                  <div class="ctrl">
-                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
-
-                      <i *ngIf="bProfile && bProfile.verifyLevel =='NONE'" class="fa fa-star" style="color:grey"> </i>
-                      <span *ngIf="bProfile && bProfile.verifyLevel =='NONE'" class="bold">
-                        {{verified_level_change}}.
-                      </span>
-                      <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'">
-                        <img height="80" width="70" src="./assets/images/BasicOrg.png" alt="Basic">
-                      </span>
-                      <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'">
-                        <img height="80" width="70" src="./assets/images/BasicPlsOrg.png" alt="Basic Plus">
-                      </span>
-                      <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'">
-                        <img height="80" width="70" src="./assets/images/PremiumOrg.png" alt="Advanced">
-                      </span>
-                      <i *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'" class="fa fa-star-half-o"
-                        style="color:goldenrod"></i>
-                      <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'" class="bold">
-                        {{verified_level_basic}}.
-                      </span>
-                      <i *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'" class="fa fa-star-half-o"
-                        style="color:goldenrod"></i>
-                      <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'" class="bold">
-                        {{verified_level_basicplus}}.
-                      </span>
-                      <i *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'" class="fa fa-star"
-                        style="color:goldenrod"></i>
-                      <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'" class="bold">
-                        {{verified_level_premium}}.
-                      </span>
-                      <br>
-
-                      <span *ngIf="bProfile && bProfile.verifyLevel != 'ADVANCED'"
-                        class="form-level-settings">{{frm_verified_cap}}
-                        <a class="learnmore-pointer" id="verified-levels"
-                          (click)="learnmore_clicked('verified-levels', $event)">Learn More
-                        </a>
-                      </span>
-                    </div>
-
-                  </div>
-                </div>
               </div>
 
 
@@ -417,7 +164,7 @@
                     </div>
 
                     <!-- Specialization -->
-                    <div class="cd-b" (click)="handleSpecialization()">
+                    <div class="cd-b" (click)="  gotoSpecializations()">
                       <div class="div-outline custId-cursor"
                         [ngClass]="{'div-grn-outline':specializeFilled,'div-red-outline':!specializeFilled }">
                         <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
@@ -432,383 +179,12 @@
 
 
 
-                    <!--mandatory fields -->
-
-                    <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
-                      <div *ngFor="let fields of domain_fields">
-                        <ng-container *ngIf="fields.mandatory">
-                          <div class="cd-b">
-                            <div class="div-outline custId-cursor"
-                              (click)="!fields['value'] ? addDynamicField(fields, 'domain_questions'):(fields.dataType=='Gender') ?editDynamicField(fields.name, 'domain_questions'):false"
-                              [ngClass]="{'div-grn-outline':fields['value'],'div-red-outline':!fields['value'] }">
-                              <i *ngIf="fields['value']" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
-                              <i *ngIf="!fields['value']" class="fa fa-exclamation-circle fa-lg fa-red"
-                          aria-hidden="true"></i>
-                              <span class="fontstyl">{{fields.displayName}} </span>
-                              <div>
-                                <!-- <div class="custom_business">
-                                  <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'domain_questions')">
-                                    <mat-icon>{{add_circle_outline}}</mat-icon>
-                                  </button>
-                                </div> -->
-                                <ng-container [ngSwitch]="fields.dataType">
-                                  <ng-container *ngSwitchCase="'TEXT'">
-                                    <div class="cont-btn">
-                                      <p> {{ fields.value | capitalizeFirst}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
-
-                                  <ng-container *ngSwitchCase="'TEXT_MED'">
-                                    <div class="cont-btn">
-                                      <p [innerHTML]="fields.value | nl2br | capitalizeFirst">
-                                        {{fields.value | nl2br | capitalizeFirst }}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
-
-                                  <ng-container *ngSwitchCase="'Boolean'">
-                                    <div class="cont-btn">
-                                      <p> {{(fields.value == 'true' || fields.value == true ) ? 'Yes' : 'No'}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
-                                  <ng-container *ngSwitchCase="'Age'">
-                                    <div class="cont-btn">
-                                      <p> {{fields.value}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
-
-                                  <ng-container *ngSwitchCase="'Number'">
-                                    <div class="cont-btn">
-                                      <p> {{fields.value}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
-
-                                  <ng-container *ngSwitchCase="'URL'">
-                                    <div class="cont-btn">
-                                      <p> {{fields.value}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
 
 
-                                  <ng-container *ngSwitchCase="'Date'">
-                                    <div class="cont-btn">
-                                      <p> {{fields.value | date:dateFormat}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
 
-                                  <ng-container *ngSwitchCase="'DOB'">
-                                    <div class="cont-btn">
-                                      <p> {{fields.value}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
-
-                                  <ng-container *ngSwitchCase="'Phone'">
-                                    <div class="cont-btn">
-                                      <p> {{fields.value}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
-
-
-                                  <ng-container *ngSwitchCase="'Email'">
-                                    <div class="cont-btn">
-                                      <p> {{fields.value}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
-
-                                  <ng-container *ngSwitchCase="'Enum'">
-                                    <div class="cont-btn">
-                                      <p>{{ getdispVal('domain', fields)}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
-
-                                  <ng-container *ngSwitchCase="'EnumList'">
-                                    <div class="cont-btn">
-                                      <p>{{ getdispVal('domain', fields)}}</p>
-                                      <span class="editbt"
-                                        (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                    </div>
-                                  </ng-container>
-
-                                  <ng-container *ngSwitchCase="'Gender'">
-                                    <div class="cont-btn" (click)="editDynamicField(fields.name, 'domain_questions')">
-                                      <!-- <p> {{fields.value | capitalizeFirst}} </p>
-                                      <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span> -->
-
-                                    </div>
-                                  </ng-container>
-
-                                  <ng-container *ngSwitchCase="'DataGrid'">
-                                    <div class="table-outer" *ngIf="fields['value']">
-                                      <table  class="table table-striped">
-                                        <thead class="cf" *ngIf="fields['value']">
-                                          <tr>
-                                            <th class="cth" *ngFor="let column of fields.Columns">
-                                              {{column.displayName}}</th>
-                                            <th></th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <tr *ngFor="let row of fields.value;let i = index">
-                                            <td *ngFor="let column of fields.Columns;let j = index"
-                                              [attr.data-title]="fields.Columns[j].displayName">
-                                              {{row[column.key]}}</td>
-                                            <td class="action">
-                                              <span class="mbt">
-                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                  <mat-icon>more_vert
-                                                  </mat-icon>
-                                                </button>
-                                                <mat-menu #menu="matMenu">
-                                                  <button type="button" mat-menu-item
-                                                    (click)="editGridDynamicField(fields.name,'domain_questions', i)">
-                                                    <i class="icon-edit"></i>
-                                                    <span>{{edit_cap}}</span>
-                                                  </button>
-                                                  <button type="button" mat-menu-item
-                                                    (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">
-                                                    <i class="icon-delete"></i>
-                                                    <span>{{delete_btn}}</span>
-                                                  </button>
-                                                </mat-menu>
-                                              </span>
-
-                                              <span class="mbt-mobile-show">
-                                                <button class="editcls" type="button"
-                                                  (click)="editGridDynamicField(fields.name,'domain_questions', i)">{{edit_cap}}</button>
-                                                <button class="deletecls" type="button"
-                                                  (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">{{delete_btn}}</button>
-                                              </span>
-                                            </td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                      <span *ngIf="fields['value']"
-                                        (click)="editGridDynamicField(fields.name,'domain_questions', null)"
-                                        class="addbt"></span>
-                                    </div>
-                                  </ng-container>
-                                </ng-container>
-                              </div>
-                            </div>
-
-                          </div>
-                        </ng-container>
-                      </div>
-                    </ng-container>
-
-                    <ng-container *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
-                      <div class="acc-cont" *ngFor="let fields of subdomain_fields">
-                        <ng-container *ngIf="fields.mandatory">
-                          <div class="cd-b">
-                            <div class="div-outline custId-cursor"
-                              (click)="!fields['value'] ? addDynamicField(fields, 'subdomain_questions'):(fields.dataType=='Gender') ?editDynamicField(fields.name, 'subdomain_questions'):false"
-                              [ngClass]="{'div-grn-outline':fields['value'],'div-red-outline':!fields['value'] }">
-                              <i *ngIf="fields['value']" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
-                              <i *ngIf="!fields['value']" class="fa fa-exclamation-circle fa-lg fa-red"
-                          aria-hidden="true"></i>
-                              <span class="fontstyl">{{fields.displayName}} </span>
-
-
-                              <!-- <div class="custom_business">
-                                <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
-                                  <mat-icon>{{add_circle_outline}}</mat-icon>
-                                </button>
-                              </div> -->
-
-                              <ng-container [ngSwitch]="fields.dataType">
-
-                                <ng-container *ngSwitchCase="'TEXT'">
-                                  <div class="cont-btn">
-                                    <p> {{fields.value | capitalizeFirst}}</p>
-
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'TEXT_MED'">
-                                  <div class="cont-btn">
-                                    <p [innerHTML]="fields.value | nl2br | capitalizeFirst">
-                                      {{fields.value | nl2br | capitalizeFirst}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'Boolean'">
-                                  <div class="cont-btn">
-                                    <p> {{(fields.value == 'true' || fields.value == true ) ? 'Yes' : 'No'}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'Age'">
-                                  <div class="cont-btn">
-                                    <p> {{fields.value}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'Number'">
-                                  <div class="cont-btn">
-                                    <p> {{fields.value}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'URL'">
-                                  <div class="cont-btn">
-                                    <p> {{fields.value}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-
-                                <ng-container *ngSwitchCase="'Date'">
-                                  <div class="cont-btn">
-                                    <p> {{fields.value | date:dateFormat}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'DOB'">
-                                  <div class="cont-btn">
-                                    <p> {{fields.value}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'Phone'">
-                                  <div class="cont-btn">
-                                    <p> {{fields.value}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-
-                                <ng-container *ngSwitchCase="'Email'">
-                                  <div class="cont-btn">
-                                    <p> {{fields.value}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'Enum'">
-                                  <div class="cont-btn">
-                                    <p> {{ getdispVal('subdomain',fields)}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'EnumList'">
-                                  <div class="cont-btn">
-                                    <p>{{ getdispVal('subdomain', fields)}}</p>
-                                    <span class="editbt"
-                                      (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'Gender'">
-                                  <div class="cont-btn" (click)="editDynamicField(fields.name, 'subdomain_questions')">
-                                    <!-- <span style="margin-left:1%" (click)="editDynamicField(fields.name, 'subdomain_questions')">{{fields.value | capitalizeFirst}} </span> -->
-
-                                  </div>
-                                </ng-container>
-
-                                <ng-container *ngSwitchCase="'DataGrid'">
-                                  <div class="table-outer"  *ngIf="fields['value']">
-                                    <table class="table table-striped" >
-                                      <thead class="cf" *ngIf="fields['value']">
-                                        <tr>
-                                          <th class="cth" *ngFor="let column of fields.Columns">
-                                            {{column.displayName}}</th>
-                                          <th></th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr *ngFor="let row of fields.value;let i = index">
-                                          <td *ngFor="let column of fields.Columns;let j = index"
-                                            [attr.data-title]="fields.Columns[j].displayName">
-                                            {{column.type=='Enum' ? vkeyNameMap[row[column.key]] : row[column.key]}}
-                                          </td>
-                                          <td class="action">
-                                            <span class="mbt">
-                                              <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                <mat-icon>more_vert
-                                                </mat-icon>
-                                              </button>
-                                              <mat-menu #menu="matMenu">
-                                                <button type="button" mat-menu-item
-                                                  (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">
-                                                  <i class="icon-edit"></i>
-                                                  <span>{{edit_cap}}</span>
-                                                </button>
-                                                <button type="button" mat-menu-item
-                                                  (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">
-                                                  <i class="icon-delete"></i>
-                                                  <span>{{delete_btn}}</span>
-                                                </button>
-                                              </mat-menu>
-                                            </span>
-                                            <span class="mbt-mobile-show">
-                                              <button class="editcls" type="button"
-                                                (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">{{edit_cap}}</button>
-                                              <button class="deletecls" type="button"
-                                                (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">{{delete_btn}}</button>
-                                            </span>
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                    <span *ngIf="fields['value']"
-                                      (click)="editGridDynamicField(fields.name,'subdomain_questions', null)"
-                                      class="addbt"></span>
-                                  </div>
-                                </ng-container>
-                              </ng-container>
-
-
-                            </div>
-                          </div>
-                        </ng-container>
-                      </div>
-
-                    </ng-container>
-
-                    <!--end mandatory fields -->
 
                     <!-- Languages Known -->
-                    <div class="cd-b" (click)="handleSpokenLanguages()">
+                    <div class="cd-b" (click)="gotoLanguages()">
                       <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':languageFilled}">
                         <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
                         <span class="fontstyl">Languages Known</span>

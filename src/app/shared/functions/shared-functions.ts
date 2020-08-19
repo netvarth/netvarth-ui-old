@@ -1368,6 +1368,17 @@ export class SharedFunctions {
       return false;
     }
   }
+  isNumericforToken(evt) {
+    const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
+    if (inputKeyCode < 48 || inputKeyCode > 57) {
+      evt.preventDefault();
+      return false;
+    } else {
+      evt.val(evt.val().replace(/[^\d].+/, ''));
+      return true;
+    }
+  }
+  
   removSpace(evt) {
     const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
     if (inputKeyCode === 32) {

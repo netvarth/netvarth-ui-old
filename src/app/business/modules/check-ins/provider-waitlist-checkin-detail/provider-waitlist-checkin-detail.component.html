@@ -19,9 +19,14 @@
               <h2 *ngIf="!showToken">{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
               <h2 *ngIf="showToken">Token {{details_cap}}</h2>
               <div class="tp" *ngIf="waitlist_data">
-                <div class="item"><span class="ttle">{{name_cap}}</span> <span>
+                <div class="item" *ngIf="waitlist_data.consumer.firstName || waitlist_data.consumer.lastName"><span
+                    class="ttle">{{name_cap}}</span> <span>
                     {{waitlist_data.consumer.firstName | capitalizeFirst}}
                     {{waitlist_data.consumer.lastName | capitalizeFirst}}</span></div>
+                <div class="item" *ngIf="waitlist_data.consumer.jaldeeId"><span
+                    class="ttle">{{customer_label | capitalizeFirst}} id</span>
+                  <span>
+                    {{waitlist_data.consumer.jaldeeId}}</span></div>
                 <!-- <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div> -->
                 <div class="item">
                   <!-- <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">Date/Est Service time:</span> -->
@@ -96,10 +101,10 @@
                   <!-- <span> {{waitlist_data.queue.name |
                     capitalizeFirst}}</span> -->
                   {{waitlist_data.queue.queueStartTime}} - {{waitlist_data.queue.queueEndTime}}</div>
-                <div class="item" *ngIf="pos"><span class="ttle">{{pay_status_cap}}</span>
+                <div class="item" *ngIf="pos && waitlist_data.paymentStatus != 'NotPaid'"><span class="ttle">{{pay_status_cap}}</span>
                   <ng-container *ngIf="waitlist_data && waitlist_data.paymentStatus">
-                    <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span
-                        class="text">{{not_paid_cap}}</span></span>
+                    <!-- <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span
+                        class="text">{{not_paid_cap}}</span></span> -->
                     <span class="paid-h" *ngIf="waitlist_data.paymentStatus == 'PartiallyPaid'"><span
                         class="text">{{partially_paid_cap}}</span></span>
                     <span class="paid-f" *ngIf="waitlist_data.paymentStatus == 'FullyPaid'"><span
@@ -108,8 +113,8 @@
                         class="text">Refund</span></span>
                   </ng-container>
                 </div>
-                <div class="item" *ngIf="waitlist_data.waitlistPhoneNumber"><span
-                    class="ttle">Phone number</span><span>{{waitlist_data.waitlistPhoneNumber}}</span></div>
+                <div class="item" *ngIf="waitlist_data.waitlistPhoneNumber"><span class="ttle">Phone
+                    number</span><span>{{waitlist_data.waitlistPhoneNumber}}</span></div>
                 <div class="item" *ngIf="userDet['sector'] == 'foodJoints'"><span
                     class="ttle">{{party_size_cap}}</span><span>
                     {{waitlist_data.partySize}}</span></div>
@@ -157,7 +162,7 @@
               <div class="clearfix"></div>
               <!-- </mat-expansion-panel>
               </mat-accordion> -->
-              <div class="item otp_scr mgn-bt-20" *ngIf="waitlist_data && waitlist_data.virtualService">
+              <!-- <div class="item otp_scr mgn-bt-20" *ngIf="waitlist_data && waitlist_data.virtualService">
                 <div class="ttle mgn-bt-10" style="font-weight: 500;
               font-size: 1rem;">Calling Modes</div>
                 <div class="mgn-bt-5" *ngFor="let mode of waitlist_data.virtualService | keyvalue">
@@ -165,7 +170,7 @@
                     {{mode.value}} </span>
                 </div>
               </div>
-              <div class="clearfix"></div>
+              <div class="clearfix"></div> -->
               <div class="btm" *ngIf="waitlist_data">
                 <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">{{send_msg_cap}}</button>
                 <button class="cs-btn bt3 addprovider"

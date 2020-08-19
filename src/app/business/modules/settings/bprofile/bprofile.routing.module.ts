@@ -6,6 +6,7 @@ import { SpecializationsComponent } from './specializations/specializations.comp
 import { LanguagesComponent } from './languages/languages.component';
 import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
 import { AboutMeComponent } from './aboutme/aboutme.component';
+import { JaldeeOnlineComponent } from './jaldee-online/jaldee-online.component';
 
 const routes: Routes = [
     {path: '', component: BProfileComponent },
@@ -14,7 +15,8 @@ const routes: Routes = [
         {path: 'specializations', component: SpecializationsComponent },
         {path: 'languages', component: LanguagesComponent },
         {path: 'additionalinfo', component: AdditionalInfoComponent },
-        {path: 'aboutme', component: AboutMeComponent }
+        {path: 'aboutme', component: AboutMeComponent },
+        {path: 'jaldeeonline', component: JaldeeOnlineComponent}
     ]},
     {
         path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule)

@@ -38,7 +38,7 @@
                                     <div>{{customer[0].firstName}} {{customer[0].lastName}}</div>
                                 </div>
                                 <div *ngIf="customer[0].jaldeeId" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
-                                    <div><b>Customer Id:</b></div>
+                                    <div><b>{{customer_label | capitalizeFirst}} Id:</b></div>
                                     <div>{{customer[0].jaldeeId}}</div>
                                 </div>
                                 <div *ngIf="customer[0].email" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">

@@ -6,20 +6,28 @@ import { MatDialog } from '@angular/material';
 import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 import { AddProviderBprofileSpecializationsComponent } from '../../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 @Component({
     selector: 'app-specializatons',
     templateUrl: './specializations.component.html'
 })
 export class SpecializationsComponent implements OnInit, OnDestroy {
     specialization_arr: any = [];
+    specializations_cap = Messages.SPECIALIZATIONS_CHOOSE;
     special_cap = Messages.BPROFILE_SPECIAL_CAP;
     specialization_title = '';
     bProfile = null;
     frm_specialization_cap = Messages.FRM_LEVEL_SPEC_MSG;
     have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
     add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
-    specialdialogRef;
     domain;
+    cancel_btn_cap = Messages.CANCEL_BTN;
+    save_btn_cap = Messages.SAVE_BTN;
+    api_loading = true;
+    selspecialization_arr: any = [];
+    disableButton = false;
+    src: any;
     normal_specilization_show = 1;
     breadcrumb_moreoptions: any = [];
     breadcrumbs = [
@@ -40,14 +48,13 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
         private routerobj: Router,
+        private specialsn: Location,
         public shared_functions: SharedFunctions,
         private dialog: MatDialog
-    ) { }
+    ) {
+      }
     ngOnDestroy() {
-        if (this.specialdialogRef) {
-            this.specialdialogRef.close();
-        }
-    }
+       }
     ngOnInit() {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.initSpecializations();
@@ -64,6 +71,16 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod ]);
     }
+    goBack() {
+        if (this.src === 'h') {
+        this.backPage();
+        } else {
+          this.routerobj.navigate(['provider', 'settings', 'bprofile']);
+        }
+      }
+      backPage() {
+        this.specialsn.back();
+      }
     initSpecializations() {
         this.bProfile = [];
         this.getBussinessProfileApi()
@@ -75,13 +92,12 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                         data['serviceSubSector']['displayName'] : '';
                     if (this.bProfile.specialization) {
                         if (this.bProfile.specialization.length > 0) {
-                            this.normal_specilization_show = 3;
-                        } else {
-                            this.normal_specilization_show = 2;
+                          console.log(this.bProfile.specialization);
+                           this.selspecialization_arr = this.bProfile.specialization;
+                          } else {
+                            this.selspecialization_arr = [];
                         }
-                    } else {
-                        this.normal_specilization_show = 2;
-                    }
+                   }
                 });
     }
     getSpecializations(domain, subdomain) {
@@ -113,43 +129,45 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
 
         });
     }
-    handleSpecialization() {
-        let holdselspec;
-        if (this.bProfile && this.bProfile.specialization) {
-            holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
+    specializationSel(sel) {
+        if (this.selspecialization_arr.length > 0) {
+          const existindx = this.selspecialization_arr.indexOf(sel);
+          if (existindx === -1) {
+            this.selspecialization_arr.push(sel);
+          } else {
+            this.selspecialization_arr.splice(existindx, 1);
+          }
         } else {
-            holdselspec = [];
+          this.selspecialization_arr.push(sel);
         }
-
-        const bprof = holdselspec;
-        const special = this.specialization_arr;
-        this.specialdialogRef = this.dialog.open(AddProviderBprofileSpecializationsComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-            disableClose: true,
-            autoFocus: false,
-            data: {
-                selspecializations: bprof,
-                specializations: special
+      }
+      checkspecializationExists(lang) {
+        if (this.selspecialization_arr.length > 0) {
+          const existindx = this.selspecialization_arr.indexOf(lang);
+          if (existindx !== -1) {
+            return true;
+          }
+        } else {
+          return false;
+        }
+      }
+      saveSpecializations() {
+        this.disableButton = true;
+        const postdata = {
+          'specialization': this.selspecialization_arr
+        };
+        this.provider_services.updatePrimaryFields(postdata)
+          .subscribe(() => {
+            this.shared_functions.openSnackBar(Messages.BPROFILE_SPECIALIZATION_SAVED, { 'panelClass': 'snackbarnormal' });
+            this.disableButton = false;
+            this.routerobj.navigate(['provider', 'settings', 'bprofile']);
+            },
+            error => {
+              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
             }
-        });
-        this.specialdialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                if (result['mod'] === 'reloadlist') {
-                    // this.getBusinessProfile();
-                    this.bProfile = result['data'];
-                    this.initSpecializations();
-                    if (this.bProfile && this.bProfile.selspecializations) {
-                        if (this.bProfile.selspecializations.length > 0) {
-                            this.normal_specilization_show = 3;
-                        } else {
-                            this.normal_specilization_show = 2;
-                        }
-                    } else {
-                        this.normal_specilization_show = 2;
-                    }
-                }
-            }
-        });
-    }
-}
+          );
+      }
+      cancel() {
+      this.routerobj.navigate(['provider', 'settings', 'bprofile']);
+      }
+   }

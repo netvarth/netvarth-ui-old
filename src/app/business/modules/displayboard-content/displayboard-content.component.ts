@@ -491,8 +491,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     }
     setDisplayboards(element) {
         const displayboard = element.queueSet;
-        const fieldlistasc = this.shared_functions.sortByKey(displayboard.fieldList, 'order');
-        displayboard.fieldList = fieldlistasc;
+        // const fieldlistasc = this.shared_functions.sortByKey(displayboard.fieldList, 'order');
+        // displayboard.fieldList = fieldlistasc;
+        
         this.selectedDisplayboards[element.position]['board'] = displayboard;
         // const Mfilter = this.setFilterForApi(displayboard);
         const Mfilter = displayboard.queryString;

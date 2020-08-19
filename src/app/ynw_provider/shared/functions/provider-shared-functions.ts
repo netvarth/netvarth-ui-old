@@ -374,6 +374,7 @@ export class ProviderSharedFuctions {
     let name;
     let email;
     let phone;
+    let phone_history;
     if (waitlist.length > 1) {
       type = 'multiple';
       for (const watlst of waitlist) {
@@ -395,6 +396,7 @@ export class ProviderSharedFuctions {
         name = waitlist[0].consumer.firstName + ' ' + waitlist[0].consumer.lastName;
         email = waitlist[0].waitlistingFor[0].email;
         phone = waitlist[0].waitlistingFor[0].phoneNo;
+        phone_history  = waitlist[0].waitlistPhoneNumber;
       }
     }
     if (type === 'single') {
@@ -417,7 +419,8 @@ export class ProviderSharedFuctions {
           name: name,
           appt: appt,
           email: email,
-          phone: phone
+          phone: phone,
+          phone_history: phone_history
         }
       });
 

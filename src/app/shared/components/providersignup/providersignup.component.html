@@ -59,7 +59,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     target="_blank">{{terms_cond_cap}}</a></span>
                         </div>
                         <div class="form-group form-button">
-                            <input type="submit" name="signup" id="signup" class="form-submit" value="Register"
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Next"
                                 [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid"
                                 (click)="registerClicked()">
                         </div>
@@ -135,75 +135,54 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
             <div class="container1">
                 <div class="signup-content">
                     <div class="signup-form">
-                        <h1 _ngcontent-qyo-c1="" class="form-title" style="
+                        <h1 *ngIf="isValidOtp" _ngcontent-qyo-c1="" class="form-title" style="
                             color: green;
                         ">Congratulations!</h1>
                         <!-- <h2 class="form-title">You have become a Jaldee partner.</h2> -->
-                        <h3 class="form-title">Please set your password and enter otp to finish sign up process.</h3>
+                        <!-- <h3 class="form-title">Please enter otp and set your password to finish sign up process.</h3> -->
                         <form method="POST" [formGroup]="spForm" class="register-form" id="register-form">
-                            <div class="form-group">
-                                <label for="password"></label>
-                                <input type="password" formControlName="new_password" name="name" id="name"
-                                    placeholder="Enter password" />
-                                <app-field-error-display
-                                    [displayError]="fed_service.isFieldValid(spForm,'new_password')"
-                                    [errorMsgs]="fed_service.getErrorMessage(spForm,'new_password',
-                                    {'required' : 'Password is required',
-                                    'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
-                                </app-field-error-display>
-                            </div>
-                            <div class="form-group">
-                                <label for="re-enter"></label>
-                                <input type="password" formControlName="confirm_password" name="passsword" id="password"
-                                    placeholder="Re-enter password*" (keyup)="keyPressed($event)" />
-                                <app-field-error-display
-                                    [displayError]="fed_service.isFieldValid(spForm,'confirm_password')" [errorMsgs]="fed_service.getErrorMessage(spForm,'confirm_password',
-                                    {'required' : 'Re-enter Password'})">
-                                </app-field-error-display>
-                                <app-field-error-display [displayError]="!isValidConfirm_pw"
-                                    errorMsg="Enter Password and Re-entered Password do not match">
-                                </app-field-error-display>
-                            </div>
-
-                            <div class="otpsection ynw-common-form-nm">
-                                <div *ngIf="showOTPContainer">
-                                    <!-- <div class="form-row">
-                                        <label>OTP is sent to Your Mobile Number</label>
-                                    </div> -->
-                                    <div class="form-group">
-                                        <mat-form-field>
-                                            <input class="number-ip-sm" matInput placeholder="Enter OTP"
-                                                [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
-                                                autocomplete="off" (keypress)="removSpecChar($event)" maxlength="5">
-                                        </mat-form-field>
-                                    </div>
-                                    <mat-dialog-actions>
-                                        <div class="resendouter" *ngIf="resetCounterVal==0">
-                                            <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}}
-                                                <ng-container *ngIf="type=='change_email'">
-                                                    Email</ng-container></span>
-                                            <ul class="info-lst">
-                                                <span class="black">Having a problem with your phone? &nbsp;<span
-                                                        (click)="setResendViaEmail()"
-                                                        mat-button>{{resend_otp_email}}</span></span>
-                                            </ul>
+                            <div *ngIf="hideOtpSection">
+                                <h3 class="form-title">Please enter OTP</h3>
+                                <div class="otpsection ynw-common-form-nm">
+                                    <div *ngIf="showOTPContainer">
+                                        <!-- <div class="form-row">
+                                            <label>OTP is sent to Your Mobile Number</label>
+                                        </div> -->
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input class="number-ip-sm" matInput placeholder="Enter OTP"
+                                                    [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
+                                                    autocomplete="off" (keypress)="removSpecChar($event)" maxlength="5">
+                                            </mat-form-field>
                                         </div>
-                                        <div class="counter-outer" *ngIf="resetCounterVal>0">
-                                            {{resend_otp_opt_active_cap}} <span
-                                                class="counter">{{resetCounterVal}}</span>
-                                            {{seconds_cap}}
-                                        </div>
-                                    </mat-dialog-actions>
-                                    <div class="form-group form-button">
-                                        <input type="submit" [disabled]="!spForm.valid || joinClicked" name="signup" id="signup"
-                                            class="form-submit" value="Join Jaldee"
-                                            (click)="onPasswordSubmit()">
+                                        <mat-dialog-actions>
+                                            <div class="resendouter" *ngIf="resetCounterVal==0">
+                                                <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}}
+                                                    <ng-container *ngIf="type=='change_email'">
+                                                        Email</ng-container></span>
+                                                <ul class="info-lst">
+                                                    <span class="black">Having a problem with your phone? &nbsp;<span
+                                                            (click)="setResendViaEmail()"
+                                                            mat-button>{{resend_otp_email}}</span></span>
+                                                </ul>
+                                            </div>
+                                            <div class="counter-outer" *ngIf="resetCounterVal>0">
+                                                {{resend_otp_opt_active_cap}} <span
+                                                    class="counter">{{resetCounterVal}}</span>
+                                                {{seconds_cap}}
+                                            </div>
+                                        </mat-dialog-actions>
+                                        
                                     </div>
+                                </div>
+                                <div>
+                                    <button (click)="onOtpSubmit()" mat-button
+                                                class="cs-btn bt1">Next</button>
                                 </div>
                             </div>
                             <ng-container *ngIf="showOTPEmailContainer">
                                 <div class="ynw-common-form-nm otpemailsection">
-                                    <div class="form-group pholder">
+                                    <div class="form-group">
                                         <mat-form-field>
                                             <input type="email" matInput [(ngModel)]="email"
                                                 [ngModelOptions]="{standalone: true}" placeholder="Enter your email id"
@@ -220,7 +199,43 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         </div>
                                     </mat-dialog-actions>
                                 </div>
+                                
                             </ng-container>
+                           <div *ngIf="isValidOtp">
+                            <h3 class="form-title">Please enter Password</h3>
+
+                            <div class="padding-top">
+                                <div class="form-group">
+                                    <label for="password"></label>
+                                    <input type="password" formControlName="new_password" name="name" id="name"
+                                        placeholder="Enter password" />
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(spForm,'new_password')"
+                                        [errorMsgs]="fed_service.getErrorMessage(spForm,'new_password',
+                                        {'required' : 'Password is required',
+                                        'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="re-enter"></label>
+                                <input type="password" formControlName="confirm_password" name="passsword" id="password"
+                                    placeholder="Re-enter password*" (keyup)="keyPressed($event)" />
+                                <app-field-error-display
+                                    [displayError]="fed_service.isFieldValid(spForm,'confirm_password')" [errorMsgs]="fed_service.getErrorMessage(spForm,'confirm_password',
+                                    {'required' : 'Re-enter Password'})">
+                                </app-field-error-display>
+                                <app-field-error-display [displayError]="!isValidConfirm_pw"
+                                    errorMsg="Enter Password and Re-entered Password do not match">
+                                </app-field-error-display>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" [disabled]="!spForm.valid || joinClicked" name="signup" id="signup"
+                                    class="form-submit" value="Join Jaldee"
+                                    (click)="onPasswordSubmit()">
+                            </div>
+                           </div>
                         </form>
 
                     </div>

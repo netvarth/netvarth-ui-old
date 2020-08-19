@@ -240,6 +240,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
     isNumeric(evt) {
         return this.shared_Functionsobj.isNumeric(evt);
     }
+    isNumericforToken(evt) {
+        return this.shared_Functionsobj.isNumericforToken(evt);
+      }
     changetime(src, passtime) {
         switch (src) {
             case 'start':
@@ -392,7 +395,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.api_loading = false;
         this.getProviderLocations();
     }
-
+ 
     updateForm() {
         const sttime = {
             hour: parseInt(moment(this.queue_data.queueSchedule.timeSlots[0].sTime,

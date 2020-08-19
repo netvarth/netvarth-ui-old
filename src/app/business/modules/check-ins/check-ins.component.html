@@ -137,8 +137,10 @@
                 <button class="item cust-button-3"
                   [ngClass]="{active: isQueueSelected(queue.id)?true:false, disabled: queue.queueState === 'ENABLED'?false:true}"
                   (click)="viewQClicked(queue)" *ngFor="let queue of activeQs;let i = index">
-                  {{queue.name}}<br />
-                  {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
+                  <span *ngIf="!queue.instantQueue">{{queue.name}}<br />
+                  {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}</span>
+                  <span *ngIf="queue.instantQueue">InstantQ<br />
+                    {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}</span>
                 </button>
               </owl-carousel>
               <div class="owl-theme">
@@ -594,7 +596,10 @@
                                     <mat-checkbox *ngFor="let q of queues"
                                       [checked]="filterQ.indexOf(q.id) !== -1"
                                       (change)="setFilterDataCheckbox('queue', q.id, $event)">
-                                      {{q.name}}</mat-checkbox>
+                                      {{q.name}}<span class="qtime-size" *ngIf="q.name != (q.queueSchedule.timeSlots[0]['sTime'] + '-' + q.queueSchedule.timeSlots[0]['eTime'])">
+                                        [{{q.queueSchedule.timeSlots[0]['sTime'] + ' - ' + q.queueSchedule.timeSlots[0]['eTime']}}]
+                                      </span>
+                                    </mat-checkbox>
                                   </li>
                                 </div>
 
@@ -723,11 +728,15 @@
                         <div class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                           {{checkin.date | date: display_dateFormat}}</div>
-                        <div class="bold pull-left mgn-lt-5 name pointer-cursor"
+                        <div class="bold pull-left mgn-lt-5 name pointer-cursor" *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
+                          <div class="bold pull-left mgn-lt-5 name pointer-cursor" *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
+                          [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
+                          (click)="goCheckinDetail(checkin)">
+                         {{customer_label}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{checkin.service.name}}</div>
@@ -790,12 +799,12 @@
                             &nbsp;Call</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('STARTED', checkin)"
-                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && !checkin.virtualService"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService || (checkin.virtualService && time_type==3))"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="showCallingModes(checkin, 'normalStart')"
-                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && checkin.virtualService"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type==1 && checkin.virtualService"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>

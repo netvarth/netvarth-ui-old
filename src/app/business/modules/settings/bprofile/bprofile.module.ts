@@ -20,6 +20,7 @@ import { ProPicPopupModule } from './pro-pic-popup/pro-pic-popup.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
 import { AboutMeComponent } from './aboutme/aboutme.component';
+import { JaldeeOnlineComponent } from './jaldee-online/jaldee-online.component';
 
 @NgModule({
     imports: [
@@ -45,7 +46,8 @@ import { AboutMeComponent } from './aboutme/aboutme.component';
         QRCodeGeneratorComponent,
         AdditionalInfoComponent,
         SpecializationsComponent,
-        AboutMeComponent
+        AboutMeComponent,
+        JaldeeOnlineComponent
     ],
     entryComponents: [
         AddProviderBprofileSpokenLanguagesComponent,

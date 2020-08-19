@@ -45,6 +45,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   phone: any;
   SEND_MESSAGE = '';
   customer_label = '';
+  phone_history: any;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -60,6 +61,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.uuid = this.data.uuid || null;
     this.email_id = this.data.email;
     this.phone = this.data.phone;
+    this.phone_history = this.data.phone_history;
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
     this.terminologies = data.terminologies;
