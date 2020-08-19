@@ -457,7 +457,7 @@ export class ProvidersignupComponent implements OnInit {
   }
   onOtpSubmit() {
     this.actionstarted = true;
-    this.joinClicked = true;
+    // this.joinClicked = true;
     this.resetApiErrors();
     return new Promise((resolve, reject) => {
       this.shared_services.OtpSignUpProviderValidate(this.otp)
@@ -470,7 +470,7 @@ export class ProvidersignupComponent implements OnInit {
           },
           error => {
             this.actionstarted = false;
-            this.joinClicked = false;
+            // this.joinClicked = false;
             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
