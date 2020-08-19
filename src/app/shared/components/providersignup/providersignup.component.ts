@@ -70,6 +70,7 @@ export class ProvidersignupComponent implements OnInit {
   action = false;
   bank_action = false;
   otp = null;
+  isValidOtp = false;
   user_details;
   domainIsthere;
   selectedpackage;
@@ -122,6 +123,7 @@ export class ProvidersignupComponent implements OnInit {
   providerPwd;
   email;
   isValidConfirm_pw = true;
+  hideOtpSection = true;
   joinClicked = false;
   api_loading = false;
   images = {
@@ -328,26 +330,8 @@ export class ProvidersignupComponent implements OnInit {
       return;
     }
   }
-  onOtpSubmit() {
-    this.actionstarted = true;
-    this.joinClicked = true;
-    this.resetApiErrors();
-    return new Promise((resolve, reject) => {
-      this.shared_services.OtpSignUpProviderValidate(this.otp)
-        .subscribe(
-          () => {
-            this.actionstarted = false;
-            this.createForm();
-            resolve();
-          },
-          error => {
-            this.actionstarted = false;
-            this.joinClicked = false;
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
-    });
-  }
+  
+ 
   // onReferalSubmit(sccode) {
   //   this.scfound = false;
   //   this.scCode = null;
@@ -469,6 +453,27 @@ export class ProvidersignupComponent implements OnInit {
       } else {
         resolve();
       }
+    });
+  }
+  onOtpSubmit() {
+    this.actionstarted = true;
+    this.joinClicked = true;
+    this.resetApiErrors();
+    return new Promise((resolve, reject) => {
+      this.shared_services.OtpSignUpProviderValidate(this.otp)
+        .subscribe(
+          () => {
+            this.actionstarted = false;
+            this.isValidOtp = true;
+            this.hideOtpSection = false;
+            resolve();
+          },
+          error => {
+            this.actionstarted = false;
+            this.joinClicked = false;
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
     });
   }
   onPasswordSubmit() {
