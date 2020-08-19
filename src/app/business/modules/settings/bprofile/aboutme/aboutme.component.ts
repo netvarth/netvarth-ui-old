@@ -77,10 +77,15 @@ export class AboutMeComponent implements OnInit {
     subdomainvirtual: false,
     specialization: false
   };
+<<<<<<< HEAD
   success_error = null;
   error_list = [];
   selitem_pic = '';
   error_msg = '';
+=======
+  edit_cap = Messages.EDIT_BTN;
+  delete_btn = Messages.DELETE_BTN;
+>>>>>>> refs/remotes/origin/1.3.0
     constructor(
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -96,8 +101,8 @@ export class AboutMeComponent implements OnInit {
     ) {
     }
     ngOnInit() {
-       // this.bProfile = this.provider_datastorageobj.get('bProfile');
-       this.getBusinessProfile();
+      this.getProviderLogo();
+      this.getBusinessProfile();
     }
      // Creates the form element
   createForm() {
@@ -235,7 +240,7 @@ export class AboutMeComponent implements OnInit {
               loginuserdata.accStatus = this.bProfile.status;
               // Updating the status (ACTIVE / INACTIVE) in the local storage
               this.sharedfunctionObj.setitemToGroupStorage('ynw-user', loginuserdata);
-              this.getProviderLogo();
+              //this.getProviderLogo();
             },
             () => {
             }
@@ -303,7 +308,7 @@ export class AboutMeComponent implements OnInit {
           data: { 'userdata': this.bProfile }
         });
         this.notedialogRef.afterClosed().subscribe(result => {
-          this.getBusinessProfile();
+           this.getProviderLogo();
         });
       }
 
@@ -320,8 +325,8 @@ export class AboutMeComponent implements OnInit {
           let mandatorydomainFilled = false;
           let additionalInfoFilledStatus = false;
           this.domain_fields = data['fields'];
-          this.domain_fields_nonmandatory = this.domain_fields.filter(dom => dom.mandatory === false);
           this.domain_fields_mandatory = this.domain_fields.filter(dom => dom.mandatory === true);
+          console.log('domain mandatory..' + JSON.stringify(this.domain_fields_mandatory));
           this.domain_questions = data['questions'] || [];
           this.domain_fields.forEach(subdomain => {
             checkArray.push(subdomain);
@@ -350,7 +355,7 @@ export class AboutMeComponent implements OnInit {
           weightageObjectOfDomain.mandatoryDomainFilledStatus = mandatorydomainFilled;
           weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
           this.provider_datastorageobj.setWeightageObjectOfDomain(weightageObjectOfDomain);
-
+          this.provider_datastorageobj.updateMandatoryAndAdditionalFieldWeightage();
 
 
         }
@@ -501,8 +506,9 @@ export class AboutMeComponent implements OnInit {
           let mandatorySubDomainFilled = false;
           let additionalInfoFilledStatus = false;
           this.subdomain_fields = data['fields'];
-          this.subdomain_fields_nonmandatory = this.subdomain_fields.filter(dom => dom.mandatory === false);
+         // this.subdomain_fields_nonmandatory = this.subdomain_fields.filter(dom => dom.mandatory === false);
           this.subdomain_fields_mandatory = this.subdomain_fields.filter(dom => dom.mandatory === true);
+          console.log('subdomain mandatory..' + JSON.stringify(this.subdomain_fields_mandatory));
           this.subdomain_fields.forEach(subdomain => {
             checkArray.push(subdomain);
           });
@@ -657,6 +663,8 @@ export class AboutMeComponent implements OnInit {
       return field;
     }
   }
+  
+  
   onDomainFormSubmit(post_data) {
     this.provider_services.updateDomainSubDomainFields(post_data,
       this.bProfile['serviceSector']['domain'])

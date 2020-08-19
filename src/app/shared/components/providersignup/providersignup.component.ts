@@ -293,6 +293,7 @@ export class ProvidersignupComponent implements OnInit {
             this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
           }
           this.active_step = 3;
+          this.hideOtpSection = true;
           this.showOTPContainer = true;
           this.showOTPEmailContainer = false;
           if (user_details.userProfile.email) {
@@ -453,7 +454,7 @@ export class ProvidersignupComponent implements OnInit {
   }
   onOtpSubmit() {
     this.actionstarted = true;
-    this.joinClicked = true;
+    // this.joinClicked = true;
     this.resetApiErrors();
     return new Promise((resolve, reject) => {
       this.shared_services.OtpSignUpProviderValidate(this.otp)
@@ -466,7 +467,7 @@ export class ProvidersignupComponent implements OnInit {
           },
           error => {
             this.actionstarted = false;
-            this.joinClicked = false;
+            // this.joinClicked = false;
             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
@@ -477,9 +478,9 @@ export class ProvidersignupComponent implements OnInit {
     this.joinClicked = true;
     this.api_loading = true;
     this.resetApiErrors();
-    if (this.otp) {
+    // if (this.otp) {
       if (this.isValidConfirm_pw) {
-        this.onOtpSubmit().then(data => {
+        // this.onOtpSubmit().then(data => {
           this.saveReferralInfo().then(
             () => {
               this.setPassword();
@@ -489,20 +490,20 @@ export class ProvidersignupComponent implements OnInit {
               this.api_loading = false;
               this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
-        },
-          (error) => {
-            this.joinClicked = false;
-            this.api_loading = false;
-          });
+        // },
+        //   (error) => {
+        //     this.joinClicked = false;
+        //     this.api_loading = false;
+        //   });
       } else {
         this.joinClicked = false;
         this.api_loading = false;
       }
-    } else {
-      this.joinClicked = false;
-      this.api_loading = false;
-      this.shared_functions.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
-    }
+    // } else {
+    //   this.joinClicked = false;
+    //   this.api_loading = false;
+    //   this.shared_functions.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
+    // }
   }
   resetApiErrors() {
     this.api_error = null;
@@ -718,6 +719,7 @@ export class ProvidersignupComponent implements OnInit {
     this.resetCounterVal = val;
   }
   setResendViaEmail() {
+    this.hideOtpSection = false;
     this.doshowOTPEmailContainer();
     this.resetApiErrors();
     if (this.user_details.userProfile && this.user_details.userProfile.email) {
@@ -744,5 +746,6 @@ export class ProvidersignupComponent implements OnInit {
     this.showOTPContainer = true;
     this.resetCounterVal = 0;
     this.otp_mobile = null;
+    this.hideOtpSection = true;
   }
 }
