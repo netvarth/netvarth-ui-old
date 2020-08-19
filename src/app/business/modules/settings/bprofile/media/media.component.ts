@@ -95,12 +95,13 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             console.log(input.ttype);
             if (input.ttype === 'image-upload') {
+              console.log(input.ttype );
                 this.provider_services.uploadGalleryImages(input.value)
                     .subscribe(
                         () => {
-                            this.getGalleryImages();
                             this.shared_functions.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                            this.getGalleryImages();
                         },
                         error => {
                             this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });

@@ -36,14 +36,14 @@ import { Location } from '@angular/common';
 })
 
 
-export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, AfterContentInit {
+export class BProfileComponent implements OnInit,  AfterViewChecked {
 
   listmyprofile_status: boolean;
   onlinepresence_status_str: string;
   subdomainVirtualFieldFilledStatus: any;
   domainVirtualFieldFilledStatus: any;
   showIncompleteButton = true;
-  
+
   domain_fields_nonmandatory: any;
   subdomain_fields_nonmandatory: any[];
   logoExist = false;
@@ -392,14 +392,14 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     private changeDetectorRef: ChangeDetectorRef) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     this.provider_datastorage.setWeightageArray([]);
-    this.shared_functions.getMessage().subscribe(data => {
-      this.getLicensemetrics();
-      switch (data.ttype) {
-        case 'upgradelicence':
-          this.getLicensemetrics();
-          break;
-      }
-    });
+    // this.shared_functions.getMessage().subscribe(data => {
+    //   this.getLicensemetrics();
+    //   switch (data.ttype) {
+    //     case 'upgradelicence':
+    //       this.getLicensemetrics();
+    //       break;
+    //   }
+    // });
   }
 
 
@@ -421,28 +421,10 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.getBusinessConfiguration();
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
-    this.getProviderLocations();
 
     this.getGalleryImages();
-    // this.getBusinessProfile();
-    this.subscription = this.galleryService.getMessage().subscribe(input => {
-      if (input.ttype === 'image-upload') {
-        this.provider_services.uploadGalleryImages(input.value)
-          .subscribe(
-            () => {
-              this.getGalleryImages();
-              this.shared_functions.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
-              this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
-            },
-            error => {
-              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-              this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
-            }
-          );
-      } else if (input.ttype === 'delete-image') {
-        this.deleteImage(input.value);
-      }
-    });
+
+
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -453,15 +435,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       customid: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_ALPHANUMERIC_HYPHEN)])]
     });
 
-    this.getLicenseDetails();
-    // this.getLicenseMetadata();
-    this.getTotalAllowedAdwordsCnt();
-    this.getLocationBadges();
-    this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
-    // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
-    // this.display_schedule =  this.sharedfunctionobj.arrageScheduleforDisplay(this.schedule_arr);
-
-    // this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'jaldeeonline->public-search' };
     this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_searchh_cap = Messages.FRM_LEVEL_PUBLIC_SEARCHH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_search_off_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);
@@ -497,9 +470,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
 
 
     });
-    // this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
-    this.getSpokenLanguages();
-    this.setLanguages();
+
 
 
 
@@ -515,59 +486,12 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     });
 
   }
-  changeJaldeeOnlineStatus(requiredFieldFilledStatus) {
-    // if (requiredFieldFilledStatus==true && this.onlinepresence_status === false) {
-    //   if(!localStorage.getItem('popupShown')) {
-    //   this.sharedfunctionobj.confirmOPSearchChangeStatus(this, this.onlinepresence_status);
-    //   localStorage.setItem('popupShown', 'true');
-    //   }
-    // } else if (requiredFieldFilledStatus==false && this.onlinepresence_status===true) {
-    //   this.handle_jaldeeOnlinePresence();
 
-    // }
 
-  }
-  ngAfterContentInit() {
-    console.log('afterContnet init');
-
-  }
   ngAfterViewChecked() {
     this.changeDetectorRef.detectChanges();
   }
-  ngOnDestroy() {
-    if (this.primarydialogRef) {
-      this.primarydialogRef.close();
-    }
-    if (this.loceditdialogRef) {
-      this.loceditdialogRef.close();
-    }
-    if (this.addlocdialogRef) {
-      this.addlocdialogRef.close();
-    }
-    if (this.scheduledialogRef) {
-      this.scheduledialogRef.close();
-    }
-    if (this.adworddialogRef) {
-      this.adworddialogRef.close();
-    }
 
-    if (this.socialdialogRef) {
-      this.socialdialogRef.close();
-    }
-    if (this.gallerydialogRef) {
-      this.gallerydialogRef.close();
-    }
-    if (this.delgaldialogRef) {
-      this.delgaldialogRef.close();
-    }
-    if (this.qrdialogRef) {
-      this.qrdialogRef.close();
-    }
-    // this.subscription.unsubscribe();
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
 
 
   calculateWeightage(data) {
@@ -644,58 +568,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
 
   }
 
-  // getLicensemetrics() {
-  //   let pkgId;
-  //   const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-  //   if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
-  //     pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
-  //   }
-  //   this.provider_services.getLicenseMetadata().subscribe(data => {
-  //     this.licenseMetadata = data;
-  //     for (let i = 0; i < this.licenseMetadata.length; i++) {
-  //       if (this.licenseMetadata[i].pkgId === pkgId) {
-  //         for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
-  //           if (this.licenseMetadata[i].metrics[k].id === 13) {
-  //             if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
-  //               this.showCustomId = true;
-  //               return;
-  //             } else {
-  //               this.showCustomId = false;
-  //               return;
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
-  getLicensemetrics() {
-    let pkgId;
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
-      pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
-    }
-    this.licenseMetadata = this.shared_functions.getitemfromLocalStorage('license-metadata');
-    // this.provider_services.getLicenseMetadata().subscribe(data => {
-    //   this.licenseMetadata = data;
-    for (let i = 0; i < this.licenseMetadata.length; i++) {
 
-      if (this.licenseMetadata[i].pkgId === pkgId) {
-        for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
-          if (this.licenseMetadata[i].metrics[k].id === 13) {
-            if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
-              this.showCustomId = true;
-              return;
-            } else {
-              this.showCustomId = false;
-              return;
-            }
-          }
-        }
-      }
-    }
-    // });
-  }
+
   getAdwordDisplayName(name) {
     return name.split(projectConstants.ADWORDSPLIT).join(' ');
   }
@@ -723,36 +597,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
 
         });
   }
-  confirm_listmyprofileStatus(e) {
-    if (this.listmyprofile_status) {
-      e.source.checked = true;
-      this.sharedfunctionobj.confirmSearchChangeStatus(this, this.listmyprofile_status);
-    } else if (!this.listmyprofile_status) {
-      e.source.checked = false;
-      this.handle_searchstatus();
-    }
-  }
-  confirm_opsearchStatus(e) {
-    if (this.onlinepresence_status) {
-      e.source.checked = true;
-      this.sharedfunctionobj.confirmOPSearchChangeStatus(this, this.onlinepresence_status);
-    } else if (!this.onlinepresence_status) {
-      e.source.checked = false;
-      this.handle_jaldeeOnlinePresence(e);
-    }
-  }
-
-  handle_searchstatus() {
-    const changeTostatus = (this.listmyprofile_status === true) ? 'DISABLE' : 'ENABLE';
-    this.provider_services.updatePublicSearch(changeTostatus)
-      .subscribe(() => {
-        this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + changeTostatus.toLowerCase() + 'd successfully', { ' panelclass': 'snackbarerror' });
-        this.getPublicSearch();
-      }, error => {
-        this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-
-      });
-  }
 
 
     getJaldeeIntegrationSettings() {
@@ -765,33 +609,10 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       }
     );
   }
-  handle_jaldeeOnlinePresence(e) {
-    const is_check = this.onlinepresence_status ? 'Disable' : 'Enable';
-    const data = {
-      'onlinePresence': !this.onlinepresence_status
-    };
-    this.provider_services.setJaldeeIntegration(data)
-      .subscribe(
-        () => {
-          this.onlinepresence_status = ! this.onlinepresence_status;
-          this.shared_functions.openSnackBar('Jaldee Online ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.getJaldeeIntegrationSettings();
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
-  }
 
-  // handle_opsearchstatus() {
-  //   const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
-  //   this.provider_services.updatePublicSearch(changeTostatus)
-  //     .subscribe(() => {
-  //       this.getPublicSearch();
-  //     }, error => {
-  //       this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //     });
-  // }
+
+
+
   getBusinessProfile() {
     this.aboutmefilled = false;
     this.locationFilled = false;
@@ -851,7 +672,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
                   this.additionalInfoDomainFields = this.provider_shared_functions.getAdditionalNonDomainMandatoryFields();
                   this.additionalInfoSubDomainFields = this.provider_shared_functions.getAdditionalNonSubDomainMandatoryFields();
                   this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
-                  this.getProviderLogo();
+
                   this.getDomainVirtualFields();
                   if (this.bProfile['serviceSubSector']['subDomain']) {
                     this.getSubDomainVirtualFields();
@@ -864,14 +685,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
             });
           this.provider_datastorage.set('bProfile', this.bProfile);
 
-          for (let i = 0; i < this.businessConfig.length; i++) {
-            if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
-              if (this.businessConfig[i].multipleLocation) {
-                this.multipeLocationAllowed = true;
-              }
-            }
-
-          }
 
           const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
@@ -884,20 +697,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
           } else {
             this.normal_profile_active = 2;
           }
-          if (this.bProfile.baseLocation) {
-            this.parkingType = this.bProfile.baseLocation.parkingType;
-            if (this.parkingType) {
-              this.park_type = this.parkingType.charAt(0).toUpperCase() + this.parkingType.substring(1);
-            }
-            if ((this.bProfile.baseLocation.parkingType && this.bProfile.baseLocation.parkingType !== 'none') || this.bProfile.baseLocation.open24hours
-              || this.objectKeys(this.bProfile.baseLocation.locationVirtualFields).length > 0) {
-              this.normal_locationamenities_show = 3;
-            } else {
-              this.normal_locationamenities_show = 2;
-            }
-          } else {
-            this.normal_locationamenities_show = 2;
-          }
+
           if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
             const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
             // calling function which saves the business related details to show in the header
@@ -916,71 +716,12 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
           } else {
             this.normal_basicinfo_show = 2;
           }
-          // check whether normal location section can be displayed
-          this.normal_locationinfo_show = 2;
-          if (this.bProfile.baseLocation) {
-            if (this.bProfile.baseLocation.place === '') { // case if base location name is blank
-              this.normal_locationinfo_show = 4;
-            } else {
-              this.normal_locationinfo_show = 3;
-            }
-            if (this.bProfile.baseLocation.bSchedule) {
-              if (this.bProfile.baseLocation.bSchedule.timespec) {
-                if (this.bProfile.baseLocation.bSchedule.timespec.length > 0) {
-                  this.schedule_arr = [];
-                  // extracting the schedule intervals
-                  for (let i = 0; i < this.bProfile.baseLocation.bSchedule.timespec.length; i++) {
-                    for (let j = 0; j < this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals.length; j++) {
-                      // pushing the schedule details to the respective array to show it in the page
-                      this.schedule_arr.push({
-                        day: this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals[j],
-                        sTime: this.bProfile.baseLocation.bSchedule.timespec[i].timeSlots[0].sTime,
-                        eTime: this.bProfile.baseLocation.bSchedule.timespec[i].timeSlots[0].eTime
-                      });
-                    }
-                  }
-                }
-              }
-            }
-            this.display_schedule = [];
-            this.display_schedule = this.sharedfunctionobj.arrageScheduleforDisplay(this.schedule_arr);
-          }
-          this.normal_customid_show = 2;
-          if (this.bProfile.customId) {
-            this.normal_customid_show = 3;
-          }
 
 
 
-          // specialization
-          this.normal_specilization_show = 2;
-          this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
-          this.specialization_title = (data['serviceSubSector']['displayName']) ?
-            data['serviceSubSector']['displayName'] : '';
-          this.normal_specilization_show = 2;
-          if (this.bProfile.specialization) {
-            if (this.bProfile.specialization.length > 0) {
-              this.normal_specilization_show = 3;
-            } else {
-              this.normal_specilization_show = 2;
-            }
-          }
 
-          this.normal_socialmedia_show = 2;
-          this.social_arr = [];
-          if (this.bProfile.socialMedia) {
-            if (this.bProfile.socialMedia.length > 0) {
-              this.normal_socialmedia_show = 3;
-              for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
-                if (this.bProfile.socialMedia[i].resource !== '') {
-                  this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
-                }
-              }
-            }
-          }
-          if (this.social_arr.length < this.orgsocial_list.length) {
-            this.showaddsocialmedia = true;
-          }
+
+
 
 
           // check whether domain fields exists
@@ -1042,36 +783,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldeeonline']);
   }
 
-  showBPrimary() {
-    this.primarydialogRef = this.dialog.open(ProviderBprofileSearchPrimaryComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: {
-        type: 'edit',
-        bprofile: this.bProfile,
-        logoExist: this.logoExist
-      }
-    });
-    this.primarydialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result === 'reloadlist') {
-          this.getBusinessProfile();
-          this.shared_functions.sendMessage({ 'ttype': 'profileChange' });
-        }
-      }
-    });
-  }
-  getLocationBadges() {
-    this.provider_services.getLocationBadges()
-      .subscribe(data => {
-        this.loc_badges = data;
-        for (const badge of this.loc_badges) {
-          this.badge_map_arr[badge.name] = badge.displayName;
-        }
-      });
-  }
+
   editLocation(badge?) {
     if (badge) {
       this.loceditdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
@@ -1092,7 +804,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
         if (result) {
           if (result === 'reloadlist') {
             this.getBusinessProfile();
-            this.getProviderLocations();
           }
         }
       });
@@ -1113,279 +824,9 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
         'locations', 'add'], navigationExtras);
     }
   }
-  editQueue() {
-    if (this.bProfile.baseLocation) {
-      const locid = this.bProfile.baseLocation.id;
-      if (locid) {
-        this.routerobj.navigate(['/provider/settings/q-manager/location-detail/' + locid]);
-      }
-    }
-  }
-  addLocation() {
-    // this.addlocdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass', 'locationoutermainclass'],
-    //   disableClose: true,
-    //   autoFocus: true,
-    //   data: {
-    //     // location : this.base_loc,
-    //     badges: this.loc_badges,
-    //     type: 'add',
-    //     source: 'bprofile'
-    //   }
-    // });
-    // this.addlocdialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     if (result === 'reloadlist') {
-    //       this.getBusinessProfile();
-    //       this.getProviderLocations();
-    //     }
-    //   }
-    // });
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'addbase' }
-    };
-    this.routerobj.navigate(['provider', 'settings', 'general',
-      'locations', 'add'], navigationExtras);
-  }
-  // get the list of locations added for the current provider
-  getProviderLocations() {
-    this.provider_services.getProviderLocations()
-      .subscribe(data => {
-        this.loc_list = data;
-        for (const loc of this.loc_list) {
-          if (loc['baseLocation']) {
-            this.base_loc = loc;
-            this.mapurl = null;
-            if (this.base_loc.lattitude !== '' &&
-              this.base_loc.longitude !== '') {
-              this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.base_loc.lattitude + ',' + this.base_loc.longitude + '&key=' + projectConstants.GOOGLEAPIKEY);
-            }
-          }
-        }
-      });
-  }
-  getmapurl() {
-    return this.base_loc.googleMapUrl; // 'https://www.google.com/maps/embed/v1/view?zoom=11&center=10.5276,76.2144&key=AIzaSyARtnqchjx36syKsRJyO_fWZHI4Fuv-SW4';
-  }
-  // display logo
-  showimg() {
-    let logourl = '';
-    this.profimg_exists = false;
-    if (this.item_pic.base64) {
-      this.profimg_exists = true;
-      return this.item_pic.base64;
-    } else {
-      if (this.blogo[0]) {
-        this.profimg_exists = true;
-        logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
-      }
-      return this.sharedfunctionobj.showlogoicon(logourl);
-    }
 
-  }
-  // handles the image display on load and on change
-  imageSelect(input) {
-    this.success_error = null;
-    this.error_list = [];
-    this.error_msg = '';
-    if (input.files && input.files[0]) {
-      for (const file of input.files) {
-        this.success_error = this.sharedfunctionobj.imageValidation(file);
-        if (this.success_error === true) {
-          const reader = new FileReader();
-          this.item_pic.files = input.files[0];
-          this.selitem_pic = input.files[0];
-          const fileobj = input.files[0];
-          reader.onload = (e) => {
-            this.item_pic.base64 = e.target['result'];
-          };
-          reader.readAsDataURL(fileobj);
-          if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
-            // generating the data to be submitted to change the logo
-            const submit_data: FormData = new FormData();
-            submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-            const propertiesDet = {
-              'caption': 'Logo'
-            };
-            const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-            submit_data.append('properties', blobPropdata);
-            this.uploadLogo(submit_data);
-          }
-        } else {
-          this.error_list.push(this.success_error);
-          if (this.error_list[0].type) {
-            this.error_msg = 'Selected image type not supported';
-          } else if (this.error_list[0].size) {
-            this.error_msg = 'Please upload images with size less than 15mb';
-          }
-          // this.error_msg = 'Please upload images with size < 5mb';
-          this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
-        }
-      }
-    }
-  }
-  // get the logo url for the provider
-  getProviderLogo() {
-    this.provider_services.getProviderLogo()
-      .subscribe(
-        data => {
-          this.blogo = data;
-          const cnow = new Date();
-          const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
-          this.cacheavoider = dd;
-          let logo = '';
-          if (this.blogo[0]) {
-            this.logoExist = true;
-            logo = this.blogo[0].url;
-          } else {
-            logo = '';
-            this.logoExist = false;
-          }
-          this.provider_datastorage.updateProfilePicWeightage(this.logoExist);
-          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-          // calling function which saves the business related details to show in the header
-          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-            || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', logo);
 
-          const pdata = { 'ttype': 'updateuserdetails' };
-          this.sharedfunctionobj.sendMessage(pdata);
-        },
-        () => {
 
-        }
-      );
-  }
-  // Upload logo
-  uploadLogo(passdata) {
-    this.provider_services.uploadLogo(passdata)
-      .subscribe(
-        data => {
-          // this.getProviderLogo();
-          this.blogo = [];
-          this.blogo[0] = data;
-          // calling function which saves the business related details to show in the header
-          const today = new Date();
-          const tday = today.toString().replace(/\s/g, '');
-          const blogo = this.blogo[0].url + '?' + tday;
-          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-            || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
-
-          const pdata = { 'ttype': 'updateuserdetails' };
-          this.provider_datastorage.updateProfilePicWeightage(true);
-          this.sharedfunctionobj.sendMessage(pdata);
-          /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
-        },
-        error => {
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          // this.api_error = error.error;
-        }
-      );
-  }
-  confirmLogoremove(keyname) {
-    this.sharedfunctionobj.confirmLogoImageDelete(this, keyname);
-  }
-  removeLogo(keyname) {
-    this.provider_services.deleteLogo(keyname)
-      .subscribe(() => {
-        // calling function which saves the business related details to show in the header
-        this.blogo = [];
-        this.profimg_exists = false;
-        this.provider_datastorage.updateProfilePicWeightage(this.profimg_exists);
-        const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-        this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-          || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '', true);
-
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedfunctionobj.sendMessage(pdata);
-        this.myInputVariable.nativeElement.value = '';
-      },
-        () => {
-
-        });
-  }
-  getDay(num) {
-    return projectConstants.myweekdaysSchedule[num];
-  }
-  change_schedulepopup() {
-    this.scheduledialogRef = this.dialog.open(ProviderBprofileSearchSchedulepopupComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: false,
-      data: {
-        schedule_arr: this.schedule_arr,
-        bProfile: this.bProfile,
-        type: 'edit'
-      }
-    });
-    this.scheduledialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result === 'reloadlist') {
-          this.getBusinessProfile();
-          this.getProviderLocations();
-        }
-      }
-    });
-  }
-  objectKeys(obj) {
-    return Object.keys(obj);
-  }
-  getLicenseDetails() {
-    this.provider_services.getLicenseDetails()
-      .subscribe(data => {
-        this.currentlicense_details = data;
-        this.license_details = this.currentlicense_details;
-        this.current_license = this.currentlicense_details.accountLicense.name;
-      });
-  }
-  getTotalAllowedAdwordsCnt() {
-    this.provider_services.getTotalAllowedAdwordsCnt()
-      .subscribe(data => {
-        this.currentlicense_details = data;
-        this.adwordsmaxcount = this.currentlicense_details;
-        this.adword_loading = false;
-        this.getAdwords();
-      });
-  }
-  getAdwords() {
-    this.adwordshow_list = [];
-    this.provider_services.getAdwords()
-      .subscribe(data => {
-        this.adword_list = data;
-        if (this.adword_list.length > 2) {
-          for (let i = 0; i < 2; i++) {
-            this.adwordshow_list.push(this.adword_list[i]);
-          }
-        } else {
-          this.adwordshow_list = this.adword_list;
-        }
-        this.normal_adworkds_active = true;
-        this.adwords_maxremaining = this.adwordsmaxcount - this.adword_list.length;
-        this.adwords_remaining = this.adword_list.length - 2;
-      });
-  }
-
-  addAdwords() {
-    this.adworddialogRef = this.dialog.open(AddProviderBprofileSearchAdwordsComponent, {
-      width: '50%',
-      data: {
-        type: 'add'
-      },
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true
-    });
-
-    this.adworddialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.getAdwords();
-      }
-    });
-  }
-  buyAdwords() {
-    this.routerobj.navigate(['provider', 'settings', 'license']);
-  }
   performActions(action) {
     if (action === 'learnmore') {
 
@@ -1396,177 +837,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
   }
-  editCustomId(customId?) {
-    this.normal_customid_show = 1;
-    if (customId) {
-      this.editMode = 1;
-      this.customForm.setValue({ 'customid': customId });
-    } else {
-      this.editMode = 0;
-    }
-  }
-  customizeId() {
-    if (this.normal_customid_show === 2 && !this.showCustomId) {
-      this.licence_warn = true;
-      setTimeout(() => {
-        this.licence_warn = false;
-      }, 3000);
-    } else {
-      this.is_customized = true;
-      this.editCustomId();
-    }
-  }
-  deleteCustomId(customId) {
-    this.provider_services.removeCustomId(customId).subscribe(
-      data => {
-        delete this.bProfile['customId'];
-        this.normal_customid_show = 2;
-      });
-    this.customForm.setValue({ 'customid': '' });
-    this.is_customized = false;
-  }
-  cancelCusUpdt() {
-    this.customForm.setValue({ 'customid': '' });
-    if (this.editMode === 0) {
-      this.normal_customid_show = 2;
-    } else {
-      this.normal_customid_show = 3;
-    }
-    this.editMode = 3;
-    this.is_customized = false;
-  }
-  add_updateCustomId(submit_data) {
-    // const customId = submit_data.customid;
-    let customId;
-    const tempCustomId = submit_data.customid;
-    if (tempCustomId.charAt(tempCustomId.length - 1) === '-') {
-      customId = tempCustomId.substr(0, tempCustomId.length - 1);
-    } else {
-      customId = tempCustomId;
-    }
-    if (this.editMode === 0) {
-      this.provider_services.addCustomId(customId).subscribe(
-        data => {
-          this.bProfile.customId = customId;
-          this.normal_customid_show = 3;
-        },
-        error => {
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          this.normal_customid_show = 2;
-        });
-    } else {
-      this.provider_services.editCustomId(customId).subscribe(
-        data => {
-          this.bProfile.customId = customId;
-          this.normal_customid_show = 3;
-        },
-        error => {
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          this.normal_customid_show = 3;
-        });
-    }
-    this.editMode = 3;
-  }
-  // copyInputMessage(inputElement) {
-  //   inputElement.select();
-  //   document.execCommand('copy');
-  //   inputElement.setSelectionRange(0, 0);
-  // }
 
-  copyInputMessage(valuetocopy) {
-    const path = projectConstants.PATH + valuetocopy;
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = path;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
-    this.shared_functions.openSnackBar('Link copied to clipboard');
-  }
-  copyProfileId(valuetocopy) {
-    const path = valuetocopy;
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = path;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
-    this.shared_functions.openSnackBar('Profile ID copied to clipboard');
-  }
-  qrCodegeneraterOnlineID(accEncUid) {
-    this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
-      width: '40%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        accencUid: accEncUid,
-        path: this.wndw_path
-      }
-    });
-
-    this.qrdialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.getBusinessProfile();
-      }
-    });
-  }
-
-
-
-  // qrCodegenerateOnlineID(valuetogenerate) {
-  //   this.qr_value = projectConstants.PATH + valuetogenerate;
-  //   this.qr_code_oId = true;
-  //   this.changeDetectorRef.detectChanges();
-  //   setTimeout(() => {
-  //     this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-  //   }, 50);
-  // }
-  // qrCodegenerateCustID(valuetogenerate) {
-  //   this.qr_value = projectConstants.PATH + valuetogenerate;
-  //   this.qr_code_cId = true;
-  //   this.changeDetectorRef.detectChanges();
-  //   setTimeout(() => {
-  //     this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-  //   }, 50);
-  // }
-  // closeOnlineQR() {
-  //   this.qr_code_oId = false;
-  // }
-  // closeCustomQR() {
-  //   this.qr_code_cId = false;
-  // }
-  // printQr(printSectionId) {
-  //   const printContent = document.getElementById(printSectionId);
-  //   const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-  //   WindowPrt.document.write('<html><head><title></title>');
-  //   WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
-  //   WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
-  //   WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
-  //   WindowPrt.document.write(printContent.innerHTML);
-  //   WindowPrt.document.write('</div>');
-  //   WindowPrt.document.write('</body></html>');
-  //   WindowPrt.document.close();
-  //   WindowPrt.focus();
-  //   WindowPrt.print();
-  //   WindowPrt.close();
-  // }
-  // showPasscode() {
-  //   this.show_passcode = !this.show_passcode;
-  // }
-  // downloadQR() {
-
-  // }
-  gotoJaldeeIntegration() {
+   gotoJaldeeIntegration() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
   }
   gotoMedia() {
@@ -1586,46 +858,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   }
   gotoAboutMe() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'aboutme']);
-  }
-
-  // specilization
-
-  initSpecializations() {
-    this.bProfile = [];
-    this.getBussinessProfileApi()
-      .then(
-        data => {
-          this.bProfile = data;
-          this.provider_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
-          this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
-          this.specialization_title = (data['serviceSubSector']['displayName']) ?
-            data['serviceSubSector']['displayName'] : '';
-          this.normal_specilization_show = 2;
-          if (this.bProfile.specialization) {
-            if (this.bProfile.specialization.length > 0) {
-              this.normal_specilization_show = 3;
-            } else {
-              this.normal_specilization_show = 2;
-            }
-          } else {
-            this.normal_specilization_show = 2;
-          }
-        });
-
-  }
-  getSpecializations(domain, subdomain) {
-    this.provider_services.getSpecializations(domain, subdomain)
-      .subscribe(data => {
-        this.specialization_arr = data;
-
-      });
-  }
-  getSpecializationName(n) {
-    for (let i = 0; i < this.specialization_arr.length; i++) {
-      if (this.specialization_arr[i].name === n) {
-        return this.specialization_arr[i].displayName;
-      }
-    }
   }
 
 
@@ -1990,170 +1222,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   }
 
 
-  // gallery
-
-
-
-  deleteImage(file) {
-    this.provider_services.deleteProviderGalleryImage(file)
-      .subscribe(
-        () => {
-          this.getGalleryImages();
-        },
-        () => {
-
-        }
-      );
-  }
-
-  getSocialdet(key, field) {
-    const retdet = this.orgsocial_list.filter(
-      soc => soc.key === key);
-    const returndet = retdet[0][field];
-    return returndet;
-  }
-
-  check_alreadyexists(v) {
-    for (let i = 0; i < this.social_arr.length; i++) {
-      if (this.social_arr[i].Sockey === v) {
-        return true;
-      }
-    }
-    return false;
-  }
-  handleSocialmedia(key) {
-    this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
-      width: '50%',
-      // panelClass: 'socialmediamainclass',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: {
-        bprofile: this.bProfile,
-        editkey: key || ''
-      }
-    });
-    this.socialdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result === 'reloadlist') {
-          this.getBusinessProfile();
-        }
-      }
-    });
-  }
-  deleteSocialmedia(sockey) {
-    const post_data: any = [];
-    for (let i = 0; i < this.social_arr.length; i++) {
-      if (this.social_arr[i].Sockey !== sockey) {
-        post_data.push({ 'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl });
-      }
-    }
-    const submit_data = {
-      'socialMedia': post_data
-    };
-    this.provider_services.updateSocialMediaLinks(submit_data)
-      .subscribe(
-        () => {
-          this.getBusinessProfile();
-        },
-        () => {
-
-        }
-      );
-
-  }
-  editSocialmedia(key) {
-    this.handleSocialmedia(key);
-  }
-
-  // languages known
-
-  setLanguages() {
-    this.bProfile = [];
-    this.getBussinessProfileApi()
-      .then(
-        data => {
-          this.bProfile = data;
-          if (this.bProfile.languagesSpoken) {
-            this.provider_datastorage.updateLanguagesWeightage(this.bProfile.languagesSpoken);
-            if (this.bProfile.languagesSpoken.length > 0) {
-              this.normal_language_show = 3;
-            } else {
-              this.normal_language_show = 2;
-            }
-          } else {
-            this.normal_language_show = 2;
-          }
-        });
-  }
-  getSpokenLanguages() {
-    this.provider_services.getSpokenLanguages()
-      .subscribe(data => {
-        this.languages_arr = data;
-        // this.provider_datastorage.updateLanguagesWeightage(this.languages_arr);
-      });
-  }
-  getlanguageName(n) {
-    for (let i = 0; i < this.languages_arr.length; i++) {
-      if (this.languages_arr[i].name === n) {
-        return this.languages_arr[i].displayName;
-      }
-    }
-  }
-  handleSpokenLanguages() {
-    let holdsellang;
-    if (this.bProfile.languagesSpoken) {
-      holdsellang = JSON.parse(JSON.stringify(this.bProfile.languagesSpoken)); // to avoid pass by reference
-    } else {
-      holdsellang = [];
-    }
-
-    const bprof = holdsellang;
-    const lang = this.languages_arr;
-    this.langdialogRef = this.dialog.open(AddProviderBprofileSpokenLanguagesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-      disableClose: true,
-      autoFocus: false,
-      data: {
-        sellanguages: bprof,
-        languagesSpoken: lang
-      }
-    });
-    this.langdialogRef.afterClosed().subscribe(result => {
-      this.getBusinessProfile();
-      if (result) {
-        if (result['mod'] === 'reloadlist') {
-          // this.getBusinessProfile();
-          this.bProfile = result['data'];
-          this.setLanguages();
-          if (this.bProfile.sellanguages) {
-            if (this.bProfile.sellanguages.length > 0) {
-              this.normal_language_show = 3;
-            } else {
-              this.normal_language_show = 2;
-            }
-          } else {
-            this.normal_language_show = 2;
-          }
-        }
-      }
-    });
-  }
-
-  changeProPic() {
-    this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: { 'userdata': this.bProfile }
-    });
-    this.notedialogRef.afterClosed().subscribe(result => {
-      this.getBusinessProfile();
-    });
-  }
   redirecToSettings() {
     this.routerobj.navigate(['provider', 'settings']);
-    // this._location.back();
+
   }
 }
