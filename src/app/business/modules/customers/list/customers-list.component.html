@@ -67,7 +67,8 @@
               <div class="filterTextinput">
                 <li class="filterli filterDatepicker">
                   <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
-                    #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date of birth">
+                    #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
+                    placeholder="Date of birth">
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
@@ -136,6 +137,9 @@
                 <td class="one">
                   <input [checked]="customerSelected[i]" type="checkbox" class="ckbx pull-left"
                     (change)="selectcustomers(i, customer)" />
+                  <span *ngIf="customer.jaldeeId" class="pad-rt-5 mgn-lt-10"><b>{{customer_label | capitalizeFirst}}
+                      Id:</b> {{customer.jaldeeId}}</span></td>
+                <td class="one">
                   <div class="bold pull-left mgn-lt-10">
                     {{customer.firstName}} {{customer.lastName}}</div>
                 </td>
@@ -148,9 +152,6 @@
                       class="fa fa-envelope"></i>&nbsp;{{customer.email}}</span>
                 </td>
                 <td class="hidden-xs hidden-sm">
-                  <span *ngIf="customer.jaldeeId" class="pad-rt-5 mgn-lt-10"><b>{{customer_label | capitalizeFirst}}
-                      Id:</b> {{customer.jaldeeId}}</span></td>
-                      <td class="hidden-xs hidden-sm">
                   <span *ngIf="customer.lastVisitedDate">Last visited on
                     {{customer.lastVisitedDate | date: dateFormat }}</span>
                 </td>
