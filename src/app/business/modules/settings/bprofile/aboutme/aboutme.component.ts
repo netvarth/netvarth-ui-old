@@ -77,7 +77,8 @@ export class AboutMeComponent implements OnInit {
     subdomainvirtual: false,
     specialization: false
   };
-
+  edit_cap = Messages.EDIT_BTN;
+  delete_btn = Messages.DELETE_BTN;
     constructor(
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
