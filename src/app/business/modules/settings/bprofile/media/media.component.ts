@@ -93,6 +93,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.getGalleryImages();
         this.getBusinessProfile();
         this.subscription = this.galleryService.getMessage().subscribe(input => {
+            console.log(input.ttype);
             if (input.ttype === 'image-upload') {
                 this.provider_services.uploadGalleryImages(input.value)
                     .subscribe(
@@ -125,6 +126,9 @@ export class MediaComponent implements OnInit, OnDestroy {
         if (this.delgaldialogRef) {
             this.delgaldialogRef.close();
         }
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+          }
     }
 
 
