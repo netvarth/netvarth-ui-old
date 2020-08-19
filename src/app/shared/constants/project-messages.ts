@@ -488,8 +488,8 @@ export const Messages = {
   'I_AGREE_CAP': 'I Agree With',
   'TERMS_CONDITIONS_CAP': 'Terms & Conditions',
   'SIGN_UP_CAP': 'Sign Up',
-  'SIGNUPP_CAP': '"You get  Premium - Free Trial for 45 days."',
-  'MORE_SIGNUP': ' Once the trial period ends it automatically switches to Gold version. You can explore various Licence subscription packages under provider settings section. ',
+  'SIGNUPP_CAP': '"You get Premium - Free Trial for 45 days."',
+  'MORE_SIGNUP': ' Once the trial period ends it automatically switches to Premium version. You can explore various Licence subscription packages under provider settings section. ',
   // App-shared-modules-add-member
   'FILL_FOLL_DETAILS_CAP': 'Please fill in the following details',
   'MALE_CAP': 'Male',
