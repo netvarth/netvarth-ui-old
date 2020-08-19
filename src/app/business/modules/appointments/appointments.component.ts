@@ -1322,6 +1322,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               },
               () => {
                 // this.load_waitlist = 1;
+                this.loading = false;
               },
               () => {
                 this.loading = false;

@@ -46,6 +46,7 @@ export class JaldeeOnlineComponent implements OnInit {
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   customer_label = '';
   qrdialogRef: any;
+  showIncompleteButton = false;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,

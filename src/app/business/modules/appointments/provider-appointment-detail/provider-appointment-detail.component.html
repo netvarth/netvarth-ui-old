@@ -80,10 +80,10 @@
                 <div class="item"><span class="ttle">Schedule</span>
                   {{waitlist_data.schedule.apptSchedule.timeSlots[0].sTime}} -
                   {{waitlist_data.schedule.apptSchedule.timeSlots[0].eTime}}</div>
-                <div class="item"><span class="ttle">{{pay_status_cap}}</span>
+                <div class="item" *ngIf="pos && waitlist_data.paymentStatus != 'NotPaid'"><span class="ttle">{{pay_status_cap}}</span>
                   <ng-container *ngIf="waitlist_data && waitlist_data.paymentStatus">
-                    <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span
-                        class="text">{{not_paid_cap}}</span></span>
+                    <!-- <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span
+                        class="text">{{not_paid_cap}}</span></span> -->
                     <span class="paid-h" *ngIf="waitlist_data.paymentStatus == 'PartiallyPaid'"><span
                         class="text">{{partially_paid_cap}}</span></span>
                     <span class="paid-f" *ngIf="waitlist_data.paymentStatus == 'FullyPaid'"><span
