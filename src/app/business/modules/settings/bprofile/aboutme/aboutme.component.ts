@@ -77,15 +77,12 @@ export class AboutMeComponent implements OnInit {
     subdomainvirtual: false,
     specialization: false
   };
-<<<<<<< HEAD
   success_error = null;
   error_list = [];
   selitem_pic = '';
   error_msg = '';
-=======
   edit_cap = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
->>>>>>> refs/remotes/origin/1.3.0
     constructor(
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
