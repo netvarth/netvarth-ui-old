@@ -656,6 +656,8 @@ export class AboutMeComponent implements OnInit {
       return field;
     }
   }
+  
+  
   onDomainFormSubmit(post_data) {
     this.provider_services.updateDomainSubDomainFields(post_data,
       this.bProfile['serviceSector']['domain'])
