@@ -36,7 +36,8 @@ export class VideoSettingsComponent implements OnInit {
         // Botim: { value: 'Botim', displayName: 'BOTIM', placeHolder: 'BOTIM ID', titleHelp: 'Configure BOTIM Settings', actualValue: '', enabled: false },
         // Imo: { value: 'Imo', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false },
         Zoom: { value: 'Zoom', displayName: 'Zoom', placeHolder: 'Zoom ID', titleHelp: 'Configure Zoom Settings', actualValue: '', enabled: false },
-        GoogleMeet: { value: 'GoogleMeet', displayName: 'Google Meet', placeHolder: 'Meet ID', titleHelp: 'Configure Google Meet Settings', actualValue: '', enabled: false
+        GoogleMeet: {
+            value: 'GoogleMeet', displayName: 'Google Meet', placeHolder: 'Meet ID', titleHelp: 'Configure Google Meet Settings', actualValue: '', enabled: false
         },
         Phone: { value: 'Phone', displayName: 'Phone', placeHolder: 'Phone number', titleHelp: 'Configure Phone Settings', actualValue: '', enabled: false }
     };
@@ -252,5 +253,8 @@ export class VideoSettingsComponent implements OnInit {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);
+    }
+    goBack() {
+        this.router.navigate(['provider', 'settings', 'comm']);
     }
 }
