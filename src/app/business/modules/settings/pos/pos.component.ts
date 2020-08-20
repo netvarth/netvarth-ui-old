@@ -41,7 +41,7 @@ export class POSComponent implements OnInit {
   item_list;
   item_count = 0;
   // jaldee_pay_cap: string;
-  breadcrumb_moreoptions: any = []; 
+  breadcrumb_moreoptions: any = [];
   constructor(private router: Router,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -53,8 +53,8 @@ export class POSComponent implements OnInit {
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
     // this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        this.domain = user.sector;
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };    
+    this.domain = user.sector;
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     // this.getpaymentDetails();
     this.getPOSSettings();
     this.getDiscounts();
@@ -165,5 +165,8 @@ export class POSComponent implements OnInit {
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
+  }
+  redirecToSettings() {
+    this.routerobj.navigate(['provider', 'settings']);
   }
 }

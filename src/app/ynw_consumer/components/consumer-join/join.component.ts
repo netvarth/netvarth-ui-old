@@ -238,22 +238,15 @@ export class ConsumerJoinComponent implements OnInit {
   onOtpSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
-
     const firstName = this.loginForm.get('first_name').value;
     const lastName = this.loginForm.get('last_name').value;
-
-    if (firstName && firstName.trim().length > 3) {
-    } else {
-      this.api_error = 'First Name is too short';
-      this.actionstarted = false;
-      return false;
-    }
-    if (lastName && lastName.trim() !== '') {
-    } else {
+    if (firstName && firstName.trim() === '' || firstName === null) {
+      this.api_error = 'First Name is required';
+    } else if (lastName && lastName.trim() === '' || lastName === null) {
       this.api_error = 'Last Name is required';
-      this.actionstarted = false;
-      return false;
-    }
+    } else if (firstName && firstName.trim().length < 3) {
+      this.api_error = 'First Name is too short';
+    } else {
     this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
       .subscribe(
         () => {
@@ -268,6 +261,7 @@ export class ConsumerJoinComponent implements OnInit {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
+    }
   }
   resendOtp(user_details) {
     this.signUpApiConsumer(user_details);
@@ -379,6 +373,7 @@ export class ConsumerJoinComponent implements OnInit {
   }
   resetApiErrors() {
     this.api_error = null;
+    this.actionstarted = false;
   }
   onChangePassword() {
     this.step = 1;

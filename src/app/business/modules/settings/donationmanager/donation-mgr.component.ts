@@ -23,7 +23,7 @@ export class DonationMgrComponent implements OnInit {
   donations_statusstr: string;
   donations_status: any;
   cause_count: any = 0;
-  breadcrumb_moreoptions: any = []; 
+  breadcrumb_moreoptions: any = [];
   constructor(private router: Router,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -78,5 +78,8 @@ export class DonationMgrComponent implements OnInit {
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/donationmanager->' + mod]);
+  }
+  redirecToSettings() {
+    this.routerobj.navigate(['provider', 'settings']);
   }
 }
