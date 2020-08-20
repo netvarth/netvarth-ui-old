@@ -7522,12 +7522,12 @@ board-box {
 }
 
 .blinking {
-  animation: blinkingText 1s infinite;
+  animation: callBlinking 1s infinite;
   font-size: 1rem;
   font-weight: 700;
 }
 
-@keyframes blinkingText {
+@keyframes callBlinking {
   0% {
     color: red;
   }

@@ -74,6 +74,8 @@ export class CustomerDetailComponent implements OnInit {
     customerId;
     customer;
     customerName;
+    timeslot;
+    comingSchduleId;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -164,6 +166,12 @@ export class CustomerDetailComponent implements OnInit {
             }
             if (qparams.noMobile) {
                 this.haveMobile = false;
+            }
+            if (qparams.timeslot) {
+                this.timeslot = qparams.timeslot;
+            }
+            if (qparams.scheduleId) {
+                this.comingSchduleId = qparams.scheduleId;
             }
         });
     }
@@ -300,7 +308,9 @@ export class CustomerDetailComponent implements OnInit {
                                     ph: form_data.mobile_number,
                                     checkinType: this.checkin_type,
                                     haveMobile: this.haveMobile,
-                                    id: data
+                                    id: data,
+                                    timeslot: this.timeslot,
+                                    scheduleId: this.comingSchduleId
                                 }
                             };
                             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);

@@ -305,6 +305,8 @@ export class AppointmentComponent implements OnInit {
         }
         this.qParams['checkinType'] = this.apptType;
         this.qParams['source'] = 'appointment';
+        this.qParams['timeslot'] = this.slotTime;
+        this.qParams['scheduleId'] = this.comingSchduleId;
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
 
