@@ -325,8 +325,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.s3url = res;
           this.getbusinessprofiledetails_json('businessProfile', true);
           this.getbusinessprofiledetails_json('virtualFields', true);
-          this.getbusinessprofiledetails_json('services', true);
-          this.getbusinessprofiledetails_json('apptServices', true);
+          // this.getbusinessprofiledetails_json('services', true);
+          // this.getbusinessprofiledetails_json('apptServices', true);
           this.getbusinessprofiledetails_json('donationServices', true);
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
@@ -435,16 +435,22 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
             setTimeout(() => {
               // merge two arrays without duplicates
-              const ids = new Set(this.apptServicesjson.map(d => d.id));
-              const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+              if (this.showDepartments) {
+              const ids = new Set(this.apptServicesjson.map(d => d.departmentId));
+              const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.departmentId))];
               this.apptServicesjson = merged;
+              } else {
+                const ids = new Set(this.apptServicesjson.map(d => d.id));
+                const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+                this.apptServicesjson = merged;
+              }
               for (let i = 0; i < this.apptServicesjson.length; i++) {
                 if (i < 3) {
                   this.apptfirstArray.push(this.apptServicesjson[i]);
                 }
               }
               this.apptTempArray = this.apptfirstArray;
-            });
+            }, 500);
             break;
           }
           case 'gallery': {
@@ -482,6 +488,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.maxsize = 1;
             }
             this.showDepartments = this.settingsjson.filterByDept;
+            if (this.showDepartments) {
+              this.getbusinessprofiledetails_json('services', true);
+              this.getbusinessprofiledetails_json('apptServices', true);
+            }
             break;
           }
           case 'location': {
@@ -521,7 +531,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               display_schedule = this.sharedFunctionobj.arrageScheduleforDisplay(schedule_arr);
               this.locationjson[i]['display_schedule'] = display_schedule;
               this.locationjson[i]['services'] = [];
-              this.getServiceByLocationid(this.locationjson[i].id, i);
+              if (!this.showDepartments) {
+                this.getServiceByLocationid(this.locationjson[i].id, i);
+              }
               this.locationjson[i]['checkins'] = [];
               if (this.userType === 'consumer') {
                 this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
@@ -836,7 +848,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             });
       }
     } else {
-      const passParam = { callback: 'fav' };
+      const passParam = { callback: 'fav', mod: mod };
       this.doLogin('consumer', passParam);
     }
   }

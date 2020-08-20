@@ -138,7 +138,7 @@
                                                 src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-12 donat-service"
+                                <!-- <div class="col-md-12 donat-service"
                                     *ngIf="apptfirstArray.length > 0 && !showDepartments">
                                     <span class="sub-title-donate">Services</span>
                                     <ul>
@@ -164,7 +164,7 @@
                                             less
                                         </a>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="tp-r list-style">
                                 <!-- <div class="gender" *ngIf="genderType=='male' || genderType=='female'">
@@ -329,14 +329,26 @@
                                                                         </ul>
                                                                     </div> -->
                                                     <!-- <div class="services"
-                                                                        *ngIf="!loc.departments && loc.serviceList && loc.serviceList.length > 0">
-                                                                        <span class="sub-title">{{services_offered}}</span>
-                                                                        <ul>
-                                                                            <li *ngFor="let serv of loc.serviceList"
-                                                                                (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
-                                                                                {{serv.name}}</li>
-                                                                        </ul>
-                                                                    </div> -->
+                                                        *ngIf="!showDepartments && loc.serviceList && loc.serviceList.length > 0">
+                                                        <span class="sub-title">{{services_offered}}</span>
+                                                        <ul>
+                                                            <li *ngFor="let serv of loc.serviceList"
+                                                                (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
+                                                                {{serv.name}}</li>
+                                                        </ul>
+                                                    </div> -->
+                                                    <div class="bt-l" *ngIf="!showDepartments && loc.services && loc.services.length > 0">
+                                                        <div class="wt-tme">
+                                                            <div class="donat-service">
+                                                                <span class="sub-title-donate">{{services_offered}}</span>
+                                                                <ul>
+                                                                    <li *ngFor="let donationService of loc.services"
+                                                                        (click)="showServiceDetail(donationService, businessjson.businessName,'servicedetails')">
+                                                                        {{donationService.name}}</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <!-- <div class="services"
                                                                     *ngIf="!loc.departments && !loc.serviceList && loc.services && loc.services.length > 0">
                                                                     <span class="sub-title">{{services_offered}}</span>

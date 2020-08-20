@@ -185,8 +185,10 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     }
     if (this.selectedDeptOrUser) {
       this.selectedDepartment = this.selectedDeptOrUser;
-      if (this.fiterByDept && this.selectedDeptOrUser.users) {
+      if (this.fiterByDept) {
+        if (this.selectedDeptOrUser && this.selectedDeptOrUser.users) {
         this.usersList = this.selectedDeptOrUser.users;
+        }
       } else {
         this.usersList = this.selectedDeptOrUser;
       }
