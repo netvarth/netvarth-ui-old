@@ -767,8 +767,8 @@ export const Messages = {
   'FUTURE_HOME_CAP': 'Future',
   'HISTORY_HOME_CAP': 'History',
   'SERVICE_TIME_CAP': 'Queues',
-  'QUEUE_CAP': 'Queues (Qs)',
-  'SERVICES_CAP': 'Services',
+  'QUEUE_CAP': 'Queues (Workiing Hours)',
+  'SERVICES_CAP': 'Consultations and Services',
   'CHECK_IN_STATUS_CAP': 'Check-In Status',
   'PAYMENT_STATUS_CAP': 'Payment Status',
   'START_DATE_CAP': 'Start Date',
@@ -803,8 +803,8 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
-  'NON_WORK_DAY_OR_HR_CAP': 'Non Working Day/Hour',
-  'SCHEDULES_CAP': 'Schedules',
+  'NON_WORK_DAY_OR_HR_CAP': 'Non Working Days',
+  'SCHEDULES_CAP': 'Schedules( Working Hours )',
   'REASON_CAP': 'Reason',
 
   // App-ynw_provider-components-add-provider-waitlist-checkin-bill
@@ -1023,7 +1023,7 @@ export const Messages = {
   'ADDON_CAP': 'Add-ons',
   'PAYMENTS_CAP': 'Payments',
   'ACCEPT_PAYMENT_CAP': 'Accept Payments',
-  'PAYMENT_SETTING_CAP': 'Payment',
+  'PAYMENT_SETTING_CAP': 'Bank Account',
   'TAX_SETTING_CAP': 'Tax',
   'BILLING_CAP': 'Billing/POS',
   'ITEMS_CAP': 'Items',
@@ -1249,9 +1249,9 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-waitlist
   'WAITLIST_ACCEPT_ONLINE_CAP': 'Accept Online',
-  'WAITLIST_LOCATIONS_CAP': 'Locations',
+  'WAITLIST_LOCATIONS_CAP': 'All Locations',
   'WAITLIST_SERVICES_CAP': 'Services',
-
+  'CUSTOMERS_NAME': '[customer]s',
   // App-ynw_provider-components-provider-waitlist-checkin-consumer-note
   'CONS_NOTE_NOTE_CAP': 'Note',
 
@@ -1331,16 +1331,19 @@ export const Messages = {
   // form-level-common
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',
   // 'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
-  'FRM_LEVEL_PROFILE_MSG': 'Setup and maintain your public profile here.',
+  'FRM_LEVEL_PROFILE_MSG': 'Your name , about you , location , specialization and more.',
   'FRM_LEVEL_WAITLIST_MSG': 'Setup the queue system so that your [customer] can avoid on-site waiting time. Enable the queue manager by setting up your services and adding them to the queue.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
+  'FRM_LEVEL_JALDEEPAY_MSG': 'Accept cashless payments from [customer]s through their ',
+  'FRM_LEVEL_COMMN_MSG': 'notifications to your [customer]s .',
+  'FRM_LEVEL_VIRTUAL_MSG': 'Teleservices to consult [customer]s.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
   'FRM_LEVEL_SELF_MSG': 'Your [customer]s won\'t be able to make online payments and you cannot collect prepayment for services.',
   'FRM_ADDINFO_MSG': 'Add more details to your online profile',
   'FRM_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result.',
   'FRM_LEVEL_BILLING_MSG': 'Create items, discounts and coupons here.',
   'FRM_LEVEL_COUPON_MSG': 'View all the coupons available here.',
-  'FRM_LEVEL_MISC_MSG': 'Other features can be mentioned here',
+  'FRM_LEVEL_MISC_MSG': 'discounts to your [customer]s .',
   'FRM_LEVEL_APPOINTMENT_MSG': 'Manage your working hours, appointment services, schedules and QBoards here. Enable "Accept Appointments" and also book a future date for [customer]\'s appointment here.',
   'FRM_LEVEL_DONATION_MSG': 'Manage your donation settings here. Enable "Accept Donations" here.',
 
@@ -1461,7 +1464,7 @@ export const Messages = {
   'QSET_UPDATE': 'QBoard query updated successfully',
   'DISPLAYBOARD_ADD': 'QBoard added successfully',
   'DISPLAYBOARD_UPDATE': 'QBoard updated successfully',
-  'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
+  'CUSTOMFIELDS_CAPTION': 'Custom fields',
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
   'MANAGE_LABELS': 'Manage Labels',
   'ADD_LABEL': 'Create Label',
@@ -1494,7 +1497,7 @@ export const Messages = {
   'BRANCHASSISTANT_UPDATED': 'Assistant updated successfully',
   'BRANCHUSER_DELETED': 'User deleted successfully',
 
-  'GENERALSETTINGS': 'General',
+  'GENERALSETTINGS': 'Features and Cusomization',
   'APPOINTMNT_SUCC': 'Appointment created successfully',
   'DONATE_SUCC': 'Donated successfully',
   'SCHEDULENAME_CAP': 'Title for Schedule *',

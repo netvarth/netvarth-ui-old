@@ -56,13 +56,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   notification_cap = Messages.NOTIFICATION_CAP;
   saleschannel_cap = Messages.SALESCHANNEL_CAP;
   frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
-
+  frm_virtual_msg = '';
   frm_waitlist_cap = '';
   frm_license_cap = Messages.FRM_LEVEL_LIC_MSG;
   frm_pay_cap = Messages.FRM_LEVEL_PAY_MSG;
   frm_bill_cap = Messages.FRM_LEVEL_BILLING_MSG;
   frm_coupon_cap = Messages.FRM_LEVEL_COUPON_MSG;
-  frm_mis_cap = Messages.FRM_LEVEL_MISC_MSG;
+  frm_mis_cap = '';
   frm_appointment_cap = Messages.FRM_LEVEL_APPOINTMENT_MSG;
   frm_donation_cap = Messages.FRM_LEVEL_DONATION_MSG;
   frm_jdn_short_cap = Messages.JDN_CAP;
@@ -129,6 +129,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   jaldee_pay_cap: string;
   provider_label = '';
   cust_domain_name = '';
+  custs_name = '';
   provider_domain_name = '';
   assistantCount;
   onlinepresence_status: any;
@@ -179,6 +180,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   accountActiveMsg = '';
   billposTooltip = '';
   frm_profile_cap = '';
+  frm_msg_jaldeepay = '';
+  frm_msg_commn = '';
   nodiscountError = false;
   noitemError = false;
   miscellaneous = '';
@@ -224,15 +227,20 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     // this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG.replace('[customer]', this.customer_label);
     this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG;
     this.frm_search_cap = Messages.FRM_SEARCH_MSG.replace('[customer]', this.customer_label);
+    this.frm_virtual_msg = Messages.FRM_LEVEL_VIRTUAL_MSG.replace('[customer]', this.customer_label);
+    this.frm_mis_cap = Messages.FRM_LEVEL_MISC_MSG.replace('[customer]', this.customer_label);
+    this.frm_msg_jaldeepay = Messages.FRM_LEVEL_JALDEEPAY_MSG.replace('[customer]', this.customer_label);
+    this.frm_msg_commn = Messages.FRM_LEVEL_COMMN_MSG.replace('[customer]', this.customer_label);
     this.frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG.replace('[customer]', this.customer_label);
     this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
+    this.custs_name = Messages.CUSTOMERS_NAME.replace('[customer]', this.customer_label);
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     this.jaldee_online_enabled_msg = Messages.JALDEEONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
     this.profile_enabled_msg = Messages.PROFILE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.profile_disabled_msg = Messages.PROFILE_DISABLED_MSG.replace('[customer]', this.customer_label);
-    this.getProviderLogo();
+    this.getProviderLogo(); 
     this.getGalleryImages();
     this.getDomainSubdomainSettings();
     this.getBusinessConfiguration();
