@@ -18,7 +18,7 @@ export class GeneralSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'General'
+            title: 'Features and Customization'
         }
     ];
     bProfile = null;

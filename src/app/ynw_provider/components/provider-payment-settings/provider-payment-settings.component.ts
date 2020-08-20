@@ -114,7 +114,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             url: '/provider/settings/payments'
         },
         {
-            title: 'Payment'
+            title: 'Bank Account'
         }
     ];
     licenseMetadata: any = [];
