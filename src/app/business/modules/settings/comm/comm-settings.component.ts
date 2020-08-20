@@ -26,7 +26,7 @@ export class CommSettingsComponent implements OnInit {
     provider_label = '';
     cust_domain_name = '';
     provider_domain_name = '';
-    breadcrumb_moreoptions: any = []; 
+    breadcrumb_moreoptions: any = [];
     constructor(private router: Router,
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
@@ -57,9 +57,9 @@ export class CommSettingsComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'learnmore') {
-          this.router.navigate(['/provider/' + this.domain + '/comm']);
+            this.router.navigate(['/provider/' + this.domain + '/comm']);
         }
-      }
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);
@@ -77,5 +77,8 @@ export class CommSettingsComponent implements OnInit {
                     this.getGlobalSettingsStatus();
                 }
             );
+    }
+    redirecToSettings() {
+        this.router.navigate(['provider', 'settings']);
     }
 }
