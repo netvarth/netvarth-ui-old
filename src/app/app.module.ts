@@ -76,6 +76,7 @@ import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
+import { JoyrideModule } from 'ngx-joyride';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -154,7 +155,8 @@ export function init_app(globalService: GlobalService) {
     DisplayboardLayoutContentModule,
     SalesChannelModule,
     ForgotPasswordModule,
-    SetPasswwordModule
+    SetPasswwordModule,
+    JoyrideModule.forRoot()
 
   ],
   providers: [

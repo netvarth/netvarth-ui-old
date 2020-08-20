@@ -13,6 +13,9 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { GlobalService } from '../../../shared/services/global-service';
 import { global } from '@angular/compiler/src/util';
 import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
+import { JoyrideService } from 'ngx-joyride';
+import { MatDialog } from '@angular/material';
+import { ProviderStartTourComponent } from '../../../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 
 @Component({
   selector: 'app-header',
@@ -53,7 +56,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     private provider_services: ProviderServices,
     private titleService: Title,
     private globalService: GlobalService,
-    private provider_dataStorage: ProviderDataStorageService) {
+    public dialog: MatDialog,
+    private provider_dataStorage: ProviderDataStorageService,
+    private readonly joyrideService: JoyrideService) {
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
@@ -109,6 +114,46 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       },
         () => {
         });
+  }
+  tourIconClicked() {
+    const dialogRef = this.dialog.open(ProviderStartTourComponent, {
+      width: '25%',
+      panelClass: ['popup-class', 'commonpopupmainclass']
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'startTour') {
+
+        this.joyrideService.startTour(
+
+          {
+            steps: ['step1@provider/settings', 'step2@provider/settings', 'step3@provider/settings', 'step4'],
+            showPrevButton: false,
+            stepDefaultPosition: 'top',
+            themeColor: '#212f23'
+          }
+          // Your steps order
+        ).subscribe(
+
+          step => {
+            /*Do something*/
+            console.log('Location', window.location.href, 'Path', window.location.pathname);
+            console.log('Next:', step);
+          },
+          error => {
+            /*handle error*/
+          },
+          () => {
+            this.router.navigate(['provider', 'settings']);
+          }
+        );
+
+      }
+
+    });
+   // this.router.navigate(['provider', 'settings']);
+
   }
   gotoActiveHome() {
     this.router.navigate(['provider', 'check-ins']);

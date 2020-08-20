@@ -14,6 +14,8 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { ViewChild } from '@angular/core';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
+import { JoyrideService } from 'ngx-joyride';
+import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
 
 @Component({
   selector: 'app-provider-bwizard',
@@ -200,7 +202,8 @@ export class ProviderbWizardComponent implements OnInit {
     public shared_service: SharedServices,
     private dialog: MatDialog,
     private routerobj: Router, private qservice: QuestionService,
-    @Inject(DOCUMENT) public document
+    @Inject(DOCUMENT) public document,
+    private readonly joyrideService: JoyrideService
   ) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
@@ -669,6 +672,47 @@ export class ProviderbWizardComponent implements OnInit {
   skipMe() {
     this.redirecttoProfile();
   }
+  letsGetStarted() {
+    const dialogRef = this.dialog.open(ProviderStartTourComponent, {
+      width: '25%',
+      panelClass: ['popup-class', 'commonpopupmainclass']
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'startTour') {
+        this.joyrideService.startTour(
+
+          {
+            steps: ['step1@provider/settings', 'step2@provider/settings', 'step3@provider/settings', 'step4'],
+            showPrevButton: false,
+            stepDefaultPosition: 'top',
+            themeColor: '#212f23'
+          }
+          // Your steps order
+        ).subscribe(
+
+          step => {
+            /*Do something*/
+            console.log('Location', window.location.href, 'Path', window.location.pathname);
+            console.log('Next:', step);
+          },
+          error => {
+            /*handle error*/
+          },
+          () => {
+            this.redirecttoProfile();
+          }
+        );
+
+      } else {
+        this.redirecttoProfile();
+      }
+
+
+    });
+
+  }
   changeSchedule_clicked() {
     this.ischange_schedule_clicked = true;
   }
@@ -817,7 +861,7 @@ export class ProviderbWizardComponent implements OnInit {
     // } else { // if sufficient data is there, then show the bprofile
     //   this.redirecttoProfile();
     // }
-    this.redirecttoProfile();
+    this.letsGetStarted();
   }
   resetErrors() {
     this.error_Exists = false;
@@ -877,7 +921,7 @@ export class ProviderbWizardComponent implements OnInit {
       case 'bussnesnmerror':
         this.bussnesnmerror = '';
         break;
-    } 
+    }
   }
 
   // Service Section

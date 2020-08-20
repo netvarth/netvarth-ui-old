@@ -13,8 +13,11 @@
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header bg-blue">
                             <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls" [matTooltip]="bprofileTooltip">My Profile
+                                <div joyrideStep="step1" title="Jaldee Online" text="Use Jaldee Online to set up your basic account and list your services in Jaldee.com"></div>
                                 <i class="fa fa-gears fl-right lnk"></i>
+
                             </h4>
+
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
@@ -163,7 +166,11 @@
                         <div class="widget-user-header bg-blue">
                             <h4 class="pointer-cursor" (click)="redirecTo('waitlistmanager')" [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Jaldee QManager
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div joyrideStep="step2" title="Do you issue tokens to your customers?" text="
+
+                                Use Jaldee QManager to add your services."></div>
                             </h4>
+
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-2">
@@ -246,6 +253,11 @@
                             <h4 (click)="redirecTo('appointmentmanager')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">
                                 Jaldee Appointment Manager
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div joyrideStep="step3" title="Do you fix appointments or take bookings with your customers?" text="
+
+                                Use Jaldee Appointment Manager to add your services.">
+
+                  </div>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
@@ -264,8 +276,8 @@
                                                 <p class="settings_info" *ngIf="createappointment_status">{{custs_name|capitalizeFirst}}<strong> can</strong> take appointments for your services.</p>
                                                 <p class="settings_info" *ngIf="!createappointment_status">{{custs_name|capitalizeFirst}}<strong> cannot</strong> take appointments for your services.
                                                 </p>
-                                           
-                                        
+
+
                                         <!-- <p class="sts" [class.active]="createappointment_status">
                                             {{createappointment_statusstr}}</p> -->
                                         <!-- <p class="settings_info" *ngIf="createappointment_status">Jaldee Online Presence
@@ -299,7 +311,7 @@
                                     </a></li> -->
                                 <li (click)="redirecTo('appservices')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">{{services_cap}} 
+                                        <span class="lnk setings">{{services_cap}}
                                             <span class="pull-right badge bg-blue">{{service_count}}</span>
                                         </span>
                                         <p class="settings_info">Eg. In-person consultation , video consultation , labservices. </p>
@@ -340,7 +352,7 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
                                 <li class="form-level-settings">
-                                    <a><strong>Customize</strong> your Jaldee account with these additional features. 
+                                    <a><strong>Customize</strong> your Jaldee account with these additional features.
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('locations')">
@@ -407,7 +419,7 @@
                                         <p class="settings_info">Create or manage custom views</p>
                                     </a>
                                 </li>
-                                
+
                             </ul>
                         </div>
                     </div>
