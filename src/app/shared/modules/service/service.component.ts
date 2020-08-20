@@ -308,6 +308,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     selectServiceTypeHandler(event) {
         this.serv_mode = event;
         this.modeselected = true;
+        this.is_tool = false;
         this.getVirtualCallingModesList();
     }
     selectToolTypeHandler(event) {
