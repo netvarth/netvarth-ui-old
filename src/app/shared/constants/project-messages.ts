@@ -1497,7 +1497,7 @@ export const Messages = {
   'BRANCHASSISTANT_UPDATED': 'Assistant updated successfully',
   'BRANCHUSER_DELETED': 'User deleted successfully',
 
-  'GENERALSETTINGS': 'Features and Cusomization',
+  'GENERALSETTINGS': 'Features and Customization',
   'APPOINTMNT_SUCC': 'Appointment created successfully',
   'DONATE_SUCC': 'Donated successfully',
   'SCHEDULENAME_CAP': 'Title for Schedule *',
