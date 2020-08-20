@@ -51,7 +51,7 @@
                                 </div>
                                 <div *ngIf="customer[0].gender" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
                                     <div><b>Gender:</b></div>
-                                    <div>{{customer[0].gender}}</div>
+                                    <div>{{customer[0].gender | capitalizeFirst}}</div>
                                 </div>
                                 <div *ngIf="customer[0].dob" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
                                     <div><b>DOB</b></div>
