@@ -10908,3 +10908,6 @@ a {
 .content .col-md-12 .w-dta .row .copy .bill-width {
   width: auto;
 }
+.paymentlink-color {
+  color: black !important; 
+}
