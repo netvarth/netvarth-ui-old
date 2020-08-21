@@ -320,17 +320,7 @@ export class ProvidersignupComponent implements OnInit {
         }
       );
   }
-  subDomainSelected() {
-    if (this.selectedDomain && this.selectedSubDomain) {
-      this.user_details['sector'] = this.selectedDomain.domain;
-      this.user_details['subSector'] = this.selectedSubDomain.subDomain;
-      this.user_details['licPkgId'] = 9;
-      this.active_step = 2;
-    } else {
-      this.shared_functions.openSnackBar('Select your area of specialization', { 'panelClass': 'snackbarerror' });
-      return;
-    }
-  }
+  
 
 
   // onReferalSubmit(sccode) {
@@ -430,6 +420,7 @@ export class ProvidersignupComponent implements OnInit {
         }
       );
   }
+
   saveReferralInfo() {
     this.actionstarted = true;
     this.resetApiErrors();
@@ -751,5 +742,41 @@ export class ProvidersignupComponent implements OnInit {
     this.resetCounterVal = 0;
     this.otp_mobile = null;
     this.hideOtpSection = true;
+  }
+  showDomains() {
+    this.active_step = 1;
+  }
+  // subDomainSelected() {
+  //   if (this.selectedDomain && this.selectedSubDomain) {
+  //     this.user_details['sector'] = this.selectedDomain.domain;
+  //     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
+  //     this.user_details['licPkgId'] = 9;
+  //     this.active_step = 2;
+  //   } else {
+  //     this.shared_functions.openSnackBar('Select your area of specialization', { 'panelClass': 'snackbarerror' });
+  //     return;
+  //   }
+  // }
+  handleDomainSelection () {
+    this.selectedSubDomain = this.selectedDomain.subDomains[0];
+    this.user_details['sector'] = this.selectedDomain.domain;
+    this.user_details['subSector'] = this.selectedSubDomain.subDomain;
+    this.user_details['licPkgId'] = 9;
+    if (this.selectedDomain && this.selectedDomain.subDomains.length > 1) {
+      this.active_step = 4;
+    } else {
+      this.active_step = 2;
+    }
+  }
+  backToSubdomains () {
+    if (this.selectedDomain && this.selectedDomain.subDomains.length > 1) {
+      this.active_step = 4;
+    } else {
+      this.active_step = 1;
+    }
+  }
+  handleSubDomainSelection () {
+    this.user_details['subSector'] = this.selectedSubDomain.subDomain;
+    this.active_step = 2;
   }
 }
