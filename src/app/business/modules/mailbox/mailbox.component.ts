@@ -224,18 +224,18 @@ export class MailboxComponent implements OnInit, OnDestroy {
     generateCustomInbox(messages: any) {
         this.inboxList = [];
         let senderName;
-        let senderId;
+        // let senderId;
         let messageStatus;
         let accountId;
         for (const message of messages) {
             if (message.receiver.id === this.userDet.id) {
                 accountId = message.owner.id;
                 senderName = message.owner.name;
-                senderId = message.owner.id;
+                // senderId = message.owner.id;
                 messageStatus = 'in';
             } else {
                 accountId = message.receiver.id;
-                senderId = message.receiver.id;
+                // senderId = message.receiver.id;
                 senderName = message.receiver.name;
                 messageStatus = 'out';
             }

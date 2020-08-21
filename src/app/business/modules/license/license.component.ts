@@ -332,7 +332,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         //         data => {
         this.all_license_metadata = this.shared_functions.getitemfromLocalStorage('license-metadata');
         // this.all_license_metadata = data;
-        const license_meta = {};
+        // const license_meta = {};
         this.license_upgarde_sub = {};
         for (const meta of this.all_license_metadata) {
             if (this.currentlicense_details && this.currentlicense_details['accountLicense']) {

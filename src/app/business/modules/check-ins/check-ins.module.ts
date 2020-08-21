@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CheckInsComponent } from './check-ins.component';
-import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { AdjustQueueDelayComponent } from './queue-delay/adjust-queue-delay.component';
 import { AdjustqueueDelayComponent } from './adjustqueue-delay/adjustqueue-delay.component';
 import { CheckinsRoutingModule } from './check-ins.routing.module';

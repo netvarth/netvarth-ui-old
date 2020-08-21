@@ -1319,7 +1319,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
   paymentlink() {
-    const dialogrefd = this.dialog.open(ConfirmPatmentLinkComponent, {
+    this.dialog.open(ConfirmPatmentLinkComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
@@ -1579,7 +1579,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
     } else {
       if (coupon.value.value === '0.0') {
-        const dialogref = this.dialog.open(JcCouponNoteComponent, {
+        this.dialog.open(JcCouponNoteComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
           disableClose: true,

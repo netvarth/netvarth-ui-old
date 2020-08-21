@@ -1130,7 +1130,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
     // this.load_waitlist = 0;
-    let Mfilter = this.setFilterForApi();
+    const Mfilter = this.setFilterForApi();
     if (this.selQIds) {
       Mfilter['queue-eq'] = this.selQIds;
       // this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
@@ -1352,7 +1352,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getFutureWLCount(Mfilter = null) {
-    let no_filter = false;
+    // let no_filter = false;
     const queueid = this.shared_functions.getitemFromGroupStorage('future_selQ');
     if (!Mfilter) {
       Mfilter = {};
@@ -1362,7 +1362,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (queueid) {
         Mfilter['queue-eq'] = queueid;
       }
-      no_filter = true;
+     // no_filter = true;
     }
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
@@ -1379,8 +1379,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getHistoryWLCount(Mfilter = null) {
-    const queueid = this.shared_functions.getitemFromGroupStorage('history_selQ');
-    let no_filter = false;
+    // const queueid = this.shared_functions.getitemFromGroupStorage('history_selQ');
+    // let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
       if (this.selected_location && this.selected_location.id) {
@@ -1389,7 +1389,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // if (queueid && queueid.length > 0) {
       //   Mfilter['queue-eq'] = queueid.toString();
       // }
-      no_filter = true;
+      // no_filter = true;
     }
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
@@ -2221,7 +2221,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showQR = true;
   }
   printBill(checkinlist) {
-    const _this = this;
+    // const _this = this;
     this.qrCodegeneration(checkinlist);
     const bprof = this.shared_functions.getitemFromGroupStorage('ynwbp');
     this.bname = bprof.bn;

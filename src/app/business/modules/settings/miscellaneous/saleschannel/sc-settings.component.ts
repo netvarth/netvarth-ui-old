@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
@@ -36,8 +36,7 @@ export class SaleschannelSettingsComponent implements OnInit {
         private shared_Functionsobj: SharedFunctions,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
-        private router: Router,
-        private changeDetectorRef: ChangeDetectorRef) {
+        private router: Router) {
     }
     ngOnInit() {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };

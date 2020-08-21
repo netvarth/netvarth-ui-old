@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Messages } from '../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 
 @Component({

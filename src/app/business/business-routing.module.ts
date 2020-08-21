@@ -8,12 +8,10 @@ import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profil
 import { ProviderSystemAlertComponent } from '../ynw_provider/components/provider-system-alerts/provider-system-alerts.component';
 import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
 import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
-// import { ProviderWaitlistCheckInDetailComponent } from '../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
 import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
-import { ManageProviderComponent } from '../shared/components/manage-provider/manage-provider.component';
 
 const routes: Routes = [
   {

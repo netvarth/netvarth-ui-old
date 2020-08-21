@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';

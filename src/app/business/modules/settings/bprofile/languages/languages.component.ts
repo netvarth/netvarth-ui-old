@@ -1,10 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
-import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 @Component({
@@ -44,11 +41,9 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
-        private provider_datastorage: ProviderDataStorageService,
         private routerobj: Router,
         private language: Location,
-        public shared_functions: SharedFunctions,
-        private dialog: MatDialog
+        public shared_functions: SharedFunctions
     ) {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     }

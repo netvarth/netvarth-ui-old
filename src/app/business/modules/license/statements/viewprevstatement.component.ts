@@ -116,7 +116,7 @@ export class ViewPrevStatementComponent implements OnInit {
         if (this.pay_data.uuid && this.pay_data.amount &&
             this.pay_data.amount !== 0) {
             this.payment_loading = true;
-            const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+            this.dialog.open(ConsumerPaymentmodeComponent, {
                 width: '50%',
                 panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
                 disableClose: true,

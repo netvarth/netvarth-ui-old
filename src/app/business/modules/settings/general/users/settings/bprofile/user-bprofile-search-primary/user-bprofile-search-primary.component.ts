@@ -9,7 +9,6 @@ import { SharedFunctions } from '../../../../../../../../shared/functions/shared
 import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
 import { projectConstants } from '../../../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
-import { SharedServices } from '../../../../../../../../shared/services/shared-services';
 
 @Component({
     selector: 'app-user-bprofile-search-primary',
@@ -40,7 +39,6 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
         public fed_service: FormMessageDisplayService,
         public provider_servicesobj: ProviderServices,
         public sharedfunctionObj: SharedFunctions,
-        private shared_services: SharedServices,
         private provider_datastorageobj: ProviderDataStorageService,
         @Inject(MAT_DIALOG_DATA) public data: any,
         @Inject(DOCUMENT) public document,
@@ -53,8 +51,8 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
         // calling method to create the form
         this.createForm();
         // this.elementRef.nativeElement.focus();
-        const bConfig = this.sharedfunctionObj.getitemfromLocalStorage('ynw-bconf');
-        const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        // const bConfig = this.sharedfunctionObj.getitemfromLocalStorage('ynw-bconf');
+        // const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
         // if (bConfig && bConfig.bdata) {
         //     for (let i = 0; i < bConfig.bdata.length; i++) {
         //         if (user.sector === bConfig.bdata[i].domain) {

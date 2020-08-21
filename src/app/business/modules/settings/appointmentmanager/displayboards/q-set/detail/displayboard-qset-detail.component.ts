@@ -516,7 +516,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     getProviderQueues() {
         return new Promise((resolve) => {
-            const activeQueues: any = [];
+            // const activeQueues: any = [];
             let queue_list: any = [];
             const params = {};
             params['state-eq'] = 'ENABLED';

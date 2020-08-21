@@ -1,5 +1,5 @@
 // import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { ActivatedRoute } from '@angular/router';
@@ -177,7 +177,7 @@ export class ProfessionalCareComponent implements OnInit {
         this.showbusiness = true;
       }
       if (childContent === 'jaldee.com-integration') {
-        this.showjaldeeintegration  = true;
+        this.showjaldeeintegration = true;
       }
       if (childContent === 'verified-levels') {
         this.showverified = true;
@@ -220,9 +220,9 @@ export class ProfessionalCareComponent implements OnInit {
       }
     }
 
-    if(parentContent === 'general'){
+    if (parentContent === 'general') {
       this.showgeneral = true;
-      if(childContent === 'locations'){
+      if (childContent === 'locations') {
         this.showlocations = true;
       }
       if (childContent === 'departments') {
@@ -253,7 +253,7 @@ export class ProfessionalCareComponent implements OnInit {
       if (childContent === 'settings-time_windows') {
         this.showtime = true;
       }
-     if (childContent === 'settings-q-boards') {
+      if (childContent === 'settings-q-boards') {
         this.showdisplayboard = true;
       }
     }
@@ -267,10 +267,10 @@ export class ProfessionalCareComponent implements OnInit {
         this.showservices = true;
       }
       if (childContent === 'schedules') {
-        this.showschedules= true;
+        this.showschedules = true;
       }
       if (childContent === 'q-boards') {
-        this.showdisplayboard= true;
+        this.showdisplayboard = true;
       }
     }
 
@@ -289,7 +289,7 @@ export class ProfessionalCareComponent implements OnInit {
 
     if (parentContent === 'billing') {
       this.showbilling = true;
-     
+
       if (childContent === 'items') {
         this.showitem = true;
       }
@@ -313,7 +313,7 @@ export class ProfessionalCareComponent implements OnInit {
 
     if (parentContent === 'miscellaneous') {
       this.showmiscellaneous = true;
-      
+
       if (childContent === 'jdn') {
         this.showjdn = true;
       }
@@ -322,7 +322,7 @@ export class ProfessionalCareComponent implements OnInit {
       }
     }
 
-    
+
 
     if (parentContent === 'customers') {
       this.showcustomers = true;
@@ -330,21 +330,21 @@ export class ProfessionalCareComponent implements OnInit {
         this.showcustomersid = true;
       }
     }
-    
+
     if (parentContent === 'comm') {
       this.showvirtualcallingmodes = true;
       if (childContent === 'virtualcallingmode') {
         this.showvirtualcallingmode = true;
       }
       if (childContent === 'videocall-settings') {
-        this.showvideocallmode  = true;
+        this.showvideocallmode = true;
       }
       if (childContent === 'notifications') {
         this.shownotifications = true;
       }
     }
-    
-  
+
+
     if (parentContent === 'license') {
       this.showlicense = true;
       if (childContent === 'upgradelicense') {
@@ -365,47 +365,47 @@ export class ProfessionalCareComponent implements OnInit {
       if (childContent === 'dashboard-home') {
         this.showdashbord = true;
       }
-     }
-    
-     if (parentContent === 'appointments') {
+    }
+
+    if (parentContent === 'appointments') {
       this.showdbappointments = true;
-      if(childContent === 'appointment-phonein'){
+      if (childContent === 'appointment-phonein') {
         this.showappointmentphonein = true;
       }
       if (childContent === 'schadjustdelay') {
         this.showschdelay = true;
       }
-   }
-   if (parentContent === 'donations' && childContent === 'donations') {
-    this.showdbdonations = true;
- }
-    
- if (parentContent === 'check-ins'){
-  this.showcheckins = true;
-  if (childContent === 'check-in') {
-    this.showcheckin = true;
-  }
-  if (childContent === 'adjustdelay') {
-    this.showdelay = true;
-  }
+    }
+    if (parentContent === 'donations' && childContent === 'donations') {
+      this.showdbdonations = true;
+    }
 
-}  
+    if (parentContent === 'check-ins') {
+      this.showcheckins = true;
+      if (childContent === 'check-in') {
+        this.showcheckin = true;
+      }
+      if (childContent === 'adjustdelay') {
+        this.showdelay = true;
+      }
+
+    }
     if (parentContent === 'auditlog' && childContent === 'auditlog') {
-    this.showauditlog = true;
+      this.showauditlog = true;
     }
     if (parentContent === 'alert' && childContent === 'alert') {
       this.showalert = true;
-      }
+    }
     if (parentContent === 'customer' && childContent === 'customer') {
       this.showcustomer = true;
     }
 
     if (parentContent === 'inbox' && childContent === 'inbox') {
       this.showinbox = true;
-   }
+    }
     if (parentContent === 'providerprofile' && childContent === 'providerprofile') {
-    this.showprofile = true;
-  }
+      this.showprofile = true;
+    }
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
     }

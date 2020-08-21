@@ -1,5 +1,5 @@
 
-import { interval as observableInterval, Subscription, Observable } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
@@ -8,10 +8,7 @@ import { projectConstants } from '../../../app.component';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Title } from '@angular/platform-browser';
-import { HttpHandler, HttpHeaders } from '@angular/common/http';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { GlobalService } from '../../../shared/services/global-service';
-import { global } from '@angular/compiler/src/util';
 import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
 import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material';
@@ -55,7 +52,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     public shared_service: SharedServices,
     private provider_services: ProviderServices,
     private titleService: Title,
-    private globalService: GlobalService,
     public dialog: MatDialog,
     private provider_dataStorage: ProviderDataStorageService,
     private readonly joyrideService: JoyrideService) {

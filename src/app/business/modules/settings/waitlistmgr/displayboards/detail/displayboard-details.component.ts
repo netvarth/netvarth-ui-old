@@ -1,14 +1,13 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { MatSelect } from '@angular/material';
-import { take, takeUntil, startWith, map } from 'rxjs/operators';
+import { takeUntil, startWith, map } from 'rxjs/operators';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import value from '*.json';
 
 
 interface Bank {

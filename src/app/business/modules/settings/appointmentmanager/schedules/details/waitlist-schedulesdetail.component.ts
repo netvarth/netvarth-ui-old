@@ -520,7 +520,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
   }
   convertDate(date?) {
-    let today;
+    // let today;
     let mon;
     let cdate;
     if (date) {
@@ -532,7 +532,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     if (mon < 10) {
       mon = '0' + mon;
     }
-    return today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+    return (cdate.getFullYear() + '-' + mon + '-' + cdate.getDate());
   }
   compareDate(dateValue, startOrend) {
     const UserDate = dateValue;
@@ -644,7 +644,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         mon = '0' + mon;
       }
       const daystr: any = [];
-      const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+      // const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
       for (const cday of this.selday_arr) {
         daystr.push(cday);
       }
@@ -654,7 +654,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         return;
       }
       // today
-      const curday = new Date();
+      // const curday = new Date();
       if (this.shared_Functionsobj.getminutesOfDay(this.dstart_time) > this.shared_Functionsobj.getminutesOfDay(this.dend_time)) {
         this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
         return;
