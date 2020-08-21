@@ -1310,7 +1310,7 @@ export const Messages = {
   'PAYBYCASH': 'Pay by Cash',
   'PAYBYOTHERS': 'Pay by Others',
   'PAYBYCASH_OTHERS': 'Pay by Cash / Others',
-  'JALDEEPAY': 'JaldeePay',
+  'JALDEEPAY': 'Pay by Jaldee App',
   'EMAILBILL': 'Email Bill',
   'WBAMOUNT': 'Amount',
   'AMOUNTDUE': 'Amount Due',

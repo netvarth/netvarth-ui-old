@@ -192,6 +192,8 @@ export class ProviderCheckinComponent implements OnInit {
     selectDept;
     selectUser;
     accountType;
+    settings: any = [];
+    showTokenId;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -222,28 +224,28 @@ export class ProviderCheckinComponent implements OnInit {
             if (qparams.userId) {
                 this.selectUser = JSON.parse(qparams.userId);
             }
-            if (this.calculationMode !== 'NoCalc' || (this.calculationMode === 'NoCalc' && !this.showtoken)) {
-                this.breadcrumbs = [
-                    {
-                        title: 'New Check-in',
-                        url: 'provider/check-ins'
-                    },
-                    {
-                        title: this.chekin_title
-                    }
-                ];
-            }
-            if (this.calculationMode === 'NoCalc' && this.showtoken) {
-                this.breadcrumbs = [
-                    {
-                        title: 'New Token',
-                        url: 'provider/check-ins'
-                    },
-                    {
-                        title: this.chekin_title
-                    }
-                ];
-            }
+            // if (this.showtoken) {
+            //     this.breadcrumbs = [
+            //         {
+            //             title: 'New Check-in',
+            //             url: 'provider/check-ins'
+            //         },
+            //         {
+            //             title: this.chekin_title
+            //         }
+            //     ];
+            // }
+            // if (!this.showtoken) {
+            //     this.breadcrumbs = [
+            //         {
+            //             title: 'New Token',
+            //             url: 'provider/check-ins'
+            //         },
+            //         {
+            //             title: this.chekin_title
+            //         }
+            //     ];
+            // }
             if (qparams.ph || qparams.haveMobile) {
                 const filter = {};
                 if (qparams.ph) {
@@ -308,7 +310,38 @@ export class ProviderCheckinComponent implements OnInit {
         // this.getCurrentLocation();
         this.showfuturediv = false;
         this.revealphonenumber = true;
+        this.getProviderSettings();
     }
+    getProviderSettings() {
+        this.provider_services.getWaitlistMgr()
+        .subscribe(data => {
+          this.settings = data;
+          this.showTokenId = this.settings.showTokenId;
+          console.log(this.showtoken);
+          if (this.showTokenId) {
+            this.breadcrumbs = [
+                {
+                    title: 'New Token',
+                    url: 'provider/check-ins'
+                },
+                {
+                    title: this.chekin_title
+                }
+            ];
+        } else {
+            this.breadcrumbs = [
+                {
+                    title: 'New Check-in',
+                    url: 'provider/check-ins'
+                },
+                {
+                    title: this.chekin_title
+                }
+            ];
+        }
+          }, () => {
+        });
+      }
     performActions(action) {
         if (action === 'learnmore') {
             this.router.navigate(['/provider/' + this.domain + '/check-ins->check-in']);
