@@ -613,7 +613,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
       .then(
         data => {
           this.bProfile = data;
-          if (this.bProfile.businessName) {
+          if (this.bProfile.businessName && this.bProfile.businessDesc) {
             this.domainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfDomain();
             this.subdomainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfSubDomain();
 
