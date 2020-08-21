@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/modules/common/shared.module';
-import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { KioskRouterModule } from './kiosk-routing.module';
 
 import { PagerModule } from '../shared/modules/pager/pager.module';
 import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 import { RatingStarModule } from '../shared/modules/ratingstar/ratingstart.module';
-import { AddMemberModule } from '../shared/modules/add-member/add-member.module';
+// import { AddMemberModule } from '../shared/modules/add-member/add-member.module';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 
 import { KioskComponent } from './kiosk.component';

@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../../../app.component';
-import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonEvent, ButtonType } from 'angular-modal-gallery';
+import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout} from 'angular-modal-gallery';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
 import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GalleryService } from '../../../../../../../../shared/modules/gallery/galery-service';
 import { Subscription } from 'rxjs';
 import { ProviderUserBprofileSearchSocialMediaComponent } from './providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
 @Component({
@@ -82,7 +81,6 @@ export class MediaComponent implements OnInit, OnDestroy {
         private provider_datastorage: ProviderDataStorageService,
         private activated_route: ActivatedRoute,
         private routerobj: Router,
-        private galleryService: GalleryService,
         public shared_functions: SharedFunctions,
         private dialog: MatDialog
     ) {

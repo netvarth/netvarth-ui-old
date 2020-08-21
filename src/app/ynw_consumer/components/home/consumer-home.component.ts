@@ -11,9 +11,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
-import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
-import { ViewConsumerWaitlistCheckInBillComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
 import { projectConstants } from '../../../app.component';
@@ -613,7 +611,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   getFavouriteProvider() {
     this.loadcomplete.fav_provider = false;
-    const k = 0;
+    // const k = 0;
     this.shared_services.getFavProvider()
       .subscribe(
         data => {
@@ -719,7 +717,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
         .subscribe(data => {
           let waitlisttime_arr: any = data;
-          const locationjson: any = [];
+          // const locationjson: any = [];
           if (waitlisttime_arr === '"Account doesn\'t exist"') {
             waitlisttime_arr = [];
           }
@@ -741,10 +739,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             cmon = '' + mm;
           }
           const dtoday = yyyy + '-' + cmon + '-' + cday;
-          const ctoday = cday + '/' + cmon + '/' + yyyy;
+          // const ctoday = cday + '/' + cmon + '/' + yyyy;
           let locindx;
-          const check_dtoday = new Date(dtoday);
-          let cdate;
+          // const check_dtoday = new Date(dtoday);
+          // let cdate;
           for (let i = 0; i < waitlisttime_arr.length; i++) {
             locindx = provids_locid[i].locindx;
             this.fav_providers[index]['locations'][locindx]['waitingtime_res'] = waitlisttime_arr[i];
@@ -760,7 +758,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               this.fav_providers[index]['locations'][locindx]['opennow'] = waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['cdate'] = waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 1;
-              cdate = new Date(waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+              // cdate = new Date(waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
               if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                 this.fav_providers[index]['locations'][locindx]['availableToday'] = true;
               } else {

@@ -9,7 +9,7 @@ import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profil
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ChangeEmailComponent } from '../shared/modules/change-email/change-email.component';
-import { ConsumerAppointmentComponent } from './components/waitlist/appointment/consumer-appointment.component';
+// import { ConsumerAppointmentComponent } from './components/waitlist/appointment/consumer-appointment.component';
 import { CheckinDetailComponent } from './components/home/checkindetail.component';
 import { ApptDetailComponent } from './components/home/appointmentdetail.component';
 const routes: Routes = [

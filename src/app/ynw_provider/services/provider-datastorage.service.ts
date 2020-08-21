@@ -48,8 +48,8 @@ export class ProviderDataStorageService {
 
   setBusinessProfileWeightage(data) {
     this.business_profile = data;
-    const domainName = this.business_profile.serviceSector.domain;
-    const subdomainName = this.business_profile.serviceSubSector.subDomain;
+    // const domainName = this.business_profile.serviceSector.domain;
+    // const subdomainName = this.business_profile.serviceSubSector.subDomain;
 
     // business name
     if (!this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME) && this.business_profile.businessName) {

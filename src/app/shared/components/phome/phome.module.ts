@@ -8,13 +8,13 @@ import { HeaderModule } from '../../modules/header/header.module';
 import { FooterModule } from '../../modules/footer/footer.module';
 import { MaterialModule } from '../../modules/common/material.module';
 import { LazyModule } from '../../modules/lazy-load/lazy.module';
-import { JaldeepricingComponent } from './pricing/jaldeepricing.component';
+// import { JaldeepricingComponent } from './pricing/jaldeepricing.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../modules/form-message-display/form-message-display.module';
-import { jaldeepricingModule } from './pricing/jaldeepricing.module';
-import { ProvidersignupComponent } from '../providersignup/providersignup.component';
+import { JaldeePricingModule } from './pricing/jaldeepricing.module';
+// import { ProvidersignupComponent } from '../providersignup/providersignup.component';
 import { ProvidersignupModule } from '../providersignup/providersignup.module';
-import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+// import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { ForgotPasswordModule } from '../forgot-password/forgot-password.module';
 import { ContactusModule } from './contactus/contactus.module';
 
@@ -32,19 +32,16 @@ import { ContactusModule } from './contactus/contactus.module';
         FormsModule,
         FormMessageDisplayModule,
         ReactiveFormsModule,
-        jaldeepricingModule,
+        JaldeePricingModule,
         ProvidersignupModule,
         ForgotPasswordModule,
         ContactusModule
-       
     ],
     declarations: [
         PhomeComponent,
         // ContactusComponent
        ],
          entryComponents: [
-            
-       
         ],
         exports: [PhomeComponent]
 })

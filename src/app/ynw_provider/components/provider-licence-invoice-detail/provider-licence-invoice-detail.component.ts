@@ -235,8 +235,8 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
       this.pay_data.amount !== 0) {
 
       this.payment_loading = true;
-
-      const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+      // const dialogrefd =
+      this.dialog.open(ConsumerPaymentmodeComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,

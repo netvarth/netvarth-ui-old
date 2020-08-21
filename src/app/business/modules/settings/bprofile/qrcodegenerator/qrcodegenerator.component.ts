@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { projectConstants } from '../../../../../app.component';
 
@@ -19,21 +18,22 @@ export class QRCodeGeneratorComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any) {
 
     }
-     private qrCodeParent: ElementRef;
+    private qrCodeParent: ElementRef;
     @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
         if (content1) { // initially setter gets called with undefined
             this.qrCodeParent = content1;
         }
     }
-    private qrCodeCustId: ElementRef;
+    // private qrCodeCustId: ElementRef;
+
     @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
         if (content2) { // initially setter gets called with undefined
             this.qrCodeParent = content2;
         }
     }
-    ngAfterViewChecked() {
-        this.changeDetectorRef.detectChanges();
-    }
+    // ngAfterViewChecked() {
+    //     this.changeDetectorRef.detectChanges();
+    // }
     ngOnInit() {
         this.accuid = this.data.accencUid;
         this.wpath = this.data.path;
@@ -61,7 +61,7 @@ export class QRCodeGeneratorComponent implements OnInit {
     //   closeCustomQR() {
     //     this.qr_code_cId = false;
     //   }
-     //   showPasscode() {
+    //   showPasscode() {
     //     this.show_passcode = !this.show_passcode;
     //   }
     printQr(printSectionId) {
@@ -79,7 +79,7 @@ export class QRCodeGeneratorComponent implements OnInit {
         WindowPrt.print();
         WindowPrt.close();
     }
-   
+
     downloadQR() {
 
     }

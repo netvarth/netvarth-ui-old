@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Input, Output } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';
@@ -7,12 +7,12 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { projectConstants } from '../../../../../app.component';
 import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { EventEmitter } from '@angular/core';
-import { ViewConsumerWaitlistCheckInBillComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
+// import { ViewConsumerWaitlistCheckInBillComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 import { ConsumerRateServicePopupComponent } from '../../../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 
 
 

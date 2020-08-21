@@ -1,6 +1,6 @@
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { OnInit, Component } from '@angular/core';
 @Component({
@@ -57,7 +57,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   checkin_label = '';
   constructor(private provider_servicesobj: ProviderServices,
     public shared_functions: SharedFunctions,
-    private router: ActivatedRoute, private route: Router) { this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
+    private router: ActivatedRoute) { this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
   ngOnInit() {
     this.router.params
       .subscribe(params => {

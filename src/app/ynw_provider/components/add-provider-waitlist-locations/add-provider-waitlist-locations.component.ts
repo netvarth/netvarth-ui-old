@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
@@ -16,7 +16,7 @@ import { Messages } from '../../../shared/constants/project-messages';
   styleUrls: ['./add-provider-waitlist-locations.component.css']
 })
 export class AddProviderWaitlistLocationsComponent implements OnInit {
-  @ViewChild('loc', {static: false}) private elementRef: ElementRef;
+  // @ViewChild('loc', {static: false}) private elementRef: ElementRef;
 
   select_cap = Messages.PAY_SET_SELECT_CAP;
   location_cap = Messages.LOCATION_CAP;

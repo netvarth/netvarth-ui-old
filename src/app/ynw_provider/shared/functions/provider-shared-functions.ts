@@ -135,8 +135,7 @@ export class ProviderSharedFuctions {
           if (!profile['subDomainVirtualFields'] || !profile['subDomainVirtualFields'][0][subdomain][domainfield.name]) {
             reqFields['subdomainvirtual'] = true;
           }
-        }
-        else {
+        } else {
           this.nonMandatorySubDomainAdditionalInfo.push(domainfield.name);
         }
       }
@@ -168,8 +167,7 @@ export class ProviderSharedFuctions {
         if (domainfield.mandatory) {
           this.user_mandatoryAdditionalInfo.push(domainfield.name);
           reqFields['subdomainvirtual'] = true;
-        }
-        else {
+        } else {
           this.user_nonMandatorySubDomainAdditionalInfo.push(domainfield.name);
         }
       }
@@ -182,18 +180,18 @@ export class ProviderSharedFuctions {
     return this.mandatoryAdditionalInfo;
   }
   getAdditionalNonDomainMandatoryFields() {
-    return this.nonMandatoryDomainAdditionalInfo
+    return this.nonMandatoryDomainAdditionalInfo;
   }
   getAdditionalNonSubDomainMandatoryFields() {
     return this.nonMandatorySubDomainAdditionalInfo;
   }
 
-  //user
+  // user
   getUserAdditonalInfoMandatoryFields() {
     return this.user_mandatoryAdditionalInfo;
   }
   getUserAdditionalNonDomainMandatoryFields() {
-    return this.user_nonMandatoryDomainAdditionalInfo
+    return this.user_nonMandatoryDomainAdditionalInfo;
   }
   getUserAdditionalNonSubDomainMandatoryFields() {
     return this.user_nonMandatorySubDomainAdditionalInfo;

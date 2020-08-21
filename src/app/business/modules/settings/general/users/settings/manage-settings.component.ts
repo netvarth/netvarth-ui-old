@@ -1,19 +1,15 @@
 import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
-import { SharedServices } from '../../../../../../shared/services/shared-services';
-import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { ProviderBprofileSearchPrimaryComponent } from '../../../../../../ynw_provider/components/provider-bprofile-search-primary/provider-bprofile-search-primary.component';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { UserDataStorageService } from './user-datastorage.service';
 import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
-import { ProPicPopupComponent } from '../../../bprofile/pro-pic-popup/pro-pic-popup.component';
 
 @Component({
   selector: 'app-managesettings',
@@ -211,7 +207,6 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     public shared_functions: SharedFunctions,
     private service: QuestionService,
     private cdref: ChangeDetectorRef,
-    private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
     private activatedRoot: ActivatedRoute,
@@ -582,7 +577,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     } else {
       if (this.blogo) {
         this.profimg_exists = true;
-        const today = new Date();
+        // const today = new Date();
         //  logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
          logourl = (this.blogo.url) ? this.blogo.url + '?' + this.cacheavoider : '';
       }

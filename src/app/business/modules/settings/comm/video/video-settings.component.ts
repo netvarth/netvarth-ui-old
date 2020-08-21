@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { KeyValue } from '@angular/common';
 
@@ -54,7 +52,7 @@ export class VideoSettingsComponent implements OnInit {
     originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
         return 0;
     }
-    constructor(private _formBuilder: FormBuilder,
+    constructor(
         private router: Router,
         public shared_functions: SharedFunctions,
         private provider_services: ProviderServices) {
@@ -137,10 +135,10 @@ export class VideoSettingsComponent implements OnInit {
         let found = false;
         this.virtualCallModesList.forEach(modes => {
             if (modes.callingMode === callingMode) {
-                let status = 'INACTIVE';
-                if (resultMode.value.enabled) {
-                    status = 'ACTIVE';
-                }
+                // let status = 'INACTIVE';
+                // if (resultMode.value.enabled) {
+                //     status = 'ACTIVE';
+                // }
                 const mode = {
                     'callingMode': callingMode,
                     'value': resultMode['value'].actualValue,

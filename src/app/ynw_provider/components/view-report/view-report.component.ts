@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -57,7 +57,7 @@ export class ViewReportComponent implements OnInit {
   isCheckin;
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
-    private router: ActivatedRoute, private route: Router,
+    private router: ActivatedRoute,
     private shared_services: SharedServices, ) { }
   ngOnInit() {
     this.router.params

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable,  Subject } from 'rxjs';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
+// import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
 
 
 @Injectable()
@@ -10,8 +10,8 @@ export class KioskSharedFunctions {
     private subject = new Subject<any>();
 
     constructor(
-      private dialog: MatDialog,
-      private snackBar: MatSnackBar
+      // private dialog: MatDialog,
+      // private snackBar: MatSnackBar
     ) {}
 
 

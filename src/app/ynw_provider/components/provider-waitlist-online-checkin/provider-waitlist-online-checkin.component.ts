@@ -3,10 +3,6 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
-
 
 @Component({
   selector: 'app-provider-waitlist-online-checkin',
@@ -54,10 +50,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   isManualMode = false;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
-    private sharedfunctionObj: SharedFunctions,
-    private router: Router, private dialog: MatDialog,
-    private shared_functions: SharedFunctions,
-    private routerobj: Router) {
+    private shared_functions: SharedFunctions) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
   }

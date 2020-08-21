@@ -522,7 +522,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         return;
       }
       // today
-      const curday = new Date();
+      // const curday = new Date();
       // const today_curtime = moment(moment(curday).format('LT'), ['hh:mm A']).format('HH:mm');
       // this.sharedfunctionObj.getminutesOfDay(this.dend_time));
       if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {

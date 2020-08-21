@@ -1,20 +1,16 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { MatDialog } from '@angular/material';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
-// import { SelectAutocompleteComponent } from 'mat-select-autocomplete';
-// import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
 @Component({
-    // 'changeDetection': ChangeDetectionStrategy.OnPush,
     'selector': 'app-department-details',
     'templateUrl': './department-details.component.html'
 })
 export class DepartmentDetailComponent implements OnInit {
-    // @ViewChild(SelectAutocompleteComponent) multiSelect: SelectAutocompleteComponent;
     dept_data;
     dept_id;
     breadcrumbs_init = [
@@ -61,8 +57,7 @@ export class DepartmentDetailComponent implements OnInit {
         private dialog: MatDialog,
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
-        private activated_route: ActivatedRoute,
-        private fb: FormBuilder) {
+        private activated_route: ActivatedRoute) {
         this.activated_route.params.subscribe(params => {
             this.dept_id = params.id;
         });
@@ -285,7 +280,7 @@ export class DepartmentDetailComponent implements OnInit {
     getDepartments() {
         this.loading = false;
         this.getServices().then(
-            res => {
+            () => {
                 this.provider_services.getDepartments()
                     .subscribe(
                         data => {

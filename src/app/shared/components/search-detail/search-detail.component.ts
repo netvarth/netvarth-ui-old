@@ -11,7 +11,7 @@ import { SignUpComponent } from '../../components/signup/signup.component';
 import { SearchFields } from '../../modules/search/searchfields';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
-import { CheckInComponent } from '../../modules/check-in/check-in.component';
+// import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
@@ -343,7 +343,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   checklocationExistsinStorage() {
-    const localloc = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
+    // const localloc = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
     const holdLocObj = {
       autoname: this.locautoname || '',
       name: this.locname || '',
@@ -1008,14 +1008,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
 
 
   }
-  private showinKm(miles) {
-    const km = 1.6 * miles;
-    if (km < 1) {
-      return '<1 km';
-    } else {
-      return km.toFixed(2) + ' km';
-    }
-  }
+  // private showinKm(miles) {
+  //   const km = 1.6 * miles;
+  //   if (km < 1) {
+  //     return '<1 km';
+  //   } else {
+  //     return km.toFixed(2) + ' km';
+  //   }
+  // }
   getApptTime(provids) {
     if (provids.length > 0) {
       const post_provids: any = [];
@@ -1100,10 +1100,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             cmon = '' + mm;
           }
           const dtoday = yyyy + '-' + cmon + '-' + cday;
-          const ctoday = cday + '/' + cmon + '/' + yyyy;
+          // const ctoday = cday + '/' + cmon + '/' + yyyy;
           let srchindx;
-          const check_dtoday = new Date(dtoday);
-          let cdate;
+          // const check_dtoday = new Date(dtoday);
+          // let cdate;
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
             srchindx = provids[i].searchindx;
             this.search_data.hits.hit[srchindx].fields['waitingtime_res'] = this.waitlisttime_arr[i];
@@ -1128,7 +1128,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['queue_available'] = 1;
               this.search_data.hits.hit[srchindx].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
-              cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+              // cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
               if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['availableToday'] = true;
               } else {
@@ -1175,13 +1175,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         });
     }
   }
-  private showproviderlogoicon(logo) {
+  public showproviderlogoicon(logo) {
     return this.shared_functions.showlogoicon(logo);
   }
-  private getdomain() {
+  public getdomain() {
     return this.domain;
   }
-  private setfields() {
+  public setfields() {
     this.searchfields = {
       domain: this.domain,
       location: this.locname,
@@ -1205,7 +1205,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     };
     return this.searchfields;
   }
-  private selected_sortfield(boolDistance) {
+  public selected_sortfield(boolDistance) {
     let selfield = '';
     let selorder = '';
     this.activeDistanceSort = boolDistance;
@@ -1219,19 +1219,19 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.change_url_on_criteria_change();
     this.do_search();
   }
-  private selected_sortorder(sel) {
+  public selected_sortorder(sel) {
     this.sortorder = sel;
     // changing the url of the search result page based on the selected criteria
     this.change_url_on_criteria_change();
     this.do_search();
   }
-  private pass_totalpages() {
+  public pass_totalpages() {
     return this.search_result_count;
   }
-  private pass_pagesize() {
+  public pass_pagesize() {
     return projectConstants.searchpass_criteria.size;
   }
-  private handle_pageclick(pg) {
+  public handle_pageclick(pg) {
     this.startpageval = pg;
     this.change_url_on_criteria_change();
     this.do_search();
@@ -1845,7 +1845,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       // check whether logged in as consumer
       this.shared_functions.setitemToGroupStorage('sctop', this.scrolltop);
       // if (this.shared_functions.checkLogin()) {
-      const ctype = this.shared_functions.isBusinessOwner('returntyp');
+      // const ctype = this.shared_functions.isBusinessOwner('returntyp');
       // if (ctype === 'consumer') {
       this.showProviderDetails(providforDetails, locId);
       // }
@@ -2098,7 +2098,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   openCoupons(obj, type) {
     this.btn_clicked = true;
     const s3id = obj.fields.unique_id;
-    const busname = obj.fields.title;
+    // const busname = obj.fields.title;
     const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     this.shared_functions.getS3Url('provider')
       .then(

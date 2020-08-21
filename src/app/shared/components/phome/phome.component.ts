@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChildren, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { SignUpComponent } from '../signup/signup.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -70,7 +70,6 @@ export class PhomeComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
-    private shared_service: SharedServices,
     public shared_functions: SharedFunctions,
     private routerobj: Router,
     public shared_services: SharedServices,
@@ -253,7 +252,7 @@ scrollToTop() {
     // if (email !== '') {
     //   loginId = email;
     // }
-    const ob = this;
+    // const ob = this;
     const post_data = {
       'countryCode': '+91',
       'loginId': loginId,

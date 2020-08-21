@@ -112,7 +112,7 @@ export class SharedFunctions {
               this.router.navigate(['/consumer']);
             } else {
               if (moreParams['bypassDefaultredirection'] === 1) {
-                const mtemp = '1';
+                // const mtemp = '1';
               } else {
                 this.router.navigate(['/consumer']);
               }
@@ -1064,7 +1064,7 @@ export class SharedFunctions {
       firstdate = new Date(date1);
     }
     seconddate = new Date(date2);
-    const timediff = Math.abs(firstdate.getTime() - seconddate.getTime());
+    // const timediff = Math.abs(firstdate.getTime() - seconddate.getTime());
     const hours = Math.abs(firstdate.getTime() - seconddate.getTime()) / 36e5; // 36e5 is the scientific notation for 60*60*1000
     return { 'hours': hours };
   }
@@ -1154,7 +1154,7 @@ export class SharedFunctions {
   }
 
   doCancelWaitlist(waitlist, type, cthis?) {
-   let msg;
+    let msg;
     if (type === 'checkin') {
       msg = 'Check-In';
     } else if (type === 'appointment') {
@@ -1377,7 +1377,7 @@ export class SharedFunctions {
       return true;
     }
   }
-  
+
   removSpace(evt) {
     const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
     if (inputKeyCode === 32) {
@@ -1490,11 +1490,11 @@ export class SharedFunctions {
     const server = date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const serverdate = moment(server).format();
     const newdate = new Date(serverdate);
-   const dd = newdate.getDate();
-   const mm = newdate.getMonth() + 1;
+    const dd = newdate.getDate();
+    const mm = newdate.getMonth() + 1;
     const y = newdate.getFullYear();
     const date1 = y + '-' + mm + '-' + dd;
-    return date1 ;
+    return date1;
   }
   setFilter() {
     setTimeout(() => {

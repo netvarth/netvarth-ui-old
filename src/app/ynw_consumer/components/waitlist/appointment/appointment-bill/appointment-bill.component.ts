@@ -5,7 +5,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { projectConstants } from '../../../../../app.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import {  ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material';
@@ -673,7 +673,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
         if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
         } else {
             if (coupon.value.value === '0.0') {
-                const dialogref = this.dialog.open(JcCouponNoteComponent, {
+                this.dialog.open(JcCouponNoteComponent, {
                     width: '50%',
                     panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
                     disableClose: true,

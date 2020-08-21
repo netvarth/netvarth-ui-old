@@ -1,6 +1,6 @@
 
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+// import {HttpClient} from '@angular/common/http';
 
 // Import RxJs required methods
 import { ServiceMeta } from '../../shared/services/service-meta';
@@ -10,7 +10,7 @@ import { ServiceMeta } from '../../shared/services/service-meta';
 export class ConsumerServices {
 
 
-  constructor(private servicemeta: ServiceMeta, private http: HttpClient) {}
+  constructor(private servicemeta: ServiceMeta) {}
 
   getWaitlist(params) {
       return this.servicemeta.httpGet('consumer/waitlist', null, params);

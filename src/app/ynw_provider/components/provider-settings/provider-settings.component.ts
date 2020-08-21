@@ -240,7 +240,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
     this.profile_enabled_msg = Messages.PROFILE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.profile_disabled_msg = Messages.PROFILE_DISABLED_MSG.replace('[customer]', this.customer_label);
-    this.getProviderLogo(); 
+    this.getProviderLogo();
     this.getGalleryImages();
     this.getDomainSubdomainSettings();
     this.getBusinessConfiguration();
@@ -376,13 +376,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         data => {
           this.blogo = data;
           let logoExist;
-
-          let logo = '';
           if (this.blogo[0]) {
             logoExist = true;
-            logo = this.blogo[0].url;
+            // logo = this.blogo[0].url;
           } else {
-            logo = '';
+            // logo = '';
             logoExist = false;
           }
           this.provider_datastorage.updateProfilePicWeightage(logoExist);

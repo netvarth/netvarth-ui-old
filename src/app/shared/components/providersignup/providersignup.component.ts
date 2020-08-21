@@ -331,8 +331,8 @@ export class ProvidersignupComponent implements OnInit {
       return;
     }
   }
-  
- 
+
+
   // onReferalSubmit(sccode) {
   //   this.scfound = false;
   //   this.scCode = null;
@@ -483,26 +483,26 @@ export class ProvidersignupComponent implements OnInit {
     this.api_loading = true;
     this.resetApiErrors();
     // if (this.otp) {
-      if (this.isValidConfirm_pw) {
-        // this.onOtpSubmit().then(data => {
-          this.saveReferralInfo().then(
-            () => {
-              this.setPassword();
-            },
-            (error) => {
-              this.joinClicked = false;
-              this.api_loading = false;
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
-        // },
-        //   (error) => {
-        //     this.joinClicked = false;
-        //     this.api_loading = false;
-        //   });
-      } else {
-        this.joinClicked = false;
-        this.api_loading = false;
-      }
+    if (this.isValidConfirm_pw) {
+      // this.onOtpSubmit().then(data => {
+      this.saveReferralInfo().then(
+        () => {
+          this.setPassword();
+        },
+        (error) => {
+          this.joinClicked = false;
+          this.api_loading = false;
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+      // },
+      //   (error) => {
+      //     this.joinClicked = false;
+      //     this.api_loading = false;
+      //   });
+    } else {
+      this.joinClicked = false;
+      this.api_loading = false;
+    }
     // } else {
     //   this.joinClicked = false;
     //   this.api_loading = false;
@@ -590,7 +590,7 @@ export class ProvidersignupComponent implements OnInit {
     this.resetApiErrors();
     if (changetostep === 2) {
     }
-    const curstep = this.active_step; // taking the current step number to a local variable
+    // const curstep = this.active_step; // taking the current step number to a local variable
     // this.save_setDetails(curstep, changetostep);
     if (changetostep === 1) {
       setTimeout(() => {

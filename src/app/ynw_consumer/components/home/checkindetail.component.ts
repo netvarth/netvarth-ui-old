@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../app.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { MatDialog } from '@angular/material';
@@ -72,7 +72,6 @@ export class CheckinDetailComponent implements OnInit {
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
-        private router: Router,
         public locationobj: Location,
         private shared_functions: SharedFunctions,
         @Inject(DOCUMENT) public document,
@@ -84,7 +83,7 @@ export class CheckinDetailComponent implements OnInit {
                 this.waitlistdata = qParams;
             });
         this.waitlist = this.waitlistdata.waitlist || null;
-        const waitlistjson = JSON.parse(this.waitlist); 
+        const waitlistjson = JSON.parse(this.waitlist);
         this.BusinessName = waitlistjson.providerAccount.businessName;
         this.ProviderId = waitlistjson.providerAccount.id;
         this.ynwUuid = waitlistjson.ynwUuid;
