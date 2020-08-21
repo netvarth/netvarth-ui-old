@@ -402,7 +402,7 @@ export class ProvidersignupComponent implements OnInit {
     this.shared_services.ProviderSetPassword(this.otp, post_data)
       .subscribe(
         () => {
-          this.active_step = 4;
+          // this.active_step = 4;
           this.actionstarted = false;
           this.providerPwd = post_data.password;
           const login_data = {
