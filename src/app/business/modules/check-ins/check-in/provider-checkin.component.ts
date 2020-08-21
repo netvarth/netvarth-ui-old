@@ -192,6 +192,7 @@ export class ProviderCheckinComponent implements OnInit {
     selectDept;
     selectUser;
     accountType;
+    disable = false;
     settings: any = [];
     showTokenId;
     constructor(public fed_service: FormMessageDisplayService,
@@ -224,7 +225,7 @@ export class ProviderCheckinComponent implements OnInit {
             if (qparams.userId) {
                 this.selectUser = JSON.parse(qparams.userId);
             }
-            // if (this.showtoken) {
+            if (this.calculationMode !== 'N            // if (this.showtoken) {
             //     this.breadcrumbs = [
             //         {
             //             title: 'New Check-in',
@@ -246,7 +247,7 @@ export class ProviderCheckinComponent implements OnInit {
             //         }
             //     ];
             // }
-            if (qparams.ph || qparams.haveMobile) {
+obile) {
                 const filter = {};
                 if (qparams.ph) {
                     filter['phoneNo-eq'] = qparams.ph;
@@ -343,7 +344,37 @@ export class ProviderCheckinComponent implements OnInit {
         });
       }
     performActions(action) {
-        if (action === 'learnmore') {
+           getProviderSettings() {
+        this.provider_services.getWaitlistMgr()
+        .subscribe(data => {
+          this.settings = data;
+          this.showTokenId = this.settings.showTokenId;
+          console.log(this.showtoken);
+          if (this.showTokenId) {
+            this.breadcrumbs = [
+                {
+                    title: 'New Token',
+                    url: 'provider/check-ins'
+                },
+                {
+                    title: this.chekin_title
+                }
+            ];
+        } else {
+            this.breadcrumbs = [
+                {
+                    title: 'New Check-in',
+                    url: 'provider/check-ins'
+                },
+                {
+                    title: this.chekin_title
+                }
+            ];
+        }
+          }, () => {
+        });
+      }
+ if (action === 'learnmore') {
             this.router.navigate(['/provider/' + this.domain + '/check-ins->check-in']);
         }
     }
@@ -988,6 +1019,7 @@ export class ProviderCheckinComponent implements OnInit {
             case 3:
                 this.main_heading = 'Family Members';
                 this.showCreateMember = false;
+                this.disable = false;
                 this.addmemberobj.fname = '';
                 this.addmemberobj.lname = '';
                 this.addmemberobj.mobile = '';
@@ -1065,6 +1097,7 @@ export class ProviderCheckinComponent implements OnInit {
     addMember() {
         this.resetApi();
         this.showCreateMember = true;
+        this.disable = false;
         // this.step = 4; // show add member section
         // this.main_heading = 'Add Family Member';
     }
@@ -1081,6 +1114,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.addmemberobj.dob = obj.dob || '';
     }
     handleSaveMember() {
+        this.disable = true;
         this.resetApi();
         let derror = '';
         const namepattern = new RegExp(projectConstantsLocal.VALIDATOR_CHARONLY);
@@ -1123,7 +1157,8 @@ export class ProviderCheckinComponent implements OnInit {
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
             fn.subscribe(() => {
-                this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
+               // this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.handleGoBack(3);
@@ -1132,6 +1167,7 @@ export class ProviderCheckinComponent implements OnInit {
                 error => {
                     // this.api_error = error.error;
                     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.disable = false;
                     // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'));
                 });
         } else {

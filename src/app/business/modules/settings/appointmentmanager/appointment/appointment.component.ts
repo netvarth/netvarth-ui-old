@@ -198,6 +198,7 @@ export class AppointmentComponent implements OnInit {
     selectDept;
     selectUser;
     accountType;
+    disable = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -924,6 +925,7 @@ export class AppointmentComponent implements OnInit {
             case 3:
                 this.main_heading = 'Family Members';
                 this.showCreateMember = false;
+                this.disable = false;
                 this.addmemberobj.fname = '';
                 this.addmemberobj.lname = '';
                 this.addmemberobj.mobile = '';
@@ -1001,6 +1003,7 @@ export class AppointmentComponent implements OnInit {
     addMember() {
         this.resetApi();
         this.showCreateMember = true;
+        this.disable = false;
         // this.step = 4; // show add member section
         // this.main_heading = 'Add Family Member';
     }
@@ -1017,6 +1020,7 @@ export class AppointmentComponent implements OnInit {
         this.addmemberobj.dob = obj.dob || '';
     }
     handleSaveMember() {
+        this.disable = true;
         this.resetApi();
         let derror = '';
         const namepattern = new RegExp(projectConstantsLocal.VALIDATOR_CHARONLY);
@@ -1059,7 +1063,8 @@ export class AppointmentComponent implements OnInit {
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
             fn.subscribe(() => {
-                this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
+                //this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.handleGoBack(3);
@@ -1068,6 +1073,7 @@ export class AppointmentComponent implements OnInit {
                 error => {
                     // this.api_error = error.error;
                     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.disable = false;
                     // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'));
                 });
         } else {

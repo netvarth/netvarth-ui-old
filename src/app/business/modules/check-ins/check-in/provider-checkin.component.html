@@ -403,7 +403,7 @@
                                             <div class="actiondiv">
                                                 <button type="button" class="cs-btn bt2 backbtn"
                                                     (click)="handleGoBack(3)">{{cancel_btn}}</button>&nbsp;
-                                                <button class="cs-btn bt1 savemember"
+                                                <button class="cs-btn bt1 savemember"mat-button [disabled] = "disable"
                                                     (click)="handleSaveMember()">OK</button>
                                             </div>
                                         </div>
