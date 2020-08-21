@@ -9,14 +9,12 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
 import { QRCodeGeneratorComponent } from '../qrcodegenerator/qrcodegenerator.component';
 import { MatDialog } from '@angular/material';
-import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 @Component({
   selector: 'app-jaldeeonline',
   templateUrl: './jaldee-online.component.html'
 })
 export class JaldeeOnlineComponent implements OnInit {
 
-  show_licence_warn: boolean;
   listmyprofile_status_str: string;
   jaldee_online_disabled_msg: string;
   jaldee_online_enabled_msg: string;
@@ -51,7 +49,6 @@ export class JaldeeOnlineComponent implements OnInit {
     private sharedfunctionobj: SharedFunctions,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public fed_service: FormMessageDisplayService,
     private fb: FormBuilder,
     private routerobj: Router,
     private dialog: MatDialog) {
@@ -59,12 +56,11 @@ export class JaldeeOnlineComponent implements OnInit {
 
   }
   ngOnInit() {
-
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.jaldee_online_enabled_msg = Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
-    this.getLicensemetrics();
     this.shared_functions.getMessage().subscribe(data => {
+      this.getLicensemetrics();
       switch (data.ttype) {
         case 'upgradelicence':
           this.getLicensemetrics();
@@ -203,7 +199,7 @@ export class JaldeeOnlineComponent implements OnInit {
         const status = (this.listmyprofile_status === true) ? 'disable' : 'enable';
 
         this.listmyprofile_status = !this.listmyprofile_status;
-        this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + status + 'd successfully');
+        this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
         this.getPublicSearch();
       }, error => {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -230,7 +226,7 @@ export class JaldeeOnlineComponent implements OnInit {
       .subscribe(
         () => {
           this.onlinepresence_status = !this.onlinepresence_status;
-          this.shared_functions.openSnackBar('Jaldee Online ' + is_check + 'd successfully');
+          this.shared_functions.openSnackBar('Jaldee Online ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         },
         error => {
@@ -249,9 +245,13 @@ export class JaldeeOnlineComponent implements OnInit {
     }
   }
   customizeId() {
-    if (this.licence_warn) {
-      this.shared_functions.openSnackBar('  You are not allowed to do this operation. Please upgrade license package', { 'panelClass': 'snackbarerror' });
+    if (this.normal_customid_show === 2 && !this.showCustomId) {
+      this.licence_warn = true;
+      setTimeout(() => {
+        this.licence_warn = false;
+      }, 3000);
     } else {
+      this.is_customized = true;
       this.editCustomId();
     }
   }
@@ -281,7 +281,6 @@ export class JaldeeOnlineComponent implements OnInit {
         data => {
           this.bProfile.customId = customId;
           this.normal_customid_show = 3;
-          this.shared_functions.openSnackBar('Personalize Id added successfully');
         },
         error => {
           this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -293,7 +292,6 @@ export class JaldeeOnlineComponent implements OnInit {
         data => {
           this.bProfile.customId = customId;
           this.normal_customid_show = 3;
-          this.shared_functions.openSnackBar('Personalize Id updated successfully');
         },
         error => {
           this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -318,11 +316,9 @@ export class JaldeeOnlineComponent implements OnInit {
           if (this.licenseMetadata[i].metrics[k].id === 13) {
             if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
               this.showCustomId = true;
-              this.licence_warn = false;
               return;
             } else {
               this.showCustomId = false;
-              this.licence_warn = true;
               return;
             }
           }
