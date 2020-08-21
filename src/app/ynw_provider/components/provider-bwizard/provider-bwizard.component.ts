@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import { Messages } from '../../../shared/constants/project-messages';
 import { GoogleMapComponent } from '../googlemap/googlemap.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -828,7 +828,7 @@ export class ProviderbWizardComponent implements OnInit {
     // this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
     const hideaction = { 'ttype': 'hidemenus', 'value': false };
     this.shared_functions.sendMessage(hideaction);
-    this.routerobj.navigate(['provider', 'settings']);
+    this.routerobj.navigate(['provider', 'settings'], { queryParams: { firstTimeSignup: true } });
     // this.routerobj.navigate(['provider', 'settings', 'bprofile']);
   }
 
@@ -860,7 +860,8 @@ export class ProviderbWizardComponent implements OnInit {
     // } else { // if sufficient data is there, then show the bprofile
     //   this.redirecttoProfile();
     // }
-    this.letsGetStarted();
+   // this.letsGetStarted();
+   this.redirecttoProfile();
   }
   resetErrors() {
     this.error_Exists = false;

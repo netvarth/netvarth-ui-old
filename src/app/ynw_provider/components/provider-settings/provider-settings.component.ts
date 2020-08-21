@@ -2,13 +2,16 @@ import { Component, OnInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } fro
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../app.component';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
+import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
+import { JoyrideService } from 'ngx-joyride';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-provider-settings',
@@ -16,6 +19,7 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 })
 
 export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
+
   blogo: ArrayBuffer;
   weightageClass: string;
   progress_bar_four: number;
@@ -154,6 +158,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   profile_enabled_msg: string;
   profile_disabled_msg: string;
   businessProfile_weightageArray: any[];
+  showTakeaTour = false;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -161,7 +166,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     private shared_services: SharedServices,
     private provider_datastorage: ProviderDataStorageService,
     private qservice: QuestionService,
-    private provider_shared_functions: ProviderSharedFuctions) {
+    private provider_shared_functions: ProviderSharedFuctions,
+    private activated_route: ActivatedRoute,
+    private readonly joyrideService: JoyrideService,
+    private dialog: MatDialog
+  ) {
+    this.activated_route.queryParams.subscribe(
+      qparams => {
+       this.showTakeaTour = qparams.firstTimeSignup;
+       if (this.showTakeaTour) {
+           this.letsGetStarted();
+       }
+      });
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.shared_functions.getMessage().subscribe(data => {
@@ -279,6 +295,48 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
     });
   }
+  letsGetStarted() {
+    const dialogRef = this.dialog.open(ProviderStartTourComponent, {
+      width: '25%',
+      panelClass: ['popup-class', 'commonpopupmainclass']
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'startTour') {
+        this.joyrideService.startTour(
+
+          {
+            steps: ['step1@provider/settings', 'step2@provider/settings', 'step3@provider/settings', 'step4'],
+            showPrevButton: false,
+            stepDefaultPosition: 'top',
+            themeColor: '#212f23'
+          }
+          // Your steps order
+        ).subscribe(
+
+          step => {
+            /*Do something*/
+            console.log('Location', window.location.href, 'Path', window.location.pathname);
+            console.log('Next:', step);
+          },
+          error => {
+            /*handle error*/
+          },
+          () => {
+            this.routerobj.navigate(['.'], {} );
+            // this.redirecttoProfile();
+          }
+        );
+
+      } else {
+        this.routerobj.navigate(['.'], {} );
+      }
+
+
+    });
+
+  }
 
   calculateWeightage(data) {
     let total = 0;
@@ -335,7 +393,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.showIncompleteButton = true;
       return businessProfileWeightageText;
     } else if
-      (weightage >= 50 && weightage < 75) {
+    (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'info';
@@ -806,11 +864,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.routerobj.navigate(['provider', 'settings', 'appointmentmanager']);
         break;
       case 'schedules':
-          if (this.locationExists) {
-            this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
-          } else if (this.bprofileLoaded) {
-            this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
-          }
+        if (this.locationExists) {
+          this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
+        } else if (this.bprofileLoaded) {
+          this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+        }
         break;
       case 'appservices':
         this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'services']);
