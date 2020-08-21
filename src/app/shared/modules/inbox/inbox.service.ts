@@ -24,8 +24,8 @@ export class InboxServices {
     getBussinessProfile() {
       return this.servicemeta.httpGet('provider/bProfile');
     }
-    readProviderMessages(providerId, messageIds) {
-        const url = 'consumer/communications/readMessages/' + providerId + '/' + messageIds;
+    readProviderMessages(providerId, messageIds, accountId) {
+        const url = 'consumer/communications/readMessages/' + providerId + '/' + messageIds + '?account=' + accountId;
         return this.servicemeta.httpPut(url);
      }
 }
