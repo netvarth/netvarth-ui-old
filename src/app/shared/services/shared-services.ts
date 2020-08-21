@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
 // Import RxJs required methods
 import { ServiceMeta } from './service-meta';
-import { AlertPromise } from 'selenium-webdriver';
 @Injectable()
 export class SharedServices {
 
   licenseMetrics: any = [];
-  constructor(private servicemeta: ServiceMeta, private http: HttpClient) {
+  constructor(private servicemeta: ServiceMeta) {
   }
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');

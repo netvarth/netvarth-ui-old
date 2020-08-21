@@ -1,5 +1,5 @@
 
-import { interval as observableInterval, Subscription, Observable } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationEnd, NavigationExtras } from '@angular/router';
 import * as moment from 'moment';

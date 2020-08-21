@@ -4,7 +4,6 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-import { SharedServices } from '../../../shared/services/shared-services';
 import { Router, ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-provider-paymentsettings',
@@ -131,7 +130,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions,
         private router: Router,
-        private shared_service: SharedServices,
         private routerobj: Router,
         private activated_route: ActivatedRoute
 

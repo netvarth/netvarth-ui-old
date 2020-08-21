@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Inject, OnChanges } from '@angular/core';
+import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
@@ -13,7 +13,6 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ViewChild } from '@angular/core';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
-import { ProviderBprofileSearchDynamicComponent } from '../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { JoyrideService } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
 
@@ -761,7 +760,7 @@ export class ProviderbWizardComponent implements OnInit {
                 this.document.getElementById('locaddress').focus();
               }
             }
-            const addr = result['address'] || null;
+            // const addr = result['address'] || null;
             this.wizard_data_holder['location'] = result['location'];
           }
         }
@@ -1376,8 +1375,8 @@ export class ProviderbWizardComponent implements OnInit {
       );
   }
   checkEnumList(questions, submit_data) {
-    for (const row of questions) {
-    }
+    // for (const row of questions) {
+    // }
     return submit_data;
   }
 

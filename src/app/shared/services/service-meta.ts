@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 @Injectable()
 export class ServiceMeta {
@@ -78,7 +78,7 @@ export class ServiceMeta {
 
     httpPatch(url_path, body?, header?, params?) {
 
-              const bodyString = JSON.stringify(body); // Stringify payload
+              // const bodyString = JSON.stringify(body); // Stringify payload
               const options: any = {}; // Create a request option
 
               if (header) {
@@ -102,7 +102,7 @@ export class ServiceMeta {
 
     httpPut(url_path, body?, header?, params?) {
 
-        const bodyString = JSON.stringify(body); // Stringify payload
+        // const bodyString = JSON.stringify(body); // Stringify payload
         const options: any = {}; // Create a request option
 
         if (header) {

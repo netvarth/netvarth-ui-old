@@ -1055,8 +1055,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           const dtoday = yyyy + '-' + cmon + '-' + cday;
           let locindx;
-          const check_dtoday = new Date(dtoday);
-          let cdate;
+          // const check_dtoday = new Date(dtoday);
+          // let cdate;
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
             locindx = provids_locid[i].locindx;
             this.locationjson[locindx]['waitingtime_res'] = this.waitlisttime_arr[i];
@@ -1072,7 +1072,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
               this.locationjson[locindx]['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
               this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 1;
-              cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+              // cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
               if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                 this.locationjson[locindx]['availableToday'] = true;
               } else {

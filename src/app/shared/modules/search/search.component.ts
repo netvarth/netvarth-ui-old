@@ -2,7 +2,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatAutocompleteTrigger, MatSelect, MatInput } from '@angular/material';
+import { MatAutocompleteTrigger, MatSelect } from '@angular/material';
 import { Messages } from '../../constants/project-messages';
 import { SharedServices } from '../../services/shared-services';
 import { SearchDataStorageService } from '../../services/search-datastorage.services';
@@ -388,9 +388,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // Check whether search labels exists
     if (this.show_popularsrchlabellist) {
       for (const label of this.show_popularsrchlabellist) {
-        let holdkeyword;
+        // let holdkeyword;
         if (label.displayname && label.displayname !== '') {
-          holdkeyword = label.displayname.toLowerCase();
+          // holdkeyword = label.displayname.toLowerCase();
           // if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
           const lbl = label.query.split('&');
           const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label', origin: 'popular' };

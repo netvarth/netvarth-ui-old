@@ -969,7 +969,7 @@ export class CheckInInnerComponent implements OnInit {
         this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
           (wailist: any) => {
             this.activeWt = wailist;
-            for ( let serv in this.serviceDatalist) {
+            for ( const serv in this.serviceDatalist) {
               if ( this.activeWt.service.id === this.serviceDatalist[serv].id) {
                 if ( this.serviceDatalist[serv].livetrack === true) {
                   this.tracking = true;
@@ -1065,7 +1065,7 @@ export class CheckInInnerComponent implements OnInit {
         'accountId': this.account_id,
         'purpose': 'prePayment'
       };
-      const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+      this.dialog.open(ConsumerPaymentmodeComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
@@ -1698,8 +1698,6 @@ export class CheckInInnerComponent implements OnInit {
        }
       this.dialogRef.close();
       this.router.navigate(['/']);
-    
-   
   }
   saveLiveTrackDetails() {
     this.track_loading = true;

@@ -6,7 +6,6 @@ import { projectConstants } from '../../../../../app.component';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
-import { ViewConsumerWaitlistCheckInBillComponent } from '../consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerRateServicePopupComponent } from '../../../../components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 

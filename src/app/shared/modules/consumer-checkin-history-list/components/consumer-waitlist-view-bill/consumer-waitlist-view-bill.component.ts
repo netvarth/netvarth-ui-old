@@ -609,7 +609,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       // alert('in if');
     } else {
       if (coupon.value.value === '0.0') {
-        const dialogref = this.dialog.open(JcCouponNoteComponent, {
+        this.dialog.open(JcCouponNoteComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
           disableClose: true,

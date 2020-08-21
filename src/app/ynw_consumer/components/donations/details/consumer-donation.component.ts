@@ -786,7 +786,7 @@ export class ConsumerDonationComponent implements OnInit {
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
         dataToSend.append('message', this.consumerNote);
-        const captions = {};
+        // const captions = {};
         this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
             dataToSend)
             .subscribe(

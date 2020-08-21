@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../app.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { MatDialog } from '@angular/material';
@@ -72,7 +72,6 @@ export class ApptDetailComponent implements OnInit {
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
-        private router: Router,
         public locationobj: Location,
         private shared_functions: SharedFunctions,
         @Inject(DOCUMENT) public document,

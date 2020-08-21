@@ -2,8 +2,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Messages } from '../../constants/project-messages';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-about-jaldee',
   templateUrl: './about-jaldee.component.html'
@@ -20,7 +20,6 @@ export class AboutJaldeeComponent implements OnInit, OnDestroy {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private router: ActivatedRoute,
-    private route: Router,
     private _scrollToService: ScrollToService
   ) { }
 

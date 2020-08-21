@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -18,7 +18,6 @@ export class DisplayboardQSetComponent implements OnInit {
     @Output() idSelected = new EventEmitter<any>();
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     constructor(
-        private router: Router,
         private routerobj: Router,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions

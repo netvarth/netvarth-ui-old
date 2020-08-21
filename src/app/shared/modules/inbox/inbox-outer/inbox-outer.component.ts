@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { InboxServices } from '../inbox.service';
-import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-inbox-outer',

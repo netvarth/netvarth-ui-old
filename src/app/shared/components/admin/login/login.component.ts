@@ -7,7 +7,6 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../app.component';
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
-import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,7 +32,7 @@ export class AdminLoginComponent implements OnInit {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public activaterouterobj: ActivatedRoute,
-    private provider_dataStorage:ProviderDataStorageService,
+    private provider_dataStorage: ProviderDataStorageService,
     public router: Router
   ) {
     this.activaterouterobj.paramMap
@@ -56,7 +55,7 @@ export class AdminLoginComponent implements OnInit {
   }
   login(data) {
     const pW = this.password;
-    const ob = this;
+    // const ob = this;
     const post_data = {
       'countryCode': '+91',
       'loginId': this.loginId,

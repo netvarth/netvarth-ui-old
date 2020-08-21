@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, EventEmitter, Input, OnChanges, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit, EventEmitter, OnChanges, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { GalleryService } from '../galery-service';
 import { Subscription } from 'rxjs';

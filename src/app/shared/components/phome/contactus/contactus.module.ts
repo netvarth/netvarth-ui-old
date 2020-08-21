@@ -1,29 +1,24 @@
 import { NgModule } from '@angular/core';
-import { PhomeRoutingModule } from '../phome-routing.module';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HeaderModule } from '../../../modules/header/header.module';
 import { MaterialModule } from '../../../modules/common/material.module';
 import { FooterModule } from '../../../modules/footer/footer.module';
 import { ContactusComponent } from './contactus.component';
 import { contactusRoutingModule } from './contactus.routing.module';
 @NgModule({
-   
     imports: [
-       
-       CommonModule,
-       FormsModule,
+        CommonModule,
+        FormsModule,
         HeaderModule,
-       MaterialModule,
-       FooterModule,
-       contactusRoutingModule
+        MaterialModule,
+        FooterModule,
+        contactusRoutingModule
     ],
     declarations: [
-        ContactusComponent,
-
-       
+        ContactusComponent
     ],
     entryComponents: [],
     exports: [ContactusComponent]
 })
-export class ContactusModule {} 
+export class ContactusModule { }

@@ -1,8 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { ActivatedRoute } from '@angular/router';
-import { Location, CommonModule } from '@angular/common';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Location } from '@angular/common';
 import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
@@ -22,10 +20,8 @@ export class ConsumerLearnmoreComponent implements  OnInit {
   domain;
   go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
   constructor(
-    private activated_route: ActivatedRoute,
     private _scrollToService: ScrollToService,
-    private _location: Location,
-    private shared_functions: SharedFunctions
+    private _location: Location
   ) { }
   ngOnInit() {
     this.activeMenu = 'searchh';
@@ -67,7 +63,7 @@ export class ConsumerLearnmoreComponent implements  OnInit {
   goBack() {
     this._location.back();
   }
-  menuclicked(value){
+  menuclicked(value) {
     this.activeMenu = value;
     }
   }

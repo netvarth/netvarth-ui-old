@@ -137,7 +137,7 @@ export class GoogleMapComponent implements OnInit {
             }
           }
         }
-        // this.obtained_address = map_address;
+        this.obtained_address = map_address;
         this.obtained_pin = map_pin;
       });
   }

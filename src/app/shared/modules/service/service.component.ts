@@ -1,10 +1,5 @@
-import { Component, OnInit, OnDestroy, Input, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-// import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-// import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-// import { projectConstants } from '../../../../app.component';
-// import { Messages } from '../../../../shared/constants/project-messages';
-// import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ServicesService } from './services.service';
 import { Subscription } from 'rxjs';
 import { projectConstants } from '../../../app.component';
@@ -318,7 +313,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.provider_services.getvirtualServiceInstructions().subscribe(
             (data: any) => {
                 this.default_instruct = data;
-                for (let i in this.default_instruct) {
+                for (const i in this.default_instruct) {
                     if (this.selctd_tool === i) {
                         this.tool_instruct = this.default_instruct[i];
                     }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { SharedServices } from '../../services/shared-services';
@@ -10,7 +10,6 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { CouponsComponent } from '../coupons/coupons.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
-import { Location } from '@angular/common';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 
@@ -103,8 +102,6 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   constructor(private routerobj: Router, private shared_functions: SharedFunctions,
     private searchdetailserviceobj: SearchDetailServices,
     private shared_service: SharedServices,
-    private activaterouterobj: ActivatedRoute,
-    private locationobj: Location,
     private dialog: MatDialog) {
     this.api_loading = true;
     this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
@@ -277,8 +274,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             cmon = '' + mm;
           }
           const dtoday = yyyy + '-' + cmon + '-' + cday;
-          const check_dtoday = new Date(dtoday);
-          let cdate;
+          // const check_dtoday = new Date(dtoday);
+          // let cdate;
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
             user['waitingtime_res'] = this.waitlisttime_arr[i];
             user['estimatedtime_det'] = [];
@@ -295,7 +292,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
               user['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
               user['estimatedtime_det']['queue_available'] = 1;
               user['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
-              cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+              // cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
               if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                 user['estimatedtime_det']['availableToday'] = true;
               } else {
@@ -528,7 +525,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   }
 
   serviceClicked(service, obj) {
-    const s3id = obj.bProfile.unique_id;
+    // const s3id = obj.bProfile.unique_id;
     const busname = obj.bProfile.businessName;
     if (!service) {
       this.btn_clicked = false;

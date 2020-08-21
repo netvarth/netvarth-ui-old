@@ -1,12 +1,11 @@
 
-import {interval as observableInterval,  Observable , Subscription } from 'rxjs';
+import {interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { KioskServices } from '../../services/kiosk-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
-import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 
@@ -222,32 +221,32 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
           if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
             this.waitlisttime_arr = [];
           }
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-          const today = new Date(todaydt);
+          // const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          // const today = new Date(todaydt);
           // const today = new Date(this.server_date.split(' ')[0]);
-          const dd = today.getDate();
-          const mm = today.getMonth() + 1; // January is 0!
-          const yyyy = today.getFullYear();
-          let cday = '';
-          if (dd < 10) {
-            cday = '0' + dd;
-          } else {
-            cday = '' + dd;
-          }
-          let cmon;
-          if (mm < 10) {
-            cmon = '0' + mm;
-          } else {
-            cmon = '' + mm;
-          }
-          const dtoday = yyyy + '-' + cmon + '-' + cday;
-          const check_dtoday = new Date(dtoday);
-          let cdate;
+          // const dd = today.getDate();
+          // const mm = today.getMonth() + 1; // January is 0!
+          // const yyyy = today.getFullYear();
+          // let cday = '';
+          // if (dd < 10) {
+          //   cday = '0' + dd;
+          // } else {
+          //   cday = '' + dd;
+          // }
+          // let cmon;
+          // if (mm < 10) {
+          //   cmon = '0' + mm;
+          // } else {
+          //   cmon = '' + mm;
+          // }
+          // const dtoday = yyyy + '-' + cmon + '-' + cday;
+          // const check_dtoday = new Date(dtoday);
+          // let cdate;
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.next_avail_queue['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
               this.next_avail_queue['queue_available'] = 1;
-              cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+              // cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
               this.next_avail_queue['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
               // if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
               // if (cdate.getTime() !== check_dtoday.getTime()) {

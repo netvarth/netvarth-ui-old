@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
@@ -33,7 +33,6 @@ export class CheckYourStatusComponent implements OnInit {
     }
   ];
   constructor(private shared_services: SharedServices,
-    private router: Router,
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions) {
     this.activated_route.params.subscribe(
