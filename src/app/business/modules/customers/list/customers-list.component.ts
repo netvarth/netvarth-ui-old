@@ -3,8 +3,6 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { AddProviderCustomerComponent } from '../../check-ins/add-provider-customer/add-provider-customer.component';
-import { SearchProviderCustomerComponent } from '../../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
 import { MatDialog } from '@angular/material';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';

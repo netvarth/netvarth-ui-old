@@ -11,7 +11,6 @@ import { ProviderBprofileSearchGalleryComponent } from '../../../../../ynw_provi
 import { Router } from '@angular/router';
 import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
 import { Subscription } from 'rxjs';
-import {Location} from '@angular/common';
 @Component({
     selector: 'app-media',
     templateUrl: './media.component.html'
@@ -80,9 +79,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         private routerobj: Router,
         private galleryService: GalleryService,
         public shared_functions: SharedFunctions,
-        private dialog: MatDialog,
-        private data_storage: ProviderDataStorageService,
-        private _location: Location,
+        private dialog: MatDialog
     ) { }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');

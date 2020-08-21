@@ -2,14 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { projectConstants } from '../../../../../app.component';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { NavigationExtras } from '@angular/router';
-import { AddProviderBprofilePrivacysettingsComponent } from '../../../../../ynw_provider/components/provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 @Component({
     selector: 'app-privacy',
     templateUrl: './privacy.component.html'
@@ -49,12 +46,10 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
-        private provider_datastorage: ProviderDataStorageService,
         private routerobj: Router,
         private router: Router,
         public shared_functions: SharedFunctions,
-        private dialog: MatDialog,
-        private _location: Location
+        private dialog: MatDialog
     ) { }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');

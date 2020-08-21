@@ -1,10 +1,10 @@
 
-import { interval as observableInterval, Subscription, Observable } from 'rxjs';
-import { Component, OnInit, HostListener, ViewChildren, OnDestroy, wtfLeave } from '@angular/core';
+import { interval as observableInterval, Subscription } from 'rxjs';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { SharedServices } from '../../../shared/services/shared-services';
+// import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -30,7 +30,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     blogo = '';
     metricElement;
     cronHandle: Subscription;
-    @ViewChildren('boardid') private boardstyle;
     MainBlogo;
     bProfile: any = [];
     qualification: any = [];
@@ -69,7 +68,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     gPosition;
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
-        private shared_services: SharedServices,
         private shared_functions: SharedFunctions,
         public _sanitizer: DomSanitizer) {
         this.onResize();
@@ -493,7 +491,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         const displayboard = element.queueSet;
         // const fieldlistasc = this.shared_functions.sortByKey(displayboard.fieldList, 'order');
         // displayboard.fieldList = fieldlistasc;
-        
+
         this.selectedDisplayboards[element.position]['board'] = displayboard;
         // const Mfilter = this.setFilterForApi(displayboard);
         const Mfilter = displayboard.queryString;

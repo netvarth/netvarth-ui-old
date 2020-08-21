@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
@@ -48,9 +46,7 @@ export class JaldeeOnlineComponent implements OnInit {
   qrdialogRef: any;
   showIncompleteButton = false;
   constructor(private provider_services: ProviderServices,
-    private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
-    private provider_shared_functions: ProviderSharedFuctions,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private fb: FormBuilder,

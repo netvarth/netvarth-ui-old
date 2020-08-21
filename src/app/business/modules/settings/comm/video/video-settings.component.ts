@@ -152,10 +152,10 @@ export class VideoSettingsComponent implements OnInit {
         });
 
         if (!found) {
-            let status = 'INACTIVE';
-            if (resultMode.value.enabled) {
-                status = 'ACTIVE';
-            }
+            // let status = 'INACTIVE';
+            // if (resultMode.value.enabled) {
+            //     status = 'ACTIVE';
+            // }
             const mode = {
                 'callingMode': callingMode,
                 'value': resultMode['value'].actualValue,

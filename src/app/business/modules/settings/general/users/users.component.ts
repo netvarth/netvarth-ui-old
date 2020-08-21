@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../../app.component';
-import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { LinkProfileComponent } from './linkProfile/linkProfile.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
@@ -75,7 +75,6 @@ export class BranchUsersComponent implements OnInit {
         private routerobj: Router,
         private provider_services: ProviderServices,
         private dialog: MatDialog,
-        private activated_route: ActivatedRoute,
         private shared_functions: SharedFunctions) {
     }
 

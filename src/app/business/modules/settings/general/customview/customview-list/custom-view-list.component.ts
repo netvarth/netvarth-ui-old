@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material';
@@ -32,7 +31,7 @@ export class CustomViewListComponent implements OnInit {
     }
   ];
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(
     private router: Router,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog,

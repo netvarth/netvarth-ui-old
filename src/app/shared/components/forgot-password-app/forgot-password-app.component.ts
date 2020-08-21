@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Messages } from '../../constants/project-messages';
 import { ForgotPasswordModel } from '../forgot-password/forgot-password.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

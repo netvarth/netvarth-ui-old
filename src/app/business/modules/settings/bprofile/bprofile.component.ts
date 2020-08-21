@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectorRef, AfterViewChecked, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../../app.component';
@@ -7,27 +7,15 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
-import { ProviderBprofileSearchPrimaryComponent } from '../../../../ynw_provider/components/provider-bprofile-search-primary/provider-bprofile-search-primary.component';
 import { AddProviderWaitlistLocationsComponent } from '../../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';
-import { ProviderBprofileSearchSchedulepopupComponent } from '../../../../ynw_provider/components/provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
-import { AddProviderBprofileSearchAdwordsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { Subscription, of } from 'rxjs';
-import { AddProviderBprofileSpecializationsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
+import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
-import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
-import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
-import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
-import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
-import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
-import { Location } from '@angular/common';
-
 
 @Component({
   selector: 'app-bprofile',
@@ -183,7 +171,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
-  private qrCodeParent: ElementRef;
+  // private qrCodeParent: ElementRef;
   notedialogRef: any;
   // @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
   //   if (content1) { // initially setter gets called with undefined
@@ -380,15 +368,13 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
-    private sanitizer: DomSanitizer, private fb: FormBuilder,
+    private fb: FormBuilder,
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     private routerobj: Router,
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices,
     private qservice: QuestionService,
-    private galleryService: GalleryService,
-    private _location: Location,
     private changeDetectorRef: ChangeDetectorRef) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     this.provider_datastorage.setWeightageArray([]);

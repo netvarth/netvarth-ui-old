@@ -86,7 +86,6 @@ export class AppointmentmanagerComponent implements OnInit {
         } else {
             this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
-        
     }
     gotoservices() {
         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'services']);

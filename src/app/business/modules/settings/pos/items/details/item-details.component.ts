@@ -1,8 +1,7 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { projectConstants } from '../../../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -52,7 +51,7 @@ export class ItemDetailsComponent implements OnInit {
     api_loading = true;
     disableButton = false;
 
-    @ViewChild('caption', { static: false }) private captionRef: ElementRef;
+    // @ViewChild('caption', { static: false }) private captionRef: ElementRef;
     customer_label;
     action;
     breadcrumbs_init = [
@@ -78,7 +77,6 @@ export class ItemDetailsComponent implements OnInit {
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
         private router: Router,
-        private provider_shared_functions: ProviderSharedFuctions,
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService) {
         this.activated_route.params.subscribe(

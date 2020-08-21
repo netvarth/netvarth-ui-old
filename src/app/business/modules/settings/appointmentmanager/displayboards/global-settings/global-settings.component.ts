@@ -83,7 +83,7 @@ export class GlobalSettingsComponent implements OnInit {
             editor.ui.view.toolbar.element,
             editor.ui.getEditableElement()
         );
-        const data = editor.getData();
+        editor.getData();
     }
     ngOnInit() {
         this.api_loading = true;

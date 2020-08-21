@@ -1,9 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../constants/project-messages';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { RazorpayService } from '../../services/razorpay.service';
 import { RazorpayprefillModel } from '../razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../services/windowRef.service';

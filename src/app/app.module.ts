@@ -1,6 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, NO_ERRORS_SCHEMA, APP_INITIALIZER, ErrorHandler } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
@@ -21,9 +21,7 @@ import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-chec
 import { AppComponent, projectConstants } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
-import { ForgotPasswordComponent } from './shared/components/forgot-password/forgot-password.component';
 import { SignUpComponent } from './shared/components/signup/signup.component';
-import { SetPasswordFormComponent } from './shared/components/set-password-form/set-password-form.component';
 import { LoginComponent } from './shared/components/login/login.component';
 import { SearchDetailServices } from './shared/components/search-detail/search-detail-services.service';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
@@ -43,7 +41,7 @@ import { ProviderDetailService } from './shared/components/provider-detail/provi
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import 'hammerjs';
-import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
+import { LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';

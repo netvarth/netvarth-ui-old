@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
-import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
 
 @Component({
@@ -22,7 +21,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
     {
       title: Messages.GENERALSETTINGS,
       url: '/provider/settings/general'
-  },
+    },
     {
       url: '/provider/settings/general/users',
       title: 'Users'
@@ -105,7 +104,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        }, () => {
+      }, () => {
       });
   }
   getUser() {
@@ -244,7 +243,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
     } else if (type === 'PREFINAL_APPT') {
       activeInput = this.prefinalAPPTNotificationSettings;
     } else if (type === 'FINAL_APPT') {
-      activeInput = this.finalAPPTNotificationSettings; 
+      activeInput = this.finalAPPTNotificationSettings;
     }
     if (this.cSettings[type]) {
       activeInput.providerId = this.userId;

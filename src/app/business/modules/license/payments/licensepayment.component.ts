@@ -1,4 +1,4 @@
-import { Component, Inject, ChangeDetectorRef, NgZone, OnInit } from '@angular/core';
+import { Component, Inject, ChangeDetectorRef, OnInit } from '@angular/core';
 import { WindowRefService } from '../../../../shared//services/windowRef.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
@@ -42,7 +42,6 @@ export class PaymentComponent implements OnInit {
   constructor(
     private activated_route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
-    private ngZone: NgZone,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public winRef: WindowRefService,

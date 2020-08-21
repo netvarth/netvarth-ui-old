@@ -2,11 +2,9 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
     'selector': 'app-donations',
@@ -70,8 +68,6 @@ export class DonationsComponent implements OnInit {
     screenWidth;
     small_device_display = false;
     constructor(private provider_services: ProviderServices,
-        private router: Router,
-        private provider_shared_functions: ProviderSharedFuctions,
         public dateformat: DateFormatPipe,
         private routerobj: Router,
         private shared_functions: SharedFunctions) {
@@ -361,7 +357,7 @@ export class DonationsComponent implements OnInit {
     }
     locationSelected(location) {
         this.selected_location = location;
-        const _this = this;
+        // const _this = this;
         if (this.selected_location) {
           this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
         }

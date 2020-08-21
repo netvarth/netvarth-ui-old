@@ -14,8 +14,7 @@ import { DOCUMENT } from '@angular/common';
 import { projectConstantsLocal } from '../../../../../../../shared/constants/project-constants';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
-import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonEvent, } from 'angular-modal-gallery';
-import { ProviderDataStorageService } from '../../../../../../../ynw_provider/services/provider-datastorage.service';
+import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout } from 'angular-modal-gallery';
 import { UserSpecializationComponent } from './specializations/userspecialization/userspecialization.component';
 import { AddProviderUserBprofileSpokenLanguagesComponent } from './languages/addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
 import { ProviderUserBprofileSearchSocialMediaComponent } from './media/providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
@@ -32,7 +31,7 @@ import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic
 
 })
 
-export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked {
+export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   userAdditionalInfoSubDomainFields: any[];
   userAdditionalInfoDomainFields: any[];
@@ -252,7 +251,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
 
 
   constructor(private provider_services: ProviderServices,
-    private provider_datastorage: ProviderDataStorageService,
     private user_datastorage: UserDataStorageService,
     private sharedfunctionobj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -312,11 +310,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.user_datastorage.getWeightageArray().subscribe(result => {
       this.businessProfile_weightageArray = result;
-      console.log( JSON.stringify(this.businessProfile_weightageArray));
+      console.log(JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
     });
   }
-  ngAfterViewChecked(){
+  ngAfterViewChecked() {
     this.cdref.detectChanges();
   }
   ngOnDestroy() {
@@ -337,11 +335,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     this.shared_services.bussinessDomains()
       .subscribe(data => {
         this.businessConfig = data;
-       // this.getBusinessProfile();
+        // this.getBusinessProfile();
       },
         () => {
 
-     });
+        });
   }
   getUserPublicSearch() {
     this.provider_services.getUserPublicSearch(this.userId)
@@ -399,14 +397,14 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
                   }
                 });
             });
-  
+
           if (this.bProfile.logo) {
             this.blogo = this.bProfile.logo;
             const cnow = new Date();
             const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
             this.cacheavoider = dd;
             this.user_datastorage.updateProfilePicWeightage(true);
-          }  else {
+          } else {
             this.user_datastorage.updateProfilePicWeightage(false);
           }
           if (this.bProfile.status === 'ACTIVE') {
@@ -496,7 +494,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
         this.user_arr = data;
         const breadcrumbs = [];
         this.breadcrumbs_init.map((e) => {
-          breadcrumbs.push(e); 
+          breadcrumbs.push(e);
         });
         breadcrumbs.push({
           title: this.user_arr.firstName,
@@ -521,18 +519,18 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
                 // this.initSpecializations();
                 this.bProfile['subDomain'] = this.subDomain;
                 this.getBusinessProfile();
-                }
+              }
             }
           }
         }
- });
+      });
   }
 
   checkMandatoryFieldsInResultSet(domainFields, fieldname) {
     let fullyfilledStatus = true;
     domainFields.forEach(function (dom) {
       if (dom.name === fieldname) {
-        if (!dom['value'] || (dom.value == undefined || dom.value == null)) {
+        if (!dom['value'] || (dom.value === undefined || dom.value === null)) {
           fullyfilledStatus = false;
           return;
         }
@@ -551,7 +549,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
         } else {
           dom_subdom_list.forEach(function (data_object) {
             if (data_object.name === field) {
-              if (!data_object['value'] || (data_object.value == undefined || data_object.value == null)) {
+              if (!data_object['value'] || (data_object.value === undefined || data_object.value == null)) {
                 fullyfilledStatus = false;
                 return;
               }
@@ -697,11 +695,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
         data => {
           let user_mandatorysubdomain = false;
           let user_mandatorySubDomainFilled = false;
-          let user_additionalInfoFilledStatus = false
+          let user_additionalInfoFilledStatus = false;
           this.subdomain_fields = data['fields'];
 
           this.subdomain_questions = data['questions'] || [];
-          if (this.userMandatoryfieldArray.length != 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
+          if (this.userMandatoryfieldArray.length !== 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
             user_mandatorysubdomain = true;
             this.userMandatoryfieldArray.forEach(mandatoryField => {
               if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {
@@ -896,21 +894,21 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
 
 
   updatePrimaryFields(pdata) {
-      // if (this.blogo.length === 0) {
-      //   const self = this;
-      //   const  promise = self.sharedfunctionobj.getBase64Image();
-      //   promise.then(function (dataURL) {
-      //   const blob = self.sharedfunctionobj.b64toBlob(dataURL);
-      //   const submit_data: FormData = new FormData();
-      //   submit_data.append('files', blob, 'jaldee-logo.png');
-      //   const propertiesDet = {
-      //     'caption': 'Logo'
-      //   };
-      //   const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-      //   submit_data.append('properties', blobPropdata);
-      //   self.uploadLogo(submit_data);
-      // });
-      // }
+    // if (this.blogo.length === 0) {
+    //   const self = this;
+    //   const  promise = self.sharedfunctionobj.getBase64Image();
+    //   promise.then(function (dataURL) {
+    //   const blob = self.sharedfunctionobj.b64toBlob(dataURL);
+    //   const submit_data: FormData = new FormData();
+    //   submit_data.append('files', blob, 'jaldee-logo.png');
+    //   const propertiesDet = {
+    //     'caption': 'Logo'
+    //   };
+    //   const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+    //   submit_data.append('properties', blobPropdata);
+    //   self.uploadLogo(submit_data);
+    // });
+    // }
 
     this.disableButton = true;
     this.provider_services.createUserbProfile(pdata, this.userId)
@@ -1032,7 +1030,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
       this.progress_bar_four = 0;
       return businessProfileWeightageText;
     } else if
-    (weightage >= 50 && weightage < 75) {
+      (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'info';
@@ -1083,7 +1081,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
           this.bProfile = data;
           this.getSpecializations(this.domain, this.subDomain);
           if (this.bProfile.specialization) {
-           this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
+            this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
             if (this.bProfile.specialization.length > 0) {
               this.normal_specilization_show = 3;
             } else {
@@ -1101,9 +1099,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   getSpecializations(domain, subdomain) {
     this.provider_services.getSpecializations(domain, subdomain)
       .subscribe((data: any) => {
-       this.specialization_arr = data;
-       });
-     }
+        this.specialization_arr = data;
+      });
+  }
   getSpecializationName(n) {
     for (let i = 0; i < this.specialization_arr.length; i++) {
       if (this.specialization_arr[i].name === n) {
@@ -1297,7 +1295,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     } else {
       if (this.blogo) {
         this.profimg_exists = true;
-        const today = new Date();
+        // const today = new Date();
         // logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
         logourl = (this.blogo.url) ? this.blogo.url + '?' + this.cacheavoider : '';
       }
@@ -1334,9 +1332,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   specializations() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'specializations']);
   }
-   additionalInfo() {
+  additionalInfo() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'additionalinfo']);
-   }
+  }
   languagesKnown() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'languages']);
   }
@@ -1352,7 +1350,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
       data: {
         'userId': this.userId,
         'userdata': this.user_arr
-    }
+      }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
       this.getUser();

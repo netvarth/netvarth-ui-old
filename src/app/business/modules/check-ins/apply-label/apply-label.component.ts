@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Messages } from '../../../../shared/constants/project-messages';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { projectConstants } from '../../../../app.component';
 

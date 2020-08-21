@@ -1,16 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-// import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
-import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { JsonAdaptor } from '@syncfusion/ej2-data';
 
 @Component({
   selector: 'app-statements',
@@ -103,7 +100,6 @@ export class StatementsComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<StatementsComponent>,
-    private dialog: MatDialog,
     private router: Router,
     private activated_route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -266,8 +262,8 @@ export class StatementsComponent implements OnInit {
     }
   }
   previousRefstmt(mergeinvoicerefno) {
-    let stmt = [];
-    stmt = this.invoice.mergedStatements;
+    // let stmt = [];
+    // stmt = this.invoice.mergedStatements;
     const navigationExtras: NavigationExtras = {
       queryParams: {
         InvoiceRefNo: mergeinvoicerefno
