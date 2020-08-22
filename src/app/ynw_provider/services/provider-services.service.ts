@@ -600,7 +600,7 @@ export class ProviderServices {
    }
    providerPaymentStatus(data) {
       const url = 'provider/payment/status';
-      return this.servicemeta.httpPost(url , data);
+      return this.servicemeta.httpPost(url, data);
    }
    acknowledgeAlert(id) {
       return this.servicemeta.httpPut('provider/alerts/' + id);
@@ -1492,5 +1492,13 @@ export class ProviderServices {
    getProviderAttachments(uuid) {
       const url = 'provider/communications/' + uuid;
       return this.servicemeta.httpGet(url);
+   }
+   getAccountContactInfo() {
+      const url = 'provider/contact';
+      return this.servicemeta.httpGet(url);
+   }
+   updateAccountContactInfo(data) {
+      const url = 'provider/contact';
+      return this.servicemeta.httpPut(url, data);
    }
 }

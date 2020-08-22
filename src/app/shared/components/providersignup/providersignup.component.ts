@@ -389,12 +389,14 @@ export class ProvidersignupComponent implements OnInit {
         this.shared_functions.providerLogin(login_data);
         const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
         this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+        this.shared_functions.setitemonLocalStorage('newProvider', 'true');
       });
     } else {
       this.shared_functions.setitemonLocalStorage('new_provider', 'true');
       this.shared_functions.providerLogin(login_data);
       const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
       this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+      this.shared_functions.setitemonLocalStorage('newProvider', 'true');
     }
   }
   setPassword() {

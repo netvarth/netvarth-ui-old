@@ -767,7 +767,7 @@ export const Messages = {
   'FUTURE_HOME_CAP': 'Future',
   'HISTORY_HOME_CAP': 'History',
   'SERVICE_TIME_CAP': 'Queues',
-  'QUEUE_CAP': 'Queues (Workiing Hours)',
+  'QUEUE_CAP': 'Queues (Working Hours)',
   'SERVICES_CAP': 'Consultations and Services',
   'CHECK_IN_STATUS_CAP': 'Check-In Status',
   'PAYMENT_STATUS_CAP': 'Payment Status',

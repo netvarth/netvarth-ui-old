@@ -6,6 +6,8 @@ import { CommonDataStorageService } from '../shared/services/common-datastorage.
 import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedServices } from '../shared/services/shared-services';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 
 @Component({
   selector: 'app-business',
@@ -20,11 +22,14 @@ export class BusinessComponent implements OnInit {
   apiloading = false;
   activeSkin;
   subscription: Subscription;
+  contactInfo: any = [];
+  profile: any = [];
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     public shared_service: SharedServices,
+    public dialog: MatDialog,
     public provider_datastorage: CommonDataStorageService,
     private provider_shared_functions: ProviderSharedFuctions) {
     router.events.subscribe(
@@ -100,6 +105,74 @@ export class BusinessComponent implements OnInit {
       this.activeSkin = 'skin-blue';
     }
   }
+  getAccountContactInfo() {
+    this.provider_services.getAccountContactInfo().subscribe(
+      data => {
+        this.contactInfo = data;
+        // if (!this.contactInfo.primaryEmail) {
+        this.getProfile();
+        // }
+      }
+    );
+  }
+  updateEmailPopup() {
+    const dialogref = this.dialog.open(UpdateEmailComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true
+    });
+    dialogref.afterClosed().subscribe(
+      result => {
+        if (result) {
+          this.updateEmail(result);
+        }
+      }
+    );
+  }
+  getProfile() {
+    this.shared_functions.getProfile()
+      .then(
+        (data: any) => {
+          this.profile = data;
+          if (this.profile.basicInfo.emailVerified) {
+            this.updateEmail(this.profile.basicInfo.email);
+          } else {
+            this.updateEmailPopup();
+          }
+        }
+      );
+  }
+  updateEmail(email) {
+    const post_data = {
+      'primaryEmail': email,
+      'primaryPhoneNumber': this.contactInfo.primaryPhoneNumber
+    };
+    this.provider_services.updateAccountContactInfo(post_data).subscribe(
+      data => {
+        if (!this.profile.basicInfo.emailVerified) {
+          this.updateAccountEmail(email);
+        }
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+  }
+  updateAccountEmail(email) {
+    const post_data = {
+      'basicInfo': {
+        'id': this.profile.basicInfo.id,
+        'firstName': this.profile.basicInfo.firstName,
+        'lastName': this.profile.basicInfo.lastName,
+        'email': email
+      }
+    };
+    const passtyp = 'provider/profile';
+    this.shared_service.updateProfile(post_data, passtyp)
+      .subscribe(
+        () => {
+        });
+  }
   getProviderLogo(bname = '', bsector = '', bsubsector = '') {
     let blogo;
     this.provider_services.getProviderLogo()
@@ -127,6 +200,9 @@ export class BusinessComponent implements OnInit {
       .then(
         data => {
           bProfile = data;
+           if (!localStorage.getItem('newProvider') && bProfile['accountType'] === 'BRANCH') {
+            this.getAccountContactInfo();
+           }
           this.shared_functions.setitemToGroupStorage('accountId', bProfile.id);
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header

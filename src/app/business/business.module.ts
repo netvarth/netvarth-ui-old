@@ -50,6 +50,7 @@ import { ProviderErrorMesagePopupComponent } from './modules/provider-error-mess
 import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
 import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
+import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 
 @NgModule({
     declarations: [
@@ -75,7 +76,8 @@ import { ProviderStartTourComponent } from '../ynw_provider/components/provider-
         ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
         ProviderErrorMesagePopupComponent,
-        ProviderStartTourComponent
+        ProviderStartTourComponent,
+        UpdateEmailComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -107,7 +109,8 @@ import { ProviderStartTourComponent } from '../ynw_provider/components/provider-
         ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
         ProviderErrorMesagePopupComponent,
-        ProviderStartTourComponent
+        ProviderStartTourComponent,
+        UpdateEmailComponent
     ],
     providers: [
         AuthGuardProviderHome,

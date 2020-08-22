@@ -12,6 +12,7 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
 import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material';
+import { UpdateEmailComponent } from '../../../business/modules/update-email/update-email.component';
 
 @Component({
   selector: 'app-provider-settings',
@@ -159,6 +160,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   profile_disabled_msg: string;
   businessProfile_weightageArray: any[];
   showTakeaTour = false;
+  profile: any = [];
+  contactInfo: any = [];
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -175,7 +178,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       qparams => {
        this.showTakeaTour = qparams.firstTimeSignup;
        if (this.showTakeaTour) {
-           this.letsGetStarted();
+          //  this.letsGetStarted();
+          this.getAccountContactInfo();
        }
       });
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
@@ -295,6 +299,75 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
     });
   }
+
+  getAccountContactInfo() {
+    this.provider_services.getAccountContactInfo().subscribe(
+      data => {
+        this.contactInfo = data;
+        if (!this.contactInfo.primaryEmail) {
+          this.getProfile();
+        } else {
+          this.letsGetStarted();
+        }
+      }
+    );
+  }
+
+  getProfile() {
+    this.shared_functions.getProfile()
+      .then(
+        (data: any) => {
+          this.profile = data;
+          this.updateEmailPopup();
+        }
+      );
+  }
+
+  updateEmailPopup() {
+    const dialogref = this.dialog.open(UpdateEmailComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true
+    });
+    dialogref.afterClosed().subscribe(
+      result => {
+        if (result) {
+          this.letsGetStarted();
+          this.updateEmail(result);
+        }
+      }
+    );
+  }
+  updateEmail(email) {
+    const post_data = {
+      'primaryEmail': email,
+      'primaryPhoneNumber': this.contactInfo.primaryPhoneNumber
+    };
+    this.provider_services.updateAccountContactInfo(post_data).subscribe(
+      data => {
+        this.updateAccountEmail(email);
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+  }
+  updateAccountEmail(email) {
+    const post_data = {
+      'basicInfo': {
+        'id': this.profile.basicInfo.id,
+        'firstName': this.profile.basicInfo.firstName,
+        'lastName': this.profile.basicInfo.lastName,
+        'email': email
+      }
+    };
+    const passtyp = 'provider/profile';
+    this.shared_services.updateProfile(post_data, passtyp)
+      .subscribe(
+        () => {
+        });
+  }
+
   letsGetStarted() {
     const dialogRef = this.dialog.open(ProviderStartTourComponent, {
       width: '25%',
