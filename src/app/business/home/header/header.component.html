@@ -1,6 +1,6 @@
 <header class="main-header jaldee-header">
   <!-- Logo -->
-  <a (click)="gotoActiveHome()" class="logo pointer-cursor">
+  <a  (click)="gotoActiveHome()" class="logo hidden-xs pointer-cursor">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><img src="assets/images/home/logo-icon.png" alt="Jaldee"></span>
     <!-- logo for regular state and mobile devices -->
@@ -9,6 +9,9 @@
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top" role="navigation">
     <!-- Sidebar toggle button-->
+    <a (click)="gotoActiveHome()" class="visible-xs logo-mini-app pointer-cursor pull-left">
+      <img src="./assets/images/home/logo-icon.png" alt="Jaldee"/>
+    </a>
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" *ngIf="!iswiz">
       <span class="sr-only">Toggle navigation</span>
     </a>
@@ -21,12 +24,12 @@
             <i class="fa fa-arrow-left"></i>
           </a>
         </li>
-        <li [matTooltip]="'Take a tour'">
+        <!-- <li [matTooltip]="'Take a tour'">
           <a (click)="tourIconClicked()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-map-pin"></i>
           </a>
           <div joyrideStep="step4"  title="Take A Tour" text="You can always reach me by clicking this icon" ></div>
-        </li>
+        </li> -->
         <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">
           <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>

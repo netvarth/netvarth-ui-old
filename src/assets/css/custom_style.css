@@ -6370,8 +6370,11 @@ li.separator.setsplit {
 
 @media only screen and (max-width: 575px) {
   .chkin .nav>li>a.nav-cust-btn-new {
-    padding: 3px 5px 0 5px!important;
-    margin-top: 12px;
+    /* padding: 3px 5px 0 5px!important;
+    margin-top: 12px; */
+    padding: 0px 3px 0 3px!important;
+    font-size: 0.70rem;
+    margin-top: 15px;
   }
 }
 
@@ -10916,4 +10919,12 @@ a {
 }
 .pad-20 {
   padding: 20px !important;
+}
+
+
+
+.logo-mini-app img {
+  width: 40px;
+    height: 40px;
+    margin-top: 5px;
 }
