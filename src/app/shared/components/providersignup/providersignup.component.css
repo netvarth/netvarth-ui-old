@@ -1037,5 +1037,5 @@ input[type=checkbox]:not(old):checked + label > span:before {
     margin-bottom: 15px !important;
   }
   .div-grn-outline {
-    border: 1px solid green!important;
+    border: 3px solid green!important;
   }
