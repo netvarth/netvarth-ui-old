@@ -2,6 +2,7 @@
   <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs_init"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
+
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12"  id="bcrumbHeader">
