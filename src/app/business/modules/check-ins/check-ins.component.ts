@@ -261,7 +261,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   labeldialogRef;
   @ViewChild('chekinSection', { static: false }) chekinSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
-  topHeight = 200;
+  topHeight = 0;
   smsdialogRef: any;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -355,8 +355,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
     const header = document.getElementById('childActionBar');
+    let qHeader = 0;
+    let tabHeader = 0;
+    if (document.getElementById('qHeader')) {
+      qHeader = document.getElementById('qHeader').offsetHeight;
+    }
+    if (document.getElementById('tabHeader')) {
+      tabHeader = document.getElementById('tabHeader').offsetHeight;
+    }
+    this.topHeight =  qHeader + tabHeader;
+    console.log(this.topHeight);
+    console.log(window.pageYOffset);
     if (header) {
-      if (window.pageYOffset >= (this.topHeight + 50)) {
+      if (window.pageYOffset > (this.topHeight + 50)) {
         header.classList.add('sticky');
       } else {
         header.classList.remove('sticky');
@@ -1362,7 +1373,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (queueid) {
         Mfilter['queue-eq'] = queueid;
       }
-     // no_filter = true;
+      // no_filter = true;
     }
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';

@@ -271,7 +271,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   allServiceSelected = false;
   services: any = [];
   consumr_id: any;
-  topHeight = 250;
+  topHeight = 0;
   @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
   @ViewChild('apptSection', { static: false }) apptSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
@@ -360,6 +360,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
     const header = document.getElementById('childActionBar');
+    let qHeader = 0;
+    let tabHeader = 0;
+    if (document.getElementById('qHeader')) {
+      qHeader = document.getElementById('apptsSchedules').offsetHeight;
+    }
+    if (document.getElementById('tabHeader')) {
+      tabHeader = document.getElementById('apptsTimeTypes').offsetHeight;
+    }
+    this.topHeight =  qHeader + tabHeader;
+    console.log(this.topHeight);
+    console.log(window.pageYOffset);
     if (header) {
       if (window.pageYOffset >= (this.topHeight + 50)) {
         header.classList.add('sticky');
