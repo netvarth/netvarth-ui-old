@@ -71,13 +71,18 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
       this.rep_username = 'Batch ' + this.data.batchId;
     } else {
       if (this.data.appt) {
-        this.rep_username = this.titleCaseWord(this.data.waitlist.appmtFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.appmtFor[0].lastName);
+        this.rep_username = this.data.waitlist.appmtFor[0].firstName ? this.titleCaseWord(this.data.waitlist.appmtFor[0].firstName) : '' + ' ' +
+          this.data.waitlist.appmtFor[0].lastName ? this.titleCaseWord(this.data.waitlist.appmtFor[0].lastName) : '';
         this.rep_date = this.titleCaseWord(this.data.waitlist.appmtDate);
         this.rep_time = this.titleCaseWord(this.data.waitlist.apptTakenTime);
       } else {
-        this.rep_username = this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName);
+        this.rep_username = this.data.waitlist.waitlistingFor[0].firstName ? this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) : '' + ' ' +
+          this.data.waitlist.waitlistingFor[0].lastName ? this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName) : '';
         this.rep_date = this.titleCaseWord(this.data.waitlist.date);
         this.rep_time = this.titleCaseWord(this.data.waitlist.checkInTime);
+      }
+      if (!this.rep_username) {
+        this.rep_username = this.customer_label;
       }
       this.rep_service = this.titleCaseWord(this.data.waitlist.service.name);
       if (this.data.waitlist.providerAccount) {
@@ -102,7 +107,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
             this.checkin_label = 'Are you sure you want to cancel this check-In?';
           }
         }
-        }, () => {
+      }, () => {
       });
   }
 
@@ -113,7 +118,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
       send_message: [{ value: false, disabled: true }]
     });
     if (this.data.isBatch) {
-      this.amForm.patchValue({send_message: true});
+      this.amForm.patchValue({ send_message: true });
     }
     this.amForm.get('send_message').valueChanges
       .subscribe(
@@ -206,7 +211,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     retmsg = retmsg.replace(/\[service\]/g, this.rep_service);
     retmsg = retmsg.replace(/\[date\]/g, this.rep_date);
     retmsg = retmsg.replace(/\[time\]/g, this.rep_time);
-    retmsg =  retmsg .replace(/\[.*?\]/g,  this.rep_provname);
+    retmsg = retmsg.replace(/\[.*?\]/g, this.rep_provname);
     if (this.cancel_reason && this.cancel_reason !== '') {
       retmsg = retmsg.replace('[reason]', this.cancel_reason);
     }

@@ -1188,6 +1188,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getFutureAppointmentsCount(Mfilter = null) {
+    console.log(Mfilter);
     // let no_filter = false;
     const queueid = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
     if (!Mfilter) {
@@ -1370,8 +1371,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.future_appt_date === null) {
       this.getTomorrowDate();
     }
+<<<<<<< HEAD
     
     this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
+=======
+   // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
+>>>>>>> branch '1.3.0' of https://github.com/netvarth/calpine-ui
     // const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
     let selQs = [];
     if (this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
@@ -1582,9 +1587,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.filter.check_in_end_date != null) {
         api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
       }
-      if (this.filter.future_appt_date != null && this.time_type === 2) {
-        api_filter['date-eq'] = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
-      }
+      // if (this.filter.future_appt_date != null && this.time_type === 2) {
+      //   api_filter['date-eq'] = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
+      // }
     }
     if (this.time_type !== 2) {
       if (this.labelFilterData !== '') {
