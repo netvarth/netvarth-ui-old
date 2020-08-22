@@ -386,15 +386,17 @@ export class ProviderSharedFuctions {
       type = 'single';
       if (appt) {
         uuid = waitlist[0].uid || null;
-        name = waitlist[0].appmtFor[0].firstName + ' ' + waitlist[0].appmtFor[0].lastName;
+        name = waitlist[0].appmtFor[0].firstName ? waitlist[0].appmtFor[0].firstName : '' + ' ' +
+          waitlist[0].appmtFor[0].lastName ? waitlist[0].appmtFor[0].lastName : '';
         email = waitlist[0].providerConsumer.email;
         phone = waitlist[0].providerConsumer.phoneNo;
       } else {
         uuid = waitlist[0].ynwUuid || null;
-        name = waitlist[0].consumer.firstName + ' ' + waitlist[0].consumer.lastName;
+        name = waitlist[0].consumer.firstName ? waitlist[0].consumer.firstName : '' + ' ' +
+          waitlist[0].consumer.lastName ? waitlist[0].consumer.lastName : '';
         email = waitlist[0].waitlistingFor[0].email;
         phone = waitlist[0].waitlistingFor[0].phoneNo;
-        phone_history  = waitlist[0].waitlistPhoneNumber;
+        phone_history = waitlist[0].waitlistPhoneNumber;
       }
     }
     if (type === 'single') {
@@ -552,4 +554,3 @@ export class ProviderSharedFuctions {
     return message;
   }
 }
-
