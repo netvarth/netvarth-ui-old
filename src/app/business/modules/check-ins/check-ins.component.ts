@@ -363,7 +363,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (document.getElementById('tabHeader')) {
       tabHeader = document.getElementById('tabHeader').offsetHeight;
     }
-    this.topHeight =  qHeader + tabHeader;
+    this.topHeight = qHeader + tabHeader;
     console.log(this.topHeight);
     console.log(window.pageYOffset);
     if (header) {
@@ -2456,12 +2456,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = [];
     } else {
       const qids = [];
-      for (const id of this.selQIds) {
-        for (const q of this.activeQs) {
-          if (id === q.id) {
-            qids.push(id);
-          }
-        }
+      // for (const id of this.selQIds) {
+      //   for (const q of this.activeQs) {
+      //     if (id === q.id) {
+      //       qids.push(id);
+      //     }
+      //   }
+      // }
+      for (const q of this.activeQs) {
+        qids.push(q.id);
       }
       if (qids.length > 0) {
         this.selQIds = qids;
