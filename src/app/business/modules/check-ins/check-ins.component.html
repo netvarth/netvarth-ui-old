@@ -736,7 +736,7 @@
                           <div class="bold pull-left mgn-lt-5 name pointer-cursor" *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
-                         {{customer_label}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
+                         {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{checkin.service.name}}</div>

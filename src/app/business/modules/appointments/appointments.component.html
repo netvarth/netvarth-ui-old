@@ -512,7 +512,7 @@
                                     {{appt.appmtFor[0].lastName}}</div>
                                     <div class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)"
                                     *ngIf="!appt.appmtFor[0].firstName">
-                                      {{appt.providerConsumer.jaldeeId}}</div>
+                                    {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                                 </td>
                                 <td class="title td-two">
                                   <div class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3"
@@ -990,7 +990,7 @@
                           {{appt.appmtFor[0].lastName}}</div>
                           <div class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
                           *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
-                          {{customer_label}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
+                          {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{appt.service.name}}</div>
@@ -1120,7 +1120,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12 no-padding">
+      <!-- <div class="col-md-12 no-padding">
         <ul class="icon-hints-ul no-padding">
           <li class="icon-hints-li"><i class="fa fa-refresh"></i> Refresh</li>
           <li class="icon-hints-li"><i class="icon-arrived"></i> Arrived</li>
@@ -1131,7 +1131,7 @@
           <li class="icon-hints-li"><i class="fa fa-phone"></i> Phone-In</li>
           <li class="icon-hints-li"><i class="icon-cloud"></i> Online</li>
         </ul>
-      </div>
+      </div> -->
     </div>
   </div>
   <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
