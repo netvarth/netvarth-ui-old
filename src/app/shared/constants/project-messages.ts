@@ -766,7 +766,7 @@ export const Messages = {
   'TODAY_HOME_CAP': 'Today',
   'FUTURE_HOME_CAP': 'Future',
   'HISTORY_HOME_CAP': 'History',
-  'SERVICE_TIME_CAP': 'Queues',
+  'SERVICE_TIME_CAP': 'Queues (Working Hours) ',
   'QUEUE_CAP': 'Queues (Working Hours)',
   'SERVICES_CAP': 'Consultations and Services',
   'CHECK_IN_STATUS_CAP': 'Check-In Status',
@@ -804,7 +804,7 @@ export const Messages = {
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
   'NON_WORK_DAY_OR_HR_CAP': 'Non Working Days',
-  'SCHEDULES_CAP': 'Schedules( Working Hours )',
+  'SCHEDULES_CAP': 'Schedules(Working Hours)',
   'REASON_CAP': 'Reason',
 
   // App-ynw_provider-components-add-provider-waitlist-checkin-bill
@@ -1498,6 +1498,7 @@ export const Messages = {
   'BRANCHUSER_DELETED': 'User deleted successfully',
 
   'GENERALSETTINGS': 'Features and Customization',
+  'LOCATESETTINGS' : 'Locate your [customer]',
   'APPOINTMNT_SUCC': 'Appointment created successfully',
   'DONATE_SUCC': 'Donated successfully',
   'SCHEDULENAME_CAP': 'Title for Schedule *',

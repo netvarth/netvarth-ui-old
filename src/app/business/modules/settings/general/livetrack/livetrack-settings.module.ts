@@ -6,10 +6,12 @@ import { LiveTrackSettingsRoutingModule } from './livetrack-settings.routing.mod
 import { CommonModule } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 
 @NgModule({
     imports: [
         BreadCrumbModule,
+        CapitalizeFirstPipeModule,
         // MaterialModule,
         FormsModule,
         CommonModule,

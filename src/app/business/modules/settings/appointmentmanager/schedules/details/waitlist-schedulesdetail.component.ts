@@ -40,11 +40,11 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     },
     {
       url: '/provider/settings/appointmentmanager',
-      title: 'Jaldee Appointment'
+      title: 'Jaldee Appointment Manager'
     },
     {
       url: '/provider/settings/appointmentmanager/schedules',
-      title: 'Schedules'
+      title: 'Schedules (Working Hours)'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;

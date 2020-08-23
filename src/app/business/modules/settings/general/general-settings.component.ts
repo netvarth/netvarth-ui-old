@@ -30,6 +30,8 @@ export class GeneralSettingsComponent implements OnInit {
     multipeLocationAllowed = false;
     departmentCount: any = 0;
     locName;
+    customer_label = '';
+    cust_domain_name = '';
     locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
     breadcrumb_moreoptions: any = [];
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
@@ -50,12 +52,13 @@ export class GeneralSettingsComponent implements OnInit {
         private shared_services: SharedServices,
         private dialog: MatDialog,
         private shared_functions: SharedFunctions) {
-
+        this.customer_label = this.shared_functions.getTerminologyTerm('customer');  
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.account_type = user.accountType;
+        this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         // this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.getWaitlistMgr();
         // this.getLiveTrackStatus();

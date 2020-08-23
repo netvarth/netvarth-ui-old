@@ -4,6 +4,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 
+
 @Component({
     selector: 'app-livetrack-settings',
     templateUrl: './livetrack-settings.component.html'
@@ -11,6 +12,9 @@ import { Router } from '@angular/router';
 export class LiveTrackSettingsComponent implements OnInit {
     livetrack_status: any;
     livetrack_statusstr: string;
+    cust_domain_name = '';
+    custs_name = '';
+    customer_label = this.shared_functions.getTerminologyTerm('customer');
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -21,7 +25,7 @@ export class LiveTrackSettingsComponent implements OnInit {
             url: '/provider/settings/general'
         },
         {
-            title: 'Live Tracking'
+           title: Messages.LOCATESETTINGS.replace('[customer]', this.customer_label),
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -30,12 +34,13 @@ export class LiveTrackSettingsComponent implements OnInit {
     constructor(private provider_services: ProviderServices,
         private shared_functions: SharedFunctions,
         private router: Router) {
-
-    }
+       }
     ngOnInit () {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getLiveTrackStatus ();
+        this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
+        this.custs_name = Messages.CUSTOMERS_NAME.replace('[customer]', this.customer_label);
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     performActions(action) {

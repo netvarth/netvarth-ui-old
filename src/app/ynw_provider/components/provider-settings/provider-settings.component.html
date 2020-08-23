@@ -13,8 +13,9 @@
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header bg-blue">
                             <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls" [matTooltip]="bprofileTooltip">My Profile
+                                    <i class="fa fa-gears fl-right lnk"></i>
                                 <div joyrideStep="step1" title="Jaldee Online" text="Use Jaldee Online to set up your basic account and list your services in Jaldee.com"></div>
-                                <i class="fa fa-gears fl-right lnk"></i>
+                               
 
                             </h4>
 
@@ -175,7 +176,7 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-2">
                                 <li class="form-level-settings">
-                                    <a><strong>Virtual queue</strong> system . Provide <strong>tokens</strong>.{{custs_name | capitalizeFirst}} will receive <strong>real-time alerts</strong>.</a>
+                                    <a><strong>Virtual queue</strong> system. Provide<strong> tokens</strong>. {{custs_name | capitalizeFirst}} will receive <strong>real-time alerts</strong>.</a>
                                 </li>
                                 <li (click)="redirecTo('waitlistmanager')">
                                     <a class="pointer-cursor">
@@ -263,7 +264,8 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-3">
                                 <li class="form-level-settings">
-                                    <a><strong>Appointment Booking </strong>system  . <strong>Take appointments . </strong><strong>Fixed Time Slots</strong> for consultations  .</a>
+                                       <a><strong>Appointment Booking</strong>&nbsp;system.<strong>&nbsp;Take appointments.</strong><strong>&nbsp;Fixed Time Slots</strong>&nbsp;for consultations.</a>
+                                   
                                 </li>
                                 <li (click)="redirecTo('appointmentmanager')">
                                     <a class="pointer-cursor">
@@ -645,8 +647,7 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('comm')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="comm">
-                                Communications And Notifications
+                            <h4 (click)="redirecTo('comm')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="comm">Communications And Notifications
                                 <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
                         </div>
