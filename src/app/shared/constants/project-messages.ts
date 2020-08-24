@@ -1334,7 +1334,7 @@ export const Messages = {
   'FRM_LEVEL_PROFILE_MSG': 'Your name , about you , location , specialization and more.',
   'FRM_LEVEL_WAITLIST_MSG': 'Setup the queue system so that your [customer] can avoid on-site waiting time. Enable the queue manager by setting up your services and adding them to the queue.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
-  'FRM_LEVEL_JALDEEPAY_MSG': 'Accept cashless payments from [customer]s through their ',
+  'FRM_LEVEL_JALDEEPAY_MSG': 'e-payments from [customer]s',
   'FRM_LEVEL_COMMN_MSG': 'notifications to your [customer]s .',
   'FRM_LEVEL_VIRTUAL_MSG': 'Teleservices to consult [customer]s.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
