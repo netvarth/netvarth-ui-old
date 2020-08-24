@@ -176,7 +176,8 @@
                                                 [class.disable]="disableMinus()" *ngIf="settingsjson.futureDateWaitlist"
                                                 (click)="calculateDate(-1)"></span>{{sel_day}}
                                             {{sel_checkindate | date: dateFormat}}
-                                            <span class="icon-add" *ngIf="settingsjson.futureDateWaitlist" (click)="calculateDate(1)"></span></span>
+                                            <span class="icon-add" *ngIf="settingsjson.futureDateWaitlist"
+                                                (click)="calculateDate(1)"></span></span>
                                         <div class="form-group dt" *ngIf="settingsjson.futureDateWaitlist">
                                             <div class="pickerouter">
                                                 <mat-datepicker-toggle matSuffix [for]="picker">
@@ -389,7 +390,7 @@
                                             <div class="actiondiv">
                                                 <button type="button" class="cs-btn bt2 backbtn"
                                                     (click)="handleGoBack(3)">{{cancel_btn}}</button>&nbsp;
-                                                <button mat-button [disabled] = "disable" class="cs-btn bt1 savemember"
+                                                <button mat-button [disabled]="disable" class="cs-btn bt1 savemember"
                                                     (click)="handleSaveMember()">OK</button>
                                             </div>
                                         </div>
@@ -550,8 +551,8 @@
                         <div class="col-md-12  mgn-up-20 " *ngIf="!showAction">
                             <button class="cs-btn bt3 width-100" (click)="handleSideScreen('members')">Add / Change
                                 Member</button>
-                            <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('note')">Add / Edit
-                                Note</button>
+                            <button class="cs-btn bt3 width-100 mgn-up-20"
+                                (click)="handleSideScreen('note')">{{note_cap}}</button>
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('email')">Add /
                                 Change Email</button>
                             <button *ngIf="s3CouponsList.length > 0" class="cs-btn bt3 width-100 mgn-up-20"

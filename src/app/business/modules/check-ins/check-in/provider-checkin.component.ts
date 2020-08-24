@@ -195,6 +195,7 @@ export class ProviderCheckinComponent implements OnInit {
     disable = false;
     settings: any = [];
     showTokenId;
+    note_cap = 'Add Note';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -404,7 +405,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.showCheckin = true;
         this.waitlist_for = [];
         this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
-       console.log(this.customer_data);
+        console.log(this.customer_data);
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -449,9 +450,11 @@ export class ProviderCheckinComponent implements OnInit {
                             if (_this.domain === 'foodJoints') {
                                 _this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
                                 _this.note_placeholder = 'Item No Item Name Item Quantity';
+                                _this.note_cap = 'Add Note / Delivery address';
                             } else {
                                 _this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
                                 _this.note_placeholder = 'Add Note';
+                                _this.note_cap = 'Add Note';
                             }
                             _this.shared_services.getServicesByLocationId(_this.sel_loc).subscribe(
                                 (services: any) => {
@@ -947,6 +950,21 @@ export class ProviderCheckinComponent implements OnInit {
         switch (cstep) {
             case 1:
                 this.hideFilterSidebar();
+                if (this.action === 'note') {
+                    if (this.consumerNote !== '') {
+                        if (this.domain === 'foodJoints') {
+                            this.note_cap = 'Edit Note / Delivery address';
+                        } else {
+                            this.note_cap = 'Edit Note';
+                        }
+                    } else {
+                        if (this.domain === 'foodJoints') {
+                            this.note_cap = 'Add Note / Delivery address';
+                        } else {
+                            this.note_cap = 'Add Note';
+                        }
+                    }
+                }
                 break;
             case 2:
                 if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
@@ -1097,7 +1115,7 @@ export class ProviderCheckinComponent implements OnInit {
             fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
             fn.subscribe(() => {
                 this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
-               // this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+                // this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.handleGoBack(3);
