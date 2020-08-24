@@ -174,6 +174,46 @@ export class LocationsListComponent implements OnInit {
             });
     }
     changeProviderBaseLocationStatus(obj) {
+        if (!obj.bSchedule) {
+            let post_itemdata2;
+            const schedule_json = [];
+            let mon;
+            const cdate = new Date();
+            mon = (cdate.getMonth() + 1);
+            if (mon < 10) {
+                mon = '0' + mon;
+            }
+            const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+            const daystr = ['1', '2', '3', '4', '5', '6', '7'];
+            schedule_json.push({
+                'recurringType': 'Weekly',
+                'repeatIntervals': daystr,
+                'startDate': today,
+                'terminator': {
+                    'endDate': '',
+                    'noOfOccurance': ''
+                },
+                'timeSlots': [{
+                    'sTime': '09:00 AM',
+                    'eTime': '06:00 PM'
+                }]
+            });
+            post_itemdata2 = {
+                'bSchedule': {
+                    'timespec': schedule_json
+                }
+            };
+            post_itemdata2.id = obj.id;
+            this.provider_services.editProviderLocation(post_itemdata2)
+                .subscribe(
+                    () => {
+                        this.changeBaseLocationStatus(obj);
+                    });
+        } else {
+            this.changeBaseLocationStatus(obj);
+        }
+    }
+    changeBaseLocationStatus(obj) {
         this.provider_services.changeProviderBaseLocationStatus(obj.id)
             .subscribe(() => {
                 this.getProviderLocations();

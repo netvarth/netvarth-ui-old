@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
@@ -26,10 +25,9 @@ export class CommSettingsComponent implements OnInit {
     provider_label = '';
     cust_domain_name = '';
     provider_domain_name = '';
-    breadcrumb_moreoptions: any = []; 
+    breadcrumb_moreoptions: any = [];
     constructor(private router: Router,
         private provider_services: ProviderServices,
-        private shared_services: SharedServices,
         private shared_functions: SharedFunctions) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -57,9 +55,9 @@ export class CommSettingsComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'learnmore') {
-          this.router.navigate(['/provider/' + this.domain + '/comm']);
+            this.router.navigate(['/provider/' + this.domain + '/comm']);
         }
-      }
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);
@@ -77,5 +75,8 @@ export class CommSettingsComponent implements OnInit {
                     this.getGlobalSettingsStatus();
                 }
             );
+    }
+    redirecToSettings() {
+        this.router.navigate(['provider', 'settings']);
     }
 }

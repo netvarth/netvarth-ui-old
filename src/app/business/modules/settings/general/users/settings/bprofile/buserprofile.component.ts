@@ -14,8 +14,7 @@ import { DOCUMENT } from '@angular/common';
 import { projectConstantsLocal } from '../../../../../../../shared/constants/project-constants';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
-import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonEvent, } from 'angular-modal-gallery';
-import { ProviderDataStorageService } from '../../../../../../../ynw_provider/services/provider-datastorage.service';
+import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout } from 'angular-modal-gallery';
 import { UserSpecializationComponent } from './specializations/userspecialization/userspecialization.component';
 import { AddProviderUserBprofileSpokenLanguagesComponent } from './languages/addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
 import { ProviderUserBprofileSearchSocialMediaComponent } from './media/providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
@@ -252,7 +251,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
 
 
   constructor(private provider_services: ProviderServices,
-    private provider_datastorage: ProviderDataStorageService,
     private user_datastorage: UserDataStorageService,
     private sharedfunctionobj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -312,11 +310,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.user_datastorage.getWeightageArray().subscribe(result => {
       this.businessProfile_weightageArray = result;
-      console.log( JSON.stringify(this.businessProfile_weightageArray));
+      console.log(JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
     });
   }
-  ngAfterViewChecked(){
+  ngAfterViewChecked() {
     this.cdref.detectChanges();
   }
   ngOnDestroy() {
@@ -532,7 +530,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     let fullyfilledStatus = true;
     domainFields.forEach(function (dom) {
       if (dom.name === fieldname) {
-        if (!dom['value'] || (dom.value == undefined || dom.value == null)) {
+        if (!dom['value'] || (dom.value === undefined || dom.value === null)) {
           fullyfilledStatus = false;
           return;
         }
@@ -551,7 +549,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
         } else {
           dom_subdom_list.forEach(function (data_object) {
             if (data_object.name === field) {
-              if (!data_object['value'] || (data_object.value == undefined || data_object.value == null)) {
+              if (!data_object['value'] || (data_object.value === undefined || data_object.value == null)) {
                 fullyfilledStatus = false;
                 return;
               }
@@ -701,7 +699,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
           this.subdomain_fields = data['fields'];
 
           this.subdomain_questions = data['questions'] || [];
-          if (this.userMandatoryfieldArray.length != 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
+          if (this.userMandatoryfieldArray.length !== 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
             user_mandatorysubdomain = true;
             this.userMandatoryfieldArray.forEach(mandatoryField => {
               if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {
@@ -1297,7 +1295,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     } else {
       if (this.blogo) {
         this.profimg_exists = true;
-        const today = new Date();
+        // const today = new Date();
         // logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
         logourl = (this.blogo.url) ? this.blogo.url + '?' + this.cacheavoider : '';
       }
@@ -1355,5 +1353,17 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     //   this.getBusinessProfile();
     // });
     this.shared_functions.openSnackBar('Visit our website "www.jaldee.com" to change your profile picture', { 'panelclass': 'snackbarerror' });
+    this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'userId': this.userId,
+        'userdata': this.user_arr
+      }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      this.getUser();
+    });
   }
 }

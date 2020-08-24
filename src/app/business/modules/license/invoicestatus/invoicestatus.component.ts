@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { MatDialog } from '@angular/material';
 import { projectConstants } from '../../../../app.component';
 import { NavigationExtras, Router } from '@angular/router';
 // import { SOURCE } from '@angular/core/src/di/injector';
@@ -56,7 +55,6 @@ export class InvoiceStatusComponent {
   invoice_status_cap = Messages.INVOICE_STATUS_CAP;
   constructor(
     private router: Router,
-    private dialog: MatDialog,
     public provider_services: ProviderServices) {
     this.getInvoiceStatus();
   }

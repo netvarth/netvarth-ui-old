@@ -5,7 +5,6 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { SharedServices } from '../../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material';
 

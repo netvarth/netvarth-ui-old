@@ -1357,6 +1357,9 @@ sup {
 .mgn-up-10 {
   margin-top: 10px !important;
 }
+.mgn-up-15 {
+  margin-top: 15px !important;
+}
 .mgn-m-up-5{
   margin-top: -5px !important;
 }
@@ -6367,8 +6370,11 @@ li.separator.setsplit {
 
 @media only screen and (max-width: 575px) {
   .chkin .nav>li>a.nav-cust-btn-new {
-    padding: 3px 5px 0 5px!important;
-    margin-top: 12px;
+    /* padding: 3px 5px 0 5px!important;
+    margin-top: 12px; */
+    padding: 0px 3px 0 3px!important;
+    font-size: 0.70rem;
+    margin-top: 15px;
   }
 }
 
@@ -7522,12 +7528,12 @@ board-box {
 }
 
 .blinking {
-  animation: blinkingText 1s infinite;
+  animation: callBlinking 1s infinite;
   font-size: 1rem;
   font-weight: 700;
 }
 
-@keyframes blinkingText {
+@keyframes callBlinking {
   0% {
     color: red;
   }
@@ -10907,4 +10913,28 @@ a {
 }
 .content .col-md-12 .w-dta .row .copy .bill-width {
   width: auto;
+}
+.paymentlink-color {
+  color: black !important; 
+}
+.pad-20 {
+  padding: 20px !important;
+}
+.pad-top-15 {
+  padding-top: 15px !important;
+}
+.pad-left-15 {
+  padding-left: 15px !important;
+}
+.pad-right-15 {
+  padding-right: 15px !important;
+}
+.logo-mini-app img {
+  width: 40px;
+    height: 40px;
+    margin-top: 5px;
+}
+.support-num {
+  font-size: 1.3rem;
+  font-weight: 700;
 }

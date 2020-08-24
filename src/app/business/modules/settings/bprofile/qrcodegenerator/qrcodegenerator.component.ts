@@ -24,15 +24,16 @@ export class QRCodeGeneratorComponent implements OnInit {
             this.qrCodeParent = content1;
         }
     }
-    private qrCodeCustId: ElementRef;
+    // private qrCodeCustId: ElementRef;
+
     @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
         if (content2) { // initially setter gets called with undefined
             this.qrCodeParent = content2;
         }
     }
-    ngAfterViewChecked() {
-        this.changeDetectorRef.detectChanges();
-    }
+    // ngAfterViewChecked() {
+    //     this.changeDetectorRef.detectChanges();
+    // }
     ngOnInit() {
         this.accuid = this.data.accencUid;
         this.wpath = this.data.path;

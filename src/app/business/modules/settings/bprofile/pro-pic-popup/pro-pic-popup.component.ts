@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ImageTransform } from './interfaces/index';
-//import { UserDataStorageService } from './../../general/users/settings/user-datastorage.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+// import { UserDataStorageService } from './../../general/users/settings/user-datastorage.service';
 
 
 @Component({

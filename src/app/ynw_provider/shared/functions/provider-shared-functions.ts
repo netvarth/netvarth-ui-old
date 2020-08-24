@@ -135,8 +135,7 @@ export class ProviderSharedFuctions {
           if (!profile['subDomainVirtualFields'] || !profile['subDomainVirtualFields'][0][subdomain][domainfield.name]) {
             reqFields['subdomainvirtual'] = true;
           }
-        }
-        else {
+        } else {
           this.nonMandatorySubDomainAdditionalInfo.push(domainfield.name);
         }
       }
@@ -168,8 +167,7 @@ export class ProviderSharedFuctions {
         if (domainfield.mandatory) {
           this.user_mandatoryAdditionalInfo.push(domainfield.name);
           reqFields['subdomainvirtual'] = true;
-        }
-        else {
+        } else {
           this.user_nonMandatorySubDomainAdditionalInfo.push(domainfield.name);
         }
       }
@@ -182,18 +180,18 @@ export class ProviderSharedFuctions {
     return this.mandatoryAdditionalInfo;
   }
   getAdditionalNonDomainMandatoryFields() {
-    return this.nonMandatoryDomainAdditionalInfo
+    return this.nonMandatoryDomainAdditionalInfo;
   }
   getAdditionalNonSubDomainMandatoryFields() {
     return this.nonMandatorySubDomainAdditionalInfo;
   }
 
-  //user
+  // user
   getUserAdditonalInfoMandatoryFields() {
     return this.user_mandatoryAdditionalInfo;
   }
   getUserAdditionalNonDomainMandatoryFields() {
-    return this.user_nonMandatoryDomainAdditionalInfo
+    return this.user_nonMandatoryDomainAdditionalInfo;
   }
   getUserAdditionalNonSubDomainMandatoryFields() {
     return this.user_nonMandatorySubDomainAdditionalInfo;
@@ -388,15 +386,17 @@ export class ProviderSharedFuctions {
       type = 'single';
       if (appt) {
         uuid = waitlist[0].uid || null;
-        name = waitlist[0].appmtFor[0].firstName + ' ' + waitlist[0].appmtFor[0].lastName;
+        name = waitlist[0].appmtFor[0].firstName ? waitlist[0].appmtFor[0].firstName : '' + ' ' +
+          waitlist[0].appmtFor[0].lastName ? waitlist[0].appmtFor[0].lastName : '';
         email = waitlist[0].providerConsumer.email;
         phone = waitlist[0].providerConsumer.phoneNo;
       } else {
         uuid = waitlist[0].ynwUuid || null;
-        name = waitlist[0].consumer.firstName + ' ' + waitlist[0].consumer.lastName;
+        name = waitlist[0].consumer.firstName ? waitlist[0].consumer.firstName : '' + ' ' +
+          waitlist[0].consumer.lastName ? waitlist[0].consumer.lastName : '';
         email = waitlist[0].waitlistingFor[0].email;
         phone = waitlist[0].waitlistingFor[0].phoneNo;
-        phone_history  = waitlist[0].waitlistPhoneNumber;
+        phone_history = waitlist[0].waitlistPhoneNumber;
       }
     }
     if (type === 'single') {
@@ -554,4 +554,3 @@ export class ProviderSharedFuctions {
     return message;
   }
 }
-

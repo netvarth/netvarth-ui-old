@@ -48,7 +48,6 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   domain;
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
-    private router: Router,
     private routerobj: Router,
     public shared_functions: SharedFunctions,
     private sharedfunctionObj: SharedFunctions) {

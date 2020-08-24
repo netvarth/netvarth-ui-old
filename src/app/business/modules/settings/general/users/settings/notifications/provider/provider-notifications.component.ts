@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
-import { projectConstants } from '../../../../../../../../app.component';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 

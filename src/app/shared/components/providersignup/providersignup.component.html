@@ -79,9 +79,14 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                 <div class="signup-content">
                     <!-- <div class="signup-form"> -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <h2 class="form-title">Select your area of specialization </h2>
+                        <h2 class="form-title">Select your Domain </h2>
                         <div class="col-md-7 col-sm-12 col-xs-12 no-padding-small">
-                            <mat-accordion class="acc-btn acc-doms">
+                            <div class="col-md-12 col-xs-12 col-sm-12 control domains pointer-cursor" (click)="selectedDomain = domain" *ngFor="let domain of business_domains; let i = index" [class.div-grn-outline]="domain===selectedDomain">  
+                                <div class="pull-left"><div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
+                                    *ngIf="domainSettings[domain.domain] "></div></div> 
+                                <div  class="pull-left mgn-lt-10"><h6>{{domain.displayName}}</h6></div> 
+                            </div>
+                            <!-- <mat-accordion class="acc-btn acc-doms">
                                 <mat-expansion-panel [expanded]="domainIndex[i]"
                                     *ngFor="let domain of business_domains; let i = index"
                                     [class.active]="domain===selectedDomain">
@@ -93,8 +98,8 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                             </div>
                                             <h6>{{domain.displayName}}</h6>
                                         </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div class="acc-subdoms" *ngIf="domain && domain.subDomains">
+                                    </mat-expansion-panel-header> -->
+                                    <!-- <div class="acc-subdoms" *ngIf="domain && domain.subDomains">
                                         <ul>
                                             <li *ngFor="let subdomain of domain.subDomains"
                                                 [class.subdomainstyle]="subdomain.subDomain==selectedSubDomain.subDomain"
@@ -103,15 +108,65 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                                     *ngIf="subdomain.subDomain==selectedSubDomain.subDomain"></i>
                                             </li>
                                         </ul>
-                                    </div>
-                                </mat-expansion-panel>
-                            </mat-accordion>
+                                    </div> -->
+                                <!-- </mat-expansion-panel>
+                            </mat-accordion> -->
                             <div class="col-md-12 col-xs-12 col-sm-12 control">
                                 <div class="form-group form-button">
                                     <input type="submit" name="signup" id="signup" class="form-submitback" value="Back"
                                         (click)="showregistersection()">&nbsp;
                                     <input type="submit" name="signup" id="signup" class="form-submit" value="Continue"
-                                        (click)="subDomainSelected()">
+                                        (click)="handleDomainSelection()">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-xs-12 col-sm-12">
+                            <div class="">
+                                <figure><img *ngIf="images[selectedDomain.domain]" [src]="images[selectedDomain.domain]"
+                                        [alt]="selectedDomain.displayName" class="img-fluid mt-5"></figure>
+                                <!-- <a href="#" class="signup-image-link">I am already member</a> -->
+                            </div>
+                        </div>
+                        <!-- </div>                         -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+    <div *ngIf="active_step==4">
+        <section class="signup">
+            <div class="container1">
+                <div class="signup-content">
+                    <!-- <div class="signup-form"> -->
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h2 class="form-title">Select your area of specialization </h2>
+                        <div class="col-md-7 col-sm-12 col-xs-12 no-padding-small">
+                            <!-- <mat-accordion class="acc-btn acc-doms">
+                                <mat-expansion-panel [expanded]="domainIndex[i]"
+                                    *ngFor="let domain of business_domains; let i = index"
+                                    [class.active]="domain===selectedDomain">
+                                    <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'"
+                                        class="acc-header">
+                                        <mat-panel-title class="block-level">
+                                            <div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
+                                                *ngIf="domainSettings[domain.domain]">
+                                            </div>
+                                            <h6>{{domain.displayName}}</h6>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header> -->
+                                    <!-- (click)="subdomSelection(subdomain,selectedDomain, i)" -->
+                                    <div class="acc-subdoms subdomains pointer-cursor" (click)="selectedSubDomain = subdomain" *ngFor="let subdomain of selectedDomain.subDomains" [class.div-grn-outline]="subdomain==selectedSubDomain">
+                                        <h6>{{subdomain.displayName}}</h6>
+                                    </div>
+                                <!-- </mat-expansion-panel>
+                            </mat-accordion> -->
+                            <div class="col-md-12 col-xs-12 col-sm-12 control">
+                                <div class="form-group form-button">
+                                    <input type="submit" name="signup" id="signup" class="form-submitback" value="Back"
+                                        (click)="showDomains()">&nbsp;
+                                    <input type="submit" name="signup" id="signup" class="form-submit" value="Continue"
+                                        (click)="handleSubDomainSelection()">
                                 </div>
                             </div>
                         </div>
@@ -333,6 +388,8 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                             </ul>
                         </div>
                         <div class="form-group form-button">
+                            <input type="button" name="backToSubDomain" id="backToSubDomain" class="form-submitback" value="Back"
+                                        (click)="backToSubdomains()">&nbsp;
                             <input type="submit" name="signup" id="signup" class="form-submit" value="Next"
                                 (click)="submitHearus()">
                         </div>

@@ -6,7 +6,6 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { from } from 'rxjs';
 
 
 @Component({
@@ -132,7 +131,7 @@ export class ConfirmPatmentLinkComponent implements OnInit {
       this.pay_link.emailNotification = 'false';
     }
     this.provider_services.Paymentlink(this.pay_link)
-      .subscribe((pData: any) => {
+      .subscribe(() => {
         this.dialogRef.close();
         this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
       },

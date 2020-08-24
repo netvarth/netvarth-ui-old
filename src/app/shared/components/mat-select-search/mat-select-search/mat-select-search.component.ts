@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, OnInit, QueryList,
+  Component, ElementRef, EventEmitter, forwardRef, Inject, OnDestroy, OnInit, QueryList,
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -101,7 +101,7 @@ import { take, takeUntil } from 'rxjs/operators';
 })
 export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewInit, ControlValueAccessor {
   /** Reference to the search input field */
-  @ViewChild('searchSelectInput', {read: ElementRef, static: false}) searchSelectInput: ElementRef;
+  @ViewChild('searchSelectInput', { read: ElementRef, static: false }) searchSelectInput: ElementRef;
 
   /** Current search value */
   get value(): string {
@@ -111,8 +111,8 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
   placeholderLabel;
   private _value: string;
 
-  onChange: Function = (_: any) => {};
-  onTouched: Function = (_: any) => {};
+  onChange: Function = (_: any) => { };
+  onTouched: Function = (_: any) => { };
 
   /** Reference to the MatSelect options */
   public _options: QueryList<MatOption>;
@@ -131,8 +131,8 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
 
 
   constructor(@Inject(MatSelect) public matSelect: MatSelect,
-              private changeDetectorRef: ChangeDetectorRef) {
-    
+    private changeDetectorRef: ChangeDetectorRef) {
+
 
   }
 
@@ -303,7 +303,7 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     this.overlayClassSet = true;
   }
 
-  
+
   /**
    * Initializes handling <mat-select [multiple]="true">
    * Note: to improve this code, mat-select should be extended to allow disabling resetting the selection while filtering.

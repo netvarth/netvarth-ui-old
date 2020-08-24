@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import {
-  AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Image, ImageModalEvent, PlainGalleryConfig, PlainGalleryStrategy, Description, DescriptionStrategy
+  AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy
 } from 'angular-modal-gallery';
 import { ProviderBprofileSearchPrimaryComponent } from '../provider-bprofile-search-primary/provider-bprofile-search-primary.component';
 import { AddProviderWaitlistLocationsComponent } from '../add-provider-waitlist-locations/add-provider-waitlist-locations.component';
@@ -1192,7 +1192,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     } else {
       if (this.blogo[0]) {
         this.profimg_exists = true;
-        const today = new Date();
+        // const today = new Date();
         // logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
         logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
       }

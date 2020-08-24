@@ -308,9 +308,9 @@ export class CallingModesComponent implements OnInit {
     }
     getMeetingDetails() {
         this.starting_url = '';
-        const uuid_data = {
-            'mode': this.callingModes
-        };
+        // const uuid_data = {
+        //     'mode': this.callingModes
+        // };
         if (this.data.type === 'checkin') {
             this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.data.uuid).
                 subscribe((meetingdata) => {

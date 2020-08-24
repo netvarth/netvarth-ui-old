@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { projectConstants } from '../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -196,7 +195,7 @@ export class HolidayDetailsComponent implements OnInit {
       const curtime = this.shared_functions.getTimeAsNumberOfMinutes(today_curtime);
       const selstarttime = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
       if (selstarttime < curtime) {
-        //this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
+        // this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
         this.shared_functions.openSnackBar(Messages.HOLIDAY_STIME, { 'panelClass': 'snackbarerror' });
         return;
       }

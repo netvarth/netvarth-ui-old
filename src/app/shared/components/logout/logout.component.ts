@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 
 export class LogoutComponent {
   constructor(private shared_functions: SharedFunctions, private router: Router) {
-    shared_functions.logout();
-    router.navigate(['/home']);
+    this.shared_functions.logout();
+    this.router.navigate(['/home']);
   }
 }
 

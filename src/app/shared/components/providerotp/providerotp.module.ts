@@ -6,14 +6,11 @@ import { HeaderModule } from '../../modules/header/header.module';
 import { MaterialModule } from '../../modules/common/material.module';
 import { FooterModule } from '../../modules/footer/footer.module';
 
-import { FieldErrorDisplayComponent } from '../../modules/form-message-display/field-error-display/field-error-display.component';
 import { FormMessageDisplayModule } from '../../modules/form-message-display/form-message-display.module';
 import { ProviderotpComponent } from './providerotp.component';
 import { providerOtpRoutingModule } from './providerotp.routing.module';
 @NgModule({
-   
     imports: [
-       
        CommonModule,
        FormsModule,
        HeaderModule,
@@ -22,8 +19,6 @@ import { providerOtpRoutingModule } from './providerotp.routing.module';
        providerOtpRoutingModule,
        ReactiveFormsModule,
        FormMessageDisplayModule
-      
-
     ],
     declarations: [
         ProviderotpComponent
@@ -31,4 +26,4 @@ import { providerOtpRoutingModule } from './providerotp.routing.module';
     entryComponents: [],
     exports: [ProviderotpComponent]
 })
-export class ProviderOtpModule {} 
+export class ProviderOtpModule {}

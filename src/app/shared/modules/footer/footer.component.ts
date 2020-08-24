@@ -1,5 +1,5 @@
 
-import { interval as observableInterval, Observable, Subscription } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, Input, OnDestroy, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';

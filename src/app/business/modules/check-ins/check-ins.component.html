@@ -2,9 +2,10 @@
   <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs_init"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
+
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">
-  <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
+  <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12"  id="bcrumbHeader">
   <div class="token-appt" *ngIf="message">
     {{message}} Go to <a class="underline" (click)="gotoSettings()"> Settings</a>
   </div>
@@ -17,7 +18,7 @@
   <div class="col-md-12 no-padding-small" *ngIf="!apiloading">
     <div class="row">
       <div class="card p0 w-dta">
-        <header class="main-header dash chkin">
+        <header class="main-header dash chkin" id="locHeader">
           <nav class="navbar navbar-static-top jd-custom-nav" role="navigation">
             <div class="navbar-custom-menu width100pc">
               <ul class="nav navbar-nav width100pc">
@@ -130,7 +131,7 @@
             </div>
           </nav>
         </header>
-        <div class="head mgn-up-5 mgn-bt-5" *ngIf="activeQs && activeQs.length > 0">
+        <div class="head mgn-up-5 mgn-bt-5" *ngIf="activeQs && activeQs.length > 0" id="qHeader">
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
               <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="activeQs">
@@ -151,7 +152,7 @@
             </div>
           </div>
         </div>
-        <div class="head mgn-up-5 mgn-bt-5" *ngIf="selected_location">
+        <div class="head mgn-up-5 mgn-bt-5" *ngIf="selected_location" id="tabHeader">
           <div class="col-md-5 col-xs-12 col-sm-12 no-padding wl-tp-cont1" style="display: flex;">
             <button class="cust-button-1" [ngClass]="{'active': time_type==1}" (click)="setTimeType(1)">
               {{today_cap}} ({{today_waitlist_count}})
@@ -736,7 +737,7 @@
                           <div class="bold pull-left mgn-lt-5 name pointer-cursor" *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
-                         {{customer_label}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
+                         {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{checkin.service.name}}</div>

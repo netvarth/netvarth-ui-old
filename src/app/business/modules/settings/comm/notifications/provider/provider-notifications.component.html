@@ -1,22 +1,30 @@
-<section>
+<!-- <section>
   <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
     (performAction)="performActions($event)"></app-breadcrumb>
+</section> -->
+<section class="">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="goBack()">
+        <span class="fa fa-chevron-left">&nbsp;Back</span>
+      </button>&nbsp;&nbsp;&nbsp;{{provider_label | capitalizeFirst}}</h5>
+  </div>
 </section>
 <section>
   <div class="row col-md-12 m0 no-padding-small" *ngIf="api_loading">
     <div class="card">
-            <app-common-innerloading-spinner></app-common-innerloading-spinner>
+      <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
-</div>
+  </div>
 </section>
 <section *ngIf="!waitlistStatus && !appointment_status && !donations_status && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
-  <div class="token-appt">
-    To setup ‘Notifications’, Appointment manager/QManager/Donations need to be enabled from your settings.
-  </div> 
-</div>
+    <div class="token-appt">
+      To setup ‘Notifications’, Appointment manager/QManager/Donations need to be enabled from your settings.
+    </div>
+  </div>
 </section>
-<section class="content comn-cls lic-page notifications" *ngIf="(waitlistStatus || appointment_status || donations_status)&& !api_loading">
+<section class="content comn-cls lic-page notifications"
+  *ngIf="(waitlistStatus || appointment_status || donations_status)&& !api_loading">
   <div class="col-md-12 no-padding-small">
     <div class="row">
       <div class="card w-dta p0 ">
@@ -41,8 +49,10 @@
             <div class="rw col-md-12">
               <div class="form-group">
                 <div style="display: flex">
-                  <span *ngIf="showToken" class="notification" style="font-weight: 600">Notify whenever a token is generated</span>
-                  <span *ngIf="!showToken" class="notification" style="font-weight: 600"> Notify whenever check-in happens</span>
+                  <span *ngIf="showToken" class="notification" style="font-weight: 600">Notify whenever a token is
+                    generated</span>
+                  <span *ngIf="!showToken" class="notification" style="font-weight: 600"> Notify whenever check-in
+                    happens</span>
                   <mat-slide-toggle class="example-margin" (change)="selectChekinNotify($event)"
                     [(ngModel)]="SelchkinNotify">
                   </mat-slide-toggle>
@@ -97,8 +107,9 @@
             <div class="rw col-md-12">
               <div class="form-group">
                 <div style="display: flex">
-                  <span *ngIf="showToken"  class="notification" style="font-weight: 600"> Notify whenever a token gets cancelled</span>
-                  <span *ngIf="!showToken"  class="notification" style="font-weight: 600"> Notify whenever check-in gets
+                  <span *ngIf="showToken" class="notification" style="font-weight: 600"> Notify whenever a token gets
+                    cancelled</span>
+                  <span *ngIf="!showToken" class="notification" style="font-weight: 600"> Notify whenever check-in gets
                     cancelled</span>
                   <mat-slide-toggle class="example-margin" (change)="selectChekinCanclNotify($event)"
                     [(ngModel)]="SelchkincnclNotify">
@@ -193,7 +204,8 @@
                   </li>
                   <li>
                     <span class="notification"> via Email</span>
-                    <span [class.icon-add]="!emailAppt" [class.icon-minus]="emailAppt" (click)="emailApptAddClicked()"></span>
+                    <span [class.icon-add]="!emailAppt" [class.icon-minus]="emailAppt"
+                      (click)="emailApptAddClicked()"></span>
                     <div class="form-group" *ngIf="emailAppt">
                       <div class="input-group mb-3 emadd">
                         <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyApptemail">
@@ -244,7 +256,8 @@
                       </div>
                     </div>
                     <ul *ngIf="apptph1_arr.length > 0">
-                      <li *ngFor="let phnecancel_appt of apptph1_arr">{{phnecancel_appt}} <i class="pointer-cursor icon-delete"
+                      <li *ngFor="let phnecancel_appt of apptph1_arr">{{phnecancel_appt}} <i
+                          class="pointer-cursor icon-delete"
                           (click)="removePhEmail(phnecancel_appt, apptph1_arr, 'cancelappointment')"></i></li>
                     </ul>
                   </li>
@@ -300,7 +313,8 @@
                 <ul class="notifications">
                   <li>
                     <span class="notification"> via SMS </span>
-                    <span [class.icon-add]="!smsDonate" [class.icon-minus]="smsDonate" (click)="smsDonateAddClicked()"></span>
+                    <span [class.icon-add]="!smsDonate" [class.icon-minus]="smsDonate"
+                      (click)="smsDonateAddClicked()"></span>
                     <div class="form-group" *ngIf="smsDonate">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
@@ -317,7 +331,8 @@
                   </li>
                   <li>
                     <span class="notification"> via Email</span>
-                    <span [class.icon-add]="!emaildonate" [class.icon-minus]="emaildonate" (click)="emaildonateAddClicked()"></span>
+                    <span [class.icon-add]="!emaildonate" [class.icon-minus]="emaildonate"
+                      (click)="emaildonateAddClicked()"></span>
                     <div class="form-group" *ngIf="emaildonate">
                       <div class="input-group mb-3 emadd">
                         <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifydonateemail">
@@ -330,7 +345,7 @@
                       <li *ngFor="let emailval of donateem_arr">{{emailval}} <i class="pointer-cursor icon-delete"
                           (click)="removePhEmail(emailval, donateem_arr, 'newdonation')"></i></li>
                     </ul>
-                  </li> 
+                  </li>
                   <li>
                     <span class="notification">App notification</span>
                     <mat-slide-toggle class="example-margin" [(ngModel)]="donatePush"

@@ -7,9 +7,8 @@ import { ProviderServices } from '../../../../../../ynw_provider/services/provid
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { MatSelect } from '@angular/material';
-import { take, takeUntil, startWith, map } from 'rxjs/operators';
+import { takeUntil, startWith, map } from 'rxjs/operators';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import value from '*.json';
 
 
 interface Bank {

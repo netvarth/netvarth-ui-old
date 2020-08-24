@@ -2,11 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { MatDialog } from '@angular/material';
-import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
-import { AddProviderBprofileSpecializationsComponent } from '../../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 @Component({
     selector: 'app-specializatons',
@@ -45,12 +41,9 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     ];
     constructor(
         private provider_services: ProviderServices,
-        private sharedfunctionobj: SharedFunctions,
-        private provider_datastorage: ProviderDataStorageService,
         private routerobj: Router,
         private specialsn: Location,
-        public shared_functions: SharedFunctions,
-        private dialog: MatDialog
+        public shared_functions: SharedFunctions
     ) {
       }
     ngOnDestroy() {

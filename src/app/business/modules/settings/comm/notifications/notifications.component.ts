@@ -113,4 +113,7 @@ export class NotificationsComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
         }
     }
+    goBack() {
+        this.router.navigate(['provider', 'settings', 'comm']);
+    }
 }

@@ -1,6 +1,11 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <!-- <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb> -->
+    <div class="pad-top-15 pad-left-15 pad-right-15">
+        <span class="setings">Settings </span>
+        <span class="pull-right">For support, call<span class="support-num"> 8880125000</span> </span>
+    </div>
 </section>
+
 <section>
     <div class="content settings">
         <div class="row">
@@ -12,9 +17,15 @@
                     <div class="box box-widget widget-user-2">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header bg-blue">
-                            <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls" [matTooltip]="bprofileTooltip">Jaldee Profile
+                            <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="bprofileTooltip">My Profile
+                                <div joyrideStep="step1" title="Jaldee Online"
+                                    text="Use Jaldee Online to set up your basic account and list your services in Jaldee.com">
+                                </div>
                                 <i class="fa fa-gears fl-right lnk"></i>
+
                             </h4>
+
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
@@ -28,14 +39,18 @@
                                         <span class="lnk setings"> Business Profile
                                         </span>
                                         <p> Profile Strength -
-                                            <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}}</span> &nbsp;&nbsp;
+                                            <span
+                                                [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}}</span>
+                                            &nbsp;&nbsp;
 
-                                          <!-- <button  *ngIf="showIncompleteButton" (click)="redirecTo('bprofile')" type="button" [className]="' btn btn-' + weightageClass">{{bprofile_btn_text}}</button> -->
+                                            <!-- <button  *ngIf="showIncompleteButton" (click)="redirecTo('bprofile')" type="button" [className]="' btn btn-' + weightageClass">{{bprofile_btn_text}}</button> -->
 
                                         </p>
                                         <div class="progress" style="height: 10px;" *ngIf="!showIncompleteButton">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
-                                                aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated active"
+                                                role="progressbar" [style.width.%]="weightageValue"
+                                                aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100">
+                                            </div>
                                         </div>
 
 
@@ -65,7 +80,7 @@
                                 </li>
                                 <li (click)="redirecTo('bprofile')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">Jaldee Online
+                                        <span class="lnk setings">Profile Link
                                             <span class="pull-right">
                                                 {{onlinepresence_statusstr}}</span>
                                             <!-- <mat-slide-toggle [(ngModel)]="search_status"
@@ -74,11 +89,14 @@
                                         </span>
                                         <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule || reqFields.specialization || reqFields.domainvirtual || reqFields.subdomainvirtual"
                                             class="req-flds-cap">
-                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required
+                                            fields missing</p>
                                         <!-- <p class="settings_info">Enable this to get online visibility.</p> -->
 
-                                            <p class="settings_info" *ngIf="onlinepresence_status">{{jaldee_online_enabled_msg}}</p>
-                                            <p class="settings_info" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </p>
+                                        <p class="settings_info" *ngIf="onlinepresence_status">Shareable Profile Link
+                                            and QR Code are <strong>active</strong></p>
+                                        <p class="settings_info" *ngIf="!onlinepresence_status">Shareable Profile Link
+                                            and QR Code are <strong>inactive</strong></p>
 
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
@@ -93,11 +111,15 @@
                                             </mat-slide-toggle> -->
                                             </span>
                                         </span>
-                                        <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">
-                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
+                                        <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
+                                            class="req-flds-cap">
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required
+                                            fields missing</p>
                                         <!-- <p class="settings_info">{{frm_search_cap}}</p> -->
-                                        <p class="settings_info" *ngIf="!search_status">{{profile_disabled_msg}}</p>
-                                        <p class="settings_info" *ngIf="search_status">{{profile_enabled_msg}}</p>
+                                        <p class="settings_info" *ngIf="search_status">You are <strong>visible</strong>
+                                            on Jaldee.com search</p>
+                                        <p class="settings_info" *ngIf="!search_status">You are <strong> not
+                                                visible</strong> on Jaldee.com search</p>
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
                                 </li>
@@ -109,7 +131,8 @@
                                         <p class="settings_info">Manage your profile here</p>
                                     </a>
                                 </li> -->
-                                <li (click)="redirecTo('integration')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="integration">
+                                <li (click)="redirecTo('integration')" class="pointer-cursor"
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="integration">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings" style="display: flex;">Jaldee.com Integration
                                         </span>
@@ -161,14 +184,21 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 class="pointer-cursor" (click)="redirecTo('waitlistmanager')" [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Jaldee QManager
+                            <h4 class="pointer-cursor" (click)="redirecTo('waitlistmanager')"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Jaldee QManager
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div joyrideStep="step2" title="Do you issue tokens to your customers?" text="
+
+                                Use Jaldee QManager to add your services."></div>
                             </h4>
+
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-2">
                                 <li class="form-level-settings">
-                                    <a>{{frm_waitlist_cap}}</a>
+                                    <a><strong>Virtual queue</strong> system . Provide
+                                        <strong>tokens</strong>.{{custs_name | capitalizeFirst}} will receive
+                                        <strong>real-time alerts</strong>.</a>
                                 </li>
                                 <li (click)="redirecTo('waitlistmanager')">
                                     <a class="pointer-cursor">
@@ -179,6 +209,13 @@
                                             </mat-slide-toggle> -->
                                                 {{waitlistStatusStr}}</span>
                                         </span>
+                                        <p class="settings_info" *ngIf="waitlistStatus">
+                                            {{custs_name|capitalizeFirst}}<strong> can</strong> take tokens and join
+                                            virtual queues for<br>your consultations and services.</p>
+                                        <p class="settings_info" *ngIf="!waitlistStatus">
+                                            {{custs_name|capitalizeFirst}}<strong> cannot</strong> take tokens and join
+                                            virtual queues<br>for your consultations and services.
+                                        </p>
                                         <!-- <p class="sts" [class.active]="waitlistStatus">
                                             {{waitlistStatusStr}}</p> -->
                                     </a>
@@ -207,10 +244,11 @@
                                     </a></li> -->
                                 <li (click)="redirecTo('services')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">{{services_cap}} offered
+                                        <span class="lnk setings">{{services_cap}}
                                             <span class="pull-right badge bg-blue">{{service_count}}</span>
                                         </span>
-                                        <p class="settings_info">Add and manage services here</p>
+                                        <p class="settings_info">Eg. In-person consultation , video consultation ,
+                                            labservices. </p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('queues')">
@@ -219,8 +257,10 @@
                                             <span class="pull-right badge bg-blue">{{queues_count}}</span>
                                         </span>
                                         <p *ngIf="queues_count == 0" class="req-flds-cap">
-                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Queues are not created</p>
-                                        <p class="settings_info">Add and manage your queues here</p>
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Queues are not
+                                            created</p>
+                                        <p class="settings_info">Set when you want to start a virtual queue and issue
+                                            tokens.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('displayboards')">
@@ -228,7 +268,8 @@
                                         <span class="lnk setings">{{displayboards_cap}}s
                                             <span class="pull-right badge bg-blue">{{board_count_waitlist}}</span>
                                         </span>
-                                        <p class="settings_info">Create and manage QBoards here</p>
+                                        <p class="settings_info"><strong>TV Display Board</strong> for status and
+                                            monitoring of queues and tokens.</p>
                                     </a>
                                 </li>
                             </ul>
@@ -240,15 +281,23 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('appointmentmanager')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">
-                                Jaldee Appointment
+                            <h4 (click)="redirecTo('appointmentmanager')" class="pointer-cursor"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">
+                                Jaldee Appointment Manager
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div joyrideStep="step3"
+                                    title="Do you fix appointments or take bookings with your customers?" text="
+
+                                Use Jaldee Appointment Manager to add your services.">
+
+                                </div>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-3">
                                 <li class="form-level-settings">
-                                    <a>{{frm_appointment_cap}}</a>
+                                    <a><strong>Appointment Booking </strong>system . <strong>Take appointments .
+                                        </strong><strong>Fixed Time Slots</strong> for consultations .</a>
                                 </li>
                                 <li (click)="redirecTo('appointmentmanager')">
                                     <a class="pointer-cursor">
@@ -257,8 +306,16 @@
                                                 <!-- <mat-slide-toggle [(ngModel)]="createappointment_status"
                                                 (change)="handle_appointmentPresence($event)">
                                             </mat-slide-toggle> -->
-                                                {{createappointment_statusstr}}</span>
-                                        </span>
+                                                {{createappointment_statusstr}} </span></span>
+                                        <p class="settings_info" *ngIf="createappointment_status">
+                                            {{custs_name|capitalizeFirst}}<strong> can</strong> take appointments for
+                                            your services.</p>
+                                        <p class="settings_info" *ngIf="!createappointment_status">
+                                            {{custs_name|capitalizeFirst}}<strong> cannot</strong> take appointments for
+                                            your services.
+                                        </p>
+
+
                                         <!-- <p class="sts" [class.active]="createappointment_status">
                                             {{createappointment_statusstr}}</p> -->
                                         <!-- <p class="settings_info" *ngIf="createappointment_status">Jaldee Online Presence
@@ -292,10 +349,11 @@
                                     </a></li> -->
                                 <li (click)="redirecTo('appservices')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">{{services_cap}} offered
+                                        <span class="lnk setings">{{services_cap}}
                                             <span class="pull-right badge bg-blue">{{service_count}}</span>
                                         </span>
-                                        <p class="settings_info">Add and manage services here</p>
+                                        <p class="settings_info">Eg. In-person consultation , video consultation ,
+                                            labservices. </p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('schedules')">
@@ -304,8 +362,9 @@
                                             <span class="pull-right badge bg-blue">{{schedules_count}}</span>
                                         </span>
                                         <p *ngIf="schedules_count == 0" class="req-flds-cap">
-                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Schedules are not created</p>
-                                        <p class="settings_info">Manage your schedules here</p>
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Schedules are
+                                            not created</p>
+                                        <p class="settings_info">Set when you want to accept bookings.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('appdisplayboards')">
@@ -313,7 +372,8 @@
                                         <span class="lnk setings">{{displayboards_cap}}s
                                             <span class="pull-right badge bg-blue">{{board_count}}</span>
                                         </span>
-                                        <p class="settings_info">Create and manage QBoards here</p>
+                                        <p class="settings_info"><strong>TV Display Board</strong> for status and
+                                            monitoring of appointments.</p>
                                     </a>
                                 </li>
 
@@ -326,30 +386,34 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('general')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="general">General
+                            <h4 (click)="redirecTo('general')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="general">Features and Customization
                                 <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
                                 <li class="form-level-settings">
-                                    <a>Set up and manage your locations, departments and more
+                                    <a><strong>Customize</strong> your Jaldee account with these additional features.
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('locations')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{locName}}
-                                            <span class="pull-right badge bg-blue" *ngIf="multipeLocationAllowed == true">{{location_count}}</span>
+                                            <span class="pull-right badge bg-blue"
+                                                *ngIf="multipeLocationAllowed == true">{{location_count}}</span>
                                         </span>
                                         <p *ngIf="location_count == 0" class="req-flds-cap">
-                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Locations are not created</p>
-                                        <p class="settings_info">Set up your locations here</p>
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Locations are
+                                            not created</p>
+                                        <p class="settings_info">All the locations you operate from</p>
                                     </a>
                                 </li>
                                 <li *ngIf="accountType=='BRANCH'" (click)="redirecTo('departments')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Departments
-                                            <span *ngIf="filterbydepartment" class="pull-right badge bg-blue">{{departmentCount}}</span>
+                                            <span *ngIf="filterbydepartment"
+                                                class="pull-right badge bg-blue">{{departmentCount}}</span>
                                             <span *ngIf="!filterbydepartment" class="pull-right">Off</span>
                                         </span>
                                         <p class="settings_info">Add departments here</p>
@@ -363,7 +427,7 @@
                                 </li>
                                 <li (click)="redirecTo('livetrack')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">Live Tracking
+                                        <span class="lnk setings">Locate your {{cust_domain_name}}
                                             <span class="pull-right">
                                                 <!-- <mat-slide-toggle [(ngModel)]="livetrack_status"
                                                     (change)="handle_liveTracking($event)">
@@ -371,15 +435,23 @@
                                                 {{livetrack_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="livetrack_status">{{livetrack_statusstr}}</p> -->
-                                        <p class="settings_info" *ngIf="livetrack_status">Live tracking hints.</p>
-                                        <p class="settings_info" *ngIf="!livetrack_status">Live tracking hints
+                                        <p class="settings_info" *ngIf="livetrack_status"><strong>Know </strong>When
+                                            your {{custs_name}} will reach you.</p>
+                                        <p class="settings_info" *ngIf="!livetrack_status"><strong>Know </strong>When
+                                            your {{custs_name}} will reach you.
                                         </p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('nonworking')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{non_wrk_day_hr_cap}}</span>
-                                        <p class="settings_info">Manage your non working days here</p>
+                                        <p class="settings_info">The days you are <strong>closed</strong>.</p>
+                                    </a>
+                                </li>
+                                <li (click)="redirecTo('skins')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Themes</span>
+                                        <p class="settings_info">Set a theme for your dashboard.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('labels')">
@@ -394,12 +466,7 @@
                                         <p class="settings_info">Create or manage custom views</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('skins')">
-                                    <a class="pointer-cursor">
-                                        <span class="lnk setings">Themes</span>
-                                        <p class="settings_info">Customize your themes</p>
-                                    </a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -477,14 +544,15 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 class="pointer-cursor" (click)="redirecTo('pos')" [matTooltipClass]="tooltipcls" [matTooltip]="billposTooltip">Jaldee Billing
+                            <h4 class="pointer-cursor" (click)="redirecTo('pos')" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="billposTooltip">Jaldee Billing
                                 <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings">
-                                    <a>{{frm_bill_cap}}.</a>
+                                    <a><strong>Give</strong> bills for your service.</a>
                                 </li>
                                 <li (click)="redirecTo('pos')">
                                     <a class="pointer-cursor">
@@ -496,8 +564,10 @@
                                                 {{pos_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="pos_status">{{pos_statusstr}}</p> -->
-                                        <p class="settings_info" *ngIf="pos_status">Billing/pos hints.</p>
-                                        <p class="settings_info" *ngIf="!pos_status">{{frm_public_self_cap}}
+                                        <p class="settings_info" *ngIf="pos_status">You <strong>can</strong> issue biils
+                                            to your {{custs_name}}.</p>
+                                        <p class="settings_info" *ngIf="!pos_status">You <strong>cannot</strong> issue
+                                            biils to your {{custs_name}}.
                                         </p>
                                     </a>
                                 </li>
@@ -506,7 +576,7 @@
                                         <span class="lnk setings">{{items_cap}}
                                             <span class="pull-right badge bg-blue">{{item_count}}</span>
                                         </span>
-                                        <p class="settings_info">Create new products/items and related information here.
+                                        <p class="settings_info">Items you want to <strong>sell</strong>.
                                         </p>
                                     </a>
                                 </li>
@@ -515,14 +585,14 @@
                                         <span class="lnk setings">{{discount_cap}}
                                             <span class="pull-right badge bg-blue">{{discount_count}}</span>
                                         </span>
-                                        <p class="settings_info">Create your discounts here.</p>
+                                        <p class="settings_info">Discounts for your services and items.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('coupons')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{coupons_cap}}
                                         </span>
-                                        <p class="settings_info">View all the coupons available here.</p>
+                                        <p class="settings_info">Coupons for your {{custs_name}}.</p>
                                     </a>
                                 </li>
                                 <!-- <li class="separator setsplit"></li> -->
@@ -534,7 +604,8 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('payments')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="payments">
+                            <h4 (click)="redirecTo('payments')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="payments">
                                 Jaldee Pay
                                 <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
@@ -542,7 +613,7 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings">
-                                    <a>Set up and manage your banking details.</a>
+                                    <a>{{frm_msg_jaldeepay}}</a>
                                 </li>
                                 <li (click)="redirecTo('payments')">
                                     <a class="pointer-cursor">
@@ -553,8 +624,10 @@
                                                 {{payment_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="payment_status">{{payment_statusstr}}</p> -->
-                                        <p class="settings_info" *ngIf="payment_status">{{jaldee_pay_cap}}</p>
-                                        <p class="settings_info" *ngIf="!payment_status">{{frm_public_self_cap}}
+                                        <p class="settings_info" *ngIf="payment_status">{{custs_name|capitalizeFirst}}
+                                            <strong>can</strong> pay using Jaldee App , Email and SMS .</p>
+                                        <p class="settings_info" *ngIf="!payment_status">{{custs_name|capitalizeFirst}}
+                                            <strong>cannot</strong> pay using Jaldee App , Email and SMS .
                                         </p>
                                     </a>
                                 </li>
@@ -562,19 +635,19 @@
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{payment_setting_cap}}
                                         </span>
-                                        <p class="settings_info">Set up your payment modes here</p>
-                                        <div class="payTypeVerify" *ngIf="paytmVerified && !payuVerified &&!isJaldeeAccount">Active payment mode : PayTm </div>
+                                        <p class="settings_info">Preferred Bank Account.</p>
+                                        <!-- <div class="payTypeVerify" *ngIf="paytmVerified && !payuVerified &&!isJaldeeAccount">Active payment mode : PayTm </div>
                                         <div class="payTypeVerify" *ngIf="payuVerified && !paytmVerified && !isJaldeeAccount">Active payment mode : CC/DC/Netbanking</div>
                                         <div class="payTypeVerify" *ngIf="paytmVerified && payuVerified && !isJaldeeAccount">Active payment modes : CC/DC/Netbanking and PayTm</div>
                                         <div class="payTypeVerify" *ngIf="isJaldeeAccount">Active payment mode : Jaldee Bank
-                                        </div>
+                                        </div> -->
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('taxsettings')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{tax_setting_cap}}
                                         </span>
-                                        <p class="settings_info">Enable and configure tax settings.</p>
+                                        <p class="settings_info">GSTN and GST rate .</p>
                                     </a>
                                 </li>
                             </ul>
@@ -585,14 +658,15 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('donationmanager')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">Donation Manager
+                            <h4 (click)="redirecTo('donationmanager')" class="pointer-cursor"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">Donation Manager
                                 <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked  set-block-4">
                                 <li class="form-level-settings">
-                                    <a>{{frm_donation_cap}}</a>
+                                    <a><strong>Collect</strong> Donations.</a>
                                 </li>
                                 <li (click)="redirecTo('donationmanager')">
                                     <a class="pointer-cursor">
@@ -604,8 +678,10 @@
                                         </span>
                                         <!-- <p class="sts" [class.active]="donations_status">
                                             {{donations_statusstr}}</p> -->
-                                        <p class="settings_info" *ngIf="donations_status">Accept Donations hints.</p>
-                                        <p class="settings_info" *ngIf="!donations_status">Accept Donations hints
+                                        <p class="settings_info" *ngIf="donations_status">{{custs_name|capitalizeFirst}}
+                                            <strong>can</strong> give donations.</p>
+                                        <p class="settings_info" *ngIf="!donations_status">
+                                            {{custs_name|capitalizeFirst}} <strong>cannot</strong> give donations.
                                         </p>
                                     </a>
                                 </li>
@@ -614,7 +690,7 @@
                                         <span class="lnk setings">Causes
                                             <span class="pull-right badge bg-blue">{{cause_count}}</span>
                                         </span>
-                                        <p class="settings_info">Add and manage causes here</p>
+                                        <p class="settings_info">Eg. Temple welfare fund , Flood relief fund , etc.</p>
                                     </a>
                                 </li>
                             </ul>
@@ -625,7 +701,8 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('comm')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="comm">
+                            <h4 (click)="redirecTo('comm')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="comm">
                                 Communications And Notifications
                                 <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
@@ -633,7 +710,7 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings">
-                                    <a>These settings allows the video call options</a>
+                                    <a><strong>Send</strong> {{frm_msg_commn}}</a>
                                 </li>
                                 <li (click)="redirecTo('video')">
                                     <a class="pointer-cursor">
@@ -646,9 +723,9 @@
                                         </span>
                                         <!-- <p class="sts" [class.active]="virtualCallingMode_status">
                                             {{virtualCallingMode_statusstr}}</p> -->
-                                        <p class="settings_info" *ngIf="virtualCallingMode_status"> Virtual Calling hints.
+                                        <p class="settings_info" *ngIf="virtualCallingMode_status"> {{frm_virtual_msg}}
                                         </p>
-                                        <p class="settings_info" *ngIf="!virtualCallingMode_status">Virtual Calling hints
+                                        <p class="settings_info" *ngIf="!virtualCallingMode_status">{{frm_virtual_msg}}
                                         </p>
                                     </a>
                                 </li>
@@ -661,7 +738,8 @@
                                 <li (click)="redirecTo('notifications')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{notification_cap}}</span>
-                                        <p class="settings_info">{{cust_domain_name|capitalizeFirst}} and {{provider_domain_name}} notifications settings</p>
+                                        <!-- <p class="settings_info">{{cust_domain_name|capitalizeFirst}} and {{provider_domain_name}} notifications settings</p> -->
+                                        <p class="settings_info">Send notifications for your services.</p>
                                     </a>
                                 </li>
                             </ul>
@@ -672,19 +750,20 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('miscellaneous')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}}
+                            <h4 (click)="redirecTo('miscellaneous')" class="pointer-cursor"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}}
                                 <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings">
-                                    <a>{{frm_mis_cap}}</a>
+                                    <a><strong>Offer</strong> {{frm_mis_cap}}</a>
                                 </li>
                                 <li (click)="redirecTo('saleschannel')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{saleschannel_cap}}</span>
-                                        <p class="settings_info">Sales channel options</p>
+                                        <p class="settings_info">For sales partners only.</p>
                                     </a>
                                 </li>
                                 <li *ngIf="accountType=='BRANCH'" (click)="redirecTo('corporate')">
@@ -697,7 +776,7 @@
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{frm_jdn_short_cap}}
                                         </span>
-                                        <p class="settings_info">Subscribe to Jaldee Discount Network here</p>
+                                        <p class="settings_info">Subscribe to Jaldee Discount Network </p>
                                     </a>
                                 </li>
                             </ul>
@@ -747,7 +826,8 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('customers')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="customers">
+                            <h4 (click)="redirecTo('customers')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="customers">
                                 Customers
                                 <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
@@ -755,7 +835,7 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings">
-                                    <a>These settings allows the customers to see their walkin check-ins</a>
+                                    <a>Consumer ID customization.</a>
                                 </li>
                                 <li (click)="redirecTo('custid')">
                                     <a class="pointer-cursor">

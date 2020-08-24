@@ -13,7 +13,6 @@ import { Location } from '@angular/common';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { AddProviderWaitlistLocationsComponent } from '../../../../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
-import { NAMED_ENTITIES } from '@angular/compiler';
 
 @Component({
   selector: 'app-location-details',

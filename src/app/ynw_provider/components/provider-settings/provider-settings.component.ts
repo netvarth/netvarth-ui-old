@@ -2,13 +2,16 @@ import { Component, OnInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } fro
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../app.component';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
+import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
+import { JoyrideService } from 'ngx-joyride';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-provider-settings',
@@ -16,6 +19,7 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 })
 
 export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
+
   blogo: ArrayBuffer;
   weightageClass: string;
   progress_bar_four: number;
@@ -56,13 +60,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   notification_cap = Messages.NOTIFICATION_CAP;
   saleschannel_cap = Messages.SALESCHANNEL_CAP;
   frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
-
+  frm_virtual_msg = '';
   frm_waitlist_cap = '';
   frm_license_cap = Messages.FRM_LEVEL_LIC_MSG;
   frm_pay_cap = Messages.FRM_LEVEL_PAY_MSG;
   frm_bill_cap = Messages.FRM_LEVEL_BILLING_MSG;
   frm_coupon_cap = Messages.FRM_LEVEL_COUPON_MSG;
-  frm_mis_cap = Messages.FRM_LEVEL_MISC_MSG;
+  frm_mis_cap = '';
   frm_appointment_cap = Messages.FRM_LEVEL_APPOINTMENT_MSG;
   frm_donation_cap = Messages.FRM_LEVEL_DONATION_MSG;
   frm_jdn_short_cap = Messages.JDN_CAP;
@@ -129,6 +133,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   jaldee_pay_cap: string;
   provider_label = '';
   cust_domain_name = '';
+  custs_name = '';
   provider_domain_name = '';
   assistantCount;
   onlinepresence_status: any;
@@ -153,6 +158,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   profile_enabled_msg: string;
   profile_disabled_msg: string;
   businessProfile_weightageArray: any[];
+  showTakeaTour = false;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -160,7 +166,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     private shared_services: SharedServices,
     private provider_datastorage: ProviderDataStorageService,
     private qservice: QuestionService,
-    private provider_shared_functions: ProviderSharedFuctions) {
+    private provider_shared_functions: ProviderSharedFuctions,
+    private activated_route: ActivatedRoute,
+    private readonly joyrideService: JoyrideService,
+    private dialog: MatDialog
+  ) {
+    this.activated_route.queryParams.subscribe(
+      qparams => {
+       this.showTakeaTour = qparams.firstTimeSignup;
+      //  if (this.showTakeaTour) {
+      //      this.letsGetStarted();
+      //  }
+      });
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.shared_functions.getMessage().subscribe(data => {
@@ -179,6 +196,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   accountActiveMsg = '';
   billposTooltip = '';
   frm_profile_cap = '';
+  frm_msg_jaldeepay = '';
+  frm_msg_commn = '';
   nodiscountError = false;
   noitemError = false;
   miscellaneous = '';
@@ -224,9 +243,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     // this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG.replace('[customer]', this.customer_label);
     this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG;
     this.frm_search_cap = Messages.FRM_SEARCH_MSG.replace('[customer]', this.customer_label);
+    this.frm_virtual_msg = Messages.FRM_LEVEL_VIRTUAL_MSG.replace('[customer]', this.customer_label);
+    this.frm_mis_cap = Messages.FRM_LEVEL_MISC_MSG.replace('[customer]', this.customer_label);
+    this.frm_msg_jaldeepay = Messages.FRM_LEVEL_JALDEEPAY_MSG.replace('[customer]', this.customer_label);
+    this.frm_msg_commn = Messages.FRM_LEVEL_COMMN_MSG.replace('[customer]', this.customer_label);
     this.frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG.replace('[customer]', this.customer_label);
     this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
+    this.custs_name = Messages.CUSTOMERS_NAME.replace('[customer]', this.customer_label);
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     this.jaldee_online_enabled_msg = Messages.JALDEEONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
@@ -270,6 +294,48 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.weightageValue = this.calculateWeightage(result);
 
     });
+  }
+  letsGetStarted() {
+    const dialogRef = this.dialog.open(ProviderStartTourComponent, {
+      width: '25%',
+      panelClass: ['popup-class', 'commonpopupmainclass']
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'startTour') {
+        this.joyrideService.startTour(
+
+          {
+            steps: ['step1@provider/settings', 'step2@provider/settings', 'step3@provider/settings', 'step4'],
+            showPrevButton: false,
+            stepDefaultPosition: 'top',
+            themeColor: '#212f23'
+          }
+          // Your steps order
+        ).subscribe(
+
+          step => {
+            /*Do something*/
+            console.log('Location', window.location.href, 'Path', window.location.pathname);
+            console.log('Next:', step);
+          },
+          error => {
+            /*handle error*/
+          },
+          () => {
+            this.routerobj.navigate(['.'], {} );
+            // this.redirecttoProfile();
+          }
+        );
+
+      } else {
+        this.routerobj.navigate(['.'], {} );
+      }
+
+
+    });
+
   }
 
   calculateWeightage(data) {
@@ -327,7 +393,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.showIncompleteButton = true;
       return businessProfileWeightageText;
     } else if
-      (weightage >= 50 && weightage < 75) {
+    (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'info';
@@ -368,13 +434,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         data => {
           this.blogo = data;
           let logoExist;
-
-          let logo = '';
           if (this.blogo[0]) {
             logoExist = true;
-            logo = this.blogo[0].url;
+            // logo = this.blogo[0].url;
           } else {
-            logo = '';
+            // logo = '';
             logoExist = false;
           }
           this.provider_datastorage.updateProfilePicWeightage(logoExist);
@@ -800,11 +864,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.routerobj.navigate(['provider', 'settings', 'appointmentmanager']);
         break;
       case 'schedules':
-          if (this.locationExists) {
-            this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
-          } else if (this.bprofileLoaded) {
-            this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
-          }
+        if (this.locationExists) {
+          this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
+        } else if (this.bprofileLoaded) {
+          this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+        }
         break;
       case 'appservices':
         this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'services']);

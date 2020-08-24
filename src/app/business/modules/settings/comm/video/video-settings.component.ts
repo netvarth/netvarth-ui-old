@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { KeyValue } from '@angular/common';
 
@@ -36,7 +34,8 @@ export class VideoSettingsComponent implements OnInit {
         // Botim: { value: 'Botim', displayName: 'BOTIM', placeHolder: 'BOTIM ID', titleHelp: 'Configure BOTIM Settings', actualValue: '', enabled: false },
         // Imo: { value: 'Imo', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false },
         Zoom: { value: 'Zoom', displayName: 'Zoom', placeHolder: 'Zoom ID', titleHelp: 'Configure Zoom Settings', actualValue: '', enabled: false },
-        GoogleMeet: { value: 'GoogleMeet', displayName: 'Google Meet', placeHolder: 'Meet ID', titleHelp: 'Configure Google Meet Settings', actualValue: '', enabled: false
+        GoogleMeet: {
+            value: 'GoogleMeet', displayName: 'Google Meet', placeHolder: 'Meet ID', titleHelp: 'Configure Google Meet Settings', actualValue: '', enabled: false
         },
         Phone: { value: 'Phone', displayName: 'Phone', placeHolder: 'Phone number', titleHelp: 'Configure Phone Settings', actualValue: '', enabled: false }
     };
@@ -53,7 +52,7 @@ export class VideoSettingsComponent implements OnInit {
     originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
         return 0;
     }
-    constructor(private _formBuilder: FormBuilder,
+    constructor(
         private router: Router,
         public shared_functions: SharedFunctions,
         private provider_services: ProviderServices) {
@@ -136,10 +135,10 @@ export class VideoSettingsComponent implements OnInit {
         let found = false;
         this.virtualCallModesList.forEach(modes => {
             if (modes.callingMode === callingMode) {
-                let status = 'INACTIVE';
-                if (resultMode.value.enabled) {
-                    status = 'ACTIVE';
-                }
+                // let status = 'INACTIVE';
+                // if (resultMode.value.enabled) {
+                //     status = 'ACTIVE';
+                // }
                 const mode = {
                     'callingMode': callingMode,
                     'value': resultMode['value'].actualValue,
@@ -153,10 +152,10 @@ export class VideoSettingsComponent implements OnInit {
         });
 
         if (!found) {
-            let status = 'INACTIVE';
-            if (resultMode.value.enabled) {
-                status = 'ACTIVE';
-            }
+            // let status = 'INACTIVE';
+            // if (resultMode.value.enabled) {
+            //     status = 'ACTIVE';
+            // }
             const mode = {
                 'callingMode': callingMode,
                 'value': resultMode['value'].actualValue,
@@ -252,5 +251,8 @@ export class VideoSettingsComponent implements OnInit {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);
+    }
+    goBack() {
+        this.router.navigate(['provider', 'settings', 'comm']);
     }
 }

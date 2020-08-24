@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
@@ -70,13 +70,13 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     }
   }
 
-  private pass_totalpages() {
+  public pass_totalpages() {
     return this.adword_list.length;
   }
-  private pass_pagesize() {
+  public pass_pagesize() {
     return this.perpage;
   }
-  private handle_pageclick(pg) {
+  public handle_pageclick(pg) {
     this.startpageval = pg;
     let passstartval = 0;
     if (this.startpageval) {

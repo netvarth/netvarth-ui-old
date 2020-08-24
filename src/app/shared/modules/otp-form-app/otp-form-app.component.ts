@@ -1,5 +1,5 @@
 
-import {interval as observableInterval,  Observable , Subscription } from 'rxjs';
+import {interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnChanges, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Messages } from '../../constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -115,7 +115,6 @@ export class OtpFormAppComponent implements OnInit, OnChanges, OnDestroy {
   removSpecChar(evt) {
     return this.shared_functions.removSpecChar(evt);
   }
-  
   setResendViaEmail() {
     this.doshowOTPEmailContainer();
     this.resetApiErrors.emit();

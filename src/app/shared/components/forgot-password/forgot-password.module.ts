@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 
 import { ForgotPasswordComponent } from './forgot-password.component';

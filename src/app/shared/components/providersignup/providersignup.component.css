@@ -1023,3 +1023,19 @@ input[type=checkbox]:not(old):checked + label > span:before {
   } 
    li.subdomainstyle, li.subdomainstyle i {color: #fff !important;}
    li.subdomainstyle:hover, li.subdomainstyle:hover i {color: #000000 !important;}
+  .domains, .subdomains {
+    border: 1px solid #ddd!important;
+  }
+
+  .domains h6, .subdomains h6 {
+    margin-top: 10px;
+  }
+  .subdomains h6 {
+    padding-left:20px 
+  }
+  .subdomains {
+    margin-bottom: 15px !important;
+  }
+  .div-grn-outline {
+    border: 3px solid green!important;
+  }

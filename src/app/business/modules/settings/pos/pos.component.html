@@ -1,6 +1,15 @@
-<section>
+<!-- <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs"  (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section> -->
+
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span>
+            </button>&nbsp;&nbsp;&nbsp;Jaldee Billing</h5>
+    </div>
 </section>
+
 <section>
     <div class="content w-manager settings comn-cls">
         <div class="col-md-12 no-padding-small">
@@ -12,8 +21,9 @@
                             </mat-slide-toggle>&nbsp;{{pos_statusstr}}
                             <!-- <div class="onoff">{{pos_statusstr}}</div> -->
                         </label>
-                        <div class="form-level-settings"> Create items, discounts and coupons here.<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn
+                        <div class="form-level-settings"> Create items, discounts and coupons here.<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('settings-departments', $event)">Learn
                                 More</a></div>
                     </div>
                 </div>

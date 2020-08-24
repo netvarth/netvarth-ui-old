@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
@@ -29,10 +28,9 @@ export class PaymentSettingsComponent implements OnInit {
     payuVerified = false;
     isJaldeeAccount = false;
     domain;
-    breadcrumb_moreoptions: any = []; 
+    breadcrumb_moreoptions: any = [];
     constructor(private router: Router,
         private provider_services: ProviderServices,
-        private shared_services: SharedServices,
         private shared_functions: SharedFunctions) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
@@ -40,7 +38,7 @@ export class PaymentSettingsComponent implements OnInit {
         this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] }; 
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.getpaymentDetails();
     }
     gotoTaxSettings() {
@@ -80,11 +78,14 @@ export class PaymentSettingsComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'learnmore') {
-          this.router.navigate(['/provider/' + this.domain + '/payments']);
+            this.router.navigate(['/provider/' + this.domain + '/payments']);
         }
-      }
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/payments->' + mod]);
-      }
+    }
+    redirecToSettings() {
+        this.router.navigate(['provider', 'settings']);
+    }
 }

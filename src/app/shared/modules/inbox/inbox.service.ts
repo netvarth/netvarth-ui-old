@@ -1,13 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-// Import RxJs required methods
 import { ServiceMeta } from '../../services/service-meta';
 
 @Injectable()
 
 export class InboxServices {
 
-    constructor(private servicemeta: ServiceMeta, private httpobj: HttpClient) {}
+    constructor(private servicemeta: ServiceMeta) {}
 
     getInbox(usertype) {
         return this.servicemeta.httpGet(usertype + '/communications');
@@ -26,8 +24,8 @@ export class InboxServices {
     getBussinessProfile() {
       return this.servicemeta.httpGet('provider/bProfile');
     }
-    readProviderMessages(providerId, messageIds) {
-        const url = 'consumer/communications/readMessages/' + providerId + '/' + messageIds;
+    readProviderMessages(providerId, messageIds, accountId) {
+        const url = 'consumer/communications/readMessages/' + providerId + '/' + messageIds + '?account=' + accountId;
         return this.servicemeta.httpPut(url);
      }
 }

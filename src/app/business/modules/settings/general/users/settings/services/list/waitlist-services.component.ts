@@ -104,7 +104,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             });
     }
     getServices(pgefilter?) {
-        const filter = {};
+      // const filter = {};
      //   filter['provider-eq'] = this.userId;
         this.api_loading = true;
         this.provider_services.getUserServicesList(pgefilter)

@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProviderWaitlistOnlineCheckinComponent } from './provider-waitlist-online-checkin.component';
 import { MaterialModule } from '../../../shared/modules/common/material.module';

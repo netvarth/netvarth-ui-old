@@ -81,11 +81,11 @@ export class DisplayboardsComponent implements OnInit {
                     const alldisplayBoards = data;
                     this.layout_list = [];
                     this.qBoardsActive = [];
-                    let count = 0;
+                    // let count = 0;
                     alldisplayBoards.forEach(element => {
                         this.layout_list.push(element);
                         if (element.isContainer) {
-                            count++;
+                            // count++;
                         } else {
                             this.qBoardsActive.push(element);
                         }

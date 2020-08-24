@@ -27,7 +27,7 @@ export class MiscellaneousComponent implements OnInit {
     provider_domain_name = '';
     customer_label = '';
     provider_label = '';
-    breadcrumb_moreoptions: any = []; 
+    breadcrumb_moreoptions: any = [];
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -73,9 +73,9 @@ export class MiscellaneousComponent implements OnInit {
     // }
     performActions(action) {
         if (action === 'learnmore') {
-          this.router.navigate(['/provider/' + this.domain + '/miscellaneous']);
+            this.router.navigate(['/provider/' + this.domain + '/miscellaneous']);
         }
-      }
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
@@ -97,5 +97,8 @@ export class MiscellaneousComponent implements OnInit {
                     }
                 );
         });
+    }
+    redirecToSettings() {
+        this.routerobj.navigate(['provider', 'settings']);
     }
 }

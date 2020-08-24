@@ -242,7 +242,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
     isNumericforToken(evt) {
         return this.shared_Functionsobj.isNumericforToken(evt);
-      }
+    }
     changetime(src, passtime) {
         switch (src) {
             case 'start':
@@ -364,6 +364,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+                tokennum: [''],
                 startdate: [''],
                 enddate: [''],
                 // timeSlot: ['', Validators.compose([Validators.required])],
@@ -395,7 +396,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.api_loading = false;
         this.getProviderLocations();
     }
- 
+
     updateForm() {
         const sttime = {
             hour: parseInt(moment(this.queue_data.queueSchedule.timeSlots[0].sTime,
@@ -418,6 +419,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             qendtime: edtime || null,
             qcapacity: this.queue_data.capacity || null,
             qserveonce: this.queue_data.parallelServing || null,
+            tokennum: this.queue_data.tokenStarts || null,
             startdate: this.queue_data.queueSchedule.startDate || null,
             enddate: this.queue_data.queueSchedule.terminator.endDate,
             // timeSlot: this.queue_data.timeInterval || 0
@@ -459,7 +461,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
     }
     convertDate(date?) {
-        let today;
+        // let today;
         let mon;
         let cdate;
         if (date) {
@@ -471,7 +473,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         if (mon < 10) {
             mon = '0' + mon;
         }
-        return today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+        return (cdate.getFullYear() + '-' + mon + '-' + cdate.getDate());
     }
     compareDate(dateValue, startOrend) {
         const UserDate = dateValue;
@@ -581,7 +583,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 mon = '0' + mon;
             }
             const daystr: any = [];
-            const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+            // const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
             for (const cday of this.selday_arr) {
                 daystr.push(cday);
             }
@@ -591,7 +593,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 return;
             }
             // today
-            const curday = new Date();
+            // const curday = new Date();
             if (this.shared_Functionsobj.getminutesOfDay(this.dstart_time) > this.shared_Functionsobj.getminutesOfDay(this.dend_time)) {
                 this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
                 return;
@@ -640,7 +642,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 // }
             };
             if (this.action === 'edit') {
-               this.editProviderQueue(post_data);
+                this.editProviderQueue(post_data);
             } else {
                 this.addProviderQueue(post_data);
             }

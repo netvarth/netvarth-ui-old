@@ -71,7 +71,7 @@ export class GeneralSettingsComponent implements OnInit {
     goDepartments() {
         this.router.navigate(['provider', 'settings', 'general', 'departments']);
     }
-    gotoUsers () {
+    gotoUsers() {
         this.router.navigate(['provider', 'settings', 'general', 'users']);
     }
     gotoNonworkingDays() {
@@ -80,7 +80,7 @@ export class GeneralSettingsComponent implements OnInit {
     gotothemes() {
         this.router.navigate(['provider', 'settings', 'general', 'skins']);
     }
-    gotoLiveTrack () {
+    gotoLiveTrack() {
         this.router.navigate(['provider', 'settings', 'general', 'livetrack']);
     }
     gotocustomview() {
@@ -91,9 +91,9 @@ export class GeneralSettingsComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'learnmore') {
-          this.router.navigate(['/provider/' + this.domain + '/general']);
+            this.router.navigate(['/provider/' + this.domain + '/general']);
         }
-      }
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/general->' + mod]);
@@ -222,5 +222,8 @@ export class GeneralSettingsComponent implements OnInit {
                 this.filterByDept = (this.filterByDept === true) ? false : true;
             }
         });
+    }
+    redirecToSettings() {
+        this.router.navigate(['provider', 'settings']);
     }
 }

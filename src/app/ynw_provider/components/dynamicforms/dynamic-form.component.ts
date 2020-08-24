@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { FormBase } from './form-base';
 import { FormControlService } from './form-control.service';
@@ -7,7 +7,7 @@ import { FormControlService } from './form-control.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import * as moment from 'moment';
-import { projectConstants } from '../../../app.component';
+// import { projectConstants } from '../../../app.component';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -42,7 +42,7 @@ export class DynamicFormComponent implements OnInit {
   };
 
 
-  constructor(private qcs: FormControlService, private fb: FormBuilder,
+  constructor(private qcs: FormControlService,
     public shared_functions: SharedFunctions) { }
 
   ngOnInit() {

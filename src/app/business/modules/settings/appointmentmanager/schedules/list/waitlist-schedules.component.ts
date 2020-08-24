@@ -553,7 +553,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         let sTime = instantQ.dstart_time;
         if (isNaN(instantQ.dstart_time.hour)) {
             const curtime = {};
-            const todaydt1 = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+            // const todaydt1 = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
             const toda = new Date(todaydt);
             const today1 = moment(toda).format();
             curtime['hour'] = parseInt(moment(new Date(today1), ['hh:mm A']).format('HH'), 10);

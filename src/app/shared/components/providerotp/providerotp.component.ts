@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges } from '@angular/core';
-import { NgModule } from '@angular/core';
 import { Messages } from '../../constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { interval as observableInterval, Observable, Subscription } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-providerotp',

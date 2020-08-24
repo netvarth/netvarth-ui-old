@@ -1,5 +1,5 @@
 
-import {interval as observableInterval,  Observable , Subscription } from 'rxjs';
+import {interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

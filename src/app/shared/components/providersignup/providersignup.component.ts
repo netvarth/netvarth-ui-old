@@ -320,19 +320,9 @@ export class ProvidersignupComponent implements OnInit {
         }
       );
   }
-  subDomainSelected() {
-    if (this.selectedDomain && this.selectedSubDomain) {
-      this.user_details['sector'] = this.selectedDomain.domain;
-      this.user_details['subSector'] = this.selectedSubDomain.subDomain;
-      this.user_details['licPkgId'] = 9;
-      this.active_step = 2;
-    } else {
-      this.shared_functions.openSnackBar('Select your area of specialization', { 'panelClass': 'snackbarerror' });
-      return;
-    }
-  }
   
- 
+
+
   // onReferalSubmit(sccode) {
   //   this.scfound = false;
   //   this.scCode = null;
@@ -408,7 +398,7 @@ export class ProvidersignupComponent implements OnInit {
     this.shared_services.ProviderSetPassword(this.otp, post_data)
       .subscribe(
         () => {
-          this.active_step = 4;
+          // this.active_step = 4;
           this.actionstarted = false;
           this.providerPwd = post_data.password;
           const login_data = {
@@ -426,6 +416,7 @@ export class ProvidersignupComponent implements OnInit {
         }
       );
   }
+
   saveReferralInfo() {
     this.actionstarted = true;
     this.resetApiErrors();
@@ -479,26 +470,26 @@ export class ProvidersignupComponent implements OnInit {
     this.api_loading = true;
     this.resetApiErrors();
     // if (this.otp) {
-      if (this.isValidConfirm_pw) {
-        // this.onOtpSubmit().then(data => {
-          this.saveReferralInfo().then(
-            () => {
-              this.setPassword();
-            },
-            (error) => {
-              this.joinClicked = false;
-              this.api_loading = false;
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
-        // },
-        //   (error) => {
-        //     this.joinClicked = false;
-        //     this.api_loading = false;
-        //   });
-      } else {
-        this.joinClicked = false;
-        this.api_loading = false;
-      }
+    if (this.isValidConfirm_pw) {
+      // this.onOtpSubmit().then(data => {
+      this.saveReferralInfo().then(
+        () => {
+          this.setPassword();
+        },
+        (error) => {
+          this.joinClicked = false;
+          this.api_loading = false;
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+      // },
+      //   (error) => {
+      //     this.joinClicked = false;
+      //     this.api_loading = false;
+      //   });
+    } else {
+      this.joinClicked = false;
+      this.api_loading = false;
+    }
     // } else {
     //   this.joinClicked = false;
     //   this.api_loading = false;
@@ -586,7 +577,7 @@ export class ProvidersignupComponent implements OnInit {
     this.resetApiErrors();
     if (changetostep === 2) {
     }
-    const curstep = this.active_step; // taking the current step number to a local variable
+    // const curstep = this.active_step; // taking the current step number to a local variable
     // this.save_setDetails(curstep, changetostep);
     if (changetostep === 1) {
       setTimeout(() => {
@@ -747,5 +738,41 @@ export class ProvidersignupComponent implements OnInit {
     this.resetCounterVal = 0;
     this.otp_mobile = null;
     this.hideOtpSection = true;
+  }
+  showDomains() {
+    this.active_step = 1;
+  }
+  // subDomainSelected() {
+  //   if (this.selectedDomain && this.selectedSubDomain) {
+  //     this.user_details['sector'] = this.selectedDomain.domain;
+  //     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
+  //     this.user_details['licPkgId'] = 9;
+  //     this.active_step = 2;
+  //   } else {
+  //     this.shared_functions.openSnackBar('Select your area of specialization', { 'panelClass': 'snackbarerror' });
+  //     return;
+  //   }
+  // }
+  handleDomainSelection () {
+    this.selectedSubDomain = this.selectedDomain.subDomains[0];
+    this.user_details['sector'] = this.selectedDomain.domain;
+    this.user_details['subSector'] = this.selectedSubDomain.subDomain;
+    this.user_details['licPkgId'] = 9;
+    if (this.selectedDomain && this.selectedDomain.subDomains.length > 1) {
+      this.active_step = 4;
+    } else {
+      this.active_step = 2;
+    }
+  }
+  backToSubdomains () {
+    if (this.selectedDomain && this.selectedDomain.subDomains.length > 1) {
+      this.active_step = 4;
+    } else {
+      this.active_step = 1;
+    }
+  }
+  handleSubDomainSelection () {
+    this.user_details['subSector'] = this.selectedSubDomain.subDomain;
+    this.active_step = 2;
   }
 }

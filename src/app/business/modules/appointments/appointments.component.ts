@@ -14,7 +14,6 @@ import { CallingModesComponent } from '../check-ins/calling-modes/calling-modes.
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
-import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { CheckinDetailsSendComponent } from '../check-ins/checkin-details-send/checkin-details-send.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
@@ -272,7 +271,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   allServiceSelected = false;
   services: any = [];
   consumr_id: any;
-  topHeight = 250;
+  topHeight = 0;
+  
   @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
   @ViewChild('apptSection', { static: false }) apptSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
@@ -314,7 +314,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
-    private _scrollToService: ScrollToService,
     public dateformat: DateFormatPipe,
     private router: Router,
     private dialog: MatDialog,
@@ -362,6 +361,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
     const header = document.getElementById('childActionBar');
+    let qHeader = 0;
+    let tabHeader = 0;
+    if (document.getElementById('qHeader')) {
+      qHeader = document.getElementById('apptsSchedules').offsetHeight;
+    }
+    if (document.getElementById('tabHeader')) {
+      tabHeader = document.getElementById('apptsTimeTypes').offsetHeight;
+    }
+    this.topHeight =  qHeader + tabHeader;
+    console.log(this.topHeight);
+    console.log(window.pageYOffset);
     if (header) {
       if (window.pageYOffset >= (this.topHeight + 50)) {
         header.classList.add('sticky');
@@ -1175,7 +1185,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getFutureAppointmentsCount(Mfilter = null) {
-    let no_filter = false;
+    console.log(Mfilter);
+    // let no_filter = false;
     const queueid = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
     if (!Mfilter) {
       Mfilter = {};
@@ -1185,7 +1196,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (queueid) {
         Mfilter['schedule-eq'] = queueid;
       }
-      no_filter = true;
+      // no_filter = true;
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending';
@@ -1202,8 +1213,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getHistoryAppointmentsCount(Mfilter = null) {
-    const queueid = this.shared_functions.getitemFromGroupStorage('appt_history_selQ');
-    let no_filter = false;
+    // const queueid = this.shared_functions.getitemFromGroupStorage('appt_history_selQ');
+    // let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
       if (this.selected_location && this.selected_location.id) {
@@ -1212,7 +1223,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // if (queueid && queueid.length > 0) {
       //   Mfilter['schedule-eq'] = queueid.toString();
       // }
-      no_filter = true;
+    //  no_filter = true;
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending';
@@ -1357,8 +1368,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.future_appt_date === null) {
       this.getTomorrowDate();
     }
+
     this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
-    const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
+    // const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
     let selQs = [];
     if (this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
@@ -1568,9 +1580,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.filter.check_in_end_date != null) {
         api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
       }
-      if (this.filter.future_appt_date != null && this.time_type === 2) {
-        api_filter['date-eq'] = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
-      }
+      // if (this.filter.future_appt_date != null && this.time_type === 2) {
+      //   api_filter['date-eq'] = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
+      // }
     }
     if (this.time_type !== 2) {
       if (this.labelFilterData !== '') {

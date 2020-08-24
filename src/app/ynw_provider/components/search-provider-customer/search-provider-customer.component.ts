@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../app.component';
+// import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 

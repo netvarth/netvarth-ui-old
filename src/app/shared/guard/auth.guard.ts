@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRoute } from '@angular/router';
+import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../functions/shared-functions';
 
@@ -95,7 +95,7 @@ export class AuthGuardProviderHome implements CanActivate {
 }
 @Injectable()
 export class AuthGuardNewProviderHome implements CanActivate {
-  constructor(private router: Router) { }
+  constructor() { }
   canActivate() {
     if (localStorage.getItem('new_provider')) {
       return true;

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { Location } from '@angular/common';
 import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
-import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-provider-payment-history',
@@ -45,7 +43,6 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   data: any;
 
   constructor(private provider_servicesobj: ProviderServices,
-    private dialog: MatDialog,
     private router: Router,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location

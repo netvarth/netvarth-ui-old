@@ -4,7 +4,7 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { DOCUMENT } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../../../app.component';
@@ -27,7 +27,6 @@ export class LinkProfileComponent implements OnInit {
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         private router: Router,
-        private activated_route: ActivatedRoute,
         private sharedservices: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         public dialogRef: MatDialogRef<LinkProfileComponent>,

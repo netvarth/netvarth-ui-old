@@ -1,5 +1,5 @@
 
-import { interval as observableInterval, Observable, Subscription } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -127,7 +127,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   showMsg(indx, message) {
     this.selectedMsg = indx;
     if (!message.read && this.user_id !== message.owner.id) {
-      this.readProviderMessages(message.owner.id, message.messageId);
+      this.readProviderMessages(message.owner.id, message.messageId, message.accountId);
     }
   }
   closeMsg() {
@@ -159,8 +159,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
       return attachment.s3path;
     }
   }
-  readProviderMessages(providerId, messageId) {
-    this.inbox_services.readProviderMessages(providerId, messageId).subscribe(data => {
+  readProviderMessages(providerId, messageId, accountId) {
+    this.inbox_services.readProviderMessages(providerId, messageId, accountId).subscribe(data => {
       this.reloadApi.emit();
     });
   }

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ViewChild, ElementRef } from '@angular/core';
+// import { ViewChild, ElementRef } from '@angular/core';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../shared/constants/project-messages';
 
@@ -51,7 +51,7 @@ export class AddProviderItemComponent implements OnInit {
   api_loading1 = true;
   disableButton = false;
 
-  @ViewChild('caption', {static: false}) private captionRef: ElementRef;
+  // @ViewChild('caption', {static: false}) private captionRef: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<AddProviderItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

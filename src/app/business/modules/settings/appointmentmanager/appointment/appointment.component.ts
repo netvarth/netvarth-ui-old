@@ -198,6 +198,8 @@ export class AppointmentComponent implements OnInit {
     selectDept;
     selectUser;
     accountType;
+    disable = false;
+    note_cap = 'Add Note';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -305,6 +307,8 @@ export class AppointmentComponent implements OnInit {
         }
         this.qParams['checkinType'] = this.apptType;
         this.qParams['source'] = 'appointment';
+        this.qParams['timeslot'] = this.slotTime;
+        this.qParams['scheduleId'] = this.comingSchduleId;
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
 
@@ -427,9 +431,11 @@ export class AppointmentComponent implements OnInit {
                             if (this.domain === 'foodJoints') {
                                 this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
                                 this.note_placeholder = 'Item No Item Name Item Quantity';
+                                this.note_cap = 'Add Note / Delivery address';
                             } else {
                                 this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
                                 this.note_placeholder = 'Add Note';
+                                this.note_cap = 'Add Note';
                             }
                             this.shared_services.getServicesforAppontmntByLocationId(this.sel_loc).subscribe(
                                 (services: any) => {
@@ -911,6 +917,21 @@ export class AppointmentComponent implements OnInit {
         switch (cstep) {
             case 1:
                 this.hideFilterSidebar();
+                if (this.action === 'note') {
+                    if (this.consumerNote !== '') {
+                        if (this.domain === 'foodJoints') {
+                            this.note_cap = 'Edit Note / Delivery address';
+                        } else {
+                            this.note_cap = 'Edit Note';
+                        }
+                    } else {
+                        if (this.domain === 'foodJoints') {
+                            this.note_cap = 'Add Note / Delivery address';
+                        } else {
+                            this.note_cap = 'Add Note';
+                        }
+                    }
+                }
                 break;
             case 2:
                 if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
@@ -922,6 +943,7 @@ export class AppointmentComponent implements OnInit {
             case 3:
                 this.main_heading = 'Family Members';
                 this.showCreateMember = false;
+                this.disable = false;
                 this.addmemberobj.fname = '';
                 this.addmemberobj.lname = '';
                 this.addmemberobj.mobile = '';
@@ -999,6 +1021,7 @@ export class AppointmentComponent implements OnInit {
     addMember() {
         this.resetApi();
         this.showCreateMember = true;
+        this.disable = false;
         // this.step = 4; // show add member section
         // this.main_heading = 'Add Family Member';
     }
@@ -1015,6 +1038,7 @@ export class AppointmentComponent implements OnInit {
         this.addmemberobj.dob = obj.dob || '';
     }
     handleSaveMember() {
+        this.disable = true;
         this.resetApi();
         let derror = '';
         const namepattern = new RegExp(projectConstantsLocal.VALIDATOR_CHARONLY);
@@ -1057,7 +1081,8 @@ export class AppointmentComponent implements OnInit {
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
             fn.subscribe(() => {
-                this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
+                //this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.handleGoBack(3);
@@ -1066,6 +1091,7 @@ export class AppointmentComponent implements OnInit {
                 error => {
                     // this.api_error = error.error;
                     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.disable = false;
                     // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'));
                 });
         } else {

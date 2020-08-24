@@ -5,7 +5,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-provider-system-auditlogs',
   templateUrl: './provider-system-auditlogs.component.html'

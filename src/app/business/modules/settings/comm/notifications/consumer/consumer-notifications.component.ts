@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
 
 @Component({
@@ -66,12 +65,12 @@ export class ConsumerNotificationsComponent implements OnInit {
   donatAddNotificationSettings = { eventType: 'DONATIONSERVICE', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
   showButton: any = {};
   customer_label = '';
-  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false ,'DONATIONSERVICE' : false};
+  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false, 'DONATIONSERVICE': false };
   consumerNotification;
   notification_statusstr: string;
   wltstPersonsahead;
   apptPersonsahead;
-  donatPersonsahead ;
+  donatPersonsahead;
   appointment_status: any;
   waitlistStatus: any;
   donations_status: any;
@@ -82,7 +81,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     private routerobj: Router,
     private shared_functions: SharedFunctions,
     public provider_services: ProviderServices,
-    private provider_datastorage: ProviderDataStorageService) { 
+    private provider_datastorage: ProviderDataStorageService) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
 
@@ -111,7 +110,7 @@ export class ConsumerNotificationsComponent implements OnInit {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        }, () => {
+      }, () => {
       });
   }
   // isNumeric(evt) {
@@ -133,7 +132,7 @@ export class ConsumerNotificationsComponent implements OnInit {
         this.donations_status = data.donationFundRaising;
         this.api_loading = false;
       });
-      
+
   }
 
   getNotificationList() {
@@ -198,7 +197,7 @@ export class ConsumerNotificationsComponent implements OnInit {
       } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['FINAL_APPT'] = true;
         this.finalAPPTNotificationSettings = notificationObj;
-      }  else if (notificationObj['eventType'] === 'DONATIONSERVICE' && notificationObj['resourceType'] === 'DONATION') {
+      } else if (notificationObj['eventType'] === 'DONATIONSERVICE' && notificationObj['resourceType'] === 'DONATION') {
         this.cSettings['DONATIONSERVICE'] = true;
         this.donatAddNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'DONATION') {
@@ -278,5 +277,8 @@ export class ConsumerNotificationsComponent implements OnInit {
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
+  }
+  goBack() {
+    this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
   }
 }

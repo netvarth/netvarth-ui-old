@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
@@ -10,7 +10,7 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { Location } from '@angular/common';
-import { remove } from '@syncfusion/ej2-base';
+
 
 @Component({
   selector: 'app-waitlist-queuedetail',
@@ -501,7 +501,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
   }
 
   convertDate(date?) {
-    let today;
+    // let today;
     let mon;
     let cdate;
     if (date) {
@@ -513,7 +513,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     if (mon < 10) {
       mon = '0' + mon;
     }
-    return today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+    return (cdate.getFullYear() + '-' + mon + '-' + cdate.getDate());
   }
   compareDate(dateValue, startOrend) {
     const UserDate = dateValue;
@@ -608,7 +608,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
       // Numeric validation
       if (isNaN(form_data.qserveonce)) {
         const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
-        // this.shared_Functionsobj.apiErrorAutoHide(this, error); 
+        // this.shared_Functionsobj.apiErrorAutoHide(this, error);
         this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         return;
       }
@@ -617,13 +617,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
         // this.shared_Functionsobj.apiErrorAutoHide(this, error);
         this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         return;
-      }  else {
+      } else {
         if (form_data.qserveonce === 0 || (form_data.qserveonce > form_data.qcapacity)) {
-            const error = this.customer_label + 's served at a time should be greater than 0 and smaller than Maximum ' + this.customer_label + 's served';
-            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            return;
+          const error = this.customer_label + 's served at a time should be greater than 0 and smaller than Maximum ' + this.customer_label + 's served';
+          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          return;
         }
-    }
+      }
       // start and end date validations
       const cdate = new Date();
       let mon;
@@ -632,7 +632,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         mon = '0' + mon;
       }
       const daystr: any = [];
-      const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+      // const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
       for (const cday of this.selday_arr) {
         daystr.push(cday);
       }
@@ -642,7 +642,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         return;
       }
       // today
-      const curday = new Date();
+     //  const curday = new Date();
       if (this.shared_Functionsobj.getminutesOfDay(this.dstart_time) > this.shared_Functionsobj.getminutesOfDay(this.dend_time)) {
         this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
         return;

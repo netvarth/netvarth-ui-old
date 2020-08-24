@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { projectConstants } from '../../../../../../app.component';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 
@@ -69,7 +68,7 @@ export class ProviderNotificationsComponent implements OnInit {
   apptph1_arr: any = [];
   apptem1_arr: any = [];
   donateem_arr: any = [];
-  donateph_arr: any =  [];
+  donateph_arr: any = [];
   domain;
   provdr_domain_name = '';
   provider_label = '';
@@ -112,10 +111,10 @@ export class ProviderNotificationsComponent implements OnInit {
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     const breadcrumbs = [];
     this.breadcrumbs_init.map((e) => {
-        breadcrumbs.push(e);
+      breadcrumbs.push(e);
     });
     breadcrumbs.push({
-        title: this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1)
+      title: this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1)
     });
     this.breadcrumbs = breadcrumbs;
     this.getProviderSettings();
@@ -125,7 +124,7 @@ export class ProviderNotificationsComponent implements OnInit {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        }, () => {
+      }, () => {
       });
   }
   getGlobalSettingsStatus() {
@@ -321,7 +320,7 @@ export class ProviderNotificationsComponent implements OnInit {
       this.donateNotifications('newdonation');
     }
   }
-  
+
 
   addChkinPh() {
     this.resetApiErrors();
@@ -721,7 +720,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savecancelNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
-  donateNotifications(source){
+  donateNotifications(source) {
     this.savechekinNotification_json = {};
     let chekinMode = 'ADD';
     if (this.notificationList.length === 0) {
@@ -735,7 +734,7 @@ export class ProviderNotificationsComponent implements OnInit {
     if (!this.selDonatnNotify) {
       this.donateem_arr = [];
       this.donateph_arr = [];
-      this.donatePush = false; 
+      this.donatePush = false;
     }
     this.savechekinNotification_json.resourceType = 'DONATION';
     this.savechekinNotification_json.eventType = 'DONATIONSERVICE';
@@ -925,5 +924,8 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);
+  }
+  goBack() {
+    this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
   }
 }

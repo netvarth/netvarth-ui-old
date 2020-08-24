@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { projectConstants } from '../../../app.component';
 
 @Component({
-    selector: 'app-jc-Coupon-note',
+    selector: 'app-jc-coupon-note',
     templateUrl: './jc-Coupon-note.component.html'
 })
 

@@ -79,7 +79,7 @@
                               <i class="fa fa-copy custId-cursor pad-left-20 font-lrge"
                                 (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
                             </span>
-                            <span class="custbtn pad-left-20" *ngIf="!bProfile.customId && onlinepresence_status">
+                            <span class="custbtn pad-left-20" *ngIf="!bProfile.customId">
                               <button class="btn btn-info jld-lnk-btn" (click)="customizeId()">
                                 Personalize
                               </button>
@@ -214,11 +214,11 @@
                     </div>
                   </div>
 
-                  <div class="coupon-outer" *ngIf="!bProfile.customId">
-                    <div class="duration instantQ" *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
+                  <!-- <div class="coupon-outer" *ngIf="show_licence_warn">
+                    <div class="duration instantQ">
                       You are not allowed to do this operation. Please upgrade license package
                     </div>
-                  </div>
+                  </div> -->
 
                 </div>
 
