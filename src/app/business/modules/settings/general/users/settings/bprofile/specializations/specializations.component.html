@@ -1,8 +1,8 @@
-<section>
+<!-- <section>
     <app-breadcrumb (performAction)="performActions()" [breadcrumbs]="breadcrumbs"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section>
-<section>
+</section> -->
+<!-- <section>
     <div class="content loc-list">
         <div class="w-dta">
             <div class="col-md-12 no-padding-small">
@@ -42,7 +42,44 @@
             </div>
         </div>
     </div>
-</section> 
+</section>  -->
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"><i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true" (click)="goBack()"></i>Specializations</h5>
+    </div>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-8 col-xs-10 col-sm-10 col-lg-9 no-padding-small">
+            <div class="row">
+                <div class="card p0">
+                    <div class="copy locd">
+                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                            <label class="specializations-label">{{specializations_cap}} </label>
+                                    <div class="form-group">
+                                        <div class="specializationouter" *ngIf="specialization_arr.length > 0" >  
+                                            <div *ngFor= "let spec of specialization_arr">
+                                                <mat-checkbox style="padding-left: 10px;"
+                                                  (change)="specializationSel(spec.name)" 
+                                                   [checked]="checkspecializationExists(spec.name)">{{spec.displayName}}
+                                                </mat-checkbox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="actiondiv col-md-12" style="margin-top: 15px;display: inline-flex;">
+                                    <button  type="button" (click)="cancel()" class="cs-btn bt2"
+                                     [disabled]="disableButton">{{cancel_btn_cap}}</button>&nbsp;
+                                    <button (click)="saveSpecializations()" type="button" mat-button class="cs-btn bt1"
+                                     [disabled]="specialization_arr.length==0 || disableButton">{{save_btn_cap}}</button>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    <div class="clearfix"></div>
+</section>
 
 
         

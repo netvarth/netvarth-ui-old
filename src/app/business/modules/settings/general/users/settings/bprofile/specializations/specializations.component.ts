@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
-import { MatDialog } from '@angular/material';
+// import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserSpecializationComponent } from './userspecialization/userspecialization.component';
+import { Location } from '@angular/common';
+// import { UserSpecializationComponent } from './userspecialization/userspecialization.component';
 @Component({
     selector: 'app-userspecializatons',
     templateUrl: './specializations.component.html'
@@ -12,7 +13,13 @@ import { UserSpecializationComponent } from './userspecialization/userspecializa
 export class SpecializationsComponent implements OnInit, OnDestroy {
     specialization_arr: any = [];
     special_cap = Messages.BPROFILE_SPECIAL_CAP;
-
+    selspecialization_arr: any = [];
+    disableButton = false;
+    user_arr: any = [];
+    src: any;
+    specializations_cap = Messages.SPECIALIZATIONS_CHOOSE;
+    cancel_btn_cap = Messages.CANCEL_BTN;
+    save_btn_cap = Messages.SAVE_BTN;
     bProfile = null;
     frm_specialization_cap = Messages.FRM_LEVEL_SPEC_MSG;
     have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
@@ -47,8 +54,9 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         private provider_services: ProviderServices,
         private activated_route: ActivatedRoute,
         private routerobj: Router,
+        private specialsn: Location,
         public shared_functions: SharedFunctions,
-        private dialog: MatDialog
+        // private dialog: MatDialog
     ) {
         this.activated_route.params.subscribe(params => {
             this.userId = params.id;
@@ -75,10 +83,20 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->']);
     }
-
+    goBack() {
+        if (this.src === 'h') {
+        this.backPage();
+        } else {
+          this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
+        }
+      }
+      backPage() {
+        this.specialsn.back();
+      }
     getUser() {
         this.provider_services.getUser(this.userId)
             .subscribe((data: any) => {
+                this.user_arr = data;
                 this.username = data.firstName;
                 const breadcrumbs = [];
                 this.breadcrumbs_init.map((e) => {
@@ -122,17 +140,14 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                     this.getSpecializations(this.domain, this.subDomain);
                     if (this.bProfile.specialization) {
                         if (this.bProfile.specialization.length > 0) {
-                            this.normal_specilization_show = 3;
+                            this.selspecialization_arr = this.bProfile.specialization;
                         } else {
-                            this.normal_specilization_show = 2;
+                            this.selspecialization_arr = [];
                         }
-                    } else {
-                        this.normal_specilization_show = 2;
-                    }
+                    } 
                 },
                 () => {
-                    this.normal_specilization_show = 2;
-                }
+                    }
             );
     }
     getSpecializations(domain, subdomain) {
@@ -162,43 +177,87 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                 );
         });
     }
-    handleSpecialization() {
-        let holdselspec;
-        if (this.bProfile && this.bProfile.specialization) {
-            holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
+    specializationSel(sel) {
+        if (this.selspecialization_arr.length > 0) {
+          const existindx = this.selspecialization_arr.indexOf(sel);
+          if (existindx === -1) {
+            this.selspecialization_arr.push(sel);
+          } else {
+            this.selspecialization_arr.splice(existindx, 1);
+          }
         } else {
-            holdselspec = [];
+          this.selspecialization_arr.push(sel);
         }
-        const bprof = holdselspec;
-        const special = this.specialization_arr;
-        this.specialdialogRef = this.dialog.open(UserSpecializationComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-            disableClose: true,
-            autoFocus: false,
-            data: {
-                selspecializations: bprof,
-                specializations: special,
-                userId: this.userId,
+      }
+      checkspecializationExists(lang) {
+        if (this.selspecialization_arr.length > 0) {
+          const existindx = this.selspecialization_arr.indexOf(lang);
+          if (existindx !== -1) {
+            return true;
+          }
+        } else {
+          return false;
+        }
+      }
+      saveSpecializations() {
+        this.disableButton = true;
+        const postdata = {
+          'specialization': this.selspecialization_arr
+        };
+        if (this.user_arr.userType === 'PROVIDER') {
+          postdata['userSubdomain'] = this.user_arr.subdomain;
+        }
+        this.provider_services.updateuserSpecializationPrimaryFields(postdata, this.userId)
+          .subscribe(() => {
+            this.shared_functions.openSnackBar(Messages.BPROFILE_SPECIALIZATION_SAVED, { 'panelClass': 'snackbarnormal' });
+            this.disableButton = false;
+            this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
+            },
+            error => {
+              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      }
+      cancel() {
+      this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
+      }
+    // handleSpecialization() {
+    //     let holdselspec;
+    //     if (this.bProfile && this.bProfile.specialization) {
+    //         holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
+    //     } else {
+    //         holdselspec = [];
+    //     }
+    //     const bprof = holdselspec;
+    //     const special = this.specialization_arr;
+    //     this.specialdialogRef = this.dialog.open(UserSpecializationComponent, {
+    //         width: '50%',
+    //         panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+    //         disableClose: true,
+    //         autoFocus: false,
+    //         data: {
+    //             selspecializations: bprof,
+    //             specializations: special,
+    //             userId: this.userId,
 
-            }
-        });
-        this.specialdialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                if (result['mod'] === 'reloadlist') {
-                    this.bProfile = result['data'];
-                    this.initSpecializations();
-                    if (this.bProfile && this.bProfile.selspecializations) {
-                        if (this.bProfile.selspecializations.length > 0) {
-                            this.normal_specilization_show = 3;
-                        } else {
-                            this.normal_specilization_show = 2;
-                        }
-                    } else {
-                        this.normal_specilization_show = 2;
-                    }
-                }
-            }
-        });
-    }
+    //         }
+    //     });
+    //     this.specialdialogRef.afterClosed().subscribe(result => {
+    //         if (result) {
+    //             if (result['mod'] === 'reloadlist') {
+    //                 this.bProfile = result['data'];
+    //                 this.initSpecializations();
+    //                 if (this.bProfile && this.bProfile.selspecializations) {
+    //                     if (this.bProfile.selspecializations.length > 0) {
+    //                         this.normal_specilization_show = 3;
+    //                     } else {
+    //                         this.normal_specilization_show = 2;
+    //                     }
+    //                 } else {
+    //                     this.normal_specilization_show = 2;
+    //                 }
+    //             }
+    //         }
+    //     });
+    // }
 }

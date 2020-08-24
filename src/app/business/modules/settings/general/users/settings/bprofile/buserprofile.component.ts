@@ -27,6 +27,7 @@ import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic
 @Component({
   selector: 'app-buserprofile',
   templateUrl: './buserprofile.component.html',
+  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss']
 
 
 })
@@ -127,13 +128,21 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   grid_row_index;
   subDomainId;
   vkeyNameMap = {};
+  domain_fields_nonmandatory = [];
+  subdomain_fields_nonmandatory = [];
+  aboutmefilled = false;
+  specializeFilled = false;
+  languageFilled = false;
+  mediaFilled = false;
+  subdomainVirtualFieldFilledStatus: any;
+  domainVirtualFieldFilledStatus: any;
   dynamicdialogRef;
   showAddSection = false;
   showAddSection1 = false;
   additionalInfoDomainFields: any = [];
   additionalInfoSubDomainFields: any = [];
   image_remaining_cnt = 0;
-
+  showIncompleteButton = true;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -170,7 +179,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   show_passcode = false;
   tooltipcls = projectConstants.TOOLTIP_CLS;
   breadcrumb_moreoptions: any = [];
-  normal_profile_active = 1;  // [1 - loading]  [2 - no info] [3 - info available]
+  normal_profile_active = 1; // [1 - loading] [2 - no info] [3 - info available]
   normal_basicinfo_show = 1;
   loadingParams: any = { 'diameter': 40, 'strokewidth': 15 };
   customButtonsFontAwesomeConfig: ButtonsConfig = {
@@ -297,12 +306,12 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.getUser();
     this.getUserPublicSearch();
     this.getBusinessConfiguration();
-    this.initSpecializations();
-    this.getSpokenLanguages();
-    this.setLanguages();
+    // this.initSpecializations();
+    // this.getSpokenLanguages();
+    // this.setLanguages();
     // calling method to create the form
     // setTimeout(() => {
-    //   this.createForm();
+    // this.createForm();
     // }, 500);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
@@ -375,6 +384,10 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   }
   getBusinessProfile() {
     this.bProfile = [];
+    this.aboutmefilled = false;
+    this.specializeFilled = false;
+    this.languageFilled = false;
+    this.mediaFilled = false;
     this.additionalInfoDomainFields = [];
     this.additionalInfoSubDomainFields = [];
     this.userMandatoryfieldArray = [];
@@ -383,6 +396,33 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       .then(
         data => {
           this.bProfile = data;
+          this.bProfile['subDomain'] = this.subDomain;
+          if (this.bProfile.businessName) {
+            this.domainVirtualFieldFilledStatus = this.user_datastorage.getWeightageObjectOfDomain();
+            this.subdomainVirtualFieldFilledStatus = this.user_datastorage.getWeightageObjectOfSubDomain();
+            if (this.domainVirtualFieldFilledStatus != null || this.subdomainVirtualFieldFilledStatus != null) {
+              if (this.domainVirtualFieldFilledStatus.mandatoryDomain === true || this.subdomainVirtualFieldFilledStatus.mandatorySubDomain === true) {
+                if ((this.domainVirtualFieldFilledStatus.mandatoryDomain && this.domainVirtualFieldFilledStatus.mandatoryDomainFilledStatus) || (this.subdomainVirtualFieldFilledStatus.mandatorySubDomain && this.subdomainVirtualFieldFilledStatus.mandatorySubDomainFilledStatus)) {
+                  this.aboutmefilled = true;
+                } else {
+                  this.aboutmefilled = false;
+                }
+              } else {
+                this.aboutmefilled = true;
+              }
+            } else {
+              this.aboutmefilled = true;
+            }
+          }
+          if (this.bProfile.specialization && this.bProfile.specialization.length !== 0) {
+            this.specializeFilled = true;
+          }
+          if (this.bProfile.languagesSpoken && this.bProfile.languagesSpoken.length !== 0) {
+            this.languageFilled = true;
+          }
+          if (this.bProfile.socialMedia && this.bProfile.socialMedia.length !== 0) {
+            this.mediaFilled = true;
+          }
           this.provider_services.getVirtualFields(this.domain).subscribe(
             domainfields => {
               this.provider_services.getVirtualFields(this.domain, this.subDomain).subscribe(
@@ -442,7 +482,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
 
         },
         () => {
-          this.normal_basicinfo_show = 2;
+          // this.normal_basicinfo_show = 2;
           this.normal_socialmedia_show = 2;
         }
       );
@@ -517,7 +557,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
                 this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
                 this.getSpecializations(this.domain, this.subDomain);
                 // this.initSpecializations();
-                this.bProfile['subDomain'] = this.subDomain;
+
                 this.getBusinessProfile();
               }
             }
@@ -525,7 +565,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
         }
       });
   }
-
+  redirecToSettings() {
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings']);
+  }
   checkMandatoryFieldsInResultSet(domainFields, fieldname) {
     let fullyfilledStatus = true;
     domainFields.forEach(function (dom) {
@@ -651,11 +693,13 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.getVirtualFields(this.domain)
       .then(
         data => {
+          console.log('domain..' + JSON.stringify(data));
           let user_mandatorydomain = false;
           let user_mandatorydomainFilled = false;
           let user_additionalInfoFilledStatus = false;
           this.domain_fields = data['fields'];
           this.domain_questions = data['questions'] || [];
+          this.domain_fields_nonmandatory = this.domain_fields.filter(dom => dom.mandatory === false);
           this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
           if (this.userMandatoryfieldArray.length !== 0 && this.domain_fields.some(domain => domain.mandatory === true)) {
             user_mandatorydomain = true;
@@ -693,11 +737,12 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.getVirtualFields(this.domain,
       this.subDomain).then(
         data => {
+          console.log('subdaomin..' + JSON.stringify(data));
           let user_mandatorysubdomain = false;
           let user_mandatorySubDomainFilled = false;
           let user_additionalInfoFilledStatus = false;
           this.subdomain_fields = data['fields'];
-
+          this.domain_fields_nonmandatory = this.domain_fields.filter(dom => dom.mandatory === false);
           this.subdomain_questions = data['questions'] || [];
           if (this.userMandatoryfieldArray.length !== 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
             user_mandatorysubdomain = true;
@@ -821,8 +866,59 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     }
   }
 
-
-
+  getdispVal(typ, field) {
+    let retfield = '';
+    let passArray = [];
+    if (typ === 'domain') {
+      passArray = this.domain_fields;
+    } else if (typ === 'subdomain') {
+      passArray = this.subdomain_fields;
+    }
+    let str = '';
+    if (field.value !== undefined) {
+      if (field.dataType === 'Enum') {
+        retfield = this.getFieldDetails(passArray, field.value, field.name);
+      } else if (field.dataType === 'EnumList') {
+        for (let i = 0; i < field.value.length; i++) {
+          if (str !== '') {
+            str += ', ';
+          }
+          str += this.getFieldDetails(passArray, field.value[i], field.name);
+        }
+        retfield = str;
+      } else {
+        retfield = field.value;
+      }
+    }
+    return retfield;
+  }
+  getFieldDetails(passedArray, fieldvalue, fieldname) {
+    let retfield;
+    if (fieldvalue !== undefined) {
+      for (let i = 0; i < passedArray.length; i++) {
+        if (fieldname === passedArray[i].name) {
+          for (let j = 0; j < passedArray[i].enumeratedConstants.length; j++) {
+            if (fieldvalue === passedArray[i].enumeratedConstants[j].name) {
+              retfield = passedArray[i].enumeratedConstants[j].displayName;
+            }
+          }
+        }
+      }
+    }
+    return retfield;
+  }
+  showValueswithComma(fld) {
+    let str = '';
+    if (fld.value !== undefined) {
+      for (let i = 0; i < fld.value.length; i++) {
+        if (str !== '') {
+          str += ', ';
+        }
+        str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+      }
+      return str;
+    }
+  }
 
   // Method to handle the add / edit for bprofile
   onSubmit(form_data) {
@@ -859,19 +955,19 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   // updating the primary field from the bprofile edit page
   createPrimaryFields(pdata) {
     // if (this.blogo.length === 0) {
-    //  const self = this;
-    //   const promise = self.sharedfunctionobj.getBase64Image();
-    //   promise.then(function (dataURL) {
-    //     const blob = self.sharedfunctionobj.b64toBlob(dataURL);
-    //     const submit_data: FormData = new FormData();
-    //     submit_data.append('files', blob, 'jaldee-logo.png');
-    //     const propertiesDet = {
-    //       'caption': 'Logo'
-    //     };
-    //     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-    //     submit_data.append('properties', blobPropdata);
-    //     self.uploadLogo(submit_data);
-    //   });
+    // const self = this;
+    // const promise = self.sharedfunctionobj.getBase64Image();
+    // promise.then(function (dataURL) {
+    // const blob = self.sharedfunctionobj.b64toBlob(dataURL);
+    // const submit_data: FormData = new FormData();
+    // submit_data.append('files', blob, 'jaldee-logo.png');
+    // const propertiesDet = {
+    // 'caption': 'Logo'
+    // };
+    // const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+    // submit_data.append('properties', blobPropdata);
+    // self.uploadLogo(submit_data);
+    // });
     // }
     this.disableButton = true;
     this.provider_services.patchUserbProfile(pdata, this.userId)
@@ -895,18 +991,18 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
 
   updatePrimaryFields(pdata) {
     // if (this.blogo.length === 0) {
-    //   const self = this;
-    //   const  promise = self.sharedfunctionobj.getBase64Image();
-    //   promise.then(function (dataURL) {
-    //   const blob = self.sharedfunctionobj.b64toBlob(dataURL);
-    //   const submit_data: FormData = new FormData();
-    //   submit_data.append('files', blob, 'jaldee-logo.png');
-    //   const propertiesDet = {
-    //     'caption': 'Logo'
-    //   };
-    //   const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-    //   submit_data.append('properties', blobPropdata);
-    //   self.uploadLogo(submit_data);
+    // const self = this;
+    // const promise = self.sharedfunctionobj.getBase64Image();
+    // promise.then(function (dataURL) {
+    // const blob = self.sharedfunctionobj.b64toBlob(dataURL);
+    // const submit_data: FormData = new FormData();
+    // submit_data.append('files', blob, 'jaldee-logo.png');
+    // const propertiesDet = {
+    // 'caption': 'Logo'
+    // };
+    // const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+    // submit_data.append('properties', blobPropdata);
+    // self.uploadLogo(submit_data);
     // });
     // }
 
@@ -1017,6 +1113,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       this.progress_bar_two = 0;
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
+      this.showIncompleteButton = true;
       return businessProfileWeightageText;
 
     }
@@ -1028,9 +1125,10 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       this.progress_bar_two = weightage - 25;
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
+      this.showIncompleteButton = true;
       return businessProfileWeightageText;
     } else if
-      (weightage >= 50 && weightage < 75) {
+    (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'info';
@@ -1038,6 +1136,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       this.progress_bar_two = 25;
       this.progress_bar_three = weightage - 50;
       this.progress_bar_four = 0;
+      this.showIncompleteButton = false;
       return businessProfileWeightageText;
 
     } else if (weightage >= 75 && weightage < 100) {
@@ -1048,6 +1147,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       this.progress_bar_two = 25;
       this.progress_bar_three = 25;
       this.progress_bar_four = weightage - 75;
+      this.showIncompleteButton = false;
       return businessProfileWeightageText;
     } else if (weightage === 100) {
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
@@ -1057,6 +1157,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       this.progress_bar_two = 25;
       this.progress_bar_three = 25;
       this.progress_bar_four = 25;
+      this.showIncompleteButton = false;
       return businessProfileWeightageText;
 
     }
@@ -1328,6 +1429,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
+  }
+  gotoAboutMe() {
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'aboutme']);
   }
   specializations() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'specializations']);

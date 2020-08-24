@@ -1,111 +1,129 @@
 <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section>
-<section>
+  </section>
+  <section>
     <div class="content w-manager settings comn-cls">
-        <div class="col-md-12 no-padding-small">
-            <div class="row">
-                <div class="card p0" >
-                <span class="bi-link prof-link" (click)="gotoOnlineProfile()">
-                <h2>Jaldee Profile</h2>
-                <span class="form-level-settings">Manage your profile here.<a class="learnmore-pointer"
-                id="customer-help"
-                (click)="learnmore_clicked('jaldeeonline', $event)">Learn
-                More</a></span>
-                <br> 
-                <br>
-                <a class="pointer-cursor">
-                <div class="row" *ngIf="businessname">
-                <div class="col-md-4 col-xs-4 col-sm-3" >
-                <img class="usrimgess rounded float-left usrimgessresponsive " [src]="showimg()" alt="" />
+      <div class="col-md-12 no-padding-small">
+        <!-- <div class="row">
+          <div class="card p0">
+            <span class="bi-link prof-link" (click)="gotoOnlineProfile()">
+              <h2>Jaldee Profile</h2>
+              <span class="form-level-settings">Manage your profile here.
+                 <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('jaldeeonline', $event)">Learn More
+                </a>
+              </span>
+  
+              <a class="pointer-cursor">
+                <!-- <div class="row" *ngIf="businessname">
+                  <div class="col-md-4 col-xs-4 col-sm-3">
+                    <img class="usrimgess rounded float-left usrimgessresponsive " [src]="showimg()" alt="" />
+                  </div>
+                  <div class="col-md-6 col-xs-6 col-sm-4">
+                    <div class="card-body-right">
+                      <h4 class="card-title"> {{bProfile.businessName | capitalizeFirst }}</h4>
+                      <p class="card-text">{{bProfile.businessDesc | capitalizeFirst}}</p>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-6 col-xs-6 col-sm-4">
-                <div class="card-body-right">
-                <h4 class="card-title"> {{bProfile.businessName | capitalizeFirst }}</h4>
-                <p class="card-text">{{bProfile.businessDesc | capitalizeFirst}}</p>
-                </div>
-                </div>
-                </div>  
                 <span class="lnk setings">Jaldee Online&nbsp;&nbsp;
+                  <span class="inactive" *ngIf="!jaldee_online_status">{{jaldee_online_status_str}}</span>
+                  <span class="active" *ngIf="jaldee_online_status">{{jaldee_online_status_str}}</span>
+                </span>
+                <span class="lnk setings">
+                  <!-- <p> Profile Strength -
+                    <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}}</span>
+                  </p> -->
+                  <!-- <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding">
+                    <div class="progress col-md-4 col-sm-12 col-xs-12 mt-2 no-padding" style="height:10px;">
+                      <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
+                        aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="col-md-5 col-sm-12 col-xs-12 no-padding-small">
+                      <button type="button" [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
+                    </div>
+                  </div>
+                </span>
+              </a>
+            </span>
+          </div>
+        </div> -->
+        <div class="row">
+          <div class="card p0">
+            <span class="b-link"  (click)="gotoOnlineProfile()">
+              <h2>My Profile</h2>
+              <span class="form-level-settings">Manage your profile here..
+                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('jaldeeonline', $event)">Learn More
+                </a>
+              </span><br>
+              <span class="lnk setings">Jaldee Online&nbsp;&nbsp;
                 <span class="inactive" *ngIf="!jaldee_online_status">{{jaldee_online_status_str}}</span>
                 <span class="active" *ngIf="jaldee_online_status">{{jaldee_online_status_str}}</span>
-                </span> 
-                <span class="lnk setings"> 
-                <p> Profile Strength -
-                <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}}</span>
-                </p>
-                <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding">
-                <div class="progress col-md-4 col-sm-12 col-xs-12 mt-2 no-padding" style="height:10px;">
-                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
-                aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="col-md-5 col-sm-12 col-xs-12 no-padding-small">
-                <button  type="button" [className]="'wght-btn btn btn-' + weightageClass" >{{bprofile_btn_text}}</button>
-                </div>
-                </div>
-                </span>
-                </a>
-                </span>
-            </div>
-            </div>
-        
-            <div class="row">
-                <div class="card p0">
-                    <span class="b-link" (click)="services()">
-                        <h2>Services({{service_count}})</h2>
-                        <span class="form-level-settings">Add and manage services here.<a class="learnmore-pointer"
-                            id="customer-help"
-                            (click)="learnmore_clicked('settings-services', $event)">Learn
-                            More</a></span>
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card p0">
-                    <span class="b-link" (click)="Queues()">
-                        <h2 *ngIf="showToken">Queues for Tokens({{queues_count}})</h2>
-                        <h2 *ngIf="!showToken">Queues for Checkins({{queues_count}})</h2>
-                        <span class="form-level-settings">Add and manage your queues here.<a class="learnmore-pointer"
-                            id="customer-help"
-                            (click)="learnmore_clicked('settings-time_windows', $event)">Learn
-                            More</a></span>
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card p0">
-                    <span class="b-link" (click)="schedules()">
-                        <h2>Schedules for appointment({{schedules_count}})</h2>
-                        <span class="form-level-settings">Add and manage your schedules here.<a class="learnmore-pointer"
-                            id="customer-help"
-                            (click)="learnmore_clicked('schedules', $event)">Learn
-                            More</a></span>
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card p0">
-                    <span class="b-link" (click)="NonWorkingDay()">
-                        <h2>Non Working Day/Hour</h2>
-                        <span class="form-level-settings">Manage your non working days here.<a class="learnmore-pointer"
-                            id="customer-help"
-                            (click)="learnmore_clicked('nonworking', $event)">Learn
-                            More</a></span>
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card p0">
-                    <span class="b-link" (click)="Notifications()">
-                        <h2>Notifications</h2>
-                        <span class="form-level-settings">Manage notification settings here<a class="learnmore-pointer"
-                            id="customer-help"
-                            (click)="learnmore_clicked('notifications', $event)">Learn
-                            More</a></span>
-                    </span>
-                </div>
-            </div>
+              </span>
+            </span>
+          </div>
         </div>
-        <div class="clearfix"></div>
+  
+        <div class="row">
+          <div class="card p0">
+            <span class="b-link" (click)="services()">
+              <h2>Consultations and Services({{service_count}})</h2>
+              <span *ngIf="domain !== 'healthCare'" class="form-level-settings">{{frm_set_ser_cap}}<a
+                class="learnmore-pointer" id="customer-help"
+                (click)="learnmore_clicked('settings-services', $event)">Learn
+                More</a></span>
+              <span *ngIf="domain == 'healthCare'" class="form-level-settings">All kinds of consultation and
+                services you offer to patients.<a class="learnmore-pointer" id="customer-help"
+                (click)="learnmore_clicked('settings-services', $event)">Learn
+                More</a></span>
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="card p0">
+            <span class="b-link" (click)="Queues()">
+              <h2 *ngIf="showToken">Queues for Tokens({{queues_count}})</h2>
+              <h2 *ngIf="!showToken">Queues for Checkins({{queues_count}})</h2>
+              <span class="form-level-settings">{{frm_set_working_hr_cap}}
+                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('settings-time_windows', $event)">Learn More
+                </a>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="card p0">
+            <span class="b-link" (click)="schedules()">
+              <h2>Schedules for appointment({{schedules_count}})</h2>
+              <span class="form-level-settings">Add and manage your schedules here.
+                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('schedules', $event)">Learn More
+                </a>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="card p0">
+            <span class="b-link" (click)="NonWorkingDay()">
+              <h2>Non Working Days</h2>
+              <span class="form-level-settings">Manage your non working days here.
+                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('nonworking', $event)">Learn More
+                </a>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="card p0">
+            <span class="b-link" (click)="Notifications()">
+              <h2>Notifications</h2>
+              <span class="form-level-settings">Manage notification settings here
+                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('notifications', $event)">Learn More
+                </a>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
     </div>
-</section>
+  </section>

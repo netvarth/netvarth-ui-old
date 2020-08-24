@@ -21,6 +21,8 @@ import { UserSpecializationComponent } from './specializations/userspecializatio
 import { AddProviderUserBprofileSpokenLanguagesComponent } from './languages/addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
 import { ProviderUserBprofileSearchSocialMediaComponent } from './media/providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
 import { ProPicPopupModule } from '../../../../bprofile/pro-pic-popup/pro-pic-popup.module';
+import { AboutmeComponent } from './aboutme/aboutme.component';
+
 @NgModule({
     imports: [
         BuserProfileRoutingModule,
@@ -44,6 +46,7 @@ import { ProPicPopupModule } from '../../../../bprofile/pro-pic-popup/pro-pic-po
         LanguagesComponent,
         AdditionalInfoComponent,
         SpecializationsComponent,
+        AboutmeComponent,
         UserSpecializationComponent,
         UserBprofileSearchPrimaryComponent,
         ProviderUserBprofileSearchSocialMediaComponent,

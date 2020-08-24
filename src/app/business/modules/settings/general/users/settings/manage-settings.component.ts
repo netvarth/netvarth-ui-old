@@ -31,6 +31,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     }
   ];
   domain;
+  frm_set_ser_cap = '';
   breadcrumbs = this.breadcrumbs_init;
   isCorp = false;
   isMultilevel = false;
@@ -192,6 +193,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   active_user;
   frm_lang_cap = '';
   userId: any;
+  frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
   service_count: any;
   queues_count: any;
   // domain;
@@ -227,6 +229,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     this.getQueuesCount();
     this.getProviderSettings();
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+    this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
