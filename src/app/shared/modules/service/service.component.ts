@@ -360,6 +360,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.filterDepart = data['filterByDept'];
+                    if (this.filterDepart) {
                     for (let i = 0; i < data['departments'].length; i++) {
                         if (data['departments'][i].departmentStatus === 'ACTIVE') {
                             this.departments.push(data['departments'][i]);
@@ -371,6 +372,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     if (this.action === 'add' && this.departments.length > 0) {
                         this.serviceForm.get('department').setValue(this.departments[0].departmentId);
                     }
+                }
                 },
                 error => {
                     this.sharedFunctons.apiErrorAutoHide(this, error);
