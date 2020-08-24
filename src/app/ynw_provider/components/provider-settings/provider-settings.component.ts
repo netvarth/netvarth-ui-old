@@ -174,9 +174,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.activated_route.queryParams.subscribe(
       qparams => {
        this.showTakeaTour = qparams.firstTimeSignup;
-       if (this.showTakeaTour) {
-           this.letsGetStarted();
-       }
+      //  if (this.showTakeaTour) {
+      //      this.letsGetStarted();
+      //  }
       });
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');

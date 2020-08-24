@@ -10920,11 +10920,21 @@ a {
 .pad-20 {
   padding: 20px !important;
 }
-
-
-
+.pad-top-15 {
+  padding-top: 15px !important;
+}
+.pad-left-15 {
+  padding-left: 15px !important;
+}
+.pad-right-15 {
+  padding-right: 15px !important;
+}
 .logo-mini-app img {
   width: 40px;
     height: 40px;
     margin-top: 5px;
+}
+.support-num {
+  font-size: 1.3rem;
+  font-weight: 700;
 }
