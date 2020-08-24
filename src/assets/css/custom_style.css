@@ -10666,6 +10666,20 @@ a {
       width: 100% !important;
     }
   }
+  .enable-notif {
+    text-align: center;
+    width: 50%;
+    font-weight: 600;
+    padding: 40px;
+    line-height: 30px;
+    margin: auto;
+    margin-top: 30px;
+  }
+  @media (max-width: 1074px) {
+    .enable-notif {
+      width: 100% !important;
+    }
+  }
   .pad-top-5 {
     padding-top: 5px !important;
   }
