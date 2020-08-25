@@ -766,8 +766,8 @@ export const Messages = {
   'TODAY_HOME_CAP': 'Today',
   'FUTURE_HOME_CAP': 'Future',
   'HISTORY_HOME_CAP': 'History',
-  'SERVICE_TIME_CAP': 'Queues',
-  'QUEUE_CAP': 'Queues (Workiing Hours)',
+  'SERVICE_TIME_CAP': 'Queues (Working Hours) ',
+  'QUEUE_CAP': 'Queues (Working Hours)',
   'SERVICES_CAP': 'Consultations and Services',
   'CHECK_IN_STATUS_CAP': 'Check-In Status',
   'PAYMENT_STATUS_CAP': 'Payment Status',
@@ -804,7 +804,7 @@ export const Messages = {
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
   'NON_WORK_DAY_OR_HR_CAP': 'Non Working Days',
-  'SCHEDULES_CAP': 'Schedules( Working Hours )',
+  'SCHEDULES_CAP': 'Schedules(Working Hours)',
   'REASON_CAP': 'Reason',
 
   // App-ynw_provider-components-add-provider-waitlist-checkin-bill
@@ -1250,7 +1250,7 @@ export const Messages = {
   // App-ynw_provider-components-provider-waitlist
   'WAITLIST_ACCEPT_ONLINE_CAP': 'Accept Online',
   'WAITLIST_LOCATIONS_CAP': 'All Locations',
-  'WAITLIST_SERVICES_CAP': 'Services',
+  'WAITLIST_SERVICES_CAP': 'Consultations and Services',
   'CUSTOMERS_NAME': '[customer]s',
   // App-ynw_provider-components-provider-waitlist-checkin-consumer-note
   'CONS_NOTE_NOTE_CAP': 'Note',
@@ -1334,7 +1334,7 @@ export const Messages = {
   'FRM_LEVEL_PROFILE_MSG': 'Your name , about you , location , specialization and more.',
   'FRM_LEVEL_WAITLIST_MSG': 'Setup the queue system so that your [customer] can avoid on-site waiting time. Enable the queue manager by setting up your services and adding them to the queue.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
-  'FRM_LEVEL_JALDEEPAY_MSG': 'Accept cashless payments from [customer]s through their ',
+  'FRM_LEVEL_JALDEEPAY_MSG': 'e-payments from [customer]s',
   'FRM_LEVEL_COMMN_MSG': 'notifications to your [customer]s .',
   'FRM_LEVEL_VIRTUAL_MSG': 'Teleservices to consult [customer]s.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
@@ -1498,6 +1498,7 @@ export const Messages = {
   'BRANCHUSER_DELETED': 'User deleted successfully',
 
   'GENERALSETTINGS': 'Features and Customization',
+  'LOCATESETTINGS' : 'Locate your [customer]',
   'APPOINTMNT_SUCC': 'Appointment created successfully',
   'DONATE_SUCC': 'Donated successfully',
   'SCHEDULENAME_CAP': 'Title for Schedule *',

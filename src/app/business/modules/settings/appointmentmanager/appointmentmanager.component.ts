@@ -16,7 +16,7 @@ export class AppointmentmanagerComponent implements OnInit {
             title: 'Settings'
         },
         {
-            title: 'Jaldee Appointment'
+            title: 'Jaldee Appointment Manager'
         }
     ];
     domain;

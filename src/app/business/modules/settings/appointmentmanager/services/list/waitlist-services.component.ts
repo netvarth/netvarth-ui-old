@@ -27,11 +27,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            title: 'Jaldee Appointment',
+            title: 'Jaldee Appointment Manager',
             url: '/provider/settings/appointmentmanager'
         },
         {
-            title: 'Services'
+            title: 'Consultations and Services'
         }
     ];
     domain: any;

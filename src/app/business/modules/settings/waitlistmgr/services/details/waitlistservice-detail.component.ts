@@ -32,7 +32,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Services',
+            title: 'Consultations and Services',
             url: '/provider/settings/q-manager/services'
         }
     ];
