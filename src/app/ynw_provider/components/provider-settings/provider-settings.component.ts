@@ -9,9 +9,6 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
-import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
-import { JoyrideService } from 'ngx-joyride';
-import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-provider-settings',
@@ -167,9 +164,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     private provider_datastorage: ProviderDataStorageService,
     private qservice: QuestionService,
     private provider_shared_functions: ProviderSharedFuctions,
-    private activated_route: ActivatedRoute,
-    private readonly joyrideService: JoyrideService,
-    private dialog: MatDialog
+    private activated_route: ActivatedRoute
   ) {
     this.activated_route.queryParams.subscribe(
       qparams => {
@@ -294,48 +289,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.weightageValue = this.calculateWeightage(result);
 
     });
-  }
-  letsGetStarted() {
-    const dialogRef = this.dialog.open(ProviderStartTourComponent, {
-      width: '25%',
-      panelClass: ['popup-class', 'commonpopupmainclass']
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'startTour') {
-        this.joyrideService.startTour(
-
-          {
-            steps: ['step1@provider/settings', 'step2@provider/settings', 'step3@provider/settings', 'step4'],
-            showPrevButton: false,
-            stepDefaultPosition: 'top',
-            themeColor: '#212f23'
-          }
-          // Your steps order
-        ).subscribe(
-
-          step => {
-            /*Do something*/
-            console.log('Location', window.location.href, 'Path', window.location.pathname);
-            console.log('Next:', step);
-          },
-          error => {
-            /*handle error*/
-          },
-          () => {
-            this.routerobj.navigate(['.'], {} );
-            // this.redirecttoProfile();
-          }
-        );
-
-      } else {
-        this.routerobj.navigate(['.'], {} );
-      }
-
-
-    });
-
   }
 
   calculateWeightage(data) {
