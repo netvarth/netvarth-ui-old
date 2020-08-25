@@ -87,12 +87,13 @@
               <div class="clr">
                 <div class="otr-elements">
                   <span class="category">{{search_result.bProfile?.userSubSector?.displayName}}</span>
-                  <span *ngIf="search_result.bProfile?.specialization"><span class="categoryspec"
+                  <span *ngIf="search_result.bProfile?.specialization">
+                      <div class="sub-title-donate">Specializations</div><span class="categoryspec"
                       *ngFor="let spec of search_result.bProfile?.specialization; let i = index"><span *ngIf="i>0"
                         class="spacer"></span>{{spec}}</span></span>
-                </div>
+                </div> 
                 <!-- <div class="schedule" *ngIf="locationjson[0]?.display_schedule">
-                  <ul>
+                  <ul> 
                     <li *ngFor="let schedule of locationjson[0]?.display_schedule">
                       <div class="day">{{schedule.dstr}}&nbsp;:</div>
                       <div class="time">{{schedule.time}}

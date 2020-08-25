@@ -157,6 +157,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
       .subscribe(
         data => {
           this.notificationList = data;
+          console.log(this.notificationList);
           if (this.notificationList) {
             this.setNotifications(this.notificationList);
           }
@@ -246,7 +247,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
       activeInput = this.finalAPPTNotificationSettings;
     }
     if (this.cSettings[type]) {
-      activeInput.providerId = this.userId;
+      //activeInput.providerId = this.userId;
       this.provider_services.updateUserConsumerNotificationSettings(activeInput).subscribe(
         () => {
           this.sharedfunctionObj.openSnackBar(Messages.CONSUMERSETTINGSSUCCESS);
@@ -258,7 +259,10 @@ export class ConsumerNotificationUserComponent implements OnInit {
         }
       );
     } else {
-      activeInput.providerId = this.userId;
+      //activeInput.providerId = this.userId;
+      if (!activeInput.provider) {
+        activeInput.provider = this.userId;
+      }
       this.provider_services.saveUserConsumerNotificationSettings(activeInput).subscribe(
         () => {
           this.sharedfunctionObj.openSnackBar(Messages.CONSUMERSETTINGSSUCCESS);

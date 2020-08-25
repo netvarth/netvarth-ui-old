@@ -63,7 +63,7 @@
                                             <i class="fa fa-whatsapp whtsap-ic font-bolder"
                                                 *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                                         </span>
-                                        {{appointment.service.name | capitalizeFirst}}</span>
+                                        {{appointment.service.name | capitalizeFirst}} <span  *ngIf="appointment.provider">({{appointment.provider.firstName | capitalizeFirst}} {{appointment.provider.lastName | capitalizeFirst}})</span></span>
                                     for <span class="forwhom" *ngFor="let user of appointment.appmtFor">
                                         {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                     </span>
@@ -325,7 +325,7 @@
                                                     <i class="fa fa-whatsapp whtsap-ic font-bolder"
                                                         *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                                                 </span>
-                                                {{waitlist.service.name | capitalizeFirst}}</span> for <span
+                                                {{waitlist.service.name | capitalizeFirst}}<span  *ngIf="waitlist.provider">({{waitlist.provider.firstName | capitalizeFirst}} {{waitlist.provider.lastName | capitalizeFirst}})</span></span> for <span
                                                 class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
                                                 {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                             </span>
