@@ -19,10 +19,10 @@
                         <div class="widget-user-header bg-blue">
                             <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls"
                                 [matTooltip]="bprofileTooltip">My Profile
+                                <i class="fa fa-gears fl-right lnk"></i>
                                 <div joyrideStep="step1" title="Jaldee Online"
                                     text="Use Jaldee Online to set up your basic account and list your services in Jaldee.com">
                                 </div>
-                                <i class="fa fa-gears fl-right lnk"></i>
 
                             </h4>
 
@@ -211,10 +211,10 @@
                                         </span>
                                         <p class="settings_info" *ngIf="waitlistStatus">
                                             {{custs_name|capitalizeFirst}}<strong> can</strong> take tokens and join
-                                            virtual queues for<br>your consultations and services.</p>
+                                            virtual queues for your consultations and services.</p>
                                         <p class="settings_info" *ngIf="!waitlistStatus">
                                             {{custs_name|capitalizeFirst}}<strong> cannot</strong> take tokens and join
-                                            virtual queues<br>for your consultations and services.
+                                            virtual queues for your consultations and services.
                                         </p>
                                         <!-- <p class="sts" [class.active]="waitlistStatus">
                                             {{waitlistStatusStr}}</p> -->
@@ -382,7 +382,7 @@
                     </div>
                 </div>
                 <!-- General -->
-                <div class="col-md-6 col-lg-4 col-12  no-padding-small">
+                <div class="col-md-6 col-lg-4 col-12  no-padding-small box-hght">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
@@ -600,7 +600,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4 col-12  no-padding-small">
+                <div class="col-md-6 col-lg-4 col-12  no-padding-small box-hght">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
