@@ -1,6 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, NO_ERRORS_SCHEMA, APP_INITIALIZER, ErrorHandler } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
@@ -17,9 +17,7 @@ import { PagerModule } from './shared/modules/pager/pager.module';
 import { HeaderModule } from './shared/modules/header/header.module';
 import { AppComponent, projectConstants } from './app.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
-import { ForgotPasswordComponent } from './shared/components/forgot-password/forgot-password.component';
 import { SignUpComponent } from './shared/components/signup/signup.component';
-import { SetPasswordFormComponent } from './shared/components/set-password-form/set-password-form.component';
 import { LoginComponent } from './shared/components/login/login.component';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
@@ -34,7 +32,7 @@ import { FormMessageDisplayService } from './shared/modules/form-message-display
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import 'hammerjs';
-import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
+import { LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
@@ -58,6 +56,8 @@ import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefi
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
+import { JoyrideModule } from 'ngx-joyride';
+import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -77,7 +77,19 @@ export function init_app(globalService: GlobalService) {
     CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
+<<<<<<< HEAD
     ConsumerPaymentmodeComponent
+=======
+    AdminLoginComponent,
+    ConsumerJoinComponent,
+    ConsumerPaymentmodeComponent,
+    ManageProviderComponent,
+    CheckYourStatusComponent,
+    PaymentLinkComponent,
+    JdnComponent,
+    UpdateProfilePopupComponent,
+    // PhomeComponent,
+>>>>>>> refs/remotes/origin/1.3.0-for-Patch-Releases
   ],
   entryComponents: [
     SignUpComponent,
@@ -87,7 +99,12 @@ export function init_app(globalService: GlobalService) {
     CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
+<<<<<<< HEAD
     ConsumerPaymentmodeComponent
+=======
+    JdnComponent,
+    UpdateProfilePopupComponent
+>>>>>>> refs/remotes/origin/1.3.0-for-Patch-Releases
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -116,7 +133,8 @@ export function init_app(globalService: GlobalService) {
     DisplayboardLayoutContentModule,
     SalesChannelModule,
     ForgotPasswordModule,
-    SetPasswwordModule
+    SetPasswwordModule,
+    JoyrideModule.forRoot()
 
   ],
   providers: [
