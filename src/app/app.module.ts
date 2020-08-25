@@ -32,7 +32,7 @@ import { FormMessageDisplayService } from './shared/modules/form-message-display
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import 'hammerjs';
-import { LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
+import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
@@ -56,8 +56,6 @@ import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefi
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
-import { JoyrideModule } from 'ngx-joyride';
-import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -77,19 +75,7 @@ export function init_app(globalService: GlobalService) {
     CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
-<<<<<<< HEAD
     ConsumerPaymentmodeComponent
-=======
-    AdminLoginComponent,
-    ConsumerJoinComponent,
-    ConsumerPaymentmodeComponent,
-    ManageProviderComponent,
-    CheckYourStatusComponent,
-    PaymentLinkComponent,
-    JdnComponent,
-    UpdateProfilePopupComponent,
-    // PhomeComponent,
->>>>>>> refs/remotes/origin/1.3.0-for-Patch-Releases
   ],
   entryComponents: [
     SignUpComponent,
@@ -99,12 +85,7 @@ export function init_app(globalService: GlobalService) {
     CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
-<<<<<<< HEAD
     ConsumerPaymentmodeComponent
-=======
-    JdnComponent,
-    UpdateProfilePopupComponent
->>>>>>> refs/remotes/origin/1.3.0-for-Patch-Releases
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -133,8 +114,7 @@ export function init_app(globalService: GlobalService) {
     DisplayboardLayoutContentModule,
     SalesChannelModule,
     ForgotPasswordModule,
-    SetPasswwordModule,
-    JoyrideModule.forRoot()
+    SetPasswwordModule
 
   ],
   providers: [

@@ -44,23 +44,22 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
 
   private _refreshSubject: Subject<any> = new Subject<any>();
 
-  private _ifSessionExpiredN() {
-    this._refreshSubject.subscribe({
-      complete: () => {
-        this._refreshSubject = new Subject<any>();
-      }
-    });
-    if (this._refreshSubject.observers.length === 1) {
-      this.shared_functions.doLogout().then(
-        (refreshSubject: any) => {
-          this._refreshSubject.next(refreshSubject);
-        }
-      );
-    }
-    return this._refreshSubject;
-  }
+  // private _ifSessionExpiredN() {
+  //   this._refreshSubject.subscribe({
+  //     complete: () => {
+  //       this._refreshSubject = new Subject<any>();
+  //     }
+  //   });
+  //   if (this._refreshSubject.observers.length === 1) {
+  //     this.shared_functions.doLogout().then(
+  //       (refreshSubject: any) => {
+  //         this._refreshSubject.next(refreshSubject);
+  //       }
+  //     );
+  //   }
+  //   return this._refreshSubject;
+  // }
 
-<<<<<<< HEAD
   private _ifSessionExpired() {
     this._refreshSubject.subscribe({
       complete: () => {
@@ -98,47 +97,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     }
     return this._refreshSubject;
   }
-=======
-  // private _ifSessionExpired() {
-  //   this._refreshSubject.subscribe({
-  //     complete: () => {
-  //       this._refreshSubject = new Subject<any>();
-  //     }
-  //   });
-  //   if (this._refreshSubject.observers.length === 1) {
-  //     // Hit refresh-token API passing the refresh token stored into the request
-  //     // to get new access token and refresh token pair
-  //     // this.sessionService.refreshToken().subscribe(this._refreshSubject);
-  //     this.shared_functions.removeitemfromSessionStorage('tabId');
-  //     const ynw_user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
-  //     if (!ynw_user) {
-  //       window.location.reload();
-  //     }
-  //     const phone_number = ynw_user.loginId;
-  //     // const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
-  //     const enc_pwd = 'U2FsdGVkX1++uus5wpaBf1lGVWOMvpqlEENsT1AA5P4==';
-  //     const password = this.shared_services.get(enc_pwd, projectConstants.KEY);
-  //     const post_data = {
-  //       'countryCode': '+91',
-  //       'loginId': phone_number,
-  //       'password': password,
-  //       'mUniqueId': ynw_user.mUniqueId
-  //     };
-  //     const activeuser = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
-  //     // this.shared_functions.doLogout().then(
-  //     //   (refreshSubject: any) => {
-  //     //     this._refreshSubject.next(refreshSubject);
-  //     //   }
-  //     // );
-  //     if (activeuser) {
-  //       this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
-  //     } else {
-  //       this.shared_services.ConsumerLogin(post_data).subscribe(this._refreshSubject);
-  //     }
-  //   }
-  //   return this._refreshSubject;
-  // }
->>>>>>> refs/remotes/origin/1.3.0-for-Patch-Releases
 
   private _checkSessionExpiryErr(error: HttpErrorResponse): boolean {
     return (

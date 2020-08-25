@@ -83,10 +83,6 @@ export class QRCodeGeneratorComponent implements OnInit {
             // printWindow.print();
         });
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/1.3.0-for-Patch-Releases
     downloadQR() {
     }
 }
