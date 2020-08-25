@@ -5,7 +5,7 @@ import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { ApplyLabelComponent } from '../check-ins/apply-label/apply-label.component';
 import { MatDialog } from '@angular/material';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -2934,30 +2934,32 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   showCallingModes(modes, action) {
+    console.log(modes);
     if (!modes.consumer) {
       this.consumr_id = modes.providerConsumer.id;
     } else {
       this.consumr_id = modes.consumer.id;
     }
-    // this.changeWaitlistStatus(modes, action);
-    this.notedialogRef = this.dialog.open(CallingModesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        modes: modes.virtualService,
-        uuid: modes.uid,
-        consumerid: this.consumr_id,
-        qdata: modes,
-        type: 'appt',
-        action: action
+    // this.notedialogRef = this.dialog.open(CallingModesComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     modes: modes.virtualService,
+    //     uuid: modes.uid,
+    //     consumerid: this.consumr_id,
+    //     qdata: modes,
+    //     type: 'appt',
+    //     action: action
+    //   }
+    // });
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        waiting_id: modes.uid,
+        type: 'appt'
       }
-    });
-    this.notedialogRef.afterClosed().subscribe(result => {
-      // if (result === 'reloadlist') {
-      this.refresh();
-      // }
-    });
+    };
+    this.router.navigate(['provider', 'check-ins', 'teleservice'], navigationExtras);
   }
   scrollToSection(curTime) {
     // if (this.time_type === 2) {

@@ -827,7 +827,7 @@
                           <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
                           <span
                             [ngClass]="{'dash': (!small_device_display && getVirtualMode(checkin.virtualService) === 'GoogleMeet' || getVirtualMode(checkin.virtualService) === 'Zoom')?true:false}"
-                            *ngIf="!small_device_display">Teleservice</span>
+                            *ngIf="!small_device_display">Start</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('DONE', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"

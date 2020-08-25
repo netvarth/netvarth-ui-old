@@ -8947,8 +8947,11 @@ owl-carousel .bt3.active {
 @media only screen and (max-width: 500px) {
   .custbtn {
     padding-left: 5px;
-  
   }
+  .teleservicePopup .step5-pad-wndow {
+    padding: 0px !important;
+  }
+
 }
 .qrcode-icon{
   font-size: xxx-large;
@@ -9702,7 +9705,7 @@ button.cust-button-2.tme {
 }
 
 .tele_srv_txtarea {
-  height: 80px !important;
+  height: 170px !important;
   border: 1px solid !important;
   border-color: #b5abab !important;
   overflow: hidden !important;
@@ -10941,4 +10944,141 @@ a {
   width: 40px;
     height: 40px;
     margin-top: 5px;
+}
+.cdk-overlay-container .cdk-global-overlay-wrapper .popUpsize {
+  width: 50% !important;
+  /* height: 50%; */
+}
+.teleservicePopup .mat-dialog-title .serv-font-size {
+  font-size: 1.4rem;
+}
+.teleservicePopup .custmer-font-wght {
+  font-weight: 500;
+}
+.teleservicePopup {
+  display: block;
+}
+.teleservicePopup .form-group .dsp-flx {
+  display: flex !important;
+}
+.teleservicePopup .form-group .border-style .fa-blk {
+  color: black;
+}
+.teleservicePopup .form-group .dsp-flx .dv-details {
+  width: fit-content !important;
+}
+.teleservicePopup .form-group .dsp-flx .dv-reminder {
+  width: 60% !important;
+}
+.teleservicePopup .form-group .dsp-flx .btn-rght {
+  float: right !important;
+}
+.teleservicePopup .form-group .dv-launch-video-serv {
+  margin-top: 50px;
+  text-align: center;
+}
+.teleservicePopup .form-group .dv-launch-aud-serv {
+  margin-top: 40px !important;
+  text-align: center;
+}
+.teleservicePopup .form-group .border-style .dv-details .text-red {
+  color: red;
+}
+.teleservicePopup .form-group .dsp-flx .remindr-pad {
+  padding-top: 18px !important;
+}
+.teleservicePopup .mat-select {
+  max-width: 120px;
+}
+.teleservicePopup .form-group .dsp-grd {
+  display: grid !important;
+}
+.teleservicePopup .wndow-pad {
+  padding: 0px 30px 30px 30px;
+}
+.teleservicePopup .pad-0 {
+  padding: 0px;
+}
+.teleservicePopup .step5-pad-wndow {
+  padding: 10px 80px 10px 80px;
+}
+.teleservicePopup .pad-left70 {
+  padding-left: 70px !important;
+}
+/* .teleservicePopup * {
+  font-family: Lato;
+} */
+.teleservicePopup :host {
+  display:block;
+  position:relative;
+}
+.teleservicePopup .clock {
+  position:relative;
+  width:200px;
+  height:200px;
+  margin:40px auto;
+  border: 1px solid rgba(0,0,0,0.75);
+}
+.teleservicePopup .hand {
+  position:absolute;
+  transform-origin: 0 0;
+  top:100%;left:50%;
+  width:200px;
+  height:0px;
+  border-top:1px solid rgba(0,0,0,0.75);
+}
+.teleservicePopup .hour-hand {
+  border-top-width:8px;
+}
+.teleservicePopup .minute-hand {
+  border-top-width:4px;
+}
+.teleservicePopup .example-full-width .center tr {
+  font-size: 1.1rem ;
+}
+.teleservicePopup .example-full-width #table2 tr {
+  font-size: 1rem ;
+}
+.teleservicePopup .table-wdth {
+  width: 500px;
+}
+.teleservicePopup .fnt-siz {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.teleservicePopup #table3 img {
+  width: 50px;
+}
+.teleservicePopup .example-full-width #table3 tr {
+  font-size: 0.9rem ;
+}
+.teleservicePopup .btn-red{
+  background: #f24949 !important;
+}
+.teleservicePopup .btn-grn{
+  background: #00cc96 !important;
+}
+.teleservicePopup .example-full-width .tbl-bordr {
+  border-collapse: separate;
+  border-spacing: 0.5em;
+}
+.teleservicePopup .example-full-width .tbl-bordr tr{
+  font-size: 0.9rem;
+}
+.teleservicePopup .fnt-1rem {
+  font-size: 1rem !important;
+}
+
+@media only screen and (max-width: 400px) {
+  .teleservicePopup #table3 img {
+    width: 35px;
+  }
+  .teleservicePopup .mat-dialog-title .serv-font-size {
+    font-size: 1rem;
+  }
+  .teleservicePopup .tele-btn {
+    width: fit-content !important;
+    padding: 5px 5px 5px 5px !important;
+    border-color: rgb(24 115 242) !important;
+  }
 }
