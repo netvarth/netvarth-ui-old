@@ -99,7 +99,7 @@ onSubmit(loginForm.value)">
             </div> -->
             <div class="">
                 <button class="cust-logpg-submt" type="submit" mat-button [disabled]="api_loading" (click)="otpSend()">
-                    <span *ngIf="!api_loading">Signup</span>
+                    <span *ngIf="!api_loading">Sign up</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
                 </button>
