@@ -12,7 +12,8 @@ import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/function
 
 @Component({
     selector: 'app-calling-modes',
-    templateUrl: './calling-modes.component.html'
+    templateUrl: './calling-modes.component.html',
+    styleUrls: ['./calling-modes.component.css']
 })
 export class CallingModesComponent implements OnInit, OnDestroy {
     callingModes;
@@ -363,14 +364,14 @@ export class CallingModesComponent implements OnInit, OnDestroy {
                 subscribe((meetingdata) => {
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
-                    this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n\n 2. Wait for your ' + this.provider_label + ' to join';
+                    this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Wait for your ' + this.provider_label + ' to join';
                 });
         } else {
             this.shared_services.getApptMeetingDetails(this.callingModes, this.waiting_id).
                 subscribe((meetingdata) => {
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
-                    this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n\n 2. Wait for your ' + this.provider_label + ' to join';
+                    this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Wait for your ' + this.provider_label + ' to join';
                 });
         }
     }
