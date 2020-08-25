@@ -835,13 +835,13 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings">
-                                    <a>Consumer ID customization.</a>
+                                    <a>{{cust_domain_name |capitalizeFirst}} ID customization.</a>
                                 </li>
                                 <li (click)="redirecTo('custid')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">Customer Id Format
+                                        <span class="lnk setings">{{cust_domain_name |capitalizeFirst}} Id Format
                                         </span>
-                                        <p class="settings_info">Configure Customer Id format</p>
+                                        <p class="settings_info">Configure {{cust_domain_name |capitalizeFirst}} Id format</p>
                                     </a>
                                 </li>
                                 <!-- <li><a>Jaldee.com Integration<span class="pull-right">
