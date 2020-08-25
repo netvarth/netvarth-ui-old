@@ -104,12 +104,12 @@ export class RazorpayService {
     options.modal.ondismiss = (() => {
       if (usertype === 'consumer') {
         if (checkin_type === 'checkin_prepayment') {
-          // this.shared_functions.openSnackBar('Payment cancelled');
+          this.shared_functions.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
           this.ngZone.run(() => this.router.navigate(['consumer']));
         }
       }
       if (checkin_type === 'appt_prepayment') {
-        // this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+        this.shared_functions.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
         this.ngZone.run(() => this.router.navigate(['consumer']));
       }
     });

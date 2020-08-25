@@ -90,25 +90,25 @@ onSubmit(loginForm.value)">
                     })">
                 </app-field-error-display>
             </div>
-            <div class="example-container joinotp">
+            <!-- <div class="example-container joinotp">
                 <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
                     (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
                     [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin"
                     (resendOTPEmail)="resendOTPEmail($event)">
                 </app-otp-form>
-            </div>
+            </div> -->
             <div class="">
-                <!-- <button class="cust-logpg-submt" type="submit" mat-button [disabled]="api_loading" (click)="otpSend()">
+                <button class="cust-logpg-submt" type="submit" mat-button [disabled]="api_loading" (click)="otpSend()">
                     <span *ngIf="!api_loading">Signup</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
-                </button> -->
+                </button>
                 <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener"
                         [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
             </div>
-            <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
-            </app-field-error-display>
         </div>
+        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display>
         <!-- <div class="mat-dialog-actions">
             <button class="cust-logpg-submt" type="submit" mat-button [disabled]="api_loading" (click)="showError()">
                 <span *ngIf="!api_loading">Login</span>
@@ -120,6 +120,20 @@ onSubmit(loginForm.value)">
         </app-field-error-display> -->
     </div>
     <!-- step 6 for signup password -->
+    
+    <div class="example-container joinotp" *ngIf="step==4">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+        <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
+            (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
+            [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin"
+            (resendOTPEmail)="resendOTPEmail($event)">
+        </app-otp-form>
+        </div>
+        <div class="clearfix"></div>
+           <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+            </app-field-error-display>
+    </div>
+    
     <div class="example-container" *ngIf="step==6">
         <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
             (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="'consumer'" [consumerlogin]="consumerjoin">
