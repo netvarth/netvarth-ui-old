@@ -206,7 +206,7 @@
                             <ul class="nav nav-stacked set-block-2">
                                 <li class="form-level-settings">
                                     <a><strong>Virtual queue</strong> system . Provide
-                                        <strong>tokens</strong>.{{custs_name | capitalizeFirst}} will receive
+                                        <strong>tokens</strong>. {{custs_name | capitalizeFirst}} will receive
                                         <strong>real-time alerts</strong>.</a>
                                 </li>
                                 <li (click)="redirecTo('waitlistmanager')">
@@ -572,7 +572,7 @@
                                 </li>
                                 <li (click)="redirecTo('pos')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">Billing/POS
+                                        <span class="lnk setings">Billing
                                             <span class="pull-right">
                                                 <!-- <mat-slide-toggle [(ngModel)]="pos_status"
                                                 (change)="handle_posStatus($event)">
@@ -629,7 +629,7 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings">
-                                    <a>{{frm_msg_jaldeepay}}</a>
+                                    <a><strong>Accept</strong> {{frm_msg_jaldeepay}}</a>
                                 </li>
                                 <li (click)="redirecTo('payments')">
                                     <a class="pointer-cursor">
@@ -851,13 +851,13 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings">
-                                    <a>Consumer ID customization.</a>
+                                    <a>{{cust_domain_name |capitalizeFirst}} ID customization.</a>
                                 </li>
                                 <li (click)="redirecTo('custid')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">Customer Id
+                                        <span class="lnk setings">{{cust_domain_name |capitalizeFirst}} Id Format
                                         </span>
-                                        <p class="settings_info">Configure Customer Id format</p>
+                                        <p class="settings_info">Configure {{cust_domain_name |capitalizeFirst}} Id format</p>
                                     </a>
                                 </li>
                                 <!-- <li><a>Jaldee.com Integration<span class="pull-right">

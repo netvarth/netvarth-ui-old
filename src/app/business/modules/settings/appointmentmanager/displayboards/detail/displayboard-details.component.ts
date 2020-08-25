@@ -100,7 +100,7 @@ export class DisplayboardDetailComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Jaldee Appointment',
+            title: 'Jaldee Appointment Manager',
             url: '/provider/settings/appointmentmanager'
         },
         {

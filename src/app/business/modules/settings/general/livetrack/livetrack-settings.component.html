@@ -7,11 +7,16 @@
             <div class="row">
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
-                        <label>Live Tracking
+                        <label>Locate your {{cust_domain_name}}
                             <mat-slide-toggle [(ngModel)]="livetrack_status" (change)="handle_liveTracking($event)">
                             </mat-slide-toggle>
                              &nbsp;{{livetrack_statusstr}}
-                             <div class="form-level-settings"> Enable "Live Track" here.<a class="learnmore-pointer"
+                             <div class="form-level-settings">
+                                    <p class="settings_info" *ngIf="livetrack_status">{{custs_name |capitalizeFirst}}<strong> can</strong> share when they will arrive.
+                                    </p>
+                                    <p class="settings_info" *ngIf="!livetrack_status">{{custs_name |capitalizeFirst }}<strong> cannot</strong> share when they will arrive.
+                                    </p> 
+                                 <a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('livetracking', $event)">Learn
                                 More</a></div>
                         </label>                        

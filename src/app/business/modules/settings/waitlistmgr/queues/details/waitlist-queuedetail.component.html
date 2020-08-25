@@ -297,7 +297,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="{{capacitylimit}}" maxlength="4" type="text"
                                         class="form-control number-ip-sm"
-                                        placeholder="Maximum {{customer_label}}s that can be served in this schedule *"
+                                        placeholder="Maximum {{customer_label}}s that can be served in this queue *"
                                         formControlName="qcapacity" autocomplete="off" (keypress)="isNumeric($event)"
                                         (keyup)="isvalid($event)">
                                 </mat-form-field>
