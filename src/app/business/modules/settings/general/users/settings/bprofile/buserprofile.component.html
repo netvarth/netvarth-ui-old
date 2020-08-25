@@ -104,7 +104,7 @@
   <mat-expansion-panel-header class="min100">
   <mat-panel-title class="block-level">
   {{profile_summary_cap}}
-  <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i>
+  <i *ngIf="reqFields.name || reqFields.location" class="req-flds-cap">*required fields missing</i>
   <p class="form-level-settings">{{frm_profile_name_cap}}
   <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('basic-information', $event)">Learn More
   </a>
