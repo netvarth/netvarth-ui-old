@@ -415,12 +415,13 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.step = 5;
     }
     amReady() {
+        console.log(this.waiting_type);
         if (this.waiting_type === 'checkin') {
             if (this.data.waitlistStatus !== 'started') {
                 this.changeWaitlistStatus(this.data, 'STARTED');
             }
         } else {
-            if (this.data.apptStatus === 'Started') {
+            if ((this.data.apptStatus === 'Started') || (this.data.apptStatus === 'Arrived')) {
                 this.changeWaitlistStatus(this.data, 'Started');
             }
         }
@@ -472,7 +473,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         }
     }
     showCustomerRecord() {
-        this.step = 6;
+        this.step = 8;
     }
     amNotReady() {
         this.step = 1;
@@ -482,5 +483,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     redirecToPreviousPage() {
         this._location.back();
+    }
+    backtoProgresPage() {
+        this.step = 6;
     }
 }
