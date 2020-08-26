@@ -8,8 +8,8 @@
             <div class="row">
                 <div class="card pos">
                     <label>{{cust_domain_name |capitalizeFirst}} Id Format</label>
-                    <p class="form-level-settings">Choose one of the two customer series options.</p>
-
+                    <p class="form-level-settings">Choose one of the two {{cust_domain_name}} series options.</p>
+ 
                     <mat-radio-group [(ngModel)]='custIdFormat' ngDefaultControl (change)="formatChanged()">
                         <mat-radio-button value="{{formats.manual.value}}"></mat-radio-button>
                         <label for="">{{formats.manual.displayName}}</label><br><br>
