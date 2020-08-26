@@ -31,18 +31,18 @@
                                     </div>
                                     <div class="mgn-up-5">
                                         <span class="fnt-siz">{{customer_label | capitalizeFirst}} Name : <span
-                                                *ngIf="this.waiting_type === 'appt'">{{consumer_fname}}</span><span
-                                                *ngIf="this.waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
+                                                *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span><span
+                                                *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-md-7 col-xs-12 col-sm-7 col-lg-7">
                                     <div
-                                        class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign">
+                                        class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
                                         * <b>Meeting details</b> have been <b>sent</b> to <span class="inl-blk"
-                                            *ngIf="this.waiting_type === 'checkin'"><b>{{consumer_fname}}&nbsp;{{consumer_lname}}</b></span>
+                                            *ngIf="waiting_type === 'checkin'"><b>{{consumer_fname}}&nbsp;{{consumer_lname}}</b></span>
                                         <span class="inl-blk"
-                                            *ngIf="this.waiting_type === 'appt'"><b>{{consumer_fname}}</b></span>
+                                            *ngIf="waiting_type === 'appt'"><b>{{consumer_fname}}</b></span>
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
                                         <button (click)="meetingDetails()" class="btn-primary-n tele-btn">
@@ -53,10 +53,10 @@
                                 </div>
                                 <div class="col-md-5 col-xs-12 col-sm-5 col-lg-5 centeralign">
                                     <div
-                                        class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign">
+                                        class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
                                         Send a reminder to <span
-                                            *ngIf="this.waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
-                                        <span *ngIf="this.waiting_type === 'appt'">{{consumer_fname}}</span>
+                                            *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
+                                        <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span>
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
                                         <button (click)="reminder()" class="btn-primary-n tele-btn">
@@ -81,15 +81,15 @@
                                                     <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
                                                     Consultation with
                                                     <span
-                                                        *ngIf="this.waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
-                                                    <span *ngIf="this.waiting_type === 'appt'">{{consumer_fname}}</span>
+                                                        *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
+                                                    <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span>
                                                 </a>
                                             </button>
                                         </div>
                                         <!-- If teleservice is wtsap/phone modes -->
                                         <div
                                             *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && is_web">
-                                            <div>
+                                            <div class="custmer-font-wght">
                                                 <span
                                                     class="text-red">*{{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}</span>
                                                 <span class="text-red"> {{notSupported}}<br>
@@ -132,16 +132,17 @@
                                             <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 ">
                                                 <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
                                                     <div><b>I am done-</b></div>
-                                                    <div><button (click)="endmeeting()" class="btn-primary-n tele-btn">End
+                                                    <div><button (click)="endmeeting()"
+                                                            class="btn-primary-n tele-btn">End
                                                             Meeting</button></div>
                                                 </div>
                                                 <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
                                                     <div><b>I am not done-</b></div>
                                                     <div>
                                                         <button (click)="redirecToPreviousPage()"
-                                                        class="btn-primary-n tele-btn">Go
-                                                        Back to
-                                                        Dashboard</button><br>
+                                                            class="btn-primary-n tele-btn">Go
+                                                            Back to
+                                                            Dashboard</button><br>
                                                         <span class="text-red">
                                                             (This will not end the meeting)
                                                         </span>
@@ -162,8 +163,8 @@
                                                     <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
                                                     Consultation with
                                                     <span
-                                                        *ngIf="this.waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
-                                                    <span *ngIf="this.waiting_type === 'appt'">{{consumer_fname}}</span>
+                                                        *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
+                                                    <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span>
                                                 </a>
                                             </button>
                                         </div>
@@ -206,12 +207,19 @@
                                         Send Reminder to {{customer_label | capitalizeFirst}} Via
                                         <div class="coupon-outer dsp-grd">
                                             <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
-                                                {{customer_label | capitalizeFirst}}'s Mobile -
-                                                <span *ngIf="this.waiting_type === 'checkin'">{{phNo}}</span>
-                                                <span *ngIf="this.waiting_type === 'appt'">{{data.phoneNumber}}</span>
+                                                {{customer_label | capitalizeFirst}}'s Mobile
+                                                <span *ngIf="waiting_type === 'checkin'"> - {{phNo}}</span>
+                                                <span *ngIf="waiting_type === 'appt'"> - {{data.phoneNumber}}</span>
                                             </mat-checkbox>
-                                            <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">
-                                                {{customer_label | capitalizeFirst}}'s Email ID
+                                            <mat-checkbox class="mgright50 example-margin" [disabled]="!emailPresent"
+                                                [(ngModel)]="email">
+                                                {{customer_label | capitalizeFirst}}'s Email Id
+                                                <span
+                                                    *ngIf="(waiting_type === 'checkin') && (data.waitlistingFor[0].email)">
+                                                    - {{data.waitlistingFor[0].email}}</span>
+                                                <span
+                                                    *ngIf="(waiting_type === 'appt') && (data.providerConsumer.email)">
+                                                    - {{data.providerConsumer.email}}</span>
                                             </mat-checkbox>
                                             <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">
                                                 App Notification for
@@ -248,7 +256,7 @@
                                         <div class="col-md-6 col-m-6 col-xs-6 col-lg-6">
                                             <img src="assets/images/person_img.png" alt="Provider_icon">
                                             <h6>{{consumer_fname}}
-                                                <span *ngIf="this.waiting_type === 'checkin'">{{consumer_lname}}</span>
+                                                <span *ngIf="waiting_type === 'checkin'">{{consumer_lname}}</span>
                                                 ({{customer_label}})
                                             </h6>
                                         </div>
@@ -269,13 +277,22 @@
                                             Send Meeting Details to {{customer_label | capitalizeFirst}} Via
                                             <div class="coupon-outer dsp-grd">
                                                 <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
-                                                    {{customer_label | capitalizeFirst}}'s Mobile - <span
-                                                        *ngIf="this.waiting_type === 'checkin'">{{phNo}}</span>
-                                                    <span
-                                                        *ngIf="this.waiting_type === 'appt'">{{data.phoneNumber}}</span>
+                                                    {{customer_label | capitalizeFirst}}'s Mobile<span
+                                                        *ngIf="waiting_type === 'checkin'"> - {{phNo}}</span>
+                                                    <span *ngIf="waiting_type === 'appt'"> - {{data.phoneNumber}}</span>
                                                 </mat-checkbox>
-                                                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">
+                                                <!-- <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">
                                                     {{customer_label | capitalizeFirst}}'s Email ID
+                                                </mat-checkbox> -->
+                                                <mat-checkbox class="mgright50 example-margin"
+                                                    [disabled]="!emailPresent" [(ngModel)]="email">
+                                                    {{customer_label | capitalizeFirst}}'s Email Id
+                                                    <span
+                                                        *ngIf="(waiting_type === 'checkin') && (data.waitlistingFor[0].email)">
+                                                        - {{data.waitlistingFor[0].email}}</span>
+                                                    <span
+                                                        *ngIf="(waiting_type === 'appt') && (data.providerConsumer.email)">
+                                                        - {{data.providerConsumer.email}}</span>
                                                 </mat-checkbox>
                                                 <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">
                                                     App Notification for
@@ -303,10 +320,10 @@
                                 </div>
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 centeralign">
                                     <h4><span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
-                                    Consultation with
-                                    <span
-                                        *ngIf="this.waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
-                                    <span *ngIf="this.waiting_type === 'appt'">{{consumer_fname}}</span>
+                                        Consultation with
+                                        <span
+                                            *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
+                                        <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span>
                                     </h4>
                                 </div>
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20">
@@ -356,7 +373,7 @@
                                         </div>
                                     </h1>
                                 </div>
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 custmer-font-wght">
                                     Service Name: <span class="mgn-lt-5"><i *ngIf="callingModes === 'Zoom'"
                                             class="fa zoom-icon"></i>
                                         <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
@@ -366,16 +383,16 @@
                                         class="mgn-lt-5">
                                         {{serv_name | capitalizeFirst}}</span>
                                 </div>
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-5">
+                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-5 custmer-font-wght">
                                     {{customer_label | capitalizeFirst}} Name :<span class="mgn-lt-5">{{consumer_fname}}
-                                        &nbsp;<span
-                                            *ngIf="this.waiting_type === 'checkin'">{{consumer_lname}}</span></span>
+                                        &nbsp;<span *ngIf="waiting_type === 'checkin'">{{consumer_lname}}</span></span>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button (click)="showCustomerRecord()" class="btn-primary-n tele-btn">Show me
                                         {{customer_label}}
                                         record</button>
                                 </div>
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20">
+                                <div
+                                    class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 custmer-font-wght">
                                     <span class="text-red"
                                         *ngIf="(callingModes === 'Zoom') || (callingModes === 'GoogleMeet')">
                                         ( {{callingModes}} has been opened in a new window )
@@ -410,10 +427,10 @@
                                 <div
                                     class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
                                     <h1 class="mat-dialog-title linkpagestyle">
-                                        <span class="serv-font-size">Complete 
-                                        <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
-                                            consultation</span>
-                                    </span>
+                                        <span class="serv-font-size">Complete
+                                            <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
+                                                consultation</span>
+                                        </span>
                                     </h1>
                                 </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
@@ -424,14 +441,14 @@
                                                 consultation</span>
                                             with<br>
                                             {{consumer_fname}} <span
-                                                *ngIf="this.waiting_type === 'checkin'">{{consumer_lname}}</span>?
+                                                *ngIf="waiting_type === 'checkin'">{{consumer_lname}}</span>?
                                         </span>
                                     </h4>
                                 </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                                     <span class="text-red">
                                         *We will be sending a notification to {{consumer_fname}} <span
-                                            *ngIf="this.waiting_type === 'checkin'">{{consumer_lname}}</span>
+                                            *ngIf="waiting_type === 'checkin'">{{consumer_lname}}</span>
                                         that the meeting has
                                         ended
                                     </span>
@@ -439,18 +456,20 @@
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-50 mgn-bt-20">
                                     <button type="button" class="cs-btn bt1 btn-grn"
                                         (click)="selectCompleted()">Yes</button>&nbsp;&nbsp;&nbsp;
-                                    <button *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')" type="button" (click)="makeCompleted()"
-                                        class="cs-btn bt1 btn-red">No</button>
-                                    <button *ngIf="(callingModes === 'WhatsApp') || (callingModes === 'Phone')" type="button" (click)="gotoUnsuported()" class="cs-btn bt1 btn-red">No</button>
+                                    <button *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')"
+                                        type="button" (click)="makeCompleted()" class="cs-btn bt1 btn-red">No</button>
+                                    <button *ngIf="(callingModes === 'WhatsApp') || (callingModes === 'Phone')"
+                                        type="button" (click)="gotoUnsuported()" class="cs-btn bt1 btn-red">No</button>
                                 </div>
                             </div>
                             <!-- Step 8 Customer Record -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign"
                                 *ngIf="step === 8">
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
+                                <div
+                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
                                     <h1 class="mat-dialog-title linkpagestyle">
                                         <span class="serv-font-size">
-                                           {{customer_label | capitalizeFirst}} Record
+                                            {{customer_label | capitalizeFirst}} Record
                                         </span>
                                     </h1>
                                 </div>
@@ -475,16 +494,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-30">
-                                        <button type="button" class="cs-btn bt2 travelmodeEdit"
-                                            (click)="backtoProgresPage()">Cancel</button>
+                                    <button type="button" class="cs-btn bt2 travelmodeEdit"
+                                        (click)="backtoProgresPage()">Cancel</button>
                                 </div>
                             </div>
                         </div>
                         <div class="lbr col-sm-12 col-md-3 col-lg-3 col-xs-12">
 
                         </div>
-                        <!-- <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-                        </app-form-success-display> -->
                     </div>
                 </div>
             </div>

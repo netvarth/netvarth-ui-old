@@ -73,75 +73,74 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     waiting_id: any;
     waiting_type: any;
     api_loading = false;
+    emailPresent = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public shared_services: SharedServices,
         private provider_shared_functions: ProviderSharedFuctions,
-        private _location: Location,
-        // @Inject(MAT_DIALOG_DATA) public data: any,
-        // public dialogRef: MatDialogRef<CallingModesComponent>
-        ) {
-            // this.activateroute.queryParams.subscribe(qparams => {
-            //     console.log(qparams);
-            //     this.waiting_id = qparams.id;
-            //     this.waiting_type = qparams.type;
-            //   });
-            this.activateroute.queryParams.subscribe(params => {
-                console.log(params);
-                this.waiting_id = params.waiting_id;
-                this.waiting_type = params.type;
-              });
+        private _location: Location
+    ) {
+        this.activateroute.queryParams.subscribe(params => {
+            this.waiting_id = params.waiting_id;
+            this.waiting_type = params.type;
+        });
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
     ngOnInit() {
-          if (this.waiting_type === 'checkin') {
-              this.provider_services.getProviderWaitlistDetailById(this.waiting_id)
-            .subscribe(
-              data => {
-                  this.data = data;
-                  console.log(this.data);
-                  this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
-                  this.busnes_name = this.data.providerAccount.businessName;
-                  this.serv_name = this.data.service.name;
-                  this.servDetails = this.data.service;
-                  this.getMeetingDetails();
-                  if (this.waiting_type === 'checkin') {
-                    this.chkinTeleserviceJoinLink();
-                    this.consumer_fname = this.data.waitlistingFor[0].firstName;
-                    this.consumer_lname = this.data.waitlistingFor[0].lastName;
-                    this.date = this.shared_functions.formatDateDisplay(this.data.date);
-                    this.time = this.data.checkInTime;
-                    this.location = this.data.queue.location.address;
-                    if (this.data.waitlistingFor[0].phoneNo) {
-                        this.phNo = this.data.waitlistingFor[0].phoneNo;
-                    }
-                    if (this.data.calculationMode === 'NoCalc') {
-                        this.jalde_q_id = this.data.token;
-                    } else {
-                        this.jalde_q_id = this.data.appxWaitingTime + ' min';
-                    }
-                }
-              });
-          } else {
+        if (this.waiting_type === 'checkin') {
+            this.provider_services.getProviderWaitlistDetailById(this.waiting_id)
+                .subscribe(
+                    data => {
+                        this.data = data;
+                        console.log(this.data);
+                        this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
+                        this.busnes_name = this.data.providerAccount.businessName;
+                        this.serv_name = this.data.service.name;
+                        this.servDetails = this.data.service;
+                        if (this.data.waitlistingFor[0].email) {
+                            this.emailPresent = true;
+                        }
+                        this.getMeetingDetails();
+                        if (this.waiting_type === 'checkin') {
+                            this.chkinTeleserviceJoinLink();
+                            this.consumer_fname = this.data.waitlistingFor[0].firstName;
+                            this.consumer_lname = this.data.waitlistingFor[0].lastName;
+                            this.date = this.shared_functions.formatDateDisplay(this.data.date);
+                            this.time = this.data.checkInTime;
+                            this.location = this.data.queue.location.address;
+                            if (this.data.waitlistingFor[0].phoneNo) {
+                                this.phNo = this.data.waitlistingFor[0].phoneNo;
+                            }
+                            if (this.data.calculationMode === 'NoCalc') {
+                                this.jalde_q_id = this.data.token;
+                            } else {
+                                this.jalde_q_id = this.data.appxWaitingTime + ' min';
+                            }
+                        }
+                    });
+        } else {
             this.provider_services.getAppointmentById(this.waiting_id)
-            .subscribe(
-              data => {
-                this.data = data;
-                console.log(this.data);
-                this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
-                this.busnes_name = this.data.providerAccount.businessName;
-                this.serv_name = this.data.service.name;
-                this.servDetails = this.data.service;
-                this.getMeetingDetails();
-                this.apptTeleserviceJoinLink();
-                this.consumer_fname = this.data.appmtFor[0].userName;
-                this.date = this.shared_functions.formatDateDisplay(this.data.appmtDate);
-                this.time = this.data.appmtTime;
-                this.location = this.data.location.address;
-              });
-          }
+                .subscribe(
+                    data => {
+                        this.data = data;
+                        console.log(this.data);
+                        this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
+                        this.busnes_name = this.data.providerAccount.businessName;
+                        this.serv_name = this.data.service.name;
+                        this.servDetails = this.data.service;
+                        if (this.data.providerConsumer.email) {
+                            this.emailPresent = true;
+                        }
+                        this.getMeetingDetails();
+                        this.apptTeleserviceJoinLink();
+                        this.consumer_fname = this.data.appmtFor[0].userName;
+                        this.date = this.shared_functions.formatDateDisplay(this.data.appmtDate);
+                        this.time = this.data.appmtTime;
+                        this.location = this.data.location.address;
+                    });
+        }
         this.notSupported = this.shared_functions.getProjectMesssages('TELE_NOT_SUPPORTED');
         this.sendMeetingDetails = this.shared_functions.getProjectMesssages('SENDING_MEET_DETAILS');
         this.availableMsg = this.shared_functions.getProjectMesssages('IS_AVAILABLE');
@@ -175,7 +174,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         } else {
             this.is_web = true;
         }
-        
+
         this.getProviderSettings();
 
         // timer
@@ -193,10 +192,9 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     selectHeadsup() {
         this.msg_to_user = '';
-       // this.getMeetingDetails();
+        // this.getMeetingDetails();
         this.step = 2;
         this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.serv_name + ' with ' + this.busnes_name + ' will begin. Please be ready.\n\n Here are the details for how to start the service -\n\n 1. Click on the following link - ' + this.starting_url + ' \n\n 2. Waiting for your ' + this.provider_label + ' to join';
-        console.log(this.msg_to_user);
     }
     selectAlrdyWaiting() {
         // if (this.callingModes === 'WhatsApp' && this.data.qdata.service.virtualServiceType === 'videoService') {
@@ -217,25 +215,25 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     selectCompleted() {
         if (this.waiting_type === 'checkin') {
             if (this.data.waitlistStatus === 'started') {
-            this.changeWaitlistStatus(this.data, 'DONE');
+                this.changeWaitlistStatus(this.data, 'DONE');
             } else {
                 this.changeWaitlistStatus(this.data, 'STARTED');
                 setTimeout(() => {
-                this.changeWaitlistStatus(this.data, 'DONE');
+                    this.changeWaitlistStatus(this.data, 'DONE');
                 }, 300);
             }
             this.redirecToPreviousPage();
-      } else {
-          if (this.data.apptStatus === 'Started') {
-            this.changeWaitlistStatus(this.data, 'Completed');
-          } else {
-            this.changeWaitlistStatus(this.data, 'Started');
-            setTimeout(() => {
-            this.changeWaitlistStatus(this.data, 'Completed');
+        } else {
+            if (this.data.apptStatus === 'Started') {
+                this.changeWaitlistStatus(this.data, 'Completed');
+            } else {
+                this.changeWaitlistStatus(this.data, 'Started');
+                setTimeout(() => {
+                    this.changeWaitlistStatus(this.data, 'Completed');
                 }, 300);
-          }
+            }
             this.redirecToPreviousPage();
-      }
+        }
     }
     sendMessage() {
         const post_data = {
@@ -250,7 +248,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         if (this.waiting_type === 'checkin') {
             this.shared_services.consumerMassCommunication(post_data).
                 subscribe(() => {
-                 //   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                    //   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                     this.shared_functions.openSnackBar(Messages.PROVIDERTOCONSUMER_NOTE_ADD);
                     this.step = 1;
                     setTimeout(() => {
@@ -261,7 +259,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         } else {
             this.shared_services.consumerMassCommunicationAppt(post_data).
                 subscribe(() => {
-                   // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                    // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                     this.shared_functions.openSnackBar(Messages.PROVIDERTOCONSUMER_NOTE_ADD);
                     this.step = 1;
                     setTimeout(() => {
@@ -316,7 +314,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
                 .then(
                     result => {
                         if (action === 'DONE') {
-                           //  this.dialogRef.close('reloadlist');
+                            //  this.dialogRef.close('reloadlist');
                         }
                         if (action === 'STARTED') {
                             // if (this.data.action === 'normalStart') {
@@ -351,7 +349,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.step = 4;
     }
     reminder() {
-       // this.getMeetingDetails();
+        // this.getMeetingDetails();
         this.msg_to_user = '';
         this.selectHeadsup();
     }
@@ -366,11 +364,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     getMeetingDetails() {
         this.starting_url = '';
-        // const uuid_data = {
-        //     'mode': this.callingModes
-        // };
-        console.log(this.callingModes);
-        console.log(this.waiting_id);
         if (this.waiting_type === 'checkin') {
             this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.waiting_id).
                 subscribe((meetingdata) => {
@@ -402,7 +395,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         } else if (this.step === 8 || this.step === 7) {
             this.step = 6;
         } else {
-          //  this.dialogRef.close('reloadlist');
+            //  this.dialogRef.close('reloadlist');
         }
     }
     asktoLaunch() {
@@ -415,7 +408,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.step = 5;
     }
     amReady() {
-        console.log(this.waiting_type);
         if (this.waiting_type === 'checkin') {
             if (this.data.waitlistStatus !== 'started') {
                 this.changeWaitlistStatus(this.data, 'STARTED');
