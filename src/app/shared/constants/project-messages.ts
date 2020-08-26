@@ -9,7 +9,7 @@ export const Messages = {
   'EMAIL_MISMATCH': 'Email and Re-entered Email do not match',
   'PASSWORD_CHANGED': 'Password has been changed successfully',
   'EMAIL_VERIFIED': 'Your email has been verified',
-  'PHONE_VERIFIED': 'Your phone number has been verified',
+  'PHONE_VERIFIED': 'Your mobile number has been verified',
   'MEMBER_CREATED': 'Member added successfully',
   'MEMBER_UPDATED': 'Member updated successfully',
   'LICENSE_UPGRADED': 'License successfully upgraded to [package]',
