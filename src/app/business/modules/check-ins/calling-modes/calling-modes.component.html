@@ -187,7 +187,7 @@
                                             <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
                                                 {{customer_label | capitalizeFirst}}'s Mobile -
                                                 <span *ngIf="this.waiting_type === 'checkin'">{{phNo}}</span>
-                                                <span *ngIf="this.waiting_type === 'appt'">{{qdata.phoneNumber}}</span>
+                                                <span *ngIf="this.waiting_type === 'appt'">{{data.phoneNumber}}</span>
                                             </mat-checkbox>
                                             <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">
                                                 {{customer_label | capitalizeFirst}}'s Email ID
@@ -251,7 +251,7 @@
                                                     {{customer_label | capitalizeFirst}}'s Mobile - <span
                                                         *ngIf="this.waiting_type === 'checkin'">{{phNo}}</span>
                                                     <span
-                                                        *ngIf="this.waiting_type === 'appt'">{{qdata.phoneNumber}}</span>
+                                                        *ngIf="this.waiting_type === 'appt'">{{data.phoneNumber}}</span>
                                                 </mat-checkbox>
                                                 <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">
                                                     {{customer_label | capitalizeFirst}}'s Email ID

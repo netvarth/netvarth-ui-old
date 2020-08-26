@@ -105,6 +105,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
                   this.busnes_name = this.data.providerAccount.businessName;
                   this.serv_name = this.data.service.name;
                   this.servDetails = this.data.service;
+                  this.getMeetingDetails();
                   if (this.waiting_type === 'checkin') {
                     this.chkinTeleserviceJoinLink();
                     this.consumer_fname = this.data.waitlistingFor[0].firstName;
@@ -120,13 +121,24 @@ export class CallingModesComponent implements OnInit, OnDestroy {
                     } else {
                         this.jalde_q_id = this.data.appxWaitingTime + ' min';
                     }
-                } else {
-                    this.apptTeleserviceJoinLink();
-                    this.consumer_fname = this.data.appmtFor[0].userName;
-                    this.date = this.shared_functions.formatDateDisplay(this.data.appmtDate);
-                    this.time = this.data.appmtTime;
-                    this.location = this.data.location.address;
                 }
+              });
+          } else {
+            this.provider_services.getAppointmentById(this.waiting_id)
+            .subscribe(
+              data => {
+                this.data = data;
+                console.log(this.data);
+                this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
+                this.busnes_name = this.data.providerAccount.businessName;
+                this.serv_name = this.data.service.name;
+                this.servDetails = this.data.service;
+                this.getMeetingDetails();
+                this.apptTeleserviceJoinLink();
+                this.consumer_fname = this.data.appmtFor[0].userName;
+                this.date = this.shared_functions.formatDateDisplay(this.data.appmtDate);
+                this.time = this.data.appmtTime;
+                this.location = this.data.location.address;
               });
           }
         this.notSupported = this.shared_functions.getProjectMesssages('TELE_NOT_SUPPORTED');
@@ -162,7 +174,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         } else {
             this.is_web = true;
         }
-        this.getMeetingDetails();
+        
         this.getProviderSettings();
 
         // timer
@@ -219,10 +231,10 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         // }
         if (this.waiting_type === 'checkin') {
             this.changeWaitlistStatus(this.data, 'DONE');
-         //   this.dialogRef.close('reloadlist');
+            this.redirecToPreviousPage();
       } else {
             this.changeWaitlistStatus(this.data, 'Completed');
-          //  this.dialogRef.close('reloadlist');
+            this.redirecToPreviousPage();
       }
     }
     sendMessage() {
@@ -339,6 +351,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.step = 4;
     }
     reminder() {
+       // this.getMeetingDetails();
+        this.msg_to_user = '';
         this.selectHeadsup();
     }
     waitingFor() {
@@ -355,6 +369,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         // const uuid_data = {
         //     'mode': this.callingModes
         // };
+        console.log(this.callingModes);
+        console.log(this.waiting_id);
         if (this.waiting_type === 'checkin') {
             this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.waiting_id).
                 subscribe((meetingdata) => {
@@ -452,11 +468,11 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             selection.removeAllRanges();
             selection.addRange(range);
             document.execCommand('Copy');
-            this.shared_functions.openSnackBar('Reminder copied to clipboard');
+            this.shared_functions.openSnackBar('Meeting Details copied to clipboard');
         }
     }
     showCustomerRecord() {
-        this.step = 8;
+        this.step = 6;
     }
     amNotReady() {
         this.step = 1;
