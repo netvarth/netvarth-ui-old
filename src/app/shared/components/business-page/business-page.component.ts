@@ -11,7 +11,6 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
-import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
@@ -358,8 +357,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           } else {
             this.getbusinessprofiledetails_json('businessProfile', true);
             this.getbusinessprofiledetails_json('virtualFields', true);
-            // this.getbusinessprofiledetails_json('services', true);
-            // this.getbusinessprofiledetails_json('apptServices', true);
+            this.getbusinessprofiledetails_json('services', true);
+            this.getbusinessprofiledetails_json('apptServices', true);
             this.getbusinessprofiledetails_json('donationServices', true);
             this.getbusinessprofiledetails_json('departmentProviders', true);
           }
@@ -557,9 +556,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
               this.locationjson[i]['checkins'] = [];
-              if (this.userType === 'consumer') {
-                this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
-              }
+              // if (this.userType === 'consumer') {
+                // this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
+              // }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
               if (this.businessid && this.userId) {
                 appt_locarr.push({ 'locid': this.businessid + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
@@ -1122,15 +1121,15 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       }, 2500);
     }
   }
-  getExistingCheckinsByLocation(locid, passedIndx) {
-    this.shared_services.getExistingCheckinsByLocation(locid)
-      .subscribe(data => {
-        this.locationjson[passedIndx]['checkins'] = data;
-      },
-        error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
-        });
-  }
+  // getExistingCheckinsByLocation(locid, passedIndx) {
+  //   this.shared_services.getExistingCheckinsByLocation(locid)
+  //     .subscribe(data => {
+  //       this.locationjson[passedIndx]['checkins'] = data;
+  //     },
+  //       error => {
+  //         this.sharedFunctionobj.apiErrorAutoHide(this, error);
+  //       });
+  // }
   getWaitlistingFor(obj) {
     let str = '';
     if (obj.length > 0) {
@@ -1180,16 +1179,16 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       this.doLogin('consumer', passParam);
     }
   }
-  getInboxUnreadCnt() {
-    const usertype = 'consumer';
-    this.shared_services.getInboxUnreadCount(usertype)
-      .subscribe(data => {
-        this.inboxCntFetched = true;
-        this.inboxUnreadCnt = data;
-      },
-        () => {
-        });
-  }
+  // getInboxUnreadCnt() {
+  //   const usertype = 'consumer';
+  //   this.shared_services.getInboxUnreadCount(usertype)
+  //     .subscribe(data => {
+  //       this.inboxCntFetched = true;
+  //       this.inboxUnreadCnt = data;
+  //     },
+  //       () => {
+  //       });
+  // }
   communicateHandler() {
     const providforCommunicate = this.provider_bussiness_id;
     // check whether logged in as consumer
@@ -1562,25 +1561,25 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
   onButtonAfterHook() { }
   // Edited//
-  showExistingCheckin(locId, locName, index) {
-    this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        locId: locId,
-        locName: locName,
-        terminologies: this.terminologiesjson,
-        settings: this.settingsjson
-      }
-    });
+  // showExistingCheckin(locId, locName, index) {
+  //   this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       locId: locId,
+  //       locName: locName,
+  //       terminologies: this.terminologiesjson,
+  //       settings: this.settingsjson
+  //     }
+  //   });
 
-    this.extChecindialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.getExistingCheckinsByLocation(locId, index);
-      }
-    });
-  }
+  //   this.extChecindialogRef.afterClosed().subscribe(result => {
+  //     if (result === true) {
+  //       this.getExistingCheckinsByLocation(locId, index);
+  //     }
+  //   });
+  // }
 
   showServiceDetail(serv, busname) {
     let servData;

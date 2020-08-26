@@ -52,11 +52,7 @@ export class GeneralSettingsComponent implements OnInit {
         private shared_services: SharedServices,
         private dialog: MatDialog,
         private shared_functions: SharedFunctions) {
-<<<<<<< HEAD
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');  
-=======
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
->>>>>>> refs/remotes/origin/1.3.0-for-Patch-Releases
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
