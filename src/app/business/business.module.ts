@@ -47,7 +47,6 @@ import { CustomerModule } from './modules/customer/customer.module';
 import { ProviderWaitlistCheckInCancelPopupComponent } from './modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ProviderErrorMesagePopupComponent } from './modules/provider-error-message-popup/provider-error-message-popup.component';
 import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
-import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 
 @NgModule({
@@ -91,8 +90,7 @@ import { ProviderStartTourComponent } from '../ynw_provider/components/provider-
         Nl2BrPipeModule,
         AddProviderSchedulesModule,
         DynamicFormModule,
-        CustomerModule,
-        JoyrideModule.forChild()
+        CustomerModule
     ],
     entryComponents: [
         AddProviderWaitlistQueuesComponent,

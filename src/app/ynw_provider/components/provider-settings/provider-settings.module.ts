@@ -28,7 +28,6 @@ import { AddProviderSchedulesModule } from '../add-provider-schedule/add-provide
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { DepartmentModule } from '../../shared/modules/department/department.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
-import { JoyrideModule } from 'ngx-joyride';
 @NgModule({
     imports: [
         CapitalizeFirstPipeModule,
@@ -49,8 +48,7 @@ import { JoyrideModule } from 'ngx-joyride';
         AddProviderSchedulesModule,
         NgbTimepickerModule,
         DepartmentModule,
-        NgxQRCodeModule,
-        JoyrideModule.forChild()
+        NgxQRCodeModule
     ],
     declarations: [
         ProviderSettingsComponent,

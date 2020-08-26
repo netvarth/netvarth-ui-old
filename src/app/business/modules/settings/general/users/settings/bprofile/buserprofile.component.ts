@@ -31,7 +31,7 @@ import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic
 
 })
 
-export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked {
 
   userAdditionalInfoSubDomainFields: any[];
   userAdditionalInfoDomainFields: any[];
@@ -335,11 +335,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.shared_services.bussinessDomains()
       .subscribe(data => {
         this.businessConfig = data;
-        // this.getBusinessProfile();
+       // this.getBusinessProfile();
       },
         () => {
 
-        });
+     });
   }
   getUserPublicSearch() {
     this.provider_services.getUserPublicSearch(this.userId)
@@ -397,14 +397,14 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
                   }
                 });
             });
-
+  
           if (this.bProfile.logo) {
             this.blogo = this.bProfile.logo;
             const cnow = new Date();
             const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
             this.cacheavoider = dd;
             this.user_datastorage.updateProfilePicWeightage(true);
-          } else {
+          }  else {
             this.user_datastorage.updateProfilePicWeightage(false);
           }
           if (this.bProfile.status === 'ACTIVE') {
@@ -494,7 +494,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
         this.user_arr = data;
         const breadcrumbs = [];
         this.breadcrumbs_init.map((e) => {
-          breadcrumbs.push(e);
+          breadcrumbs.push(e); 
         });
         breadcrumbs.push({
           title: this.user_arr.firstName,
@@ -519,11 +519,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
                 // this.initSpecializations();
                 this.bProfile['subDomain'] = this.subDomain;
                 this.getBusinessProfile();
-              }
+                }
             }
           }
         }
-      });
+ });
   }
 
   checkMandatoryFieldsInResultSet(domainFields, fieldname) {
@@ -695,7 +695,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
         data => {
           let user_mandatorysubdomain = false;
           let user_mandatorySubDomainFilled = false;
-          let user_additionalInfoFilledStatus = false;
+          let user_additionalInfoFilledStatus = false
           this.subdomain_fields = data['fields'];
 
           this.subdomain_questions = data['questions'] || [];
@@ -894,21 +894,21 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
 
 
   updatePrimaryFields(pdata) {
-    // if (this.blogo.length === 0) {
-    //   const self = this;
-    //   const  promise = self.sharedfunctionobj.getBase64Image();
-    //   promise.then(function (dataURL) {
-    //   const blob = self.sharedfunctionobj.b64toBlob(dataURL);
-    //   const submit_data: FormData = new FormData();
-    //   submit_data.append('files', blob, 'jaldee-logo.png');
-    //   const propertiesDet = {
-    //     'caption': 'Logo'
-    //   };
-    //   const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-    //   submit_data.append('properties', blobPropdata);
-    //   self.uploadLogo(submit_data);
-    // });
-    // }
+      // if (this.blogo.length === 0) {
+      //   const self = this;
+      //   const  promise = self.sharedfunctionobj.getBase64Image();
+      //   promise.then(function (dataURL) {
+      //   const blob = self.sharedfunctionobj.b64toBlob(dataURL);
+      //   const submit_data: FormData = new FormData();
+      //   submit_data.append('files', blob, 'jaldee-logo.png');
+      //   const propertiesDet = {
+      //     'caption': 'Logo'
+      //   };
+      //   const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+      //   submit_data.append('properties', blobPropdata);
+      //   self.uploadLogo(submit_data);
+      // });
+      // }
 
     this.disableButton = true;
     this.provider_services.createUserbProfile(pdata, this.userId)
@@ -1030,7 +1030,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       this.progress_bar_four = 0;
       return businessProfileWeightageText;
     } else if
-      (weightage >= 50 && weightage < 75) {
+    (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'info';
@@ -1081,7 +1081,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
           this.bProfile = data;
           this.getSpecializations(this.domain, this.subDomain);
           if (this.bProfile.specialization) {
-            this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
+           this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
             if (this.bProfile.specialization.length > 0) {
               this.normal_specilization_show = 3;
             } else {
@@ -1099,9 +1099,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   getSpecializations(domain, subdomain) {
     this.provider_services.getSpecializations(domain, subdomain)
       .subscribe((data: any) => {
-        this.specialization_arr = data;
-      });
-  }
+       this.specialization_arr = data;
+       });
+     }
   getSpecializationName(n) {
     for (let i = 0; i < this.specialization_arr.length; i++) {
       if (this.specialization_arr[i].name === n) {
@@ -1332,9 +1332,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   specializations() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'specializations']);
   }
-  additionalInfo() {
+   additionalInfo() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'additionalinfo']);
-  }
+   }
   languagesKnown() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'languages']);
   }
