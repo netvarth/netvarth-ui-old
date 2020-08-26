@@ -358,8 +358,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           } else {
             this.getbusinessprofiledetails_json('businessProfile', true);
             this.getbusinessprofiledetails_json('virtualFields', true);
-            this.getbusinessprofiledetails_json('services', true);
-            this.getbusinessprofiledetails_json('apptServices', true);
+            // this.getbusinessprofiledetails_json('services', true);
+            // this.getbusinessprofiledetails_json('apptServices', true);
             this.getbusinessprofiledetails_json('donationServices', true);
             this.getbusinessprofiledetails_json('departmentProviders', true);
           }
