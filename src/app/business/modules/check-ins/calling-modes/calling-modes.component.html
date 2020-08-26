@@ -102,7 +102,8 @@
                                                         {{installed_cap}}
                                                     </a></span>
                                             </div>
-                                            <div>
+
+                                            <!-- <div>
                                                 <table id="table2" width="100%" class="center">
                                                     <tbody>
                                                         <tr class="linkpagestyle">
@@ -126,6 +127,26 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                            </div> -->
+
+                                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 ">
+                                                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                                    <div><b>I am done-</b></div>
+                                                    <div><button (click)="endmeeting()" class="btn-primary-n tele-btn">End
+                                                            Meeting</button></div>
+                                                </div>
+                                                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                                    <div><b>I am not done-</b></div>
+                                                    <div>
+                                                        <button (click)="redirecToPreviousPage()"
+                                                        class="btn-primary-n tele-btn">Go
+                                                        Back to
+                                                        Dashboard</button><br>
+                                                        <span class="text-red">
+                                                            (This will not end the meeting)
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div
@@ -370,13 +391,13 @@
                                         <div><b>I am not done-</b></div>
                                         <div><a *ngIf="(callingModes !== 'Phone')" target="_blank"
                                                 [href]="starting_url">
-                                                <button class="btn-primary-n tele-btn">&nbsp;&nbsp;&nbsp;Relaunch
-                                                    Meeting&nbsp;&nbsp;&nbsp;</button>
+                                                <button class="btn-primary-n tele-btn">Relaunch
+                                                    Meeting</button>
                                             </a>
                                             <a *ngIf="(callingModes === 'Phone')" target="_blank"
                                                 [href]="'tel:' + starting_url">
-                                                <button class="btn-primary-n tele-btn">&nbsp;&nbsp;&nbsp;Relaunch
-                                                    Meeting&nbsp;&nbsp;&nbsp;</button>
+                                                <button class="btn-primary-n tele-btn">Relaunch
+                                                    Meeting</button>
                                             </a></div>
                                     </div>
                                 </div>

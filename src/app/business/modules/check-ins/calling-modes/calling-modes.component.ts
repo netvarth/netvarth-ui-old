@@ -215,21 +215,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         }
     }
     selectCompleted() {
-        // if (this.data.type === 'checkin') {
-        //     if (this.data.qdata.waitlistStatus === 'started') {
-        //         this.changeWaitlistStatus(this.data.qdata, 'DONE');
-        //         this.dialogRef.close('reloadlist');
-        //     } else {
-        //         this.changeWaitlistStatus(this.data.qdata, 'STARTED');
-        //     }
-        // } else {
-        //     if (this.data.qdata.apptStatus === 'Started') {
-        //         this.changeWaitlistStatus(this.data.qdata, 'Completed');
-        //         this.dialogRef.close('reloadlist');
-        //     } else {
-        //         this.changeWaitlistStatus(this.data.qdata, 'Started');
-        //     }
-        // }
         if (this.waiting_type === 'checkin') {
             if (this.data.waitlistStatus === 'started') {
             this.changeWaitlistStatus(this.data, 'DONE');
@@ -434,10 +419,15 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         if (this.waiting_type === 'checkin') {
             if (this.data.waitlistStatus !== 'started') {
                 this.changeWaitlistStatus(this.data, 'STARTED');
+            } else if (this.data.waitlistStatus === 'started') {
+                this.shared_functions.openSnackBar('Service already started!');
             }
+
         } else {
-            if ((this.data.apptStatus === 'Started') || (this.data.apptStatus === 'Arrived')) {
+            if (this.data.apptStatus !== 'Started') {
                 this.changeWaitlistStatus(this.data, 'Started');
+            } else if (this.data.apptStatus === 'Started') {
+                this.shared_functions.openSnackBar('Service already started!');
             }
         }
         this.step = 6;
