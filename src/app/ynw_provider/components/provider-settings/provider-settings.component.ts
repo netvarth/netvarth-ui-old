@@ -176,11 +176,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   ) {
     this.activated_route.queryParams.subscribe(
       qparams => {
-       this.showTakeaTour = qparams.firstTimeSignup;
-       if (this.showTakeaTour) {
-          //  this.letsGetStarted();
-          this.getAccountContactInfo();
-       }
+        this.showTakeaTour = qparams.firstTimeSignup;
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
+        if (this.showTakeaTour) {
+          if (this.accountType === 'BRANCH') {
+            this.getAccountContactInfo();
+          } else {
+            this.letsGetStarted();
+          }
+        }
       });
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -234,8 +239,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   showIncompleteButton = true;
   ngOnInit() {
     // this.provider_datastorage.setWeightageArray([]);
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    this.accountType = user.accountType;
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
     this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');
@@ -397,13 +400,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
             /*handle error*/
           },
           () => {
-            this.routerobj.navigate(['.'], {} );
+            this.routerobj.navigate(['.'], {});
             // this.redirecttoProfile();
           }
         );
 
       } else {
-        this.routerobj.navigate(['.'], {} );
+        this.routerobj.navigate(['.'], {});
       }
 
 
@@ -466,7 +469,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.showIncompleteButton = true;
       return businessProfileWeightageText;
     } else if
-    (weightage >= 50 && weightage < 75) {
+      (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'info';

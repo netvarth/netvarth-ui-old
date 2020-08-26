@@ -418,7 +418,7 @@ export class CustomerSearchComponent implements OnInit {
                 mobile_number: ['', Validators.compose([Validators.maxLength(10),
                 Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
                 first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-                customer_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+                customer_id: [''],
                 last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
                 email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
                 dob: [''],
@@ -507,12 +507,7 @@ export class CustomerSearchComponent implements OnInit {
                         };
                         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
                     } else {
-                        const navigationExtras: NavigationExtras = {
-                            queryParams: {
-                                phoneNo: this.phoneNo
-                            }
-                        };
-                        this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+                        this.router.navigate(['provider', 'customers']);
                     }
                 },
                 error => {
