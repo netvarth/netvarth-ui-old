@@ -42,5 +42,6 @@ export class CustomersSettingsComponent implements OnInit {
         this.router.navigate(['provider', 'settings']);
     }
     redirecToHelp() {
-        this.router.navigate(['/provider/' + this.domain + '/customers']);    }
+        this.router.navigate(['/provider/' + this.domain + '/customers']);
+    }
 }
