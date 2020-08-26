@@ -90,56 +90,9 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         if (this.waiting_type === 'checkin') {
-            this.provider_services.getProviderWaitlistDetailById(this.waiting_id)
-                .subscribe(
-                    data => {
-                        this.data = data;
-                        console.log(this.data);
-                        this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
-                        this.busnes_name = this.data.providerAccount.businessName;
-                        this.serv_name = this.data.service.name;
-                        this.servDetails = this.data.service;
-                        if (this.data.waitlistingFor[0].email) {
-                            this.emailPresent = true;
-                        }
-                        this.getMeetingDetails();
-                        if (this.waiting_type === 'checkin') {
-                            this.chkinTeleserviceJoinLink();
-                            this.consumer_fname = this.data.waitlistingFor[0].firstName;
-                            this.consumer_lname = this.data.waitlistingFor[0].lastName;
-                            this.date = this.shared_functions.formatDateDisplay(this.data.date);
-                            this.time = this.data.checkInTime;
-                            this.location = this.data.queue.location.address;
-                            if (this.data.waitlistingFor[0].phoneNo) {
-                                this.phNo = this.data.waitlistingFor[0].phoneNo;
-                            }
-                            if (this.data.calculationMode === 'NoCalc') {
-                                this.jalde_q_id = this.data.token;
-                            } else {
-                                this.jalde_q_id = this.data.appxWaitingTime + ' min';
-                            }
-                        }
-                    });
+            this.getProviderWaitlstById();
         } else {
-            this.provider_services.getAppointmentById(this.waiting_id)
-                .subscribe(
-                    data => {
-                        this.data = data;
-                        console.log(this.data);
-                        this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
-                        this.busnes_name = this.data.providerAccount.businessName;
-                        this.serv_name = this.data.service.name;
-                        this.servDetails = this.data.service;
-                        if (this.data.providerConsumer.email) {
-                            this.emailPresent = true;
-                        }
-                        this.getMeetingDetails();
-                        this.apptTeleserviceJoinLink();
-                        this.consumer_fname = this.data.appmtFor[0].userName;
-                        this.date = this.shared_functions.formatDateDisplay(this.data.appmtDate);
-                        this.time = this.data.appmtTime;
-                        this.location = this.data.location.address;
-                    });
+            this.getProviderApptById();
         }
         this.notSupported = this.shared_functions.getProjectMesssages('TELE_NOT_SUPPORTED');
         this.sendMeetingDetails = this.shared_functions.getProjectMesssages('SENDING_MEET_DETAILS');
@@ -311,34 +264,14 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         if (this.waiting_type === 'checkin') {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
-                .then(
-                    result => {
-                        if (action === 'DONE') {
-                            //  this.dialogRef.close('reloadlist');
-                        }
-                        if (action === 'STARTED') {
-                            // if (this.data.action === 'normalStart') {
-                            //     // this.dialogRef.close('reloadlist');
-                            // } else {
-                            //     this.changeWaitlistStatus(this.data.qdata, 'DONE');
-                            // }
-                        }
+                .then(result => {
+                        this.getProviderWaitlstById();
                     }
                 );
         } else {
             this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data, true)
-                .then(
-                    result => {
-                        if (action === 'Completed') {
-                            // this.dialogRef.close('reloadlist');
-                        }
-                        if (action === 'Started') {
-                            // if (this.data.action === 'normalStart') {
-                            //     //     this.dialogRef.close('reloadlist');
-                            // } else {
-                            //     this.changeWaitlistStatus(this.data.qdata, 'Completed');
-                            // }
-                        }
+                .then(result => {
+                    this.getProviderApptById();
                     }
                 );
         }
@@ -486,5 +419,58 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     gotoUnsuported() {
         this.step = 1;
+    }
+    getProviderWaitlstById () {
+        this.provider_services.getProviderWaitlistDetailById(this.waiting_id)
+                .subscribe(
+                    data => {
+                        this.data = data;
+                        console.log(this.data);
+                        this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
+                        this.busnes_name = this.data.providerAccount.businessName;
+                        this.serv_name = this.data.service.name;
+                        this.servDetails = this.data.service;
+                        if (this.data.waitlistingFor[0].email) {
+                            this.emailPresent = true;
+                        }
+                        this.getMeetingDetails();
+                        if (this.waiting_type === 'checkin') {
+                            this.chkinTeleserviceJoinLink();
+                            this.consumer_fname = this.data.waitlistingFor[0].firstName;
+                            this.consumer_lname = this.data.waitlistingFor[0].lastName;
+                            this.date = this.shared_functions.formatDateDisplay(this.data.date);
+                            this.time = this.data.checkInTime;
+                            this.location = this.data.queue.location.address;
+                            if (this.data.waitlistingFor[0].phoneNo) {
+                                this.phNo = this.data.waitlistingFor[0].phoneNo;
+                            }
+                            if (this.data.calculationMode === 'NoCalc') {
+                                this.jalde_q_id = this.data.token;
+                            } else {
+                                this.jalde_q_id = this.data.appxWaitingTime + ' min';
+                            }
+                        }
+                    });
+    }
+    getProviderApptById () {
+        this.provider_services.getAppointmentById(this.waiting_id)
+                .subscribe(
+                    data => {
+                        this.data = data;
+                        console.log(this.data);
+                        this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
+                        this.busnes_name = this.data.providerAccount.businessName;
+                        this.serv_name = this.data.service.name;
+                        this.servDetails = this.data.service;
+                        if (this.data.providerConsumer.email) {
+                            this.emailPresent = true;
+                        }
+                        this.getMeetingDetails();
+                        this.apptTeleserviceJoinLink();
+                        this.consumer_fname = this.data.appmtFor[0].userName;
+                        this.date = this.shared_functions.formatDateDisplay(this.data.appmtDate);
+                        this.time = this.data.appmtTime;
+                        this.location = this.data.location.address;
+                    });
     }
 }
