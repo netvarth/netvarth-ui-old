@@ -32,6 +32,7 @@ export class RazorpayService {
 
   payBillWithoutCredentials(razorModel) {
     const self = this;
+    razorModel.retry = false;
     return new Promise(function (resolve) {
       const options = razorModel;
       options.handler = ((response, error) => {
@@ -47,6 +48,10 @@ export class RazorpayService {
     //     color: '#F37254'
     //   }
     // };
+    razorModel.retry = false;
+    razorModel.modal = {
+      escape: false
+      };
     const options = razorModel;
     options.handler = ((response, error) => {
       options.response = response;
@@ -69,7 +74,7 @@ export class RazorpayService {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'donations']));
         } else if (checkin_type === 'payment_link') {
-        this.ngZone.run(() => this.router.navigate([ 'pay' , livetrack] , navigationExtras));
+          this.ngZone.run(() => this.router.navigate(['pay', livetrack], navigationExtras));
         } else if (checkin_type === 'checkin_prepayment') {
           if (livetrack === true) {
             this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
@@ -94,6 +99,19 @@ export class RazorpayService {
       // });
       // options.modal.ondismiss = (() => {
       //   // handle the case when user closes the form while transaction is in progress
+    });
+
+    options.modal.ondismiss = (() => {
+      if (usertype === 'consumer') {
+        if (checkin_type === 'checkin_prepayment') {
+          this.shared_functions.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+          this.ngZone.run(() => this.router.navigate(['consumer']));
+        }
+      }
+      if (checkin_type === 'appt_prepayment') {
+        this.shared_functions.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        this.ngZone.run(() => this.router.navigate(['consumer']));
+      }
     });
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
     rzp.open();

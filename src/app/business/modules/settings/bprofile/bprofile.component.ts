@@ -273,7 +273,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
       url: '/provider/settings'
     },
     {
-      title: 'Jaldee Profile'
+      title: 'My Profile'
     }
   ];
   businessConfig: any = [];

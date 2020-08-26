@@ -206,6 +206,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     accountType;
     futureAppt = false;
     disable = false;
+    note_cap = 'Add Note';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -892,6 +893,21 @@ export class ConsumerAppointmentComponent implements OnInit {
         switch (cstep) {
             case 1:
                 this.hideFilterSidebar();
+                if (this.action === 'note') {
+                    if (this.consumerNote !== '') {
+                        if (this.domain === 'foodJoints') {
+                            this.note_cap = 'Edit Note / Delivery address';
+                        } else {
+                            this.note_cap = 'Edit Note';
+                        }
+                    } else {
+                        if (this.domain === 'foodJoints') {
+                            this.note_cap = 'Add Note / Delivery address';
+                        } else {
+                            this.note_cap = 'Add Note';
+                        }
+                    }
+                }
                 break;
             case 2:
                 if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
@@ -1528,15 +1544,17 @@ export class ConsumerAppointmentComponent implements OnInit {
                         this.businessjson = res;
                         this.accountType = this.businessjson.accountType;
                         if (this.accountType === 'BRANCH') {
-                        this.getProviderDepart(this.businessjson.id);
+                            this.getProviderDepart(this.businessjson.id);
                         }
                         this.domain = this.businessjson.serviceSector.domain;
                         if (this.domain === 'foodJoints') {
                             this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
                             this.note_placeholder = 'Item No Item Name Item Quantity';
+                            this.note_cap = 'Add Note / Delivery address';
                         } else {
                             this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
                             this.note_placeholder = '';
+                            this.note_cap = 'Add Note';
                         }
                         this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
                         break;

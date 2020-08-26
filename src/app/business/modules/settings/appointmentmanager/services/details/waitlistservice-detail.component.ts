@@ -31,7 +31,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             url: '/provider/settings/appointmentmanager'
         },
         {
-            title: 'Consultations and Services',
+            title: 'Services Offered',
             url: '/provider/settings/appointmentmanager/services'
         }
     ];

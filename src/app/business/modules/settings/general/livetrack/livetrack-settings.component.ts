@@ -25,7 +25,11 @@ export class LiveTrackSettingsComponent implements OnInit {
             url: '/provider/settings/general'
         },
         {
+<<<<<<< HEAD
            title: Messages.LOCATESETTINGS.replace('[customer]', this.customer_label),
+=======
+            title: Messages.LOCATESETTINGS.replace('[customer]', this.customer_label),
+>>>>>>> refs/remotes/origin/1.3.0-for-Patch-Releases
         }
     ];
     breadcrumbs = this.breadcrumbs_init;

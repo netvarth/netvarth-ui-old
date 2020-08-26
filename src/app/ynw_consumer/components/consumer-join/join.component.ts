@@ -175,28 +175,38 @@ export class ConsumerJoinComponent implements OnInit {
     this.actionstarted = true;
     this.resetApiErrors();
     this.user_details = {};
-    let userProfile = {
-      countryCode: '+91',
-      primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
-      firstName: null,
-      lastName: null
-    };
-    userProfile = {
+    // let userProfile = {
+    //   countryCode: '+91',
+    //   primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
+    //   firstName: null,
+    //   lastName: null
+    // };
+   const userProfile = {
       countryCode: '+91',
       primaryMobileNo: this.loginForm.get('emailId').value || null,
       firstName: this.loginForm.get('first_name').value || null,
       lastName: this.loginForm.get('last_name').value || null,
     };
-    if (userProfile.firstName === null) {
-      userProfile.firstName = 'undefined';
-    }
-    if (userProfile.lastName === null) {
-      userProfile.lastName = 'undefined';
-    }
+    // if (userProfile.firstName === null) {
+    //   userProfile.firstName = 'undefined';
+    // }
+    // if (userProfile.lastName === null) {
+    //   userProfile.lastName = 'undefined';
+    // }
     this.user_details = {
       userProfile: userProfile
     };
+    const firstName = this.loginForm.get('first_name').value;
+    const lastName = this.loginForm.get('last_name').value;
+    if (firstName && firstName.trim() === '' || firstName === null) {
+      this.api_error = 'First Name is required';
+    } else if (lastName && lastName.trim() === '' || lastName === null) {
+      this.api_error = 'Last Name is required';
+    } else if (firstName && firstName.trim().length < 3) {
+      this.api_error = 'First Name is too short';
+    } else {
     this.signUpApiConsumer(this.user_details);
+    }
   }
   resendOTPEmail(status) {
     this.resendViaEmail = status;
@@ -215,7 +225,7 @@ export class ConsumerJoinComponent implements OnInit {
           } else {
             this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
           }
-          this.step = 3;
+          this.step = 4;
         },
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
@@ -238,15 +248,7 @@ export class ConsumerJoinComponent implements OnInit {
   onOtpSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
-    const firstName = this.loginForm.get('first_name').value;
-    const lastName = this.loginForm.get('last_name').value;
-    if (firstName && firstName.trim() === '' || firstName === null) {
-      this.api_error = 'First Name is required';
-    } else if (lastName && lastName.trim() === '' || lastName === null) {
-      this.api_error = 'Last Name is required';
-    } else if (firstName && firstName.trim().length < 3) {
-      this.api_error = 'First Name is too short';
-    } else {
+  
     this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
       .subscribe(
         () => {
@@ -259,9 +261,10 @@ export class ConsumerJoinComponent implements OnInit {
         error => {
           this.actionstarted = false;
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          console.log(this.api_error);
         }
       );
-    }
+    
   }
   resendOtp(user_details) {
     this.signUpApiConsumer(user_details);
@@ -393,7 +396,8 @@ export class ConsumerJoinComponent implements OnInit {
         } else {
           this.phoneExists = false;
           this.isPhoneValid = true;
-          this.otpSend();
+          this.step = 3;
+          // this.otpSend();
         }
       }
       );
