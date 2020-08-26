@@ -161,7 +161,8 @@
 																	</div>
 																	<div *ngIf="curSelItm.typ === 'Items' && actiontype !== 'adjustItem'"
 																		class="item qty col-md-3 col-sm-4 col-lg-3 no-padding">
-																		<span class="label">Price</span> <span
+																		<!-- <span class="label">Price</span> -->
+																		 <span
 																			class="number">
 																			<mat-form-field class="example-full-width">
 																				<input type="text" min="0" matInput
@@ -592,7 +593,7 @@
 														<div class="list-content">
 															<div class="c-row one">
 																<div class="name">
-																	{{item.itemName | capitalizeFirst}} -
+																	{{item.itemName | capitalizeFirst}}
 																	{{item.price|currency:'&#8377; '}}
 																	<sup [matTooltipClass]="tooltipcls"
 																		[matTooltip]="'Taxable'"

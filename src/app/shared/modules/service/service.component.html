@@ -340,7 +340,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
                 </mat-radio-group>
             </div> -->
-            <div class="form-group inline" *ngIf="!is_virtual_serv && is_lvtrack_enable">
+            <div class="form-group inline" *ngIf="!is_virtual_serv && is_lvtrack_enable && !is_donation">
                 <label class="col-form-label">Enable Live Track</label>
                 <mat-slide-toggle class="example-margin" formControlName="livetrack">
                 </mat-slide-toggle>
