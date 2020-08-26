@@ -34,6 +34,7 @@ import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic
 
 export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
+  notedialogRef: MatDialogRef<ProPicPopupComponent, any>;
   userAdditionalInfoSubDomainFields: any[];
   userAdditionalInfoDomainFields: any[];
   progress_bar_four: number;
@@ -255,7 +256,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   jaldee_acc_url = Messages.JALDEE_URL;
   wndw_path = projectConstants.PATH;
   subdomain: any;
-  notedialogRef: MatDialogRef<unknown, any>;
+
 
 
 
@@ -413,10 +414,14 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
             } else {
               this.aboutmefilled = true;
             }
+            if (this.aboutmefilled && (this.bProfile.specialization && this.bProfile.specialization.length !== 0)) {
+              this.showIncompleteButton = false;
+            }
           }
           if (this.bProfile.specialization && this.bProfile.specialization.length !== 0) {
             this.specializeFilled = true;
           }
+
           if (this.bProfile.languagesSpoken && this.bProfile.languagesSpoken.length !== 0) {
             this.languageFilled = true;
           }
@@ -1113,19 +1118,17 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       this.progress_bar_two = 0;
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
-      this.showIncompleteButton = true;
       return businessProfileWeightageText;
 
     }
     if (weightage > 25 && weightage < 50) {
-      businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
+      businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
-      this.weightageClass = 'warning';
+      this.weightageClass = 'info';
       this.progress_bar_one = 25;
       this.progress_bar_two = weightage - 25;
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
-      this.showIncompleteButton = true;
       return businessProfileWeightageText;
     } else if
     (weightage >= 50 && weightage < 75) {
@@ -1136,7 +1139,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       this.progress_bar_two = 25;
       this.progress_bar_three = weightage - 50;
       this.progress_bar_four = 0;
-      this.showIncompleteButton = false;
       return businessProfileWeightageText;
 
     } else if (weightage >= 75 && weightage < 100) {
@@ -1147,7 +1149,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       this.progress_bar_two = 25;
       this.progress_bar_three = 25;
       this.progress_bar_four = weightage - 75;
-      this.showIncompleteButton = false;
       return businessProfileWeightageText;
     } else if (weightage === 100) {
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
@@ -1157,7 +1158,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       this.progress_bar_two = 25;
       this.progress_bar_three = 25;
       this.progress_bar_four = 25;
-      this.showIncompleteButton = false;
       return businessProfileWeightageText;
 
     }

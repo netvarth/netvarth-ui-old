@@ -19,6 +19,8 @@ import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module
 import { ProPicPopupModule } from './pro-pic-popup/pro-pic-popup.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { AboutMeComponent } from './aboutme/aboutme.component';
 import { JaldeeOnlineComponent } from './jaldee-online/jaldee-online.component';
 
@@ -35,7 +37,9 @@ import { JaldeeOnlineComponent } from './jaldee-online/jaldee-online.component';
         DynamicFormModule,
         GalleryModule,
         ProPicPopupModule,
-        NgxQRCodeModule
+        NgxQRCodeModule,
+        ShareButtonsModule,
+        ShareIconsModule
     ],
     declarations: [
         BProfileComponent,

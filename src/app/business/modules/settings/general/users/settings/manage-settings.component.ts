@@ -6,7 +6,7 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { MatDialogRef } from '@angular/material';
+// import { MatDialogRef } from '@angular/material';
 import { UserDataStorageService } from './user-datastorage.service';
 import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
@@ -199,7 +199,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   // domain;
   schedules_count;
   businessname: any;
-  notedialogRef: MatDialogRef<unknown, any>;
+
   settings: any = [];
   showToken = false;
   constructor(
