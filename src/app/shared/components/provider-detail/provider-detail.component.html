@@ -343,9 +343,20 @@
                                                             <div class="donat-service">
                                                                 <span class="sub-title-donate">{{services_offered}}</span>
                                                                 <ul>
-                                                                    <li *ngFor="let donationService of loc.services"
-                                                                        (click)="showServiceDetail(donationService, businessjson.businessName,'servicedetails')">
-                                                                        {{donationService.name}}</li>
+                                                                    <li *ngFor="let service of loc.services"
+                                                                        (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
+                                                                        {{service.name}}
+                                                                        <span *ngIf="service.serviceType == 'virtualService'">
+                                                                            <i class="fa fa-phone"
+                                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                            <i class="fa meet-icon"
+                                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                            <i class="fa zoom-icon"
+                                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                            <i class="fa fa-whatsapp whtsap-ic font-bolder"
+                                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                                        </span>
+                                                                    </li>
                                                                 </ul>
                                                             </div>
                                                         </div>

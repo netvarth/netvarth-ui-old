@@ -7,6 +7,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { Location } from '@angular/common';
 
 
 
@@ -76,6 +77,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         public shared_functions: SharedFunctions,
         public shared_services: SharedServices,
         private provider_shared_functions: ProviderSharedFuctions,
+        private _location: Location,
         // @Inject(MAT_DIALOG_DATA) public data: any,
         // public dialogRef: MatDialogRef<CallingModesComponent>
         ) {
@@ -466,5 +468,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     endmeeting() {
         this.step = 7;
+    }
+    redirecToPreviousPage() {
+        this._location.back();
     }
 }
