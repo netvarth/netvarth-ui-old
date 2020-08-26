@@ -418,8 +418,9 @@
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-50 mgn-bt-20">
                                     <button type="button" class="cs-btn bt1 btn-grn"
                                         (click)="selectCompleted()">Yes</button>&nbsp;&nbsp;&nbsp;
-                                    <button type="button" (click)="makeCompleted()"
+                                    <button *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')" type="button" (click)="makeCompleted()"
                                         class="cs-btn bt1 btn-red">No</button>
+                                    <button *ngIf="(callingModes === 'WhatsApp') || (callingModes === 'Phone')" type="button" (click)="gotoUnsuported()" class="cs-btn bt1 btn-red">No</button>
                                 </div>
                             </div>
                             <!-- Step 8 Customer Record -->

@@ -230,10 +230,24 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         //     }
         // }
         if (this.waiting_type === 'checkin') {
+            if (this.data.waitlistStatus === 'started') {
             this.changeWaitlistStatus(this.data, 'DONE');
+            } else {
+                this.changeWaitlistStatus(this.data, 'STARTED');
+                setTimeout(() => {
+                this.changeWaitlistStatus(this.data, 'DONE');
+                }, 300);
+            }
             this.redirecToPreviousPage();
       } else {
+          if (this.data.apptStatus === 'Started') {
             this.changeWaitlistStatus(this.data, 'Completed');
+          } else {
+            this.changeWaitlistStatus(this.data, 'Started');
+            setTimeout(() => {
+            this.changeWaitlistStatus(this.data, 'Completed');
+                }, 300);
+          }
             this.redirecToPreviousPage();
       }
     }
@@ -486,5 +500,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     backtoProgresPage() {
         this.step = 6;
+    }
+    gotoUnsuported() {
+        this.step = 1;
     }
 }
