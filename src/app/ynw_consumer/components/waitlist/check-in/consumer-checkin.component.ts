@@ -460,6 +460,9 @@ export class ConsumerCheckinComponent implements OnInit {
         this.edit = false;
         this.selected_phone = this.userPhone;
     }
+    cancelPhone() {
+        this.edit = true;
+    }
     validateEmail(mail) {
         const emailField = mail;
         const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
