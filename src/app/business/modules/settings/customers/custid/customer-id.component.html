@@ -7,7 +7,7 @@
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card pos">
-                    <label>Customer Id Format</label>
+                    <label>{{cust_domain_name |capitalizeFirst}} Id Format</label>
                     <p class="form-level-settings">Choose one of the two customer series options.</p>
 
                     <mat-radio-group [(ngModel)]='custIdFormat' ngDefaultControl (change)="formatChanged()">
