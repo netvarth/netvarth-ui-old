@@ -72,6 +72,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     data: any;
     waiting_id: any;
     waiting_type: any;
+    api_loading = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
