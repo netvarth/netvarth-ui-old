@@ -94,9 +94,9 @@
                                         <!-- <p class="settings_info">Enable this to get online visibility.</p> -->
 
                                         <p class="settings_info" *ngIf="onlinepresence_status">Shareable Profile Link
-                                            and QR Code are <strong>active</strong></p>
+                                            and QR Code are <strong>active.</strong></p>
                                         <p class="settings_info" *ngIf="!onlinepresence_status">Shareable Profile Link
-                                            and QR Code are <strong>inactive</strong></p>
+                                            and QR Code are <strong>inactive.</strong></p>
 
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
@@ -117,9 +117,9 @@
                                             fields missing</p>
                                         <!-- <p class="settings_info">{{frm_search_cap}}</p> -->
                                         <p class="settings_info" *ngIf="search_status">You are <strong>visible</strong>
-                                            on Jaldee.com search</p>
+                                            on Jaldee.com search.</p>
                                         <p class="settings_info" *ngIf="!search_status">You are <strong> not
-                                                visible</strong> on Jaldee.com search</p>
+                                                visible</strong> on Jaldee.com search.</p>
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
                                 </li>
@@ -136,7 +136,7 @@
                                     <a class="pointer-cursor">
                                         <span class="lnk setings" style="display: flex;">Jaldee.com Integration
                                         </span>
-                                        <p class="settings_info">Manage your account integration with jaldee.com</p>
+                                        <p class="settings_info">Manage your account integration with jaldee.com.</p>
 
                                     </a>
                                 </li>
@@ -196,9 +196,9 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-2">
                                 <li class="form-level-settings">
-                                    <a><strong>Virtual queue</strong> system . Provide
+                                    <a><strong>Virtual queue</strong> system. Provide
                                         <strong>tokens</strong>. {{custs_name | capitalizeFirst}} will receive
-                                        <strong>real-time alerts</strong>.</a>
+                                        <strong>real-time alerts.</strong>.</a>
                                 </li>
                                 <li (click)="redirecTo('waitlistmanager')">
                                     <a class="pointer-cursor">
@@ -406,7 +406,7 @@
                                         <p *ngIf="location_count == 0" class="req-flds-cap">
                                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Locations are
                                             not created</p>
-                                        <p class="settings_info">All the locations you operate from</p>
+                                        <p class="settings_info">All the locations you operate from.</p>
                                     </a>
                                 </li>
                                 <li *ngIf="accountType=='BRANCH'" (click)="redirecTo('departments')">
@@ -416,18 +416,18 @@
                                                 class="pull-right badge bg-blue">{{departmentCount}}</span>
                                             <span *ngIf="!filterbydepartment" class="pull-right">Off</span>
                                         </span>
-                                        <p class="settings_info">Add departments here</p>
+                                        <p class="settings_info">Add departments here.</p>
                                     </a>
                                 </li>
                                 <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('users')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Users</span>
-                                        <p class="settings_info">Create or manage users</p>
+                                        <p class="settings_info">Create or manage users.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('livetrack')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">Locate Your {{cust_domain_name |capitalizeFirst}}
+                                        <span class="lnk setings">Locate Your {{cust_domain_name |capitalizeFirst}}.
                                             <span class="pull-right">
                                                 <!-- <mat-slide-toggle [(ngModel)]="livetrack_status"
                                                     (change)="handle_liveTracking($event)">
@@ -457,13 +457,13 @@
                                 <li (click)="redirecTo('labels')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{customfields_cap}}</span>
-                                        <p class="settings_info">Add or manage your labels here</p>
+                                        <p class="settings_info">Add or manage your labels here.</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="pointer-cursor" (click)="redirecTo('customview')">
                                         <span class="lnk setings">Custom Views</span>
-                                        <p class="settings_info">Create or manage custom views</p>
+                                        <p class="settings_info">Create or manage custom views.</p>
                                     </a>
                                 </li>
 
@@ -625,9 +625,9 @@
                                         </span>
                                         <!-- <p class="sts" [class.active]="payment_status">{{payment_statusstr}}</p> -->
                                         <p class="settings_info" *ngIf="payment_status">{{custs_name|capitalizeFirst}}
-                                            <strong>can</strong> pay using Jaldee App , Email and SMS .</p>
+                                            <strong>can</strong> pay using Jaldee App , Email and SMS.</p>
                                         <p class="settings_info" *ngIf="!payment_status">{{custs_name|capitalizeFirst}}
-                                            <strong>cannot</strong> pay using Jaldee App , Email and SMS .
+                                            <strong>cannot</strong> pay using Jaldee App , Email and SMS.
                                         </p>
                                     </a>
                                 </li>
@@ -647,7 +647,7 @@
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{tax_setting_cap}}
                                         </span>
-                                        <p class="settings_info">GSTN and GST rate .</p>
+                                        <p class="settings_info">GSTN and GST rate.</p>
                                     </a>
                                 </li>
                             </ul>
@@ -769,14 +769,14 @@
                                 <li *ngIf="accountType=='BRANCH'" (click)="redirecTo('corporate')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Corporate Settings</span>
-                                        <p class="settings_info">Create or join corporate account</p>
+                                        <p class="settings_info">Create or join corporate account.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('jdn')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{frm_jdn_short_cap}}
                                         </span>
-                                        <p class="settings_info">Subscribe to Jaldee Discount Network </p>
+                                        <p class="settings_info">Subscribe to Jaldee Discount Network. </p>
                                     </a>
                                 </li>
                             </ul>
@@ -841,7 +841,7 @@
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{cust_domain_name |capitalizeFirst}} Id Format
                                         </span>
-                                        <p class="settings_info">Configure {{cust_domain_name |capitalizeFirst}} Id format</p>
+                                        <p class="settings_info">Configure {{cust_domain_name |capitalizeFirst}} Id format.</p>
                                     </a>
                                 </li>
                                 <!-- <li><a>Jaldee.com Integration<span class="pull-right">
