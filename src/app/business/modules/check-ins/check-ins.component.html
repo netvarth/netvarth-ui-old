@@ -827,14 +827,14 @@
                           <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
                               <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="getVirtualMode(checkin.virtualService) === 'GoogleMeet'"></i>
+                            *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="getVirtualMode(checkin.virtualService) === 'Zoom'"></i>
+                            *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'Zoom'"></i>
                           <i class="fa fa-phone" [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="getVirtualMode(checkin.virtualService) === 'Phone'"></i>
+                            *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'Phone'"></i>
                           <i class="fa fa-whatsapp whtsap-ic"
                             [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
+                            *ngIf="checkin.service.serviceType === 'virtualService' &&getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
                           <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
                           <span
                             [ngClass]="{'dash': (!small_device_display && getVirtualMode(checkin.virtualService) === 'GoogleMeet' || getVirtualMode(checkin.virtualService) === 'Zoom')?true:false}"
