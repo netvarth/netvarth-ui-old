@@ -95,9 +95,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
     ngOnInit() {
-          console.log(this.waiting_type);
           if (this.waiting_type === 'checkin') {
-              console.log(this.waiting_id);
               this.provider_services.getProviderWaitlistDetailById(this.waiting_id)
             .subscribe(
               data => {
@@ -181,16 +179,11 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             });
     }
     selectHeadsup() {
-        // if (this.callingModes === 'WhatsApp' && this.data.qdata.service.virtualServiceType === 'videoService') {
-        //     this.msg_to_user = 'In one minute, ' + this.busnes_name + ' will be starting a video call for your service. Please be ready';
-        // } else if (this.data.qdata.service.virtualServiceType === 'audioService') {
-        //     this.msg_to_user = 'In one minute, ' + this.busnes_name + ' will be starting a audio call for your service. Please be ready';
-        // } else {
-        //     this.getMeetingDetails();
-        //     this.msg_to_user = 'In one minute, ' + this.busnes_name + ' will be starting a video call for your service. Please be ready. Here is the link for joining the video call - ' + this.temp_msglink;
-        // }
         this.msg_to_user = '';
+       // this.getMeetingDetails();
+        this.step = 2;
         this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.serv_name + ' with ' + this.busnes_name + ' will begin. Please be ready.\n\n Here are the details for how to start the service -\n\n 1. Click on the following link - ' + this.starting_url + ' \n\n 2. Waiting for your ' + this.provider_label + ' to join';
+        console.log(this.msg_to_user);
     }
     selectAlrdyWaiting() {
         // if (this.callingModes === 'WhatsApp' && this.data.qdata.service.virtualServiceType === 'videoService') {
@@ -245,7 +238,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         if (this.waiting_type === 'checkin') {
             this.shared_services.consumerMassCommunication(post_data).
                 subscribe(() => {
-                    this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                 //   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                    this.shared_functions.openSnackBar(Messages.PROVIDERTOCONSUMER_NOTE_ADD);
                     this.step = 1;
                     setTimeout(() => {
                         this.api_success = '';
@@ -255,7 +249,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         } else {
             this.shared_services.consumerMassCommunicationAppt(post_data).
                 subscribe(() => {
-                    this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                   // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                    this.shared_functions.openSnackBar(Messages.PROVIDERTOCONSUMER_NOTE_ADD);
                     this.step = 1;
                     setTimeout(() => {
                         this.api_success = '';
@@ -344,7 +339,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.step = 4;
     }
     reminder() {
-        this.step = 2;
         this.selectHeadsup();
     }
     waitingFor() {
@@ -396,12 +390,12 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         }
     }
     asktoLaunch() {
-        this.btndisabled = true;
-        //     this.launch = true;
-        setTimeout(() => {
-            this.btndisabled = false;
-        }, 100);
-        // this.getMeetingDetails();
+        // this.btndisabled = true;
+        // //     this.launch = true;
+        // setTimeout(() => {
+        //     this.btndisabled = false;
+        // }, 100);
+        this.getMeetingDetails();
         this.step = 5;
     }
     amReady() {
@@ -435,6 +429,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     handleTimeSelction(obj) {
         this.selectedTime = obj;
+        this.selectHeadsup();
     }
     copyReminderInfo() {
         const info = document.getElementById('reminderData');

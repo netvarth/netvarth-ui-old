@@ -11076,6 +11076,11 @@ a {
 .teleservicePopup .fnt-1rem {
   font-size: 1rem !important;
 }
+.teleservicePopup .txt-left {
+  text-align: left;
+  line-height: 40px;
+  font-weight: 500;
+}
 
 @media only screen and (max-width: 400px) {
   .teleservicePopup #table3 img {

@@ -110,10 +110,10 @@
                                                             <td>&nbsp;<b>I am not done-</b></td>
                                                         </tr>
                                                         <tr class="linkpagestyle">
-                                                            <td><button mat-dialog-close
+                                                            <td><button (click)="endmeeting()"
                                                                     class="btn-primary-n tele-btn">End
                                                                     Meeting</button></td>
-                                                            <td><button mat-dialog-close
+                                                            <td><button (click)="redirecToPreviousPage()"
                                                                     class="btn-primary-n tele-btn">Go
                                                                     Back to
                                                                     Dashboard</button>
@@ -425,15 +425,14 @@
                             <!-- Step 8 Customer Record -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign"
                                 *ngIf="step === 8">
-                                <div
-                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
                                     <h1 class="mat-dialog-title linkpagestyle">
                                         <span class="serv-font-size">
-                                           Customer Record
+                                           {{customer_label | capitalizeFirst}} Record
                                         </span>
                                     </h1>
                                 </div>
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 txt-left">
                                     <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                         Name: <span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span>
                                     </div>
@@ -449,21 +448,21 @@
                                     <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                         Service: <span class="mgn-lt-5">{{serv_name}}</span>
                                     </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12" *ngIf="data.qdata.consumerNote">
-                                        Notes: <span class="mgn-lt-5">{{data.qdata.consumerNote}}</span>
+                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12" *ngIf="data.consumerNote">
+                                        Notes: <span class="mgn-lt-5">{{data.consumerNote}}</span>
                                     </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-30">
+                                </div>
+                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-30">
                                         <button type="button" class="cs-btn bt2 travelmodeEdit"
                                             (click)="back()">Cancel</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="lbr col-sm-12 col-md-3 col-lg-3 col-xs-12">
 
                         </div>
-                        <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-                        </app-form-success-display>
+                        <!-- <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+                        </app-form-success-display> -->
                     </div>
                 </div>
             </div>
