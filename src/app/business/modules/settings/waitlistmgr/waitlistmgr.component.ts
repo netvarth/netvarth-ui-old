@@ -153,7 +153,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                         // if (this.domain === 'healthCare') {
                         //     this.qSystem = 'token';
                         // } else {
-                            this.qSystem = 'fifo';
+                        this.qSystem = 'fifo';
                         // }
                         if (this.waitlist_manager.calculationMode === 'Fixed') {
                             this.calcMode = 'manual';
@@ -299,9 +299,9 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     // }
     performActions(action) {
         if (action === 'learnmore') {
-          this.routerobj.navigate(['/provider/' + this.domain + '/q-manager']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/q-manager']);
         }
-      }
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->' + mod]);
@@ -512,5 +512,10 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             this.trnArndTime = 0;
         }
     }
+    redirecToSettings() {
+        this.routerobj.navigate(['provider', 'settings']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/q-manager']);
+    }
 }
-

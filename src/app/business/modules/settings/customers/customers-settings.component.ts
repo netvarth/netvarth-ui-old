@@ -38,4 +38,9 @@ export class CustomersSettingsComponent implements OnInit {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/customers->' + mod]);
     }
+    redirecToSettings() {
+        this.router.navigate(['provider', 'settings']);
+    }
+    redirecToHelp() {
+        this.router.navigate(['/provider/' + this.domain + '/customers']);    }
 }

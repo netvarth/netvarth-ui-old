@@ -1,5 +1,17 @@
-<section>
+<!-- <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs"  (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions" ></app-breadcrumb>
+</section> -->
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"> 
+         <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
+            <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+            Jaldee Appointment Manager
+          <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
+             <i class="fa fa-book" >&nbsp;Help</i>
+          </button> 
+        </h5>     
+    </div>
 </section>
 <section>
     <div class="content w-manager settings comn-cls">
