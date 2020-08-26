@@ -1,6 +1,6 @@
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToBprofile()">
+        <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToPreviousPage()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span>
             </button>
             <!--  -->
@@ -424,12 +424,12 @@
                             </div>
                             <!-- Step 8 Customer Record -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign"
-                                *ngIf="step == 8">
+                                *ngIf="step === 8">
                                 <div
                                     class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
                                     <h1 class="mat-dialog-title linkpagestyle">
                                         <span class="serv-font-size">
-                                            {{customer_label | capitalizeFirst}} Record
+                                           Customer Record
                                         </span>
                                     </h1>
                                 </div>
