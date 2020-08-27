@@ -12,13 +12,13 @@ import * as moment from 'moment';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
-@Component({
+@Component({ 
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html'
 })
 export class ConsumerCheckinComponent implements OnInit {
     checkinSubscribtion: Subscription;
-    select_service_cap = Messages.SELECT_SER_CAP;
+    select_service_cap = Messages.SELECT_SER_CAP;  
     select_deptment_cap = Messages.SELECT_DEPT_CAP;
     no_services_avail_cap = Messages.NO_SER_AVAIL_CAP;
     add_change_member = Messages.ADD_CHANGE_MEMBER;
@@ -213,6 +213,7 @@ export class ConsumerCheckinComponent implements OnInit {
     accountType;
     disable = false;
     note_cap = 'Add Note';
+    email_cap = 'Add Email';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -924,6 +925,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 this.addmemberobj.gender = '';
                 this.addmemberobj.dob = '';
                 break;
+            
         }
         this.step = cstep;
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
@@ -1464,8 +1466,11 @@ export class ConsumerCheckinComponent implements OnInit {
                     }
                     if (this.userEmail) {
                         this.emailExist = true;
+                        this.email_cap = 'Change Email';
                     } else {
                         this.emailExist = false;
+                        this.email_cap = 'Add Email';
+
                     }
                 });
     }
@@ -1542,6 +1547,7 @@ export class ConsumerCheckinComponent implements OnInit {
                             this.showCouponWB = true;
                         }
                         break;
+                   
                     case 'departmentProviders': {
                         this.users = res;
                         this.users.push(this.userN);
