@@ -76,6 +76,7 @@ import { PaymentLinkComponent } from './shared/components/payment-link/payment-l
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
+import { ShareService } from 'ngx-sharebuttons';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -183,6 +184,7 @@ export function init_app(globalService: GlobalService) {
     SearchDetailServices,
     ProviderDetailService,
     ProviderDataStorageService,
+    ShareService,
     Title,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
