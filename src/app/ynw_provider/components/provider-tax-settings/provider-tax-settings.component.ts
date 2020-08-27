@@ -175,7 +175,6 @@ export class ProvidertaxSettingsComponent implements OnInit {
     cancelEdit() {
         this.showEditSection = false;
     }
-    
     redirecToJaldeepay() {
         this.routerobj.navigate(['provider', 'settings' , 'payments']);
     }

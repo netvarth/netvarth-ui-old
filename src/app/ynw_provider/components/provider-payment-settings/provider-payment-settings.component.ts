@@ -693,7 +693,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.api_loading = false;
         }, 1000);
     }
-    
     redirecToJaldeepay() {
         this.router.navigate(['provider', 'settings' , 'payments']);
     }
