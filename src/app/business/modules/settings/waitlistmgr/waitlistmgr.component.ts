@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-waitlistmgr',
@@ -93,6 +94,9 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        if (this.domain === 'healthCare') {
+            this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
+          }
         this.account_type = user.accountType;
         this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.loading = true;

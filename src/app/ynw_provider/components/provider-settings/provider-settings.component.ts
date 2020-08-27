@@ -4,6 +4,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../app.component';
+
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
@@ -12,6 +13,7 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
 import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-settings',
@@ -218,6 +220,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   additionalInfoDomainFields: any = [];
   additionalInfoSubDomainFields: any = [];
   domain_fields;
+  domain;
   domain_questions = [];
   subdomain_fields = [];
   image_list: any = [];
@@ -226,11 +229,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   normal_domainfield_show = 1;
   normal_subdomainfield_show = 1;
   field;
+  services_hint = '';
   bprofileLoaded = false;
   showIncompleteButton = true;
   ngOnInit() {
-    // this.provider_datastorage.setWeightageArray([]);
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
+    this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
+    if (this.domain === 'healthCare') {
+      this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
+    }
     this.accountType = user.accountType;
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
@@ -295,6 +303,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
     });
   }
+
   letsGetStarted() {
     const dialogRef = this.dialog.open(ProviderStartTourComponent, {
       width: '25%',

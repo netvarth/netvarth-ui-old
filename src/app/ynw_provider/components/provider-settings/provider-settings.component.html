@@ -244,11 +244,10 @@
                                     </a></li> -->
                                 <li (click)="redirecTo('services')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">{{services_cap}}
+                                        <span class="lnk setings"  >{{services_cap}}
                                             <span class="pull-right badge bg-blue">{{service_count}}</span>
                                         </span>
-                                        <p class="settings_info">Eg. In-person consultation , video consultation ,
-                                            labservices. </p>
+                                        <p class="settings_info" >Eg: {{services_hint}}.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('queues')">
@@ -352,8 +351,7 @@
                                         <span class="lnk setings">{{services_cap}}
                                             <span class="pull-right badge bg-blue">{{service_count}}</span>
                                         </span>
-                                        <p class="settings_info">Eg. In-person consultation , video consultation ,
-                                            labservices. </p>
+                                        <p class="settings_info" >Eg: {{services_hint}}.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('schedules')">

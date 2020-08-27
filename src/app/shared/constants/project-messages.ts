@@ -1251,6 +1251,7 @@ export const Messages = {
   'WAITLIST_ACCEPT_ONLINE_CAP': 'Accept Online',
   'WAITLIST_LOCATIONS_CAP': 'All Locations',
   'WAITLIST_SERVICES_CAP': 'Services Offered',
+  'WAITLIST_HEALTHCARE_SERVICES': 'Consultations and Services',
   'CUSTOMERS_NAME': '[customer]s',
   // App-ynw_provider-components-provider-waitlist-checkin-consumer-note
   'CONS_NOTE_NOTE_CAP': 'Note',
