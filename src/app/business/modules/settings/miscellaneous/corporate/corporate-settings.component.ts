@@ -110,4 +110,10 @@ export class CorporateSettingsComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->corporate']);
         }
     }
+    redirecToMiscellaneous() {
+        this.routerobj.navigate(['provider', 'settings' , 'miscellaneous']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->corporate']);
+    }
 }

@@ -101,4 +101,7 @@ export class MiscellaneousComponent implements OnInit {
     redirecToSettings() {
         this.routerobj.navigate(['provider', 'settings']);
     }
+    redirecToHelp() {
+        this.router.navigate(['/provider/' + this.domain + '/miscellaneous']);
+    }
 }
