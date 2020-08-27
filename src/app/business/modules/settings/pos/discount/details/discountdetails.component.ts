@@ -56,6 +56,7 @@ export class DiscountDetailsComponent implements OnInit {
   action;
   discount: any;
   discountname: any;
+  discountcaption = 'Add Discount';
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -125,6 +126,7 @@ export class DiscountDetailsComponent implements OnInit {
     });
 
     if (this.action === 'edit') {
+      this.discountcaption = 'Edit Discount';
       this.updateForm();
     }
     this.api_loading1 = false;

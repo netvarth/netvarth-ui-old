@@ -60,6 +60,7 @@ export class LabelComponent implements OnInit {
     customer_label = '';
     waitlist_label = '';
     exceedLimit = false;
+    labelcaption = 'Create Label';
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -94,6 +95,7 @@ export class LabelComponent implements OnInit {
 
     }
     editLabelbyId(id) {
+        this.labelcaption = 'Edit Label';
         this.provider_services.getLabel(id).subscribe(data => {
             this.labelData = data;
             const breadcrumbs = [];

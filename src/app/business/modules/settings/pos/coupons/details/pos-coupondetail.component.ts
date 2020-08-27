@@ -53,6 +53,7 @@ export class PosCouponDetailComponent implements OnInit {
   action;
   coupon: any;
   cupen_name: any;
+  couponcaption = 'Add Coupon';
 
   constructor(
     private fb: FormBuilder,
@@ -122,6 +123,7 @@ export class PosCouponDetailComponent implements OnInit {
     });
 
     if (this.action === 'edit') {
+      this.couponcaption = 'Edit Coupon';
       this.updateForm();
     }
     this.api_loading1 = false;
