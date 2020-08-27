@@ -63,8 +63,10 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     selectedTime = '1 Minute';
     minute = [
         { value: '1 Minute', viewValue: '1 Minute' },
-        { value: '2 Minute', viewValue: '2 Minute' },
-        { value: '3 Minute', viewValue: '3 Minute' }
+        { value: '5 Minutes', viewValue: '5 Minutes' },
+        { value: '10 Minutes', viewValue: '10 Minutes' },
+        { value: '30 Minutes', viewValue: '30 Minutes' },
+        { value: '1 Hour', viewValue: '1 Hour' }
     ];
     provider_label: any;
     phNo: any;
@@ -74,6 +76,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     waiting_type: any;
     api_loading = false;
     emailPresent = false;
+    user_type = 'me';
+    usrSelected = 'me';
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -149,7 +153,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         // this.getMeetingDetails();
         this.step = 2;
         if (this.callingModes !== 'Phone') {
-            this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.serv_name + ' with ' + this.busnes_name + ' will begin. Please be ready.\n\n Here are the details for how to start the service -\n\n 1. Click on the following link - ' + this.starting_url + ' \n\n 2. Waiting for your ' + this.provider_label + ' to join';
+            this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.serv_name + ' with ' + this.busnes_name + ' will begin. Please be ready.\n\n Here are the details for how to start the service -\n\n 1. Click on the following link - ' + this.starting_url + ' \n\n 2. Wait for your ' + this.provider_label + ' to join';
         } else {
             this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.serv_name + ' with ' + this.busnes_name + ' will begin.\n\n You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' Please be ready.';
         }
@@ -401,6 +405,10 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.selectedTime = obj;
         this.selectHeadsup();
     }
+    handleUserTypeSelection(obj) {
+        this.user_type = obj;
+        console.log(this.user_type);
+    }
     copyReminderInfo() {
         const info = document.getElementById('reminderData');
         if (window.getSelection) {
@@ -444,7 +452,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         }
     }
     backtoProgresPage() {
-        this.step = 6;
+        this.step = 1;
     }
     gotoUnsuported() {
         this.step = 1;
