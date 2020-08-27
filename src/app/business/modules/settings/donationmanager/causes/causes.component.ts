@@ -142,4 +142,13 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     getAppxTime(waitlist) {
         return this.shared_functions.providerConvertMinutesToHourMinute(waitlist);
     }
+    redirecToDonation() {
+        this.router.navigate(['provider', 'settings' , 'donationmanager']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/donationmanager->causes']);
+    }
+    addcause() {
+        this.router.navigate(['provider', 'settings', 'donationmanager', 'causes', 'add']);
+    }
 }
