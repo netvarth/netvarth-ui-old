@@ -1174,7 +1174,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       no_filter = true;
     }
     if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
     return new Promise((resolve) => {
       this.provider_services.getTodayAppointmentsCount(Mfilter)
@@ -1202,7 +1202,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // no_filter = true;
     }
     if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
     return new Promise((resolve) => {
       this.provider_services.getFutureAppointmentsCount(Mfilter)
@@ -1229,7 +1229,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     //  no_filter = true;
     }
     if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
@@ -1302,7 +1302,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
     }
     if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
     this.resetPaginationData();
     this.pagination.startpageval = 1;
@@ -1419,7 +1419,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
     }
     if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
@@ -1459,7 +1459,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     //   Mfilter['schedule-eq'] = this.selQidsforHistory.toString();
     // }
     if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
