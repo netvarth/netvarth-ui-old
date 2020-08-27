@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 @Component({
   selector: 'app-foodjoints-learnmore',
@@ -115,6 +115,7 @@ export class FoodJointComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private _location: Location,
     private _scrollToService: ScrollToService,
+    private router: Router
   ) { }
 
   setActivePricing(item) {
@@ -415,6 +416,9 @@ export class FoodJointComponent implements OnInit {
       if (childContent === 'serviceH') { this.showserviceH = true; }
       if (childContent === 'hourH') { this.showhoursH = true; }
     }
+  }
+  redirecToSettings() {
+    this.router.navigate(['provider', 'settings' ]);
   }
 }
 
