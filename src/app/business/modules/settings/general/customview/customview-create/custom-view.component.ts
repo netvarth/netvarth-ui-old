@@ -735,4 +735,7 @@ export class CustomViewComponent implements OnInit {
     onCancel() {
         this.router.navigate(['provider', 'settings', 'general', 'customview']);
     }
+    redirecToGeneral() {
+        this.router.navigate(['provider', 'settings' , 'general' , 'customview']);
+    }
 }

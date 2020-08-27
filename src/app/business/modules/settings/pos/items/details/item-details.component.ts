@@ -73,6 +73,7 @@ export class ItemDetailsComponent implements OnInit {
     item;
     taxDetails: any = [];
     itemname: any;
+    Addcaption = 'Add Item';
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -174,6 +175,7 @@ export class ItemDetailsComponent implements OnInit {
             });
         }
         if (this.action === 'edit') {
+            this.Addcaption = 'Edit Item';
             this.updateForm();
         }
     }

@@ -38,4 +38,10 @@ export class ProviderSkinsComponent implements OnInit {
   performActions() {
     this.routerobj.navigate(['/provider/' + this.domain + '/general->themes']);
   }
+  redirecToGeneral() {
+    this.routerobj.navigate(['provider', 'settings' , 'general']);
+  }
+  redirecToHelp() {
+    this.routerobj.navigate(['/provider/' + this.domain + '/general->themes']);
+  }
 }

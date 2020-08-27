@@ -241,4 +241,7 @@ export class LabelComponent implements OnInit {
             this.exceedLimit = false;
         }
     }
+    redirecToGeneral() {
+        this.router.navigate(['provider', 'settings' , 'general' , 'labels']);
+    }
 }
