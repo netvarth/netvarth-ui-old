@@ -96,7 +96,7 @@
                                                     {{sendMeetingDetails}}
                                                     {{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}
                                                     {{availableMsg}}</span><br>
-                                                <span><a>
+                                                <span><a (click)="gotoMeetDetails()">
                                                         {{ph_or_tab_cap}}
                                                         {{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}
                                                         {{installed_cap}}
@@ -131,13 +131,17 @@
 
                                             <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 ">
                                                 <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                                                    <div><b>I am done-</b></div>
+                                                    <div><b>I am done
+                                                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                                    </b></div>
                                                     <div><button (click)="endmeeting()"
                                                             class="btn-primary-n tele-btn">End
                                                             Meeting</button></div>
                                                 </div>
                                                 <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                                                    <div><b>I am not done-</b></div>
+                                                    <div><b>I am not done
+                                                        <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                                                    </b></div>
                                                     <div>
                                                         <button (click)="redirecToPreviousPage()"
                                                             class="btn-primary-n tele-btn">Go
@@ -237,18 +241,16 @@
                                 </div>
 
                             </div>
+                            <!-- Step 4 Meeting Details -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step == 4">
-                                <!-- Step 4-->
-                                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
-                                    <h1 class="mat-dialog-title linkpagestyle">
-                                        <span *ngIf="step === 2" class="serv-font-size">
-                                            View Meeting Details for
-                                        </span>
-                                    </h1>
-                                </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-20 no-padding">
                                     <div
                                         class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon mgn-bt-20 bg-grey pad-10 centeralign no-padding">
+                                        <!-- <h1 class="mat-dialog-title linkpagestyle">
+                                            <span *ngIf="step === 4" class="serv-font-size">
+                                                View Meeting Details for
+                                            </span>
+                                        </h1> -->
                                         <div class="col-md-6 col-m-6 col-xs-6 col-lg-6 ">
                                             <img src="assets/images/person_provider.jpg" alt="Provider_icon">
                                             <h6>Me</h6>
@@ -400,12 +402,16 @@
                                 </div>
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 ">
                                     <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                                        <div><b>I am done-</b></div>
+                                        <div><b>I am done
+                                            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                        </b></div>
                                         <div><button (click)="endmeeting()" class="btn-primary-n tele-btn">End
                                                 Meeting</button></div>
                                     </div>
                                     <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                                        <div><b>I am not done-</b></div>
+                                        <div><b>I am not done
+                                            <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                                        </b></div>
                                         <div><a *ngIf="(callingModes !== 'Phone')" target="_blank"
                                                 [href]="starting_url">
                                                 <button class="btn-primary-n tele-btn">Relaunch
@@ -495,7 +501,7 @@
                                 </div>
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-30">
                                     <button type="button" class="cs-btn bt2 travelmodeEdit"
-                                        (click)="backtoProgresPage()">Cancel</button>
+                                        (click)="backtoProgresPage()">Back</button>
                                 </div>
                             </div>
                         </div>

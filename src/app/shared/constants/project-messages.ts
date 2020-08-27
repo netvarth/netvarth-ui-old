@@ -160,7 +160,7 @@ export const Messages = {
   'TELE_NOT_SUPPORTED': 'is not supported on this device.',
   'SENDING_MEET_DETAILS': 'Send the meeting details to your phone or tablet where',
   'IS_AVAILABLE': 'is available to you',
-  'PHONE_OR_TAB': 'Sending meeting details to your phone/tablet where',
+  'PHONE_OR_TAB': 'Send meeting details to your phone/tablet where',
   'IS_INSTALD': 'is available',
   'SEND_REMINDER': 'Send a reminder that the service will begin in',
 
