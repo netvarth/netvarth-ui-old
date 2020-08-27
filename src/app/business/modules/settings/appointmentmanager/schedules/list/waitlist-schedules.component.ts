@@ -40,12 +40,12 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
 
         {
             url: '/provider/settings/appointmentmanager',
-            title: 'Jaldee Appointment'
+            title: 'Jaldee Appointment Manager'
         },
 
         {
             url: '/provider/settings/appointmentmanager/schedules',
-            title: 'Schedules'
+            title: 'Schedules (Working Hours)'
 
         }
 

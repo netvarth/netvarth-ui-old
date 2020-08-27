@@ -282,5 +282,11 @@ export class JDNComponent implements OnInit {
     isNumeric(evt) {
         return this.shared_functions.isNumeric(evt);
     }
+    redirecToMiscellaneous() {
+        this.routerobj.navigate(['provider', 'settings' , 'miscellaneous']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->jdn']);
+    }
 }
 

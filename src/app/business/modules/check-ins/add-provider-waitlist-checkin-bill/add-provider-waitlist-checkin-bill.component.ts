@@ -1427,7 +1427,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '<table width="100%"';
       bill_html += '	style="color:#000000; font-size:10pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-top:10px;padding-bottom:10px">';
       bill_html += '	<tr>';
-      bill_html += '<td width="50%" style="text-align:left;font-weight:bold;">' + item.itemName + ' @ &#x20b9;' + parseFloat(item.price).toFixed(2);
+      bill_html += '<td width="50%" style="text-align:left;font-weight:bold;">' + item.itemName + '  &#x20b9;' + parseFloat(item.price).toFixed(2);
       if (item.GSTpercentage > 0) {
         bill_html += '<span style="font-size: .60rem;;font-weight: 600;color: #fda60d;"><sup> Tax</sup></span>';
       }

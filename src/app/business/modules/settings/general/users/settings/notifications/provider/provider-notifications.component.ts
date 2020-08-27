@@ -34,33 +34,45 @@ export class ProviderNotificationUserComponent implements OnInit {
   SelchkincnclNotify = false;
   sms = false;
   email = false;
+  pushcheckin = false;
   cheknpush = false;
   cancelsms = false;
+  pushcancelph = false;
   cancelemail = false;
   cancelpush = false;
   smsAppt = false;
+  pushApptPh = false;
   emailAppt = false;
   apptPush = false;
   cancelsmsAppt = false;
+  pushcancelAppt = false;
   cancelemailAppt = false;
   cancelpushAppt = false;
   notifyphonenumber = '';
+  notifypushcheckinphonenumber = '';
   notifyemail = '';
   notifycanclphonenumber = '';
+  notifypushcanclcheckinphonenumber = '';
   notifycanclemail = '';
   notifyApptphonenumber = '';
+  notifypushApptphonenumber = '';
   notifyApptemail = '';
   notifyApptcanclphonenumber = '';
+  notifypushApptcanclphonenumber = '';
   notifyApptcanclemail = '';
   api_error = null;
   api_success = null;
   ph_arr: any = [];
+  pushcheckinph_arr: any = [];
   em_arr: any = [];
   ph1_arr: any = [];
+  pushcanclcheckin_arr: any = [];
   em1_arr: any = [];
   apptph_arr: any = [];
+  apptpushph_arr: any = [];
   apptem_arr: any = [];
   apptph1_arr: any = [];
+  pushapptcancelph_arr: any = [];
   apptem1_arr: any = [];
   domain;
   provdr_domain_name = '';
@@ -167,7 +179,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     if (notificationList.length !== 0) {
       for (const notifyList of notificationList) {
         if (notifyList.eventType && notifyList.eventType === 'WAITLISTADD') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMessage) {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMsg) {
             this.SelchkinNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -184,15 +196,15 @@ export class ProviderNotificationUserComponent implements OnInit {
           // else {
           //   this.SelchkinNotify = false;
           // }
-          if (notifyList.pushMessage) {
-            this.cheknpush = notifyList.pushMessage;
+          if (notifyList.pushMsg) {
+            this.pushcheckinph_arr = notifyList.pushMsg;
             this.SelchkinNotify = true;
           }
           // else {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMessage) {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMsg) {
             this.SelchkincnclNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -209,15 +221,15 @@ export class ProviderNotificationUserComponent implements OnInit {
           // else {
           //   this.SelchkincnclNotify = false;
           // }
-          if (notifyList.pushMessage) {
-            this.cancelpush = notifyList.pushMessage;
+          if (notifyList.pushMsg) {
+            this.pushcanclcheckin_arr = notifyList.pushMsg;
             this.SelchkincnclNotify = true;
           }
           // else {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTADD') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMessage) {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMsg) {
             this.selApptNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -235,15 +247,15 @@ export class ProviderNotificationUserComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
 
-          if (notifyList.pushMessage) {
-            this.apptPush = notifyList.pushMessage;
+          if (notifyList.pushMsg) {
+            this.apptpushph_arr = notifyList.pushMsg;
             this.selApptNotify = true;
           }
           // else {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMessage) {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMsg) {
             this.selApptCancelNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -261,8 +273,8 @@ export class ProviderNotificationUserComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
 
-          if (notifyList.pushMessage) {
-            this.cancelpushAppt = notifyList.pushMessage;
+          if (notifyList.pushMsg) {
+            this.pushapptcancelph_arr = notifyList.pushMsg;
             this.selApptCancelNotify = true;
           }
           // else {
@@ -357,6 +369,40 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.notifyemail = '';
     }
   }
+  addpushChkinPh() {
+    this.resetApiErrors();
+    if (this.notifypushcheckinphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifypushcheckinphonenumber !== '') {
+      const curphone = this.notifypushcheckinphonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+
+      if (this.pushcheckinph_arr.indexOf(curphone) === -1) {
+        this.pushcheckinph_arr.push(curphone);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      this.okCheckinStatus = true;
+      this.notifypushcheckinphonenumber = '';
+    }
+  }
   addCheknCanclph() {
     this.resetApiErrors();
     if (this.notifycanclphonenumber === '') {
@@ -386,7 +432,7 @@ export class ProviderNotificationUserComponent implements OnInit {
         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
-      // this.ph1_arr.push(curphone1);
+     
       this.okCancelStatus = true;
       this.notifycanclphonenumber = '';
     }
@@ -413,6 +459,39 @@ export class ProviderNotificationUserComponent implements OnInit {
       }
       this.notifycanclemail = '';
       this.okCancelStatus = true;
+    }
+  }
+  addCheknCanclpushph() {
+    this.resetApiErrors();
+    if (this.notifypushcanclcheckinphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifypushcanclcheckinphonenumber !== '') {
+      const curphone1 = this.notifypushcanclcheckinphonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone1);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone1);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+      if (this.pushcanclcheckin_arr.indexOf(curphone1) === -1) {
+        this.pushcanclcheckin_arr.push(curphone1);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      this.okCancelStatus = true;
+      this.notifypushcanclcheckinphonenumber = '';
     }
   }
   addApptPh() {
@@ -475,6 +554,40 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.notifyApptemail = '';
     }
   }
+  addpushApptPh() {
+    this.resetApiErrors();
+    if (this.notifypushApptphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifypushApptphonenumber !== '') {
+      const curphone = this.notifypushApptphonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+
+      if (this.apptpushph_arr.indexOf(curphone) === -1) {
+        this.apptpushph_arr.push(curphone);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      this.okApptStatus = true;
+      this.notifypushApptphonenumber = '';
+    }
+  }
   addApptCanclph() {
     this.resetApiErrors();
     if (this.notifyApptcanclphonenumber === '') {
@@ -504,7 +617,6 @@ export class ProviderNotificationUserComponent implements OnInit {
         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
-      // this.ph1_arr.push(curphone1);
       this.okApptCancelStatus = true;
       this.notifyApptcanclphonenumber = '';
     }
@@ -533,6 +645,39 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.okApptCancelStatus = true;
     }
   }
+  addpushApptCanclph() {
+    this.resetApiErrors();
+    if (this.notifypushApptcanclphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifypushApptcanclphonenumber !== '') {
+      const curphone1 = this.notifypushApptcanclphonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone1);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone1);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+      if (this.pushapptcancelph_arr.indexOf(curphone1) === -1) {
+        this.pushapptcancelph_arr.push(curphone1);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      this.okApptCancelStatus = true;
+      this.notifypushApptcanclphonenumber = '';
+    }
+  }
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
@@ -551,13 +696,13 @@ export class ProviderNotificationUserComponent implements OnInit {
     if (!this.SelchkinNotify) {
       this.em_arr = [];
       this.ph_arr = [];
-      this.cheknpush = false;
+      this.pushcheckinph_arr = [];
     }
     this.savechekinNotification_json.resourceType = 'CHECKIN';
     this.savechekinNotification_json.eventType = 'WAITLISTADD';
     this.savechekinNotification_json.sms = this.ph_arr;
     this.savechekinNotification_json.email = this.em_arr;
-    this.savechekinNotification_json.pushMessage = this.cheknpush;
+    this.savechekinNotification_json.pushMsg = this.pushcheckinph_arr;
     this.savechekinNotification_json.providerId = this.userId;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
@@ -576,13 +721,14 @@ export class ProviderNotificationUserComponent implements OnInit {
     if (!this.SelchkincnclNotify) {
       this.em1_arr = [];
       this.ph1_arr = [];
-      this.cancelpush = false;
+      this.pushcanclcheckin_arr = [];
+     // this.cancelpush = false;
     }
     this.savecancelNotification_json.resourceType = 'CHECKIN';
     this.savecancelNotification_json.eventType = 'WAITLISTCANCEL';
     this.savecancelNotification_json.sms = this.ph1_arr;
     this.savecancelNotification_json.email = this.em1_arr;
-    this.savecancelNotification_json.pushMessage = this.cancelpush;
+    this.savecancelNotification_json.pushMsg = this.pushcanclcheckin_arr;
     this.savecancelNotification_json.providerId = this.userId;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
@@ -600,13 +746,14 @@ export class ProviderNotificationUserComponent implements OnInit {
     if (!this.selApptNotify) {
       this.apptem_arr = [];
       this.apptph_arr = [];
-      this.apptPush = false;
+      this.apptpushph_arr = [];
+      //this.apptPush = false;
     }
     this.savechekinNotification_json.resourceType = 'APPOINTMENT';
     this.savechekinNotification_json.eventType = 'APPOINTMENTADD';
     this.savechekinNotification_json.sms = this.apptph_arr;
     this.savechekinNotification_json.email = this.apptem_arr;
-    this.savechekinNotification_json.pushMessage = this.apptPush;
+    this.savechekinNotification_json.pushMsg = this.apptpushph_arr;
     this.savechekinNotification_json.providerId = this.userId;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
@@ -625,21 +772,24 @@ export class ProviderNotificationUserComponent implements OnInit {
     if (!this.selApptCancelNotify) {
       this.apptem1_arr = [];
       this.apptph1_arr = [];
-      this.cancelpushAppt = false;
+      this.pushapptcancelph_arr = [];
+      //this.cancelpushAppt = false;
     }
     this.savecancelNotification_json.resourceType = 'APPOINTMENT';
     this.savecancelNotification_json.eventType = 'APPOINTMENTCANCEL';
     this.savecancelNotification_json.sms = this.apptph1_arr;
     this.savecancelNotification_json.email = this.apptem1_arr;
-    this.savecancelNotification_json.pushMessage = this.cancelpushAppt;
+    this.savecancelNotification_json.pushMsg = this.pushapptcancelph_arr;
     this.savecancelNotification_json.providerId = this.userId;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
   saveNotifctnJson(saveNotification_json, mode, source) {
     this.sms = false;
+    this.pushcheckin = false;
     this.email = false;
     this.cancelemail = false;
     this.cancelsms = false;
+    this.pushcancelph = false;
     if (mode === 'ADD') {
       this.provider_services.addNotificationList(saveNotification_json)
         .subscribe(
@@ -714,11 +864,25 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.sms = true;
     }
   }
+  pushcheckinAddClicked(){
+    if (this.pushcheckin) {
+      this.pushcheckin = false;
+    } else {
+      this.pushcheckin= true;
+    }
+  }
   cancelledCheckinsmsAddClicked() {
     if (this.cancelsms) {
       this.cancelsms = false;
     } else {
       this.cancelsms = true;
+    }
+  }
+  pushcancelledCheckinsmsAddClicked() {
+    if (this.pushcancelph) {
+      this.pushcancelph = false;
+    } else {
+      this.pushcancelph = true;
     }
   }
   smsApptAddClicked() {
@@ -728,11 +892,25 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.smsAppt = true;
     }
   }
+  pushApptAddClicked() {
+    if (this.pushApptPh) {
+      this.pushApptPh = false;
+    } else {
+      this.pushApptPh = true;
+    }
+  }
   cancelledApptsmsAddClicked() {
     if (this.cancelsmsAppt) {
       this.cancelsmsAppt = false;
     } else {
       this.cancelsmsAppt = true;
+    }
+  }
+  pushcancelledApptAddClicked() {
+    if (this.pushcancelAppt) {
+      this.pushcancelAppt= false;
+    } else {
+      this.pushcancelAppt = true;
     }
   }
   emailAddClicked() {

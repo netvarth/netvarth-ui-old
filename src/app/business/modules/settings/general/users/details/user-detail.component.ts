@@ -166,6 +166,20 @@ export class BranchUserDetailComponent implements OnInit {
                 } else if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
                 }
+            } else if (this.sector === 'finance') {
+                if (subdomain.subDomain === this.subsector) {
+                    this.selectedsubDomain.push(subdomain);
+                } else if (subdomain.subDomain === this.subsector) {
+                    this.selectedsubDomain.push(subdomain);
+                } else if (subdomain.subDomain === this.subsector) {
+                    this.selectedsubDomain.push(subdomain);
+                }
+            } else if (this.sector === 'veterinaryPetcare') {
+                if (this.subsector === 'veterinaryhospital') {
+                    if (subdomain.subDomain === 'veterinarydoctor') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                }
             }
         }
     }

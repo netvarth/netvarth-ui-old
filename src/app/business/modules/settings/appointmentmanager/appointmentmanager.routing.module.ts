@@ -10,7 +10,6 @@ const routes: Routes = [
     { path: 'schedules', loadChildren: () => import('./schedules/waitlist-schedules.module').then(m => m.WaitlistSchedulesModule) },
     {path: 'services', loadChildren: () => import('./services/waitlist-services.module').then(m => m.WaitlistServicesModule)},
     {path: 'displayboards', loadChildren: () => import('./displayboards/displayboards.module').then(m => m.DisplayboardsModule)}
-    
 
 ];
 @NgModule({

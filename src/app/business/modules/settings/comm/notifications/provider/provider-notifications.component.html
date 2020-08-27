@@ -18,13 +18,13 @@
 </section>
 <section *ngIf="!waitlistStatus && !appointment_status && !donations_status && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
-    <div class="token-appt">
-      To setup ‘Notifications’, Appointment manager/QManager/Donations need to be enabled from your settings.
+    <div class="enable-notif">
+      To setup ‘Other Notifications’, Appointment manager/QManager/Donations need to be enabled from your settings.
     </div>
   </div>
 </section>
 <section class="content comn-cls lic-page notifications"
-  *ngIf="(waitlistStatus || appointment_status || donations_status)&& !api_loading">
+  *ngIf="!api_loading">
   <div class="col-md-12 no-padding-small">
     <div class="row">
       <div class="card w-dta p0 ">
@@ -35,7 +35,7 @@
             <mat-expansion-panel-header>
               <mat-panel-title class="block-level">{{provdr_domain_name|capitalizeFirst}} Notifications</mat-panel-title>
             </mat-expansion-panel-header> -->
-
+<div *ngIf="waitlistStatus || appointment_status || donations_status">
         <mat-accordion *ngIf="waitlistStatus">
           <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header class="mgn-bt-10">
@@ -95,10 +95,27 @@
                   </li>
                   <li>
                     <span class="notification">App notification</span>
+                    <span [class.icon-add]="!cheknPushph" [class.icon-minus]="cheknPushph" (click)="cheknPushAddClicked()"></span>
+                    <div class="form-group" *ngIf="cheknPushph">
+                      <div class="input-group mb-3 phadd">
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
+                          [(ngModel)]="notifycheknPushphonenumber" minlength="0" maxlength="10">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default" (click)="addcheknPushPh()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="cheknPushph_arr.length > 0">
+                      <li *ngFor="let phne of cheknPushph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(phne, cheknPushph_arr, 'newcheckin')"></i></li>
+                    </ul>
+                  </li>
+                  <!-- <li>
+                    <span class="notification">App notification</span>
                     <mat-slide-toggle class="example-margin" [(ngModel)]="cheknpush"
                       (change)="changePushMsgStatus('newcheckin')">
                     </mat-slide-toggle>
-                  </li>
+                  </li> -->
                 </ul>
               </section>
               <button *ngIf="okCheckinStatus" (click)="chekinNotifications('newcheckin')" type="button" mat-button
@@ -153,11 +170,28 @@
                           (click)="removePhEmail(emailcancl,em1_arr, 'cancelcheckin')"></i></li>
                     </ul>
                   </li>
-                  <li>
+                  <!-- <li>
                     <span class="notification">App notification</span>
                     <mat-slide-toggle class="example-margin" [(ngModel)]="cancelpush"
                       (change)="changePushMsgStatus('cancelcheckin')">
                     </mat-slide-toggle>
+                  </li> -->
+                  <li>
+                    <span class="notification">App notification</span>
+                    <span [class.icon-add]="!cheknCancelPushph" [class.icon-minus]="cheknCancelPushph" (click)="cheknCancelPushAddClicked()"></span>
+                    <div class="form-group" *ngIf="cheknCancelPushph">
+                      <div class="input-group mb-3 phadd">
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
+                          [(ngModel)]="notifycheknCancelPushphonenumber" minlength="0" maxlength="10">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default" (click)="addcheknCancelPushPh()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="cheknCancelPushph_arr.length > 0">
+                      <li *ngFor="let phne of cheknCancelPushph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(phne, cheknCancelPushph_arr, 'newcheckin')"></i></li>
+                    </ul>
                   </li>
                 </ul>
               </section>
@@ -219,11 +253,28 @@
                           (click)="removePhEmail(emailval, apptem_arr, 'newappointment')"></i></li>
                     </ul>
                   </li>
-                  <li>
+                  <!-- <li>
                     <span class="notification">App notification</span>
                     <mat-slide-toggle class="example-margin" [(ngModel)]="apptPush"
                       (change)="changePushMsgStatus('newappointment')">
                     </mat-slide-toggle>
+                  </li> -->
+                  <li>
+                    <span class="notification">App notification</span>
+                    <span [class.icon-add]="!apptPushph" [class.icon-minus]="apptPushph" (click)="apptPushAddClicked()"></span>
+                    <div class="form-group" *ngIf="apptPushph">
+                      <div class="input-group mb-3 phadd">
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
+                          [(ngModel)]="notifyapptPushphonenumber" minlength="0" maxlength="10">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default" (click)="addapptPushPh()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="apptPushph_arr.length > 0">
+                      <li *ngFor="let phne of apptPushph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(phne, apptPushph_arr, 'newappointment')"></i></li>
+                    </ul>
                   </li>
                 </ul>
               </section>
@@ -278,11 +329,28 @@
                           (click)="removePhEmail(emailcancl, apptem1_arr, 'cancelappointment')"></i></li>
                     </ul>
                   </li>
-                  <li>
+                  <!-- <li>
                     <span class="notification">App notification</span>
                     <mat-slide-toggle class="example-margin" [(ngModel)]="cancelpushAppt"
                       (change)="changePushMsgStatus('cancelappointment')">
                     </mat-slide-toggle>
+                  </li> -->
+                  <li>
+                    <span class="notification">App notification</span>
+                    <span [class.icon-add]="!apptcancelPushph" [class.icon-minus]="apptcancelPushph" (click)="apptcancelPushAddClicked()"></span>
+                    <div class="form-group" *ngIf="apptcancelPushph">
+                      <div class="input-group mb-3 phadd">
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
+                          [(ngModel)]="notifyapptcancelPushphonenumber" minlength="0" maxlength="10">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default" (click)="addapptcancelPushPh()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="apptcancelPushph_arr.length > 0">
+                      <li *ngFor="let phne of apptcancelPushph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(phne, apptcancelPushph_arr, 'cancelappointment')"></i></li>
+                    </ul>
                   </li>
                 </ul>
               </section>
@@ -346,11 +414,29 @@
                           (click)="removePhEmail(emailval, donateem_arr, 'newdonation')"></i></li>
                     </ul>
                   </li>
-                  <li>
+                  <!-- <li>
                     <span class="notification">App notification</span>
                     <mat-slide-toggle class="example-margin" [(ngModel)]="donatePush"
                       (change)="changePushMsgStatus('newdonation')">
                     </mat-slide-toggle>
+                  </li> -->
+                  <li>
+                    <span class="notification"> App notification </span>
+                    <span [class.icon-add]="!pushAppDonate" [class.icon-minus]="pushAppDonate"
+                      (click)="pushAppDonateAddClicked()"></span>
+                    <div class="form-group" *ngIf="pushAppDonate">
+                      <div class="input-group mb-3 phadd">
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
+                          [(ngModel)]="notifypushDonatephonenumber" minlength="0" maxlength="10">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default" (click)="addpushDonatePh()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="donatepushph_arr.length > 0">
+                      <li *ngFor="let phne of donatepushph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(phne, donatepushph_arr, 'newdonation')"></i></li>
+                    </ul>
                   </li>
                 </ul>
               </section>
@@ -417,6 +503,94 @@
             </div> -->
           </mat-expansion-panel>
         </mat-accordion>
+      </div>
+      <div>
+        <mat-accordion >
+          <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header class="mgn-bt-10">
+              <mat-panel-title class="block-level">System Notifications<br>
+                <span class="form-level-settings">{{mode_of_notify}}</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="rw col-md-12">
+              <div class="form-group">
+                <div style="display: flex">
+                  <span class="notification" style="font-weight: 600"> Notify whenever package changes</span>
+                  <mat-slide-toggle class="example-margin" (change)="selectSystemNotify($event)"
+                    [(ngModel)]="selSystemNotify">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+              <section class="leftselectAll" *ngIf="selSystemNotify">
+                <ul class="notifications">
+                  <li>
+                    <span class="notification"> via SMS </span>
+                    <span [class.icon-add]="!smsSystem" [class.icon-minus]="smsSystem"
+                      (click)="smsSystemAddClicked()"></span>
+                    <div class="form-group" *ngIf="smsSystem">
+                      <div class="input-group mb-3 phadd">
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
+                          [(ngModel)]="notifySystemphonenumber" minlength="0" maxlength="10">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default" (click)="addSystemPh()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="systemph_arr.length > 0">
+                      <li *ngFor="let phne of systemph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(phne, systemph_arr, 'newsystem')"></i></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="notification"> via Email</span>
+                    <span [class.icon-add]="!emailsystem" [class.icon-minus]="emailsystem"
+                      (click)="emailsystemAddClicked()"></span>
+                    <div class="form-group" *ngIf="emailsystem">
+                      <div class="input-group mb-3 emadd">
+                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifysystememail">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default " (click)="addSystemmail()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="systemem_arr.length > 0">
+                      <li *ngFor="let emailval of systemem_arr">{{emailval}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(emailval, systemem_arr, 'newsystem')"></i></li>
+                    </ul>
+                  </li>
+                  <!-- <li>
+                    <span class="notification">App notification</span>
+                    <mat-slide-toggle class="example-margin" [(ngModel)]="systemPush"
+                      (change)="changePushMsgStatus('newsystem')">
+                    </mat-slide-toggle>
+                  </li> -->
+
+                  <li>
+                    <span class="notification"> App notification </span>
+                    <span [class.icon-add]="!pushSystem" [class.icon-minus]="pushSystem"
+                      (click)="pushSystemAddClicked()"></span>
+                    <div class="form-group" *ngIf="pushSystem">
+                      <div class="input-group mb-3 phadd">
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
+                          [(ngModel)]="notifypushSystemphonenumber" minlength="0" maxlength="10">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default" (click)="addpushSystemPh()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="pushsystemph_arr.length > 0">
+                      <li *ngFor="let phne of pushsystemph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(phne, pushsystemph_arr, 'newsystem')"></i></li>
+                    </ul>
+                  </li>
+                </ul>
+              </section>
+              <button *ngIf="okSystemStatus" (click)="systemNotifications('newsystem')" type="button" mat-button
+                class="cs-btn bt1 notifyOk">OK</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
       </div>
     </div>
   </div>

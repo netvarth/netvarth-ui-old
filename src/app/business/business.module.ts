@@ -48,6 +48,7 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from './modules/check-ins
 import { ProviderErrorMesagePopupComponent } from './modules/provider-error-message-popup/provider-error-message-popup.component';
 import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
+import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 
 @NgModule({
     declarations: [
@@ -73,7 +74,8 @@ import { ProviderStartTourComponent } from '../ynw_provider/components/provider-
         ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
         ProviderErrorMesagePopupComponent,
-        ProviderStartTourComponent
+        ProviderStartTourComponent,
+        UpdateEmailComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -103,7 +105,8 @@ import { ProviderStartTourComponent } from '../ynw_provider/components/provider-
         ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
         ProviderErrorMesagePopupComponent,
-        ProviderStartTourComponent
+        ProviderStartTourComponent,
+        UpdateEmailComponent
     ],
     providers: [
         AuthGuardProviderHome,

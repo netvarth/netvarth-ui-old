@@ -9,6 +9,13 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
+<<<<<<< HEAD
+=======
+import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
+import { JoyrideService } from 'ngx-joyride';
+import { MatDialog } from '@angular/material';
+import { UpdateEmailComponent } from '../../../business/modules/update-email/update-email.component';
+>>>>>>> refs/remotes/origin/1.3.0
 
 @Component({
   selector: 'app-provider-settings',
@@ -156,6 +163,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   profile_disabled_msg: string;
   businessProfile_weightageArray: any[];
   showTakeaTour = false;
+  profile: any = [];
+  contactInfo: any = [];
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -168,10 +177,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   ) {
     this.activated_route.queryParams.subscribe(
       qparams => {
-       this.showTakeaTour = qparams.firstTimeSignup;
-      //  if (this.showTakeaTour) {
-      //      this.letsGetStarted();
-      //  }
+        this.showTakeaTour = qparams.firstTimeSignup;
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
+        if (this.showTakeaTour) {
+          if (this.accountType === 'BRANCH') {
+            this.getAccountContactInfo();
+          } else {
+            this.letsGetStarted();
+          }
+        }
       });
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -225,8 +240,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   showIncompleteButton = true;
   ngOnInit() {
     // this.provider_datastorage.setWeightageArray([]);
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    this.accountType = user.accountType;
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
     this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');
@@ -290,6 +303,120 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
     });
   }
+<<<<<<< HEAD
+=======
+
+  getAccountContactInfo() {
+    this.provider_services.getAccountContactInfo().subscribe(
+      data => {
+        this.contactInfo = data;
+        if (!this.contactInfo.primaryEmail) {
+          this.getProfile();
+        } else {
+          this.letsGetStarted();
+        }
+      }
+    );
+  }
+
+  getProfile() {
+    this.shared_functions.getProfile()
+      .then(
+        (data: any) => {
+          this.profile = data;
+          this.updateEmailPopup();
+        }
+      );
+  }
+
+  updateEmailPopup() {
+    const dialogref = this.dialog.open(UpdateEmailComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true
+    });
+    dialogref.afterClosed().subscribe(
+      result => {
+        if (result) {
+          this.letsGetStarted();
+          this.updateEmail(result);
+        }
+      }
+    );
+  }
+  updateEmail(email) {
+    const post_data = {
+      'primaryEmail': email,
+      'primaryPhoneNumber': this.contactInfo.primaryPhoneNumber
+    };
+    this.provider_services.updateAccountContactInfo(post_data).subscribe(
+      data => {
+        this.updateAccountEmail(email);
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+  }
+  updateAccountEmail(email) {
+    const post_data = {
+      'basicInfo': {
+        'id': this.profile.basicInfo.id,
+        'firstName': this.profile.basicInfo.firstName,
+        'lastName': this.profile.basicInfo.lastName,
+        'email': email
+      }
+    };
+    const passtyp = 'provider/profile';
+    this.shared_services.updateProfile(post_data, passtyp)
+      .subscribe(
+        () => {
+        });
+  }
+
+  letsGetStarted() {
+    const dialogRef = this.dialog.open(ProviderStartTourComponent, {
+      width: '25%',
+      panelClass: ['popup-class', 'commonpopupmainclass']
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'startTour') {
+        this.joyrideService.startTour(
+
+          {
+            steps: ['step1@provider/settings', 'step2@provider/settings', 'step3@provider/settings', 'step4'],
+            showPrevButton: false,
+            stepDefaultPosition: 'top',
+            themeColor: '#212f23'
+          }
+          // Your steps order
+        ).subscribe(
+
+          step => {
+            /*Do something*/
+            console.log('Location', window.location.href, 'Path', window.location.pathname);
+            console.log('Next:', step);
+          },
+          error => {
+            /*handle error*/
+          },
+          () => {
+            this.routerobj.navigate(['.'], {});
+            // this.redirecttoProfile();
+          }
+        );
+
+      } else {
+        this.routerobj.navigate(['.'], {});
+      }
+
+
+    });
+
+  }
+>>>>>>> refs/remotes/origin/1.3.0
 
   calculateWeightage(data) {
     let total = 0;
@@ -346,7 +473,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.showIncompleteButton = true;
       return businessProfileWeightageText;
     } else if
-    (weightage >= 50 && weightage < 75) {
+      (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'info';

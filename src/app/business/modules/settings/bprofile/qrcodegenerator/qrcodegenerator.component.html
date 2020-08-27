@@ -1,4 +1,5 @@
 <h1 class="mat-dialog-title">Jaldee QR Code
+<<<<<<< HEAD
         <button  mat-dialog-close class="modal_close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
@@ -29,3 +30,46 @@
             </div>
             </div>
     </mat-dialog-content>
+=======
+  <button  mat-dialog-close class="modal_close" tabindex="-1">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<mat-dialog-content>
+  <div class="coupon-outer textcenter" *ngIf="qr_code_oId" #qrCodeOnlineId>
+              <!-- <div>
+                  <i (click)="closeOnlineQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i>
+              </div> -->
+      <div>
+          <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
+          </ngx-qrcode>
+      </div>
+      <div class="coupon-outer">
+          <button class="btn btn-info jld-lnk-btn">
+              <a class="ngx-qr-btn" [href]="qrCodePath" download>
+              <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a>
+          </button>
+                  <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
+                  &nbsp;&nbsp;&nbsp;
+                  <button (click)="closeOnlineQR()">close</button> -->
+      </div>
+      <div class="jld-link-pad">
+       <div>Jaldee Link - <span class="jld-lnk-font">{{wpath}}{{accuid}}</span></div>
+       <div>
+           Jaldee Provider ID - <span class="jld-lnk-font">{{accuid}}</span>
+       </div>
+       <div class="mgn-up-20">
+         <label>Share Jaldee Link </label>
+        <share-buttons [theme]="'circles-dark'"
+        [include]="['facebook','whatsapp','email']"
+        [url]="shareLink"
+        [autoSetMeta]="true"
+        [image]="qrCodePath"
+        [showIcon]="true"
+        [showText]="true"
+       ></share-buttons>
+       </div>
+      </div>
+      </div>
+</mat-dialog-content>
+>>>>>>> refs/remotes/origin/1.3.0

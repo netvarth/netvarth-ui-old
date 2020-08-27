@@ -102,13 +102,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                     *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" matInput id="customer_id"
-                                            placeholder="Customer id *" formControlName="customer_id" autocomplete="off"
+                                            placeholder="{{customer_label | capitalizeFirst}} id *" formControlName="customer_id" autocomplete="off"
                                             (blur)="onFieldBlur('customer_id')">
                                     </mat-form-field>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'customer_id')" [errorMsgs]="fed_service.getErrorMessage(amForm,'customer_id',
     {
-      'required' : 'Please enter Customer id'
+      'required' : 'Please enter ' + customer_label +' id'
     })">
                                     </app-field-error-display>
                                 </div>

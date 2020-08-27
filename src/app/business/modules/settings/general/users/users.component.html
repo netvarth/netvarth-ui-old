@@ -112,21 +112,21 @@
                     <tbody *ngFor="let user of users_list">
                         <tr class="grid-pad" [class.grid-disabled]="user.status=='INACTIVE'" *ngIf="!api_loading">
                             <td> 
-                                    <div *ngIf="user.userType === 'ASSISTANT' || user.userType === 'ADMIN' || user.defaultAdminUser" class="bold pull-left mgn-lt-5 teli-wtsap-a"
+                                    <div *ngIf="user.userType === 'ASSISTANT' || user.userType === 'ADMIN'" class="bold pull-left mgn-lt-5 teli-wtsap-a"
                                     >{{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}</div>
-                                <div *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser" class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
+                                <div *ngIf="user.userType === 'PROVIDER' " class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
                                 (click)="manageSettings(user.id)">{{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}</div>
                             </td>
                             <td>
-                                    <span class="ttle" *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser">{{provider_label}}</span>
+                                    <span class="ttle" *ngIf="user.userType === 'PROVIDER' ">{{provider_label}}</span>
                                     <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label}}</span>
                                     <span class="ttle" *ngIf="user.userType === 'ADMIN'">admin</span>
-                                    <span class="admin" *ngIf="user.userType === 'PROVIDER' && user.defaultAdminUser">admin</span>
+                                    <!-- <span class="admin" *ngIf="user.userType === 'PROVIDER' && user.defaultAdminUser">admin</span> -->
                             </td>
                             <td>
                                     <span *ngIf="user.userType === 'PROVIDER' && user.deptId">{{getDepartmentNamebyId(user.deptId)}}</span>
                                 </td>
-                            <td> <div *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser">Jaldee online:
+                            <td> <div *ngIf="user.userType === 'PROVIDER' ">Jaldee online:
                                 <span class="greenc" *ngIf="user.searchEnabled">On</span>
                                 <span class="red"*ngIf="!user.searchEnabled">Off</span></div>
                                 </td>
@@ -143,15 +143,15 @@
                                         <button mat-menu-item (click)="personalProfile(user.id)">
                                             Personal Details
                                         </button>
-                                        <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser"
+                                        <button *ngIf="user.userType === 'PROVIDER'"
                                             mat-menu-item (click)="manageSettings(user.id)">
                                             Settings
                                         </button>
-                                        <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser && user.status === 'ACTIVE'"
+                                        <!-- <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser && user.status === 'ACTIVE'"
                                             mat-menu-item (click)="makeDefalutAdmin(user.id)">
                                             Change to superadmin
-                                        </button>
-                                        <button *ngIf="!user.defaultAdminUser" mat-menu-item (click)="changeUserStatus(user)">
+                                        </button> -->
+                                        <button  mat-menu-item (click)="changeUserStatus(user)">
                                             <i *ngIf="user.status=='INACTIVE' || !user.status"
                                                 class="icon-enable"></i>
                                             <i *ngIf="user.status=='ACTIVE'" class="icon-disable"></i>

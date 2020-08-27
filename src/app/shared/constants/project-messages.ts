@@ -9,7 +9,7 @@ export const Messages = {
   'EMAIL_MISMATCH': 'Email and Re-entered Email do not match',
   'PASSWORD_CHANGED': 'Password has been changed successfully',
   'EMAIL_VERIFIED': 'Your email has been verified',
-  'PHONE_VERIFIED': 'Your phone number has been verified',
+  'PHONE_VERIFIED': 'Your mobile number has been verified',
   'MEMBER_CREATED': 'Member added successfully',
   'MEMBER_UPDATED': 'Member updated successfully',
   'LICENSE_UPGRADED': 'License successfully upgraded to [package]',
@@ -157,6 +157,12 @@ export const Messages = {
   'CUSTOMER_SEARCH_EXIST': 'This [customer] already exists in Jaldee',
   'CUSTOMER_SEARCH_UNAVAILABLE': 'This [customer] doesnt exist',
   'PROVIDER_CUSTOMER_CREATED': 'New [customer] created',
+  'TELE_NOT_SUPPORTED': 'is not supported on this device.',
+  'SENDING_MEET_DETAILS': 'Send the meeting details to your phone or tablet where',
+  'IS_AVAILABLE': 'is available to you',
+  'PHONE_OR_TAB': 'Send meeting details to your phone/tablet where',
+  'IS_INSTALD': 'is available',
+  'SEND_REMINDER': 'Send a reminder that the service will begin in',
 
   // Payment Setting
   'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',

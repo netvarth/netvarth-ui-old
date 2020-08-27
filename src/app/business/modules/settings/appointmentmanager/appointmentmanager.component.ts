@@ -205,5 +205,11 @@ export class AppointmentmanagerComponent implements OnInit {
                     this.schedules_count = data;
                 });
     }
+    redirecToSettings() {
+        this.routerobj.navigate(['provider', 'settings']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager']);
+    }
 }
 

@@ -97,4 +97,10 @@ export class SaleschannelSettingsComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->saleschannel']);
         }
     }
+    redirecToMiscellaneous() {
+        this.routerobj.navigate(['provider', 'settings' , 'miscellaneous']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->saleschannel']);
+    }
 }

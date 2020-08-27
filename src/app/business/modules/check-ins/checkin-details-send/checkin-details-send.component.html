@@ -42,7 +42,7 @@
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button type="button" class="cs-btn bt2 travelmodeEdit" (click)="back()">Cancel</button>
+        <button type="button" class="cs-btn bt2" style="padding:10px 30px;" (click)="back()">Cancel</button>
         <button type="button" class="cs-btn bt1"  mat-button [disabled]="(!sms &&!email) || (!consumer_email  && (!phone || phone === 'null'))" (click)="sendMessage()">Send</button>
     </mat-dialog-actions>
     <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>

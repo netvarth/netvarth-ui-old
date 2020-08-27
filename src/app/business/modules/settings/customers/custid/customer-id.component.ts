@@ -129,4 +129,10 @@ export class CustomerIdSettingsComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/customers->custid-settings']);
         }
     }
+    redirecToCustomers() {
+        this.routerobj.navigate(['provider', 'settings' , 'customers']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/customers->custid-settings']);
+    }
 }
