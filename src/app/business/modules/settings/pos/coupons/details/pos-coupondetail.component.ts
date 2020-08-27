@@ -68,6 +68,7 @@ export class PosCouponDetailComponent implements OnInit {
         this.coupon_id = params.id;
         this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
         if (this.coupon_id) {
+          console.log(this.coupon_id);
           if (this.coupon_id === 'add') {
             const breadcrumbs = [];
             this.breadcrumbs_init.map((e) => {
@@ -246,5 +247,8 @@ export class PosCouponDetailComponent implements OnInit {
           this.disableButton = false;
         }
       );
+  }
+  redirecToJaldeeBilling() {
+    this.router.navigate(['provider', 'settings' , 'pos' , 'coupon']);
   }
 }

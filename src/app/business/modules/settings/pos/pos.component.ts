@@ -169,4 +169,7 @@ export class POSComponent implements OnInit {
   redirecToSettings() {
     this.routerobj.navigate(['provider', 'settings']);
   }
+  redirecToHelp() {
+    this.routerobj.navigate(['/provider/' + this.domain + '/billing']);
+}
 }

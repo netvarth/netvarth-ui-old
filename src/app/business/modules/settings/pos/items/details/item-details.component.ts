@@ -317,4 +317,7 @@ export class ItemDetailsComponent implements OnInit {
         };
         this.router.navigate(['provider', 'settings', 'pos', 'items', item.itemId], navigationExtras);
     }
+    redirecToJaldeeBilling() {
+        this.router.navigate(['provider', 'settings', 'pos' , 'items']);
+    }
 }

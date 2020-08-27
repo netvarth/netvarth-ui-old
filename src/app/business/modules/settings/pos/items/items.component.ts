@@ -189,4 +189,10 @@ export class ItemsComponent implements OnInit, OnDestroy {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
     }
+    redirecToJaldeeBilling() {
+        this.routerobj.navigate(['provider', 'settings' , 'pos']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/billing->items']);
+    }
 }

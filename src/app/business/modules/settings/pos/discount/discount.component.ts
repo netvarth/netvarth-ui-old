@@ -178,4 +178,10 @@ export class DiscountComponent implements OnInit, OnDestroy {
   //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
   //   return moreOptions;
   // }
+  redirecToJaldeeBilling() {
+    this.routerobj.navigate(['provider', 'settings' , 'pos']);
+  }
+  redirecToHelp() {
+    this.routerobj.navigate(['/provider/' + this.domain + '/billing->discount']);
+  }
 }

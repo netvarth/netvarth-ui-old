@@ -275,4 +275,7 @@ export class DiscountDetailsComponent implements OnInit {
         );
     });
   }
+  redirecToJaldeeBilling() {
+    this.router.navigate(['provider', 'settings', 'pos' , 'discount']);
+}
 }
