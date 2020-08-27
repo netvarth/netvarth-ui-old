@@ -11121,6 +11121,11 @@ a {
     padding: 5px 5px 5px 5px !important;
     border-color: rgb(24 115 242) !important;
   }
+  .teleservicePopup .col-md-12 .col-md-3 .usr_img {
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: scale-down !important;
+  }
 }
 .support-num {
   font-size: 1.3rem;

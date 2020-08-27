@@ -78,6 +78,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     emailPresent = false;
     user_type = 'me';
     usrSelected = 'me';
+    isPrevStep = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -148,14 +149,27 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             }, () => {
             });
     }
-    selectHeadsup() {
+    selectHeadsup(stp6?) {
+        console.log(stp6);
         this.msg_to_user = '';
         // this.getMeetingDetails();
+        this.isPrevStep = false;
         this.step = 2;
+        if (stp6) {
+            this.isPrevStep = true;
+        }
         if (this.callingModes !== 'Phone') {
-            this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.serv_name + ' with ' + this.busnes_name + ' will begin. Please be ready.\n\n Here are the details for how to start the service -\n\n 1. Click on the following link - ' + this.starting_url + ' \n\n 2. Wait for your ' + this.provider_label + ' to join';
+            if (this.isPrevStep) {
+                this.msg_to_user = 'Here are the details for how to start the service -\n\n 1. Click on the following link - ' + this.starting_url + ' \n\n 2. Wait for your ' + this.provider_label + ' to join';
+            } else {
+                this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.serv_name + ' with ' + this.busnes_name + ' will begin. Please be ready.\n\n Here are the details for how to start the service -\n\n 1. Click on the following link - ' + this.starting_url + ' \n\n 2. Wait for your ' + this.provider_label + ' to join';
+            }
         } else {
-            this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.serv_name + ' with ' + this.busnes_name + ' will begin.\n\n You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' Please be ready.';
+            if (this.isPrevStep) {
+                this.msg_to_user = 'Your ' + this.serv_name + ' with ' + this.busnes_name + ' is on progress';
+            } else {
+                this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.serv_name + ' with ' + this.busnes_name + ' will begin.\n\n You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' Please be ready.';
+            }
         }
     }
     selectAlrdyWaiting() {
@@ -296,7 +310,11 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         }
     }
 
-    meetingDetails() {
+    meetingDetails(stp6?) {
+        this.isPrevStep = false;
+        if (stp6) {
+            this.isPrevStep = true;
+        }
         this.getMeetingDetails();
         this.step = 4;
     }
@@ -312,7 +330,12 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     back() {
         this.btndisabled = false;
-        this.step = 1;
+        if (this.isPrevStep) {
+            this.step = 6;
+        } else {
+            this.step = 1;
+        }
+        // this._location.back();
     }
     getMeetingDetails() {
         this.starting_url = '';
@@ -433,8 +456,13 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             this.shared_functions.openSnackBar('Meeting Details copied to clipboard');
         }
     }
-    showCustomerRecord() {
+    showCustomerRecord(stp6?) {
+        this.isPrevStep = false;
+        if (stp6) {
+            this.isPrevStep = true;
+        }
         this.step = 8;
+        console.log(this.isPrevStep);
     }
     amNotReady() {
         this.step = 1;
@@ -443,16 +471,23 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.step = 7;
     }
     redirecToPreviousPage() {
-        if (this.step === 1) {
-            this._location.back();
-        } else if (this.step === 2 || this.step === 4 || this.step === 5 || this.step === 6) {
-            this.step = 1;
-        } else if (this.step === 7 || this.step === 8) {
-            this.step = 6;
-        }
+        this._location.back();
+        // if (this.step === 1) {
+        //     this._location.back();
+        // } else if (this.step === 2 || this.step === 4 || this.step === 5 || this.step === 6) {
+        //     this.step = 1;
+        // } else if (this.step === 7 || this.step === 8) {
+        //     this.step = 6;
+        // }
+        // console.log(this.isPrevStep);
     }
     backtoProgresPage() {
-        this.step = 1;
+        console.log(this.isPrevStep);
+        if (this.isPrevStep) {
+            this.step = 6;
+        } else {
+            this.step = 1;
+        }
     }
     gotoUnsuported() {
         this.step = 1;

@@ -1,7 +1,7 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToPreviousPage()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
+                <span class="fa fa-chevron-left">&nbsp;Dashboard</span>
             </button> &nbsp; Jaldee Teleservice
             <!--  -->
         </h5>
@@ -53,7 +53,7 @@
                                         <i class="fa fa-mobile fa-3x" aria-hidden="true"></i>
                                     </div>
                                 </div>
-                                <!-- Reminder,meeting details,Customer details(btns) -->
+                                <!--Content box with Reminder,meeting details,Customer details(btns) -->
                                 <div
                                     class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 brd-solid-1">
                                     <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3 centeralign mgn-bt-30 pad-10">
@@ -112,7 +112,7 @@
                                     </div>
                                 </div>
 
-                                <!-- End meeting,back to dashboard (WhatsApp/Phone) -->
+                                <!-- Done and Not-done (WhatsApp/Phone) -->
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 centeralign mgn-bt-30 pad-10"
                                     *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && is_web">
                                     <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
@@ -166,7 +166,7 @@
                                                 <i *ngIf="callingModes === 'WhatsApp'"
                                                     class="fa fa-whatsapp fa-lg whtsap-ic"></i>
                                                 <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile fa-lg"></i>
-                                                <a
+                                                <a class="chkin-mobic"
                                                     [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">
                                                     Start
                                                     <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
@@ -187,12 +187,12 @@
                                     class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
                                     <h1 class="mat-dialog-title linkpagestyle">
                                         <span class="serv-font-size">
-                                            Reminder
+                                            <span>{{isPrevStep? 'Message' : 'Reminder'}}</span>
                                         </span>
                                     </h1>
                                 </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-30">
-                                    <div class="form-group mgn-bt-10">
+                                    <div *ngIf="!isPrevStep" class="form-group mgn-bt-10">
                                         <span>{{reminder_cap}}</span>&nbsp;&nbsp;
                                         <mat-select class="brd-solid-1" [(ngModel)]="selectedTime"
                                             (selectionChange)="handleTimeSelction(time.value)" #time>
@@ -240,7 +240,8 @@
                                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
                                         style="display: inline-flex;">
                                         <button type="button" mat-button [disabled]="msg_to_user ===''"
-                                            class="cs-btn bt1" (click)="sendMessage()">Send Reminder</button>
+                                            class="cs-btn bt1" (click)="sendMessage()">Send <span>{{isPrevStep? 'Message' : 'Reminder'}}</span>
+                                        </button>
                                         <button type="button" class="cs-btn bt2 travelmodeEdit"
                                             (click)="back()">Cancel</button>
                                     </div>
@@ -372,6 +373,7 @@
                             <!-- Step 6 Service in Progress -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign"
                                 *ngIf="step == 6">
+                                <!-- heading -->
                                 <div
                                     class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
                                     <h1 class="mat-dialog-title linkpagestyle">
@@ -393,6 +395,7 @@
                                         </div>
                                     </h1>
                                 </div>
+                                <!-- service name -->
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 custmer-font-wght">
                                     Service Name: <span class="mgn-lt-5"><i *ngIf="callingModes === 'Zoom'"
                                             class="fa zoom-icon"></i>
@@ -403,14 +406,7 @@
                                         class="mgn-lt-5">
                                         {{serv_name | capitalizeFirst}}</span>
                                 </div>
-                                <!-- <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-5 custmer-font-wght">
-                                    {{customer_label | capitalizeFirst}} Name :<span class="mgn-lt-5">{{consumer_fname}}
-                                        &nbsp;<span *ngIf="waiting_type === 'checkin'">{{consumer_lname}}</span></span>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button (click)="showCustomerRecord()" class="btn-primary-n tele-btn">Show me
-                                        {{customer_label}}
-                                        record</button>
-                                </div> -->
+                                <!-- opened window notify -->
                                 <div
                                     class="col-md-12 col-m-12 col-xs-12 col-lg-12  mgn-bt-20 custmer-font-wght">
                                     <span class="text-red"
@@ -418,6 +414,65 @@
                                         ( {{callingModes}} has been opened in a new window )
                                     </span>
                                 </div>
+                                <!-- content box with meeting and customer details -->
+                                <div
+                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 brd-solid-1">
+                                    <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3 centeralign mgn-bt-30 pad-10">
+                                        <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon">
+                                    </div>
+                                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 centeralign mgn-bt-30 pad-10">
+                                        <div
+                                            class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
+                                            <div class="mgn-up-5">
+                                                <span class="fnt-siz">{{customer_label | capitalizeFirst}} Name : <span
+                                                        *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span><span
+                                                        *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
+                                            <div
+                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
+                                                Send a Message
+                                            </div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
+                                                <button (click)="selectHeadsup('step6')" class="btn-primary-n tele-btn">
+                                                    <i class="fa fa-bell fa-blk" aria-hidden="true"></i>
+                                                    <a class="tspace">Send Message</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
+                                            <div
+                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
+                                                View {{customer_label | capitalizeFirst}} Details
+                                            </div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
+                                                <button (click)="showCustomerRecord('step6')" class="btn-primary-n tele-btn">
+                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                    <a class="tspace">{{customer_label | capitalizeFirst}} Details</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
+                                            <div
+                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
+                                                View Meeting Details
+                                            </div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
+                                                <button (click)="meetingDetails('step6')" class="btn-primary-n tele-btn">
+                                                    <i class="fa fa-eye fa-blk" aria-hidden="true"></i>
+                                                    <a class="tspace">Meeting Details</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                                            <span class="text-red ft-smlr fl-right disabled-style">*Meeting details have
+                                                already sent to {{customer_label}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- done and not-done -->
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 ">
                                     <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
                                         <div><b>I am done
