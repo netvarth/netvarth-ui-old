@@ -85,7 +85,10 @@ export class PaymentSettingsComponent implements OnInit {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/payments->' + mod]);
     }
-    redirecToSettings() {
+    redirecToJaldeepay() {
         this.router.navigate(['provider', 'settings']);
+    }
+    redirecToHelp() {
+        this.router.navigate(['/provider/' + this.domain + '/payments']);
     }
 }
