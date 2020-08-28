@@ -56,7 +56,7 @@
                     <div class="result" [innerHTML]="message.msg | nl2br | capitalizeFirst">
                         <!-- {{shared_functions.firstToUpper(message.msg)}} -->
                     </div>
-                    <div class="result attach" *ngIf="message.attachements" (click)="showImagesection(i)">
+                    <div class="result attach" *ngIf="message.attachements && message.attachements.length > 0" (click)="showImagesection(i)">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
                             {{message.attachements.length}} Attachment(s) </a>
                     </div>
