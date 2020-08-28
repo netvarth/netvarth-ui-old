@@ -339,5 +339,5 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     }
     redirecToServices() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'services']);
-      }
+    }
 }

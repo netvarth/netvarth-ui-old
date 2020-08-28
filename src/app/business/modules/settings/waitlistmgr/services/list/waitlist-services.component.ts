@@ -221,5 +221,5 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
       }
       addservice() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'services', 'add']);
-      }
+       }
 }
