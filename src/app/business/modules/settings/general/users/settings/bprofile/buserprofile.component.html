@@ -58,8 +58,8 @@
 
 
 
-        
- 
+
+
 
 <!-- <div class="pubs card w-dta bprof" *ngIf="bProfile && !showIncompleteButton">
   <div class="ctrl">
@@ -79,12 +79,12 @@
     <div class="div-outline custId-cursor"
     [ngClass]="{'div-grn-outline':onlinepresence_status,'div-red-outline':!onlinepresence_status }" >
     <span class="fontstyl">Jaldee Online &nbsp;&nbsp;</span>
-    <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
-    </mat-slide-toggle> &nbsp;{{jaldee_online_status_str}}
+    <mat-slide-toggle [checked]="onlinepresence_status" (change)="confirm_searchStatus($event);">
+    </mat-slide-toggle> &nbsp;{{onlinepresence_status_str}}
       <p class="head-level-settings">
 
-        <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in jaldee.com</span>
-        <span class="active" *ngIf="jaldee_online_status">Your profile is listed in jaldee.com</span>
+        <span class="inactive" *ngIf="!onlinepresence_status">Your profile is not listed in jaldee.com</span>
+        <span class="active" *ngIf="onlinepresence_status">Your profile is listed in jaldee.com</span>
 
       </p>
 
@@ -164,7 +164,7 @@
 
 
         <!--Additional Info-->
-        <div class="row" *ngIf="bProfile">
+        <div class="row" >
 
 
 
@@ -214,7 +214,7 @@
                                           (click)="addDynamicField(fields, 'subdomain_questions')">
                                           <mat-icon>{{add_circle_outline}}</mat-icon>
                                         </button>
-                                      </mat-panel-description> 
+                                      </mat-panel-description>
                                     </mat-expansion-panel-header>
 
                                     <ng-container [ngSwitch]="fields.dataType">
