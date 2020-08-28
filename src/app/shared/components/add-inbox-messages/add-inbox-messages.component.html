@@ -79,7 +79,7 @@
             <button type="submit" mat-button [disabled]="!amForm.valid || disableButton || typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && (!phone || phone === 'null')"
                 class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
             <button type="button"
-                *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist')"
+                *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist' || source == 'provider-waitlist-inbox')"
                 class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Attach files'">
                 <!-- accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" -->
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple

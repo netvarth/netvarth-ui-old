@@ -19,6 +19,7 @@ import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlis
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { CheckinDetailsSendComponent } from './checkin-details-send/checkin-details-send.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
+import { interval as observableInterval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-checkins',
@@ -292,6 +293,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   message1 = '';
   showDashbard = true;
   tokenOrCheckin;
+  refreshTime;
+  cronHandle: Subscription;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -381,6 +384,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
+    this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'appointments',
       'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
@@ -416,6 +420,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           });
       }
     );
+    this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
+      this.refresh();
+    });
   }
 
   getDepartments() {
@@ -680,7 +687,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-
+    if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+    }
   }
   selectLocationFromCookie(cookie_location_id) {
     let selected_location = null;
@@ -1952,6 +1961,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
   }
   refresh() {
+    console.log(this.time_type);
     if (this.time_type === 1) {
       this.getTodayWL();
     }

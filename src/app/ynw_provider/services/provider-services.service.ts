@@ -1105,8 +1105,8 @@ export class ProviderServices {
    getProviderSchedulesbyDate(date) {
       return this.servicemeta.httpGet('provider/appointment/schedule/date/' + date);
    }
-   readConsumerMessages(consumerId, messageIds) {
-      const url = 'provider/communications/readMessages/' + consumerId + '/' + messageIds;
+   readConsumerMessages(consumerId, messageIds, providerId) {
+      const url = 'provider/communications/readMessages/' + consumerId + '/' + messageIds + '/' + providerId;
       return this.servicemeta.httpPut(url);
    }
    // CustomViewUrls

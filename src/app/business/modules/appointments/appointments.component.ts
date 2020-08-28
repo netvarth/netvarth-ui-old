@@ -18,6 +18,7 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provid
 import { CheckinDetailsSendComponent } from '../check-ins/checkin-details-send/checkin-details-send.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
+import { interval as observableInterval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-appointments',
@@ -272,7 +273,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   services: any = [];
   consumr_id: any;
   topHeight = 0;
-  
+
   @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
   @ViewChild('apptSection', { static: false }) apptSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
@@ -311,6 +312,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   showDashbard = true;
   filteredSchedule: any = [];
   allScheduleSelected = false;
+  cronHandle: Subscription;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -369,7 +371,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (document.getElementById('tabHeader')) {
       tabHeader = document.getElementById('apptsTimeTypes').offsetHeight;
     }
-    this.topHeight =  qHeader + tabHeader;
+    this.topHeight = qHeader + tabHeader;
     console.log(this.topHeight);
     console.log(window.pageYOffset);
     if (header) {
@@ -409,6 +411,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getLocationList();
     this.getServices();
     this.getProviders();
+    this.cronHandle = observableInterval(30000).subscribe(() => {
+      this.refresh();
+    });
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
@@ -1593,9 +1598,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.time_type === 3) {
-       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
-      api_filter['schedule-eq'] = this.filteredSchedule.toString();
-    }
+      if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
+        api_filter['schedule-eq'] = this.filteredSchedule.toString();
+      }
       if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
         api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
       }

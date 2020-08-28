@@ -134,6 +134,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
     switch (this.source) {
       case 'provider-waitlist': this.message_label = 'Message to ' + consumer_label; break;
+      case 'provider-waitlist-inbox': this.message_label = 'Message to ' + consumer_label; break;
       case 'consumer-waitlist': this.message_label = 'Message to ' + provider_label; break;
       case 'consumer-common': this.message_label = 'Message to ' + provider_label; break;
       case 'provider-common': this.message_label = 'Message to ' + consumer_label; break;
@@ -242,6 +243,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           };
           switch (this.source) {
             case 'provider-waitlist': this.providerToConsumerWaitlistNote(post_data); break;
+            case 'provider-waitlist-inbox': this.providerToConsumerWaitlistNote(post_data); break;
             case 'consumer-waitlist': this.consumerToProviderWaitlistNote(post_data); break;
             case 'consumer-common': this.consumerToProviderNoteAdd(post_data); break;
             case 'provider-common': this.providerToConsumerNoteAdd(post_data); break;
