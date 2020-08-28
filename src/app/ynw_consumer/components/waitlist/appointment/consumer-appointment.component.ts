@@ -545,7 +545,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.selectedUser = user;
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
-        if (user.id && user.id !== 0) {
+        if (user && user.id && user.id !== 0) {
             for (let i = 0; i < this.servicesjson.length; i++) {
                 if (this.servicesjson[i].provider && user.id === this.servicesjson[i].provider.id) {
                     newserviceArray.push(this.serviceslist[i]);
