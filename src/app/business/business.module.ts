@@ -51,6 +51,7 @@ import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/co
 import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
+import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
 
 @NgModule({
     declarations: [
@@ -77,7 +78,8 @@ import { UpdateEmailComponent } from './modules/update-email/update-email.compon
         ProviderWaitlistCheckInCancelPopupComponent,
         ProviderErrorMesagePopupComponent,
         ProviderStartTourComponent,
-        UpdateEmailComponent
+        UpdateEmailComponent,
+        InboxListComponent
     ],
     imports: [
         BusinessRoutingModule,
