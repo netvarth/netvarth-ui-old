@@ -20,9 +20,16 @@
                             <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls"
                                 [matTooltip]="bprofileTooltip">My Profile
                                 <i class="fa fa-gears fl-right lnk"></i>
-                                <div joyrideStep="step1" title="Jaldee Online"
-                                    text="Use Jaldee Online to set up your basic account and list your services in Jaldee.com">
+                                <div>
+                                <div joyrideStep="step1" [stepContent]="text1" title="My profile">
                                 </div>
+                                <ng-template #text1>
+                                        Use Jaldee Online to set up your basic account and list your services in Jaldee.com
+                                </ng-template>
+                            </div>
+                                <!-- <div joyrideStep="step1" title="Jaldee Online"
+                                    text="Use Jaldee Online to set up your basic account and list your services in Jaldee.com">
+                                </div> -->
 
                             </h4>
 
@@ -187,9 +194,16 @@
                             <h4 class="pointer-cursor" (click)="redirecTo('waitlistmanager')"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Jaldee QManager
                                 <i class="fa fa-gears fl-right lnk"></i>
-                                <div joyrideStep="step2" title="Do you issue tokens to your customers?" text="
+                                <div>
+                                    <div joyrideStep="step2" [stepContent]="text2" title="Do you issue tokens to your customers?">
+                                    </div>
+                                    <ng-template #text2>
+                                            Use Jaldee QManager to add your services.
+                                    </ng-template>
+                                </div>
+                                <!-- <div joyrideStep="step2" title="Do you issue tokens to your customers?" text="
 
-                                Use Jaldee QManager to add your services."></div>
+                                Use Jaldee QManager to add your services."></div> -->
                             </h4>
 
                         </div>
@@ -285,12 +299,21 @@
                                 [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">
                                 Jaldee Appointment Manager
                                 <i class="fa fa-gears fl-right lnk"></i>
-                                <div joyrideStep="step3"
+                                <div>
+                                    <div joyrideStep="step3" [stepContent]="text3" title="Do you fix appointments or take bookings with your customers?">
+                                    </div>
+                                    <ng-template #text3>
+                                        <div>
+                                            Use Jaldee Appointment Manager to add your services.
+                                        </div>
+                                    </ng-template>
+                                </div>
+                                <!-- <div joyrideStep="step3"
                                     title="Do you fix appointments or take bookings with your customers?" text="
 
                                 Use Jaldee Appointment Manager to add your services.">
 
-                                </div>
+                                </div> -->
                             </h4>
                         </div>
                         <div class="box-footer no-padding">

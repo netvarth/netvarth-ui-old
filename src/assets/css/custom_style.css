@@ -11148,3 +11148,22 @@ a {
     height: 600px;
   }
 }
+.joyride-step__container {
+  width: 300px !important;
+  
+}
+.joyride-step__body {
+  color: rgba(0,0,0,0.54) !important;
+  font: 13px "Roboto","Arial",sans-serif !important;
+  line-height: 20px !important;
+  padding: 15px !important;
+}
+.joyride-step__title{
+  color: rgba(0,0,0,0.87) !important;
+  font: 500 20px "Roboto","Arial",sans-serif !important;
+  padding: 0 !important;
+}
+.joyride-button{
+  color: #fff !important;
+  background-color: #4285f4 !important;
+}
