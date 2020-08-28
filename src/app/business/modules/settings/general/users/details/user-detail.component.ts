@@ -75,7 +75,7 @@ export class BranchUserDetailComponent implements OnInit {
     departments: any = [];
     userId;
     user_data: any = [];
-    userTypesFormfill: any = ['ASSISTANT', 'PROVIDER', 'ADMIN'];
+    userTypesFormfill: any = [{value: 'ASSISTANT', name: 'ASSISTANT'}, {value: 'PROVIDER', name: 'PROVIDER'}, {value: 'ADMIN', name: 'ADMIN'}];
     dept: any;
     subDom;
     deptLength;
@@ -117,6 +117,9 @@ export class BranchUserDetailComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.subsector = user.subSector;
         this.sector = user.sector;
+        if (this.sector === 'healthCare') {
+           this.userTypesFormfill = [{value: 'ASSISTANT', name: 'ASSISTANT'}, {value: 'PROVIDER', name: 'DOCTOR'}, {value: 'ADMIN', name: 'ADMIN'}];
+        }
         if (bConfig && bConfig.bdata) {
             for (let i = 0; i < bConfig.bdata.length; i++) {
                 if (user.sector === bConfig.bdata[i].domain) {
@@ -201,7 +204,7 @@ export class BranchUserDetailComponent implements OnInit {
             // city: []
         });
 
-        this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0]);
+        this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0].name);
         this.getWaitlistMgr();
     }
     getUserData() {
@@ -212,6 +215,9 @@ export class BranchUserDetailComponent implements OnInit {
                         this.user_data = res;
                         if (this.actionparam.type === 'edit') {
                             this.type = this.user_data.userType;
+                            if (this.sector === 'healthCare') {
+                                this.type = 'DOCTOR';
+                            }
                             // this.createForm();
                             this.updateForm();
                         }
@@ -307,6 +313,7 @@ export class BranchUserDetailComponent implements OnInit {
             // post_data1['subdomain'] = input.selectedSubDomain;
             post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
         }
+        console.log(post_data1);
         if (this.actionparam.type === 'edit') {
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('USERUPDATED_ADDED'), { 'panelclass': 'snackbarerror' });

@@ -62,7 +62,7 @@
                                     <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3 centeralign mgn-bt-30 pad-10">
                                         <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon">
                                     </div>
-                                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 centeralign mgn-bt-30 pad-10">
+                                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 centeralign mgn-bt-30 pad-10 box-bg-grey">
                                         <div
                                             class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
                                             <div class="mgn-up-5">
@@ -115,7 +115,7 @@
                                 </div>
 
                                 <!-- Done and Not-done (WhatsApp/Phone) -->
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 centeralign mgn-bt-30 pad-10"
+                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 centeralign mgn-bt-30 pad-10 box-bg-grey"
                                     *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && is_web">
                                     <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
                                         <div><b>I am done
@@ -425,7 +425,7 @@
                                     <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3 centeralign mgn-bt-30 pad-10">
                                         <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon">
                                     </div>
-                                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 centeralign mgn-bt-30 pad-10">
+                                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 centeralign mgn-bt-30 pad-10 box-bg-grey">
                                         <div
                                             class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
                                             <div class="mgn-up-5">
@@ -481,7 +481,7 @@
                                     </div>
                                 </div>
                                 <!-- done and not-done -->
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 ">
+                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 box-bg-grey">
                                     <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
                                         <div><b>I am done
                                                 <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
@@ -562,7 +562,9 @@
                                 </div>
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 txt-left">
                                     <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        Name: <span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span>
+                                        Name: <span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span><span *ngIf="waiting_type === 'checkin'">
+                                            {{consumer_lname | capitalizeFirst}}
+                                        </span>
                                     </div>
                                     <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                         Id: <span class="mgn-lt-5">{{data.consumer.id}}</span>

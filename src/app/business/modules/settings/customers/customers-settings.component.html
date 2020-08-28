@@ -19,8 +19,8 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoCustomerIdSettings()">
-                        <h2>Customer Id</h2>
-                        <span class="form-level-settings">Configure customer id settings here. <a class="learnmore-pointer"
+                        <h2>{{cust_domain_name |capitalizeFirst}} Id Format</h2>
+                        <span class="form-level-settings">Configure {{cust_domain_name}} id settings here. <a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('custid-settings', $event)">Learn
                                 More</a></span> 
                     </span>

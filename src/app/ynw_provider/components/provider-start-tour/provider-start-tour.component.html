@@ -1,9 +1,15 @@
-<h1 mat-dialog-title>Learn How to Use Jaldee ??</h1>
+<div class="iph-dialog">
+  <h1 mat-dialog-title>Take a tour</h1>
 <div class="text-center" mat-dialog-content>
-    Jaldee offers many features for you to enhance your business.
-    <button type="button" class="btn btn-info cs-btn bt2" (click)="onNoClick('startTour')" >TAKE A TOUR</button>
+    You're a few steps away from setting up your business in Jaldee. We're there to help you out.<br>
+    Explore Jaldee's features to understand what suits your business.
+    <button type="button" class="noThanksBtn" (click)="onNoClick('stopTour')">NO THANKS</button>
+
+    <button type="button" class="exploreBtn" (click)="onNoClick('startTour')" >EXPLORE</button>
 </div>
 
-<div mat-dialog-actions>
+<!-- <div mat-dialog-actions>
   <button type="button" class="btn btn-link" (click)="onNoClick('stopTour')">NO THANKS</button>
+</div> -->
 </div>
+
