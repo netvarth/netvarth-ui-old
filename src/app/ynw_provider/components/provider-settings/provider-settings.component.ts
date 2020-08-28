@@ -12,6 +12,7 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
 import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { UpdateEmailComponent } from '../../../business/modules/update-email/update-email.component';
 
 @Component({
@@ -227,6 +228,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   additionalInfoDomainFields: any = [];
   additionalInfoSubDomainFields: any = [];
   domain_fields;
+  domain;
   domain_questions = [];
   subdomain_fields = [];
   image_list: any = [];
@@ -235,10 +237,17 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   normal_domainfield_show = 1;
   normal_subdomainfield_show = 1;
   field;
+  services_hint = '';
   bprofileLoaded = false;
   showIncompleteButton = true;
   ngOnInit() {
-    // this.provider_datastorage.setWeightageArray([]);
+      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
+    this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
+    if (this.domain === 'healthCare') {
+      this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
+    }
+    this.accountType = user.accountType;
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
     this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');
@@ -400,14 +409,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
             /*handle error*/
           },
           () => {
-            //this.routerobj.navigate(['.'], {});
+            this.routerobj.navigate(['.'], {} );
             // this.redirecttoProfile();
-            this.routerobj.navigate(['provider', 'settings'], { });
           }
         );
 
       } else {
-        this.routerobj.navigate(['provider', 'settings'], { });
+       this.routerobj.navigate(['.'], {} );
       }
 
 
