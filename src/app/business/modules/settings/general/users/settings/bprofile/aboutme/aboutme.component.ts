@@ -161,7 +161,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
   createForm() {
     this.formfields = {
       bname: ['', Validators.compose([Validators.required])],
-      bdesc: ['']
+      bdesc: ['', Validators.compose([Validators.required])]
     };
     this.amForm = this.fb.group(this.formfields);
     // this.prov_curstatus = this.bProfile.status;
@@ -169,6 +169,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       this.updateForm();
     }
   }
+  
   updateForm() {
     this.amForm.setValue({
       'bname': this.bProfile.businessName || '',

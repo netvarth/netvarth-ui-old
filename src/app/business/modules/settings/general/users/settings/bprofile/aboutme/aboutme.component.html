@@ -91,7 +91,7 @@
                                                             <mat-form-field>
                                                                 <textarea  maxlength="2000" matInput class="form-control" id="bdesc" #bdesc formControlName="bdesc" row="4" placeholder="A short description about your service/business (Max 2000 characters)"></textarea>
                                                             </mat-form-field>
-                                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')" errorMsg="Please describe your bsuiness/service in brief">
+                                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')" errorMsg="Please describe your business/service in brief">
                                                             </app-field-error-display>
                                                         </div>
                                                         <div *ngIf="showVirtualFields">
@@ -475,7 +475,7 @@
                                                             <button type="button" class="cs-btn bt2"  (click)="redirecToBprofile()"
                                                                 [disabled]="disableButton">{{cancel_btn_cap}}</button>
                                                             <button type="submit" style="margin-left: 15px;"
-                                                                [disabled]="!amForm.valid && disableButton" class="cs-btn bt1"
+                                                                [disabled]="!amForm.valid || disableButton" class="cs-btn bt1"
                                                                 mat-button>{{save_btn_cap}}</button>
                                                         </div>
                                                     </form>
