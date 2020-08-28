@@ -73,6 +73,7 @@ export class ItemDetailsComponent implements OnInit {
     item;
     taxDetails: any = [];
     itemname: any;
+    itemcaption = 'Add Item';
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -165,6 +166,7 @@ export class ItemDetailsComponent implements OnInit {
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
             });
         } else {
+            // this.itemcaption = 'Item Details';
             this.amForm = this.fb.group({
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
@@ -174,6 +176,7 @@ export class ItemDetailsComponent implements OnInit {
             });
         }
         if (this.action === 'edit') {
+            this.itemcaption = 'Edit Item';
             this.updateForm();
         }
     }

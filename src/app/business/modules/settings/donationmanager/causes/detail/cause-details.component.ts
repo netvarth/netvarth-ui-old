@@ -44,6 +44,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
     click_here_cap = Messages.CLICK_HERE_CAP;
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
     showGallery = false;
+    causecaption = 'Add Cause';
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -120,6 +121,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                             this.serviceParams['action'] = 'edit';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else if (serviceActionModel.action === 'close' && serviceActionModel.source !== 'add') {
+                            this.causecaption = 'Cause Details';
                             this.serviceParams['action'] = 'show';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else {
@@ -181,6 +183,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                 data => {
                     this.serviceParams['service'] = data;
                     this.serviceParams['action'] = 'show';
+                    this.causecaption = 'Cause Details';
                     this.status = this.serviceParams['service'].status;
                     this.setGalleryImages(this.serviceParams['service'].servicegallery || []);
                     // remove multiple end breadcrumb on edit function
@@ -194,6 +197,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
+                        this.causecaption = 'Edit Cause';
                         this.serviceParams['action'] = 'edit';
                     }
                     this.servicesService.initServiceParams(this.serviceParams);
@@ -308,5 +312,8 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
     goBack() {
         this.router.navigate(['provider', 'settings', 'donationmanager', 'causes']);
         this.api_loading = false;
+    }
+    redirecToDonation() {
+        this.router.navigate(['provider', 'settings' , 'donationmanager' , 'causes']);
     }
 }

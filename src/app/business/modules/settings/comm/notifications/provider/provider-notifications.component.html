@@ -16,13 +16,13 @@
     </div>
   </div>
 </section>
-<section *ngIf="!waitlistStatus && !appointment_status && !donations_status && !api_loading">
+<!-- <section *ngIf="!waitlistStatus && !appointment_status && !donations_status && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
     <div class="enable-notif">
       To setup ‘Other Notifications’, Appointment manager/QManager/Donations need to be enabled from your settings.
     </div>
   </div>
-</section>
+</section> -->
 <section class="content comn-cls lic-page notifications"
   *ngIf="!api_loading">
   <div class="col-md-12 no-padding-small">
@@ -35,7 +35,6 @@
             <mat-expansion-panel-header>
               <mat-panel-title class="block-level">{{provdr_domain_name|capitalizeFirst}} Notifications</mat-panel-title>
             </mat-expansion-panel-header> -->
-<div *ngIf="waitlistStatus || appointment_status || donations_status">
         <mat-accordion *ngIf="waitlistStatus">
           <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header class="mgn-bt-10">
@@ -503,8 +502,8 @@
             </div> -->
           </mat-expansion-panel>
         </mat-accordion>
-      </div>
-      <div>
+     
+     
         <mat-accordion >
           <mat-expansion-panel [expanded]="false">
             <mat-expansion-panel-header class="mgn-bt-10">
@@ -590,7 +589,7 @@
             </div>
           </mat-expansion-panel>
         </mat-accordion>
-      </div>
+     
       </div>
     </div>
   </div>

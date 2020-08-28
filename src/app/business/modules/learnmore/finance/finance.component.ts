@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 @Component({
     selector: 'app-finance-learnmore',
@@ -115,6 +115,8 @@ export class FinanceComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private _location: Location,
     private _scrollToService: ScrollToService,
+    private router: Router
+
   ) { }
 
   setActivePricing(item) {
@@ -428,6 +430,9 @@ export class FinanceComponent implements OnInit {
   {this.showhoursH = true;}
 }
 
+  }
+  redirecToSettings() {
+    this.router.navigate(['provider', 'settings' ]);
   }
 }
 

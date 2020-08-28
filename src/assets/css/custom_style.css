@@ -1330,6 +1330,10 @@ sup {
   margin-bottom: 5px !important;
 }
 
+.mgn-bt-50 {
+  margin-bottom: 50px !important;
+}
+
 .mgn-lt-3 {
   margin-left: 3px !important;
 }
@@ -3187,6 +3191,9 @@ body {
 @media only screen and (min-width:460px) and (max-width:767px) {
   .dash-actions-th {
     width: 135px !important;
+  }
+  .teleservicePopup .fl-right {
+    float: none !important;
   }
 }
 
@@ -8548,6 +8555,11 @@ owl-carousel .bt3.active {
   .top-tax {
     top: 75px !important;
   }
+  .teleservicePopup .col-md-12 .col-md-3 .usr_img {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: scale-down !important;
+  }
 }
 
 @media only screen and (max-width: 600px) {}
@@ -11081,7 +11093,32 @@ a {
   line-height: 40px;
   font-weight: 500;
 }
-
+.teleservicePopup .chkin-mobic {
+  font-size: medium;
+}
+.teleservicePopup .brd-solid-1 {
+  border: 1px solid;
+}
+.teleservicePopup .fnt-file {
+  font-size: 1.5rem !important;
+}
+.teleservicePopup .fa-arw {
+  font-size: 1.8rem !important;
+  color: rgb(111 195 111) !important;
+}
+.teleservicePopup .col-md-12 .col-md-3 .usr_img {
+  width: 150px;
+  height: 195px;
+  object-fit: scale-down;
+}
+.teleservicePopup .wtsap-img {
+  width: 30px;
+  padding-bottom: 10px;
+}
+.teleservicePopup .nxt-icon {
+  width: 18px;
+  padding-bottom: 10px;
+}
 @media only screen and (max-width: 400px) {
   .teleservicePopup #table3 img {
     width: 35px;
@@ -11093,6 +11130,11 @@ a {
     width: fit-content !important;
     padding: 5px 5px 5px 5px !important;
     border-color: rgb(24 115 242) !important;
+  }
+  .teleservicePopup .col-md-12 .col-md-3 .usr_img {
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: scale-down !important;
   }
 }
 .support-num {

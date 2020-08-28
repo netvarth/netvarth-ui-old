@@ -88,4 +88,10 @@ export class LabelsComponent implements OnInit {
             }
         );
     }
+    redirecToGeneral() {
+        this.router.navigate(['provider', 'settings' , 'general']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/general->labels']);
+    }
 }

@@ -100,4 +100,10 @@ export class CustomViewListComponent implements OnInit {
   addView() {
     this.router.navigate(['provider/settings/general/customview/add']);
   }
+  redirecToGeneral() {
+    this.router.navigate(['provider', 'settings' , 'general']);
+  }
+  redirecToHelp() {
+    this.router.navigate(['/provider/' + this.domain + '/general->customview']);
+  }
 }

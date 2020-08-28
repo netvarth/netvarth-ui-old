@@ -182,11 +182,12 @@ export class ProviderNotificationsComponent implements OnInit {
       this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
     }
   }
-  setNotificationList(notificationList: any): any {
+  setNotificationList(notificationList) {
     if (notificationList.length !== 0) {
       for (const notifyList of notificationList) {
         if (notifyList.eventType && notifyList.eventType === 'WAITLISTADD') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMsg) {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
+            console.log(this.SelchkinNotify);
             this.SelchkinNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -204,7 +205,7 @@ export class ProviderNotificationsComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
 
-          if (notifyList.pushMsg) {
+          if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.cheknPushph_arr = notifyList.pushMsg;
             this.SelchkinNotify = true;
           }
@@ -212,7 +213,8 @@ export class ProviderNotificationsComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMsg) {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
+            console.log(this.SelchkincnclNotify);
             this.SelchkincnclNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -229,7 +231,7 @@ export class ProviderNotificationsComponent implements OnInit {
           // else {
           //   this.SelchkincnclNotify = false;
           // }
-          if (notifyList.pushMsg) {
+          if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.cheknCancelPushph_arr = notifyList.pushMsg;
             this.SelchkincnclNotify = true;
           }
@@ -237,7 +239,7 @@ export class ProviderNotificationsComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTADD') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMsg) {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selApptNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -255,7 +257,7 @@ export class ProviderNotificationsComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
 
-          if (notifyList.pushMsg) {
+          if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.apptPushph_arr = notifyList.pushMsg;
             this.selApptNotify = true;
           }
@@ -263,7 +265,7 @@ export class ProviderNotificationsComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMsg) {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selApptCancelNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -281,7 +283,7 @@ export class ProviderNotificationsComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
 
-          if (notifyList.pushMsg) {
+          if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.apptcancelPushph_arr = notifyList.pushMsg;
             this.selApptCancelNotify = true;
           }
@@ -289,7 +291,7 @@ export class ProviderNotificationsComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMsg) {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selDonatnNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -307,7 +309,7 @@ export class ProviderNotificationsComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
 
-          if (notifyList.pushMsg) {
+          if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.donatepushph_arr = notifyList.pushMsg;
             this.selDonatnNotify = true;
           }
@@ -315,7 +317,7 @@ export class ProviderNotificationsComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'LICENSE') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMsg) {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selSystemNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -327,7 +329,7 @@ export class ProviderNotificationsComponent implements OnInit {
             this.selSystemNotify = true;
           }
 
-          if (notifyList.pushMsg) {
+          if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.pushsystemph_arr = notifyList.pushMsg;
             this.selSystemNotify = true;
           }
@@ -342,7 +344,9 @@ export class ProviderNotificationsComponent implements OnInit {
     }
   }
   selectChekinCanclNotify(event) {
+    console.log(this.SelchkincnclNotify);
     this.SelchkincnclNotify = event.checked;
+    console.log(this.SelchkincnclNotify);
     if (!this.SelchkincnclNotify) {
       this.checkinCancelNotifications('cancelcheckin');
     }
@@ -976,6 +980,7 @@ export class ProviderNotificationsComponent implements OnInit {
         chekincancelMode = 'UPDATE';
       }
     }
+    console.log(this.SelchkincnclNotify);
     if (!this.SelchkincnclNotify) {
       this.em1_arr = [];
       this.ph1_arr = [];

@@ -284,5 +284,8 @@ export class HolidayDetailsComponent implements OnInit {
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
-}
+  }
+  redirecToGeneral() {
+    this.router.navigate(['provider', 'settings' , 'general' , 'holidays' ]);
+  }
 }

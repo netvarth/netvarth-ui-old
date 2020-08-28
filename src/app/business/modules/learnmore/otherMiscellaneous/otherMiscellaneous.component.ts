@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { Location } from '@angular/common';
@@ -117,6 +117,7 @@ export class OtherMiscellaneousComponent implements OnInit {
       private shared_functions: SharedFunctions,
       private _location: Location,
       private _scrollToService: ScrollToService,
+      private router: Router
     ) { }
   
     setActivePricing(item) {
@@ -405,6 +406,7 @@ export class OtherMiscellaneousComponent implements OnInit {
         this.showdownpanel = true;
     }
     }
+    redirecToSettings() {
+      this.router.navigate(['provider', 'settings' ]);
+    }
   }
-  
-  

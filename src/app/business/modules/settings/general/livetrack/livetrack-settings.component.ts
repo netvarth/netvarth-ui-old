@@ -74,4 +74,10 @@ export class LiveTrackSettingsComponent implements OnInit {
                 }
             );
     }
+    redirecToGeneral() {
+        this.router.navigate(['provider', 'settings' , 'general']);
+    }
+    redirecToHelp() {
+        this.router.navigate(['/provider/' + this.domain + '/general->livetracking']);
+    }
 }
