@@ -230,4 +230,13 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
           this.setPaginationFilter(pgefilter);
           this.getServices(pgefilter);
       }
+      redirecToApptmanager() {
+        this.routerobj.navigate(['provider', 'settings' , 'appointmentmanager' ]);
+      }
+      redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->services']);
+      }
+      addservice() {
+        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'services', 'add']);
+       }
 }
