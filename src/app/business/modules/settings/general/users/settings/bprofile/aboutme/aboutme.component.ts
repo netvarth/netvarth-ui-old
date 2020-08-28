@@ -84,6 +84,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
   };
   dynamicdialogRef;
   logoExist = false;
+  change_cap = Messages.BPROFILE_CHANGE_CAP;
   constructor(
     private fb: FormBuilder,
     private service: QuestionService,
@@ -437,7 +438,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
           this.subdomain_fields = data['fields'];
           this.subdomain_fields_mandatory = this.subdomain_fields.filter(dom => dom.mandatory === true);
           this.subdomain_questions = data['questions'] || [];
-          if (this.userMandatoryfieldArray.length != 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
+          if (this.userMandatoryfieldArray.length !== 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
             user_mandatorysubdomain = true;
             this.userMandatoryfieldArray.forEach(mandatoryField => {
               if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {
