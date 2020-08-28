@@ -436,8 +436,8 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 messageIds.push(message.messageId);
             }
         }
-        const messageids = messageIds.toString();
-        const leng = messages.length;
+        // const messageids = messageIds.toString();
+        // const leng = messages.length;
         // if (messageids) {
         //     this.provider_services.readConsumerMessages(messages[0].accountId, messageids.split(',').join('-')).subscribe(data => {
         //         this.getInboxMessages();
