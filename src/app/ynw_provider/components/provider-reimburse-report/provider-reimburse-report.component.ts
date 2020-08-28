@@ -361,4 +361,7 @@ export class ProviderReimburseReportComponent implements OnInit {
   hideFilterSidebar() {
     this.filter_sidebar = false;
   }
+  redirecToJaldeeBilling() {
+    this.router.navigate(['provider', 'settings' , 'pos' , 'coupon']);
+  }
 }

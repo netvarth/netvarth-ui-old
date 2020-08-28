@@ -9,13 +9,10 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
-<<<<<<< HEAD
-=======
 import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
 import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material';
 import { UpdateEmailComponent } from '../../../business/modules/update-email/update-email.component';
->>>>>>> refs/remotes/origin/1.3.0
 
 @Component({
   selector: 'app-provider-settings',
@@ -173,7 +170,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     private provider_datastorage: ProviderDataStorageService,
     private qservice: QuestionService,
     private provider_shared_functions: ProviderSharedFuctions,
-    private activated_route: ActivatedRoute
+    private activated_route: ActivatedRoute,
+    private readonly joyrideService: JoyrideService,
+    private dialog: MatDialog
   ) {
     this.activated_route.queryParams.subscribe(
       qparams => {
@@ -303,8 +302,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
     });
   }
-<<<<<<< HEAD
-=======
 
   getAccountContactInfo() {
     this.provider_services.getAccountContactInfo().subscribe(
@@ -416,7 +413,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     });
 
   }
->>>>>>> refs/remotes/origin/1.3.0
 
   calculateWeightage(data) {
     let total = 0;

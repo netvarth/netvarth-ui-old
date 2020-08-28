@@ -32,7 +32,7 @@ import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic
 
 })
 
-export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked {
+export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   notedialogRef: MatDialogRef<ProPicPopupComponent, any>;
   userAdditionalInfoSubDomainFields: any[];
@@ -345,11 +345,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     this.shared_services.bussinessDomains()
       .subscribe(data => {
         this.businessConfig = data;
-       // this.getBusinessProfile();
+        // this.getBusinessProfile();
       },
         () => {
 
-     });
+        });
   }
   getUserPublicSearch() {
     this.provider_services.getUserPublicSearch(this.userId)
@@ -442,14 +442,14 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
                   }
                 });
             });
-  
+
           if (this.bProfile.logo) {
             this.blogo = this.bProfile.logo;
             const cnow = new Date();
             const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
             this.cacheavoider = dd;
             this.user_datastorage.updateProfilePicWeightage(true);
-          }  else {
+          } else {
             this.user_datastorage.updateProfilePicWeightage(false);
           }
           if (this.bProfile.status === 'ACTIVE') {
@@ -539,7 +539,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
         this.user_arr = data;
         const breadcrumbs = [];
         this.breadcrumbs_init.map((e) => {
-          breadcrumbs.push(e); 
+          breadcrumbs.push(e);
         });
         breadcrumbs.push({
           title: this.user_arr.firstName,
@@ -564,11 +564,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
                 // this.initSpecializations();
 
                 this.getBusinessProfile();
-                }
+              }
             }
           }
         }
- });
+      });
   }
   redirecToSettings() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings']);
@@ -745,7 +745,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
           console.log('subdaomin..' + JSON.stringify(data));
           let user_mandatorysubdomain = false;
           let user_mandatorySubDomainFilled = false;
-          let user_additionalInfoFilledStatus = false
+          let user_additionalInfoFilledStatus = false;
           this.subdomain_fields = data['fields'];
           this.domain_fields_nonmandatory = this.domain_fields.filter(dom => dom.mandatory === false);
           this.subdomain_questions = data['questions'] || [];
@@ -995,23 +995,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
 
 
   updatePrimaryFields(pdata) {
-<<<<<<< HEAD
-      // if (this.blogo.length === 0) {
-      //   const self = this;
-      //   const  promise = self.sharedfunctionobj.getBase64Image();
-      //   promise.then(function (dataURL) {
-      //   const blob = self.sharedfunctionobj.b64toBlob(dataURL);
-      //   const submit_data: FormData = new FormData();
-      //   submit_data.append('files', blob, 'jaldee-logo.png');
-      //   const propertiesDet = {
-      //     'caption': 'Logo'
-      //   };
-      //   const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-      //   submit_data.append('properties', blobPropdata);
-      //   self.uploadLogo(submit_data);
-      // });
-      // }
-=======
     // if (this.blogo.length === 0) {
     // const self = this;
     // const promise = self.sharedfunctionobj.getBase64Image();
@@ -1027,7 +1010,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     // self.uploadLogo(submit_data);
     // });
     // }
->>>>>>> refs/remotes/origin/1.3.0
 
     this.disableButton = true;
     this.provider_services.createUserbProfile(pdata, this.userId)
@@ -1200,7 +1182,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
           this.bProfile = data;
           this.getSpecializations(this.domain, this.subDomain);
           if (this.bProfile.specialization) {
-           this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
+            this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
             if (this.bProfile.specialization.length > 0) {
               this.normal_specilization_show = 3;
             } else {
@@ -1218,9 +1200,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   getSpecializations(domain, subdomain) {
     this.provider_services.getSpecializations(domain, subdomain)
       .subscribe((data: any) => {
-       this.specialization_arr = data;
-       });
-     }
+        this.specialization_arr = data;
+      });
+  }
   getSpecializationName(n) {
     for (let i = 0; i < this.specialization_arr.length; i++) {
       if (this.specialization_arr[i].name === n) {
@@ -1454,9 +1436,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   specializations() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'specializations']);
   }
-   additionalInfo() {
+  additionalInfo() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'additionalinfo']);
-   }
+  }
   languagesKnown() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'languages']);
   }
@@ -1465,16 +1447,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   }
 
   changeProPic() {
-    // this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true,
-    //   data: { 'userdata': this.bProfile }
-    // });
-    // this.notedialogRef.afterClosed().subscribe(result => {
-    //   this.getBusinessProfile();
-    // });
-    this.shared_functions.openSnackBar('Visit our website "www.jaldee.com" to change your profile picture', { 'panelclass': 'snackbarerror' });
     this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
