@@ -409,13 +409,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
             /*handle error*/
           },
           () => {
-            this.routerobj.navigate(['.'], {} );
+            //this.routerobj.navigate(['.'], {});
             // this.redirecttoProfile();
+            this.routerobj.navigate(['provider', 'settings'], { });
           }
         );
 
       } else {
-       this.routerobj.navigate(['.'], {} );
+        this.routerobj.navigate(['provider', 'settings'], { });
       }
 
 
@@ -773,6 +774,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
           this.getWaitlistMgr();
         });
   }
+
   redirecTo(mod, usermode?) {
     switch (mod) {
       case 'bprofile':
@@ -780,6 +782,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         break;
       case 'specializations':
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'specializations']);
+        break;
+        case 'jaldeeonline':
+        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldeeonline']);
         break;
       case 'languages':
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'languages']);
