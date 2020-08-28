@@ -58,14 +58,14 @@
                       </div>
                       <div class="form-group">
                         <mat-form-field>
-                          <textarea maxlength="2000" matInput class="form-control" id="bdesc" formControlName="bdesc"
+                          <textarea maxlength="2000" matInput class="form-control" #bdesc id="bdesc" formControlName="bdesc"
                             row="4" placeholder="About me (Max 2000 characters) *"></textarea>
                         </mat-form-field>
                         <app-field-error-display [displayError]="fed_service.isFieldValid(aboutmeForm,'bdesc')"
                           errorMsg="Please enter the profile summary">
                         </app-field-error-display>
                       </div>
-                      <div *ngIf="bProfile.businessName">
+                      <div *ngIf="showVirtualFields">
 
                         <!--mandatory fields -->
 

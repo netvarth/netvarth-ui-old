@@ -32,7 +32,7 @@
                                                         <!--<span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>-->
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="">
@@ -74,11 +74,11 @@
                                                     class="cs-btn bt1" mat-button>{{save_btn_cap}}</button>
                                             </div>
                                         </form> -->
-                                        
+
                                                     <form *ngIf="amForm" [formGroup]="amForm" novalidate
                                                         (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
                                                         (keyup)="resetApiErrors()" class="ynw-common-form-nm">
-            
+
                                                         <div class="form-group">
                                                             <mat-form-field>
                                                                 <input type="text" matInput class="form-control" id="bname" #bname formControlName="bname" autocomplete="off"
@@ -89,15 +89,15 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <mat-form-field>
-                                                                <textarea  maxlength="2000" matInput class="form-control" id="bdesc" formControlName="bdesc" row="4" placeholder="A short description about your service (Max 2000 characters)"></textarea>
+                                                                <textarea  maxlength="2000" matInput class="form-control" id="bdesc" #bdesc formControlName="bdesc" row="4" placeholder="A short description about your service/business (Max 2000 characters)"></textarea>
                                                             </mat-form-field>
-                                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')" errorMsg="Please enter the profile summary">
+                                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')" errorMsg="Please describe your bsuiness/service in brief">
                                                             </app-field-error-display>
                                                         </div>
-                                                        <div *ngIf="bProfile && bProfile.businessName">
+                                                        <div *ngIf="showVirtualFields">
                                                           <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
-                                                            <div *ngFor="let fields of domain_fields">
-                                                              <ng-container *ngIf="fields.mandatory">
+                                                            <div *ngFor="let fields of domain_fields_mandatory">
+                                                              <ng-container >
                                                                 <div class="cd-b">
                                                                   <div class="div-outline custId-cursor"
                                                                     (click)="!fields['value'] ? addDynamicField(fields, 'domain_questions'):(fields.dataType=='Gender') ?editDynamicField(fields.name, 'domain_questions'):false"
@@ -120,7 +120,7 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
+
                                                                         <ng-container *ngSwitchCase="'TEXT_MED'">
                                                                           <div class="cont-btn">
                                                                             <p [innerHTML]="fields.value | nl2br | capitalizeFirst">
@@ -129,7 +129,7 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
+
                                                                         <ng-container *ngSwitchCase="'Boolean'">
                                                                           <div class="cont-btn">
                                                                             <p> {{(fields.value == 'true' || fields.value == true ) ? 'Yes' : 'No'}}</p>
@@ -144,7 +144,7 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
+
                                                                         <ng-container *ngSwitchCase="'Number'">
                                                                           <div class="cont-btn">
                                                                             <p> {{fields.value}}</p>
@@ -152,7 +152,7 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
+
                                                                         <ng-container *ngSwitchCase="'URL'">
                                                                           <div class="cont-btn">
                                                                             <p> {{fields.value}}</p>
@@ -160,8 +160,8 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
-                                        
+
+
                                                                         <ng-container *ngSwitchCase="'Date'">
                                                                           <div class="cont-btn">
                                                                             <p> {{fields.value | date:dateFormat}}</p>
@@ -169,7 +169,7 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
+
                                                                         <ng-container *ngSwitchCase="'DOB'">
                                                                           <div class="cont-btn">
                                                                             <p> {{fields.value}}</p>
@@ -177,7 +177,7 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
+
                                                                         <ng-container *ngSwitchCase="'Phone'">
                                                                           <div class="cont-btn">
                                                                             <p> {{fields.value}}</p>
@@ -185,8 +185,8 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
-                                        
+
+
                                                                         <ng-container *ngSwitchCase="'Email'">
                                                                           <div class="cont-btn">
                                                                             <p> {{fields.value}}</p>
@@ -194,7 +194,7 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
+
                                                                         <ng-container *ngSwitchCase="'Enum'">
                                                                           <div class="cont-btn">
                                                                             <p>{{ getdispVal('domain', fields)}}</p>
@@ -202,7 +202,7 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
+
                                                                         <ng-container *ngSwitchCase="'EnumList'">
                                                                           <div class="cont-btn">
                                                                             <p>{{ getdispVal('domain', fields)}}</p>
@@ -210,15 +210,15 @@
                                                                               (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                           </div>
                                                                         </ng-container>
-                                        
+
                                                                         <ng-container *ngSwitchCase="'Gender'">
                                                                           <div class="cont-btn" (click)="editDynamicField(fields.name, 'domain_questions')">
                                                                             <!-- <p> {{fields.value | capitalizeFirst}} </p>
                                                                             <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span> -->
-                                        
+
                                                                           </div>
                                                                         </ng-container>
-                                        
+
                                                                         <ng-container *ngSwitchCase="'DataGrid'">
                                                                           <div class="table-outer" *ngIf="fields['value']">
                                                                             <table  class="table table-striped">
@@ -253,7 +253,7 @@
                                                                                         </button>
                                                                                       </mat-menu>
                                                                                     </span>
-                                        
+
                                                                                     <span class="mbt-mobile-show">
                                                                                       <button class="editcls" type="button"
                                                                                         (click)="editGridDynamicField(fields.name,'domain_questions', i)">{{edit_cap}}</button>
@@ -272,14 +272,14 @@
                                                                       </ng-container>
                                                                     </div>
                                                                   </div>
-                                        
+
                                                                 </div>
                                                               </ng-container>
                                                             </div>
                                                           </ng-container>
                                                           <ng-container *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
-                                                            <div class="acc-cont" *ngFor="let fields of subdomain_fields">
-                                                              <ng-container *ngIf="fields.mandatory">
+                                                            <div class="acc-cont" *ngFor="let fields of subdomain_fields_mandatory">
+                                                              <ng-container >
                                                                 <div class="cd-b">
                                                                   <div class="div-outline custId-cursor"
                                                                     (click)="!fields['value'] ? addDynamicField(fields, 'subdomain_questions'):(fields.dataType=='Gender') ?editDynamicField(fields.name, 'subdomain_questions'):false"
@@ -288,25 +288,25 @@
                                                                     <i *ngIf="!fields['value']" class="fa fa-exclamation-circle fa-lg fa-red"
                                                                 aria-hidden="true"></i>
                                                                     <span class="fontstyl">{{fields.displayName}} </span>
-                                        
-                                        
+
+
                                                                     <!-- <div class="custom_business">
                                                                       <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
                                                                         <mat-icon>{{add_circle_outline}}</mat-icon>
                                                                       </button>
                                                                     </div> -->
-                                        
+
                                                                     <ng-container [ngSwitch]="fields.dataType">
-                                        
+
                                                                       <ng-container *ngSwitchCase="'TEXT'">
                                                                         <div class="cont-btn">
                                                                           <p> {{fields.value | capitalizeFirst}}</p>
-                                        
+
                                                                           <span class="editbt"
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'TEXT_MED'">
                                                                         <div class="cont-btn">
                                                                           <p [innerHTML]="fields.value | nl2br | capitalizeFirst">
@@ -315,7 +315,7 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'Boolean'">
                                                                         <div class="cont-btn">
                                                                           <p> {{(fields.value == 'true' || fields.value == true ) ? 'Yes' : 'No'}}</p>
@@ -323,7 +323,7 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'Age'">
                                                                         <div class="cont-btn">
                                                                           <p> {{fields.value}}</p>
@@ -331,7 +331,7 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'Number'">
                                                                         <div class="cont-btn">
                                                                           <p> {{fields.value}}</p>
@@ -339,7 +339,7 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'URL'">
                                                                         <div class="cont-btn">
                                                                           <p> {{fields.value}}</p>
@@ -347,8 +347,8 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
-                                        
+
+
                                                                       <ng-container *ngSwitchCase="'Date'">
                                                                         <div class="cont-btn">
                                                                           <p> {{fields.value | date:dateFormat}}</p>
@@ -356,7 +356,7 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'DOB'">
                                                                         <div class="cont-btn">
                                                                           <p> {{fields.value}}</p>
@@ -364,7 +364,7 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'Phone'">
                                                                         <div class="cont-btn">
                                                                           <p> {{fields.value}}</p>
@@ -372,8 +372,8 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
-                                        
+
+
                                                                       <ng-container *ngSwitchCase="'Email'">
                                                                         <div class="cont-btn">
                                                                           <p> {{fields.value}}</p>
@@ -381,7 +381,7 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'Enum'">
                                                                         <div class="cont-btn">
                                                                           <p> {{ getdispVal('subdomain',fields)}}</p>
@@ -389,7 +389,7 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'EnumList'">
                                                                         <div class="cont-btn">
                                                                           <p>{{ getdispVal('subdomain', fields)}}</p>
@@ -397,14 +397,14 @@
                                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'Gender'">
                                                                         <div class="cont-btn" (click)="editDynamicField(fields.name, 'subdomain_questions')">
                                                                           <!-- <span style="margin-left:1%" (click)="editDynamicField(fields.name, 'subdomain_questions')">{{fields.value | capitalizeFirst}} </span> -->
-                                        
+
                                                                         </div>
                                                                       </ng-container>
-                                        
+
                                                                       <ng-container *ngSwitchCase="'DataGrid'">
                                                                         <div class="table-outer"  *ngIf="fields['value']">
                                                                           <table class="table table-striped" >
@@ -456,19 +456,19 @@
                                                                         </div>
                                                                       </ng-container>
                                                                     </ng-container>
-                                        
-                                        
+
+
                                                                   </div>
                                                                 </div>
                                                               </ng-container>
                                                             </div>
-                                        
+
                                                           </ng-container>
-                                                           
-                                    
-                                                                                    
-                                                                          
-                                    
+
+
+
+
+
                                                             <!--end mandatory fields -->
                                                           </div>
                                                         <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">

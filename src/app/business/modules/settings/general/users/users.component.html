@@ -27,7 +27,7 @@
                                                         </span>
                                                     </a>
                                                 </li>
-            
+
                                                 <li class="dropdown notifications-menu pull-right">
                                                     <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
                                                         data-toggle="control-sidebar">
@@ -37,7 +37,7 @@
                                                     </a>
                                                 </li>
                                             </ul>
-            
+
                                         </div>
                                         <aside class="filterSidebar" *ngIf="filter_sidebar">
                                             <section class="sidebar" style="overflow:auto;height:568px">
@@ -49,7 +49,7 @@
                                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear
                                                         All</span>
                                                 </div>
-            
+
                                                 <ul class="sidebar-menu">
                                                     <div class="filterTextinput">
                                                         <li class="filterli">
@@ -59,7 +59,7 @@
                                                                 class="filterTextbox" placeholder="First Name">
                                                         </li>
                                                     </div>
-            
+
                                                     <div class="filterTextinput">
                                                         <li class="filterli">
                                                             <input type="text" id="lastName" [(ngModel)]="filter.lastName"
@@ -74,7 +74,7 @@
                                                                 #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, userType)"
                                                                 maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                                         </li>
-            
+
                                                     </div>
                                                     <div>
                                                         <li class="filterli filterDatepicker">
@@ -97,7 +97,7 @@
                         <tr>
                             <th style="padding: 20px;"></th>
                             <th></th>
-                            <th></th> 
+                            <th></th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -111,16 +111,16 @@
                     </tbody>
                     <tbody *ngFor="let user of users_list">
                         <tr class="grid-pad" [class.grid-disabled]="user.status=='INACTIVE'" *ngIf="!api_loading">
-                            <td> 
+                            <td>
                                     <div *ngIf="user.userType === 'ASSISTANT' || user.userType === 'ADMIN'" class="bold pull-left mgn-lt-5 teli-wtsap-a"
                                     >{{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}</div>
                                 <div *ngIf="user.userType === 'PROVIDER' " class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
                                 (click)="manageSettings(user.id)">{{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}</div>
                             </td>
                             <td>
-                                    <span class="ttle" *ngIf="user.userType === 'PROVIDER' ">{{provider_label}}</span>
-                                    <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label}}</span>
-                                    <span class="ttle" *ngIf="user.userType === 'ADMIN'">admin</span>
+                                    <span class="ttle" *ngIf="user.userType === 'PROVIDER' ">{{provider_label | capitalizeFirst}}</span>
+                                    <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label | capitalizeFirst}}</span>
+                                    <span class="ttle" *ngIf="user.userType === 'ADMIN'">Admin</span>
                                     <!-- <span class="admin" *ngIf="user.userType === 'PROVIDER' && user.defaultAdminUser">admin</span> -->
                             </td>
                             <td>
@@ -130,8 +130,8 @@
                                 <span class="greenc" *ngIf="user.searchEnabled">On</span>
                                 <span class="red"*ngIf="!user.searchEnabled">Off</span></div>
                                 </td>
-                            
-                          
+
+
                             <td>
                                 <div class="copy">
                                     <span class="mbt" style="top: -18px;">
@@ -305,7 +305,7 @@
                                             <button mat-menu-item (click)="personalProfile(user.id)">
                                                 Personal Details
                                             </button>
-                                            
+
 
                                             <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser"
                                                 mat-menu-item (click)="manageSettings(user.id)">
@@ -315,7 +315,7 @@
                                                 mat-menu-item (click)="makeDefalutAdmin(user.id)">
                                                 Change to superadmin
                                             </button>
-                                           
+
 
                                             <button *ngIf="!user.defaultAdminUser" mat-menu-item (click)="changeUserStatus(user)">
                                                 <i *ngIf="user.status=='INACTIVE' || !user.status"

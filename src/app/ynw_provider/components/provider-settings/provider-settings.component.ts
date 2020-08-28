@@ -400,13 +400,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
             /*handle error*/
           },
           () => {
-            this.routerobj.navigate(['.'], {});
+            //this.routerobj.navigate(['.'], {});
             // this.redirecttoProfile();
+            this.routerobj.navigate(['provider', 'settings'], { });
           }
         );
 
       } else {
-        this.routerobj.navigate(['.'], {});
+        this.routerobj.navigate(['provider', 'settings'], { });
       }
 
 
