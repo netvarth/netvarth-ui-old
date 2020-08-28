@@ -954,7 +954,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
       redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-time_windows']);
       }
-      addqueue(){
+      addqueue() {
         const navigationExtras: NavigationExtras = {
             queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }
         };

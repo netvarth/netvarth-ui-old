@@ -927,6 +927,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
   }
   redirecToQueues() {
-   this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
+    this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
   }
 }
