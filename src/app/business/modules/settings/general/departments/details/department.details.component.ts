@@ -191,7 +191,7 @@ export class DepartmentDetailComponent implements OnInit {
     getServices() {
         this.loading = true;
         return new Promise((resolve, reject) => {
-            const filter = { 'serviceType-neq': 'donationService' };
+            const filter = { 'serviceType-neq': 'donationService', 'scope-eq': 'account' };
             this.provider_services.getServicesList(filter)
                 .subscribe(
                     data => {
@@ -285,6 +285,7 @@ export class DepartmentDetailComponent implements OnInit {
                     .subscribe(
                         data => {
                             this.deptObj = data;
+                            console.log(this.deptObj);
                             this.departments = this.deptObj['departments'];
                             this.defaultdepartmentservice = [];
                             for (let i = 0; i < this.servicesjson.length; i++) {

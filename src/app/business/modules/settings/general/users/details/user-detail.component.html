@@ -205,13 +205,13 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                 </div>
-                                        <div class="form-group" *ngIf="actionparam.type !== 'edit'">
+                                        <div class="form-group" *ngIf="actionparam.type !== 'edit'"> 
                                             <mat-form-field>
                                                 <mat-select formControlName="selectedUserType"
                                                     placeholder="Choose Usertype *"
                                                     (selectionChange)="onUserSelect($event)">
-                                                    <mat-option *ngFor="let user of userTypesFormfill" [value]="user">
-                                                        {{user}}
+                                                    <mat-option *ngFor="let user of userTypesFormfill" [value]="user.value">
+                                                        {{user.name}}
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>
