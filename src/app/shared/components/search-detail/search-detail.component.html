@@ -481,7 +481,7 @@
                             </div>
                         </div>
                         <!-- Book Service button start -->
-                        <div class="bottom-sect pdetail" *ngIf="showButton(search_result)">
+                        <div class="bottom-sect pdetail" *ngIf="showButton(search_result) === 'bookservice'">
                             <div class="bt-l">
                                 <div class="wt-tme">
                                     <div class="donat-service" *ngIf="!search_result.fields.departments">
@@ -524,7 +524,9 @@
                         <!-- Book service butoon ends -->
 
                         <!-- <div class="bottom-sect"
-                            *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['waitlist'] && search_result.fields.online_profile == 1">
+                            *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['waitlist'] && search_result.fields.online_profile == 1"> -->
+                            <div class="bottom-sect"
+                            *ngIf="showButton(search_result) === 'waitlist'">
                             <div class="bt-l">
                                 <div class="wt-tme"
                                     *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message']!='No active services'">
@@ -607,17 +609,17 @@
                                     </ng-container>
                                 </ng-container>
                                 <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
-                                    *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday'] && !search_result.fields['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
+                                    *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && !search_result.fields['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
                                     search_result.fields)}}</span>
                                 <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
-                                    *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday'] && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
+                                    *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
                                 <span class="checkin-btn disabled"
-                                    *ngIf="!search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{getTerminologyTerm('waitlist',
+                                    *ngIf="!search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday']) && (!search_result.fields['estimatedtime_det']['cdate'] || search_result.fields.future_checkins==0)">{{getTerminologyTerm('waitlist',
                                     search_result.fields)}}</span>
                                 <span class="checkin-btn disabled"
-                                    *ngIf="search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{get_token_btn}}</span>
+                                    *ngIf="search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday']) && (!search_result.fields['estimatedtime_det']['cdate'] || search_result.fields.future_checkins==0)">{{get_token_btn}}</span>
 
-                                <div class="future-date-link checkin-future">
+                                <!-- <div class="future-date-link checkin-future">
                                     <span class="bt10" (click)="checkinClicked(search_result, true)"
                                         *ngIf="search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">{{do_you_want_to_cap}}
                                         <span
@@ -625,11 +627,13 @@
                                         <span
                                             *ngIf="!search_result.fields['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
                                         {{for_cap}} <span>{{different_date}}</span></span>
-                                </div>
+                                </div> -->
                             </div>
-                        </div> -->
+                        </div>
                         <!-- <div class="bottom-sect pdetail"
-                            *ngIf="search_result.fields.apptAllowed && search_result.fields.online_profile == 1">
+                            *ngIf="search_result.fields.apptAllowed && search_result.fields.online_profile == 1"> -->
+                            <div class="bottom-sect pdetail"
+                            *ngIf="showButton(search_result) === 'appt'">
                             <div class="bt-l">
                                 <div class="wt-tme">
                                     <div class="donat-service" *ngIf="!search_result.fields.departments">
@@ -664,9 +668,11 @@
                                 <span (click)="appointmentClicked(search_result, false)"
                                     class="checkin-btn">Appointment</span>
                             </div>
-                        </div> -->
+                        </div>
                         <!-- <div class="bottom-sect pdetail"
-                            *ngIf="search_result.fields.donation_status == 1 && search_result.fields.donationlength >= 1 && search_result.fields.donation_services && search_result.fields.online_profile == 1">
+                            *ngIf="search_result.fields.donation_status == 1 && search_result.fields.donationlength >= 1 && search_result.fields.donation_services && search_result.fields.online_profile == 1"> -->
+                            <div class="bottom-sect pdetail"
+                            *ngIf="showButton(search_result) === 'donation'">
                             <div class="bt-l">
                                 <div class="wt-tme">
                                     <div class="donat-service">
@@ -691,7 +697,7 @@
                             <div class="bottom-actions-root">
                                 <span (click)="payClicked(search_result)" class="checkin-btn">Donate</span>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="search_paging">
                         <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()"
