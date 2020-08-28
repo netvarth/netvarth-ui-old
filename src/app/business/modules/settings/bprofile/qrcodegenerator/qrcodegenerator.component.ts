@@ -50,7 +50,7 @@ export class QRCodeGeneratorComponent implements OnInit {
     console.log(this.wpath + this.accuid);
     this.shareLink = this.wpath + this.accuid;
     this.description = 'Avoid waiting in queues';
-    this.imageUrl = this.wpath + 'assets/images/basicpls.png';
+    this.imageUrl = this.wpath + 'assets/images/logo.png';
     this.qrCodegenerateOnlineID(this.accuid);
   }
   qrCodegenerateOnlineID(valuetogenerate) {
@@ -60,11 +60,11 @@ export class QRCodeGeneratorComponent implements OnInit {
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
       this.angular_meta.addTags([
-        { property: 'og:url', content: this.shareLink },
+        // { property: 'og:url', content: this.shareLink },
         { property: 'og:image', content: this.imageUrl },
         { property: 'og:type', content: 'website' },
-        { property: 'og:description', content: 'No more awaiting queues' },
-        {}
+        { property: 'og:description', content: this.description },
+
       ]);
     }, 50);
    // this.titleService.setTitle('Jaldee');
