@@ -562,7 +562,9 @@
                                 </div>
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 txt-left">
                                     <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        Name: <span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span>
+                                        Name: <span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span><span *ngIf="waiting_type === 'checkin'">
+                                            {{consumer_lname | capitalizeFirst}}
+                                        </span>
                                     </div>
                                     <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                         Id: <span class="mgn-lt-5">{{data.consumer.id}}</span>
