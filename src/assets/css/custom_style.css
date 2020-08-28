@@ -3192,9 +3192,6 @@ body {
   .dash-actions-th {
     width: 135px !important;
   }
-  .teleservicePopup .fl-right {
-    float: none !important;
-  }
 }
 
 @media only screen and (max-width:575px) {
@@ -3385,6 +3382,10 @@ figcaption {
   .tscroll {
     overflow: hidden;
     overflow-x: auto;
+  }
+  
+  .teleservicePopup .fl-right {
+    float: none !important;
   }
 }
 

@@ -52,6 +52,7 @@ import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
+import { CallingModesModule } from './modules/calling-modes/calling-modes.module';
 
 @NgModule({
     declarations: [
@@ -98,6 +99,7 @@ import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
         AddProviderSchedulesModule,
         DynamicFormModule,
         CustomerModule,
+        CallingModesModule,
         JoyrideModule.forChild()
     ],
     entryComponents: [

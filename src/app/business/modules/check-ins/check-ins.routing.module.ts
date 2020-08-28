@@ -7,7 +7,6 @@ import { AdjustqueueDelayComponent } from './adjustqueue-delay/adjustqueue-delay
 import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 const routes: Routes = [
     { path: '', component: CheckInsComponent },
-    {path: 'teleservice', loadChildren: () => import('./calling-modes/calling-modes.module').then(m => m.CallingModesModule)},
     {
         path: '',
         children: [

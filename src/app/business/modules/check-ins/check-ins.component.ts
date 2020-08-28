@@ -12,7 +12,6 @@ import { filter, pairwise } from 'rxjs/operators';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { MatDialog } from '@angular/material';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
-// import { CallingModesComponent } from './calling-modes/calling-modes.component';
 import { KeyValue } from '@angular/common';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -2402,7 +2401,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         type: 'checkin'
       }
     };
-    this.router.navigate(['provider', 'check-ins', 'teleservice'], navigationExtras);
+    this.router.navigate(['provider', 'teleservice'], navigationExtras);
   }
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
