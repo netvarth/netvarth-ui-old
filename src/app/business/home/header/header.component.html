@@ -26,9 +26,11 @@
         </li>
          <li [matTooltip]="'Take a tour'" *ngIf="!iswiz">
           <a (click)="tourIconClicked()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="fa fa-plane"></i>
+            <i class="fa fa-plane">
+              <div joyrideStep="step4"  title="Still have some doubts?" text="Click this icon to view the tour again" ></div>
+
+            </i>
           </a>
-          <div joyrideStep="step4"  title="Still have some doubts?" text="Click this icon to view the tour again" ></div>
         </li>
         <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">
           <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
