@@ -202,8 +202,6 @@ export class AboutmeComponent implements OnInit, OnDestroy {
         post_itemdata['userSubdomain'] = this.user_arr.subdomain;
       }
       // calling the method to update the primarty fields in bProfile edit page
-      console.log(this.bProfile);
-
       if (this.bProfile) {
         this.updatePrimaryFields(post_itemdata);
       } else {
