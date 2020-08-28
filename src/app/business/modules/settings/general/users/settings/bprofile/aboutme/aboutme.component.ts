@@ -169,6 +169,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       this.updateForm();
     }
   }
+  
   updateForm() {
     this.amForm.setValue({
       'bname': this.bProfile.businessName || '',
