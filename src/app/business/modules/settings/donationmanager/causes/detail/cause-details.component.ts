@@ -118,6 +118,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                         }
                     } else {
                         if (serviceActionModel.action === 'edit') {
+                            this.causecaption = 'Edit Cause';
                             this.serviceParams['action'] = 'edit';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else if (serviceActionModel.action === 'close' && serviceActionModel.source !== 'add') {

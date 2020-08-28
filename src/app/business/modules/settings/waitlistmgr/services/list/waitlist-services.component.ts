@@ -213,4 +213,13 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
               this.getServices(pgefilter);
             });
       }
+      redirecToQmanager() {
+        this.routerobj.navigate(['provider', 'settings' , 'q-manager' ]);
+      }
+      redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-services']);
+      }
+      addservice() {
+        this.router.navigate(['provider', 'settings', 'q-manager', 'services', 'add']);
+      }
 }

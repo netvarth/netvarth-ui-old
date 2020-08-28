@@ -43,6 +43,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     can_change_hours = Messages.BPROFILE_CHANGE_SERVICE_WORKING_HOURS_CAP;
     click_here_cap = Messages.CLICK_HERE_CAP;
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
+    servicecaption = 'Add Service';
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -120,10 +121,12 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         }
                     } else {
                         if (serviceActionModel.action === 'edit') {
+                            this.servicecaption = 'Edit Service';
                             this.serviceParams['action'] = 'edit';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else if (serviceActionModel.action === 'close' && serviceActionModel.source !== 'add') {
                             this.serviceParams['action'] = 'show';
+                            this.servicecaption = 'Serviec Details';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else {
                             this.router.navigate(['provider/settings/q-manager/services']);
@@ -202,6 +205,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                 data => {
                     this.serviceParams['service'] = data;
                     this.serviceParams['action'] = 'show';
+                    this.servicecaption = 'Serviec Details';
                     this.status = this.serviceParams['service'].status;
                     this.setGalleryImages(this.serviceParams['service'].servicegallery || []);
                     // remove multiple end breadcrumb on edit function
@@ -215,6 +219,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
+                        this.servicecaption = 'Edit Service';
                         this.serviceParams['action'] = 'edit';
                     }
                     this.servicesService.initServiceParams(this.serviceParams);
@@ -332,4 +337,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             'services']);
         this.api_loading = false;
     }
+    redirecToServices() {
+        this.router.navigate(['provider', 'settings', 'q-manager', 'services']);
+      }
 }
