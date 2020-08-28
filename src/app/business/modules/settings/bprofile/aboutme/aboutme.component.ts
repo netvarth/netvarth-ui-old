@@ -159,10 +159,13 @@ export class AboutMeComponent implements OnInit {
   }
   // saving the primary fields from the bprofile create page
   createPrimaryFields(pdata) {
+    this.disableButton = true;
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
         () => {
+
           this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_CREATED);
+          this.disableButton = false;
           console.log(this.domain_fields_mandatory.length);
           console.log(this.subdomain_fields_mandatory.length);
           if (this.domain_fields_mandatory.length !== 0 || this.subdomain_fields_mandatory.length !== 0) {
@@ -193,6 +196,7 @@ export class AboutMeComponent implements OnInit {
         () => {
           // this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
           this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_UPDATED);
+          this.disableButton = false;
           setTimeout(() => {
             this.redirecToBprofile();
           }, projectConstants.TIMEOUT_DELAY);
