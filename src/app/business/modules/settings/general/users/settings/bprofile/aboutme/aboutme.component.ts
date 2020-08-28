@@ -84,6 +84,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
   };
   dynamicdialogRef;
   logoExist = false;
+  change_cap = Messages.BPROFILE_CHANGE_CAP;
   constructor(
     private fb: FormBuilder,
     private service: QuestionService,
