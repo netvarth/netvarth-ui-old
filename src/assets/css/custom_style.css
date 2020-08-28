@@ -11111,7 +11111,14 @@ a {
   height: 195px;
   object-fit: scale-down;
 }
-
+.teleservicePopup .wtsap-img {
+  width: 30px;
+  padding-bottom: 10px;
+}
+.teleservicePopup .nxt-icon {
+  width: 18px;
+  padding-bottom: 10px;
+}
 @media only screen and (max-width: 400px) {
   .teleservicePopup #table3 img {
     width: 35px;
