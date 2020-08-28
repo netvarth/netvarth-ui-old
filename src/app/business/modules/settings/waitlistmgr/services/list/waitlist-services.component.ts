@@ -21,19 +21,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     api_error = null;
     api_success = null;
     breadcrumb_moreoptions: any = [];
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
-        },
-        {
-            title: ' Services Offered'
-        }
-    ];
+    breadcrumbs;
     domain: any;
     trackStatus: string;
     serv_list;
@@ -46,7 +34,16 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         totalCnt: 0,
         perPage: this.page_count
       };
-
+      breadcrumbs_init = [
+        {
+            title: 'Settings',
+            url: '/provider/settings'
+        },
+        {
+            title: 'Jaldee Appointment Manager',
+            url: '/provider/settings/appointmentmanager'
+        },
+    ];
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
@@ -63,6 +60,25 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             });
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        if (this.domain === 'healthCare') {
+            const breadcrumbs = [];
+            this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+            });
+            breadcrumbs.push({
+                title: Messages.WAITLIST_HEALTHCARE_SERVICES,
+            });
+            this.breadcrumbs = breadcrumbs;
+        } else {
+            const breadcrumbs = [];
+            this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+            });
+            breadcrumbs.push({
+                title: Messages.WAITLIST_SERVICES_CAP,
+            });
+            this.breadcrumbs = breadcrumbs;
+        }
         this.api_loading = true;
         this.getDomainSubdomainSettings();
         this.getServiceCount();
@@ -213,13 +229,4 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
               this.getServices(pgefilter);
             });
       }
-      redirecToQmanager() {
-        this.routerobj.navigate(['provider', 'settings' , 'q-manager' ]);
-      }
-      redirecToHelp() {
-        this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-services']);
-      }
-      addservice() {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'services', 'add']);
-       }
 }
