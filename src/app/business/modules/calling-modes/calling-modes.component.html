@@ -27,7 +27,7 @@
                                             <i *ngIf="callingModes === 'WhatsApp'"
                                                 class="fa fa-whatsapp fa-lg whtsap-ic"></i>
                                             <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile"></i>
-                                            {{serv_name}}
+                                            &nbsp;{{serv_name}}
                                         </h5>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@
                                             <span
                                                 class="text-red">*{{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}</span>
                                             <span class="text-red"> {{notSupported}}</span><br>
-                                            <span><a (click)="gotoMeetDetails()">
+                                            <span><a (click)="meetingDetails()">
                                                     {{ph_or_tab_cap}}
                                                     {{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}
                                                     {{installed_cap}}
@@ -166,11 +166,11 @@
                                             <button (click)="asktoLaunch()"
                                                 [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
                                                 <i *ngIf="callingModes === 'WhatsApp'"
-                                                    class="fa fa-whatsapp fa-lg whtsap-ic"></i>
-                                                <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile fa-lg"></i>
+                                                    class="fa fa-whatsapp fa-lg whtsap-ic fnt-lrge"></i>
+                                                <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile fa-lg fnt-fon"></i>
                                                 <a class="chkin-mobic"
                                                     [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">
-                                                    Start
+                                                    &nbsp;Start
                                                     <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
                                                     Consultation with
                                                     <span

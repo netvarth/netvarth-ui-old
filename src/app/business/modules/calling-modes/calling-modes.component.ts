@@ -76,8 +76,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     waiting_type: any;
     api_loading = false;
     emailPresent = false;
-    user_type = 'user';
-    usrSelected = 'user';
+    user_type = 'me';
+    usrSelected = 'me';
     isPrevStep = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
@@ -346,7 +346,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         if (stp6) {
             this.isPrevStep = true;
         }
-        this.getMeetingDetails('user');
+        this.getMeetingDetails('me');
         this.step = 4;
     }
     reminder() {

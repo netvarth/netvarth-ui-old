@@ -36,6 +36,13 @@ textarea {
 .mgn-bt-auto {
     margin-bottom: auto;
 }
+.fnt-lrge {
+    font-size: 1.4rem;
+}
+.fnt-fon {
+    font-size: x-large;
+    color: rgb(0 0 0);
+}
 @media only screen and (max-width: 769px) {
     .mgn-bt-auto {
         margin-bottom: 0px !important;
