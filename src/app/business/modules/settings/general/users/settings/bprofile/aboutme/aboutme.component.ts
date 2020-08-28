@@ -136,7 +136,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
                 console.log(this.domainList.bdata[i].subDomains[j]);
                 this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
                 console.log(this.subDomain);
-              
+
                 this.getBusinessProfile();
               }
             }
@@ -170,7 +170,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       this.updateForm();
     }
   }
-  
+
   updateForm() {
     this.amForm.setValue({
       'bname': this.bProfile.businessName || '',
@@ -553,6 +553,23 @@ export class AboutmeComponent implements OnInit, OnDestroy {
     const field = this.getFieldQuestion(field_name, type);
     this.showDynamicFieldPopup(field, type);
   }
+  deleteGridDynamicField(field_name, type = 'domain_questions', index = 0) {
+    const pre_value = (type === 'domain_questions') ? JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields'])) :
+        JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subDomain]));
+    const grid_list = pre_value[field_name] || [];
+    if (grid_list.length === 1 && index === 0) {
+        delete pre_value[field_name];
+    } else {
+        grid_list.splice(index, 1);
+        pre_value[field_name] = grid_list;
+    }
+    if (type === 'domain_questions') {
+        this.onDomainFormSubmit(pre_value);
+    } else if (type === 'subdomain_questions') {
+        this.onSubDomainFormSubmit(pre_value);
+    }
+}
+
   showDynamicFieldPopup(field, type, grid_row_index = null) {
     this.dynamicdialogRef = this.dialog.open(ProviderUserBprofileSearchDynamicComponent, {
       width: '50%',

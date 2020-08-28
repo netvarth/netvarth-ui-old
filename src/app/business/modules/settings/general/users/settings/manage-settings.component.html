@@ -66,7 +66,7 @@
         <div class="row">
           <div class="card p0">
             <span class="b-link" (click)="services()">
-              <h2>Consultations and Services <span *ngIf="service_count!=0">({{service_count}})</span></h2>
+              <h2>Consultations and Services <span [hidden]="service_count==0">({{service_count}})</span></h2>
               <span *ngIf="domain !== 'healthCare'" class="form-level-settings">{{frm_set_ser_cap}}<a
                 class="learnmore-pointer" id="customer-help"
                 (click)="learnmore_clicked('settings-services', $event)">Learn
@@ -81,8 +81,8 @@
         <div class="row">
           <div class="card p0">
             <span class="b-link" (click)="Queues()">
-              <h2 *ngIf="showToken">Queues for Tokens<span *ngIf="queues_count!=0">({{queues_count}})</span></h2>
-              <h2 *ngIf="!showToken">Queues for Checkins<span *ngIf="queues_count!=0">({{queues_count}})</span></h2>
+              <h2 *ngIf="showToken">Queues for Tokens<span [hidden]="queues_count==0">({{queues_count}})</span></h2>
+              <h2 *ngIf="!showToken">Queues for Checkins<span [hidden]="queues_count==0">({{queues_count}})</span></h2>
               <span class="form-level-settings"> {{frm_set_working_hr_cap}}
                 <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('settings-time_windows', $event)">Learn More
                 </a>
@@ -93,7 +93,7 @@
         <div class="row">
           <div class="card p0">
             <span class="b-link" (click)="schedules()">
-              <h2>Schedules for appointment<span *ngIf="schedules_count!=0">({{schedules_count}})</span></h2>
+              <h2>Schedules for appointment<span [hidden]="schedules_count==0">({{schedules_count}})</span></h2>
               <span class="form-level-settings">Add and manage your schedules here.
                 <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('schedules', $event)">Learn More
                 </a>
