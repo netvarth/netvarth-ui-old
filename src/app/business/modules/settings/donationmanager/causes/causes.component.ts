@@ -4,6 +4,8 @@ import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/funct
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../../app.component';
+
 
 @Component({
     selector: 'app-donation-causelist',
@@ -20,6 +22,8 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     api_error = null;
     api_success = null;
     breadcrumb_moreoptions: any = [];
+    add_button = Messages.ADD_BUTTON;
+    tooltipcls = projectConstants.TOOLTIP_CLS;
     breadcrumbs = [
         {
             title: 'Settings',

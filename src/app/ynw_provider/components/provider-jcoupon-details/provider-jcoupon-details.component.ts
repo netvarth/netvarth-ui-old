@@ -97,6 +97,9 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   formatDateDisplay(dateStr) {
     return this.shared_functions.formatDateDisplay(dateStr);
   }
+  redirecToJaldeeBilling() {
+
+  }
   changecouponStatus(jcCoupon) {
     const jc_coupon_status = (jcCoupon.couponState === 'ENABLED') ? 'disable' : 'enable';
     this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status).subscribe(
