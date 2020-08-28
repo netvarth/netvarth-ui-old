@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { Location } from '@angular/common';
@@ -116,7 +116,6 @@ export class RetailStoresComponent implements OnInit {
       private shared_functions: SharedFunctions,
       private _location: Location,
       private _scrollToService: ScrollToService,
-      private router: Router
     ) { }
   
     setActivePricing(item) {
@@ -412,6 +411,6 @@ export class RetailStoresComponent implements OnInit {
     }
    }
    redirecToSettings() {
-    this.router.navigate(['provider', 'settings' ]);
+    this._location.back();
   }
   }

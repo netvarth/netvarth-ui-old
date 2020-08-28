@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 @Component({
     selector: 'app-personalcare-learnmore',
@@ -116,8 +116,7 @@ export class PersonalCareComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
     private _location: Location,
-    private _scrollToService: ScrollToService,
-    private router: Router
+    private _scrollToService: ScrollToService
   ) { }
 
   setActivePricing(item) {
@@ -426,7 +425,7 @@ export class PersonalCareComponent implements OnInit {
 }
   }
   redirecToSettings() {
-    this.router.navigate(['provider', 'settings' ]);
+    this._location.back();
   }
 }
 
