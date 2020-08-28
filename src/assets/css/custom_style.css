@@ -11139,10 +11139,14 @@ a {
   }
 }
 .support-num {
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: blue;
 }
 
+.support-callicon{
+  color: blue;
+}
 @media (min-width: 1200px) {
   .box-hght {
     height: 630px;
