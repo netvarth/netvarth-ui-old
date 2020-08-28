@@ -24,7 +24,7 @@
             <i class="fa fa-arrow-left"></i>
           </a>
         </li>
-         <li [matTooltip]="'Take a tour'">
+         <li [matTooltip]="'Take a tour'" *ngIf="!iswiz">
           <a (click)="tourIconClicked()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-plane"></i>
           </a>
