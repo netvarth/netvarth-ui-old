@@ -103,7 +103,7 @@ export class AboutMeComponent implements OnInit {
       bname: [{ value: this.bProfile.businessName, disabled: false }, Validators.compose([Validators.required])],
       // shortname: [{ value: this.bProfile.shortName, disabled: false }],
       // bdesc: [{ value: this.bProfile.businessDesc, disabled: false }, Validators.compose([Validators.required])]
-      bdesc: [{ value: this.bProfile.businessDesc, disabled: false }]
+      bdesc: [{ value: this.bProfile.businessDesc, disabled: false }, Validators.compose([Validators.required])]
     };
     this.prov_curstatus = this.bProfile.status;
     this.aboutmeForm = this.fb.group(this.formfields);

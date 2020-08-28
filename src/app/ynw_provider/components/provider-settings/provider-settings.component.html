@@ -265,8 +265,7 @@
                                       <span class="lnk setings">{{services_cap}}
                                           <span class="pull-right badge bg-blue">{{service_count}}</span>
                                       </span>
-                                      <p class="settings_info">Eg. In-person consultation , video consultation ,
-                                          labservices. </p>
+                                      <p class="settings_info">Eg: {{services_hint}}.</p>
                                   </a>
                               </li>
                               <li (click)="redirecTo('queues')">
@@ -382,8 +381,7 @@
                                       <span class="lnk setings">{{services_cap}}
                                           <span class="pull-right badge bg-blue">{{service_count}}</span>
                                       </span>
-                                      <p class="settings_info">Eg. In-person consultation , video consultation ,
-                                          labservices. </p>
+                                      <p class="settings_info">Eg: {{services_hint}}.</p>
                                   </a>
                               </li>
                               <li (click)="redirecTo('schedules')">
@@ -457,7 +455,7 @@
                               </li>
                               <li (click)="redirecTo('livetrack')">
                                   <a class="pointer-cursor">
-                                      <span class="lnk setings">Locate your {{cust_domain_name}}
+                                      <span class="lnk setings">Locate Your {{cust_domain_name |capitalizeFirst}}
                                           <span class="pull-right">
                                               <!-- <mat-slide-toggle [(ngModel)]="livetrack_status"
                                                   (change)="handle_liveTracking($event)">
