@@ -40,8 +40,8 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            title: 'Jaldee Appointment Manager',
-            url: '/provider/settings/appointmentmanager'
+            title: Messages.WAITLIST_MANAGE_CAP,
+            url: '/provider/settings/q-manager'
         },
     ];
     constructor(private provider_services: ProviderServices,

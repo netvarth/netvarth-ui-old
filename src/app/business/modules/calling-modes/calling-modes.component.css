@@ -33,3 +33,11 @@ textarea {
 .box-bg-grey {
     background: rgb(202 195 195 / 16%);
 }
+.mgn-bt-auto {
+    margin-bottom: auto;
+}
+@media only screen and (max-width: 769px) {
+    .mgn-bt-auto {
+        margin-bottom: 0px !important;
+    }
+  }

@@ -59,7 +59,7 @@
                                 <!--Content box with Reminder,meeting details,Customer details(btns) -->
                                 <div
                                     class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 brd-solid-1">
-                                    <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3 centeralign mgn-bt-30 pad-10">
+                                    <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3 centeralign mgn-bt-30 pad-10 mgn-bt-auto">
                                         <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon">
                                     </div>
                                     <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 centeralign mgn-bt-30 pad-10 box-bg-grey">
@@ -107,9 +107,9 @@
                                                     <a class="tspace">Meeting Details</a>
                                                 </button>
                                             </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
+                                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
                                                 <span class="text-red ft-smlr fl-right disabled-style">*Meeting details sent to {{customer_label}}</span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -262,9 +262,6 @@
                                         </h1>
                                         <mat-select class="brd-solid-1" [(ngModel)]="user_type"
                                             (selectionChange)="handleUserTypeSelection(utype.value)" #utype [(value)]="usrSelected">
-                                            <!-- <mat-option *ngFor="let usr of utypes" [value]="usr.value">
-                                                {{usr.viewValue}}
-                                            </mat-option> -->
                                             <mat-option value="me">
                                                 Me
                                             </mat-option>
@@ -296,17 +293,15 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        <div class="form-group">
-                                            Send Meeting Details to {{customer_label | capitalizeFirst}} Via
+                                        <div *ngIf="user_type === 'user'" class="form-group">
+                                            Send Meeting Details to {{customer_label | capitalizeFirst}} 
+                                            Via
                                             <div class="coupon-outer dsp-grd">
                                                 <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
                                                     {{customer_label | capitalizeFirst}}'s Mobile<span
                                                         *ngIf="waiting_type === 'checkin'"> - {{phNo}}</span>
                                                     <span *ngIf="waiting_type === 'appt'"> - {{data.phoneNumber}}</span>
                                                 </mat-checkbox>
-                                                <!-- <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">
-                                                    {{customer_label | capitalizeFirst}}'s Email ID
-                                                </mat-checkbox> -->
                                                 <mat-checkbox class="mgright50 example-margin"
                                                     [disabled]="!emailPresent" [(ngModel)]="email">
                                                     {{customer_label | capitalizeFirst}}'s Email Id
@@ -325,7 +320,7 @@
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
                                             style="display: inline-flex;">
-                                            <button type="button" mat-button [disabled]="msg_to_user ===''"
+                                            <button *ngIf="user_type === 'user'" type="button" mat-button [disabled]="msg_to_user ===''"
                                                 class="cs-btn bt1" (click)="sendMessage()">Send</button>
                                             <button type="button" class="cs-btn bt2 travelmodeEdit"
                                                 (click)="back()">Cancel</button>
@@ -422,7 +417,7 @@
                                 <!-- content box with meeting and customer details -->
                                 <div
                                     class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 brd-solid-1">
-                                    <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3 centeralign mgn-bt-30 pad-10">
+                                    <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3 centeralign mgn-bt-30 pad-10 mgn-bt-auto">
                                         <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon">
                                     </div>
                                     <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 centeralign mgn-bt-30 pad-10 box-bg-grey">
@@ -470,9 +465,9 @@
                                                     <a class="tspace">Meeting Details</a>
                                                 </button>
                                             </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
+                                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
                                                 <span class="text-red ft-smlr fl-right disabled-style">*Meeting details sent to {{customer_label}}</span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                                             <span class="text-red ft-smlr fl-right disabled-style">*Meeting details have
