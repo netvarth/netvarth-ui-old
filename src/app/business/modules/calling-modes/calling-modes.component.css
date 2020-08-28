@@ -30,3 +30,6 @@ textarea {
 .ln-hgt-30 {
     line-height: 30px;
 }
+.box-bg-grey {
+    background: rgb(202 195 195 / 16%);
+}
