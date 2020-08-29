@@ -80,6 +80,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     usrSelected = 'me';
     isPrevStep = false;
     serviceProgress = false;
+    ynwUser: any;
+    msg_to_me;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -96,6 +98,8 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
     ngOnInit() {
+        this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        console.log(this.ynwUser);
         if (this.waiting_type === 'checkin') {
             this.getProviderWaitlstById();
         } else {
@@ -347,7 +351,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         if (stp6) {
             this.isPrevStep = true;
         }
-        this.getMeetingDetails('me');
+        this.getMeetingDetails();
         this.step = 4;
     }
     reminder() {
@@ -377,38 +381,24 @@ export class CallingModesComponent implements OnInit, OnDestroy {
                 subscribe((meetingdata) => {
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
-
-                    if (usr_typ && usr_typ === 'user') {
-                        switch (this.callingModes) {
-                            case 'WhatsApp':
-                                this.msg_to_user = '1. Wait for your turn\n\n2. When it is time you will recieve a WhatsApp call from ' + this.busnes_name ;
-                              break;
-                            case 'Phone':
-                                this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + '. Please be ready';
-                              break;
-                            case 'Zoom':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n\n2. Wait for your ' + this.provider_label + ' to join';
-                              break;
-                            case 'GoogleMeet':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n\n2. Wait for your ' + this.provider_label + ' to join';
-                              break;
-                          }
-                    } else if (usr_typ && usr_typ === 'me') {
-                        switch (this.callingModes) {
-                            case 'WhatsApp':
-                                this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right of the screen ' ;
-                              break;
-                            case 'Phone':
-                                this.msg_to_user = 'Call to this number ' + this.starting_url;
-                              break;
-                            case 'Zoom':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Join meeting ' ;
-                              break;
-                            case 'GoogleMeet':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Click on join button ' ;
-                              break;
-                          }
-                    }
+                    switch (this.callingModes) {
+                        case 'WhatsApp':
+                            this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right of the screen ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right corner of the screen to start the video consultation ' ;
+                          break;
+                        case 'Phone':
+                            this.msg_to_user = 'Call to this number ' + this.starting_url;
+                            this.msg_to_me = 'Call to this number ' + this.starting_url;
+                          break;
+                        case 'Zoom':
+                            this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Join meeting ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Join meeting ' ;
+                          break;
+                        case 'GoogleMeet':
+                            this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Click on join button ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on join button ' ;
+                          break;
+                      }
                 });
         } else {
             this.shared_services.getApptMeetingDetails(this.callingModes, this.waiting_id).
@@ -416,42 +406,24 @@ export class CallingModesComponent implements OnInit, OnDestroy {
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
 
-                    if (usr_typ && usr_typ === 'user') {
-                        switch (this.callingModes) {
-                            case 'WhatsApp':
-                                this.msg_to_user = '1. Wait for your turn\n\n2. When it is time you will recieve a WhatsApp call from ' + this.busnes_name ;
-                              break;
-                            case 'Phone':
-                                this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + '. Please be ready';
-                              break;
-                            case 'Zoom':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n\n2. Wait for your ' + this.provider_label + ' to join';
-                              break;
-                            case 'GoogleMeet':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n\n2. Wait for your ' + this.provider_label + ' to join';
-                              break;
-                          }
-                        // if (this.callingModes !== 'Phone') {
-                        //     this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Wait for your ' + this.provider_label + ' to join';
-                        // } else {
-                        //     this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + '. Please be ready';
-                        // }
-                    } else if (usr_typ && usr_typ === 'me') {
-                        switch (this.callingModes) {
-                            case 'WhatsApp':
-                                this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right corner of the screen to start the video consultation ' ;
-                              break;
-                            case 'Phone':
-                                this.msg_to_user = 'Call to this number ' + this.starting_url;
-                              break;
-                            case 'Zoom':
-                                this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Join meeting ' ;
-                              break;
-                            case 'GoogleMeet':
-                                this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on join button ' ;
-                              break;
-                          }
-                    }
+                    switch (this.callingModes) {
+                        case 'WhatsApp':
+                            this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right of the screen ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right corner of the screen to start the video consultation ' ;
+                          break;
+                        case 'Phone':
+                            this.msg_to_user = 'Call to this number ' + this.starting_url;
+                            this.msg_to_me = 'Call to this number ' + this.starting_url;
+                          break;
+                        case 'Zoom':
+                            this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Join meeting ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Join meeting ' ;
+                          break;
+                        case 'GoogleMeet':
+                            this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Click on join button ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on join button ' ;
+                          break;
+                      }
 
                 });
         }
@@ -524,11 +496,11 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.selectedTime = obj;
         this.selectHeadsup();
     }
-    handleUserTypeSelection(obj) {
-        this.user_type = obj;
-        console.log(this.user_type);
-        this.getMeetingDetails(this.user_type);
-    }
+    // handleUserTypeSelection(obj) {
+    //     this.user_type = obj;
+    //     console.log(this.user_type);
+    //     this.getMeetingDetails();
+    // }
     copyReminderInfo() {
         const info = document.getElementById('reminderData');
         if (window.getSelection) {

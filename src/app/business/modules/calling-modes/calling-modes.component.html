@@ -2,7 +2,7 @@
     <div class="card title-gb">
         <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToPreviousPage()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button> &nbsp;Teleservice
+            </button>
             <!--  -->
         </h5>
     </div>
@@ -252,34 +252,15 @@
                             </div>
                             <!-- Step 4 Meeting Details -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step == 4">
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-20 no-padding">
+                                <!-- For Customer -->
+                                <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 mgn-bt-20 no-padding">
                                     <div
                                         class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon mgn-bt-20 bg-grey pad-10 centeralign no-padding">
                                         <h1 class="mat-dialog-title linkpagestyle">
                                             <span class="serv-font-size">
-                                                View Meeting Details for
+                                                View Meeting Details for {{customer_label | capitalizeFirst}}
                                             </span>
                                         </h1>
-                                        <mat-select class="brd-solid-1" [(ngModel)]="user_type"
-                                            (selectionChange)="handleUserTypeSelection(utype.value)" #utype [(value)]="usrSelected">
-                                            <mat-option value="me">
-                                                Me
-                                            </mat-option>
-                                            <mat-option value="user">
-                                                {{customer_label | capitalizeFirst}}
-                                            </mat-option>
-                                        </mat-select>
-                                        <!-- <div class="col-md-6 col-m-6 col-xs-6 col-lg-6 ">
-                                            <img src="assets/images/person_provider.jpg" alt="Provider_icon">
-                                            <h6>Me</h6>
-                                        </div>
-                                        <div class="col-md-6 col-m-6 col-xs-6 col-lg-6">
-                                            <img src="assets/images/person_img.png" alt="Provider_icon">
-                                            <h6>{{consumer_fname}}
-                                                <span *ngIf="waiting_type === 'checkin'">{{consumer_lname}}</span>
-                                                ({{customer_label}})
-                                            </h6>
-                                        </div> -->
                                     </div>
                                     <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                         <div id="meetDetailsData">
@@ -293,7 +274,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        <div *ngIf="user_type === 'user'" class="form-group">
+                                        <div class="form-group">
                                             Send Meeting Details to {{customer_label | capitalizeFirst}} 
                                             Via
                                             <div class="coupon-outer dsp-grd">
@@ -320,10 +301,47 @@
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
                                             style="display: inline-flex;">
-                                            <button *ngIf="user_type === 'user'" type="button" mat-button [disabled]="msg_to_user ===''"
+                                            <button type="button" mat-button [disabled]="msg_to_user ===''"
                                                 class="cs-btn bt1" (click)="sendMessage()">Send</button>
-                                            <!-- <button type="button" class="cs-btn bt2 travelmodeEdit"
-                                                (click)="back()">Cancel</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- For Me -->
+                                <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 mgn-bt-20 no-padding">
+                                    <div
+                                        class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon mgn-bt-20 bg-grey pad-10 centeralign no-padding">
+                                        <h1 class="mat-dialog-title linkpagestyle">
+                                            <span class="serv-font-size">
+                                                View Meeting Details for Me
+                                            </span>
+                                        </h1>
+                                    </div>
+                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                        <div id="meetDetailsData">
+                                            <textarea class="tele_srv_txtarea" matInput placeholder=""
+                                                [(ngModel)]="msg_to_me" (ngModelChange)="dataChanged($event)">
+                                            </textarea>
+                                        </div>
+                                        <div class="btn-primary-n custId-cursor delteTC"
+                                            (click)="copyMeetingDetailsInfo()">
+                                            <i class="fa fa-clone" aria-hidden="true"></i> Copy Meeting Details
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                        <div  class="form-group">
+                                            Send Meeting Details to Me Via
+                                            <div class="coupon-outer dsp-grd">
+                                                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
+                                                    My Mobile- {{ynwUser.primaryPhoneNumber}}
+                                                </mat-checkbox>
+                                            </div>
+                                            <!-- <div class="coupon-outer dsp-grd"><br></div>
+                                            <div class="coupon-outer dsp-grd"></div> -->
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
+                                            style="display: inline-flex;">
+                                            <button type="button" mat-button [disabled]="msg_to_user ===''"
+                                                class="cs-btn bt1" (click)="sendMessage()">Send</button>
                                         </div>
                                     </div>
                                 </div>
