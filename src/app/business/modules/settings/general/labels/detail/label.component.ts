@@ -128,6 +128,7 @@ export class LabelComponent implements OnInit {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_ADDED'));
                 this.editLabelbyId(data);
                 this.actionparam = 'view';
+                this.labelcaption = 'Label Details';
             },
                 error => {
                     this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -145,7 +146,9 @@ export class LabelComponent implements OnInit {
             this.provider_services.updateLabel(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_UPDATED'));
                 this.editLabelbyId(data);
+                this.labelcaption = 'Label Details';
                 this.actionparam = 'view';
+
             },
                 error => {
                     this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -169,6 +172,7 @@ export class LabelComponent implements OnInit {
     }
     editLabel() {
         this.actionparam = 'edit';
+        this.labelcaption = ' Edit Label';
         if (this.label_id) {
             this.editLabelbyId(this.label_id);
         }
@@ -222,6 +226,7 @@ export class LabelComponent implements OnInit {
         }
         setTimeout(() => {
             if (this.actionparam === 'edit') {
+                this.labelcaption = 'Label Details';
                 this.actionparam = 'view';
             } else {
                 this.router.navigate(['provider/settings/general/labels']);
