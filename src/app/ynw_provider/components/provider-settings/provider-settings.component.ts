@@ -244,7 +244,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
-    if (this.domain === 'healthCare') {
+    if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
       this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
     }
     this.accountType = user.accountType;

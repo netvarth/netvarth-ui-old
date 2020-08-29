@@ -94,7 +94,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        if (this.domain === 'healthCare') {
+        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare')  {
             this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
           }
         this.account_type = user.accountType;
