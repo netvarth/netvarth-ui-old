@@ -200,7 +200,7 @@ export class BusinessComponent implements OnInit {
       .then(
         data => {
           bProfile = data;
-           if (!localStorage.getItem('newProvider') && bProfile['accountType'] === 'BRANCH') {
+           if (!localStorage.getItem('newProvider')) {
             this.getAccountContactInfo();
            }
           this.shared_functions.setitemToGroupStorage('accountId', bProfile.id);

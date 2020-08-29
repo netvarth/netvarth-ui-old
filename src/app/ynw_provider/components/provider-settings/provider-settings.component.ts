@@ -181,11 +181,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
         if (this.showTakeaTour) {
-          if (this.accountType === 'BRANCH') {
-            this.getAccountContactInfo();
-          } else {
-            this.letsGetStarted();
-          }
+          this.getAccountContactInfo();
         }
       });
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
@@ -241,7 +237,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   bprofileLoaded = false;
   showIncompleteButton = true;
   ngOnInit() {
-      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
     if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
@@ -411,12 +407,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
           () => {
             //this.routerobj.navigate(['.'], {});
             // this.redirecttoProfile();
-            this.routerobj.navigate(['provider', 'settings'], { });
+            this.routerobj.navigate(['provider', 'settings'], {});
           }
         );
 
       } else {
-        this.routerobj.navigate(['provider', 'settings'], { });
+        this.routerobj.navigate(['provider', 'settings'], {});
       }
 
 
@@ -783,7 +779,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       case 'specializations':
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'specializations']);
         break;
-        case 'jaldeeonline':
+      case 'jaldeeonline':
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldeeonline']);
         break;
       case 'languages':
