@@ -89,12 +89,11 @@
                                 <div
                                     [ngClass]="{'dv-launch-video-serv' : (servDetails?.virtualServiceType === 'videoService'), 'dv-launch-aud-serv' : (servDetails?.virtualServiceType === 'audioService')}">
                                     <div *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')">
-                                        <button type="button" class="cs-btn bt1 btn-grn" (click)="asktoLaunch()">
+                                        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="asktoLaunch()">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
                                             <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
                                             <b>
-                                                Start
-                                                <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span> Call
+                                                Start {{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}} Call
                                                 <!-- Call with
                                                 <span
                                                     *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
@@ -107,15 +106,12 @@
 
                                     <div
                                         *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && !is_web">
-                                        <button type="button" class="cs-btn bt1 btn-grn" (click)="asktoLaunch()">
+                                        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="asktoLaunch()">
 
                                             <i *ngIf="callingModes === 'WhatsApp'"
                                                 class="fa fa-whatsapp fa-lg whtsap-ic fnt-lrge"></i>
                                             <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile fa-lg fnt-fon"></i>
-                                            <b>
-                                                &nbsp;Start
-                                                <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
-                                                Call
+                                            <b> &nbsp;Start {{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}} Call
                                                 <!-- <span
                                                     *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
                                                 <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span> -->
@@ -203,7 +199,7 @@
                                 </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
                                     style="display: inline-flex;">
-                                    <button type="button" mat-button [disabled]="msg_to_user ===''" class="cs-btn bt1"
+                                    <button type="button" mat-button [disabled]="msg_to_user ===''" class="cs-btn bt1 txt-trans-none"
                                         (click)="sendMessage()">Send
                                         {{isPrevStep? 'Message' : 'Reminder'}}
                                     </button>
@@ -215,7 +211,7 @@
                         </div>
                         
                         <!-- Step 4 Meeting Details -->
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step == 4">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding meetingdetails" *ngIf="step == 4">
                             <!-- For Customer -->
                             <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 mgn-bt-20 no-padding">
                                 <div
