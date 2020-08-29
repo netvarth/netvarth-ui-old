@@ -50,6 +50,7 @@ import { ProviderErrorMesagePopupComponent } from './modules/provider-error-mess
 import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
 import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
+import { CallingModesModule } from './modules/calling-modes/calling-modes.module';
 
 @NgModule({
     declarations: [
@@ -94,6 +95,7 @@ import { ProviderStartTourComponent } from '../ynw_provider/components/provider-
         AddProviderSchedulesModule,
         DynamicFormModule,
         CustomerModule,
+        CallingModesModule,
         JoyrideModule.forChild()
     ],
     entryComponents: [
