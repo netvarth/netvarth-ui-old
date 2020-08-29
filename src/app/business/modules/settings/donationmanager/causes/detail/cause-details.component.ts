@@ -118,6 +118,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                         }
                     } else {
                         if (serviceActionModel.action === 'edit') {
+                            this.causecaption = 'Edit Cause';
                             this.serviceParams['action'] = 'edit';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else if (serviceActionModel.action === 'close' && serviceActionModel.source !== 'add') {
@@ -197,7 +198,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
-                        this.causecaption = 'Edit Cause';
+                        this.causecaption = 'Edit Cause'; 
                         this.serviceParams['action'] = 'edit';
                     }
                     this.servicesService.initServiceParams(this.serviceParams);

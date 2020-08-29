@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-
+import { Messages } from '../../../../../shared/constants/project-messages';
 @Component({
     'selector': 'app-integration-settings',
     'templateUrl': './integration-settings.component.html'
@@ -28,16 +28,19 @@ export class IntegrationSettingsComponent implements OnInit {
     jaldeeintegration_status: any;
     jaldeeintegration_statusstr: string;
     accountActiveMsg = '';
+    cust_domain_name = '';
     customer_label = '';
     domain;
     constructor(private router: Router,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions) {
+        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
     ngOnInit() {
         this.getJaldeeIntegrationSettings();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     }
     getJaldeeIntegrationSettings() {
         this.provider_services.getJaldeeIntegrationSettings().subscribe(
@@ -106,5 +109,8 @@ export class IntegrationSettingsComponent implements OnInit {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
+    }
+    redirecToProfile() {
+        this.router.navigate(['provider', 'settings', 'bprofile']);
     }
 }

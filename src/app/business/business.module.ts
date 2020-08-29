@@ -49,6 +49,8 @@ import { ProviderErrorMesagePopupComponent } from './modules/provider-error-mess
 import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
+import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
+import { CallingModesModule } from './modules/calling-modes/calling-modes.module';
 
 @NgModule({
     declarations: [
@@ -75,7 +77,8 @@ import { UpdateEmailComponent } from './modules/update-email/update-email.compon
         ProviderWaitlistCheckInCancelPopupComponent,
         ProviderErrorMesagePopupComponent,
         ProviderStartTourComponent,
-        UpdateEmailComponent
+        UpdateEmailComponent,
+        InboxListComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -92,7 +95,13 @@ import { UpdateEmailComponent } from './modules/update-email/update-email.compon
         Nl2BrPipeModule,
         AddProviderSchedulesModule,
         DynamicFormModule,
+<<<<<<< HEAD
         CustomerModule
+=======
+        CustomerModule,
+        CallingModesModule,
+        JoyrideModule.forChild()
+>>>>>>> refs/remotes/origin/1.3.0
     ],
     entryComponents: [
         AddProviderWaitlistQueuesComponent,

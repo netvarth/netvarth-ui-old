@@ -22,27 +22,16 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     image_list: any = [];
     serviceExists = true;
     showGallery = false;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
-        },
-        {
-            title: 'Services Offered',
-            url: '/provider/settings/q-manager/services'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
+    breadcrumbs_init;
+    breadcrumbs;
     subscription: Subscription; // for gallery
     serviceSubscription: Subscription; // from service module
     servstatus;
+    domain;
     can_change_hours = Messages.BPROFILE_CHANGE_SERVICE_WORKING_HOURS_CAP;
     click_here_cap = Messages.CLICK_HERE_CAP;
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
+    servicecaption = 'Add Service';
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -50,6 +39,41 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         private activated_route: ActivatedRoute,
         private router: Router,
         private provider_shared_functions: ProviderSharedFuctions) {
+            const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+            this.domain = user.sector;
+            if (this.domain === 'healthCare') {
+                this.breadcrumbs_init = [
+                    {
+                        title: 'Settings',
+                        url: '/provider/settings'
+                    },
+                    {
+                        title: Messages.WAITLIST_MANAGE_CAP,
+                        url: '/provider/settings/q-manager'
+                    },
+                    {
+                        title: Messages.WAITLIST_HEALTHCARE_SERVICES,
+                        url: '/provider/settings/q-manager/services'
+                    }
+                ];
+               this.breadcrumbs = this.breadcrumbs_init;
+              } else {
+                this.breadcrumbs_init = [
+                    {
+                        title: 'Settings',
+                        url: '/provider/settings'
+                    },
+                    {
+                        title: Messages.WAITLIST_MANAGE_CAP,
+                        url: '/provider/settings/q-manager'
+                    },
+                    {
+                    title: Messages.WAITLIST_SERVICES_CAP,
+                    url: '/provider/settings/q-manager/services'
+                    }
+                ];
+                this.breadcrumbs = this.breadcrumbs_init;
+              }
         this.activated_route.params.subscribe(
             (params) => {
                 this.service_id = params.id;
@@ -109,6 +133,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         if (serviceActionModel.action === 'add') {
                             this.createService(post_itemdata2);
                         } else if (serviceActionModel.action === 'edit') {
+                            this.servicecaption = 'Edit Service';
                             post_itemdata2.id = this.service_id;
                             if (post_itemdata2.livetrack !== this.serviceParams['service'].livetrack) {
                                 this.changeLiveTrackStatus(post_itemdata2);
@@ -120,10 +145,12 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         }
                     } else {
                         if (serviceActionModel.action === 'edit') {
+                            this.servicecaption = ' Edit Serviec';
                             this.serviceParams['action'] = 'edit';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else if (serviceActionModel.action === 'close' && serviceActionModel.source !== 'add') {
                             this.serviceParams['action'] = 'show';
+                            this.servicecaption = 'Serviec Details';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else {
                             this.router.navigate(['provider/settings/q-manager/services']);
@@ -202,6 +229,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                 data => {
                     this.serviceParams['service'] = data;
                     this.serviceParams['action'] = 'show';
+                    this.servicecaption = 'Serviec Details';
                     this.status = this.serviceParams['service'].status;
                     this.setGalleryImages(this.serviceParams['service'].servicegallery || []);
                     // remove multiple end breadcrumb on edit function
@@ -215,6 +243,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
+                        this.servicecaption = 'Edit Service';
                         this.serviceParams['action'] = 'edit';
                     }
                     this.servicesService.initServiceParams(this.serviceParams);
@@ -331,5 +360,8 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'q-manager',
             'services']);
         this.api_loading = false;
+    }
+    redirecToServices() {
+        this.router.navigate(['provider', 'settings', 'q-manager', 'services']);
     }
 }

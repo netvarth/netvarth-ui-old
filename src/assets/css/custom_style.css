@@ -3192,9 +3192,6 @@ body {
   .dash-actions-th {
     width: 135px !important;
   }
-  .teleservicePopup .fl-right {
-    float: none !important;
-  }
 }
 
 @media only screen and (max-width:575px) {
@@ -3385,6 +3382,10 @@ figcaption {
   .tscroll {
     overflow: hidden;
     overflow-x: auto;
+  }
+  
+  .teleservicePopup .fl-right {
+    float: none !important;
   }
 }
 
@@ -11138,12 +11139,74 @@ a {
   }
 }
 .support-num {
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: blue;
 }
 
+.support-callicon{
+  color: blue;
+}
 @media (min-width: 1200px) {
   .box-hght {
-    height: 600px;
+    height: 630px;
   }
+}
+.joyride-step__container {
+  width: 300px !important;
+  
+}
+.joyride-step__body {
+  color: rgba(0,0,0,0.54) !important;
+  font: 15px "Roboto","Arial",sans-serif !important;
+  line-height: 20px !important;
+  padding: 15px !important;
+}
+.joyride-step__title{
+  color: rgba(0,0,0,0.87) !important;
+  font: 500 20px "Roboto","Arial",sans-serif !important;
+  padding: 0 !important;
+}
+.joyride-button{
+  color: #fff !important;
+  background-color: #4285f4 !important;
+}
+.noThanksBtn{
+  background-color: #fff;
+  border: none;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  color: #4285f4;
+  cursor: pointer;
+  display: inline-block;
+  font: 500 14px "Roboto","Arial",sans-serif;
+  height: 36px;
+  margin: 24px 0 0 8px;
+  min-width: 88px;
+  padding: 0 8px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all 150ms cubic-bezier(0.4,0.0,0.2,1);
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+.exploreBtn{
+    color: #fff;
+    background-color: #4285f4;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+    font: 500 14px "Roboto","Arial",sans-serif;
+    height: 36px;
+    margin: 24px 0 0 8px;
+    min-width: 88px;
+    padding: 0 8px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 150ms cubic-bezier(0.4,0.0,0.2,1);
+}
+.takeTourTitle{
+  font-size: 1.5rem !important;
 }

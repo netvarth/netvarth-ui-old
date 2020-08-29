@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-finance-learnmore',
     templateUrl: './finance.component.html'
@@ -115,7 +115,6 @@ export class FinanceComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private _location: Location,
     private _scrollToService: ScrollToService,
-    private router: Router
 
   ) { }
 
@@ -432,7 +431,8 @@ export class FinanceComponent implements OnInit {
 
   }
   redirecToSettings() {
-    this.router.navigate(['provider', 'settings' ]);
+    this._location.back();
+    // this.router.navigate(['provider', 'settings' ]);
   }
 }
 

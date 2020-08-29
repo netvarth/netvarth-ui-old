@@ -1257,6 +1257,7 @@ export const Messages = {
   'WAITLIST_ACCEPT_ONLINE_CAP': 'Accept Online',
   'WAITLIST_LOCATIONS_CAP': 'All Locations',
   'WAITLIST_SERVICES_CAP': 'Services Offered',
+  'WAITLIST_HEALTHCARE_SERVICES': 'Consultations and Services',
   'CUSTOMERS_NAME': '[customer]s',
   // App-ynw_provider-components-provider-waitlist-checkin-consumer-note
   'CONS_NOTE_NOTE_CAP': 'Note',
@@ -1470,7 +1471,7 @@ export const Messages = {
   'QSET_UPDATE': 'QBoard query updated successfully',
   'DISPLAYBOARD_ADD': 'QBoard added successfully',
   'DISPLAYBOARD_UPDATE': 'QBoard updated successfully',
-  'CUSTOMFIELDS_CAPTION': 'Custom fields',
+  'CUSTOMFIELDS_CAPTION': 'Custom Fields',
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
   'MANAGE_LABELS': 'Manage Labels',
   'ADD_LABEL': 'Create Label',
@@ -1504,10 +1505,11 @@ export const Messages = {
   'BRANCHUSER_DELETED': 'User deleted successfully',
 
   'GENERALSETTINGS': 'Features and Customization',
-  'LOCATESETTINGS' : 'Locate your [customer]',
+  'LOCATESETTINGS' : 'Locate Your [customer]',
   'APPOINTMNT_SUCC': 'Appointment created successfully',
   'DONATE_SUCC': 'Donated successfully',
   'SCHEDULENAME_CAP': 'Title for Schedule *',
+  'CUSTOMER_ID' : '[customer] Id Format',
 
   'DEFAULTVIEWCAP': 'My View',
   'NOUSERCAP': 'Global Services',

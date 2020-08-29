@@ -24,12 +24,14 @@
             <i class="fa fa-arrow-left"></i>
           </a>
         </li>
-        <!-- <li [matTooltip]="'Take a tour'">
+         <li [matTooltip]="'Take a tour'" *ngIf="!iswiz">
           <a (click)="tourIconClicked()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="fa fa-map-pin"></i>
+            <i class="fa fa-plane">
+              <div joyrideStep="step4"  title="Still have some doubts?" text="Call us on 1800-1234567 or click on this icon to view the tour again" ></div>
+
+            </i>
           </a>
-          <div joyrideStep="step4"  title="Take A Tour" text="You can always reach me by clicking this icon" ></div>
-        </li> -->
+        </li>
         <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">
           <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>

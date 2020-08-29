@@ -108,7 +108,50 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         () => {
         });
   }
+<<<<<<< HEAD
   
+=======
+  tourIconClicked() {
+    const dialogRef = this.dialog.open(ProviderStartTourComponent, {
+      width: '25%',
+      panelClass: ['popup-class', 'commonpopupmainclass']
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'startTour') {
+
+        this.joyrideService.startTour(
+
+          {
+            steps: ['step1@provider/settings', 'step2@provider/settings', 'step3@provider/settings', 'step4'],
+            showPrevButton: false,
+            stepDefaultPosition: 'top',
+            themeColor: '#212f23'
+          }
+          // Your steps order
+        ).subscribe(
+
+          step => {
+            /*Do something*/
+            console.log('Location', window.location.href, 'Path', window.location.pathname);
+            console.log('Next:', step);
+          },
+          error => {
+            /*handle error*/
+          },
+          () => {
+            this.router.navigate(['provider', 'settings']);
+          }
+        );  
+
+      }
+
+    });
+   // this.router.navigate(['provider', 'settings']);
+
+  }
+>>>>>>> refs/remotes/origin/1.3.0
   gotoActiveHome() {
     this.router.navigate(['provider', 'check-ins']);
   }

@@ -25,6 +25,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     locations;
     api_loading = true;
     add_button = Messages.ADD_BUTTON;
+    tooltipcls = projectConstants.TOOLTIP_CLS;
     tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
     breadcrumb_moreoptions: any = [];
     isAllServicesSelected = false;
@@ -948,4 +949,16 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
         });
     }
+    redirecToQmanager() {
+        this.routerobj.navigate(['provider', 'settings' , 'q-manager' ]);
+      }
+      redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-time_windows']);
+      }
+      addqueue() {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }
+        };
+        this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add'], navigationExtras);
+      }
 }

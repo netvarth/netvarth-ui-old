@@ -101,6 +101,9 @@ export class GeneralSettingsComponent implements OnInit {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/general->' + mod]);
     }
+    redirecToHelp() {
+        this.router.navigate(['/provider/' + this.domain + '/general']);
+    }
     getLocationCount() {
         this.loading = true;
         this.provider_services.getLocationCount()

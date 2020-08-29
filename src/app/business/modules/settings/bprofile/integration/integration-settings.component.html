@@ -1,5 +1,14 @@
-<section>
+<!-- <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section> -->
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"> 
+         <button type="button" class="btn default profile-back" (click)="redirecToProfile()">
+            <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+            Jaldee.com Integration
+        </h5>     
+    </div>
 </section>
 <section>
     <div class="content w-manager settings comn-cls">
@@ -25,7 +34,7 @@
                                     </span>
                                     <div class="onoff">{{walkinConsumer_statusstr}}</div>
                                 </label>
-                                <p class="settings_info">Add customer details to jaldee.com.<a class="learnmore-pointer"
+                                <p class="settings_info">Add  {{cust_domain_name}} details to jaldee.com.<a class="learnmore-pointer"
                                     id="customer-help" (click)="learnmore_clicked('jaldee.com-integration', $event)">Learn
                                     More</a></p>
                         </div>

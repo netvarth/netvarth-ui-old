@@ -23,7 +23,6 @@ import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-chec
 import { AddProviderWaitlistCheckInProviderNoteModule } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module';
 import { LocateCustomerModule } from './locate-customer/locate-customer.module';
 import { ProviderWaitlistCheckInConsumerNoteModule } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module';
-import { CallingModesModule } from './calling-modes/calling-modes.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { CheckinDetailsSendModule } from './checkin-details-send/checkin-details-send.modules';
 import { ModalGalleryModule } from 'angular-modal-gallery';
@@ -51,7 +50,6 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
         AddProviderWaitlistCheckInProviderNoteModule,
         LocateCustomerModule,
         ProviderWaitlistCheckInConsumerNoteModule,
-        CallingModesModule,
         CheckinDetailsSendModule,
         NgxQRCodeModule,
         ModalGalleryModule.forRoot()

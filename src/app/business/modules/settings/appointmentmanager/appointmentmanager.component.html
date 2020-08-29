@@ -7,9 +7,9 @@
          <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
             <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
             Jaldee Appointment Manager
-          <!-- <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
-             <i class="fa fa-book" >&nbsp;Help</i>
-          </button>  -->
+          <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
+            Help
+          </button> 
         </h5>     
     </div>
 </section>
@@ -97,7 +97,7 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoservices()">
-                        <h2>Services Offered ({{service_count}})</h2>
+                        <h2>{{services_cap}} ({{service_count}})</h2>
                         <span  *ngIf="domain !== 'healthCare'" class="form-level-settings">{{frm_set_ser_cap}}<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('services', $event)">Learn
                                 More</a></span>

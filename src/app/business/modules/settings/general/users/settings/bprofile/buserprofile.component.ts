@@ -11,13 +11,9 @@ import { FormMessageDisplayService } from '../../../../../../../shared/modules/f
 import { SharedServices } from '../../../../../../../shared/services/shared-services';
 import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
 import { DOCUMENT } from '@angular/common';
-import { projectConstantsLocal } from '../../../../../../../shared/constants/project-constants';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout } from 'angular-modal-gallery';
-import { UserSpecializationComponent } from './specializations/userspecialization/userspecialization.component';
-import { AddProviderUserBprofileSpokenLanguagesComponent } from './languages/addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
-import { ProviderUserBprofileSearchSocialMediaComponent } from './media/providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
 import { ProviderSharedFuctions } from '../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { QuestionService } from '../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderUserBprofileSearchDynamicComponent } from './additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
@@ -34,6 +30,8 @@ import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic
 
 export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
+  onlinepresence_status_str: string;
+  onlinepresence_status: any;
   notedialogRef: MatDialogRef<ProPicPopupComponent, any>;
   userAdditionalInfoSubDomainFields: any[];
   userAdditionalInfoDomainFields: any[];
@@ -356,27 +354,36 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       .subscribe(
         data => {
           this.public_search = (data && data.toString() === 'true') ? true : false;
-          this.jaldee_online_status_str = (this.public_search === true) ? 'on' : 'off';
-          this.jaldee_online_status = this.public_search;
-          this.normal_search_active = this.public_search;
+          this.onlinepresence_status_str = (this.public_search === true) ? 'On' : 'Off';
+          this.onlinepresence_status = this.public_search;
         },
         () => {
         }
       );
   }
-  confirm_searchStatus() {
-    if (this.normal_search_active) {
-      this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
-    } else {
+  // if (this.listmyprofile_status) {
+  //   e.source.checked = true;
+  //   this.sharedfunctionobj.confirmSearchChangeStatus(this, this.listmyprofile_status);
+  // } else if (!this.listmyprofile_status) {
+  //   e.source.checked = false;
+  //   this.handle_searchstatus();
+  // }
+  confirm_searchStatus(e) {
+
+    if (this.onlinepresence_status) {
+      e.source.checked = true;
+      this.sharedfunctionobj.confirmSearchChangeStatusOfUser(this, this.onlinepresence_status);
+    } else if (!this.onlinepresence_status) {
+      e.source.checked = false;
       this.handle_searchstatus();
     }
   }
   handle_searchstatus() {
-    const changeTostatus = (this.normal_search_active === true) ? 'Disable' : 'Enable';
+    const changeTostatus = (this.onlinepresence_status === true) ? 'Disable' : 'Enable';
     this.provider_services.updateUserPublicSearch(this.userId, changeTostatus)
       .subscribe(() => {
-        const status = (this.normal_search_active === true) ? 'disable' : 'enable';
-        this.shared_functions.openSnackBar('Public Search ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
+        this.onlinepresence_status = !this.onlinepresence_status;
+        this.shared_functions.openSnackBar('Jaldee Online ' + changeTostatus + 'd successfully', { ' panelclass': 'snackbarerror' });
         this.getUserPublicSearch();
       }, error => {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -560,9 +567,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
             for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
               if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
                 this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
-                this.getSpecializations(this.domain, this.subDomain);
-                // this.initSpecializations();
-
                 this.getBusinessProfile();
               }
             }
@@ -925,188 +929,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     }
   }
 
-  // Method to handle the add / edit for bprofile
-  onSubmit(form_data) {
-    const blankpatterm = projectConstantsLocal.VALIDATOR_BLANK;
-    form_data.bname = form_data.bname.trim();
-    if (blankpatterm.test(form_data.bname)) {
-      this.api_error = 'Please enter the business name';
-      this.document.getElementById('bname').focus();
-      return;
-    }
-    if (form_data.bdesc) {
-      form_data.bdesc = form_data.bdesc.trim();
-    }
-    if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
-      this.api_error = this.sharedfunctionobj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
-    } else if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {
-      this.api_error = this.sharedfunctionobj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
-    } else {
-      const post_itemdata = {
-        'businessName': form_data.bname,
-        'businessDesc': form_data.bdesc
-      };
-      if (this.user_arr.userType === 'PROVIDER') {
-        post_itemdata['userSubdomain'] = this.user_arr.subdomain;
-      }
-      // calling the method to update the primarty fields in bProfile edit page
-      if (this.bProfile.length === 0) {
-        this.createPrimaryFields(post_itemdata);
-      } else {
-        this.updatePrimaryFields(post_itemdata);
-      }
-    }
-  }
-  // updating the primary field from the bprofile edit page
-  createPrimaryFields(pdata) {
-    // if (this.blogo.length === 0) {
-    // const self = this;
-    // const promise = self.sharedfunctionobj.getBase64Image();
-    // promise.then(function (dataURL) {
-    // const blob = self.sharedfunctionobj.b64toBlob(dataURL);
-    // const submit_data: FormData = new FormData();
-    // submit_data.append('files', blob, 'jaldee-logo.png');
-    // const propertiesDet = {
-    // 'caption': 'Logo'
-    // };
-    // const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-    // submit_data.append('properties', blobPropdata);
-    // self.uploadLogo(submit_data);
-    // });
-    // }
-    this.disableButton = true;
-    this.provider_services.patchUserbProfile(pdata, this.userId)
-      .subscribe(
-        () => {
-          this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_CREATED');
-          this.sharedfunctionobj.openSnackBar(this.api_success, { 'panelclass': 'snackbarerror' });
-          this.showProfile = false;
-          // this.profileview = true;
-          this.getBusinessProfile();
-        },
-        error => {
-          this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
-          this.sharedfunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
-          this.disableButton = false;
-        }
-      );
-  }
-
-
-
-  updatePrimaryFields(pdata) {
-    // if (this.blogo.length === 0) {
-    // const self = this;
-    // const promise = self.sharedfunctionobj.getBase64Image();
-    // promise.then(function (dataURL) {
-    // const blob = self.sharedfunctionobj.b64toBlob(dataURL);
-    // const submit_data: FormData = new FormData();
-    // submit_data.append('files', blob, 'jaldee-logo.png');
-    // const propertiesDet = {
-    // 'caption': 'Logo'
-    // };
-    // const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-    // submit_data.append('properties', blobPropdata);
-    // self.uploadLogo(submit_data);
-    // });
-    // }
-
-    this.disableButton = true;
-    this.provider_services.createUserbProfile(pdata, this.userId)
-      .subscribe(
-        () => {
-          this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_UPDATED');
-          this.sharedfunctionobj.openSnackBar(this.api_success, { 'panelclass': 'snackbarerror' });
-          this.showProfile = false;
-          // this.profileview = true;
-          this.getBusinessProfile();
-        },
-        error => {
-          this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
-          this.sharedfunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
-          this.disableButton = false;
-        }
-      );
-  }
-  showBPrimary() {
-    this.showProfile = true;
-    this.disableButton = false;
-    // this.profileview = false;
-    this.createForm();
-  }
-
-  cancel() {
-    this.showProfile = false;
-    // this.profileview = true;
-  }
-  // handles the image display on load and on change
-  imageSelect(input) {
-    this.success_error = null;
-    this.error_list = [];
-    this.error_msg = '';
-    if (input.files && input.files[0]) {
-      for (const file of input.files) {
-        this.success_error = this.sharedfunctionobj.imageValidation(file);
-        if (this.success_error === true) {
-          const reader = new FileReader();
-          this.item_pic.files = input.files[0];
-          this.selitem_pic = input.files[0];
-          const fileobj = input.files[0];
-          reader.onload = (e) => {
-            this.item_pic.base64 = e.target['result'];
-          };
-          reader.readAsDataURL(fileobj);
-          if (this.user_arr.status === 'ACTIVE' || this.user_arr.status === 'INACTIVE') { // case now in bprofile edit page
-            // generating the data to be submitted to change the logo
-            const submit_data: FormData = new FormData();
-            submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-            const propertiesDet = {
-              'caption': 'Logo'
-            };
-            const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-            submit_data.append('properties', blobPropdata);
-            this.uploadLogo(submit_data);
-          }
-        } else {
-          this.error_list.push(this.success_error);
-          if (this.error_list[0].type) {
-            this.error_msg = 'Selected image type not supported';
-          } else if (this.error_list[0].size) {
-            this.error_msg = 'Please upload images with size less than 15mb';
-          }
-          // this.error_msg = 'Please upload images with size < 5mb';
-          this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
-        }
-      }
-    }
-  }
-  // Upload logo
-  uploadLogo(passdata) {
-    // this.provider_services.uploadLogo(passdata)
-    this.provider_services.uploaduserLogo(passdata, this.userId)
-      .subscribe(
-        data => {
-          // this.getProviderLogo();
-          this.blogo = [];
-          this.blogo = data;
-          // calling function which saves the business related details to show in the header
-          const today = new Date();
-          const tday = today.toString().replace(/\s/g, '');
-          const blogo = this.blogo.url + '?' + tday;
-          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-            || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
-          const pdata = { 'ttype': 'updateuserdetails' };
-          this.user_datastorage.updateProfilePicWeightage(true);
-          this.sharedfunctionobj.sendMessage(pdata);
-          /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
-        },
-        error => {
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          // this.api_error = error.error;
-        }
-      );
-  }
   getBusinessProfileWeightageText() {
     let businessProfileWeightageText = '';
     const weightage = this.weightageValue;
@@ -1174,255 +996,10 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   scroll(el: HTMLElement) {
     el.scrollIntoView({ behavior: 'smooth' });
   }
-  initSpecializations() {
-    this.bProfile = [];
-    this.getBussinessProfileApi()
-      .then(
-        data => {
-          this.bProfile = data;
-          this.getSpecializations(this.domain, this.subDomain);
-          if (this.bProfile.specialization) {
-            this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
-            if (this.bProfile.specialization.length > 0) {
-              this.normal_specilization_show = 3;
-            } else {
-              this.normal_specilization_show = 2;
-            }
-          } else {
-            this.normal_specilization_show = 2;
-          }
-        },
-        () => {
-          this.normal_specilization_show = 2;
-        }
-      );
-  }
-  getSpecializations(domain, subdomain) {
-    this.provider_services.getSpecializations(domain, subdomain)
-      .subscribe((data: any) => {
-        this.specialization_arr = data;
-      });
-  }
-  getSpecializationName(n) {
-    for (let i = 0; i < this.specialization_arr.length; i++) {
-      if (this.specialization_arr[i].name === n) {
-        return this.specialization_arr[i].displayName;
-      }
-    }
-  }
-  handleSpecialization() {
-    let holdselspec;
-    if (this.bProfile && this.bProfile.specialization) {
-      holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
-    } else {
-      holdselspec = [];
-    }
-    const bprof = holdselspec;
-    const special = this.specialization_arr;
-    this.specialdialogRef = this.dialog.open(UserSpecializationComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-      disableClose: true,
-      autoFocus: false,
-      data: {
-        selspecializations: bprof,
-        specializations: special,
-        userId: this.userId,
 
-      }
-    });
-    this.specialdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result['mod'] === 'reloadlist') {
-          this.bProfile = result['data'];
-          this.initSpecializations();
-          if (this.bProfile && this.bProfile.selspecializations) {
-            if (this.bProfile.selspecializations.length > 0) {
-              this.normal_specilization_show = 3;
-            } else {
-              this.normal_specilization_show = 2;
-            }
-          } else {
-            this.normal_specilization_show = 2;
-          }
-        }
-      }
-    });
-  }
-  setLanguages() {
-    this.bProfile = [];
-    this.getBussinessProfileApi()
-      .then(
-        data => {
-          this.bProfile = data;
-          if (this.bProfile.languagesSpoken) {
-            this.user_datastorage.updateLanguagesWeightage(this.bProfile.languagesSpoken);
-            if (this.bProfile.languagesSpoken.length > 0) {
-              this.normal_language_show = 3;
-            } else {
-              this.normal_language_show = 2;
-            }
-          } else {
-            this.normal_language_show = 2;
-          }
-        },
-        () => {
-          this.normal_language_show = 2;
-        }
-      );
-  }
-  getSpokenLanguages() {
-    this.provider_services.getSpokenLanguages()
-      .subscribe(data => {
-        this.languages_arr = data;
-      });
-  }
-  getlanguageName(n) {
-    for (let i = 0; i < this.languages_arr.length; i++) {
-      if (this.languages_arr[i].name === n) {
-        return this.languages_arr[i].displayName;
-      }
-    }
-  }
-  handleSpokenLanguages() {
-    let holdsellang;
-    if (this.bProfile.languagesSpoken) {
-      holdsellang = JSON.parse(JSON.stringify(this.bProfile.languagesSpoken)); // to avoid pass by reference
-    } else {
-      holdsellang = [];
-    }
-    const bprof = holdsellang;
-    const lang = this.languages_arr;
-    this.langdialogRef = this.dialog.open(AddProviderUserBprofileSpokenLanguagesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-      disableClose: true,
-      autoFocus: false,
-      data: {
-        sellanguages: bprof,
-        languagesSpoken: lang,
-        userId: this.userId
-      }
-    });
-    this.langdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result['mod'] === 'reloadlist') {
-          this.bProfile = result['data'];
-          this.setLanguages();
-          if (this.bProfile.sellanguages) {
-            if (this.bProfile.sellanguages.length > 0) {
-              this.normal_language_show = 3;
-            } else {
-              this.normal_language_show = 2;
-            }
-          } else {
-            this.normal_language_show = 2;
-          }
-        }
-      }
-    });
-  }
-  confirmDelete(file, indx) {
-    const skey = this.image_list[indx].keyName;
-    file.keyName = skey;
-    this.sharedfunctionobj.confirmGalleryImageDelete(this, file);
-  }
-  getSocialdet(key, field) {
-    const retdet = this.orgsocial_list.filter(
-      soc => soc.key === key);
-    const returndet = retdet[0][field];
-    return returndet;
-  }
 
-  check_alreadyexists(v) {
-    for (let i = 0; i < this.social_arr.length; i++) {
-      if (this.social_arr[i].Sockey === v) {
-        return true;
-      }
-    }
-    return false;
-  }
-  handleSocialmedia(key) {
-    this.socialdialogRef = this.dialog.open(ProviderUserBprofileSearchSocialMediaComponent, {
-      width: '50%',
-      // panelClass: 'socialmediamainclass',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: {
-        bprofile: this.bProfile,
-        editkey: key || '',
-        userId: this.userId
-      }
-    });
-    this.socialdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result === 'reloadlist') {
-          this.getBusinessProfile();
-        }
-      }
-    });
-  }
-  deleteSocialmedia(sockey) {
-    const post_data: any = [];
-    for (let i = 0; i < this.social_arr.length; i++) {
-      if (this.social_arr[i].Sockey !== sockey) {
-        post_data.push({ 'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl });
-      }
-    }
-    const submit_data = {
-      'socialMedia': post_data
-    };
-    this.provider_services.updateUserSocialMediaLinks(submit_data, this.userId)
-      .subscribe(
-        () => {
-          this.getBusinessProfile();
-        },
-        () => {
 
-        }
-      );
 
-  }
-  editSocialmedia(key) {
-    this.handleSocialmedia(key);
-  }
-  showimg() {
-    let logourl = '';
-    this.profimg_exists = false;
-    if (this.item_pic.base64) {
-      this.profimg_exists = true;
-      return this.item_pic.base64;
-    } else {
-      if (this.blogo) {
-        this.profimg_exists = true;
-        // const today = new Date();
-        // logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
-        logourl = (this.blogo.url) ? this.blogo.url + '?' + this.cacheavoider : '';
-      }
-      return this.sharedfunctionobj.showlogoicon(logourl);
-    }
-  }
-  confirmLogoremove(keyname) {
-    this.sharedfunctionobj.confirmLogoImageDelete(this, keyname);
-  }
-  removeLogo(keyname) {
-    this.provider_services.deleteuserLogo(keyname, this.userId)
-      .subscribe(() => {
-        // calling function which saves the business related details to show in the header
-        this.blogo = [];
-        this.profimg_exists = false;
-        this.user_datastorage.updateProfilePicWeightage(this.profimg_exists);
-        const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-        this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-          || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '', true);
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedfunctionobj.sendMessage(pdata);
-      },
-        () => {
-
-        });
-  }
   showPasscode() {
     this.show_passcode = !this.show_passcode;
   }
@@ -1446,18 +1023,5 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'media']);
   }
 
-  changeProPic() {
-    this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        'userId': this.userId,
-        'userdata': this.user_arr
-      }
-    });
-    this.notedialogRef.afterClosed().subscribe(result => {
-      this.getUser();
-    });
-  }
+
 }

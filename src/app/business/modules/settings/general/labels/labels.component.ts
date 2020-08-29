@@ -20,7 +20,7 @@ export class LabelsComponent implements OnInit {
             url: '/provider/settings/general'
         },
         {
-            title: 'Labels'
+            title: 'Custom Fields'
         }
     ];
     api_loading: boolean;

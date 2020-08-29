@@ -21,28 +21,17 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     status;
     image_list: any = [];
     serviceExists = true;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Jaldee Appointment Manager',
-            url: '/provider/settings/appointmentmanager'
-        },
-        {
-            title: 'Services Offered',
-            url: '/provider/settings/appointmentmanager/services'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
+    breadcrumbs ;
+    breadcrumbs_init;
     subscription: Subscription; // for gallery
     serviceSubscription: Subscription; // from service module
     servstatus;
+    domain;
     can_change_hours = Messages.BPROFILE_CHANGE_SERVICE_WORKING_HOURS_CAP;
     click_here_cap = Messages.CLICK_HERE_CAP;
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
     showGallery = false;
+    servicecaption = 'Add Service';
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -50,6 +39,41 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         private activated_route: ActivatedRoute,
         private router: Router,
         private provider_shared_functions: ProviderSharedFuctions) {
+            const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+            this.domain = user.sector;
+            if (this.domain === 'healthCare') {
+                this.breadcrumbs_init = [
+                    {
+                        title: 'Settings',
+                        url: '/provider/settings'
+                    },
+                    {
+                        title: Messages.WAITLIST_MANAGE_CAP,
+                        url: '/provider/settings/q-manager'
+                    },
+                   {
+                        title: Messages.WAITLIST_HEALTHCARE_SERVICES,
+                        url: '/provider/settings/q-manager/services'
+                    }
+                ];
+                this.breadcrumbs = this.breadcrumbs_init;
+              } else {
+                this.breadcrumbs_init = [
+                    {
+                        title: 'Settings',
+                        url: '/provider/settings'
+                    },
+                    {
+                        title: Messages.WAITLIST_MANAGE_CAP,
+                        url: '/provider/settings/q-manager'
+                    },
+                    {
+                    title: Messages.WAITLIST_SERVICES_CAP,
+                    url: '/provider/settings/q-manager/services'
+                    }
+                ];
+                this.breadcrumbs = this.breadcrumbs_init;
+              }
         this.activated_route.params.subscribe(
             (params) => {
                 this.service_id = params.id;
@@ -80,6 +104,8 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
+        const user_data = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        this.domain = user_data.sector;
         setTimeout(() => this.showGallery = true, 1200);
         this.initServiceParams();
         this.subscription = this.galleryService.getMessage().subscribe(input => {
@@ -109,6 +135,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         if (serviceActionModel.action === 'add') {
                             this.createService(post_itemdata2);
                         } else if (serviceActionModel.action === 'edit') {
+                            this.servicecaption = 'Edit Service';
                             post_itemdata2.id = this.service_id;
                             this.updateService(post_itemdata2);
                         } else if (serviceActionModel.action === 'changestatus') {
@@ -116,10 +143,12 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         }
                     } else {
                         if (serviceActionModel.action === 'edit') {
+                            this.servicecaption = ' Edit Serviec';
                             this.serviceParams['action'] = 'edit';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else if (serviceActionModel.action === 'close' && serviceActionModel.source !== 'add') {
                             this.serviceParams['action'] = 'show';
+                            this.servicecaption = 'Serviec Details';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else {
                             this.router.navigate(['provider/settings/appointmentmanager/services']);
@@ -180,6 +209,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                 data => {
                     this.serviceParams['service'] = data;
                     this.serviceParams['action'] = 'show';
+                    this.servicecaption = 'Serviec Details';
                     this.status = this.serviceParams['service'].status;
                     this.setGalleryImages(this.serviceParams['service'].servicegallery || []);
                     // remove multiple end breadcrumb on edit function
@@ -193,6 +223,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
+                        this.servicecaption = 'Edit Service';
                         this.serviceParams['action'] = 'edit';
                     }
                     this.servicesService.initServiceParams(this.serviceParams);
@@ -309,5 +340,8 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'appointmentmanager',
             'services']);
         this.api_loading = false;
+    }
+    redirecToApptServices() {
+        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'services']);
     }
 }

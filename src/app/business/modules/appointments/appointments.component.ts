@@ -10,7 +10,7 @@ import { ApplyLabelComponent } from '../check-ins/apply-label/apply-label.compon
 import { MatDialog } from '@angular/material';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
-import { CallingModesComponent } from '../check-ins/calling-modes/calling-modes.component';
+// import { CallingModesComponent } from '../calling-modes/calling-modes.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -18,7 +18,12 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provid
 import { CheckinDetailsSendComponent } from '../check-ins/checkin-details-send/checkin-details-send.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
+<<<<<<< HEAD
 declare let cordova: any;
+=======
+import { interval as observableInterval, Subscription } from 'rxjs';
+
+>>>>>>> refs/remotes/origin/1.3.0
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -272,7 +277,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   services: any = [];
   consumr_id: any;
   topHeight = 0;
-  
+
   @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
   @ViewChild('apptSection', { static: false }) apptSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
@@ -311,6 +316,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   showDashbard = true;
   filteredSchedule: any = [];
   allScheduleSelected = false;
+  cronHandle: Subscription;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -369,7 +375,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (document.getElementById('tabHeader')) {
       tabHeader = document.getElementById('apptsTimeTypes').offsetHeight;
     }
-    this.topHeight =  qHeader + tabHeader;
+    this.topHeight = qHeader + tabHeader;
     console.log(this.topHeight);
     console.log(window.pageYOffset);
     if (header) {
@@ -409,6 +415,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getLocationList();
     this.getServices();
     this.getProviders();
+    this.cronHandle = observableInterval(30000).subscribe(() => {
+      this.refresh();
+    });
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
@@ -1590,9 +1599,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.time_type === 3) {
-       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
-      api_filter['schedule-eq'] = this.filteredSchedule.toString();
-    }
+      if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
+        api_filter['schedule-eq'] = this.filteredSchedule.toString();
+      }
       if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
         api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
       }
@@ -2485,24 +2494,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getVirtualServiceCount(virtualService) {
     return Object.keys(virtualService).length;
   }
-  generateLink(modes) {
-    this.notedialogRef = this.dialog.open(CallingModesComponent, {
-      width: '20%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        modes: modes.virtualService,
-        uuid: modes.uid,
-        linkValue: this.gnr_link,
-        qdata: modes,
-        type: 'appt'
-      }
-    });
-    this.notedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-      }
-    });
-  }
+
+
   smsAppt() {
     const _this = this;
     let appt;
@@ -2960,7 +2953,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         type: 'appt'
       }
     };
-    this.router.navigate(['provider', 'check-ins', 'teleservice'], navigationExtras);
+    this.router.navigate(['provider', 'teleservice'], navigationExtras);
   }
   scrollToSection(curTime) {
     // if (this.time_type === 2) {

@@ -5,7 +5,11 @@
     <div class="card title-gb">
         <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp;Features and Customization</h5>
+            </button>&nbsp;&nbsp;&nbsp;Features and Customization
+            <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
+                <i class="fa fa-book" >&nbsp;Help</i>
+            </button>
+        </h5>   
     </div>
 </section>
 <section>
@@ -51,8 +55,8 @@
             <div class="row">
                 <div class="card p0">
                     <span (click)="gotoLiveTrack()" class="b-link">
-                        <h2>Locate Your {{cust_domain_name}}</h2>
-                        <span class="form-level-settings" >Live tracking hints <a class="learnmore-pointer"
+                        <h2>Locate Your {{cust_domain_name |capitalizeFirst}}</h2>
+                        <span class="form-level-settings" >Locate Your {{cust_domain_name |capitalizeFirst}} hints <a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('livetracking', $event)">Learn
                                 More</a></span>
                     </span>
@@ -83,7 +87,7 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoLabels()">
-                        <h2>Custom fields</h2>
+                        <h2>Custom Fields</h2>
                         <span class="form-level-settings">Add or manage your labels here.<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('labels', $event)">Learn
                                 More</a></span>

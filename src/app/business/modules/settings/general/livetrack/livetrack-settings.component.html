@@ -5,7 +5,7 @@
     <div class="card title-gb">
         <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToGeneral()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp;Locate your patient
+            </button>&nbsp;&nbsp;&nbsp;Locate Your {{cust_domain_name |capitalizeFirst}}
             <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
                 Help
              </button> </h5>
@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
-                        <label>Locate your {{cust_domain_name}}
+                        <label>Locate Your {{cust_domain_name |capitalizeFirst}}
                             <mat-slide-toggle [(ngModel)]="livetrack_status" (change)="handle_liveTracking($event)">
                             </mat-slide-toggle>
                              &nbsp;{{livetrack_statusstr}}

@@ -1372,11 +1372,11 @@ export class ProviderCheckinComponent implements OnInit {
     getAllUsers() {
         const filter = {
             'status-eq': 'ACTIVE',
-            'userType-neq': 'ASSISTANT'
+            'userType-neq': 'ASSISTANT,ADMIN'
         };
         this.provider_services.getUsers(filter).subscribe(
             (users: any) => {
-                this.users = users.filter(user => !user.admin);
+                this.users = users;
                 this.users.push(this.userN);
                 if (this.selectUser) {
                     const userDetails = this.users.filter(user => user.id === this.selectUser);

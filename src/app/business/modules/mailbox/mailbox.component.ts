@@ -436,20 +436,20 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 messageIds.push(message.messageId);
             }
         }
-        const messageids = messageIds.toString();
-        const leng = messages.length;
-        if (messageids) {
-            this.provider_services.readConsumerMessages(messages[0].accountId, messageids.split(',').join('-')).subscribe(data => {
-                this.getInboxMessages();
-                this.getUnreadCount();
-                this.openState[index] = true;
-                setTimeout(() => {
-                    this.scrollToSection(messages[leng - 1]);
-                }, 1000);
-            });
-        } else {
-            this.scrollToSection(messages[leng - 1]);
-        }
+        // const messageids = messageIds.toString();
+        // const leng = messages.length;
+        // if (messageids) {
+        //     this.provider_services.readConsumerMessages(messages[0].accountId, messageids.split(',').join('-')).subscribe(data => {
+        //         this.getInboxMessages();
+        //         this.getUnreadCount();
+        //         this.openState[index] = true;
+        //         setTimeout(() => {
+        //             this.scrollToSection(messages[leng - 1]);
+        //         }, 1000);
+        //     });
+        // } else {
+        //     this.scrollToSection(messages[leng - 1]);
+        // }
     }
     scrollToSection(messageList) {
         this.msgIds.toArray().forEach(element => {

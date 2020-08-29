@@ -23,8 +23,10 @@ import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/funct
 export class AboutMeComponent implements OnInit {
 
 
-  subdomain_fields_mandatory: any[];
-  domain_fields_mandatory: any;
+  showVirtualFields = false;
+  showMandatory: boolean;
+  subdomain_fields_mandatory = [];
+  domain_fields_mandatory = [];
   dynamicdialogRef: MatDialogRef<ProviderBprofileSearchDynamicComponent, any>;
 
   profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
@@ -105,7 +107,7 @@ export class AboutMeComponent implements OnInit {
       bname: [{ value: this.bProfile.businessName, disabled: false }, Validators.compose([Validators.required])],
       // shortname: [{ value: this.bProfile.shortName, disabled: false }],
       // bdesc: [{ value: this.bProfile.businessDesc, disabled: false }, Validators.compose([Validators.required])]
-      bdesc: [{ value: this.bProfile.businessDesc, disabled: false }]
+      bdesc: [{ value: this.bProfile.businessDesc, disabled: false },  Validators.compose([Validators.required])]
     };
     this.prov_curstatus = this.bProfile.status;
     this.aboutmeForm = this.fb.group(this.formfields);
@@ -125,19 +127,19 @@ export class AboutMeComponent implements OnInit {
       this.document.getElementById('bname').focus();
       return;
     }
-    //   if (form_data.bdesc !== '' && form_data.bdesc.trim() === '') {
-    //   this.api_error = 'Please enter the business description';
-    //   this.document.getElementById('bdesc').focus();
-    //   return;
-    //  }
-    if (form_data.bdesc) {
-      form_data.bdesc = form_data.bdesc.trim();
-    }
-    /*if (blankpatterm.test(form_data.bdesc)) {
-     this.api_error = 'Please enter the business description';
-     this.document.getElementById('bdesc').focus();
-     return;
-    }*/
+    form_data.bdesc = form_data.bdesc.trim();
+      if (form_data.bdesc !== '' && form_data.bdesc.trim() === '') {
+      this.api_error = 'Please enter the business description';
+      this.document.getElementById('bdesc').focus();
+      return;
+     }
+
+
+    // if (blankpatterm.test(form_data.bdesc)) {
+    //  this.api_error = 'Please enter the business description';
+    //  this.document.getElementById('bdesc').focus();
+    //  return;
+    // }
     if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
       this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
     } else if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {
@@ -161,11 +163,21 @@ export class AboutMeComponent implements OnInit {
   }
   // saving the primary fields from the bprofile create page
   createPrimaryFields(pdata) {
+    this.disableButton = true;
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
         () => {
+
           this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_CREATED);
-          this.getBusinessProfile();
+          this.disableButton = false;
+          console.log(this.domain_fields_mandatory.length);
+          console.log(this.subdomain_fields_mandatory.length);
+          if (this.domain_fields_mandatory.length !== 0 || this.subdomain_fields_mandatory.length !== 0) {
+            this.showVirtualFields = true;
+          } else {
+            this.redirecToBprofile();
+          }
+
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
@@ -188,6 +200,7 @@ export class AboutMeComponent implements OnInit {
         () => {
           // this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
           this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_UPDATED);
+          this.disableButton = false;
           setTimeout(() => {
             this.redirecToBprofile();
           }, projectConstants.TIMEOUT_DELAY);
@@ -204,9 +217,13 @@ export class AboutMeComponent implements OnInit {
       .subscribe(
         data => {
           this.bProfile = data;
-          console.log(this.bProfile);
           if (this.bProfile) {
             this.createForm();
+          }
+          if (this.bProfile.businessName) {
+            this.showVirtualFields = true;
+          } else {
+            this.showVirtualFields = false;
           }
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
@@ -256,22 +273,19 @@ export class AboutMeComponent implements OnInit {
           const cnow = new Date();
           const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
           this.cacheavoider = dd;
-          let logo = '';
           if (this.blogo[0]) {
             this.logoExist = true;
-            logo = this.blogo[0].url;
           } else {
-            logo = '';
             this.logoExist = false;
           }
           this.provider_datastorageobj.updateProfilePicWeightage(this.logoExist);
-          const subsectorname = this.sharedfunctionObj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-          // calling function which saves the business related details to show in the header
-          this.sharedfunctionObj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-            || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', logo);
+          // const subsectorname = this.sharedfunctionObj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+          // // calling function which saves the business related details to show in the header
+          // this.sharedfunctionObj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+          //   || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', logo);
 
-          const pdata = { 'ttype': 'updateuserdetails' };
-          this.sharedfunctionObj.sendMessage(pdata);
+          // const pdata = { 'ttype': 'updateuserdetails' };
+          // this.sharedfunctionObj.sendMessage(pdata);
         },
         () => {
 
