@@ -150,7 +150,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else if (serviceActionModel.action === 'close' && serviceActionModel.source !== 'add') {
                             this.serviceParams['action'] = 'show';
-                            this.servicecaption = 'Serviec Details';
+                            this.servicecaption = 'Service Details';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else {
                             this.router.navigate(['provider/settings/q-manager/services']);
@@ -229,7 +229,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                 data => {
                     this.serviceParams['service'] = data;
                     this.serviceParams['action'] = 'show';
-                    this.servicecaption = 'Serviec Details';
+                    this.servicecaption = 'Service Details';
                     this.status = this.serviceParams['service'].status;
                     this.setGalleryImages(this.serviceParams['service'].servicegallery || []);
                     // remove multiple end breadcrumb on edit function
