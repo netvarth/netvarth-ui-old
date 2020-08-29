@@ -10,7 +10,9 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { Title } from '@angular/platform-browser';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
+import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material';
+import { ProviderStartTourComponent } from '../../../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 
 @Component({
   selector: 'app-header',
@@ -51,7 +53,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     private provider_services: ProviderServices,
     private titleService: Title,
     public dialog: MatDialog,
-    private provider_dataStorage: ProviderDataStorageService) {
+    private provider_dataStorage: ProviderDataStorageService,
+    private readonly joyrideService: JoyrideService) {
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
@@ -108,9 +111,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         () => {
         });
   }
-<<<<<<< HEAD
-  
-=======
   tourIconClicked() {
     const dialogRef = this.dialog.open(ProviderStartTourComponent, {
       width: '25%',
@@ -151,7 +151,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
    // this.router.navigate(['provider', 'settings']);
 
   }
->>>>>>> refs/remotes/origin/1.3.0
   gotoActiveHome() {
     this.router.navigate(['provider', 'check-ins']);
   }
@@ -164,7 +163,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
-      this.blogo = bdetails.logo || './assets/images/img-null.svg';
+      this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';
     }
   }
   ngOnInit() {

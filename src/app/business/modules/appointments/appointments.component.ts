@@ -18,12 +18,8 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provid
 import { CheckinDetailsSendComponent } from '../check-ins/checkin-details-send/checkin-details-send.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
-<<<<<<< HEAD
-declare let cordova: any;
-=======
 import { interval as observableInterval, Subscription } from 'rxjs';
-
->>>>>>> refs/remotes/origin/1.3.0
+declare let cordova: any;
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -780,6 +776,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (this.activeSchedules.length > 0) {
         const selQ = this.activeSchedules[0];
         this.selQId = selQ.id;
+        if (selQ && selQ.provider) {
+          this.selUser = selQ.provider;
+        }
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
         this.servicesCount = selQ.services.length;
         this.selQCapacity = selQ.parallelServing;
@@ -2810,7 +2809,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.pos = data['enablepos'];
     });
   }
-
   printHistoryCheckin() {
     const Mfilter = this.setFilterForApi();
     const promise = this.getHistoryAppointmentsCount(Mfilter);
@@ -2908,7 +2906,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
     this.selectedView = view;
     this.initView(this.selectedView, 'reloadAPIs');
-
   }
   clearApptIdsFromStorage() {
     this.shared_functions.removeitemFromGroupStorage('appt_history_selQ');

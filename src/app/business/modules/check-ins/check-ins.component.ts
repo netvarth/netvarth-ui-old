@@ -18,12 +18,8 @@ import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlis
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { CheckinDetailsSendComponent } from './checkin-details-send/checkin-details-send.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
-<<<<<<< HEAD
-declare let cordova: any;
-=======
 import { interval as observableInterval, Subscription } from 'rxjs';
-
->>>>>>> refs/remotes/origin/1.3.0
+declare let cordova: any;
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -1964,7 +1960,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
   }
   refresh() {
-    console.log(this.time_type);
     if (this.time_type === 1) {
       this.getTodayWL();
     }
@@ -2233,7 +2228,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             });
       });
   }
-
   printCheckin() {
     const _this = this;
     let appt;
