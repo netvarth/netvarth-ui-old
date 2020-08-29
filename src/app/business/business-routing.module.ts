@@ -20,6 +20,7 @@ const routes: Routes = [
       { path: '', component: BusinessHomeComponent, canActivate: [AuthGuardProviderHome] },
       { path: 'faq', loadChildren: () => import('./modules/faq/provider-faq.module').then(m => m.ProviderFaqModule) },
       { path: 'customers', loadChildren: () => import('./modules/customers/customers.module').then(m => m.CustomersModule) },
+      {path: 'teleservice', loadChildren: () => import('./modules/calling-modes/calling-modes.module').then(m => m.CallingModesModule)},
       { path: 'kiosk', loadChildren: () => import('../ynw_kiosk/kiosk.module').then(m => m.KioskModule) },
       { path: 'bill/:id', component: AddProviderWaitlistCheckInBillComponent },
       { path: 'settings', loadChildren: () => import('../ynw_provider/components/provider-settings/provider-settings.module').then(m => m.ProviderSettingsModule) },

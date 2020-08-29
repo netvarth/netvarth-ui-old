@@ -4,11 +4,15 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { Router } from '@angular/router';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material';
+import { Messages } from '../../../../../shared/constants/project-messages';
+
 @Component({
     'selector': 'app-custid',
     'templateUrl': './customer-id.component.html'
 })
 export class CustomerIdSettingsComponent implements OnInit {
+    customer_label = this.shared_functions.getTerminologyTerm('customer');
+    customer_label_upper = this.shared_functions.firstToUpper(this. customer_label);
     breadcrumbs = [
         {
             title: 'Settings',
@@ -19,7 +23,7 @@ export class CustomerIdSettingsComponent implements OnInit {
             url: '/provider/settings/customers'
         },
         {
-            title: 'Customer Id'
+            title: Messages.CUSTOMER_ID.replace('[customer]', this.customer_label_upper),
         }
     ];
     formats = {
@@ -33,6 +37,7 @@ export class CustomerIdSettingsComponent implements OnInit {
     tempCustIdFormat: any;
     inputChanged = false;
     domain: any;
+    cust_domain_name = '';
     breadcrumb_moreoptions: any = [];
     constructor(
         private provider_services: ProviderServices,
@@ -47,6 +52,7 @@ export class CustomerIdSettingsComponent implements OnInit {
         this.getGlobalSettings();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'customers->custid-settings',
             'actions': [

@@ -4,6 +4,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-appointmentmanager',
@@ -41,7 +42,7 @@ export class AppointmentmanagerComponent implements OnInit {
     frm_set_ser_cap = '';
     bProfile = null;
     locationExists = false;
-
+    services_cap = Messages.WAITLIST_SERVICES_CAP;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -64,6 +65,11 @@ export class AppointmentmanagerComponent implements OnInit {
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
+        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
+            this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
+          }
     }
     getBusinessProfile() {
         this.provider_services.getBussinessProfile()

@@ -12,7 +12,6 @@ import { filter, pairwise } from 'rxjs/operators';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { MatDialog } from '@angular/material';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
-import { CallingModesComponent } from './calling-modes/calling-modes.component';
 import { KeyValue } from '@angular/common';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -2367,25 +2366,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.consumr_id = modes.consumer.id;
     }
-    // this.changeWaitlistStatus(modes, action);
-    this.notedialogRef = this.dialog.open(CallingModesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        modes: modes.virtualService,
-        uuid: modes.ynwUuid,
-        consumerid: this.consumr_id,
-        qdata: modes,
-        type: 'checkin',
-        action: action
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        waiting_id: modes.ynwUuid,
+        type: 'checkin'
       }
-    });
-    this.notedialogRef.afterClosed().subscribe(result => {
-      // if (result === 'reloadlist') {
-      this.refresh();
-      // }
-    });
+    };
+    this.router.navigate(['provider', 'teleservice'], navigationExtras);
   }
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;

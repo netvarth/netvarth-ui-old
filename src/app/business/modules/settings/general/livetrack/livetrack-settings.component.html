@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
-                        <label>Locate your {{cust_domain_name}}
+                        <label>Locate Your {{cust_domain_name |capitalizeFirst}}
                             <mat-slide-toggle [(ngModel)]="livetrack_status" (change)="handle_liveTracking($event)">
                             </mat-slide-toggle>
                              &nbsp;{{livetrack_statusstr}}

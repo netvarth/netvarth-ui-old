@@ -124,6 +124,10 @@
                                 <div class="lt0" *ngIf="appointment.batchId" style="font-size: 0.9rem;">
                                     Batch <span class="token">{{appointment.batchId}} </span>
                                 </div>
+                                <div class="lt0 underline" *ngIf="appointment.service.serviceType === 'virtualService' && appointment.apptStatus !== 'Completed'
+                                         && appointment.apptStatus !== 'Cancelled'">
+                                    <a (click)="getMeetingDetails(appointment,'appt')"> Meeting details </a>
+                                </div>
                                 <!-- <div class="lt0 payment"
                                             *ngIf="!appointment.parentUuid && appointment.apptStatus=='prepaymentPending'">
                                             <span class="paytext">{{checkindisablemsg}} {{appointment.counter}}
@@ -385,6 +389,10 @@
                                         </div>
                                         <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
                                             {{party_size}} <span class="persons">{{waitlist.partySize}}</span>
+                                        </div>
+                                        <div class="lt0 underline" *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.waitlistStatus !== 'done'
+                                         && waitlist.waitlistStatus !== 'cancelled'">
+                                            <a (click)="getMeetingDetails(waitlist,'waitlist')"> Meeting details </a>
                                         </div>
                                         <!-- <div class="lt0 payment"
                                     *ngIf="!waitlist.parentUuid && waitlist.waitlistStatus=='prepaymentPending'">
@@ -752,10 +760,10 @@
                                         <span class="cs-btn chk-btn" (click)="goCheckin(provider, loc, 'fav_provider')"
                                             *ngIf="loc['waitlist'] && provider.onlinePresence && ((loc['onlineCheckIn'] && loc['isAvailableToday'] && loc['availableToday']) || (provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate'])) && loc['showToken']">{{get_token_btn}}</span>
                                         <span class="cs-btn chk-btn disabled"
-                                            *ngIf="loc['waitlist'] && provider.onlinePresence && !loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!provider.settings.futureDateWaitlist || !loc['estimatedtime_det']['cdate'])">
+                                            *ngIf="loc['waitlist'] && provider.onlinePresence && !loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (provider.settings && !provider.settings.futureDateWaitlist || !loc['estimatedtime_det']['cdate'])">
                                             {{getTerminologyTerm('waitlist')}}</span>
                                         <span class="cs-btn chk-btn disabled"
-                                            *ngIf="loc['waitlist'] && provider.onlinePresence && loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!provider.settings.futureDateWaitlist || !loc['estimatedtime_det']['cdate'])">{{get_token_btn}}</span>
+                                            *ngIf="loc['waitlist'] && provider.onlinePresence && loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (provider.settings && !provider.settings.futureDateWaitlist || !loc['estimatedtime_det']['cdate'])">{{get_token_btn}}</span>
                                         <!-- <span class="cs-btn bt10"
                                             *ngIf="loc['waitlist'] && provider.onlinePresence && provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate']"
                                             (click)="goCheckin(provider, loc, loc['estimatedtime_det']['cdate'], true, 'fav_provider')">

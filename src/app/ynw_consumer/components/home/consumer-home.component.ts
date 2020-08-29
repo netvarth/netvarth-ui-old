@@ -19,6 +19,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
+import { MeetingDetailsComponent } from '../meeting-details/meeting-details.component';
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -1571,5 +1572,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getSingleTime(slot) {
     const slots = slot.split('-');
     return this.shared_functions.convert24HourtoAmPm(slots[0]);
+  }
+  getMeetingDetails(details, source) {
+    const passData = {
+      'type': source,
+      'details': details
+    }
+    this.addnotedialogRef = this.dialog.open(MeetingDetailsComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class'],
+      disableClose: true,
+      data: passData
+    });
+    this.addnotedialogRef.afterClosed().subscribe(result => {
+    });
   }
 }
