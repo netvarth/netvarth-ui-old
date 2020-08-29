@@ -106,7 +106,7 @@ export function init_app(globalService: GlobalService) {
     CheckYourStatusComponent,
     PaymentLinkComponent,
     JdnComponent,
-    UpdateProfilePopupComponent,
+    UpdateProfilePopupComponent
     // PhomeComponent,
   ],
   entryComponents: [

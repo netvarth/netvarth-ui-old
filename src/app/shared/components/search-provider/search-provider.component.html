@@ -6,24 +6,24 @@
     <div class="row">
       <div class="c-outer">
         <div class="c-body prov-detail-outer"> -->
-<div class="card">
-  <div class="c-ot" style="margin-bottom: 50px;
+<div class="card sp no-padding">
+  <div class="c-ot" style="margin-bottom: 10px;
         margin-top: 10px" *ngIf="selectedDepartment && fiterByDept">
-    <div class="item col-md-4 col-xs-12 mgn-bt-10" *ngIf="selectedDepartment.departmentName" style="font-weight: 600;">
+    <!-- <div class="item col-md-4 col-xs-12 mgn-bt-10" *ngIf="selectedDepartment.departmentName" style="font-weight: 600;">
       <span class="ttle" style="color: #999999;
                 display: block;
                 font-weight: 500;">Department Name</span>
       <span>{{selectedDepartment.departmentName}}</span>
-    </div>
+    </div> -->
     <div class="item col-md-8 col-xs-12" *ngIf="selectedDepartment.departmentDescription" style="font-weight: 600;">
-      <span class="ttle" style="color: #999999;
+      <!-- <span class="ttle" style="color: #999999;
                 display: block;
-                font-weight: 500;">Description</span>
+                font-weight: 500;">Description</span> -->
       <span> {{selectedDepartment.departmentDescription}}</span>
     </div>
   </div>
-  <div class="dept-services" *ngIf="!api_loading && showService && serviceJson && serviceJson.length > 0">
-    <h6 class="mgn-bt-10">{{services_offered}}</h6>
+  <div class="dept-services col-xs-12 col-md-12 col-sm-12 col-lg-12" *ngIf="!api_loading && showService && serviceJson && serviceJson.length > 0">
+    <h6 >{{services_offered}}</h6>
     <ul>
       <li *ngFor="let service of serviceJson" (click)="showServiceDetail(service, businessjson.businessName)">
         <span *ngIf="service.serviceType === 'virtualService'">
@@ -36,22 +36,72 @@
           <i class="fa fa-whatsapp whtsap-ic font-bolder"
             *ngIf="service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
         </span>
-        {{service.name | capitalizeFirst}}</li>
+        &nbsp;{{service.name | capitalizeFirst}}</li>
     </ul>
   </div>
   <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
   <ng-container *ngIf="!api_loading && !showService">
-    <div class="col-md-12" *ngIf="businessjson.accountType === 'BRANCH' && usersList && usersList.length > 0"
+    <div class="col-md-12 no-padding" *ngIf="businessjson.accountType === 'BRANCH' && usersList && usersList.length > 0"
       style="padding: 0px">
-      <div class="srlst provider-det" *ngFor="let search_result of usersList">
-        <div class="top-sect">
-          <div class="tp-l">
-            <div class="tp1">
-              <div class="pro-img" (click)="providerDetClicked(search_result)">
+      <div class="srlst provider-det col-md-12 col-lg-12 col-xs-12 col-xs-12 no-padding" *ngFor="let search_result of usersList">
+
+
+        <div class="panel-body">
+          <div class="col-md-3 col-xs-12 col-sm-4 col-lg-3">
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centresmall">
+              <img alt="Profile Image" *ngIf="search_result.bProfile?.logo && search_result.bProfile?.logo?.url"
+                [src]="search_result.bProfile.logo.url" id="profile-image1" class="img-circle img-responsive">
+            </div>
+            <!-- <div class="gal col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                    <div class="gallery-bullet centeralign pointer-cursor"
+                        (click)="openImageModalRow(image_list_popup[1])">
+                        <i class="fa fa-circle" *ngFor="let enable of galleryenabledArr"></i>
+                        <i class="fa fa-circle-o" *ngFor="let i of gallerydisabledArr"></i>
+                    </div>
+                </div> -->
+          </div>
+          <div class="col-md-9 col-xs-12 col-sm-8 col-lg-9 no-padding bus-title-content">
+            <div class="col-md-8 col-xs-12 col-sm-12 col-lg-9 no-padding">
+              <div class="no-padding">
+                <h3 (click)="providerDetClicked(search_result)">
+                  {{search_result.bProfile?.businessName | capitalizeFirst}}</h3>
+                <div class="clearfix"></div>
+                <div *ngIf="search_result.bProfile?.specialization.length == 1" class="question-header">Specialization
+                </div>
+                <div *ngIf="search_result.bProfile?.specialization.length > 1" class="question-header">Specializations
+                </div>
+                <div class="question-value1">
+                  <span *ngFor="let spec of search_result.bProfile?.specialization; let i = index;"
+                    style="display: inline-block;margin-right:10px">
+                    {{spec}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+            [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+            (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook($event)">
+          </ks-modal-gallery> -->
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- <div class="top-sect"> -->
+        <!-- <div class="tp-l"> -->
+        <!-- <div class="tp1"> -->
+        <!-- <div class="pro-img" (click)="providerDetClicked(search_result)">
                 <img class="crop-img-fit" *ngIf="search_result.bProfile?.logo && search_result.bProfile?.logo?.url"
                   [src]="search_result.bProfile.logo.url" alt="">
-              </div>
-              <ul class="gal" *ngIf="search_result.gallery_thumb_nails">
+              </div> -->
+        <!-- <ul class="gal" *ngIf="search_result.gallery_thumb_nails">
                 <li>
                   <div class="galbx">
                     <div class="overlay" (click)="providerDetClicked(search_result)">
@@ -59,8 +109,8 @@
                     <img [src]="search_result.gallery_thumb_nails[0]" alt="" style="width:50px;height:auto;">
                   </div>
                 </li>
-              </ul>
-              <!-- <div class="rating-stars">
+              </ul> -->
+        <!-- <div class="rating-stars">
                 <img class="ratingstar" *ngFor="let enable of search_result.ratingenabledArr"
                   src="./assets/images/star.svg" alt="" />
                 <img class="ratingstar" *ngIf="search_result.ratingenabledHalf" src="./assets/images/star-half.svg"
@@ -68,31 +118,34 @@
                 <img class="ratingstar" *ngFor="let enable of search_result.ratingdisabledArr"
                   src="./assets/images/star-disabled.svg" alt="" />
               </div> -->
-            </div>
-            <div class="tp2">
-              <h3 [matTooltipClass]="tooltipcls" [matTooltip]="bNameTooltip">
-                <span (click)="providerDetClicked(search_result)">
-                  {{search_result.bProfile?.businessName | capitalizeFirst}}
-                  <!-- <sup class="font-open-now"
+        <!-- </div> -->
+        <!-- <div class="tp2"> -->
+        <!-- <h3 [matTooltipClass]="tooltipcls" [matTooltip]="bNameTooltip">
+                <span >
+                  {{search_result.bProfile?.businessName | capitalizeFirst}} -->
+        <!-- <sup class="font-open-now"
                     *ngIf="search_result['opennow'] || search_result['apptopennow']">&nbsp;{{open_now_cap}}
                   </sup> -->
-                </span> <span class="mgn-lt-10 pointer-cursor" *ngIf="jdnlength > 0" (click)="openJdn()"
-                  [matTooltip]="jdnTooltip"><img height="35" width="35" src="./assets/images/JDN.png"></span>
-              </h3>
-              <span *ngIf="locationjson[0].place">{{locationjson[0].place | capitalizeFirst }}
+        <!-- </span> -->
+        <!-- <span class="mgn-lt-10 pointer-cursor" *ngIf="jdnlength > 0" (click)="openJdn()"
+                  [matTooltip]="jdnTooltip"><img height="35" width="35" src="./assets/images/JDN.png"></span> -->
+        <!-- </h3> -->
+        <!-- <span *ngIf="locationjson[0].place">{{locationjson[0].place | capitalizeFirst }}
                 <span class="consumr-loc-icon"> <a rel="noopener" class="directions mgn-lt-20"
                     [href]="locationjson[0].googleMapUrl" target="_blank"
                     *ngIf="locationjson[0].googleMapUrl!=''">{{get_directions_cap}}</a></span>
-              </span>
-              <div class="clr">
-                <div class="otr-elements">
-                  <span class="category">{{search_result.bProfile?.userSubSector?.displayName}}</span>
-                  <span *ngIf="search_result.bProfile?.specialization"><span class="categoryspec"
-                      *ngFor="let spec of search_result.bProfile?.specialization; let i = index"><span *ngIf="i>0"
-                        class="spacer"></span>{{spec}}</span></span>
-                </div>
-                <!-- <div class="schedule" *ngIf="locationjson[0]?.display_schedule">
-                  <ul>
+              </span> -->
+        <!-- <div class="clr">
+                <div class="otr-elements"> -->
+        <!-- <span class="category">{{search_result.bProfile?.userSubSector?.displayName}}</span> -->
+        <!-- <span *ngIf="search_result.bProfile?.specialization">
+                    <div class="sub-title-donate">Specializations</div><span class="categoryspec"
+                      *ngFor="let spec of "><span *ngIf="i>0"
+                        class="spacer"></span>{{spec}}</span>
+                  </span>
+                </div> -->
+        <!-- <div class="schedule" *ngIf="locationjson[0]?.display_schedule">
+                  <ul> 
                     <li *ngFor="let schedule of locationjson[0]?.display_schedule">
                       <div class="day">{{schedule.dstr}}&nbsp;:</div>
                       <div class="time">{{schedule.time}}
@@ -102,14 +155,14 @@
                     </li>
                   </ul>
                 </div> -->
-                <div class="donat-service"
+        <!-- <div class="donat-service"
                   *ngIf="search_result.wtlstservices && search_result.wtlstservices.length > 0">
                   <span class="sub-title-donate checkin-service-group">
                     Services</span>
                   <ul>
                     <li *ngFor="let serv of search_result.wtlstservices"
-                      (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv.name | capitalizeFirst}}
-                      <span *ngIf="serv.serviceType == 'virtualService'">
+                      (click)="!btn_clicked && checkserviceClicked(serv,search_result)"><span
+                        *ngIf="serv.serviceType == 'virtualService'">
                         <i class="fa fa-phone"
                           *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'Phone'"></i>
                         <i class="fa meet-icon"
@@ -118,19 +171,20 @@
                           *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                         <i class="fa fa-whatsapp whtsap-ic font-bolder"
                           *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
-                      </span>
-                      <!-- <span *ngIf="serv.serviceType == 'virtualService' && serv.virtualServiceType == 'audioService'">
+                      </span>&nbsp;{{serv.name | capitalizeFirst}} -->
+
+        <!-- <span *ngIf="serv.serviceType == 'virtualService' && serv.virtualServiceType == 'audioService'">
                         (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)
                       </span> -->
-
+        <!-- 
                     </li>
                   </ul>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="tp-r" style="width: auto;">
-            <ul class="badges">
+            </div> -->
+        <!-- </div> -->
+        <!-- <div class="tp-r" style="width: auto;"> -->
+        <!-- <ul class="badges">
               <li
                 *ngIf="locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none'"
                 [matTooltip]="'Parking Type: ' + locationjson[0].parkingType">
@@ -153,16 +207,24 @@
               <li *ngIf="locationjson[0]?.locationVirtualFields?.firstaid=='true'" [matTooltip]="'First Aid'">
                 <span class="icon-first-aid"></span>
               </li>
-            </ul>
-            <span class="first-time-jc" *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"
+            </ul> -->
+        <!-- <span class="first-time-jc" *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"
               (click)="openCoupons('first')"><i class="fa fa-tag red"></i>
               {{first_time_coupon}}</span>
             <span class="other-jcs" *ngIf="s3CouponList.length>0" (click)="openCoupons()"><i class="fa fa-tag blue"></i>
-              {{jaldee_coupon}}</span>
-            <span class="communicate" (click)="communicateHandler(search_result)" [matTooltipClass]="tooltipcls"
-              [matTooltip]="commTooltip">{{send_messages}}</span>
-          </div>
-        </div>
+              {{jaldee_coupon}}</span> -->
+        <!-- <ul class="bus-actions no-padding">
+              <li>
+                <a class="like-btn" (click)="communicateHandler(search_result)" [matTooltip]="commTooltip"
+                  [matTooltipClass]="tooltipcls">
+                  <span>
+                    {{send_messages}}
+                  </span>
+                </a>
+              </li>
+            </ul> -->
+        <!-- </div> -->
+        <!-- </div> -->
         <div class="bottom-sect"
           *ngIf="search_result['estimatedtime_det'] && search_result['estimatedtime_det']['waitlist'] && businessjson.onlinePresence">
           <div class="bt-l">
