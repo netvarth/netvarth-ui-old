@@ -11134,3 +11134,6 @@ a {
     height: 630px;
   }
 }
+.teleservicePopup .reminder .tele_srv_txtarea {
+  height: 180px !important;
+}
