@@ -115,6 +115,7 @@ export class ItemDetailsComponent implements OnInit {
                                             this.breadcrumbs = breadcrumbs;
                                             this.createForm();
                                         } else if (this.action === 'view') {
+                                            this.itemcaption = 'Item Details';
                                             const breadcrumbs = [];
                                             this.breadcrumbs_init.map((e) => {
                                                 breadcrumbs.push(e);
