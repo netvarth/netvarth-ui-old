@@ -11356,7 +11356,7 @@ image-cropper img {
   margin-top: 0 !important;
 }
 .bus-page .card.sp .panel-body img {
-  width: 80% !important;
+  width: 60% !important;
   margin:auto !important;
 }
 @media only screen and (max-width: 767px) {
