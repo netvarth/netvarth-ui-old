@@ -334,7 +334,7 @@
                                                     <div class="bottom-actions-root"
                                                         *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
                                                         <div class="checkin-est"
-                                                            *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                                                            *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc' && !settingsjson['showTokenId']">
                                                             <span
                                                                 class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
                                                             <span class="time-data">{{loc['estimatedtime_det']['time']}}
