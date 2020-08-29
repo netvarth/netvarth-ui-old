@@ -129,4 +129,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
             });
         }
     }
+    redirecToLicenseInvoice() {
+        this.routerobj.navigate(['provider', 'license']);
+    }
 }

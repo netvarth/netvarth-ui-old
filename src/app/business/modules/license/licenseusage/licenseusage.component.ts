@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { Router } from '@angular/router';
 
 @Component({
-selector:'app-licenseusage',
-templateUrl:'./licenseusage.component.html'
+selector: 'app-licenseusage',
+templateUrl: './licenseusage.component.html'
 })
 export class licenseusageComponent implements OnInit{
     breadcrumb_moreoptions: any = [];
@@ -16,15 +17,14 @@ export class licenseusageComponent implements OnInit{
       {
         title: 'License Usage'
       }
-    ]; 
+    ];
     constructor(
-       public provider_services: ProviderServices
+       public provider_services: ProviderServices,
+       private routerobj: Router
       ) { }
-      
-    metric:any;
-    metrics:any;
-    metrices:any
-    
+    metric: any;
+    metrics: any;
+    metrices: any;
     ngOnInit() {
         this.provider_services.getLicenseUsage().subscribe (
             data=> {
@@ -42,16 +42,9 @@ export class licenseusageComponent implements OnInit{
               }  
           });
     }
+     redirecToLicenseInvoice() {
+        this.routerobj.navigate(['provider', 'license']);
+    }
   }
-              
-               
-                
-            
 
-               
-             
-            
-        
-
-      
 

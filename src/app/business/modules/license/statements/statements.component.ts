@@ -96,7 +96,7 @@ export class StatementsComponent implements OnInit {
   var: any;
   temp1;
   mergestatement: any;
-
+  licensecaption = 'Statements';
 
   constructor(
     public dialogRef: MatDialogRef<StatementsComponent>,
@@ -130,6 +130,7 @@ export class StatementsComponent implements OnInit {
       });
       this.breadcrumbs = breadcrumbs;
     } else if (this.data.data2 === 'invo-statement Paid') {
+      this.licensecaption = 'Payment Details';
       const breadcrumbs = [];
       this.breadcrumbs_init.map((e) => {
         breadcrumbs.push(e);
@@ -144,6 +145,7 @@ export class StatementsComponent implements OnInit {
       });
       this.breadcrumbs = breadcrumbs;
     } else if (this.temp === 'payment-history') {
+      this.licensecaption = 'Payment Details';
       const breadcrumbs = [];
       this.breadcrumbs_init.map((e) => {
         breadcrumbs.push(e);
@@ -357,4 +359,18 @@ export class StatementsComponent implements OnInit {
         }
       );
   }
+  redirecToLicenseInvoice() {
+    if (this.data.data1 === 'invo-statement NotPaid') {
+      this.router.navigate(['provider', 'license' , 'invoicestatus']);
+    } else if (this.data.data2 === 'invo-statement Paid') {
+      this.router.navigate(['provider', 'license' , 'invoicestatus']);
+    } else if (this.temp === 'payment-history') {
+      this.router.navigate(['provider', 'license' , 'payment' , 'history']);
+    } else {
+      this.router.navigate(['provider', 'license']);
+    }
+ 
 }
+}
+
+

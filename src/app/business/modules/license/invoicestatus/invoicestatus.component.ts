@@ -183,4 +183,7 @@ export class InvoiceStatusComponent {
   hideFilterSidebar() {
     this.filter_sidebar = false;
   }
+  redirecToLicenseInvoice() {
+    this.router.navigate(['provider', 'license']);
+}
 }
