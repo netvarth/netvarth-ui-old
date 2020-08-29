@@ -213,7 +213,7 @@
                                     <li *ngIf="isInFav && !userId"><span class="icon-favourite-filled"
                                             (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li> -->
                                     <li><span class="icon-message" (click)="communicateHandler()"
-                                            *ngIf="provider_bussiness_id">{{send_msgs_cap}}</span></li>
+                                            *ngIf="provider_bussiness_id && !userId">{{send_msgs_cap}}</span></li>
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">
                                     <a rel="noopener" [href]="soc.value" target="_blank"

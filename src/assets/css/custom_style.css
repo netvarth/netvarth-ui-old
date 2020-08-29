@@ -10941,6 +10941,11 @@ a {
 
 @media (min-width: 1200px) {
   .box-hght {
-    height: 600px;
+    height: 630px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .wizard-li {
+    font-size: .7rem!important;
   }
 }
