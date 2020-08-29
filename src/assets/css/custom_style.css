@@ -10941,6 +10941,199 @@ a {
 
 @media (min-width: 1200px) {
   .box-hght {
-    height: 600px;
+    height: 630px;
   }
+}
+@media screen and (max-width: 768px) {
+  .wizard-li {
+    font-size: .7rem!important;
+  }
+}
+
+
+
+.teleservicePopup .mat-dialog-title .serv-font-size {
+  font-size: 1.4rem;
+}
+.teleservicePopup .custmer-font-wght {
+  font-weight: 500;
+}
+.teleservicePopup {
+  display: block;
+}
+.teleservicePopup .form-group .dsp-flx {
+  display: flex !important;
+}
+.teleservicePopup .form-group .border-style .fa-blk {
+  color: black;
+}
+.teleservicePopup .form-group .dsp-flx .dv-details {
+  width: fit-content !important;
+}
+.teleservicePopup .form-group .dsp-flx .dv-reminder {
+  width: 60% !important;
+}
+.teleservicePopup .form-group .dsp-flx .btn-rght {
+  float: right !important;
+}
+.teleservicePopup .form-group .dv-launch-video-serv {
+  margin-top: 50px;
+  text-align: center;
+}
+.teleservicePopup .form-group .dv-launch-aud-serv {
+  margin-top: 40px !important;
+  text-align: center;
+}
+.teleservicePopup .form-group .border-style .dv-details .text-red {
+  color: red;
+}
+.teleservicePopup .form-group .dsp-flx .remindr-pad {
+  padding-top: 18px !important;
+}
+.teleservicePopup .mat-select {
+  max-width: 120px;
+}
+.teleservicePopup .form-group .dsp-grd {
+  display: grid !important;
+}
+.teleservicePopup .wndow-pad {
+  padding: 0px 30px 30px 30px;
+}
+.teleservicePopup .pad-0 {
+  padding: 0px;
+}
+.teleservicePopup .step5-pad-wndow {
+  padding: 10px 80px 10px 80px;
+}
+.teleservicePopup .pad-left70 {
+  padding-left: 70px !important;
+}
+/* .teleservicePopup * {
+  font-family: Lato;
+} */
+.teleservicePopup :host {
+  display:block;
+  position:relative;
+}
+.teleservicePopup .clock {
+  position:relative;
+  width:200px;
+  height:200px;
+  margin:40px auto;
+  border: 1px solid rgba(0,0,0,0.75);
+}
+.teleservicePopup .hand {
+  position:absolute;
+  transform-origin: 0 0;
+  top:100%;left:50%;
+  width:200px;
+  height:0px;
+  border-top:1px solid rgba(0,0,0,0.75);
+}
+.teleservicePopup .hour-hand {
+  border-top-width:8px;
+}
+.teleservicePopup .minute-hand {
+  border-top-width:4px;
+}
+.teleservicePopup .example-full-width .center tr {
+  font-size: 1.1rem ;
+}
+.teleservicePopup .example-full-width #table2 tr {
+  font-size: 1rem ;
+}
+.teleservicePopup .table-wdth {
+  width: 500px;
+}
+.teleservicePopup .fnt-siz {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.teleservicePopup #table3 img {
+  width: 50px;
+}
+.teleservicePopup .example-full-width #table3 tr {
+  font-size: 0.9rem ;
+}
+.teleservicePopup .btn-red{
+  background: #f24949 !important;
+}
+.teleservicePopup .btn-grn{
+  background: #00cc96 !important;
+}
+.teleservicePopup .example-full-width .tbl-bordr {
+  border-collapse: separate;
+  border-spacing: 0.5em;
+}
+.teleservicePopup .example-full-width .tbl-bordr tr{
+  font-size: 0.9rem;
+}
+.teleservicePopup .fnt-1rem {
+  font-size: 1rem !important;
+}
+.teleservicePopup .txt-left {
+  text-align: left;
+  line-height: 40px;
+  font-weight: 500;
+}
+.teleservicePopup .chkin-mobic {
+  font-size: medium;
+}
+.teleservicePopup .brd-solid-1 {
+  border: 1px solid;
+}
+.teleservicePopup .fnt-file {
+  font-size: 1.5rem !important;
+}
+.teleservicePopup .fa-arw {
+  font-size: 1.8rem !important;
+  color: rgb(111 195 111) !important;
+}
+.teleservicePopup .col-md-12 .usr_img {
+  width: 120px;
+  height: 120px;
+  object-fit: scale-down;
+}
+.teleservicePopup .wtsap-img {
+  width: 30px;
+  padding-bottom: 10px;
+}
+.teleservicePopup .nxt-icon {
+  width: 18px;
+  padding-bottom: 10px;
+}
+@media only screen and (max-width: 400px) {
+  .teleservicePopup #table3 img {
+    width: 35px;
+  }
+  .teleservicePopup .mat-dialog-title .serv-font-size {
+    font-size: 1rem;
+  }
+  .teleservicePopup .tele-btn {
+    width: fit-content !important;
+    padding: 5px 5px 5px 5px !important;
+    border-color: rgb(24 115 242) !important;
+  }
+  .teleservicePopup .col-md-12 .usr_img {
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: scale-down !important;
+  }
+}
+.support-num {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: blue;
+}
+
+.support-callicon{
+  color: blue;
+}
+@media (min-width: 1200px) {
+  .box-hght {
+    height: 630px;
+  }
+}
+.teleservicePopup .reminder .tele_srv_txtarea {
+  height: 180px !important;
 }
