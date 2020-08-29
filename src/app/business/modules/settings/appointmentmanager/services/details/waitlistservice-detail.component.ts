@@ -40,7 +40,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         private provider_shared_functions: ProviderSharedFuctions) {
             const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
             this.domain = user.sector;
-            if (this.domain === 'healthCare') {
+            if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
                 this.breadcrumbs_init = [
                     {
                         title: 'Settings',

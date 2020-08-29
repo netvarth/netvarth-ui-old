@@ -67,7 +67,7 @@ export class AppointmentmanagerComponent implements OnInit {
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        if (this.domain === 'healthCare') {
+        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
             this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
           }
     }

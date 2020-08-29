@@ -60,7 +60,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             });
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        if (this.domain === 'healthCare') {
+        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
             const breadcrumbs = [];
             this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);

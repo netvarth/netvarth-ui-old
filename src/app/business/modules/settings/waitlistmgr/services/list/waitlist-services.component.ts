@@ -40,8 +40,8 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            title: 'Jaldee Appointment Manager',
-            url: '/provider/settings/appointmentmanager'
+            title: Messages.WAITLIST_MANAGE_CAP,
+            url: '/provider/settings/q-manager'
         },
     ];
     constructor(private provider_services: ProviderServices,
@@ -60,7 +60,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             });
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        if (this.domain === 'healthCare') {
+        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
             const breadcrumbs = [];
             this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
