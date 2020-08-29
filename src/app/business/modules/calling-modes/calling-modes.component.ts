@@ -513,8 +513,20 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             this.shared_functions.openSnackBar('Reminder copied to clipboard');
         }
     }
-    copyMeetingDetailsInfo() {
-        const info = document.getElementById('meetDetailsData');
+    copyUsrMeetingDetailsInfo() {
+        const info = document.getElementById('usrmeetDetailsData');
+        if (window.getSelection) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(info);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            document.execCommand('Copy');
+            this.shared_functions.openSnackBar('Meeting Details copied to clipboard');
+        }
+    }
+    copyMyMeetingDetailsInfo() {
+        const info = document.getElementById('mymeetDetailsData');
         if (window.getSelection) {
             const selection = window.getSelection();
             const range = document.createRange();
