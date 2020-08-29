@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-waitlist-services',
@@ -13,6 +14,7 @@ import { projectConstants } from '../../../../../../app.component';
 export class WaitlistServicesComponent implements OnInit, OnDestroy {
     add_new_serv_cap = Messages.SER_ADD_NEW_SER_CAP;
     est_duration_cap = Messages.SER_EST_DURATION_CAP;
+    services_cap = Messages.WAITLIST_SERVICES_CAP;
     min_cap = Messages.SER_MIN_CAP;
     price_cap = Messages.SER_PRICE_CAP;
     isServiceBillable = false;
@@ -61,24 +63,27 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         if (this.domain === 'healthCare') {
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: Messages.WAITLIST_HEALTHCARE_SERVICES,
-            });
-            this.breadcrumbs = breadcrumbs;
-        } else {
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: Messages.WAITLIST_SERVICES_CAP,
-            });
-            this.breadcrumbs = breadcrumbs;
-        }
+                this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
+              }
+        // if (this.domain === 'healthCare') {
+        //     const breadcrumbs = [];
+        //     this.breadcrumbs_init.map((e) => {
+        //         breadcrumbs.push(e);
+        //     });
+        //     breadcrumbs.push({
+        //         title: Messages.WAITLIST_HEALTHCARE_SERVICES,
+        //     });
+        //     this.breadcrumbs = breadcrumbs;
+        // } else {
+        //     const breadcrumbs = [];
+        //     this.breadcrumbs_init.map((e) => {
+        //         breadcrumbs.push(e);
+        //     });
+        //     breadcrumbs.push({
+        //         title: Messages.WAITLIST_SERVICES_CAP,
+        //     });
+        //     this.breadcrumbs = breadcrumbs;
+        // }
         this.api_loading = true;
         this.getDomainSubdomainSettings();
         this.getServiceCount();
