@@ -17,6 +17,7 @@ import { SearchDetailServices } from '../search-detail/search-detail-services.se
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
+import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
@@ -90,6 +91,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   waitlisttime_arr: any = [];
   favprovs: any = [];
   specializationslist: any = [];
+  specializationslist_more: any = [];
   socialMedialist: any = [];
   settings_exists = false;
   business_exists = false;
@@ -103,6 +105,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   viewallServices = false;
   viewallSpec = false;
   showmoreDesc = false;
+  showmoreSpec = false;
+  showMore = false;
   bNameStart = '';
   bNameEnd = '';
   image_list: any = [];
@@ -397,10 +401,21 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.bLogo = this.businessjson.logo.url + '?' + new Date();
               }
             } else {
-              this.bLogo = '';
+              // this.bLogo = '';
+              this.bLogo = '../../../assets/images/img-null.svg';
             }
+            this.specializationslist = [];
+            this.specializationslist_more = [];
             if (this.businessjson.specialization) {
-              this.specializationslist = this.businessjson.specialization;
+              // this.specializationslist = this.businessjson.specialization;
+
+              for (let i = 0; i < this.businessjson.specialization.length; i++) {
+                if (i <= 1) {
+                  this.specializationslist.push(this.businessjson.specialization[i]);
+                } else {
+                  this.specializationslist_more.push(this.businessjson.specialization[i]);
+                }
+              }
             }
             if (this.businessjson.socialMedia) {
               this.socialMedialist = this.businessjson.socialMedia;
@@ -411,6 +426,25 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (this.businessjson.phoneNumbers) {
               this.phonelist = this.businessjson.phoneNumbers;
             }
+            // if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
+            //   if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
+            //     this.bLogo = this.businessjson.logo.url + '?' + new Date();
+            //   }
+            // } else {
+            //   this.bLogo = '';
+            // }
+            // if (this.businessjson.specialization) {
+            //   this.specializationslist = this.businessjson.specialization;
+            // }
+            // if (this.businessjson.socialMedia) {
+            //   this.socialMedialist = this.businessjson.socialMedia;
+            // }
+            // if (this.businessjson.emails) {
+            //   this.emaillist = this.businessjson.emails;
+            // }
+            // if (this.businessjson.phoneNumbers) {
+            //   this.phonelist = this.businessjson.phoneNumbers;
+            // }
             this.getbusinessprofiledetails_json('gallery', true);
             if (this.userType === 'consumer') {
               this.getFavProviders();
@@ -555,6 +589,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.locationjson[i]['display_schedule'] = display_schedule;
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
+              this.getApptServiceByLocationid(this.locationjson[i].id, i);
               this.locationjson[i]['checkins'] = [];
               // if (this.userType === 'consumer') {
                 // this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
@@ -638,6 +673,20 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
         }
       );
+  }
+  getApptServiceByLocationid(locid, passedIndx) {
+    this.locationjson[passedIndx]['apptservices'] = [];
+    this.shared_services.getServicesforAppontmntByLocationId(locid)
+      .subscribe(data => {
+        if (this.showDepartments) {
+          this.locationjson[passedIndx]['apptservices'] = this.sharedFunctionobj.groupBy(data, 'department');
+        } else {
+          this.locationjson[passedIndx]['apptservices'] = data;
+        }
+      },
+        error => {
+          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+        });
   }
   private getUserWaitingTime(provids_locid) {
     if (provids_locid.length > 0) {
@@ -1100,13 +1149,29 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     return image ? images.indexOf(image) : -1;
   }
   getServiceByLocationid(locid, passedIndx) {
+
+    this.locationjson[passedIndx]['wlservices'] = [];
     this.shared_services.getServicesByLocationId(locid)
       .subscribe(data => {
         this.locationjson[passedIndx]['services'] = data;
+
+        if (this.showDepartments) {
+          this.locationjson[passedIndx]['wlservices'] = this.sharedFunctionobj.groupBy(data, 'department');
+        } else {
+          this.locationjson[passedIndx]['wlservices'] = data;
+        }
+        console.log(this.locationjson[passedIndx]['wlservices']);
       },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
         });
+    // this.shared_services.getServicesByLocationId(locid)
+    //   .subscribe(data => {
+    //     this.locationjson[passedIndx]['services'] = data;
+    //   },
+    //     error => {
+    //       this.sharedFunctionobj.apiErrorAutoHide(this, error);
+    //     });
   }
   getServicesByDepartment(dept) {
     this.routerobj.navigate(['searchdetail', this.provider_id, dept.departmentId], { queryParams: { source: 'business' } });
@@ -1739,16 +1804,19 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
               this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              console.log(this.appttime_arr[i]);
               if (this.appttime_arr[i]['availableSchedule']) {
                 this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+                this.locationjson[locindx]['availableSchedule'] = this.appttime_arr[i]['availableSchedule'];
                 if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
                   this.locationjson[locindx]['apptAvailableToday'] = true;
                 } else {
                   this.locationjson[locindx]['apptAvailableToday'] = false;
                 }
               }
+              console.log(this.locationjson);
             }
           }
         });
@@ -1771,5 +1839,55 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     } else {
       this.apptfirstArray = this.apptTempArray;
     }
+  }
+  getContactInfo(phonelist, emaillist) {
+    const contactinfo = [];
+    if ((phonelist && phonelist.length > 0) || (emaillist && emaillist.length > 0)) {
+      if (phonelist.length > 0) {
+        for (let i = 0; i < phonelist.length; i++) {
+          contactinfo.push(phonelist[i].instance + '-' + this.phonelist[i].label);
+        }
+      }
+      if (emaillist && emaillist.length > 0) {
+        for (let i = 0; i < emaillist.length; i++) {
+          contactinfo.push(emaillist[i].instance + '-' + emaillist[i].label);
+        }
+      }
+    }
+    return contactinfo;
+  }
+
+  showContactInfo(phonelist, emaillist) {
+    const contactinfo = [];
+    if ((phonelist && phonelist.length > 0) || (emaillist && emaillist.length > 0)) {
+      if (phonelist.length > 0) {
+        for (let i = 0; i < phonelist.length; i++) {
+          contactinfo.push(phonelist[i].instance + '-' + this.phonelist[i].label + '<br/>');
+        }
+      }
+      if (emaillist && emaillist.length > 0) {
+        for (let i = 0; i < emaillist.length; i++) {
+          contactinfo.push(emaillist[i].instance + '-' + emaillist[i].label + '<br/>');
+        }
+      }
+    }
+    this.dialog.open(VisualizeComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'displayContent': contactinfo
+      }
+    });
+  }
+  showSpec() {
+    if (this.showmoreSpec) {
+      this.showmoreSpec = false;
+    } else {
+      this.showmoreSpec = true;
+    }
+  }
+  showMoreInfo() {
+    this.showMore = !this.showMore;
   }
 }

@@ -197,47 +197,8 @@
                                                     class="glyphicon glyphicon-envelope one" style="width:20px"
                                                     [matTooltip]="email.label | capitalizeFirst"></span>{{email.instance}}
                                             </span>
-<<<<<<< HEAD
                                         </li>
                                     </ul>
-=======
-                                            {{add_to_fav_cap}}
-                                        </a>
-                                    </li>
-                                    <li *ngIf="isInFav && !userId">
-                                        <a class='like-button' (click)="doRemoveFav()">
-                                            <span class='like-icon'>
-                                                <div class='heart-animation-1'></div>
-                                                <div class='heart-animation-2'></div>
-                                            </span>
-                                            {{rem_from_fav_cap}}
-                                        </a>
-                                    </li>
-                                    <!-- <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0">
-                                        <i class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
-                                            (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
-                                    <li *ngIf="s3CouponList.length>0"><i class="fa fa-tag blue"></i><span
-                                            class="icon-jal-coupon pointer-cursor"
-                                            (click)="openCoupons()">{{jaldee_coupon}}</span></li> -->
-
-                                    <!-- <li *ngIf="userType !== 'provider'"><span class="icon-history"
-                                            (click)="redirectToHistory()">{{history_cap}}</span>
-                                    </li> -->
-
-
-                                    <!-- <li *ngIf="!isInFav && !userId"><span class="fav icon-favourite"
-                                            (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
-                                    <li *ngIf="isInFav && !userId"><span class="icon-favourite-filled"
-                                            (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li> -->
-                                    <li><span class="icon-message" (click)="communicateHandler()"
-                                            *ngIf="provider_bussiness_id && !userId">{{send_msgs_cap}}</span></li>
-                                </ul>
-                                <div class="socialmedia" *ngIf="socialMedialist.length>0">
-                                    <a rel="noopener" [href]="soc.value" target="_blank"
-                                        *ngFor="let soc of socialMedialist"><i
-                                            [class]="getSocialdet(soc.resource, 'iconClass')"
-                                            [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
->>>>>>> branch '1.3.0-for-Patch-Releases' of https://github.com/netvarth/calpine-ui
                                 </div>
                             </div>
                         </div>
