@@ -310,12 +310,12 @@
                         </div>
                         <!-- Step 5 Are you ready -->
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step == 5">
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign  pad-10">
                                 <h1 class="mat-dialog-title linkpagestyle serv-name-color">
                                     <span class="serv-font-size">Are you ready to Start?</span>
                                 </h1>
                             </div>
-                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 centeralign">
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12  centeralign">
                                 <h4><span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
                                     Consultation with
                                     <span
@@ -323,7 +323,7 @@
                                     <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span>
                                 </h4>
                             </div>
-                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20">
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-bt-20">
                                 <div class="example-full-width">
                                     <div class="step5-pad-wndow linkpagestyle">
                                         <div>
@@ -427,7 +427,7 @@
                         </div>
                         <!-- Step 7 Have You Completed Meeting? -->
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign" *ngIf="step == 7">
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign  pad-10">
                                 <h1 class="mat-dialog-title linkpagestyle serv-name-color">
                                     <span class="serv-font-size">Complete
                                         <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
