@@ -311,7 +311,7 @@
                         <!-- Step 5 Are you ready -->
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step == 5">
                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10">
-                                <h1 class="mat-dialog-title linkpagestyle">
+                                <h1 class="mat-dialog-title linkpagestyle serv-name-color">
                                     <span class="serv-font-size">Are you ready to Start?</span>
                                 </h1>
                             </div>
@@ -389,9 +389,9 @@
                                             </span></b>
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
-                                            <button (click)="reminder('step6')" class="btn-primary-n tele-btn">
+                                            <button (click)="selectHeadsup('step6')" class="btn-primary-n tele-btn">
                                                 <i class="fa fa-bell fa-blk" aria-hidden="true"></i>
-                                                <a class="tspace">Send Reminder</a>
+                                                <a class="tspace">Send Message</a>
                                             </button>
                                             <button (click)="meetingDetails('step6')" class="btn-primary-n tele-btn">
                                                 <i class="fa fa-eye fa-blk" aria-hidden="true"></i>
