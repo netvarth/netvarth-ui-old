@@ -62,6 +62,9 @@ export class CommSettingsComponent implements OnInit {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);
     }
+    redirecToHelp() {
+        this.router.navigate(['/provider/' + this.domain + '/comm']);
+    }
     handle_virtualCallingModeStatus(event) {
         const is_VirtualCallingMode = (event.checked) ? 'Enable' : 'Disable';
         this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
@@ -69,7 +72,7 @@ export class CommSettingsComponent implements OnInit {
                 () => {
                     this.shared_functions.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getGlobalSettingsStatus();
-                },
+                }, 
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getGlobalSettingsStatus();
