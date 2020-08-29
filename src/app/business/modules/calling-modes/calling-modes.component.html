@@ -1,7 +1,7 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToPreviousPage()">
-                <span class="fa fa-chevron-left">&nbsp;Dashboard</span>
+                <span class="fa fa-chevron-left">&nbsp;Back</span>
             </button> &nbsp;Teleservice
             <!--  -->
         </h5>
@@ -244,8 +244,8 @@
                                         <button type="button" mat-button [disabled]="msg_to_user ===''"
                                             class="cs-btn bt1" (click)="sendMessage()">Send {{isPrevStep? 'Message' : 'Reminder'}}
                                         </button>
-                                        <button type="button" class="cs-btn bt2 travelmodeEdit"
-                                            (click)="back()">Cancel</button>
+                                        <!-- <button type="button" class="cs-btn bt2 travelmodeEdit"
+                                            (click)="back()">Cancel</button> -->
                                     </div>
                                 </div>
 
@@ -322,8 +322,8 @@
                                             style="display: inline-flex;">
                                             <button *ngIf="user_type === 'user'" type="button" mat-button [disabled]="msg_to_user ===''"
                                                 class="cs-btn bt1" (click)="sendMessage()">Send</button>
-                                            <button type="button" class="cs-btn bt2 travelmodeEdit"
-                                                (click)="back()">Cancel</button>
+                                            <!-- <button type="button" class="cs-btn bt2 travelmodeEdit"
+                                                (click)="back()">Cancel</button> -->
                                         </div>
                                     </div>
                                 </div>
@@ -578,8 +578,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-30">
-                                    <button type="button" class="cs-btn bt2 travelmodeEdit"
-                                        (click)="backtoProgresPage()">Back</button>
+                                    <!-- <button type="button" class="cs-btn bt2 travelmodeEdit"
+                                        (click)="backtoProgresPage()">Back</button> -->
                                 </div>
                             </div>
                         </div>

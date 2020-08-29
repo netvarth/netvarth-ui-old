@@ -79,6 +79,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     user_type = 'me';
     usrSelected = 'me';
     isPrevStep = false;
+    serviceProgress = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -483,6 +484,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.step = 5;
     }
     amReady() {
+        this.serviceProgress = false;
         if (this.waiting_type === 'checkin') {
             if (this.data.waitlistStatus !== 'started') {
                 this.changeWaitlistStatus(this.data, 'STARTED');
@@ -498,6 +500,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             }
             this.apptTeleserviceJoinLink();
         }
+        this.serviceProgress = true;
         this.step = 6;
     }
     copyInfo() {
@@ -565,15 +568,15 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.step = 7;
     }
     redirecToPreviousPage() {
-        this._location.back();
-        // if (this.step === 1) {
-        //     this._location.back();
-        // } else if (this.step === 2 || this.step === 4 || this.step === 5 || this.step === 6) {
-        //     this.step = 1;
-        // } else if (this.step === 7 || this.step === 8) {
-        //     this.step = 6;
-        // }
-        // console.log(this.isPrevStep);
+       // this._location.back();
+         if (this.step === 1) {
+            this._location.back();
+        } else if (((this.step === 2 || this.step === 4 || this.step === 8) && !this.serviceProgress) || this.step === 6 || this.step === 5) {
+            this.serviceProgress = false;
+            this.step = 1;
+        } else if (this.step === 7 || ((this.step === 2 || this.step === 4 || this.step === 8) && this.serviceProgress)) {
+            this.step = 6;
+        }
     }
     backtoProgresPage() {
         console.log(this.isPrevStep);
