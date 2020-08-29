@@ -804,11 +804,11 @@
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor" (click)="showCallingModes(checkin, 'normalStart')"
+                        <!-- <a class="statusText btn-play pointer-cursor" (click)="showCallingModes(checkin, 'normalStart')"
                           *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type==1 && checkin.virtualService"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
-                        </a>
+                        </a> -->
                         <a class="statusText btn-play pointer-cursor"
                           *ngIf="time_type==1 && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
@@ -827,7 +827,7 @@
                           <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
                           <span
                             [ngClass]="{'dash': (!small_device_display && getVirtualMode(checkin.virtualService) === 'GoogleMeet' || getVirtualMode(checkin.virtualService) === 'Zoom')?true:false}"
-                            *ngIf="!small_device_display">Teleservice</span>
+                            *ngIf="!small_device_display">Start</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('DONE', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
