@@ -517,6 +517,18 @@
                                 <td class="title td-two">
                                   <div class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3"
                                     *ngIf="servicesCount>1">{{appt.service.name}}
+                                    <i class="fa meet-icon"
+                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
+                                  <i class="fa zoom-icon"
+                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Zoom'"></i>
+                                  <i class="fa fa-phone"
+                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Phone'"></i>
+                                  <i class="fa fa-whatsapp whtsap-ic"
+                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
                                   </div>
                                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                     <span class="checkin-label mgn-rt-10"
@@ -993,7 +1005,20 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{appt.service.name}}</div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{appt.service.name}}
+                          <i class="fa meet-icon"
+                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
+                        <i class="fa zoom-icon"
+                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Zoom'"></i>
+                        <i class="fa fa-phone"
+                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Phone'"></i>
+                        <i class="fa fa-whatsapp whtsap-ic"
+                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                        </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="checkin-label mgn-rt-10"
                             *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
