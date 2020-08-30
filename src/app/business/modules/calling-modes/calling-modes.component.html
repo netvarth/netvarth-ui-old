@@ -89,12 +89,11 @@
                                 <div
                                     [ngClass]="{'dv-launch-video-serv' : (servDetails?.virtualServiceType === 'videoService'), 'dv-launch-aud-serv' : (servDetails?.virtualServiceType === 'audioService')}">
                                     <div *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')">
-                                        <button type="button" class="cs-btn bt1 btn-grn" (click)="asktoLaunch()">
+                                        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="asktoLaunch()">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
                                             <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
                                             <b>
-                                                Start
-                                                <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span> Call
+                                                Start {{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}} Call
                                                 <!-- Call with
                                                 <span
                                                     *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
@@ -107,15 +106,12 @@
 
                                     <div
                                         *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && !is_web">
-                                        <button type="button" class="cs-btn bt1 btn-grn" (click)="asktoLaunch()">
+                                        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="asktoLaunch()">
 
                                             <i *ngIf="callingModes === 'WhatsApp'"
                                                 class="fa fa-whatsapp fa-lg whtsap-ic fnt-lrge"></i>
                                             <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile fa-lg fnt-fon"></i>
-                                            <b>
-                                                &nbsp;Start
-                                                <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
-                                                Call
+                                            <b> &nbsp;Start {{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}} Call
                                                 <!-- <span
                                                     *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
                                                 <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span> -->
@@ -166,7 +162,7 @@
                                         </mat-option>
                                     </mat-select>
                                 </div>
-                                <div class="form-group mgn-bt-10">
+                                <div class="form-group mgn-bt-10 reminder">
                                     <div id="reminderData">
                                         <textarea class="tele_srv_txtarea" matInput placeholder=""
                                             [(ngModel)]="msg_to_user" (ngModelChange)="dataChanged($event)">
@@ -203,7 +199,7 @@
                                 </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
                                     style="display: inline-flex;">
-                                    <button type="button" mat-button [disabled]="msg_to_user ===''" class="cs-btn bt1"
+                                    <button type="button" mat-button [disabled]="msg_to_user ===''" class="cs-btn bt1 txt-trans-none"
                                         (click)="sendMessage()">Send
                                         {{isPrevStep? 'Message' : 'Reminder'}}
                                     </button>
@@ -215,11 +211,11 @@
                         </div>
                         
                         <!-- Step 4 Meeting Details -->
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step == 4">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding meetingdetails" *ngIf="step == 4">
                             <!-- For Customer -->
                             <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 mgn-bt-20 no-padding">
                                 <div
-                                    class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon mgn-bt-20  pad-10 centeralign no-padding">
+                                    class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon  pad-10 centeralign no-padding">
                                     <h1 class="mat-dialog-title linkpagestyle serv-name-color">
                                         <span class="serv-font-size">
                                             View Meeting Details for {{customer_label | capitalizeFirst}}
@@ -272,7 +268,7 @@
                             <!-- For Me -->
                             <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 mgn-bt-20 no-padding">
                                 <div
-                                    class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon mgn-bt-20 pad-10 centeralign no-padding">
+                                    class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon pad-10 centeralign no-padding">
                                     <h1 class="mat-dialog-title linkpagestyle serv-name-color">
                                         <span class="serv-font-size">
                                             View Meeting Details for Me
@@ -310,12 +306,12 @@
                         </div>
                         <!-- Step 5 Are you ready -->
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step == 5">
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10">
-                                <h1 class="mat-dialog-title linkpagestyle">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign  pad-10">
+                                <h1 class="mat-dialog-title linkpagestyle serv-name-color">
                                     <span class="serv-font-size">Are you ready to Start?</span>
                                 </h1>
                             </div>
-                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 centeralign">
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12  centeralign">
                                 <h4><span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
                                     Consultation with
                                     <span
@@ -323,7 +319,7 @@
                                     <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span>
                                 </h4>
                             </div>
-                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20">
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-bt-20">
                                 <div class="example-full-width">
                                     <div class="step5-pad-wndow linkpagestyle">
                                         <div>
@@ -389,9 +385,9 @@
                                             </span></b>
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
-                                            <button (click)="reminder('step6')" class="btn-primary-n tele-btn">
+                                            <button (click)="selectHeadsup('step6')" class="btn-primary-n tele-btn">
                                                 <i class="fa fa-bell fa-blk" aria-hidden="true"></i>
-                                                <a class="tspace">Send Reminder</a>
+                                                <a class="tspace">Send Message</a>
                                             </button>
                                             <button (click)="meetingDetails('step6')" class="btn-primary-n tele-btn">
                                                 <i class="fa fa-eye fa-blk" aria-hidden="true"></i>
@@ -427,7 +423,7 @@
                         </div>
                         <!-- Step 7 Have You Completed Meeting? -->
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign" *ngIf="step == 7">
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign  pad-10">
                                 <h1 class="mat-dialog-title linkpagestyle serv-name-color">
                                     <span class="serv-font-size">Complete
                                         <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}

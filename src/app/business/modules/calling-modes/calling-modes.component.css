@@ -57,6 +57,12 @@ textarea {
 .serv-name-color {
     color: rgb(60 141 188);
 }
+.txt-trans-none{
+    text-transform: none !important;
+}
+.teleservicePopup .meetingdetails .tele_srv_txtarea {
+    height: 180px !important;
+}  
 @media only screen and (max-width: 769px) {
     .mgn-bt-auto {
         margin-bottom: 0px !important;
