@@ -398,25 +398,25 @@
                             </div>
                             <!-- done and not-done -->
                             <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20">
-                                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                                    <div><b>I am done
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                                    <!-- <div><b>I am done
                                             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                        </b></div>
-                                    <div><button (click)="endmeeting()" class="btn-primary-n tele-btn txt-trans-none">End
-                                            Meeting</button></div>
+                                        </b></div> -->
+                                    <div><button (click)="endmeeting()" class="cs-btn bt1  btn-red txt-trans-none">End
+                                            Meeting  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></button></div>
                                 </div>
-                                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                                    <div><b>I am not done
-                                            <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-                                        </b></div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                                    <!-- <div><b>I am not done
+
+                                        </b></div> -->
                                     <div><a *ngIf="(callingModes !== 'Phone')" target="_blank" [href]="starting_url">
-                                            <button class="btn-primary-n tele-btn txt-trans-none">Relaunch
-                                                Meeting</button>
+                                            <button class="cs-btn bt1 btn-blue  txt-trans-none">Relaunch
+                                                Meeting <i class="fa fa-thumbs-o-down" aria-hidden="true"></i> </button>
                                         </a>
                                         <a *ngIf="(callingModes === 'Phone')" target="_blank"
                                             [href]="'tel:' + starting_url">
-                                            <button class="btn-primary-n tele-btn txt-trans-none">Relaunch
-                                                Meeting</button>
+                                            <button class="cs-btn bt1 btn-blue txt-trans-none">Relaunch
+                                                Meeting  <i class="fa fa-thumbs-o-down" aria-hidden="true"></i></button>
                                         </a></div>
                                 </div>
                             </div>
