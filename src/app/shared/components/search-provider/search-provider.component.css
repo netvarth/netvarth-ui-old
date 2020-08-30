@@ -136,4 +136,41 @@
   }
  
   
-  
+ .card .srlst.details .top-sect .tp-l {
+    padding:5px !important
+  }
+  .content .c-outer .c-body .srlst .card .top-sect .tp-l .tp1 .pro-img img {
+    width: 130px !important;
+    height: 130px !important;
+  }
+
+  .bus-page .c-outer .c-body .srlst .card .top-sect .tp-l .tp1 .pro-img {
+    width: 130px !important;
+    height: 130px !important;
+  }
+  .bus-page .c-outer .c-body .srlst .top-sect .tp-l .tp1 .pro-img {
+    width: 130px !important;
+    height: 130px !important;
+  }
+
+  ul.bus-actions li {
+    list-style: none !important;
+  }
+  .like-btn{
+    border: 1px solid #5f75bc;
+    border-radius: 40px;
+    padding: .45rem .75rem;
+    font-weight: 600;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    display: -webkit-box;
+    display: flex;
+    font-size: 0.9rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+

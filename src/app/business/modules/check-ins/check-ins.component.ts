@@ -1129,6 +1129,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getFutureWL() {
     this.resetCheckList();
     this.loading = true;
+    this.futureAppointments = [];
     if (this.filter.futurecheckin_date === null) {
       this.getTomorrowDate();
     }
