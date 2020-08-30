@@ -71,11 +71,11 @@
                                                 </span></b>
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
-                                                <button (click)="reminder()" class="btn-primary-n tele-btn">
+                                                <button (click)="reminder()" class="btn-primary-n tele-btn txt-trans-none">
                                                     <i class="fa fa-bell fa-blk" aria-hidden="true"></i>
                                                     <a class="tspace">Send Reminder</a>
                                                 </button>
-                                                <button (click)="meetingDetails()" class="btn-primary-n tele-btn">
+                                                <button (click)="meetingDetails()" class="btn-primary-n tele-btn txt-trans-none">
                                                     <i class="fa fa-eye fa-blk" aria-hidden="true"></i>
                                                     <a class="tspace">Meeting Details</a>
                                                 </button>
@@ -135,14 +135,14 @@
                                         </div>
                                     </div> -->
 
-                                <button type="button" (click)="endmeeting()" class="cs-btn bt1 btn-red">End
+                                <button type="button" (click)="endmeeting()" class="cs-btn bt1 btn-red txt-trans-none">End
                                     meeting</button>
                                 <!-- <button type="button" class="cs-btn bt1 btn-grn"
                                     (click)="selectCompleted()">Go back to dashboard</button> -->
                             </div>
 
 
-                            
+
                         <!-- Step 2 Reminder -->
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step === 2">
                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10">
@@ -209,7 +209,7 @@
                             </div>
 
                         </div>
-                        
+
                         <!-- Step 4 Meeting Details -->
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding meetingdetails" *ngIf="step == 4">
                             <!-- For Customer -->
@@ -261,7 +261,7 @@
                                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
                                         style="display: inline-flex;">
                                         <button type="button" mat-button [disabled]="msg_to_user ===''"
-                                            class="cs-btn bt1" (click)="sendMessage()">Send</button>
+                                            class="cs-btn bt1 txt-trans-none" (click)="sendMessage()">Send</button>
                                     </div>
                                 </div>
                             </div>
@@ -333,15 +333,15 @@
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12  mgn-up-20 mgn-bt-30 no-padding  centeralign">
                                 <a *ngIf="(callingModes !== 'Phone')" target="_blank" [href]="starting_url">
-                                    <button type="button" class="cs-btn bt1 btn-grn" (click)="amReady()">Yes I
+                                    <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="amReady()">Yes I
                                         am ready</button>
                                 </a>
                                 <a *ngIf="(callingModes === 'Phone')" target="_blank" [href]="'tel:' + starting_url">
-                                    <button type="button" class="cs-btn bt1 btn-grn" (click)="amReady()">Yes I
+                                    <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="amReady()">Yes I
                                         am ready</button>
                                 </a>
                                 &nbsp;&nbsp;&nbsp;
-                                <button (click)="amNotReady()" type="button" class="cs-btn bt1 btn-red">No I am
+                                <button (click)="amNotReady()" type="button" class="cs-btn bt1 btn-red txt-trans-none">No I am
                                     not ready</button>
                             </div>
                         </div>
@@ -385,11 +385,11 @@
                                             </span></b>
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
-                                            <button (click)="selectHeadsup('step6')" class="btn-primary-n tele-btn">
+                                            <button (click)="selectHeadsup('step6')" class="btn-primary-n tele-btn txt-trans-none">
                                                 <i class="fa fa-bell fa-blk" aria-hidden="true"></i>
                                                 <a class="tspace">Send Message</a>
                                             </button>
-                                            <button (click)="meetingDetails('step6')" class="btn-primary-n tele-btn">
+                                            <button (click)="meetingDetails('step6')" class="btn-primary-n tele-btn txt-trans-none">
                                                 <i class="fa fa-eye fa-blk" aria-hidden="true"></i>
                                                 <a class="tspace">Meeting Details</a>
                                             </button>
@@ -402,7 +402,7 @@
                                     <div><b>I am done
                                             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                                         </b></div>
-                                    <div><button (click)="endmeeting()" class="btn-primary-n tele-btn">End
+                                    <div><button (click)="endmeeting()" class="btn-primary-n tele-btn txt-trans-none">End
                                             Meeting</button></div>
                                 </div>
                                 <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
@@ -410,12 +410,12 @@
                                             <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
                                         </b></div>
                                     <div><a *ngIf="(callingModes !== 'Phone')" target="_blank" [href]="starting_url">
-                                            <button class="btn-primary-n tele-btn">Relaunch
+                                            <button class="btn-primary-n tele-btn txt-trans-none">Relaunch
                                                 Meeting</button>
                                         </a>
                                         <a *ngIf="(callingModes === 'Phone')" target="_blank"
                                             [href]="'tel:' + starting_url">
-                                            <button class="btn-primary-n tele-btn">Relaunch
+                                            <button class="btn-primary-n tele-btn txt-trans-none">Relaunch
                                                 Meeting</button>
                                         </a></div>
                                 </div>
@@ -452,12 +452,12 @@
                                 </span>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-50 mgn-bt-20">
-                                <button type="button" class="cs-btn bt1 btn-grn"
+                                <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
                                     (click)="selectCompleted()">Yes</button>&nbsp;&nbsp;&nbsp;
                                 <button *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')"
-                                    type="button" (click)="makeCompleted()" class="cs-btn bt1 btn-red">No</button>
+                                    type="button" (click)="makeCompleted()" class="cs-btn bt1 btn-red txt-trans-none">No</button>
                                 <button *ngIf="(callingModes === 'WhatsApp') || (callingModes === 'Phone')"
-                                    type="button" (click)="gotoUnsuported()" class="cs-btn bt1 btn-red">No</button>
+                                    type="button" (click)="gotoUnsuported()" class="cs-btn bt1 btn-red txt-trans-none">No</button>
                             </div>
                         </div>
 
