@@ -324,22 +324,28 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         if (this.waiting_type === 'checkin') {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
-                    if (action === 'DONE') {
-                        this.shared_functions.openSnackBar('Meeting has been ended');
-                        this.router.navigate(['provider', 'check-ins']);
-                    } else {
-                        this.getProviderWaitlstById();
+                    console.log(result);
+                    if (result) {
+                        if (action === 'DONE') {
+                            this.shared_functions.openSnackBar('Meeting has been ended');
+                            this.router.navigate(['provider', 'check-ins']);
+                        } else {
+                            this.getProviderWaitlstById();
+                        }
                     }
                 }
                 );
         } else {
             this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
-                    if (action === 'Completed') {
-                        this.shared_functions.openSnackBar('Meeting has been ended');
-                        this.router.navigate(['provider', 'appointments']);
-                    } else {
-                        this.getProviderApptById();
+                    console.log(result);
+                    if (result) {
+                        if (action === 'Completed') {
+                            this.shared_functions.openSnackBar('Meeting has been ended');
+                            this.router.navigate(['provider', 'appointments']);
+                        } else {
+                            this.getProviderApptById();
+                        }
                     }
                 }
                 );

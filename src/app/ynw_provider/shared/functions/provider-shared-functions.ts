@@ -306,8 +306,8 @@ export class ProviderSharedFuctions {
     return new Promise((resolve, reject) => {
       ob.provider_services.changeProviderApptStatus(waitlist.uid, action, post_data)
         .subscribe(
-          () => {
-            resolve('changeWaitlistStatusApi');
+          (data) => {
+            resolve(data);
             let status_msg = '';
             switch (action) {
               case 'Arrived': status_msg = 'arrived'; break;
@@ -337,8 +337,8 @@ export class ProviderSharedFuctions {
     return new Promise((resolve, reject) => {
       ob.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action, post_data)
         .subscribe(
-          () => {
-            resolve('changeWaitlistStatusApi');
+          (data) => {
+            resolve(data);
             let status_msg = '';
             switch (action) {
               case 'REPORT': status_msg = '[arrived]'; break;
