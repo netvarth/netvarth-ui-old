@@ -199,6 +199,7 @@ export class ProviderbWizardComponent implements OnInit {
     'personalFitness': 'https://forms.gle/irMZHtfQ9fmpetjW9',
     'beautyCare': 'https://forms.gle/EMU8C1iig7EuHSnp9'
   };
+  expressSignupClicked = false;
   constructor(
     private fb: FormBuilder,
     public shared_functions: SharedFunctions,
@@ -1475,5 +1476,16 @@ export class ProviderbWizardComponent implements OnInit {
   }
   expressSignup() {
     window.open(this.subDomainLinks[this.bProfile.serviceSubSector.subDomain], '_blank');
+    this.expressSignupClicked = true;
+  }
+  providerLogout() {
+    this.shared_functions.doLogout()
+      .then(
+        () => {
+          this.routerobj.navigate(['/home']);
+        },
+        () => {
+        }
+      );
   }
 }
