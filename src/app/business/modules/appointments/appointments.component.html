@@ -616,7 +616,10 @@
                                     <i class="fa fa-whatsapp whtsap-ic"
                                       [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                                       *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
-                                    <span *ngIf="!small_device_display">Start</span>
+                                    <span *ngIf="!small_device_display">
+                                      <!-- Start -->
+                                      {{appt.apptStatus === 'Started' ? 'Resume': 'Start'}}
+                                    </span>
                                   </a>
                                   <a class="btn-play pointer-cursor " *ngIf="appt.apptStatus === 'Started'"
                                     (click)="changeWaitlistStatus('Completed',appt)" [matTooltipClass]="tooltipcls"
@@ -1107,7 +1110,10 @@
                             *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
                           <span
                             [ngClass]="{'dash': (!small_device_display && getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
-                            *ngIf="!small_device_display">Start</span>
+                            *ngIf="!small_device_display">
+                            <!-- Start -->
+                            {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                          </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
