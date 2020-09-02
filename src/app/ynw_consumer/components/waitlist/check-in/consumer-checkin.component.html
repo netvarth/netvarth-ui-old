@@ -37,9 +37,9 @@
                                                     placeholder="Contact number" class=" emailPrepay"
                                                     [(ngModel)]="selected_phone" />
                                                 <span (click)="addPhone()"
-                                                    style="color: #00aef2; padding-left:5px">Ok</span>
+                                                    style="color: #00aef2; padding-left:5px;cursor: pointer;"><i class="fa fa-check" aria-hidden="true"></i></span>
                                                     <span (click)="cancelPhone()"
-                                                    style="color: black; padding-left:5px">Cancel</span>
+                                                    style="color: black; padding-left:5px;cursor: pointer;"><i class="fa fa-times" aria-hidden="true"></i></span>
                                                 <app-field-error-display [displayError]="true"
                                                     *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
                                                 </app-field-error-display>
@@ -255,7 +255,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <ng-container *ngIf="queuejson.length > 0">
+                                    <!-- <ng-container *ngIf="queuejson.length > 0">
                                         <div class="col-md-12 form-group queue-outer mgn-up-20"
                                             *ngIf="board_count > 0 && availableSlots.length>0">
                                             <div class="ttle mgn-bt-10">Select Appointment Time</div>
@@ -268,12 +268,15 @@
                                         <div class="clearfix"></div>
                                         <app-common-innerloading-spinner *ngIf="api_loading">
                                         </app-common-innerloading-spinner>
-                                    </ng-container>
+                                    </ng-container> -->
                                     <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
                                         <span class='no-queue-available'
                                             *ngIf="checkinLabel==='Check-In'">Check-in{{not_accepted_for_this_date}}</span>
                                         <span class='no-queue-available'
                                             *ngIf="checkinLabel!=='Check-In'">{{checkinLabel}}{{not_accepted_for_this_date}}</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="queuejson.length > 0 && servicesjson.length == 0">
+                                        <span class='no-queue-available'>{{no_services_avail_cap}}</span>
                                     </ng-container>
                                 </div>
                             </ng-container>
@@ -319,7 +322,7 @@
                         </ng-container>
                         <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
 
-                        <ng-container *ngIf="this.checkinLabel && queuejson.length > 0">
+                        <ng-container *ngIf="this.checkinLabel && queuejson.length > 0 && servicesjson.length > 0">
                             <div class="waitlist-action mgn-bt-20 mgn-up-10"> <button mat-button class="cs-btn bt1"
                                     [class.confirmbtn]="step == 1" (click)="handleCheckinClicked()"
                                     [disabled]="api_loading">{{showCheckinButtonCaption()}}</button>
