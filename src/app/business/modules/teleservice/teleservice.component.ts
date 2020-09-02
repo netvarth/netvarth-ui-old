@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../app.component';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { Location } from '@angular/common';
 
 
@@ -42,9 +39,8 @@ export class TeleServiceComponent implements OnInit {
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public shared_services: SharedServices,
-        private provider_shared_functions: ProviderSharedFuctions,
         private _location: Location,
-        private router: Router
+
     ) {
         this.activateroute.queryParams.subscribe(params => {
             this.waiting_id = params.waiting_id;
