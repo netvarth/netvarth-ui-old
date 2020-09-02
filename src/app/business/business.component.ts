@@ -162,13 +162,10 @@ export class BusinessComponent implements OnInit {
     const post_data = {
       'basicInfo': {
         'id': this.profile.basicInfo.id,
-        'firstName': this.profile.basicInfo.firstName,
-        'lastName': this.profile.basicInfo.lastName,
         'email': email
       }
     };
-    const passtyp = 'provider/profile';
-    this.shared_service.updateProfile(post_data, passtyp)
+    this.provider_services.updateAccountEmail(post_data)
       .subscribe(
         () => {
         });

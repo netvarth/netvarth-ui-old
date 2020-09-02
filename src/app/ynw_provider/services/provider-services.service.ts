@@ -1501,4 +1501,8 @@ export class ProviderServices {
       const url = 'provider/contact';
       return this.servicemeta.httpPut(url, data);
    }
+   updateAccountEmail(data) {
+      const url = 'provider/email/notification';
+      return this.servicemeta.httpPut(url, data);
+   }
 }
