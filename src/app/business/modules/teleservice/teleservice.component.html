@@ -26,6 +26,7 @@
                                                 class="fa fa-whatsapp fa-lg whtsap-ic"></i>
                                             <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile"></i>
                                             &nbsp;{{serv_name}}
+                                            <span *ngIf="servStarted">(Service is in progress)</span>
                                         </h5>
                                     </div>
                                 </div>
@@ -82,7 +83,7 @@
                             </div>
                             <!-- Start consultation for gmeet/zoom/wtsap/phone-->
                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10"
-                                *ngIf="step === 1">
+                                *ngIf="(step === 1 && !servStarted)">
 
                                 <div
                                     [ngClass]="{'dv-launch-video-serv' : (servDetails?.virtualServiceType === 'videoService'), 'dv-launch-aud-serv' : (servDetails?.virtualServiceType === 'audioService')}">
@@ -118,12 +119,30 @@
                                 </div>
                             </div>
 
-                            <!-- Done and Not done -->
+                            <!-- End Meeting for whatsapp/phone if opened in web -->
                             <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10"
                                 *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && (is_web && step === 1)">
                                 <button type="button" (click)="endmeeting()"
                                     class="cs-btn bt1 btn-red txt-trans-none">End
                                     meeting</button>
+                            </div>
+                            <!-- End Meeting and relaunch for zoom/gmeet & whtsap/phone(if opened in mob or tab) -->
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10 disp-flex"
+                                *ngIf="servStarted">
+                                <button type="button" (click)="endmeeting()"
+                                    class="cs-btn bt1 btn-red txt-trans-none">End
+                                    meeting</button> &nbsp;&nbsp;&nbsp;
+                                    <a *ngIf="(callingModes !== 'Phone')" target="_blank" [href]="starting_url">
+                                        <button class="cs-btn bt1 btn-blue  txt-trans-none">Relaunch
+                                            Meeting 
+                                         </button>
+                                    </a>
+                                    <a *ngIf="(callingModes === 'Phone')" target="_blank"
+                                        [href]="'tel:' + starting_url">
+                                        <button class="cs-btn bt1 btn-blue txt-trans-none">Relaunch
+                                            Meeting 
+                                            </button>
+                                    </a>
                             </div>
                         </div>
                     </div>

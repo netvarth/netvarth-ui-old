@@ -4,8 +4,8 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Location } from '@angular/common';
-
-
+import { MatDialog } from '@angular/material';
+import { TeleServiceConfirmBoxComponent } from './teleservice-confirm-box/teleservice-confirm-box.component';
 
 @Component({
     selector: 'app-teleservice',
@@ -35,12 +35,18 @@ export class TeleServiceComponent implements OnInit {
     phNo: any;
     api_loading = false;
     step = 1;
+    startTeledialogRef: any;
+    consumer_lname: any;
+    starting_url: string;
+    meetlink_data;
+    servStarted = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public shared_services: SharedServices,
         private _location: Location,
-
+       // private router: Router,
+        private dialog: MatDialog
     ) {
         this.activateroute.queryParams.subscribe(params => {
             this.waiting_id = params.waiting_id;
@@ -103,10 +109,10 @@ export class TeleServiceComponent implements OnInit {
                     if (this.data.waitlistingFor[0].email) {
                         this.emailPresent = true;
                     }
-                    //   this.getMeetingDetails();
+                    this.getMeetingDetails();
                     if (this.waiting_type === 'checkin') {
                         this.consumer_fname = this.data.waitlistingFor[0].firstName;
-                        this.consumer_fname = this.data.waitlistingFor[0].lastName;
+                        this.consumer_lname = this.data.waitlistingFor[0].lastName;
                         if (this.data.waitlistingFor[0].phoneNo) {
                             this.phNo = this.data.waitlistingFor[0].phoneNo;
                         }
@@ -126,13 +132,54 @@ export class TeleServiceComponent implements OnInit {
                     if (this.data.providerConsumer.email) {
                         this.emailPresent = true;
                     }
-                    //  this.getMeetingDetails();
+                    this.getMeetingDetails();
                     this.consumer_fname = this.data.appmtFor[0].userName;
                 });
     }
     redirecToPreviousPage() {
         if (this.step === 1) {
             this._location.back();
+        }
+    }
+    asktoLaunch() {
+        this.startTeledialogRef = this.dialog.open(TeleServiceConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': 'Are you ready to start ?',
+                serviceDetail : this.servDetails,
+                consumerName : this.consumer_fname,
+                custmerLabel : this.customer_label,
+                teleHealth : 'teleservice',
+                meetingLink : this.starting_url,
+                app : this.callingModes
+            }
+          });
+          this.startTeledialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                if (result === 'started') {
+                    this.servStarted = true;
+                }
+            }
+          });
+    }
+
+    getMeetingDetails() {
+        this.starting_url = '';
+        if (this.waiting_type === 'checkin') {
+            this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.waiting_id).
+                subscribe((meetingdata) => {
+                    this.meetlink_data = meetingdata;
+                    this.starting_url = this.meetlink_data.startingUl;
+                });
+        } else {
+            this.shared_services.getApptMeetingDetails(this.callingModes, this.waiting_id).
+                subscribe((meetingdata) => {
+                    this.meetlink_data = meetingdata;
+                    this.starting_url = this.meetlink_data.startingUl;
+
+                });
         }
     }
 }

@@ -68,3 +68,6 @@ textarea {
         margin-bottom: 0px !important;
     }
   }
+.disp-flex {
+    display: flex;
+}  

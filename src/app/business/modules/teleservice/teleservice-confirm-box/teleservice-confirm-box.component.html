@@ -1,0 +1,30 @@
+<h1 mat-dialog-title class="centeralign">{{data.serviceDetail.name}}</h1>
+<div mat-dialog-content>
+  <p> {{data.message}} </p>
+
+  <!-- <div class="centeralign">
+    <h4>{{(data.serviceDetail?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}} Consultation with
+      {{data.consumerName}}
+    </h4>
+  </div>
+  <div>
+    <p>
+      Your {{data.custmerLabel}} will <b>receive an alert</b> that the
+      <b>meeting has been started </b>and will be asked to join
+    </p>
+  </div> -->
+
+</div>
+<div mat-dialog-actions class="paddingtop">
+  <a  target="_blank" [href]="data.app === 'Phone'? 'tel:' + data.meetingLink : data.meetingLink">
+    <button tabindex="-1" (click)="amReady()" class="cs-btn bt1 btn-grn txt-trans-none">Yes I am ready</button>
+  </a>
+
+  <!-- <a *ngIf="(data.app === 'Phone')" target="_blank" [href]="'tel:' + data.meetingLink">
+    <button tabindex="-1" (click)="amReady()" class="cs-btn bt1 btn-grn txt-trans-none">Yes I am ready</button>
+  </a> -->
+
+  <button tabindex="2" mat-dialog-close class="cs-btn bt1 reddelete txt-trans-none">No I am not ready</button>
+</div>
+<!-- <app-field-error-display [displayError]="true" *ngIf="showError" errorMsg="Department name is required">
+</app-field-error-display> -->
