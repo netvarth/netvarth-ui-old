@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { TeleServiceConfirmBoxComponent } from './teleservice-confirm-box/teleservice-confirm-box.component';
+import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 
 @Component({
     selector: 'app-teleservice',
@@ -45,8 +46,9 @@ export class TeleServiceComponent implements OnInit {
         public shared_functions: SharedFunctions,
         public shared_services: SharedServices,
         private _location: Location,
-       // private router: Router,
-        private dialog: MatDialog
+        private router: Router,
+        private dialog: MatDialog,
+        private provider_shared_functions: ProviderSharedFuctions,
     ) {
         this.activateroute.queryParams.subscribe(params => {
             this.waiting_id = params.waiting_id;
@@ -66,6 +68,8 @@ export class TeleServiceComponent implements OnInit {
         this.availableMsg = this.shared_functions.getProjectMesssages('IS_AVAILABLE');
         this.ph_or_tab_cap = this.shared_functions.getProjectMesssages('PHONE_OR_TAB');
         this.installed_cap = this.shared_functions.getProjectMesssages('IS_INSTALD');
+
+        // checking the device
         const isMobile = {
             Android: function () {
                 return navigator.userAgent.match(/Android/i);
@@ -95,7 +99,7 @@ export class TeleServiceComponent implements OnInit {
         }
     }
 
-
+    // For getting the details of checkin/appt data by Id
     getProviderWaitlstById() {
         this.provider_services.getProviderWaitlistDetailById(this.waiting_id)
             .subscribe(
@@ -111,6 +115,7 @@ export class TeleServiceComponent implements OnInit {
                     }
                     this.getMeetingDetails();
                     if (this.waiting_type === 'checkin') {
+                        this.chkinTeleserviceJoinLink();
                         this.consumer_fname = this.data.waitlistingFor[0].firstName;
                         this.consumer_lname = this.data.waitlistingFor[0].lastName;
                         if (this.data.waitlistingFor[0].phoneNo) {
@@ -133,38 +138,59 @@ export class TeleServiceComponent implements OnInit {
                         this.emailPresent = true;
                     }
                     this.getMeetingDetails();
+                    this.apptTeleserviceJoinLink();
                     this.consumer_fname = this.data.appmtFor[0].userName;
                 });
     }
+
+    // Back btn navigation
     redirecToPreviousPage() {
         if (this.step === 1) {
             this._location.back();
         }
     }
+
+    // Asking to start the meeting
     asktoLaunch() {
         this.startTeledialogRef = this.dialog.open(TeleServiceConfirmBoxComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                'message': 'Are you ready to start ?',
-                serviceDetail : this.servDetails,
-                consumerName : this.consumer_fname,
-                custmerLabel : this.customer_label,
-                teleHealth : 'teleservice',
-                meetingLink : this.starting_url,
-                app : this.callingModes
+                message: 'Are you ready to start ?',
+                serviceDetail: this.servDetails,
+                consumerName: this.consumer_fname,
+                custmerLabel: this.customer_label,
+                readymsg: 'teleserviceStart',
+                meetingLink: this.starting_url,
+                app: this.callingModes
             }
-          });
-          this.startTeledialogRef.afterClosed().subscribe(result => {
+        });
+        this.startTeledialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (result === 'started') {
                     this.servStarted = true;
+                    if (this.waiting_type === 'checkin') {
+                        if (this.data.waitlistStatus !== 'started') {
+                            this.changeWaitlistStatus(this.data, 'STARTED');
+                        } else if (this.data.waitlistStatus === 'started') {
+                            this.shared_functions.openSnackBar('Service already started!');
+                        }
+                        // this.chkinTeleserviceJoinLink();
+                    } else {
+                        if (this.data.apptStatus !== 'Started') {
+                            this.changeWaitlistStatus(this.data, 'Started');
+                        } else if (this.data.apptStatus === 'Started') {
+                            this.shared_functions.openSnackBar('Service already started!');
+                        }
+                        //    this.apptTeleserviceJoinLink();
+                    }
                 }
             }
-          });
+        });
     }
 
+    // For getting meeting link from rest(GET URL)
     getMeetingDetails() {
         this.starting_url = '';
         if (this.waiting_type === 'checkin') {
@@ -181,5 +207,108 @@ export class TeleServiceComponent implements OnInit {
 
                 });
         }
+    }
+
+    // changing status to start/complete
+    changeWaitlistStatus(qdata, action) {
+        qdata.disableStartbtn = true;
+        if (this.waiting_type === 'checkin') {
+            this.provider_shared_functions.changeWaitlistStatus(this, qdata, action);
+        } else {
+            this.provider_shared_functions.changeWaitlistStatus(this, qdata, action, 'appt');
+        }
+    }
+    changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+        if (this.waiting_type === 'checkin') {
+            this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
+                .then(result => {
+                    console.log(result);
+                    if (result) {
+                        if (action === 'DONE') {
+                            this.shared_functions.openSnackBar('Meeting has been ended');
+                            this.router.navigate(['provider', 'check-ins']);
+                        } else {
+                            this.getProviderWaitlstById();
+                        }
+                    }
+                }
+                );
+        } else {
+            this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data, true)
+                .then(result => {
+                    console.log(result);
+                    if (result) {
+                        if (action === 'Completed') {
+                            this.shared_functions.openSnackBar('Meeting has been ended');
+                            this.router.navigate(['provider', 'appointments']);
+                        } else {
+                            this.getProviderApptById();
+                        }
+                    }
+                }
+                );
+        }
+    }
+
+    // Asking to end the meeting
+    endmeeting() {
+        this.startTeledialogRef = this.dialog.open(TeleServiceConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                message: 'Have you completed the service?',
+                serviceDetail: this.servDetails,
+                consumerName: this.consumer_fname,
+                custmerLabel: this.customer_label,
+                endmsg: 'teleserviceEnd',
+                app: this.callingModes
+            }
+        });
+        this.startTeledialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                if (result === 'completed') {
+                    if (this.waiting_type === 'checkin') {
+                        if (this.data.waitlistStatus === 'started') {
+                            this.changeWaitlistStatus(this.data, 'DONE');
+                        } else {
+                            this.changeWaitlistStatus(this.data, 'STARTED');
+                            setTimeout(() => {
+                                this.changeWaitlistStatus(this.data, 'DONE');
+                            }, 300);
+                        }
+                        this.redirecToPreviousPage();
+                    } else {
+                        if (this.data.apptStatus === 'Started') {
+                            this.changeWaitlistStatus(this.data, 'Completed');
+                        } else {
+                            this.changeWaitlistStatus(this.data, 'Started');
+                            setTimeout(() => {
+                                this.changeWaitlistStatus(this.data, 'Completed');
+                            }, 300);
+                        }
+                        this.redirecToPreviousPage();
+                    }
+                }
+            }
+        });
+    }
+
+    // Sending rest API to consumer and provider about service starting
+    chkinTeleserviceJoinLink() {
+        const uuid_data = {
+            'mode': this.callingModes
+        };
+        this.shared_services.consumerWtlstTeleserviceWithId(uuid_data, this.waiting_id).
+            subscribe((modeData) => {
+            });
+    }
+    apptTeleserviceJoinLink() {
+        const uuid_data = {
+            'mode': this.callingModes
+        };
+        this.shared_services.consumerApptTeleserviceWithId(uuid_data, this.waiting_id).
+            subscribe((modeData) => {
+            });
     }
 }

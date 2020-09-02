@@ -19,4 +19,7 @@ export class TeleServiceConfirmBoxComponent implements OnInit {
   amReady() {
     this.dialogRef.close('started');
   }
+  endMeeting() {
+    this.dialogRef.close('completed');
+  }
 }
