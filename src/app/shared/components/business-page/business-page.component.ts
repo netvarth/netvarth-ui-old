@@ -221,6 +221,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   futureAllowed = true;
   galleryenabledArr: any = [];
   gallerydisabledArr: any = [];
+  
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
