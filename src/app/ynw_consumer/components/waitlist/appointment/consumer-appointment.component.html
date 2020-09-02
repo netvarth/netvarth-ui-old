@@ -37,9 +37,9 @@
                                                     placeholder="Contact number" class=" emailPrepay"
                                                     [(ngModel)]="selected_phone" />
                                                 <span (click)="addPhone()"
-                                                    style="color: #00aef2; padding-left:5px">Ok</span>
+                                                style="color: #00aef2; padding-left:5px;cursor: pointer;"><i class="fa fa-check" aria-hidden="true"></i></span>
                                                     <span (click)="cancelPhone()"
-                                                    style="color: black; padding-left:5px">Cancel</span>
+                                                    style="color: black; padding-left:5px;cursor: pointer;"><i class="fa fa-times" aria-hidden="true"></i></span>
                                                 <app-field-error-display [displayError]="true"
                                                     *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
                                                 </app-field-error-display>
