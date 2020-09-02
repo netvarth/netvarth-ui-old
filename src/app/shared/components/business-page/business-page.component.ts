@@ -137,6 +137,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   jdnDiscountType;
   playstore = true;
   appstore = true;
+  galleryenabledArr;
+  gallerydisabledArr;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)

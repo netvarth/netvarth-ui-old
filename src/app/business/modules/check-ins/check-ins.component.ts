@@ -2373,7 +2373,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         type: 'checkin'
       }
     };
-    this.router.navigate(['provider', 'teleservice'], navigationExtras);
+    this.router.navigate(['provider', 'telehealth'], navigationExtras);
   }
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
