@@ -4,11 +4,16 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../app.component';
+
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
+import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
+import { JoyrideService } from 'ngx-joyride';
+import { MatDialog } from '@angular/material';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-settings',
@@ -164,7 +169,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     private provider_datastorage: ProviderDataStorageService,
     private qservice: QuestionService,
     private provider_shared_functions: ProviderSharedFuctions,
-    private activated_route: ActivatedRoute
+    private activated_route: ActivatedRoute,
+    private readonly joyrideService: JoyrideService,
+    private dialog: MatDialog
   ) {
     this.activated_route.queryParams.subscribe(
       qparams => {
@@ -213,6 +220,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   additionalInfoDomainFields: any = [];
   additionalInfoSubDomainFields: any = [];
   domain_fields;
+  domain;
   domain_questions = [];
   subdomain_fields = [];
   image_list: any = [];
@@ -221,11 +229,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   normal_domainfield_show = 1;
   normal_subdomainfield_show = 1;
   field;
+  services_hint = '';
   bprofileLoaded = false;
   showIncompleteButton = true;
   ngOnInit() {
-    // this.provider_datastorage.setWeightageArray([]);
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
+    this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
+    if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
+      this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
+    }
     this.accountType = user.accountType;
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
@@ -289,6 +302,49 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.weightageValue = this.calculateWeightage(result);
 
     });
+  }
+
+  letsGetStarted() {
+    const dialogRef = this.dialog.open(ProviderStartTourComponent, {
+      width: '25%',
+      panelClass: ['popup-class', 'commonpopupmainclass']
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'startTour') {
+        this.joyrideService.startTour(
+
+          {
+            steps: ['step1@provider/settings', 'step2@provider/settings', 'step3@provider/settings', 'step4'],
+            showPrevButton: false,
+            stepDefaultPosition: 'top',
+            themeColor: '#212f23'
+          }
+          // Your steps order
+        ).subscribe(
+
+          step => {
+            /*Do something*/
+            console.log('Location', window.location.href, 'Path', window.location.pathname);
+            console.log('Next:', step);
+          },
+          error => {
+            /*handle error*/
+          },
+          () => {
+            this.routerobj.navigate(['.'], {} );
+            // this.redirecttoProfile();
+          }
+        );
+
+      } else {
+        this.routerobj.navigate(['.'], {} );
+      }
+
+
+    });
+
   }
 
   calculateWeightage(data) {

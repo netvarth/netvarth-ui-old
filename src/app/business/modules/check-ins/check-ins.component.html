@@ -740,7 +740,17 @@
                          {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{checkin.service.name}}</div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{checkin.service.name}}
+                          <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'GoogleMeet'"></i>
+                        <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'Zoom'"></i>
+                        <i class="fa fa-phone" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'Phone'"></i>
+                        <i class="fa fa-whatsapp whtsap-ic"
+                          [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
+                        </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
                           {{checkin.queue.queueStartTime + ' - ' + checkin.queue.queueEndTime}}
                         </div>
@@ -804,11 +814,11 @@
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor" (click)="showCallingModes(checkin, 'normalStart')"
+                        <!-- <a class="statusText btn-play pointer-cursor" (click)="showCallingModes(checkin, 'normalStart')"
                           *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type==1 && checkin.virtualService"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
-                        </a>
+                        </a> -->
                         <a class="statusText btn-play pointer-cursor"
                           *ngIf="time_type==1 && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
@@ -827,7 +837,10 @@
                           <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
                           <span
                             [ngClass]="{'dash': (!small_device_display && getVirtualMode(checkin.virtualService) === 'GoogleMeet' || getVirtualMode(checkin.virtualService) === 'Zoom')?true:false}"
-                            *ngIf="!small_device_display">Teleservice</span>
+                            *ngIf="!small_device_display">
+                            <!-- Start -->
+                            {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Start'}}
+                          </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('DONE', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"

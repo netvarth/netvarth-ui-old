@@ -1,14 +1,35 @@
 <section>
     <div class="col-md-12 no-padding-small">
         <!-- Step 0 -->
-        <div *ngIf="active_step==0" class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
+        <div *ngIf="active_step==0 && !loading_active" class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
             <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
-            <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;">
+            <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;"
+                *ngIf="bProfile && !subDomainLinks[bProfile.serviceSubSector.subDomain]">
                 <h1 style="font-size: xx-large;line-height: 2;">Welcome {{userdet.userName}}!</h1>
                 <p style="font-size: 1.4rem;line-height: 2;">{{frm_wiz_one_cap}}</p>
                 <!-- <p>{{frm_wiz_two_cap}}</p>
                 <p>{{frm_wiz_three_cap}}</p> -->
                 <p style="font-size: 1.4rem;">{{frm_wiz_four_cap}}</p>
+            </div>
+
+            <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;"
+                *ngIf="bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain] && !expressSignupClicked">
+                <h1 style="font-size: xx-large;line-height: 2;">Welcome to your Jaldee Business Account.</h1>
+                <p style="font-size: 1.4rem;line-height: 2;">NOW, IT'S TIME TO BUILD YOUR PROFILE.</p>
+                <p style="font-size: 1.4rem;">Don't have the time to setup your Jaldee account? Try EXPRESS SIGNUP.</p>
+                <p style="font-size: 1.4rem;">Here are some benefits</p>
+                <li class="wizard-li" style="font-size: 1.4rem;">Save your time</li>
+                <li class="wizard-li" style="font-size: 1.4rem;">Instant Account Setup</li>
+            </div>
+            <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;"
+                *ngIf="bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain] && expressSignupClicked">
+                <h1 style="font-size: xx-large;line-height: 2;">THANK YOU</h1>
+                <p style="font-size: 1.4rem;line-height: 2;">Please fill the form which has been opened in another
+                    window.</p>
+                <p style="font-size: 1.4rem;">Once you've filled the form, a Jaldee Executive will contact you soon.
+                </p>
+                <p style="font-size: 1.4rem;">You can contact the Jaldee support team anytime on this number <b>
+                        888&nbsp;012&nbsp;5000</b></p>
             </div>
             <div class="pt-btm" style="padding-top: 80px;">
                 <!-- <ul class="ico">
@@ -20,12 +41,21 @@
                     <li><span [matTooltipClass]="tooltipcls" [matTooltip]="searchTooltip" data-icon="d"></span></li>
                 </ul> -->
 
-                <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="skipMe()">{{get_start_cap}} <i
-                        class="icon icon-angle-right"></i>
+                <span class="cs-btn lg-btn"
+                    *ngIf="subDomainLinks[bProfile.serviceSubSector.subDomain] && !expressSignupClicked"
+                    (click)="expressSignup()">Express Sign up <i class="icon icon-angle-right"></i>
                 </span>
-                <!-- <p class="normal-link" *ngIf="!loading_active" (click)="skipMe()">I will explore myself. <b>
-                        Skip</b>
-                </p> -->
+                <span class="cs-btn lg-btn"
+                    *ngIf="subDomainLinks[bProfile.serviceSubSector.subDomain] && expressSignupClicked"
+                    (click)="providerLogout()">Ok, Thanks
+                </span>
+                <span class="cs-btn lg-btn" *ngIf="!subDomainLinks[bProfile.serviceSubSector.subDomain]"
+                    (click)="skipMe()">{{get_start_cap}} <i class="icon icon-angle-right"></i>
+                </span>
+                <p class="normal-link pointer-cursor underline"
+                    *ngIf="subDomainLinks[bProfile.serviceSubSector.subDomain] && !expressSignupClicked"
+                    (click)="skipMe()">I
+                    will explore myself </p>
             </div>
         </div>
         <!-- Step 1 -->

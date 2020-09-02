@@ -32,7 +32,7 @@ import { FormMessageDisplayService } from './shared/modules/form-message-display
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import 'hammerjs';
-import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angular/common';
+import { LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
@@ -56,11 +56,11 @@ import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefi
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
+import { JoyrideModule } from 'ngx-joyride';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
-
 
 @NgModule({
   declarations: [
@@ -114,7 +114,8 @@ export function init_app(globalService: GlobalService) {
     DisplayboardLayoutContentModule,
     SalesChannelModule,
     ForgotPasswordModule,
-    SetPasswwordModule
+    SetPasswwordModule,
+    JoyrideModule.forRoot()
 
   ],
   providers: [
@@ -139,13 +140,12 @@ export function init_app(globalService: GlobalService) {
     FormMessageDisplayService,
     ProviderDataStorageService,
     Title,
-    { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService, GlobalFunctions
-    ], multi: true },
+    { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: [] }
   ],

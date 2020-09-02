@@ -12,7 +12,6 @@ import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitaliz
     imports: [
         BreadCrumbModule,
         CapitalizeFirstPipeModule,
-        // MaterialModule,
         FormsModule,
         CommonModule,
         MatSlideToggleModule,

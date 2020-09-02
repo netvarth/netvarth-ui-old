@@ -196,6 +196,18 @@ export const projectConstantsLocal = {
     otherMiscellaneous: { iconClass: 'other_icon' },
 
   },
+  DOMAIN_SERVICES_HINT: {
+    healthCare: { helphint: 'In-person consultation, Video consultation, Lab services' },
+    personalCare: { helphint: 'Haircut facial, Spa treatment'},
+    foodJoints: { helphint: 'Pickup, Dine-in, Home delivery'},
+    professionalConsulting: { helphint: 'Legal consultation, Auditing' },
+    vastuAstrology: { helphint: 'Palm reading, Horoscope reading'},
+    religiousPriests: { helphint: 'Pooja, Abhisheka seva'},
+    finance: { helphint: 'Loan appeal, Account opening'},
+    veterinaryPetcare: {helphint: 'In-person consultation, Video consultation, Pet training' },
+    retailStores: { helphint: 'Pickup, Home delivery'},
+    otherMiscellaneous: { helphint: 'Add your services here'},
+  },
   SUBDOMAIN_ICONS: {
     physiciansSurgeons: { help: 'single doctor facility', iconClass: 'allopathy_doc' },
     hospital: { help: 'multiple doctors facility', iconClass: 'hospital_doc' },
@@ -247,6 +259,9 @@ export const projectConstantsLocal = {
     'all': 'Public (All can see)',
     'customersOnly': 'Customer',
     'self': 'Private (None can see)'
+  },
+  HealthcareService: {
+    'service_cap': 'Consultations and Services'
   },
   TOOLTIP_CLS: 'ynwtooltipcls',
   TOOLTIP_PRIVACYPHONE: 'Example : Cell Phone,  Mobile, Emergency, Main Line, others etc',

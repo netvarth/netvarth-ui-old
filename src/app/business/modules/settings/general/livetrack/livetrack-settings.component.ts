@@ -14,6 +14,7 @@ export class LiveTrackSettingsComponent implements OnInit {
     cust_domain_name = '';
     custs_name = '';
     customer_label = this.shared_functions.getTerminologyTerm('customer');
+    customer_label_upper = this.shared_functions.firstToUpper(this. customer_label);
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -24,7 +25,7 @@ export class LiveTrackSettingsComponent implements OnInit {
             url: '/provider/settings/general'
         },
         {
-            title: Messages.LOCATESETTINGS.replace('[customer]', this.customer_label),
+            title: Messages.LOCATESETTINGS.replace('[customer]', this. customer_label_upper),
         }
     ];
     breadcrumbs = this.breadcrumbs_init;

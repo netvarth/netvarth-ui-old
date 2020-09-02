@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { Messages } from '../../../shared/constants/project-messages';
 import { GoogleMapComponent } from '../googlemap/googlemap.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -96,7 +96,7 @@ export class ProviderbWizardComponent implements OnInit {
   foodServc_frmsentns = Messages.FOODSRVC_FORMLEVEL_CAP;
   remem_msg = Messages.REMEM_MSG_CAP;
   rupee_symbol = '₹';
-  @ViewChild('bnameId', {static: false}) bnameIdref: ElementRef;
+  @ViewChild('bnameId', { static: false }) bnameIdref: ElementRef;
   tbprof;
 
 
@@ -190,6 +190,14 @@ export class ProviderbWizardComponent implements OnInit {
   qAvailability: any = [];
   loadCompleted = false;
   duration = { hour: 0, minute: 0 };
+  subDomainLinks = {
+    'physiciansSurgeons': 'https://forms.gle/r3vEqUNpMVsc6EsB9',
+    'dentists': 'https://forms.gle/N4JrJD4ZGkneHjVBA',
+    'alternateMedicinePractitioners': 'https://forms.gle/QzRcjW5ShPHkVFfYA',
+    'personalFitness': 'https://forms.gle/irMZHtfQ9fmpetjW9',
+    'beautyCare': 'https://forms.gle/EMU8C1iig7EuHSnp9'
+  };
+  expressSignupClicked = false;
   constructor(
     private fb: FormBuilder,
     public shared_functions: SharedFunctions,
@@ -817,8 +825,8 @@ export class ProviderbWizardComponent implements OnInit {
     // } else { // if sufficient data is there, then show the bprofile
     //   this.redirecttoProfile();
     // }
-   // this.letsGetStarted();
-   this.redirecttoProfile();
+    // this.letsGetStarted();
+    this.redirecttoProfile();
   }
   resetErrors() {
     this.error_Exists = false;
@@ -1423,5 +1431,18 @@ export class ProviderbWizardComponent implements OnInit {
   handlegridCancel(obj) {
     this.showAddSection = false;
   }
+  expressSignup() {
+    window.open(this.subDomainLinks[this.bProfile.serviceSubSector.subDomain], '_blank');
+    this.expressSignupClicked = true;
+  }
+  providerLogout() {
+    this.shared_functions.doLogout()
+      .then(
+        () => {
+          this.routerobj.navigate(['/home']);
+        },
+        () => {
+        }
+      );
+  }
 }
-
