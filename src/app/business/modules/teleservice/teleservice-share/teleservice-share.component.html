@@ -38,7 +38,7 @@
 
 
   <!-- Meeting Details Section -->
-  <div mat-dialog-content *ngIf="data.meetingDetail">
+  <div mat-dialog-content class="meetingdetail" *ngIf="data.meetingDetail">
     <mat-tab-group (selectedTabChange)="tabClick($event)">
       <mat-tab label="For {{data.custmerLabel}}">
         <mat-form-field id="usr_meetingDetails">
@@ -46,7 +46,7 @@
             (ngModelChange)="dataChanged($event)">
           </textarea>
         </mat-form-field>
-        <div class="btn-primary-n custId-cursor delteTC" (click)="copyMessageInfo('usr_meetingDetails','MeetingDetails')">
+        <div class="btn-primary-n custId-cursor delteTC bx-shdw-none" (click)="copyMessageInfo('usr_meetingDetails','MeetingDetails')">
           <i class="fa fa-clone" aria-hidden="true"></i> Copy Meeting Details
         </div>
       </mat-tab>
@@ -56,7 +56,7 @@
             (ngModelChange)="dataChanged($event)">
               </textarea>
         </mat-form-field>
-        <div class="btn-primary-n custId-cursor delteTC" (click)="copyMessageInfo('mymeetDetails','MeetingDetails')">
+        <div class="btn-primary-n custId-cursor delteTC bx-shdw-none" (click)="copyMessageInfo('mymeetDetails','MeetingDetails')">
           <i class="fa fa-clone" aria-hidden="true"></i> Copy Meeting Details
         </div>
       </mat-tab>

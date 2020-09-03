@@ -10,3 +10,6 @@
 .flt-left {
   float: left;
 }
+.meetingdetail .btn-primary-n:before {
+  box-shadow: none !important;
+}
