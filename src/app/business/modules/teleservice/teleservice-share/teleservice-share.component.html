@@ -39,7 +39,7 @@
 
   <!-- Meeting Details Section -->
   <div mat-dialog-content *ngIf="data.meetingDetail">
-    <mat-tab-group>
+    <mat-tab-group (selectedTabChange)="tabClick($event)">
       <mat-tab label="For {{data.custmerLabel}}">
         <mat-form-field id="usr_meetingDetails">
           <textarea class="form-control tel_srv_txtarea" matInput placeholder="" [(ngModel)]="msg_to_user"
@@ -61,7 +61,7 @@
         </div>
       </mat-tab>
     </mat-tab-group>
-    <div class="coupon-outer mgn-up-40">
+    <div *ngIf="!providerView" class="coupon-outer">
       <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
         Mobile
       </mat-checkbox>
@@ -74,7 +74,7 @@
   </div>
 
   <!-- Actions -->
-  <div mat-dialog-actions class="paddingtop flt-left">
+  <div *ngIf="!providerView" mat-dialog-actions class="paddingtop">
     <button tabindex="-1" mat-dialog-close class="cs-btn bt2">cancel</button>
     <button tabindex="2" class="cs-btn bt1" (click)="sendMessage()">Send</button>
   </div>
