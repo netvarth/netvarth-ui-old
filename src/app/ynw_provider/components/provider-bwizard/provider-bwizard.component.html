@@ -15,9 +15,9 @@
                 <span class="cs-btn lg-btn" (click)="skipMe()">{{get_start_cap}} <i class="icon icon-angle-right"></i>
                 </span> </div>
         </div>
-        <div *ngIf="active_step==0 && !loading_active && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
+        <div *ngIf="active_step==0 && !loading_active && !expressSignupClicked && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
             class="express-signup step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto no-padding">
-            <h2>Welcome to Jaldee Business</h2>
+            <h2 style="margin: 0px !important;">Welcome to Jaldee Business</h2>
             <div class="col-md-12">
                 <h3 class="mgn-up-10 txt-align-center"> Assisted Account Setup </h3>
                 <div>
@@ -49,15 +49,21 @@
                         <button class="mgn-bt-10 mat-button" (click)="providerLogout()">
                             Ok, thanks
                         </button> </div>
-                    <div class="txt-align-center mgn-up-10" *ngIf="!expressSignupClicked">
-                        <span class="no-thanks"> No, thanks </span>
-                        <a class="underline" (click)="skipMe()"> I'll explore myself </a>
-                    </div>
-                    <!-- <div class="mgn-up-50 pull-right">
-                        <button class="mgn-bt-10 bt6" (click)="showSection('why-jaldee')">
-                            Why Jaldee business?
-                        </button> </div> -->
                 </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div *ngIf="active_step==0 && !loading_active && expressSignupClicked && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
+            class="express-signup step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto no-padding">
+            <h2 class="mgn-up-20">THANK YOU</h2>
+            <div class="col-12 col-sm-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 no-padding">
+                Please fill the form which has been opened in another window.<br>
+                Once you've filled the form, a Jaldee Executive will contact you soon.<br>
+                You can contact the Jaldee support team anytime on this number 888 012 5000
+                <div class="express-button mgn-up-20">
+                    <button class="mgn-bt-10 mat-button" (click)="providerLogout()">
+                        Ok, thanks
+                    </button> </div>
             </div>
             <div class="clearfix"></div>
         </div>
