@@ -1,0 +1,24 @@
+<h1 mat-dialog-title class="centeralign">{{data.serviceDetail.name}}</h1>
+<div mat-dialog-content>
+  <p> {{data.message}} </p>
+  <ul class="info-lst serviceadd-info" *ngIf="data.readymsg">
+    <li class="pointlist">By clicking I am ready, your {{data.custmerLabel}} will receive an alert, Your service will marked as 'started' in your dashboard, {{data.app}} will be launched, You will be asked to admit the {{data.custmerLabel}}</li>
+  </ul>
+  <!-- <ul  class="info-lst serviceadd-info" *ngIf="data.endmsg">
+    <li class="pointlist">We will be sending a notification to {{data.custmerLabel}} that the meeting has ended</li>
+  </ul> -->
+</div>
+<!-- Start Meeting -->
+<div mat-dialog-actions class="paddingtop" *ngIf="data.readymsg">
+  <a target="_blank" [href]="data.app === 'Phone'? 'tel:' + data.meetingLink : data.meetingLink">
+    <button tabindex="-1" (click)="amReady()" class="cs-btn bt1 btn-grn txt-trans-none">Yes I am ready</button>
+  </a>
+  <button tabindex="2" mat-dialog-close class="cs-btn bt1 reddelete txt-trans-none">No I am not ready</button>
+</div>
+<!-- End Meeting -->
+<div mat-dialog-actions class="paddingtop" *ngIf="data.endmsg">
+    <button tabindex="-1" (click)="endMeeting()" class="cs-btn bt1 btn-grn txt-trans-none">Yes</button>
+  <button tabindex="2" mat-dialog-close class="cs-btn bt1 reddelete txt-trans-none">No </button>
+</div>
+<!-- <app-field-error-display [displayError]="true" *ngIf="showError" errorMsg="Department name is required">
+</app-field-error-display> -->

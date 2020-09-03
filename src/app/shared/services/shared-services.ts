@@ -787,4 +787,12 @@ export class SharedServices {
     const url = 'provider/appointment/schedule/location/' + locid + '/service/' + servid;
     return this.servicemeta.httpGet(url);
   }
+  getConsumerWaitlistMeetingDetails(uuid, mode, accountId) {
+    const url = 'consumer/waitlist/' + uuid + '/meetingDetails/' + mode + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  getConsumerApptMeetingDetails(uuid, mode, accountId) {
+    const url = 'consumer/appointment/' + uuid + '/meetingDetails/' + mode + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
 }

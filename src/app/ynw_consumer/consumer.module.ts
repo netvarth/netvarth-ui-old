@@ -41,6 +41,7 @@ import { ConsumerAppointmentModule } from './components/waitlist/appointment/con
 import { ConsumerDonationModule } from './components/donations/consumer-donation.module';
 import { CheckinDetailComponent } from './components/home/checkindetail.component';
 import { ApptDetailComponent } from './components/home/appointmentdetail.component';
+import { MeetingDetailsComponent } from './components/meeting-details/meeting-details.component';
 
 @NgModule({
   imports: [
@@ -75,14 +76,16 @@ import { ApptDetailComponent } from './components/home/appointmentdetail.compone
     NotificationListBoxComponent,
     MembersComponent,
     AddMembersHolderComponent,
-    AddManagePrivacyComponent
+    AddManagePrivacyComponent,
+    MeetingDetailsComponent
   ],
   exports: [ConfirmBoxComponent],
   entryComponents: [
     ConfirmBoxComponent,
     NotificationListBoxComponent,
     AddMembersHolderComponent,
-    AddManagePrivacyComponent
+    AddManagePrivacyComponent,
+    MeetingDetailsComponent
   ],
   providers: [
     SharedServices,

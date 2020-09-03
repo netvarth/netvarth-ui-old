@@ -8,20 +8,21 @@
     </div>
 </section>
 <section class="teleservicePopup">
+    <div>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card p0" *ngIf="!api_loading">
                     <div class="copy locd">
 
-                        <div class="lbl col-sm-12 col-md-9 col-lg-9 col-xs-12 no-padding">
+                        <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 no-padding">
                             <!-- Step 1 Starting Window-->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding " *ngIf="step === 1">
                                 <!-- Service Name -->
                                 <div
-                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
+                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-10 pad-10">
                                     <div>
-                                        <h5>
+                                        <h5 class="serv-name-color">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
                                             <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
                                             <i *ngIf="callingModes === 'WhatsApp'"
@@ -47,180 +48,198 @@
                                         </div>
                                     </div>
                                     <div class="mgn-up-10">
-                                        <i class="fa fa-file-text-o fnt-file" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-file-text-o fnt-file"
+                                            aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <!-- <i class="fa fa-arrow-circle-o-right fa-arw"
                                             aria-hidden="true"></i> -->
-                                            <img class="nxt-icon" src="assets/images/next.png" alt="nexticon">
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <img *ngIf="callingModes === 'WhatsApp'" class="wtsap-img" src="assets/images/whtsapLogo.png" alt="WhatsAppicon">
-                                        <img *ngIf="callingModes === 'Phone'" class="wtsap-img" src="assets/images/phone.png" alt="phoneicon">
+                                        <img class="nxt-icon" src="assets/images/next.png" alt="nexticon">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <img *ngIf="callingModes === 'WhatsApp'" class="wtsap-img"
+                                            src="assets/images/whtsapLogo.png" alt="WhatsAppicon">
+                                        <img *ngIf="callingModes === 'Phone'" class="wtsap-img"
+                                            src="assets/images/phone.png" alt="phoneicon">
                                     </div>
                                 </div>
                                 <!--Content box with Reminder,meeting details,Customer details(btns) -->
-                                <div
-                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 brd-solid-1">
-                                    <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3 centeralign mgn-bt-30 pad-10 mgn-bt-auto">
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12   centeralign pad-10">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10">
                                         <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon">
-                                    </div>
-                                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 centeralign mgn-bt-30 pad-10 box-bg-grey">
-                                        <div
-                                            class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
-                                            <div class="mgn-up-5">
-                                                <span class="fnt-siz">{{customer_label | capitalizeFirst}} Name : <span
-                                                        *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span><span
-                                                        *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
-                                                </span>
-                                            </div>
+                                        <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                            <b><span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span><span
+                                                    *ngIf="waiting_type === 'checkin'">
+                                                    {{consumer_lname | capitalizeFirst}}
+                                                </span></b>
                                         </div>
-                                        <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
-                                            <div
-                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
-                                                Send a Reminder
-                                            </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
-                                                <button (click)="reminder()" class="btn-primary-n tele-btn">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
+                                                <button (click)="reminder()" class="btn-primary-n tele-btn txt-trans-none">
                                                     <i class="fa fa-bell fa-blk" aria-hidden="true"></i>
-                                                    <a class="tspace">Reminder</a>
+                                                    <a class="tspace">Send Reminder</a>
                                                 </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
-                                            <div
-                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
-                                                View {{customer_label | capitalizeFirst}} Details
-                                            </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
-                                                <button (click)="showCustomerRecord()" class="btn-primary-n tele-btn">
-                                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                                    <a class="tspace">{{customer_label | capitalizeFirst}} Details</a>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
-                                            <div
-                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
-                                                View Meeting Details
-                                            </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
-                                                <button (click)="meetingDetails()" class="btn-primary-n tele-btn">
+                                                <button (click)="meetingDetails()" class="btn-primary-n tele-btn txt-trans-none">
                                                     <i class="fa fa-eye fa-blk" aria-hidden="true"></i>
                                                     <a class="tspace">Meeting Details</a>
                                                 </button>
-                                            </div>
-                                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
-                                                <span class="text-red ft-smlr fl-right disabled-style">*Meeting details sent to {{customer_label}}</span>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Done and Not-done (WhatsApp/Phone) -->
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 centeralign mgn-bt-30 pad-10 box-bg-grey"
-                                    *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && is_web">
-                                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                                        <div><b>I am done
-                                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                            </b></div>
-                                        <div><button (click)="endmeeting()" class="btn-primary-n tele-btn">End
-                                                Meeting</button></div>
-                                    </div>
-                                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                                        <div><b>I am not done
-                                                <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-                                            </b></div>
-                                        <div>
-                                            <button (click)="redirecToPreviousPage()" class="btn-primary-n tele-btn">Go
-                                                Back to
-                                                Dashboard</button><br>
-                                            <span class="text-red ft-smlr disabled-style">
-                                                (This will not end the meeting)
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Start consultation -->
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-50 centeralign">
-                                    <div
-                                        [ngClass]="{'dv-launch-video-serv' : (servDetails?.virtualServiceType === 'videoService'), 'dv-launch-aud-serv' : (servDetails?.virtualServiceType === 'audioService')}">
-                                        <div *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')">
-                                            <button (click)="asktoLaunch()"
-                                                [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
-                                                <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
-                                                <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
-                                                <a class="chkin-mobic"
-                                                    [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">
-                                                    Start
-                                                    <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
-                                                    Consultation with
-                                                    <span
-                                                        *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
-                                                    <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span>
-                                                </a>
-                                            </button>
-                                        </div>
-                                        <!-- If teleservice is wtsap/phone modes -->
-
-                                        <div
-                                            *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && !is_web">
-                                            <button (click)="asktoLaunch()"
-                                                [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
-                                                <i *ngIf="callingModes === 'WhatsApp'"
-                                                    class="fa fa-whatsapp fa-lg whtsap-ic fnt-lrge"></i>
-                                                <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile fa-lg fnt-fon"></i>
-                                                <a class="chkin-mobic"
-                                                    [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">
-                                                    &nbsp;Start
-                                                    <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
-                                                    Consultation with
-                                                    <span
-                                                        *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
-                                                    <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span>
-                                                </a>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
-                            <!-- Step 2 Reminder -->
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step === 2">
+                            <!-- Start consultation for gmeet/zoom/wtsap/phone-->
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10" *ngIf="step === 1">
+
                                 <div
-                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
-                                    <h1 class="mat-dialog-title linkpagestyle">
+                                    [ngClass]="{'dv-launch-video-serv' : (servDetails?.virtualServiceType === 'videoService'), 'dv-launch-aud-serv' : (servDetails?.virtualServiceType === 'audioService')}">
+                                    <div *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')">
+                                        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="asktoLaunch()">
+                                            <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
+                                            <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
+                                            <b>
+                                                Start {{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}} Call
+                                                <!-- Call with
+                                                <span
+                                                    *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
+                                                <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span> -->
+                                            </b>
+                                        </button>
+
+                                    </div>
+                                    <!-- If teleservice is wtsap/phone modes -->
+
+                                    <div
+                                        *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && !is_web">
+                                        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="asktoLaunch()">
+
+                                            <i *ngIf="callingModes === 'WhatsApp'"
+                                                class="fa fa-whatsapp fa-lg whtsap-ic fnt-lrge"></i>
+                                            <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile fa-lg fnt-fon"></i>
+                                            <b> &nbsp;Start {{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}} Call
+                                                <!-- <span
+                                                    *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
+                                                <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span> -->
+                                            </b>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Done and Not done -->
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10"
+                                *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && (is_web && step === 1)">
+                                <!-- <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 end-meet-red selctDte"
+                                        (click)="endmeeting()">
+                                        <b>End Meeting</b>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 go-bck-dashbrd selctDte"
+                                        (click)="redirecToPreviousPage()">
+                                        <div> <b>Go Back to
+                                                Dashboard</b>
+                                        </div>
+                                    </div> -->
+
+                                <button type="button" (click)="endmeeting()" class="cs-btn bt1 btn-red txt-trans-none">End
+                                    meeting</button>
+                                <!-- <button type="button" class="cs-btn bt1 btn-grn"
+                                    (click)="selectCompleted()">Go back to dashboard</button> -->
+                            </div>
+
+
+
+                        <!-- Step 2 Reminder -->
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step === 2">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10">
+                                <h1 class="mat-dialog-title linkpagestyle serv-name-color">
+                                    <span class="serv-font-size">
+                                        <span>{{isPrevStep? 'Message' : 'Reminder'}}</span>
+                                    </span>
+                                </h1>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-30">
+                                <div *ngIf="!isPrevStep" class="form-group mgn-bt-10 centeralign">
+                                    <span>{{reminder_cap}}</span>&nbsp;&nbsp;
+                                    <mat-select class="brd-solid-1" [(ngModel)]="selectedTime"
+                                        (selectionChange)="handleTimeSelction(time.value)" #time>
+                                        <mat-option *ngFor="let min of minute" [value]="min.value">
+                                            {{min.viewValue}}
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                                <div class="form-group mgn-bt-10 reminder">
+                                    <div id="reminderData">
+                                        <textarea class="tele_srv_txtarea" matInput placeholder=""
+                                            [(ngModel)]="msg_to_user" (ngModelChange)="dataChanged($event)">
+                                        </textarea>
+                                    </div>
+                                    <div class="btn-primary-n custId-cursor delteTC" (click)="copyReminderInfo()">
+                                        <i class="fa fa-clone" aria-hidden="true"></i> Copy this message
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-20">
+                                <div class="form-group">
+                                    Send Reminder to {{customer_label | capitalizeFirst}} Via
+                                    <div class="coupon-outer dsp-grd">
+                                        <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
+                                            {{customer_label | capitalizeFirst}}'s Mobile
+                                            <span *ngIf="waiting_type === 'checkin'"> - {{phNo}}</span>
+                                            <span *ngIf="waiting_type === 'appt'"> - {{data.phoneNumber}}</span>
+                                        </mat-checkbox>
+                                        <mat-checkbox class="mgright50 example-margin" [disabled]="!emailPresent"
+                                            [(ngModel)]="email">
+                                            {{customer_label | capitalizeFirst}}'s Email Id
+                                            <span
+                                                *ngIf="(waiting_type === 'checkin') && (data.waitlistingFor[0].email)">
+                                                - {{data.waitlistingFor[0].email}}</span>
+                                            <span *ngIf="(waiting_type === 'appt') && (data.providerConsumer.email)">
+                                                - {{data.providerConsumer.email}}</span>
+                                        </mat-checkbox>
+                                        <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">
+                                            App Notification for
+                                            {{customer_label | capitalizeFirst}}'s Jaldee Account
+                                        </mat-checkbox>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
+                                    style="display: inline-flex;">
+                                    <button type="button" mat-button [disabled]="msg_to_user ===''" class="cs-btn bt1 txt-trans-none"
+                                        (click)="sendMessage()">Send
+                                        {{isPrevStep? 'Message' : 'Reminder'}}
+                                    </button>
+                                    <!-- <button type="button" class="cs-btn bt2 travelmodeEdit"
+                                            (click)="back()">Cancel</button> -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Step 4 Meeting Details -->
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding meetingdetails" *ngIf="step == 4">
+                            <!-- For Customer -->
+                            <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 mgn-bt-20 no-padding">
+                                <div
+                                    class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon  pad-10 centeralign no-padding">
+                                    <h1 class="mat-dialog-title linkpagestyle serv-name-color">
                                         <span class="serv-font-size">
-                                            <span>{{isPrevStep? 'Message' : 'Reminder'}}</span>
+                                            View Meeting Details for {{customer_label | capitalizeFirst}}
                                         </span>
                                     </h1>
                                 </div>
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-30">
-                                    <div *ngIf="!isPrevStep" class="form-group mgn-bt-10">
-                                        <span>{{reminder_cap}}</span>&nbsp;&nbsp;
-                                        <mat-select class="brd-solid-1" [(ngModel)]="selectedTime"
-                                            (selectionChange)="handleTimeSelction(time.value)" #time>
-                                            <mat-option *ngFor="let min of minute" [value]="min.value">
-                                                {{min.viewValue}}
-                                            </mat-option>
-                                        </mat-select>
+                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                    <div id="usrmeetDetailsData">
+                                        <textarea class="tele_srv_txtarea" matInput placeholder=""
+                                            [(ngModel)]="msg_to_user" (ngModelChange)="dataChanged($event)">
+                                            </textarea>
                                     </div>
-                                    <div class="form-group mgn-bt-10">
-                                        <div id="reminderData">
-                                            <textarea class="tele_srv_txtarea" matInput placeholder=""
-                                                [(ngModel)]="msg_to_user" (ngModelChange)="dataChanged($event)">
-                                        </textarea>
-                                        </div>
-                                        <div class="btn-primary-n custId-cursor delteTC" (click)="copyReminderInfo()">
-                                            <i class="fa fa-clone" aria-hidden="true"></i> Copy this message
-                                        </div>
+                                    <div class="btn-primary-n custId-cursor delteTC" (click)="copyUsrMeetingDetailsInfo()">
+                                        <i class="fa fa-clone" aria-hidden="true"></i> Copy Meeting Details
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-20">
+                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                     <div class="form-group">
-                                        Send Reminder to {{customer_label | capitalizeFirst}} Via
+                                        Send Meeting Details to {{customer_label | capitalizeFirst}}
+                                        Via
                                         <div class="coupon-outer dsp-grd">
                                             <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
-                                                {{customer_label | capitalizeFirst}}'s Mobile
-                                                <span *ngIf="waiting_type === 'checkin'"> - {{phNo}}</span>
+                                                {{customer_label | capitalizeFirst}}'s Mobile<span
+                                                    *ngIf="waiting_type === 'checkin'"> - {{phNo}}</span>
                                                 <span *ngIf="waiting_type === 'appt'"> - {{data.phoneNumber}}</span>
                                             </mat-checkbox>
                                             <mat-checkbox class="mgright50 example-margin" [disabled]="!emailPresent"
@@ -242,372 +261,222 @@
                                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
                                         style="display: inline-flex;">
                                         <button type="button" mat-button [disabled]="msg_to_user ===''"
-                                            class="cs-btn bt1" (click)="sendMessage()">Send {{isPrevStep? 'Message' : 'Reminder'}}
-                                        </button>
-                                        <!-- <button type="button" class="cs-btn bt2 travelmodeEdit"
-                                            (click)="back()">Cancel</button> -->
+                                            class="cs-btn bt1 txt-trans-none" (click)="sendMessage()">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- For Me -->
+                            <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 mgn-bt-20 no-padding">
+                                <div
+                                    class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon pad-10 centeralign no-padding">
+                                    <h1 class="mat-dialog-title linkpagestyle serv-name-color">
+                                        <span class="serv-font-size">
+                                            View Meeting Details for Me
+                                        </span>
+                                    </h1>
+                                </div>
+                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                    <div id="mymeetDetailsData">
+                                        <textarea class="tele_srv_txtarea" matInput placeholder=""
+                                            [(ngModel)]="msg_to_me" (ngModelChange)="dataChanged($event)">
+                                            </textarea>
+                                    </div>
+                                    <div class="btn-primary-n custId-cursor delteTC" (click)="copyMyMeetingDetailsInfo()">
+                                        <i class="fa fa-clone" aria-hidden="true"></i> Copy Meeting Details
                                     </div>
                                 </div>
 
-                            </div>
-                            <!-- Step 4 Meeting Details -->
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step == 4">
-                                <!-- For Customer -->
-                                <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 mgn-bt-20 no-padding">
-                                    <div
-                                        class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon mgn-bt-20 bg-grey pad-10 centeralign no-padding">
-                                        <h1 class="mat-dialog-title linkpagestyle">
-                                            <span class="serv-font-size">
-                                                View Meeting Details for {{customer_label | capitalizeFirst}}
-                                            </span>
-                                        </h1>
-                                    </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        <div id="meetDetailsData">
-                                            <textarea class="tele_srv_txtarea" matInput placeholder=""
-                                                [(ngModel)]="msg_to_user" (ngModelChange)="dataChanged($event)">
-                                            </textarea>
-                                        </div>
-                                        <div class="btn-primary-n custId-cursor delteTC"
-                                            (click)="copyMeetingDetailsInfo()">
-                                            <i class="fa fa-clone" aria-hidden="true"></i> Copy Meeting Details
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                <!-- <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                         <div class="form-group">
-                                            Send Meeting Details to {{customer_label | capitalizeFirst}} 
-                                            Via
-                                            <div class="coupon-outer dsp-grd">
-                                                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
-                                                    {{customer_label | capitalizeFirst}}'s Mobile<span
-                                                        *ngIf="waiting_type === 'checkin'"> - {{phNo}}</span>
-                                                    <span *ngIf="waiting_type === 'appt'"> - {{data.phoneNumber}}</span>
-                                                </mat-checkbox>
-                                                <mat-checkbox class="mgright50 example-margin"
-                                                    [disabled]="!emailPresent" [(ngModel)]="email">
-                                                    {{customer_label | capitalizeFirst}}'s Email Id
-                                                    <span
-                                                        *ngIf="(waiting_type === 'checkin') && (data.waitlistingFor[0].email)">
-                                                        - {{data.waitlistingFor[0].email}}</span>
-                                                    <span
-                                                        *ngIf="(waiting_type === 'appt') && (data.providerConsumer.email)">
-                                                        - {{data.providerConsumer.email}}</span>
-                                                </mat-checkbox>
-                                                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">
-                                                    App Notification for
-                                                    {{customer_label | capitalizeFirst}}'s Jaldee Account
-                                                </mat-checkbox>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
-                                            style="display: inline-flex;">
-                                            <button type="button" mat-button [disabled]="msg_to_user ===''"
-                                                class="cs-btn bt1" (click)="sendMessage()">Send</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- For Me -->
-                                <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 mgn-bt-20 no-padding">
-                                    <div
-                                        class="col-md-12 col-m-12 col-xs-12 col-lg-12 mt-icon mgn-bt-20 bg-grey pad-10 centeralign no-padding">
-                                        <h1 class="mat-dialog-title linkpagestyle">
-                                            <span class="serv-font-size">
-                                                View Meeting Details for Me
-                                            </span>
-                                        </h1>
-                                    </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        <div id="meetDetailsData">
-                                            <textarea class="tele_srv_txtarea" matInput placeholder=""
-                                                [(ngModel)]="msg_to_me" (ngModelChange)="dataChanged($event)">
-                                            </textarea>
-                                        </div>
-                                        <div class="btn-primary-n custId-cursor delteTC"
-                                            (click)="copyMeetingDetailsInfo()">
-                                            <i class="fa fa-clone" aria-hidden="true"></i> Copy Meeting Details
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        <div  class="form-group">
                                             Send Meeting Details to Me Via
                                             <div class="coupon-outer dsp-grd">
                                                 <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
                                                     My Mobile- {{ynwUser.primaryPhoneNumber}}
                                                 </mat-checkbox>
                                             </div>
-                                            <!-- <div class="coupon-outer dsp-grd"><br></div>
-                                            <div class="coupon-outer dsp-grd"></div> -->
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
                                             style="display: inline-flex;">
                                             <button type="button" mat-button [disabled]="msg_to_user ===''"
                                                 class="cs-btn bt1" (click)="sendMessage()">Send</button>
                                         </div>
-                                    </div>
-                                </div>
+                                    </div> -->
+
                             </div>
-                            <!-- Step 5 Are you ready -->
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step == 5">
-                                <div
-                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
-                                    <h1 class="mat-dialog-title linkpagestyle">
-                                        <span class="serv-font-size">Are you ready to Start?</span>
-                                    </h1>
-                                </div>
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 centeralign">
-                                    <h4><span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
-                                        Consultation with
-                                        <span
-                                            *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
-                                        <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span>
-                                    </h4>
-                                </div>
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20">
-                                    <div class="example-full-width">
-                                        <div class="step5-pad-wndow linkpagestyle">
-                                            <div>
-                                               <p>
+                        </div>
+                        <!-- Step 5 Are you ready -->
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" *ngIf="step == 5">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign  pad-10">
+                                <h1 class="mat-dialog-title linkpagestyle serv-name-color">
+                                    <span class="serv-font-size">Are you ready to Start?</span>
+                                </h1>
+                            </div>
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12  centeralign">
+                                <h4><span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}</span>
+                                    Consultation with
+                                    <span
+                                        *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
+                                    <span *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span>
+                                </h4>
+                            </div>
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-bt-20">
+                                <div class="example-full-width">
+                                    <div class="step5-pad-wndow linkpagestyle">
+                                        <div>
+                                            <p>
                                                 Your {{customer_label}} will <b>receive an alert</b> that the
                                                 <b>meeting has been started </b>and will be asked to join
-                                               </p></div>
+                                            </p>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-xs-12 col-sm-12  mgn-up-20 mgn-bt-30 no-padding  centeralign">
-                                    <a *ngIf="(callingModes !== 'Phone')" target="_blank" [href]="starting_url">
-                                        <button type="button" class="cs-btn bt1 btn-grn" (click)="amReady()">Yes I
-                                            am ready</button>
-                                    </a>
-                                    <a *ngIf="(callingModes === 'Phone')" target="_blank"
-                                        [href]="'tel:' + starting_url">
-                                        <button type="button" class="cs-btn bt1 btn-grn" (click)="amReady()">Yes I
-                                            am ready</button>
-                                    </a>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <button (click)="amNotReady()" type="button" class="cs-btn bt1 btn-red">No I am
-                                        not ready</button>
-                                </div>
-                            </div>
-                            <!-- Step 6 Service in Progress -->
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign"
-                                *ngIf="step == 6">
-                                <!-- heading -->
-                                <div
-                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
-                                    <h1 class="mat-dialog-title linkpagestyle">
-                                        <div>
-                                            <span class="serv-font-size">
-                                                Service is in Progress <div class="pull-left clock"
-                                                    style="border : blue; display: none;">
-                                                    <div class="hand hour-hand"
-                                                        [style.transform]="'rotate(' + (hourDegrees$|async) + 'deg)'">
-                                                    </div>
-                                                    <div class="hand minute-hand"
-                                                        [style.transform]="'rotate(' + (minDegrees$|async) + 'deg)'">
-                                                    </div>
-                                                    <div class="hand second-hand"
-                                                        [style.transform]="'rotate(' + (secDegrees$|async) + 'deg)'">
-                                                    </div>
-                                                </div>
-                                            </span>
-                                        </div>
-                                    </h1>
-                                </div>
-                                <!-- service name -->
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 custmer-font-wght">
-                                    Service Name: <span class="mgn-lt-5"><i *ngIf="callingModes === 'Zoom'"
-                                            class="fa zoom-icon"></i>
-                                        <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
-                                        <i *ngIf="callingModes === 'WhatsApp'"
-                                            class="fa fa-whatsapp fa-lg whtsap-ic"></i>
-                                        <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile"></i></span><span
-                                        class="mgn-lt-5">
-                                        {{serv_name | capitalizeFirst}}</span>
-                                </div>
-                                <!-- opened window notify -->
-                                <div
-                                    class="col-md-12 col-m-12 col-xs-12 col-lg-12  mgn-bt-20 custmer-font-wght">
-                                    <span class="text-red"
-                                        *ngIf="(callingModes === 'Zoom') || (callingModes === 'GoogleMeet')">
-                                        ( {{callingModes}} has been opened in a new window )
-                                    </span>
-                                </div>
-                                <!-- content box with meeting and customer details -->
-                                <div
-                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 brd-solid-1">
-                                    <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3 centeralign mgn-bt-30 pad-10 mgn-bt-auto">
-                                        <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon">
-                                    </div>
-                                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 centeralign mgn-bt-30 pad-10 box-bg-grey">
-                                        <div
-                                            class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
-                                            <div class="mgn-up-5">
-                                                <span class="fnt-siz">{{customer_label | capitalizeFirst}} Name : <span
-                                                        *ngIf="waiting_type === 'appt'">{{consumer_fname}}</span><span
-                                                        *ngIf="waiting_type === 'checkin'">{{consumer_fname}}&nbsp;{{consumer_lname}}</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
-                                            <div
-                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
-                                                Send a Message
-                                            </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
-                                                <button (click)="selectHeadsup('step6')" class="btn-primary-n tele-btn">
-                                                    <i class="fa fa-bell fa-blk" aria-hidden="true"></i>
-                                                    <a class="tspace">Send Message</a>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
-                                            <div
-                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
-                                                View {{customer_label | capitalizeFirst}} Details
-                                            </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
-                                                <button (click)="showCustomerRecord('step6')" class="btn-primary-n tele-btn">
-                                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                                    <a class="tspace">{{customer_label | capitalizeFirst}} Details</a>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
-                                            <div
-                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 no-padding centeralign custmer-font-wght">
-                                                View Meeting Details
-                                            </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
-                                                <button (click)="meetingDetails('step6')" class="btn-primary-n tele-btn">
-                                                    <i class="fa fa-eye fa-blk" aria-hidden="true"></i>
-                                                    <a class="tspace">Meeting Details</a>
-                                                </button>
-                                            </div>
-                                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding centeralign">
-                                                <span class="text-red ft-smlr fl-right disabled-style">*Meeting details sent to {{customer_label}}</span>
-                                            </div> -->
-                                        </div>
-                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-                                            <span class="text-red ft-smlr fl-right disabled-style">*Meeting details have
-                                                already sent to {{customer_label}}</span>
-                                        </div> -->
-                                    </div>
-                                </div>
-                                <!-- done and not-done -->
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20 box-bg-grey">
-                                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                                        <div><b>I am done
-                                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                            </b></div>
-                                        <div><button (click)="endmeeting()" class="btn-primary-n tele-btn">End
-                                                Meeting</button></div>
-                                    </div>
-                                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                                        <div><b>I am not done
-                                                <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-                                            </b></div>
-                                        <div><a *ngIf="(callingModes !== 'Phone')" target="_blank"
-                                                [href]="starting_url">
-                                                <button class="btn-primary-n tele-btn">Relaunch
-                                                    Meeting</button>
-                                            </a>
-                                            <a *ngIf="(callingModes === 'Phone')" target="_blank"
-                                                [href]="'tel:' + starting_url">
-                                                <button class="btn-primary-n tele-btn">Relaunch
-                                                    Meeting</button>
-                                            </a></div>
                                     </div>
                                 </div>
                             </div>
-
-
-                            <!-- Step 7 Have You Completed Meeting? -->
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign"
-                                *ngIf="step == 7">
-                                <div
-                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
-                                    <h1 class="mat-dialog-title linkpagestyle">
-                                        <span class="serv-font-size">Complete
-                                            <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
-                                                consultation</span>
+                            <div class="col-md-12 col-xs-12 col-sm-12  mgn-up-20 mgn-bt-30 no-padding  centeralign">
+                                <a *ngIf="(callingModes !== 'Phone')" target="_blank" [href]="starting_url">
+                                    <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="amReady()">Yes I
+                                        am ready</button>
+                                </a>
+                                <a *ngIf="(callingModes === 'Phone')" target="_blank" [href]="'tel:' + starting_url">
+                                    <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="amReady()">Yes I
+                                        am ready</button>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;
+                                <button (click)="amNotReady()" type="button" class="cs-btn bt1 btn-red txt-trans-none">No I am
+                                    not ready</button>
+                            </div>
+                        </div>
+                        <!-- Step 6 Service in Progress -->
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign" *ngIf="step == 6">
+                            <!-- heading -->
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 ">
+                                <h1 class="mat-dialog-title linkpagestyle serv-name-color">
+                                    <div>
+                                        <span class="serv-font-size">
+                                            Service is in Progress...
                                         </span>
-                                    </h1>
+                                    </div>
+                                </h1>
+                            </div>
+                            <!-- service name -->
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 custmer-font-wght">
+                                Service Name: <span class="mgn-lt-5"><i *ngIf="callingModes === 'Zoom'"
+                                        class="fa zoom-icon"></i>
+                                    <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
+                                    <i *ngIf="callingModes === 'WhatsApp'" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                                    <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile"></i></span><span
+                                    class="mgn-lt-5">
+                                    {{serv_name | capitalizeFirst}}</span>
+                            </div>
+                            <!-- opened window notify -->
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12  mgn-bt-20 custmer-font-wght">
+                                <span class="text-red"
+                                    *ngIf="(callingModes === 'Zoom') || (callingModes === 'GoogleMeet')">
+                                    ( {{callingModes}} has been opened in a new window )
+                                </span>
+                            </div>
+                            <!-- content box with meeting and customer details -->
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12   centeralign pad-10">
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10">
+                                    <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon">
+                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                        <b><span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span><span
+                                                *ngIf="waiting_type === 'checkin'">
+                                                {{consumer_lname | capitalizeFirst}}
+                                            </span></b>
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
+                                            <button (click)="selectHeadsup('step6')" class="btn-primary-n tele-btn txt-trans-none">
+                                                <i class="fa fa-bell fa-blk" aria-hidden="true"></i>
+                                                <a class="tspace">Send Message</a>
+                                            </button>
+                                            <button (click)="meetingDetails('step6')" class="btn-primary-n tele-btn txt-trans-none">
+                                                <i class="fa fa-eye fa-blk" aria-hidden="true"></i>
+                                                <a class="tspace">Meeting Details</a>
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- done and not-done -->
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-20" style="display: flex;">
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                                    <!-- <div><b>I am done
+                                            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                        </b></div> -->
+                                    <div><button (click)="endmeeting()" class="cs-btn bt1  btn-red txt-trans-none">End
+                                            Meeting  
+                                            <!-- <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> -->
+                                        </button></div>
                                 </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-                                    <h4 class="ln-hgt-30">
-                                        <span class="serv-font-size">
-                                            Have you completed the
-                                            <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
-                                                consultation</span>
-                                            with<br>
-                                            {{consumer_fname}} <span
-                                                *ngIf="waiting_type === 'checkin'">{{consumer_lname}}</span>?
-                                        </span>
-                                    </h4>
-                                </div>
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-                                    <span class="text-red">
-                                       <p> *We will be sending a notification to {{consumer_fname}} <span
-                                        *ngIf="waiting_type === 'checkin'">{{consumer_lname}}</span>
-                                    that the meeting has
-                                    ended </p>
-                                    </span>
-                                </div>
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-50 mgn-bt-20">
-                                    <button type="button" class="cs-btn bt1 btn-grn"
-                                        (click)="selectCompleted()">Yes</button>&nbsp;&nbsp;&nbsp;
-                                    <button *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')"
-                                        type="button" (click)="makeCompleted()" class="cs-btn bt1 btn-red">No</button>
-                                    <button *ngIf="(callingModes === 'WhatsApp') || (callingModes === 'Phone')"
-                                        type="button" (click)="gotoUnsuported()" class="cs-btn bt1 btn-red">No</button>
-                                </div>
-                            </div>
-                            <!-- Step 8 Customer Record -->
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign"
-                                *ngIf="step === 8">
-                                <div
-                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10 bg-grey">
-                                    <h1 class="mat-dialog-title linkpagestyle">
-                                        <span class="serv-font-size">
-                                            {{customer_label | capitalizeFirst}} Record
-                                        </span>
-                                    </h1>
-                                </div>
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 txt-left">
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        Name: <span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span><span *ngIf="waiting_type === 'checkin'">
-                                            {{consumer_lname | capitalizeFirst}}
-                                        </span>
-                                    </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        Id: <span class="mgn-lt-5">{{data.consumer.id}}</span>
-                                    </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        Date: <span class="mgn-lt-5">{{date}}</span>
-                                    </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        Location: <span class="mgn-lt-5">{{location}}</span>
-                                    </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                        Service: <span class="mgn-lt-5">{{serv_name}}</span>
-                                    </div>
-                                    <div class="col-md-12 col-m-12 col-xs-12 col-lg-12" *ngIf="data.consumerNote">
-                                        Notes: <span class="mgn-lt-5">{{data.consumerNote}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 mgn-up-20 mgn-bt-30">
-                                    <!-- <button type="button" class="cs-btn bt2 travelmodeEdit"
-                                        (click)="backtoProgresPage()">Back</button> -->
+                                    <!-- <div><b>I am not done
+
+                                        </b></div> -->
+                                    <div><a *ngIf="(callingModes !== 'Phone')" target="_blank" [href]="starting_url">
+                                            <button class="cs-btn bt1 btn-blue  txt-trans-none">Relaunch
+                                                Meeting 
+                                                <!-- <i class="fa fa-thumbs-o-down" aria-hidden="true"></i> -->
+                                             </button>
+                                        </a>
+                                        <a *ngIf="(callingModes === 'Phone')" target="_blank"
+                                            [href]="'tel:' + starting_url">
+                                            <button class="cs-btn bt1 btn-blue txt-trans-none">Relaunch
+                                                Meeting 
+                                                 <!-- <i class="fa fa-thumbs-o-down" aria-hidden="true"></i> -->
+                                                </button>
+                                        </a></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="lbr col-sm-12 col-md-3 col-lg-3 col-xs-12">
+                        <!-- Step 7 Have You Completed Meeting? -->
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding centeralign" *ngIf="step == 7">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign  pad-10">
+                                <h1 class="mat-dialog-title linkpagestyle serv-name-color">
+                                    <span class="serv-font-size">Complete
+                                        <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
+                                            consultation</span>
+                                    </span>
+                                </h1>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                                <h4 class="ln-hgt-30">
+                                    <span class="serv-font-size">
+                                        Have you completed the
+                                        <span>{{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
+                                            consultation</span>
+                                        with<br>
+                                        {{consumer_fname}} <span
+                                            *ngIf="waiting_type === 'checkin'">{{consumer_lname}}</span>?
+                                    </span>
+                                </h4>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                                <span class="text-red">
+                                    <p> *We will be sending a notification to {{consumer_fname}} <span
+                                            *ngIf="waiting_type === 'checkin'">{{consumer_lname}}</span>
+                                        that the meeting has
+                                        ended </p>
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-50 mgn-bt-20">
+                                <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
+                                    (click)="selectCompleted()">Yes</button>&nbsp;&nbsp;&nbsp;
+                                <button *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')"
+                                    type="button" (click)="makeCompleted()" class="cs-btn bt1 btn-red txt-trans-none">No</button>
+                                <button *ngIf="(callingModes === 'WhatsApp') || (callingModes === 'Phone')"
+                                    type="button" (click)="gotoUnsuported()" class="cs-btn bt1 btn-red txt-trans-none">No</button>
+                            </div>
+                        </div>
 
                         </div>
+
+                    </div>
+                    <div class="lbr col-sm-12 col-md-3 col-lg-3 col-xs-12">
+
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <div class="clearfix"></div>
 </section>

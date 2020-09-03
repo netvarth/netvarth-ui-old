@@ -1062,7 +1062,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             fn = this.shared_services.addMembers(post_data);
             fn.subscribe(() => {
                 this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
-                //this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+                // this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.handleGoBack(3);

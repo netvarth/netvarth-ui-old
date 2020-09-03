@@ -1138,6 +1138,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getFutureWL() {
     this.resetCheckList();
     this.loading = true;
+    this.futureAppointments = [];
     if (this.filter.futurecheckin_date === null) {
       this.getTomorrowDate();
     }
@@ -1960,7 +1961,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
   }
   refresh() {
-    console.log(this.time_type);
     if (this.time_type === 1) {
       this.getTodayWL();
     }
@@ -2370,38 +2370,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
 
-  showCallingModes(modes, action) {
-    console.log(modes);
+ showCallingModes(modes, action) {
     if (!modes.consumer) {
       this.consumr_id = modes.providerConsumer.id;
     } else {
       this.consumr_id = modes.consumer.id;
     }
-    // this.changeWaitlistStatus(modes, action);
-    // this.notedialogRef = this.dialog.open(CallingModesComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true,
-    //   data: {
-    //     modes: modes.virtualService,
-    //     uuid: modes.ynwUuid,
-    //     consumerid: this.consumr_id,
-    //     qdata: modes,
-    //     type: 'checkin',
-    //     action: action
-    //   }
-    // });
-    // this.notedialogRef.afterClosed().subscribe(result => {
-    //   this.refresh();
-    // });
-    //  this.router.navigate(['provider', 'teleservice']);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         waiting_id: modes.ynwUuid,
         type: 'checkin'
       }
     };
-    this.router.navigate(['provider', 'teleservice'], navigationExtras);
+    this.router.navigate(['provider', 'telehealth'], navigationExtras);
   }
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;

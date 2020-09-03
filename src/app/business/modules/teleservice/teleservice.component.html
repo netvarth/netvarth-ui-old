@@ -1,0 +1,153 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToPreviousPage()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span>
+            </button>
+            <!--  -->
+        </h5>
+    </div>
+</section>
+<section class="teleservicePopup">
+    <div class="content loc-list">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card p0">
+                    <div class="copy locd">
+                        <div class="lbl col-sm-12 col-md-6 col-lg-6 col-xs-12 no-padding">
+                            <!-- First Page -->
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding " *ngIf="step === 1">
+                                <!-- Service Name -->
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-10 pad-10">
+                                    <div>
+                                        <h5 class="serv-name-color">
+                                            <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
+                                            <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
+                                            <i *ngIf="callingModes === 'WhatsApp'"
+                                                class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                                            <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile"></i>
+                                            &nbsp;{{serv_name}}
+                                            <span *ngIf="servStarted">(Service is in progress)</span>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <!-- Warning If telemode is WhatsApp/Phone -->
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-10 pad-10"
+                                    *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && is_web">
+                                    <div>
+                                        <div class="custmer-font-wght">
+                                            <span
+                                                class="text-red">*{{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}</span>
+                                            <span class="text-red"> {{notSupported}}</span><br>
+                                            <span><a (click)="meetingDetails()">
+                                                    {{ph_or_tab_cap}}
+                                                    {{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}
+                                                    {{installed_cap}}
+                                                </a></span>
+                                        </div>
+                                    </div>
+                                    <div class="mgn-up-10">
+                                        <i class="fa fa-file-text-o fnt-file"
+                                            aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <img class="nxt-icon" src="assets/images/next.png" alt="nexticon">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <img *ngIf="callingModes === 'WhatsApp'" class="wtsap-img"
+                                            src="assets/images/whtsapLogo.png" alt="WhatsAppicon">
+                                        <img *ngIf="callingModes === 'Phone'" class="wtsap-img"
+                                            src="assets/images/phone.png" alt="phoneicon">
+                                    </div>
+                                </div>
+                                <!--Content box with Reminder,meeting details,Customer details(btns) -->
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12   centeralign pad-10">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10">
+                                        <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon">
+                                        <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
+                                            <b><span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span><span
+                                                    *ngIf="waiting_type === 'checkin'">
+                                                    {{consumer_lname | capitalizeFirst}}
+                                                </span></b>
+                                        </div>
+                                        <div
+                                            class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
+                                            <button (click)="reminder()" class="btn-primary-n tele-btn txt-trans-none">
+                                                <i class="fa fa-bell fa-blk" aria-hidden="true"></i>
+                                                <a class="tspace">Send Reminder</a>
+                                            </button>
+                                            <button (click)="meetingDetails()"
+                                                class="btn-primary-n tele-btn txt-trans-none">
+                                                <i class="fa fa-eye fa-blk" aria-hidden="true"></i>
+                                                <a class="tspace">Meeting Details</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Start consultation for gmeet/zoom/wtsap/phone-->
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10"
+                                *ngIf="(step === 1 && !servStarted)">
+
+                                <div
+                                    [ngClass]="{'dv-launch-video-serv' : (servDetails?.virtualServiceType === 'videoService'), 'dv-launch-aud-serv' : (servDetails?.virtualServiceType === 'audioService')}">
+                                    <div *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')">
+                                        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
+                                            (click)="asktoLaunch()">
+                                            <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
+                                            <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
+                                            <b>
+                                                Start
+                                                {{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
+                                                Call
+                                            </b>
+                                        </button>
+
+                                    </div>
+                                    <!-- If teleservice is wtsap/phone modes -->
+
+                                    <div
+                                        *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && !is_web">
+                                        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
+                                            (click)="asktoLaunch()">
+
+                                            <i *ngIf="callingModes === 'WhatsApp'"
+                                                class="fa fa-whatsapp fa-lg whtsap-ic fnt-lrge"></i>
+                                            <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile fa-lg fnt-fon"></i>
+                                            <b> &nbsp;Start
+                                                {{(servDetails?.virtualServiceType == 'videoService')? 'Video' : 'Audio'}}
+                                                Call
+                                            </b>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- End Meeting for whatsapp/phone if opened in web -->
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10"
+                                *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && (is_web && step === 1)">
+                                <button type="button" (click)="endmeeting()"
+                                    class="cs-btn bt1 btn-red txt-trans-none">End
+                                    meeting</button>
+                            </div>
+                            <!-- End Meeting and relaunch for zoom/gmeet & whtsap/phone(if opened in mob or tab) -->
+                            <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10 disp-flex"
+                                *ngIf="servStarted">
+                                <button type="button" (click)="endmeeting()"
+                                    class="cs-btn bt1 btn-red txt-trans-none">End
+                                    meeting</button> &nbsp;&nbsp;&nbsp;
+                                    <a *ngIf="(callingModes !== 'Phone')" target="_blank" [href]="starting_url">
+                                        <button class="cs-btn bt1 btn-blue  txt-trans-none">Relaunch
+                                            Meeting 
+                                         </button>
+                                    </a>
+                                    <a *ngIf="(callingModes === 'Phone')" target="_blank"
+                                        [href]="'tel:' + starting_url">
+                                        <button class="cs-btn bt1 btn-blue txt-trans-none">Relaunch
+                                            Meeting 
+                                            </button>
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
