@@ -1,8 +1,10 @@
-<h1 mat-dialog-title>{{data.reminder ? 'Reminder': 'Meeting Details'}}</h1>
+<h1 mat-dialog-title>
+  {{data.reminder ? (data.status === true ? 'Message' : 'Reminder'): 'Meeting Details'}}
+</h1>
 
 <!-- Reminder Section -->
 <div mat-dialog-content *ngIf="data.reminder">
-  <div>
+  <div *ngIf="!data.status">
     <span>{{reminder_cap}}</span>&nbsp;&nbsp;
     <mat-select class="brd-solid-1" [(ngModel)]="selectedTime" (selectionChange)="handleTimeSelction(time.value)" #time>
       <mat-option *ngFor="let min of minute" [value]="min.value">

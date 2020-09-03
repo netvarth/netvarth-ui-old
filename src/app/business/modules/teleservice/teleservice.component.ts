@@ -330,7 +330,8 @@ export class TeleServiceComponent implements OnInit {
                 app: this.callingModes,
                 waitingId: this.waiting_id,
                 waitingType: this.waiting_type,
-                busnsName : this.busnes_name
+                busnsName : this.busnes_name,
+                status: this.servStarted
             }
         });
         this.startTeledialogRef.afterClosed().subscribe(result => {

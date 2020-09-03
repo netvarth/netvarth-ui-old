@@ -69,8 +69,9 @@
                                         <div
                                             class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
                                             <button (click)="reminder()" class="btn-primary-n tele-btn txt-trans-none">
-                                                <i class="fa fa-bell fa-blk" aria-hidden="true"></i>
-                                                <a class="tspace">Send Reminder</a>
+                                                <i *ngIf="!servStarted" class="fa fa-bell fa-blk" aria-hidden="true"></i>
+                                                <i *ngIf="servStarted" class="fa fa-envelope-o fa-blk fnt-600" aria-hidden="true"></i>
+                                                <a class="tspace">Send {{servStarted ? 'Message' : 'Reminder'}}</a>
                                             </button>
                                             <button (click)="meetingDetails()"
                                                 class="btn-primary-n tele-btn txt-trans-none">
