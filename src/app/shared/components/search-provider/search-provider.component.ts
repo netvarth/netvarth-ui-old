@@ -447,12 +447,13 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     const providforCommunicate = search_result.bProfile.id;
     // check whether logged in as consumer
     if (this.shared_functions.checkLogin()) {
-      this.showCommunicate(providforCommunicate);
+      this.showCommunicate(providforCommunicate,search_result.bProfile.businessName);
     } else { // show consumer login
-
+      const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: search_result.bProfile.businessName };
+      this.doLogin('consumer', passParam);
     }
   }
-  showCommunicate(provid) {
+  showCommunicate(provid,name?) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -463,7 +464,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         source: 'consumer-common',
         type: 'send',
         terminologies: this.terminologiesjson,
-        name: this.businessjson.businessName
+        name: name
+       // name: this.businessjson.businessName
       }
     });
 
@@ -704,7 +706,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         this.shared_functions.sendMessage(pdata);
         this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
         if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId']);
+          console.log(passParam);
+          this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment();
         } else {
