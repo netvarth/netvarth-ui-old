@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-teleservice-share',
@@ -28,6 +29,8 @@ export class TeleServiceShareComponent implements OnInit {
   ];
   api_success = null;
   providerView = false;
+  cancel_btn_cap = Messages.CANCEL_BTN;
+  send_btn_cap = Messages.SEND_BTN;
 
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
