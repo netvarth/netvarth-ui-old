@@ -90,8 +90,9 @@ export class TeleServiceShareComponent implements OnInit {
   }
 
   // Copy textarea content
-  copyReminderInfo() {
-    const info = document.getElementById('reminderData');
+  copyMessageInfo(elementId, Message) {
+    console.log(elementId);
+    const info = document.getElementById(elementId);
     if (window.getSelection) {
       const selection = window.getSelection();
       const range = document.createRange();
@@ -99,33 +100,33 @@ export class TeleServiceShareComponent implements OnInit {
       selection.removeAllRanges();
       selection.addRange(range);
       document.execCommand('Copy');
-      this.shared_functions.openSnackBar('Reminder copied to clipboard');
+      this.shared_functions.openSnackBar(Message + ' copied to clipboard');
     }
   }
-  copyUsrMeetingDetailsInfo() {
-    const info = document.getElementById('usrmeetDetailsData');
-    if (window.getSelection) {
-      const selection = window.getSelection();
-      const range = document.createRange();
-      range.selectNodeContents(info);
-      selection.removeAllRanges();
-      selection.addRange(range);
-      document.execCommand('Copy');
-      this.shared_functions.openSnackBar('Meeting Details copied to clipboard');
-    }
-  }
-  copyMyMeetingDetailsInfo() {
-    const info = document.getElementById('mymeetDetailsData');
-    if (window.getSelection) {
-      const selection = window.getSelection();
-      const range = document.createRange();
-      range.selectNodeContents(info);
-      selection.removeAllRanges();
-      selection.addRange(range);
-      document.execCommand('Copy');
-      this.shared_functions.openSnackBar('Meeting Details copied to clipboard');
-    }
-  }
+  // copyUsrMeetingDetailsInfo() {
+  //   const info = document.getElementById('usrmeetDetailsData');
+  //   if (window.getSelection) {
+  //     const selection = window.getSelection();
+  //     const range = document.createRange();
+  //     range.selectNodeContents(info);
+  //     selection.removeAllRanges();
+  //     selection.addRange(range);
+  //     document.execCommand('Copy');
+  //     this.shared_functions.openSnackBar('Meeting Details copied to clipboard');
+  //   }
+  // }
+  // copyMyMeetingDetailsInfo() {
+  //   const info = document.getElementById('mymeetDetailsData');
+  //   if (window.getSelection) {
+  //     const selection = window.getSelection();
+  //     const range = document.createRange();
+  //     range.selectNodeContents(info);
+  //     selection.removeAllRanges();
+  //     selection.addRange(range);
+  //     document.execCommand('Copy');
+  //     this.shared_functions.openSnackBar('Meeting Details copied to clipboard');
+  //   }
+  // }
 
   // Mass communication
   sendMessage() {
