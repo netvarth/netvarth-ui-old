@@ -60,6 +60,11 @@
                             aria-hidden="true"></i>
                         </span>
                       </div>
+                      <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.provider">
+                        <span class="service">Provider: </span> 
+                        <span class="forwhom">{{statusInfo.provider.firstName | capitalizeFirst}} {{statusInfo.provider.lastName | capitalizeFirst}} 
+                        </span>
+                      </div>
                       <ng-container
                         *ngIf="statusInfo.estimated_time && (statusInfo.waitlistStatus && (statusInfo.waitlistStatus == 'checkedIn'  || statusInfo.waitlistStatus == 'arrived' || statusInfo.waitlistStatus == 'cancelled'))">
                         <div class="lt0 knw-stat-line-h"

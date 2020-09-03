@@ -63,11 +63,12 @@
                                             <i class="fa fa-whatsapp whtsap-ic font-bolder"
                                                 *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                                         </span>
-                                        {{appointment.service.name | capitalizeFirst}} <span  *ngIf="appointment.provider">({{appointment.provider.firstName | capitalizeFirst}} {{appointment.provider.lastName | capitalizeFirst}})</span></span>
+                                        {{appointment.service.name | capitalizeFirst}} </span>
                                     for <span class="forwhom" *ngFor="let user of appointment.appmtFor">
                                         {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                     </span>
                                 </div>
+                                <span class="lt0" *ngIf="appointment.provider">Provider: {{appointment.provider.firstName | capitalizeFirst}} {{appointment.provider.lastName | capitalizeFirst}}</span>
                                 <ng-container
                                     *ngIf="appointment.appmtTime && (appointment.apptStatus == 'Confirmed'  ||
                                     appointment.apptStatus == 'Arrived' || appointment.apptStatus == 'Cancelled' || appointment.apptStatus == 'Rejected')">
@@ -329,11 +330,11 @@
                                                     <i class="fa fa-whatsapp whtsap-ic font-bolder"
                                                         *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                                                 </span>
-                                                {{waitlist.service.name | capitalizeFirst}}<span  *ngIf="waitlist.provider">({{waitlist.provider.firstName | capitalizeFirst}} {{waitlist.provider.lastName | capitalizeFirst}})</span></span> for <span
+                                                {{waitlist.service.name | capitalizeFirst}}</span> for <span
                                                 class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
-                                                {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                                            </span>
+                                                {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}</span>
                                         </div>
+                                        <span class="lt0" *ngIf="waitlist.provider">Provider: {{waitlist.provider.firstName | capitalizeFirst}} {{waitlist.provider.lastName | capitalizeFirst}}</span>
                                         <ng-container
                                             *ngIf="waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
                                         waitlist.waitlistStatus == 'arrived' || waitlist.waitlistStatus == 'cancelled')">
