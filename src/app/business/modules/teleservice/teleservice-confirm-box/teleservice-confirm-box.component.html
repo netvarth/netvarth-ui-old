@@ -7,10 +7,11 @@
 
 </h1>
 <div mat-dialog-content>
-  <p> {{data.message}} </p>
-  <ul class="info-lst serviceadd-info" *ngIf="data.readymsg">
-    <li class="pointlist">By clicking I am ready, your {{data.custmerLabel}} will receive an alert, Your service will marked as 'started' in your dashboard, {{data.app}} will be launched, You will be asked to admit the {{data.custmerLabel}}</li>
+
+  <ul class="info-lst" *ngIf="data.readymsg">
+    <li><a class="teleservice">By clicking Yes I am ready, your {{data.custmerLabel}} will receive an alert and  {{data.app}} will be launched, then you will be asked to admit the {{data.custmerLabel}}</a></li>
   </ul>
+  <p> {{data.message}} </p>
   <!-- <ul  class="info-lst serviceadd-info" *ngIf="data.endmsg">
     <li class="pointlist">We will be sending a notification to {{data.custmerLabel}} that the meeting has ended</li>
   </ul> -->
