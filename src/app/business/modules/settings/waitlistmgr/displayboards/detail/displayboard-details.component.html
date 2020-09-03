@@ -1,6 +1,18 @@
-<section>
+<!-- <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section>
+</section> -->
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"> 
+         <button type="button" class="btn default profile-back" (click)="redirecToQmanager()">
+            <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+            {{qBoardscaption}}
+          <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
+               Help
+          </button> 
+        </h5>     
+    </div>
+</section> 
 <section>
     <div class="content loc-list displyboard">
         <div *ngIf="!headerSetting && !footerSetting" class="col-md-12 no-padding">
