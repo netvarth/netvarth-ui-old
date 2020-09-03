@@ -1,0 +1,15 @@
+.tel_srv_txtarea {
+  height: 180px !important;
+  border: 1px solid !important;
+  border-color: #b5abab !important;
+  overflow: hidden !important;
+} 
+.mgn-up-40 {
+  margin-top: 40px;
+}
+.flt-left {
+  float: left;
+}
+.meetingdetail .btn-primary-n:before {
+  box-shadow: none !important;
+}

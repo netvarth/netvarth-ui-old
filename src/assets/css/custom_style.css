@@ -11410,3 +11410,55 @@ background-color: #f0f0f5 !important;
   color: #d2d6de;
   margin-bottom: 0 !important;
 }
+.express-signup h2 {
+  text-align: center !important;
+  padding: 10px !important;
+  border-bottom: 2px solid;
+  margin: 0px !important;
+}
+.express-signup .wizard-list {
+  color: #006cab !important;
+}
+.express-signup .express-button {
+  text-align: center;
+  width: 70%;
+  margin: auto;
+}
+.express-signup .border-botm {
+  border-bottom: 2px solid !important;
+}
+.txt-align-center {
+  text-align: center !important;
+}
+.no-thanks {
+  display: block;
+  font-size: 1.8rem !important;
+  font-weight: 400;
+}
+.express-signup .express-button button{
+  font-weight: 500 !important;
+}
+@media only screen and (max-width: 490px) {
+  .express-signup .express-button {
+    width: 100%;
+  }
+  .express-signup .express-button button{
+    padding: 10px !important;
+  }
+}
+.express-signup ol li {
+  font-weight: 500;
+}
+.express-signup {
+  font-family: sans-serif !important;
+}
+.wizard-popup-text {
+  text-align: center;
+  line-height: 1.5rem;
+  font-size: medium;
+}
+@media screen and (max-width: 768px) {
+  .express-signup h2 {
+      font-size: 25px!important;
+  }
+}

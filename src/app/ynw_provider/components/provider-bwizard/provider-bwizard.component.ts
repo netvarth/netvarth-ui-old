@@ -13,6 +13,9 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ViewChild } from '@angular/core';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
+import { JoyrideService } from 'ngx-joyride';
+import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
+import { ShowMessageComponent } from '../../../business/modules/show-messages/show-messages.component';
 
 @Component({
   selector: 'app-provider-bwizard',
@@ -207,7 +210,8 @@ export class ProviderbWizardComponent implements OnInit {
     public shared_service: SharedServices,
     private dialog: MatDialog,
     private routerobj: Router, private qservice: QuestionService,
-    @Inject(DOCUMENT) public document
+    @Inject(DOCUMENT) public document,
+    private readonly joyrideService: JoyrideService
   ) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
@@ -674,9 +678,53 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   skipMe() {
-    this.redirecttoProfile();
+    if (this.subDomainLinks[this.bProfile.serviceSubSector.subDomain]) {
+      this.showSection('skip');
+    } else {
+      this.redirecttoProfile();
+    }
   }
-  
+  letsGetStarted() {
+    const dialogRef = this.dialog.open(ProviderStartTourComponent, {
+      width: '25%',
+      panelClass: ['popup-class', 'commonpopupmainclass']
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'startTour') {
+        this.joyrideService.startTour(
+
+          {
+            steps: ['step1@provider/settings', 'step2@provider/settings', 'step3@provider/settings', 'step4'],
+            showPrevButton: false,
+            stepDefaultPosition: 'top',
+            themeColor: '#212f23'
+          }
+          // Your steps order
+        ).subscribe(
+
+          step => {
+            /*Do something*/
+            console.log('Location', window.location.href, 'Path', window.location.pathname);
+            console.log('Next:', step);
+          },
+          error => {
+            /*handle error*/
+          },
+          () => {
+            this.redirecttoProfile();
+          }
+        );
+
+      } else {
+        this.redirecttoProfile();
+      }
+
+
+    });
+
+  }
   changeSchedule_clicked() {
     this.ischange_schedule_clicked = true;
   }
@@ -1444,5 +1492,20 @@ export class ProviderbWizardComponent implements OnInit {
         () => {
         }
       );
+  }
+  showSection(type) {
+    const dialogRef = this.dialog.open(ShowMessageComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'type': type
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (type === 'skip') {
+        this.redirecttoProfile();
+      }
+    });
   }
 }

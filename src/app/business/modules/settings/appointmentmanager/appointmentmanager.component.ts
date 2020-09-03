@@ -5,6 +5,8 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-appointmentmanager',
@@ -45,7 +47,7 @@ export class AppointmentmanagerComponent implements OnInit {
     services_cap = Messages.WAITLIST_SERVICES_CAP;
     constructor(
         private router: Router,
-        private routerobj: Router,
+        private routerobj: Router, private dialog: MatDialog,
         public shared_functions: SharedFunctions,
         private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
@@ -69,7 +71,7 @@ export class AppointmentmanagerComponent implements OnInit {
         this.domain = user.sector;
         if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
             this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
-          }
+        }
     }
     getBusinessProfile() {
         this.provider_services.getBussinessProfile()
@@ -131,17 +133,31 @@ export class AppointmentmanagerComponent implements OnInit {
     }
     handle_appointmentPresence(event) {
         const is_check = (event.checked) ? 'Enable' : 'Disable';
-        this.provider_services.setAppointmentPresence(is_check)
-            .subscribe(
-                () => {
-                    this.shared_functions.openSnackBar('Appointment manager ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-                    this.getOnlinePresence();
-                },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getOnlinePresence();
+        if (event.checked && this.schedules_count === 0) {
+            const confirmdialogRef = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    'message': 'N0 schedules'
                 }
-            );
+            });
+            confirmdialogRef.afterClosed().subscribe(result => {
+                this.createappointment_status = false;
+            });
+        } else {
+            this.provider_services.setAppointmentPresence(is_check)
+                .subscribe(
+                    () => {
+                        this.shared_functions.openSnackBar('Appointment manager ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                        this.getOnlinePresence();
+                    },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.getOnlinePresence();
+                    }
+                );
+        }
     }
 
     getOnlinePresence() {
@@ -204,7 +220,7 @@ export class AppointmentmanagerComponent implements OnInit {
                 });
     }
     getSchedulesCount() {
-       // const filter = { 'scope-eq': 'account' };
+        // const filter = { 'scope-eq': 'account' };
         this.provider_services.getSchedulesCount()
             .subscribe(
                 data => {

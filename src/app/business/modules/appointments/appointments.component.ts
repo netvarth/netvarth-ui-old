@@ -2946,7 +2946,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         type: 'appt'
       }
     };
-    this.router.navigate(['provider', 'teleservice'], navigationExtras);
+    this.router.navigate(['provider', 'telehealth'], navigationExtras);
   }
   scrollToSection(curTime) {
     // if (this.time_type === 2) {

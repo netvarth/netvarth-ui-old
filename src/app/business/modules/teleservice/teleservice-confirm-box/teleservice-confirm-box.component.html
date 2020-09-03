@@ -1,0 +1,31 @@
+<h1 mat-dialog-title class="centeralign">
+  <i *ngIf="data.app === 'Zoom'" class="fa zoom-icon"></i>
+  <i *ngIf="data.app === 'GoogleMeet'" class="fa meet-icon"></i>
+  <i *ngIf="data.app === 'WhatsApp'" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+  <i *ngIf="data.app === 'Phone'" class="fa fa-mobile"></i>
+  &nbsp;{{data.serviceDetail.name}}
+
+</h1>
+<div mat-dialog-content class="pt-0">
+  <ul class="info-lst" *ngIf="data.readymsg">
+    <li><a class="teleservice">By clicking Yes I am ready, your {{data.custmerLabel}} will receive an alert and  {{data.app}} will be launched, then you will be asked to admit the {{data.custmerLabel}}</a></li>
+  </ul>
+  <p> {{data.message}} </p>
+  <!-- <ul  class="info-lst serviceadd-info" *ngIf="data.endmsg">
+    <li class="pointlist">We will be sending a notification to {{data.custmerLabel}} that the meeting has ended</li>
+  </ul> -->
+</div>
+<!-- Start Meeting -->
+<div mat-dialog-actions class="paddingtop no-padding" *ngIf="data.readymsg">
+  <a target="_blank" [href]="data.app === 'Phone'? 'tel:' + data.meetingLink : data.meetingLink">
+    <button tabindex="-1" (click)="amReady()" class="cs-btn bt1 btn-grn txt-trans-none">Yes I am ready</button>
+  </a>
+  <button tabindex="2" mat-dialog-close class="cs-btn bt1 reddelete txt-trans-none">No I am not ready</button>
+</div>
+<!-- End Meeting -->
+<div mat-dialog-actions class="paddingtop" *ngIf="data.endmsg">
+    <button tabindex="-1" (click)="endMeeting()" class="cs-btn bt1 btn-grn txt-trans-none">Yes</button>
+  <button tabindex="2" mat-dialog-close class="cs-btn bt1 reddelete txt-trans-none">No </button>
+</div>
+<!-- <app-field-error-display [displayError]="true" *ngIf="showError" errorMsg="Department name is required">
+</app-field-error-display> -->
