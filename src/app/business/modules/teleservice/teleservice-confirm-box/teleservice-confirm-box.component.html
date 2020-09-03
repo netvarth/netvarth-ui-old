@@ -16,7 +16,7 @@
   </ul> -->
 </div>
 <!-- Start Meeting -->
-<div mat-dialog-actions class="paddingtop" *ngIf="data.readymsg">
+<div mat-dialog-actions class="paddingtop no-padding" *ngIf="data.readymsg">
   <a target="_blank" [href]="data.app === 'Phone'? 'tel:' + data.meetingLink : data.meetingLink">
     <button tabindex="-1" (click)="amReady()" class="cs-btn bt1 btn-grn txt-trans-none">Yes I am ready</button>
   </a>
