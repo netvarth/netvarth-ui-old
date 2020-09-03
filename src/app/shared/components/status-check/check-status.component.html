@@ -33,7 +33,8 @@
                 <div class="item">
                   <div class="header" style="padding: 1px;">
                     <div class="lt">
-                      <h6 *ngIf="statusInfo.waitlistingFor" class="glbl-seting-font-wight">Checkin Details</h6>
+                      <h6 *ngIf="!statusInfo.appmtFor && !statusInfo.showToken" class="glbl-seting-font-wight">Checkin Details</h6>
+                      <h6 *ngIf="statusInfo.showToken" class="glbl-seting-font-wight">Token Details</h6>
                       <h6 *ngIf="statusInfo.appmtFor" class="glbl-seting-font-wight">Appointment Details</h6>
                     </div>
                   </div>
@@ -41,8 +42,9 @@
                     <!-- <div class="lt"> -->
                     <div class="shortcut">
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.waitlistingFor">
-                        <span class="service">Checkin For:
-                        </span> <span class="forwhom" *ngFor="let user of statusInfo.waitlistingFor">
+                        <span *ngIf="!statusInfo.showToken" class="service">Checkin For:</span> 
+                        <span *ngIf="statusInfo.showToken" class="service">Token For:</span> 
+                        <span class="forwhom" *ngFor="let user of statusInfo.waitlistingFor">
                           {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                         </span>
                       </div>
