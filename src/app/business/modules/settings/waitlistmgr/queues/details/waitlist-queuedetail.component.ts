@@ -405,7 +405,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
     this.api_loading = false;
     this.getProviderLocations();
-
   }
 
   updateForm() {
