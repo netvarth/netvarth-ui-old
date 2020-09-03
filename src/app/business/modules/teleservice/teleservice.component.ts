@@ -7,6 +7,8 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { TeleServiceConfirmBoxComponent } from './teleservice-confirm-box/teleservice-confirm-box.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { TeleServiceShareComponent } from './teleservice-share/teleservice-share.component';
+
 
 @Component({
     selector: 'app-teleservice',
@@ -310,5 +312,52 @@ export class TeleServiceComponent implements OnInit {
         this.shared_services.consumerApptTeleserviceWithId(uuid_data, this.waiting_id).
             subscribe((modeData) => {
             });
+    }
+
+    // Reminder popup
+    reminder() {
+        this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                serviceDetail: this.servDetails,
+                consumerName: this.consumer_fname,
+                custmerLabel: this.customer_label,
+                providerLabel: this.provider_label,
+                reminder: 'reminder',
+                meetingLink: this.starting_url,
+                app: this.callingModes,
+                waitingId: this.waiting_id,
+                waitingType: this.waiting_type,
+                busnsName : this.busnes_name
+            }
+        });
+        this.startTeledialogRef.afterClosed().subscribe(result => {
+
+        });
+    }
+    // Meeting detail popup
+    meetingDetails() {
+        this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                serviceDetail: this.servDetails,
+                consumerName: this.consumer_fname,
+                custmerLabel: this.customer_label,
+                providerLabel: this.provider_label,
+                meetingDetail: 'meetingdetails',
+                meetingLink: this.starting_url,
+                app: this.callingModes,
+                waitingId: this.waiting_id,
+                waitingType: this.waiting_type,
+                busnsName : this.busnes_name
+            }
+        });
+        this.startTeledialogRef.afterClosed().subscribe(result => {
+
+        });
     }
 }

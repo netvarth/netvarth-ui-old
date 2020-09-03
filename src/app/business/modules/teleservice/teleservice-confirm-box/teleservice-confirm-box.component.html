@@ -1,4 +1,11 @@
-<h1 mat-dialog-title class="centeralign">{{data.serviceDetail.name}}</h1>
+<h1 mat-dialog-title class="centeralign">
+  <i *ngIf="data.app === 'Zoom'" class="fa zoom-icon"></i>
+  <i *ngIf="data.app === 'GoogleMeet'" class="fa meet-icon"></i>
+  <i *ngIf="data.app === 'WhatsApp'" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+  <i *ngIf="data.app === 'Phone'" class="fa fa-mobile"></i>
+  &nbsp;{{data.serviceDetail.name}}
+
+</h1>
 <div mat-dialog-content>
   <p> {{data.message}} </p>
   <ul class="info-lst serviceadd-info" *ngIf="data.readymsg">
