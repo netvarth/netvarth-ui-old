@@ -41,14 +41,14 @@
                             benefit.
                         </div>
                     </div>
-                    <div class="express-button border-botm mgn-up-50" *ngIf="!expressSignupClicked"> <button
+                    <div class="express-button border-botm mgn-up-50"> <button
                             class="mgn-bt-30 mat-button" (click)="expressSignup()"> Take me to Assisted Account
                             Setup
                         </button> </div>
-                    <div class="express-button mgn-up-20" *ngIf="expressSignupClicked">
-                        <button class="mgn-bt-10 mat-button" (click)="providerLogout()">
-                            Ok, thanks
-                        </button> </div>
+                        <div class="txt-align-center mgn-up-10">
+                            <span class="no-thanks"> No, thanks </span>
+                            <a class="underline" (click)="skipMe()"> I'll explore myself </a>
+                        </div>
                 </div>
             </div>
             <div class="clearfix"></div>
