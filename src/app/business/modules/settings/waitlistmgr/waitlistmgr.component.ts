@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { ShowMessageComponent } from '../../show-messages/show-messages.component';
 
 @Component({
     selector: 'app-waitlistmgr',
@@ -352,14 +353,14 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     handleCheckinPresence(event) {
         const is_check = (event.checked) ? 'Enable' : 'Disable';
         if (event.checked && this.queues_count === 0) {
-            const confirmdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            const confirmdialogRef = this.dialog.open(ShowMessageComponent, {
                 width: '50%',
-                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                panelClass: ['popup-class', 'commonpopupmainclass'],
                 disableClose: true,
                 data: {
-                    'message': 'No queues'
+                  'type': 'waitlist'
                 }
-            });
+              });
             confirmdialogRef.afterClosed().subscribe(result => {
                 this.waitlist_status = false;
             });
