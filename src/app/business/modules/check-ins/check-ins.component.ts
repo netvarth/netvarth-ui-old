@@ -2588,8 +2588,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   checkDashboardVisibility() {
     if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
-        this.message = 'To access the dashboard, go to Settings > Jaldee Profile > Business Profile and set up your profile. You also need to create a service and a queue and enable Jaldee QManager.';
+        this.provider_services.getWaitlistMgr()
+       .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        if ( this.showToken ) {
+        this.tokenOrCheckin = 'Tokens';
+        this.message = 'To access ' + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
       } else {
+        this.tokenOrCheckin = 'Check-ins';
+        this.message = 'To access '  + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
+      }
+    });
+  } else {
         this.message1 = 'Enable Jaldee QManager in your settings to access ' + this.tokenOrCheckin + ' dashboard.';
       }
       this.apiloading = false;

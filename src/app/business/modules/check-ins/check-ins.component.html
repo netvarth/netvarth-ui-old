@@ -7,7 +7,7 @@
 <section *ngIf="!showDashbard && !apiloading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12"  id="bcrumbHeader">
   <div class="token-appt" *ngIf="message">
-    {{message}} Go to <a class="underline" (click)="gotoSettings()"> Settings</a>
+    {{message}} <br>Go to <a class="underline" (click)="gotoSettings()"> Settings</a>
   </div>
   <div class="token-appt" *ngIf="message1">
     {{message1}} Go to <a class="underline" (click)="gotoQmanager()"> Jaldee QManager</a>
