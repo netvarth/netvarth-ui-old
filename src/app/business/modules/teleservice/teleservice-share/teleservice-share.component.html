@@ -8,7 +8,7 @@
 
   <!-- Reminder Section -->
   <div mat-dialog-content *ngIf="data.reminder">
-    <div class="col-md-12">
+    <div *ngIf="!data.status" class="col-md-12">
     <div class="col-md-8 no-padding" style="color:#1873f2;font-weight:bold" >
       {{reminder_cap}}</div>
       <div class="col-md-3  no-padding">
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="coupon-outer mgn-up-40">
-        Send Reminder Via<br>
+        Send {{data.status === true ? 'Message' : 'Reminder'}} Via<br>
       <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
         Mobile
       </mat-checkbox>
