@@ -34,6 +34,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   loc_status_cap = Messages.WAITLIST_LOC_STATUS_CAP;
   set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
   schedule_cap = Messages.WAITLIST_SCHEDULE_CAP;
+  queue_cap = Messages.WAITLIST_QUEUE_CAP;
   waitlist_cap = Messages.WAITLIST_CAP;
   queues_cap = Messages.SERVICE_TIME_CAP;
   location_map_cap = Messages.LOCATION_MAP_CAP;

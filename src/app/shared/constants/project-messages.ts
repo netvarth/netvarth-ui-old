@@ -1064,6 +1064,8 @@ export const Messages = {
   'WAITLIST_LOC_STATUS_CAP': 'Location Status',
   'WAITLIST_SET_BASE_CAP': 'Set as base location',
   'WAITLIST_SCHEDULE_CAP': 'Schedule',
+  'WAITLIST_QUEUE_CAP': 'Working Hours',
+
 
   // App-ynw_provider-components-provider-waitlist-locations
   'ADD_NEW_LOC_CAP': 'Add Location',
