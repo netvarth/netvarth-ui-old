@@ -221,8 +221,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   apptTempArray: any = [];
   showType = 'more';
   futureAllowed = true;
-  galleryenabledArr: any = [];
-  gallerydisabledArr: any = [];
   
   constructor(
     private activaterouterobj: ActivatedRoute,

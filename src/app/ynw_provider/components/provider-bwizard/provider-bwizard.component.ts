@@ -15,6 +15,7 @@ import { ViewChild } from '@angular/core';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { JoyrideService } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
+import { ShowMessageComponent } from '../../../business/modules/show-messages/show-messages.component';
 
 @Component({
   selector: 'app-provider-bwizard',
@@ -677,7 +678,11 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   skipMe() {
-    this.redirecttoProfile();
+    if (this.subDomainLinks[this.bProfile.serviceSubSector.subDomain]) {
+      this.showSection('skip');
+    } else {
+      this.redirecttoProfile();
+    }
   }
   letsGetStarted() {
     const dialogRef = this.dialog.open(ProviderStartTourComponent, {
@@ -1487,5 +1492,20 @@ export class ProviderbWizardComponent implements OnInit {
         () => {
         }
       );
+  }
+  showSection(type) {
+    const dialogRef = this.dialog.open(ShowMessageComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'type': type
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (type === 'skip') {
+        this.redirecttoProfile();
+      }
+    });
   }
 }
