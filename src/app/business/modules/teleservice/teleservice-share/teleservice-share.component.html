@@ -4,13 +4,14 @@
       <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
   </h1>
+  
 
   <!-- Reminder Section -->
   <div mat-dialog-content *ngIf="data.reminder">
     <div class="col-md-12">
-    <div class="col-md-9">
+    <div class="col-md-8 no-padding" style="color:#1873f2;font-weight:bold" >
       {{reminder_cap}}</div>
-      <div class="col-md-3">
+      <div class="col-md-3  no-padding">
       <mat-select class="brd-solid-1" [(ngModel)]="selectedTime" (selectionChange)="handleTimeSelction(time.value)" #time>
         <mat-option *ngFor="let min of minute" [value]="min.value">
           {{min.viewValue}}
@@ -28,7 +29,7 @@
       </div>
     </div>
     <div class="coupon-outer mgn-up-40">
-        Send Reminder Via <br>
+        Send Reminder Via<br>
       <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
         Mobile
       </mat-checkbox>
