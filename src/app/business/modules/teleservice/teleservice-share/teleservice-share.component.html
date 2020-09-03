@@ -1,5 +1,8 @@
-<h1 mat-dialog-title>
+<h1 class="mat-dialog-title">
     {{data.reminder ? (data.status === true ? 'Message' : 'Reminder'): 'Meeting Details'}}
+    <button mat-dialog-close class="modal_close" tabindex="-1">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
   </h1>
 
   <!-- Reminder Section -->

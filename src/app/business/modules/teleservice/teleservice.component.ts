@@ -318,7 +318,7 @@ export class TeleServiceComponent implements OnInit {
     reminder() {
         this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
             width: '50%',
-            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            panelClass: ['commonpopupmainclass', 'popup-class'],
             disableClose: true,
             data: {
                 serviceDetail: this.servDetails,
@@ -342,7 +342,7 @@ export class TeleServiceComponent implements OnInit {
     meetingDetails() {
         this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
             width: '50%',
-            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            panelClass: ['commonpopupmainclass', 'popup-class'],
             disableClose: true,
             data: {
                 serviceDetail: this.servDetails,
