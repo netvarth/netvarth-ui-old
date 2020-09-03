@@ -64,11 +64,12 @@ export class TeleServiceShareComponent implements OnInit {
   // Reminder textarea msg content
   getReminderData() {
     if (this.data.status) {
-      if (this.data.app !== 'Phone') {
-        this.msg_to_user = 'Here are the details for how to start the service -\n1. Click on the following link - ' + this.data.meetingLink + '\n2. Wait for your ' + this.data.providerLabel + ' to join';
-      } else {
-        this.msg_to_user = 'Your ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' is on progress';
-      }
+      // if (this.data.app !== 'Phone') {
+      //   this.msg_to_user = 'Your ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' is on progress';
+      // } else {
+      //   this.msg_to_user = 'Your ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' is on progress';
+      // }
+      this.msg_to_user = '';
     } else {
       switch (this.data.app) {
         case 'WhatsApp':
