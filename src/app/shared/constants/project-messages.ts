@@ -112,7 +112,8 @@ export const Messages = {
   'ADWORD_EXCEED_LIMIT': 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/Add-on for more benefits',
 
   // WaitlistManager
-  'ONLINE_CHECKIN_SAVED': 'Waitlist settings saved successfully',
+  // 'ONLINE_CHECKIN_SAVED': 'Waitlist settings saved successfully',
+  'ONLINE_CHECKIN_SAVED': 'QManager settings saved successfully',
   'SERVICE_UPDATED': 'Service updated successfully',
   'LABEL_UPDATED': 'Label updated successfully',
   'LABEL_ADDED': 'Label created successfully',
