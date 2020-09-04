@@ -1,15 +1,20 @@
-<h1 mat-dialog-title class="centeralign">{{data.serviceDetail.name}}</h1>
-<div mat-dialog-content>
-  <p> {{data.message}} </p>
-  <ul class="info-lst serviceadd-info" *ngIf="data.readymsg">
-    <li class="pointlist">By clicking I am ready, your {{data.custmerLabel}} will receive an alert, Your service will marked as 'started' in your dashboard, {{data.app}} will be launched, You will be asked to admit the {{data.custmerLabel}}</li>
+<h1 mat-dialog-title class="centeralign">
+  <i *ngIf="data.app" [class]=iconClass></i>
+
+  &nbsp;{{data.serviceDetail.name}}
+
+</h1>
+<div mat-dialog-content class="pt-0">
+  <ul class="info-lst" *ngIf="data.readymsg">
+    <li><a class="teleservice">By clicking Yes I am ready, your {{data.custmerLabel}} will receive an alert and  {{data.app}} will be launched, then you will be asked to admit the {{data.custmerLabel}}</a></li>
   </ul>
+  <p> {{data.message}} </p>
   <!-- <ul  class="info-lst serviceadd-info" *ngIf="data.endmsg">
     <li class="pointlist">We will be sending a notification to {{data.custmerLabel}} that the meeting has ended</li>
   </ul> -->
 </div>
 <!-- Start Meeting -->
-<div mat-dialog-actions class="paddingtop" *ngIf="data.readymsg">
+<div mat-dialog-actions class="paddingtop no-padding" *ngIf="data.readymsg">
   <a target="_blank" [href]="data.app === 'Phone'? 'tel:' + data.meetingLink : data.meetingLink">
     <button tabindex="-1" (click)="amReady()" class="cs-btn bt1 btn-grn txt-trans-none">Yes I am ready</button>
   </a>

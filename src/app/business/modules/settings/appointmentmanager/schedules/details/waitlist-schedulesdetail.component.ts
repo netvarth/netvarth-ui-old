@@ -40,11 +40,11 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     },
     {
       url: '/provider/settings/appointmentmanager',
-      title: 'Jaldee Appointment Manager'
+      title: 'Jaldee Appointment'
     },
     {
       url: '/provider/settings/appointmentmanager/schedules',
-      title: 'Schedules (Working Hours)'
+      title: 'Schedules'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -98,7 +98,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   showBatchFields = false;
   batch = false;
-  Schedulescaption = 'Add Schedule';
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -272,7 +271,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
           this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
           let schedule_arr = [];
           if (this.queue_data.apptSchedule) {
-            this.Schedulescaption = 'Schedule Details';
             schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.apptSchedule);
           }
           this.display_schedule = [];
@@ -288,7 +286,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
           this.breadcrumbs = breadcrumbs;
           this.api_loading = false;
           if (this.action === 'edit') {
-            this.Schedulescaption = 'Edit Schedule';
             this.createForm();
           }
           this.getProviderServices();
@@ -363,7 +360,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     this.api_loading = false;
   }
   addEditProviderQueue() {
-    this.Schedulescaption = 'Edit Schedule';
     this.action = 'edit';
     this.createForm();
   }
@@ -419,7 +415,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         startdate: [''],
         enddate: [''],
       });
-      this.amForm.get('startdate').setValue(this.minDate);
+      this.amForm.get('startdate').setValue(new Date());
       this.provider_services.getQStartToken()
         .subscribe(
           (data) => {
@@ -732,7 +728,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       //     'batchEnable':false
       // };
       if (this.action === 'edit') {
-        this.Schedulescaption = 'Schedule Details';
         this.editProviderSchedule(post_data);
       } else {
         this.addProviderSchedule(post_data);
@@ -786,7 +781,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   closeClick() {
     if (this.action === 'edit' && this.params.action !== 'editFromList' && this.params.source !== 'location_detail') {
       this.action = 'view';
-      this.Schedulescaption = 'Schedule Details';
     } else {
       this._location.back();
     }
@@ -953,9 +947,5 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       this.amForm.get('qserveonce').setValue(1);
       this.sbatchStatus = false;
     }
-  }
-  redirecToSchedules() {
-    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
-
   }
 }

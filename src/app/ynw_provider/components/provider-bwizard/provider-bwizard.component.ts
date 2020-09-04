@@ -15,6 +15,7 @@ import { ViewChild } from '@angular/core';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { JoyrideService } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
+import { ShowMessageComponent } from '../../../business/modules/show-messages/show-messages.component';
 
 @Component({
   selector: 'app-provider-bwizard',
@@ -197,7 +198,35 @@ export class ProviderbWizardComponent implements OnInit {
     'dentists': 'https://forms.gle/N4JrJD4ZGkneHjVBA',
     'alternateMedicinePractitioners': 'https://forms.gle/QzRcjW5ShPHkVFfYA',
     'personalFitness': 'https://forms.gle/irMZHtfQ9fmpetjW9',
-    'beautyCare': 'https://forms.gle/EMU8C1iig7EuHSnp9'
+    'beautyCare': 'https://forms.gle/EMU8C1iig7EuHSnp9',
+    'taxConsultants': 'https://forms.gle/aFVo6YAnJZgwgMMk8',
+    'stockbroker': 'https://forms.gle/PjAnwvo9X6DxvXgW6',
+    'lawyers': 'https://forms.gle/Knor9qf89V8H2Sv89',
+    'geologist': 'https://forms.gle/mWTrsZkGFLfy6gbe7',
+    'financialAdviser': 'https://forms.gle/Rzb7GTbB8j55sjxS8',
+    'civilArchitects': 'https://forms.gle/1D1evCotn2KepLaz8',
+    'charteredAccountants': 'https://forms.gle/1r1vb9c4PgtgNwPY9',
+    'auditor': 'https://forms.gle/CrQEnY9CETgo21So6',
+    'sweetShop': 'https://forms.gle/hogjk95Aj9NPCSVU7',
+    'restaurants': 'https://forms.gle/Gfbp9d6FPuumwc3A9',
+    'juiceParlour': 'https://forms.gle/WzrdnWHVe9e79iLbA',
+    'iceCreamParlour': 'https://forms.gle/JwNY7vobpNya8RbK6',
+    'homefood': 'https://forms.gle/yySrX5FQHojyA5QE9',
+    'homebaker': 'https://forms.gle/PJPcCZWfyivR9cjBA',
+    'coffeeShop': 'https://forms.gle/m74wTbYAjcy3bXVb7',
+    'caterer': 'https://forms.gle/JaZ9DmtqRZpcPLnU7',
+    'bakery': 'https://forms.gle/zctXApAa5ARjbJTv5',
+    'nbfc': 'https://forms.gle/sucFibLELaipHe4WA',
+    'insurance': 'https://forms.gle/LscT1JDzv5vNWCi97',
+    'bank': 'https://forms.gle/m9DT9XByaP6ZasLw8',
+    'temple': 'https://forms.gle/Tm42NMMgw4HPFHkR7',
+    'poojari': 'https://forms.gle/ijzm4omHpwDHsLqh7',
+    'veterinarydoctor': 'https://forms.gle/kJxSgovts5UuGQ2WA',
+    'petcare': 'https://forms.gle/wNNui5Gak1ju24HF9',
+    'vastu': 'https://forms.gle/B9c34Gu3wL41Ayub6',
+    'Astrologer': 'https://forms.gle/NYhVeWFMRwHyYuYz8',
+    'supermarket': 'https://forms.gle/hYbHhK5BS8aAhgkv7',
+    'miscellaneous': 'https://forms.gle/nxsqUwtfv8hhBfJ86',
   };
   expressSignupClicked = false;
   constructor(
@@ -677,7 +706,11 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   skipMe() {
-    this.redirecttoProfile();
+    if (this.subDomainLinks[this.bProfile.serviceSubSector.subDomain]) {
+      this.showSection('skip');
+    } else {
+      this.redirecttoProfile();
+    }
   }
   letsGetStarted() {
     const dialogRef = this.dialog.open(ProviderStartTourComponent, {
@@ -1487,5 +1520,20 @@ export class ProviderbWizardComponent implements OnInit {
         () => {
         }
       );
+  }
+  showSection(type) {
+    const dialogRef = this.dialog.open(ShowMessageComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'type': type
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (type === 'skip') {
+        this.redirecttoProfile();
+      }
+    });
   }
 }

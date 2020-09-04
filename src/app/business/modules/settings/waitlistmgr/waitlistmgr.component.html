@@ -135,8 +135,8 @@
                             Use the Jaldee QManager to manage the services you offer using a queue system.
                         </span>
                     </div>
-                    <div *ngIf="domain=='healthCare'" class="mgn-bt-10" style="font-weight: 600;color:green;">Token
-                        system</div>
+                    <!-- <div *ngIf="domain=='healthCare'" class="mgn-bt-10" style="font-weight: 600;color:green;">Token
+                        system</div> -->
                     <div class="mgn-bt-30" *ngIf="domain !=='healthCare'">
                         <div class="mgn-bt-10" style="font-weight: 600"> Choose your Queue system </div>
                         <mat-radio-group [(ngModel)]="qSystem">
@@ -198,7 +198,7 @@
                                             style="font-size: 1rem;"></i> -->
                                 <!-- </mat-checkbox> -->
                                 <i class="fa fa-check"></i>
-                                <span class="mgn-lt-5" style="font-weight: bold;">  Number of persons ahead </span>
+                                <span class="mgn-lt-5" style="font-weight: bold;"> Number of persons ahead </span>
                             </div>
                             <div class="mgn-bt-5">
                                 <!-- <mat-checkbox [disabled]="true">
@@ -223,7 +223,7 @@
                         <div class="">
                             <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Online queue check-in
                                 <i [matTooltip]="'Your ' + customer_label + 's can get tokens using Jaldee App, Jaldee.com, by scanning Jaldee QR code or clicking Jaldee link that you shared with your' + customer_label +'s'"
-                                class="fa fa-info-circle" style="font-size: 1rem;"></i>
+                                    class="fa fa-info-circle" style="font-size: 1rem;"></i>
                             </div>
                             <div>
                                 <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
@@ -307,7 +307,7 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="goService()">
-                        <h2>{{services_cap}}  ({{service_count}})</h2>
+                        <h2>{{services_cap}} ({{service_count}})</h2>
                         <span *ngIf="domain !== 'healthCare'" class="form-level-settings">{{frm_set_ser_cap}}<a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('settings-services', $event)">Learn

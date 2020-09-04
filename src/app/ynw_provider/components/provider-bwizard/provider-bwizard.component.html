@@ -1,62 +1,71 @@
 <section>
     <div class="col-md-12 no-padding-small">
         <!-- Step 0 -->
-        <div *ngIf="active_step==0 && !loading_active" class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
+        <div *ngIf="active_step==0 && !loading_active && bProfile && !subDomainLinks[bProfile.serviceSubSector.subDomain]"
+            class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
             <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
-            <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;"
-                *ngIf="bProfile && !subDomainLinks[bProfile.serviceSubSector.subDomain]">
+            <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;">
                 <h1 style="font-size: xx-large;line-height: 2;">Welcome {{userdet.userName}}!</h1>
                 <p style="font-size: 1.4rem;line-height: 2;">{{frm_wiz_one_cap}}</p>
                 <!-- <p>{{frm_wiz_two_cap}}</p>
                 <p>{{frm_wiz_three_cap}}</p> -->
                 <p style="font-size: 1.4rem;">{{frm_wiz_four_cap}}</p>
             </div>
-
-            <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;"
-                *ngIf="bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain] && !expressSignupClicked">
-                <h1 style="font-size: xx-large;line-height: 2;">Welcome to your Jaldee Business Account.</h1>
-                <p style="font-size: 1.4rem;line-height: 2;">NOW, IT'S TIME TO BUILD YOUR PROFILE.</p>
-                <p style="font-size: 1.4rem;">Don't have the time to setup your Jaldee account? Try EXPRESS SIGNUP.</p>
-                <p style="font-size: 1.4rem;">Here are some benefits</p>
-                <li class="wizard-li" style="font-size: 1.4rem;">Save your time</li>
-                <li class="wizard-li" style="font-size: 1.4rem;">Instant Account Setup</li>
-            </div>
-            <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;"
-                *ngIf="bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain] && expressSignupClicked">
-                <h1 style="font-size: xx-large;line-height: 2;">THANK YOU</h1>
-                <p style="font-size: 1.4rem;line-height: 2;">Please fill the form which has been opened in another
-                    window.</p>
-                <p style="font-size: 1.4rem;">Once you've filled the form, a Jaldee Executive will contact you soon.
-                </p>
-                <p style="font-size: 1.4rem;">You can contact the Jaldee support team anytime on this number <b>
-                        888&nbsp;012&nbsp;5000</b></p>
-            </div>
             <div class="pt-btm" style="padding-top: 80px;">
-                <!-- <ul class="ico">
-                    <li><span [matTooltipClass]="tooltipcls" [matTooltip]="profileTooltip" data-icon="l"></span></li>
-                    <li><span [matTooltipClass]="tooltipcls" [matTooltip]="settingsTooltip" data-icon="D"></span></li>
-                    <li><span [matTooltipClass]="tooltipcls" [matTooltip]="locationTooltip" data-icon="k"></span></li>
-                    <li><span [matTooltipClass]="tooltipcls" [matTooltip]="workinghourTooltip" data-icon="1"></span>
-                    </li>
-                    <li><span [matTooltipClass]="tooltipcls" [matTooltip]="searchTooltip" data-icon="d"></span></li>
-                </ul> -->
-
-                <span class="cs-btn lg-btn"
-                    *ngIf="subDomainLinks[bProfile.serviceSubSector.subDomain] && !expressSignupClicked"
-                    (click)="expressSignup()">Express Sign up <i class="icon icon-angle-right"></i>
-                </span>
-                <span class="cs-btn lg-btn"
-                    *ngIf="subDomainLinks[bProfile.serviceSubSector.subDomain] && expressSignupClicked"
-                    (click)="providerLogout()">Ok, Thanks
-                </span>
-                <span class="cs-btn lg-btn" *ngIf="!subDomainLinks[bProfile.serviceSubSector.subDomain]"
-                    (click)="skipMe()">{{get_start_cap}} <i class="icon icon-angle-right"></i>
-                </span>
-                <p class="normal-link pointer-cursor underline"
-                    *ngIf="subDomainLinks[bProfile.serviceSubSector.subDomain] && !expressSignupClicked"
-                    (click)="skipMe()">I
-                    will explore myself </p>
+                <span class="cs-btn lg-btn" (click)="skipMe()">{{get_start_cap}} <i class="icon icon-angle-right"></i>
+                </span> </div>
+        </div>
+        <div *ngIf="active_step==0 && !loading_active && !expressSignupClicked && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
+            class="express-signup step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto no-padding">
+            <h2 style="margin: 0px !important;">Welcome to Jaldee Business</h2>
+            <div class="col-md-12">
+                <h3 class="mgn-up-10 txt-align-center"> Assisted Account Setup </h3>
+                <div>
+                    <a class="underline pull-right mgn-bt-10" (click)="showSection('why-jaldee')">
+                        Why Jaldee business?
+                    </a> </div>
+                <div class="col-12 col-sm-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
+                    Save your time and just relax. Jaldee team can create your profile and make your account
+                    live for free.
+                    Jaldee team offers you free Jaldee support and consultation.
+                    You just need to do the following:-
+                    <div class="wizard-list mgn-up-10">
+                        <div class="mgn-bt-5">
+                            1. You fill the form - 5 to 10 minutes of your time.
+                        </div>
+                        <div class="mgn-bt-5">
+                            2. Jaldee team will set up your account. Jaldee team will contact you in 48 hours.
+                        </div>
+                        <div class="mgn-bt-5">
+                            3. Jaldee team will share the best practices and how to use Jaldee for your maximum
+                            benefit.
+                        </div>
+                    </div>
+                    <div class="express-button border-botm mgn-up-50"> <button
+                            class="mgn-bt-30 mat-button" (click)="expressSignup()"> Take me to Assisted Account
+                            Setup
+                        </button> </div>
+                        <div class="txt-align-center mgn-up-10">
+                            <span class="no-thanks"> No, thanks </span>
+                            <a class="underline" (click)="skipMe()"> I'll explore myself </a>
+                        </div>
+                </div>
             </div>
+            <div class="clearfix"></div>
+        </div>
+        <div *ngIf="active_step==0 && !loading_active && expressSignupClicked && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
+            class="express-signup step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto no-padding">
+            <h2 class="mgn-up-20">THANK YOU</h2>
+            <div class="col-12 col-sm-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 no-padding">
+                Please fill the form which has been opened in another window.<br>
+                Once you've filled the form, a Jaldee Executive will contact you soon.<br>
+                You can contact the Jaldee support team anytime on this number 888 012 5000
+                <div class="express-button mgn-up-20">
+                    <button class="mgn-bt-10 mat-button" (click)="providerLogout()">
+                        Ok, thanks
+                    </button> </div>
+            </div>
+            <div class="clearfix"></div>
         </div>
         <!-- Step 1 -->
         <div *ngIf="active_step==1" class="is-bx step1 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
