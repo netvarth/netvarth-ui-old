@@ -348,6 +348,7 @@ export class TeleServiceComponent implements OnInit {
 
         });
     }
+
     // Meeting detail popup
     meetingDetails() {
         this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
@@ -364,7 +365,9 @@ export class TeleServiceComponent implements OnInit {
                 app: this.callingModes,
                 waitingId: this.waiting_id,
                 waitingType: this.waiting_type,
-                busnsName : this.busnes_name
+                busnsName : this.busnes_name,
+                token: this.data.token,
+                checkInTime: this.data.checkInTime
             }
         });
         this.startTeledialogRef.afterClosed().subscribe(result => {

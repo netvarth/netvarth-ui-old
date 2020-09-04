@@ -12,6 +12,16 @@ import { Messages } from '../../../../shared/constants/project-messages';
 })
 
 export class TeleServiceShareComponent implements OnInit {
+  providerMsg_secondLine: string;
+  providerMsg_firstLine: string;
+  userMsg_secondline: string;
+  userMsg_firstLine: string;
+  consumerName: any;
+  customer_label: any;
+  meetingLink: any;
+  serviceName: any;
+  providerName: any;
+  provider_label: any;
   sendMeetingDetails: any;
   sms = true;
   email = true;
@@ -40,16 +50,22 @@ export class TeleServiceShareComponent implements OnInit {
   internt_cap: any;
   calling_u_cap: any;
 
+
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    console.log(this.data);
     this.sendMeetingDetails = this.shared_functions.getProjectMesssages('SENDING_MEET_DETAILS');
     this.reminder_cap = this.shared_functions.getProjectMesssages('SEND_REMINDER');
-    this.begin_cap = this.shared_functions.getProjectMesssages('WIL_BEGN');
+    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.providerName = this.data.busnsName;
+    this.serviceName = this.data.serviceDetail.name;
+    this.meetingLink = this.data.meetingLink;
+    this.consumerName = this.data.consumerName;
+      this.begin_cap = this.shared_functions.getProjectMesssages('WIL_BEGN');
     this.ready_cap = this.shared_functions.getProjectMesssages('PLS_B_REDY');
     this.how_join_cap = this.shared_functions.getProjectMesssages('HW_TO_JOIN');
     this.turn_cap = this.shared_functions.getProjectMesssages('UR_TURN');
@@ -72,7 +88,7 @@ export class TeleServiceShareComponent implements OnInit {
   }
   tabClick(evt) {
     if (evt.index === 1) {
-    this.providerView = true;
+      this.providerView = true;
     } else {
       this.providerView = false;
     }
@@ -109,22 +125,50 @@ export class TeleServiceShareComponent implements OnInit {
   }
   // Meeting detail textarea msg content
   getMeetingDetailsData() {
+
+    this.userMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n'
+
+                               + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ':' + this.providerName +
+
+                                '\nToken Number :' + this.data.token +
+
+                                '\n Time : ' + this.data.checkInTime + '\n';
+
+    this.userMsg_secondline = ' How to join the video call 1. When it is your turn, click on the following link - '
+
+                              + this.meetingLink + '2. Wait for' + this.providerName + ' to join ';
+
+    this.providerMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for '
+
+                                + this.serviceName + ' \n '
+
+                                 + this.customer_label.charAt(0).toUpperCase() +  this.customer_label.substring(1) + ':' + this.consumerName +
+
+                                '\nToken Number :' + this.data.token +
+
+                                '\n Time : ' + this.data.checkInTime + '\n';
+
+    this.providerMsg_secondLine = 'How to join the video call 1. When it is your turn, click on the following link - '
+
+                                  + this.meetingLink + '2.Click on join Now ';
     switch (this.data.app) {
       case 'WhatsApp':
-        this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.data.meetingLink + '\n 2. Click on the video icon on the top right of the screen ';
-        this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.data.meetingLink + '\n 2. Click on the video icon on the top right corner of the screen to start the video consultation ';
+        this.userMsg_secondline = '* You will receive a call from' + this.data.busnsName + ' when it is your turn.';
+        this.msg_to_user = this.userMsg_firstLine + this.userMsg_secondline;
+        this.providerMsg_secondLine = '* To start the video call, click on the link- ' + this.data.meetingLink + 'on your phone or WhatsApp enabled device'
+        this.msg_to_me = this.providerMsg_firstLine + this.providerMsg_secondLine;
         break;
       case 'Phone':
         this.msg_to_user = 'Call to this number ' + this.data.meetingLink;
         this.msg_to_me = 'Call to this number ' + this.data.meetingLink;
         break;
       case 'Zoom':
-        this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.data.meetingLink + '\n2. Join meeting ';
-        this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.data.meetingLink + '\n 2. Join meeting ';
+        this.msg_to_user = this.userMsg_firstLine + this.userMsg_secondline;
+        this.msg_to_me = this.providerMsg_firstLine + this.providerMsg_secondLine;
         break;
       case 'GoogleMeet':
-        this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.data.meetingLink + '\n2. Click on join button ';
-        this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.data.meetingLink + '\n 2. Click on join button ';
+        this.msg_to_user = this.userMsg_firstLine + this.userMsg_secondline;
+        this.msg_to_me = this.providerMsg_firstLine + this.providerMsg_secondLine;
         break;
     }
   }
