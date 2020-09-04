@@ -122,7 +122,7 @@ export class TeleServiceComponent implements OnInit {
                     }
                     this.getMeetingDetails();
                     if (this.waiting_type === 'checkin') {
-                        this.chkinTeleserviceJoinLink();
+                      //  this.chkinTeleserviceJoinLink();
                         this.consumer_fname = this.data.waitlistingFor[0].firstName;
                         this.consumer_lname = this.data.waitlistingFor[0].lastName;
                         if (this.data.waitlistingFor[0].phoneNo) {
@@ -150,7 +150,7 @@ export class TeleServiceComponent implements OnInit {
                         this.emailPresent = true;
                     }
                     this.getMeetingDetails();
-                    this.apptTeleserviceJoinLink();
+                   // this.apptTeleserviceJoinLink();
                     this.consumer_fname = this.data.appmtFor[0].userName;
                 });
     }
@@ -188,14 +188,14 @@ export class TeleServiceComponent implements OnInit {
                         } else if (this.data.waitlistStatus === 'started') {
                             this.shared_functions.openSnackBar('Service already started!');
                         }
-                        // this.chkinTeleserviceJoinLink();
+                         this.chkinTeleserviceJoinLink();
                     } else {
                         if (this.data.apptStatus !== 'Started') {
                             this.changeWaitlistStatus(this.data, 'Started');
                         } else if (this.data.apptStatus === 'Started') {
                             this.shared_functions.openSnackBar('Service already started!');
                         }
-                        //    this.apptTeleserviceJoinLink();
+                            this.apptTeleserviceJoinLink();
                     }
                 }
             }

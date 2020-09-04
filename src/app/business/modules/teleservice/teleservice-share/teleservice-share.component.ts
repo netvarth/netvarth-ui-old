@@ -38,7 +38,7 @@ export class TeleServiceShareComponent implements OnInit {
     { value: '1 Hour', viewValue: '1 Hour' }
   ];
   api_success = null;
-  providerView = false;
+  providerView = true;
   cancel_btn_cap = Messages.CANCEL_BTN;
   send_btn_cap = Messages.SEND_BTN;
   begin_cap: any;
@@ -75,6 +75,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.calling_u_cap = this.shared_functions.getProjectMesssages('CAL_U');
     if (this.data.reminder) {
       this.getReminderData();
+      this.providerView = false;
     } else if (this.data.meetingDetail) {
       this.getMeetingDetailsData();
     }
@@ -87,7 +88,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.msg_to_user = evt;
   }
   tabClick(evt) {
-    if (evt.index === 1) {
+    if (evt.index === 0) {
       this.providerView = true;
     } else {
       this.providerView = false;
