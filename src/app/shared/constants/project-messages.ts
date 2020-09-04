@@ -171,6 +171,7 @@ export const Messages = {
   'WAIT': 'Wait for ',
   'JOIN': ' to join',
   'NET_CNNCT': 'Remember to keep your internet connection turned on to receive the call.',
+  'CAL_U': ' will be calling you shortly. ',
 
   // Payment Setting
   'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',

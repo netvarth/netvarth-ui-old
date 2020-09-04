@@ -38,6 +38,7 @@ export class TeleServiceShareComponent implements OnInit {
   wait_cap: any;
   join_cap: any;
   internt_cap: any;
+  calling_u_cap: any;
 
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
@@ -55,6 +56,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.wait_cap = this.shared_functions.getProjectMesssages('WAIT');
     this.join_cap = this.shared_functions.getProjectMesssages('JOIN');
     this.internt_cap = this.shared_functions.getProjectMesssages('NET_CNNCT');
+    this.calling_u_cap = this.shared_functions.getProjectMesssages('CAL_U');
     if (this.data.reminder) {
       this.getReminderData();
     } else if (this.data.meetingDetail) {
@@ -88,13 +90,13 @@ export class TeleServiceShareComponent implements OnInit {
       switch (this.data.app) {
         case 'WhatsApp':
           if (this.data.serviceDetail.virtualServiceType === 'videoService') {
-            this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName +  ' will be calling you shortly. ' + this.ready_cap + '\n\n' + this.internt_cap;
+            this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName +  this.calling_u_cap + this.ready_cap + '\n\n' + this.internt_cap;
           } else {
-            this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' '  + this.begin_cap + '\n\n' + this.data.busnsName +  ' will be calling you shortly. ' + this.ready_cap + '.\n\n' + this.internt_cap;
+            this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' '  + this.begin_cap + '\n\n' + this.data.busnsName +  this.calling_u_cap + this.ready_cap + '.\n\n' + this.internt_cap;
           }
           break;
         case 'Phone':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' '  + this.begin_cap + '\n\n' + this.data.busnsName +  ' will be calling you shortly. ' + this.ready_cap;
+          this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' '  + this.begin_cap + '\n\n' + this.data.busnsName +  this.calling_u_cap + this.ready_cap;
           break;
         case 'Zoom':
           this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' '  +  this.begin_cap  + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '  ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
