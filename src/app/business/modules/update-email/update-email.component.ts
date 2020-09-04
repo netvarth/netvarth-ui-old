@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 
 @Component({
   selector: 'app-update-email',
@@ -8,7 +9,9 @@ import { MatDialogRef } from '@angular/material';
 export class UpdateEmailComponent implements OnInit {
   email;
   api_error = '';
-  constructor(public dialogRef: MatDialogRef<UpdateEmailComponent>) { }
+  constructor(public dialogRef: MatDialogRef<UpdateEmailComponent>,
+    private provider_services: ProviderServices,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }
@@ -18,11 +21,23 @@ export class UpdateEmailComponent implements OnInit {
       if (!stat) {
         this.api_error = 'Please enter a valid email';
       } else {
-        this.dialogRef.close(this.email);
+        const post_data = {
+          'basicInfo': {
+            'id': this.data.profile.basicInfo.id,
+            'email': this.email
+          }
+        };
+        this.provider_services.updateAccountEmail(post_data)
+          .subscribe(
+            () => {
+              this.dialogRef.close(this.email);
+            },
+            error => {
+              this.api_error = error.error;
+            });
       }
     } else {
       this.api_error = 'Please enter your email.';
-      // this.dialogRef.close();
     }
   }
   validateEmail(mail) {

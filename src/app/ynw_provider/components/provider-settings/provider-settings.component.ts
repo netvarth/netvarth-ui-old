@@ -335,7 +335,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     const dialogref = this.dialog.open(UpdateEmailComponent, {
       width: '40%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true
+      disableClose: true,
+      data: {
+        profile: this.profile
+      }
     });
     dialogref.afterClosed().subscribe(
       result => {
@@ -349,28 +352,17 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   updateEmail(email) {
     const post_data = {
       'primaryEmail': email,
-      'primaryPhoneNumber': this.contactInfo.primaryPhoneNumber
+      'primaryPhoneNumber': this.contactInfo.primaryPhoneNumber,
+       'contactFirstName': this.contactInfo.contactFirstName,
+      'contactLastName': this.contactInfo.contactLastName
     };
     this.provider_services.updateAccountContactInfo(post_data).subscribe(
       data => {
-        this.updateAccountEmail(email);
       },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
-  }
-  updateAccountEmail(email) {
-    const post_data = {
-      'basicInfo': {
-        'id': this.profile.basicInfo.id,
-        'email': email
-      }
-    };
-    this.provider_services.updateAccountEmail(post_data)
-      .subscribe(
-        () => {
-        });
   }
 
   letsGetStarted() {
