@@ -570,5 +570,11 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                 () => {
                 });
     }
+    redirecToSettings() {
+        this.routerobj.navigate(['provider', 'settings']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/q-manager']);
+    }
 }
 

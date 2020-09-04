@@ -50,6 +50,8 @@ import { ShowMessageComponent } from './modules/show-messages/show-messages.comp
 import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
 import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
+import { UpdateEmailComponent } from './modules/update-email/update-email.component';
+import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
 import { CallingModesModule } from './modules/calling-modes/calling-modes.module';
 
 @NgModule({
@@ -76,7 +78,9 @@ import { CallingModesModule } from './modules/calling-modes/calling-modes.module
         ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
         ShowMessageComponent,
-        ProviderStartTourComponent
+        ProviderStartTourComponent,
+        UpdateEmailComponent,
+        InboxListComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -109,7 +113,8 @@ import { CallingModesModule } from './modules/calling-modes/calling-modes.module
         ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
         ShowMessageComponent,
-        ProviderStartTourComponent
+        ProviderStartTourComponent,
+        UpdateEmailComponent
     ],
     providers: [
         AuthGuardProviderHome,

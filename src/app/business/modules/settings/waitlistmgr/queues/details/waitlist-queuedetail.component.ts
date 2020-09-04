@@ -97,6 +97,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
   enddateError = false;
   minDate;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  queuecaption = 'Add Queue';
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -262,6 +263,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
           this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
           let schedule_arr = [];
           if (this.queue_data.queueSchedule) {
+            this.queuecaption = 'Queue Details';
             schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.queueSchedule);
           }
           this.display_schedule = [];
@@ -277,6 +279,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
           this.breadcrumbs = breadcrumbs;
           this.api_loading = false;
           if (this.action === 'edit') {
+            this.queuecaption = 'Edit Queue';
             this.createForm();
           }
           this.getProviderServices();
@@ -358,6 +361,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     this.api_loading = false;
   }
   addEditProviderQueue() {
+    this.queuecaption = 'Edit Queue';
     this.action = 'edit';
     this.createForm();
   }
@@ -405,6 +409,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
     this.api_loading = false;
     this.getProviderLocations();
+
   }
 
   updateForm() {
@@ -687,6 +692,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         // 'timeInterval': form_data.timeSlot
       };
       if (this.action === 'edit') {
+        this.queuecaption = 'Queue Details';
         this.editProviderQueue(post_data);
       } else {
         this.addProviderQueue(post_data);
@@ -728,6 +734,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
           } else if (this.params.source === 'location_detail') {
             this._location.back();
           } else {
+            // this.queuecaption = 'Queue Details';
             this.action = 'view';
           }
         },
@@ -740,6 +747,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
   closeClick() {
     if (this.action === 'edit' && this.params.action !== 'editFromList' && this.params.source !== 'location_detail') {
       this.action = 'view';
+      this.queuecaption = 'Queue Details';
     } else {
       this._location.back();
     }
@@ -917,5 +925,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
     } else {
       this.showEditSection = false;
     }
+  }
+  redirecToQueues() {
+    this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
   }
 }
