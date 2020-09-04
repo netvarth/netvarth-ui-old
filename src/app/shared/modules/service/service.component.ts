@@ -518,7 +518,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     multiples: [0, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
-                    notification: [false],
+                    notification: [true],
                     livetrack: [false]
                 });
             } else {
@@ -532,7 +532,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
-                    notification: [false],
+                    notification: [true],
                     livetrack: [false]
                 });
 
@@ -555,7 +555,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     multiples: [0, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
-                    notification: [false],
+                    notification: [true],
                     livetrack: [false]
                 });
             } else {
@@ -565,7 +565,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     department: ['', Validators.compose([Validators.maxLength(500)])],
                     serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
-                    notification: [false],
+                    notification: [true],
                     livetrack: [false]
                 });
             }
