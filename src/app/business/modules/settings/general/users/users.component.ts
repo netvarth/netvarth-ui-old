@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { LinkProfileComponent } from './linkProfile/linkProfile.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
 
@@ -70,6 +71,7 @@ export class BranchUsersComponent implements OnInit {
     businessConfig: any;
     provider_label = '';
     assistant_label = '';
+    changeUserStatusdialogRef;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -128,6 +130,23 @@ export class BranchUsersComponent implements OnInit {
             }
         });
     }
+    // changeUserStatus(user) {
+    //     let passingStatus;
+    //     if (user.status === 'ACTIVE') {
+    //         passingStatus = 'Disable';
+    //     } else {
+    //         passingStatus = 'Enable';
+    //     }
+    //     this.provider_services.disableEnableuser(user.id, passingStatus)
+    //         .subscribe(
+    //             () => {
+    //                 this.getUsers();
+    //             },
+    //             (error) => {
+    //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //                 this.getUsers();
+    //             });
+    // }
     changeUserStatus(user) {
         let passingStatus;
         if (user.status === 'ACTIVE') {
@@ -135,7 +154,37 @@ export class BranchUsersComponent implements OnInit {
         } else {
             passingStatus = 'Enable';
         }
-        this.provider_services.disableEnableuser(user.id, passingStatus)
+        if (user.userType === 'PROVIDER') {
+            let msg;
+            if (passingStatus === 'Disable') {
+               msg = 'Disabling the ' + this.provider_label + ', will also disable the ' + this.provider_label + '’s services as well as queues/schedules, if any. Continue?';
+            } else {
+               msg = 'After enabling, make sure to setup services as well as queues/schedules for the ' + this.provider_label + '.';
+            }
+
+        this.changeUserStatusdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg
+            }
+        });
+        this.changeUserStatusdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.provider_services.disableEnableuser(user.id, passingStatus)
+                .subscribe(
+                    () => {
+                        this.getUsers();
+                    },
+                    (error) => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.getUsers();
+                    });
+            }
+        });
+    } else {
+             this.provider_services.disableEnableuser(user.id, passingStatus)
             .subscribe(
                 () => {
                     this.getUsers();
@@ -144,6 +193,7 @@ export class BranchUsersComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getUsers();
                 });
+    }
     }
     getUsers(from_oninit = false) {
         let filter = this.setFilterForApi();
