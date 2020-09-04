@@ -347,7 +347,7 @@ export class DisplayboardDetailComponent implements OnInit {
             this.qboardscaption = 'QBoard Details';
             this.actionparam = 'view';
         } else {
-            this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
         }
     }
     getDisplayboardQSets() {
