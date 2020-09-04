@@ -108,6 +108,11 @@ export class TeleServiceComponent implements OnInit {
                 data => {
                     this.data = data;
                     console.log(this.data);
+                    if (this.data.waitlistStatus === 'started') {
+                        this.servStarted = true;
+                    } else {
+                        this.servStarted = false;
+                    }
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
@@ -132,6 +137,11 @@ export class TeleServiceComponent implements OnInit {
                 data => {
                     this.data = data;
                     console.log(this.data);
+                    if (this.data.apptStatus === 'Started') {
+                        this.servStarted = true;
+                    } else {
+                        this.servStarted = false;
+                    }
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;

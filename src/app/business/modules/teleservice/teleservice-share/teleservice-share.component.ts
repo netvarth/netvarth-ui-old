@@ -31,6 +31,14 @@ export class TeleServiceShareComponent implements OnInit {
   providerView = false;
   cancel_btn_cap = Messages.CANCEL_BTN;
   send_btn_cap = Messages.SEND_BTN;
+  begin_cap: any;
+  ready_cap: any;
+  how_join_cap: any;
+  turn_cap: any;
+  wait_cap: any;
+  join_cap: any;
+  internt_cap: any;
+  calling_u_cap: any;
 
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
@@ -41,6 +49,14 @@ export class TeleServiceShareComponent implements OnInit {
     console.log(this.data);
     this.sendMeetingDetails = this.shared_functions.getProjectMesssages('SENDING_MEET_DETAILS');
     this.reminder_cap = this.shared_functions.getProjectMesssages('SEND_REMINDER');
+    this.begin_cap = this.shared_functions.getProjectMesssages('WIL_BEGN');
+    this.ready_cap = this.shared_functions.getProjectMesssages('PLS_B_REDY');
+    this.how_join_cap = this.shared_functions.getProjectMesssages('HW_TO_JOIN');
+    this.turn_cap = this.shared_functions.getProjectMesssages('UR_TURN');
+    this.wait_cap = this.shared_functions.getProjectMesssages('WAIT');
+    this.join_cap = this.shared_functions.getProjectMesssages('JOIN');
+    this.internt_cap = this.shared_functions.getProjectMesssages('NET_CNNCT');
+    this.calling_u_cap = this.shared_functions.getProjectMesssages('CAL_U');
     if (this.data.reminder) {
       this.getReminderData();
     } else if (this.data.meetingDetail) {
@@ -73,16 +89,20 @@ export class TeleServiceShareComponent implements OnInit {
     } else {
       switch (this.data.app) {
         case 'WhatsApp':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.data.serviceDetail.name + ' via WhatsApp with ' + this.data.busnsName + ' will begin. Please be ready.\n\nSteps to follow to start the WhatsApp consultation: \n\n1. Wait for your turn.\n\n2. When it is time you will recieve a WhatsApp call from ' + this.data.busnsName;
+          if (this.data.serviceDetail.virtualServiceType === 'videoService') {
+            this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName +  this.calling_u_cap + this.ready_cap + '\n\n' + this.internt_cap;
+          } else {
+            this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' '  + this.begin_cap + '\n\n' + this.data.busnsName +  this.calling_u_cap + this.ready_cap + '.\n\n' + this.internt_cap;
+          }
           break;
         case 'Phone':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' will begin.\n\nYou will receive a ' + this.data.app + ' call from ' + this.data.busnsName + '. Please be ready.';
+          this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' '  + this.begin_cap + '\n\n' + this.data.busnsName +  this.calling_u_cap + this.ready_cap;
           break;
         case 'Zoom':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' will begin. Please be ready.\n\nHere are the details for how to start the service -\n1. Click on the following link - ' + this.data.meetingLink + ' \n2. Wait for your ' + this.data.providerLabel + ' to join';
+          this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' '  +  this.begin_cap  + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '  ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
           break;
         case 'GoogleMeet':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' will begin. Please be ready.\n\nHere are the details for how to start the service -\n1. Click on the following link - ' + this.data.meetingLink + '\n2. Wait for your ' + this.data.providerLabel + ' to join';
+          this.msg_to_user = 'In ' + this.selectedTime + ', your video Call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' '  + this.begin_cap  + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '  ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
           break;
       }
     }
