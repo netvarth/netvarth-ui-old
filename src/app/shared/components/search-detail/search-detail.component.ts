@@ -880,7 +880,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 // }
                 // }
                 this.account_type = this.search_data.hits.hit[i].fields.account_type;
-                if (this.search_data.hits.hit[i].fields.departments && this.search_data.hits.hit[i].fields.providers && this.search_data.hits.hit[i].fields.providers.length > 0) {
+                if (this.search_data.hits.hit[i].fields.providers && this.search_data.hits.hit[i].fields.providers.length > 0) {
                   this.search_data.hits.hit[i].fields.userCount = this.search_data.hits.hit[i].fields.providers.length;
                   if (this.search_data.hits.hit[i].fields.providers.length === 1) {
                     this.search_data.hits.hit[i].fields.provider_label = this.getTerminologyTerm('provider', this.search_data.hits.hit[i].fields);

@@ -393,4 +393,7 @@ export class DisplayboardDetailComponent implements OnInit {
     redirecToQmanager() {
         this.router.navigate(['provider', 'settings' , 'q-manager' , 'displayboards' ]);
     }
+    redirecToHelp() {
+        
+    }
 }
