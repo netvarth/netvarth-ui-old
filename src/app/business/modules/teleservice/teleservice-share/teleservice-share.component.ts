@@ -65,7 +65,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.serviceName = this.data.serviceDetail.name;
     this.meetingLink = this.data.meetingLink;
     this.consumerName = this.data.consumerName;
-      this.begin_cap = this.shared_functions.getProjectMesssages('WIL_BEGN');
+    this.begin_cap = this.shared_functions.getProjectMesssages('WIL_BEGN');
     this.ready_cap = this.shared_functions.getProjectMesssages('PLS_B_REDY');
     this.how_join_cap = this.shared_functions.getProjectMesssages('HW_TO_JOIN');
     this.turn_cap = this.shared_functions.getProjectMesssages('UR_TURN');
@@ -106,19 +106,19 @@ export class TeleServiceShareComponent implements OnInit {
       switch (this.data.app) {
         case 'WhatsApp':
           if (this.data.serviceDetail.virtualServiceType === 'videoService') {
-            this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName +  this.calling_u_cap + this.ready_cap + '\n\n' + this.internt_cap;
+            this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName + this.calling_u_cap + this.ready_cap + '\n\n' + this.internt_cap;
           } else {
-            this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' '  + this.begin_cap + '\n\n' + this.data.busnsName +  this.calling_u_cap + this.ready_cap + '.\n\n' + this.internt_cap;
+            this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName + this.calling_u_cap + this.ready_cap + '.\n\n' + this.internt_cap;
           }
           break;
         case 'Phone':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' '  + this.begin_cap + '\n\n' + this.data.busnsName +  this.calling_u_cap + this.ready_cap;
+          this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName + this.calling_u_cap + this.ready_cap;
           break;
         case 'Zoom':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' '  +  this.begin_cap  + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '  ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
+          this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' ' + this.begin_cap + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '  ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
           break;
         case 'GoogleMeet':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your video Call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' '  + this.begin_cap  + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '  ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
+          this.msg_to_user = 'In ' + this.selectedTime + ', your video Call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' ' + this.begin_cap + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '  ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
           break;
       }
     }
@@ -126,36 +126,18 @@ export class TeleServiceShareComponent implements OnInit {
   // Meeting detail textarea msg content
   getMeetingDetailsData() {
 
-    this.userMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n'
+    this.userMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ':' + this.providerName + '\nToken Number :' + this.data.token + '\n Time : ' + this.data.checkInTime + '\n';
 
-                               + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ':' + this.providerName +
+    this.userMsg_secondline = ' How to join the video call 1. When it is your turn, click on the following link - ' + this.meetingLink + '2. Wait for' + this.providerName + ' to join ';
 
-                                '\nToken Number :' + this.data.token +
+    this.providerMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + ' \n ' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ':' + this.consumerName + '\nToken Number :' + this.data.token + '\n Time : ' + this.data.checkInTime + '\n';
 
-                                '\n Time : ' + this.data.checkInTime + '\n';
-
-    this.userMsg_secondline = ' How to join the video call 1. When it is your turn, click on the following link - '
-
-                              + this.meetingLink + '2. Wait for' + this.providerName + ' to join ';
-
-    this.providerMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for '
-
-                                + this.serviceName + ' \n '
-
-                                 + this.customer_label.charAt(0).toUpperCase() +  this.customer_label.substring(1) + ':' + this.consumerName +
-
-                                '\nToken Number :' + this.data.token +
-
-                                '\n Time : ' + this.data.checkInTime + '\n';
-
-    this.providerMsg_secondLine = 'How to join the video call 1. When it is your turn, click on the following link - '
-
-                                  + this.meetingLink + '2.Click on join Now ';
+    this.providerMsg_secondLine = 'How to join the video call 1. When it is your turn, click on the following link - ' + this.meetingLink + '2. Click on join Now ';
     switch (this.data.app) {
       case 'WhatsApp':
-        this.userMsg_secondline = '* You will receive a call from' + this.data.busnsName + ' when it is your turn.';
+        this.userMsg_secondline = '* You will receive a call from ' + this.data.busnsName + ' when it is your turn.';
         this.msg_to_user = this.userMsg_firstLine + this.userMsg_secondline;
-        this.providerMsg_secondLine = '* To start the video call, click on the link- ' + this.data.meetingLink + 'on your phone or WhatsApp enabled device'
+        this.providerMsg_secondLine = '* To start the video call, click on the link- ' + this.data.meetingLink + ' on your phone or WhatsApp enabled device';
         this.msg_to_me = this.providerMsg_firstLine + this.providerMsg_secondLine;
         break;
       case 'Phone':
