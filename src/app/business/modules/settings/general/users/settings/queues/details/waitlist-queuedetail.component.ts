@@ -385,7 +385,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 enddate: [''],
                 // timeSlot: ['', Validators.compose([Validators.required])]
             });
-            this.amForm.get('startdate').setValue(this.minDate);
+            this.amForm.get('startdate').setValue(new Date());
             this.provider_services.getQStartToken()
                 .subscribe(
                     (data) => {

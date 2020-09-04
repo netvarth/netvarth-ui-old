@@ -11413,8 +11413,7 @@ background-color: #f0f0f5 !important;
 .express-signup h2 {
   text-align: center !important;
   padding: 10px !important;
-  border-bottom: 2px solid;
-  margin: 0px !important;
+  border-bottom: 2px solid #ddd;
 }
 .express-signup .wizard-list {
   color: #006cab !important;
@@ -11425,7 +11424,7 @@ background-color: #f0f0f5 !important;
   margin: auto;
 }
 .express-signup .border-botm {
-  border-bottom: 2px solid !important;
+  border-bottom: 2px solid #ddd !important;
 }
 .txt-align-center {
   text-align: center !important;
@@ -11451,6 +11450,7 @@ background-color: #f0f0f5 !important;
 }
 .express-signup {
   font-family: sans-serif !important;
+  text-align: center;
 }
 .wizard-popup-text {
   text-align: center;
@@ -11461,4 +11461,9 @@ background-color: #f0f0f5 !important;
   .express-signup h2 {
       font-size: 25px!important;
   }
+}
+.waitlist-hint {
+  font-weight: 600 !important;
+  margin-bottom: 10px !important;
+  font-size: 1rem !important;
 }

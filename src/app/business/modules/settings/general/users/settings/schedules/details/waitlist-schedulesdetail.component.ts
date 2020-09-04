@@ -409,7 +409,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                 startdate: [''],
                 enddate: [''],
             });
-            this.amForm.get('startdate').setValue(this.minDate);
+            this.amForm.get('startdate').setValue(new Date());
             this.provider_services.getQStartToken()
                 .subscribe(
                     (data) => {

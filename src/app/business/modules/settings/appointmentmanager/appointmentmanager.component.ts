@@ -5,8 +5,8 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material';
+import { ShowMessageComponent } from '../../show-messages/show-messages.component';
 
 @Component({
     selector: 'app-appointmentmanager',
@@ -134,14 +134,14 @@ export class AppointmentmanagerComponent implements OnInit {
     handle_appointmentPresence(event) {
         const is_check = (event.checked) ? 'Enable' : 'Disable';
         if (event.checked && this.schedules_count === 0) {
-            const confirmdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            const confirmdialogRef = this.dialog.open(ShowMessageComponent, {
                 width: '50%',
-                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                panelClass: ['popup-class', 'commonpopupmainclass'],
                 disableClose: true,
                 data: {
-                    'message': 'N0 schedules'
+                  'type': 'appt'
                 }
-            });
+              });
             confirmdialogRef.afterClosed().subscribe(result => {
                 this.createappointment_status = false;
             });
