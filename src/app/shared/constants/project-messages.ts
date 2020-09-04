@@ -163,6 +163,14 @@ export const Messages = {
   'PHONE_OR_TAB': 'Send meeting details to your phone/tablet where',
   'IS_INSTALD': 'is available',
   'SEND_REMINDER': 'Send a reminder that the service will begin in',
+  // Teleservice reminder and meeting details
+  'WIL_BEGN': ' will begin. ',
+  'PLS_B_REDY': 'Please be ready.',
+  'HW_TO_JOIN':  'How to join the video call - ',
+  'UR_TURN': 'When it is your turn, Click on the following link - ',
+  'WAIT': 'Wait for ',
+  'JOIN': ' to join',
+  'NET_CNNCT': 'Remember to keep your internet connection turned on to receive the call.',
 
   // Payment Setting
   'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',
