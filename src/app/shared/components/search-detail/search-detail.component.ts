@@ -1062,6 +1062,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 }
               }
             }
+             if (this.appttime_arr[i]['message']) {
+              this.search_data.hits.hit[srchindx].fields['apptMessage'] = this.appttime_arr[i]['message'];
+            }
           }
         });
     }

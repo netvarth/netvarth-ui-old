@@ -1,7 +1,6 @@
-<app-header *ngIf="showsearchsection && obtainedRefined" [headerTitle]="'Header'"
-   ></app-header>
-     <app-search-form *ngIf="showsearchsection && obtainedRefined" (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet"
-   [passedRefine]="searchcommononlyrefine_arr"></app-search-form> 
+<app-header *ngIf="showsearchsection && obtainedRefined" [headerTitle]="'Header'"></app-header>
+<app-search-form *ngIf="showsearchsection && obtainedRefined" (searchclick)="handlesearchClick($event)"
+    [passedDomain]="domain" [passedkwdet]="kwdet" [passedRefine]="searchcommononlyrefine_arr"></app-search-form>
 <section class="content">
     <div class="container">
         <div class="row">
@@ -526,8 +525,7 @@
 
                         <!-- <div class="bottom-sect"
                             *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['waitlist'] && search_result.fields.online_profile == 1"> -->
-                            <div class="bottom-sect"
-                            *ngIf="showButton(search_result) === 'waitlist'">
+                        <div class="bottom-sect" *ngIf="showButton(search_result) === 'waitlist'">
                             <div class="bt-l">
                                 <div class="wt-tme"
                                     *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message']!='No active services'">
@@ -601,18 +599,17 @@
                                     *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
                                     <ng-container
                                         *ngIf="search_result.fields['estimatedtime_det']['personAhead'] || search_result.fields['estimatedtime_det']['personAhead'] === 0">
-                                        <div class="checkin-est"
-                                            *ngIf="!search_result.fields['opennow']">
+                                        <div class="checkin-est" *ngIf="!search_result.fields['opennow']">
                                             <span class="est-time">Next Available Time</span>
                                             <span
                                                 class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
                                         </div>
                                     </ng-container>
                                 </ng-container>
-                                <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
+                                <span class="checkin-btn" (click)="providerDetClicked(search_result)"
                                     *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && !search_result.fields['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
                                     search_result.fields)}}</span>
-                                <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
+                                <span class="checkin-btn" (click)="providerDetClicked(search_result)"
                                     *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
                                 <span class="checkin-btn disabled"
                                     *ngIf="!search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday']) && (!search_result.fields['estimatedtime_det']['cdate'] || search_result.fields.future_checkins==0)">{{getTerminologyTerm('waitlist',
@@ -633,8 +630,7 @@
                         </div>
                         <!-- <div class="bottom-sect pdetail"
                             *ngIf="search_result.fields.apptAllowed && search_result.fields.online_profile == 1"> -->
-                            <div class="bottom-sect pdetail"
-                            *ngIf="showButton(search_result) === 'appt'">
+                        <div class="bottom-sect pdetail" *ngIf="showButton(search_result) === 'appt'">
                             <div class="bt-l">
                                 <div class="wt-tme">
                                     <div class="donat-service" *ngIf="!search_result.fields.departments">
@@ -666,14 +662,13 @@
                             </div>
                             <div style="flex-grow:1"></div>
                             <div class="bottom-actions-root">
-                                <span (click)="appointmentClicked(search_result, false)"
+                                <span (click)="providerDetClicked(search_result)"
                                     class="checkin-btn">Appointment</span>
                             </div>
                         </div>
                         <!-- <div class="bottom-sect pdetail"
                             *ngIf="search_result.fields.donation_status == 1 && search_result.fields.donationlength >= 1 && search_result.fields.donation_services && search_result.fields.online_profile == 1"> -->
-                            <div class="bottom-sect pdetail"
-                            *ngIf="showButton(search_result) === 'donation'">
+                        <div class="bottom-sect pdetail" *ngIf="showButton(search_result) === 'donation'">
                             <div class="bt-l">
                                 <div class="wt-tme">
                                     <div class="donat-service">
@@ -696,7 +691,21 @@
                             </div>
                             <div style="flex-grow:1"></div>
                             <div class="bottom-actions-root">
-                                <span (click)="payClicked(search_result)" class="checkin-btn">Donate</span>
+                                <span (click)="providerDetClicked(search_result)" class="checkin-btn">Donate</span>
+                            </div>
+                        </div>
+                        <div class="bottom-sect" *ngIf="!showButton(search_result) && (search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message'] || search_result.fields['apptMessage'])">
+                            <div class="bt-l">
+                                <div class="wt-tme">
+                                    <div class="wt-tme notallowed">
+                                        <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">
+                                            {{search_result.fields['estimatedtime_det']['message']}}
+                                        </ng-container>
+                                        <ng-container *ngIf="search_result.fields['apptMessage']">
+                                            {{search_result.fields['apptMessage']}}
+                                        </ng-container> 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
