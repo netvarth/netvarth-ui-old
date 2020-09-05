@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { TeleServiceConfirmBoxComponent } from './teleservice-confirm-box/teleservice-confirm-box.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
@@ -47,7 +46,6 @@ export class TeleServiceComponent implements OnInit {
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public shared_services: SharedServices,
-        private _location: Location,
         private router: Router,
         private dialog: MatDialog,
         private provider_shared_functions: ProviderSharedFuctions,
@@ -122,7 +120,7 @@ export class TeleServiceComponent implements OnInit {
                     }
                     this.getMeetingDetails();
                     if (this.waiting_type === 'checkin') {
-                      //  this.chkinTeleserviceJoinLink();
+                        //  this.chkinTeleserviceJoinLink();
                         this.consumer_fname = this.data.waitlistingFor[0].firstName;
                         this.consumer_lname = this.data.waitlistingFor[0].lastName;
                         if (this.data.waitlistingFor[0].phoneNo) {
@@ -150,15 +148,33 @@ export class TeleServiceComponent implements OnInit {
                         this.emailPresent = true;
                     }
                     this.getMeetingDetails();
-                   // this.apptTeleserviceJoinLink();
+                    // this.apptTeleserviceJoinLink();
                     this.consumer_fname = this.data.appmtFor[0].userName;
                 });
     }
 
     // Back btn navigation
     redirecToPreviousPage() {
-        if (this.step === 1) {
-            this._location.back();
+        // if (this.step === 1) {
+        //     this._location.back();
+        // }
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                servStatus: this.servStarted
+            }
+        };
+        if (this.waiting_type === 'checkin') {
+            if (this.servStarted) {
+                this.router.navigate(['provider', 'check-ins'], navigationExtras);
+            } else {
+                this.router.navigate(['provider', 'check-ins']);
+            }
+        } else {
+            if (this.servStarted) {
+                this.router.navigate(['provider', 'appointments'], navigationExtras);
+            } else {
+                this.router.navigate(['provider', 'appointments']);
+            }
         }
     }
 
@@ -188,14 +204,14 @@ export class TeleServiceComponent implements OnInit {
                         } else if (this.data.waitlistStatus === 'started') {
                             this.shared_functions.openSnackBar('Service already started!');
                         }
-                         this.chkinTeleserviceJoinLink();
+                        this.chkinTeleserviceJoinLink();
                     } else {
                         if (this.data.apptStatus !== 'Started') {
                             this.changeWaitlistStatus(this.data, 'Started');
                         } else if (this.data.apptStatus === 'Started') {
                             this.shared_functions.openSnackBar('Service already started!');
                         }
-                            this.apptTeleserviceJoinLink();
+                        this.apptTeleserviceJoinLink();
                     }
                 }
             }
@@ -340,7 +356,7 @@ export class TeleServiceComponent implements OnInit {
                 app: this.callingModes,
                 waitingId: this.waiting_id,
                 waitingType: this.waiting_type,
-                busnsName : this.busnes_name,
+                busnsName: this.busnes_name,
                 status: this.servStarted
             }
         });
@@ -365,7 +381,7 @@ export class TeleServiceComponent implements OnInit {
                 app: this.callingModes,
                 waitingId: this.waiting_id,
                 waitingType: this.waiting_type,
-                busnsName : this.busnes_name,
+                busnsName: this.busnes_name,
                 token: this.data.token,
                 checkInTime: this.data.checkInTime
             }

@@ -5,7 +5,7 @@ import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ApplyLabelComponent } from '../check-ins/apply-label/apply-label.component';
 import { MatDialog } from '@angular/material';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -318,6 +318,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
     private router: Router,
+    public activateroute: ActivatedRoute,
     private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.onResize();
@@ -345,6 +346,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.started_upper, value: 'started' },
       { name: this.arrived_upper, value: 'Arrived' },
       { name: this.done_upper, value: 'complete' }];
+    this.activateroute.queryParams.subscribe(params => {
+        if (params.servStatus) {
+         this.statusAction = 'started';
+        }
+     });
   }
 
   @HostListener('window:resize', ['$event'])

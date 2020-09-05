@@ -77,3 +77,11 @@ textarea {
 .fnt-600 {
     font-weight: 600;
 }
+.video-wdth {
+    width: 25px !important;
+}
+@media only screen and (max-width: 400px) {
+    .video-wdth {
+        width: 20px !important;
+    }
+}
