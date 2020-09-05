@@ -1449,8 +1449,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
   }
   appointmentClicked(location, service: any) {
-    alert('hi')
-;    this.futureAllowed = true;
+    this.futureAllowed = true;
     const current_provider = {
       'id': location.id,
       'place': location.place,
