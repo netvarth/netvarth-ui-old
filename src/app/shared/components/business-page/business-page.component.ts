@@ -283,7 +283,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.sharedFunctionobj.getProjectMesssages('JDN_TOOPTIP');
-    
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -643,9 +642,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
               if (this.businessjson.id && this.userId) {
-                appt_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
+                // appt_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
                 wait_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
-                // appt_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
+                appt_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
                 // wait_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
               }
             }

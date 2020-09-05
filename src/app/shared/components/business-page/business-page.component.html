@@ -509,7 +509,7 @@
                                     <div class="dept-head col-md-12 col-xs-12 col-sm-12" *ngIf="!userId">
                                         <h6>{{loc['apptservices'][dept.key][0].deptName | capitalizeFirst}}
                                         </h6>
-                                    </div>
+                                    </div> 
                                     <ng-container *ngIf="loc['appttime_det'] && !loc['appttime_det']['message']">
                                         <ng-container *ngFor="let service of loc['apptservices'][dept.key]">
                                             <div class="bus-item"

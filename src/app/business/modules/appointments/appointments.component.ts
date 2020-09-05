@@ -372,8 +372,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       tabHeader = document.getElementById('apptsTimeTypes').offsetHeight;
     }
     this.topHeight = qHeader + tabHeader;
-    console.log(this.topHeight);
-    console.log(window.pageYOffset);
     if (header) {
       if (window.pageYOffset >= (this.topHeight + 50)) {
         header.classList.add('sticky');
@@ -1193,7 +1191,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getFutureAppointmentsCount(Mfilter = null) {
-    console.log(Mfilter);
     // let no_filter = false;
     const queueid = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
     if (!Mfilter) {

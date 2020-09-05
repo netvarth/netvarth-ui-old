@@ -99,7 +99,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        console.log(this.ynwUser);
         if (this.waiting_type === 'checkin') {
             this.getProviderWaitlstById();
         } else {
@@ -155,7 +154,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             });
     }
     selectHeadsup(stp6?) {
-        console.log(stp6);
         this.msg_to_user = '';
         // this.getMeetingDetails();
         this.isPrevStep = false;
@@ -239,7 +237,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         }
     }
     sendMessage() {
-        console.log(this.isPrevStep);
         const post_data = {
             medium: {
                 email: this.email,
@@ -324,7 +321,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         if (this.waiting_type === 'checkin') {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
-                    console.log(result);
                     if (result) {
                         if (action === 'DONE') {
                             this.shared_functions.openSnackBar('Meeting has been ended');
@@ -338,7 +334,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         } else {
             this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
-                    console.log(result);
                     if (result) {
                         if (action === 'Completed') {
                             this.shared_functions.openSnackBar('Meeting has been ended');
@@ -381,7 +376,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     getMeetingDetails(usr_typ?) {
         this.starting_url = '';
-        console.log(usr_typ);
         if (this.waiting_type === 'checkin') {
             this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.waiting_id).
                 subscribe((meetingdata) => {
@@ -549,7 +543,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             this.isPrevStep = true;
         }
         this.step = 8;
-        console.log(this.isPrevStep);
     }
     amNotReady() {
         this.step = 1;
@@ -569,7 +562,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         }
     }
     backtoProgresPage() {
-        console.log(this.isPrevStep);
         if (this.isPrevStep) {
             this.step = 6;
         } else {
@@ -591,7 +583,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.data = data;
-                    console.log(this.data);
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
@@ -623,7 +614,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.data = data;
-                    console.log(this.data);
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;

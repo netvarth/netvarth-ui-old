@@ -172,7 +172,6 @@ export class AdjustqueueDelayComponent implements OnInit {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        console.log(this.showToken);
         if (this.showToken) {
           this.breadcrumbs = [
             {

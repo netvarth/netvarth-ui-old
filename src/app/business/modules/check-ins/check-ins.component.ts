@@ -366,8 +366,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       tabHeader = document.getElementById('tabHeader').offsetHeight;
     }
     this.topHeight = qHeader + tabHeader;
-    console.log(this.topHeight);
-    console.log(window.pageYOffset);
     if (header) {
       if (window.pageYOffset > (this.topHeight + 50)) {
         header.classList.add('sticky');

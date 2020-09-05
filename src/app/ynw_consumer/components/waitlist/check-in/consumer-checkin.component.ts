@@ -1234,7 +1234,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.partyapi_error = '';
     }
     setUserDetails(selectedUserId) {
-        const userDetail = this.users.filter(user => user.id === JSON.parse(selectedUserId));
+        const userDetail = this.users.filter(user => user.id === selectedUserId);
         this.selectedUser = userDetail[0];
     }
     getDepartmentById(deptId) {
@@ -1644,6 +1644,9 @@ export class ConsumerCheckinComponent implements OnInit {
                                 }
                             });
                         }
+                        if (this.selectedUserParam) {
+                            this.setUserDetails(this.selectedUserParam);
+                        }
                         // this.users = res;
                         // this.users.push(this.userN);
                         // if (this.users.length !== 0) {
@@ -1759,10 +1762,11 @@ export class ConsumerCheckinComponent implements OnInit {
         this.coupon_status = null;
     }
     getPic(user) {
-        // if (user.profilePicture) {
-        //   // alert(JSON.parse(user.profilePicture)['url']);
-        //   return JSON.parse(user.profilePicture)['url'];
-        // }
+        console.log(user);
+        if (user.profilePicture) {
+          // alert(JSON.parse(user.profilePicture)['url']);
+          return JSON.parse(user.profilePicture)['url'];
+        }
         return 'assets/images/avatar5.png';
     }
     gotoAttachments() {

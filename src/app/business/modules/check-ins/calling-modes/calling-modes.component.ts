@@ -150,7 +150,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             });
     }
     selectHeadsup(stp6?) {
-        console.log(stp6);
         this.msg_to_user = '';
         // this.getMeetingDetails();
         this.isPrevStep = false;
@@ -430,7 +429,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     handleUserTypeSelection(obj) {
         this.user_type = obj;
-        console.log(this.user_type);
     }
     copyReminderInfo() {
         const info = document.getElementById('reminderData');
@@ -462,7 +460,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             this.isPrevStep = true;
         }
         this.step = 8;
-        console.log(this.isPrevStep);
     }
     amNotReady() {
         this.step = 1;

@@ -1102,7 +1102,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         return errmsg;
     }
     setUserDetails(selectedUserId) {
-        const userDetail = this.users.filter(user => user.id === JSON.parse(selectedUserId));
+        const userDetail = this.users.filter(user => user.id === selectedUserId);
         this.selectedUser = userDetail[0];
     }
     clearerrorParty() {
@@ -1448,6 +1448,9 @@ export class ConsumerAppointmentComponent implements OnInit {
                                 }
                             });
                         }
+                        if (this.selectedUserParam) {
+                            this.setUserDetails(this.selectedUserParam);
+                        }
                         // this.users.push(this.userN);
                         // if (this.users.length !== 0) {
                         //     if (this.selectedUserParam) {
@@ -1574,10 +1577,11 @@ export class ConsumerAppointmentComponent implements OnInit {
         return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
     }
     getPic(user) {
-        // if (user.profilePicture) {
-        //   // alert(JSON.parse(user.profilePicture)['url']);
-        //   return JSON.parse(user.profilePicture)['url'];
-        // }
+        console.log(user);
+        if (user.profilePicture) {
+          // alert(JSON.parse(user.profilePicture)['url']);
+          return JSON.parse(user.profilePicture)['url'];
+        }
         return 'assets/images/avatar5.png';
     }
     gotoAttachments() {
@@ -1680,4 +1684,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.servicedialogRef.afterClosed().subscribe(() => {
         });
     }
+    // viewSelectedUser(userId) {
+    //     this.router.navigate(['', this.provider_id + '_' + userId]);
+    // }
 }
