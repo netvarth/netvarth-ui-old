@@ -392,8 +392,8 @@ export class ProviderSharedFuctions {
         phone = waitlist[0].providerConsumer.phoneNo;
       } else {
         uuid = waitlist[0].ynwUuid || null;
-        name = waitlist[0].consumer.firstName ? waitlist[0].consumer.firstName : '' + ' ' +
-          waitlist[0].consumer.lastName ? waitlist[0].consumer.lastName : '';
+        name = waitlist[0].waitlistingFor[0].firstName ? waitlist[0].waitlistingFor[0].firstName : '' + ' ' +
+          waitlist[0].waitlistingFor[0].lastName ? waitlist[0].waitlistingFor[0].lastName : '';
         email = waitlist[0].waitlistingFor[0].email;
         phone = waitlist[0].waitlistingFor[0].phoneNo;
         phone_history = waitlist[0].waitlistPhoneNumber;
