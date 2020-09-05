@@ -24,6 +24,8 @@ export class UpdateEmailComponent implements OnInit {
         const post_data = {
           'basicInfo': {
             'id': this.data.profile.basicInfo.id,
+            'firstName': this.data.profile.basicInfo.firstName,
+            'lastName': this.data.profile.basicInfo.lastName,
             'email': this.email
           }
         };

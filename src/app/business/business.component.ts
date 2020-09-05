@@ -127,7 +127,6 @@ export class BusinessComponent implements OnInit {
     dialogref.afterClosed().subscribe(
       result => {
         if (result) {
-          this.updateEmail(result);
         }
       }
     );

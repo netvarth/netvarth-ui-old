@@ -344,23 +344,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       result => {
         if (result) {
           this.letsGetStarted();
-          this.updateEmail(result);
         }
-      }
-    );
-  }
-  updateEmail(email) {
-    const post_data = {
-      'primaryEmail': email,
-      'primaryPhoneNumber': this.contactInfo.primaryPhoneNumber,
-       'contactFirstName': this.contactInfo.contactFirstName,
-      'contactLastName': this.contactInfo.contactLastName
-    };
-    this.provider_services.updateAccountContactInfo(post_data).subscribe(
-      data => {
-      },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }
