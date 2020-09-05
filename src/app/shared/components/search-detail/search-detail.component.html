@@ -701,7 +701,7 @@
                                         <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">
                                             {{search_result.fields['estimatedtime_det']['message']}}
                                         </ng-container>
-                                        <ng-container *ngIf="search_result.fields['apptMessage']">
+                                        <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message'] && search_result.fields['apptMessage']">
                                             {{search_result.fields['apptMessage']}}
                                         </ng-container> 
                                     </div>
