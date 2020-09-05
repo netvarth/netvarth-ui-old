@@ -174,7 +174,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12 border-tp check-new-group pad-rt-0">
-                            <div class="col-md-12 col-xs-12 col-sm-8 no-padding">
+                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">Booking For <a
                                             class="lnk pointer-cursor action mgn-lt-10 pull-right mgn-rt-20"
@@ -440,12 +440,12 @@
                         </div>
                         <ng-container class="attachment"
                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                            <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10" style="display: flex;"
+                            <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
                                 *ngFor="let item of selectedMessage.files; let i = index">
-                                <div class="col-md-7">
+                                <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
                                     <span class="ln-hgt-40">{{item.name}}</span>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
                                     <span class="">
                                         <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                             <mat-icon>more_vert</mat-icon>
@@ -457,7 +457,11 @@
                                             </button>
                                         </mat-menu>
                                     </span>
-                                </div>
+                                </div>                                
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv">
+                                <button mat-button class="cs-btn bt1 savemember"
+                                (click)="goBack()">OK</button>
                             </div>
                         </ng-container>
                     </div>
