@@ -1372,13 +1372,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.shared_services.getFavProvider()
         .subscribe(data => {
           this.favprovs = data;
-          if (this.favprovs.length === 0) {
-            this.handle_Fav('add');
-          } else {
+          if (this.favprovs.length !== 0) {
             const provider = this.favprovs.filter(fav => fav.id === this.provider_bussiness_id);
-            if (provider.length === 0) {
-              this.handle_Fav('add');
-            } else {
+            if (provider.length !== 0) {
               this.isInFav = true;
             }
           }
