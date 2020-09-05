@@ -2,7 +2,7 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { Router, NavigationExtras, RoutesRecognized } from '@angular/router';
+import { Router, NavigationExtras, RoutesRecognized, ActivatedRoute } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
@@ -300,6 +300,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private provider_shared_functions: ProviderSharedFuctions,
     public dateformat: DateFormatPipe,
     private dialog: MatDialog,
+    public activateroute: ActivatedRoute,
     private router: Router) {
     this.onResize();
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -329,6 +330,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.started_upper, value: 'started' },
       { name: this.arrived_upper, value: 'arrived' },
       { name: this.done_upper, value: 'complete' }];
+
+      this.activateroute.queryParams.subscribe(params => {
+       if (params.servStatus) {
+        this.statusAction = 'started';
+       }
+    });
   }
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
