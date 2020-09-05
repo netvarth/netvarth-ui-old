@@ -127,11 +127,13 @@ export class TeleServiceShareComponent implements OnInit {
   // Meeting detail textarea msg content
   getMeetingDetailsData() {
 
-    this.userMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ':' + this.providerName + '\nToken Number :' + this.data.token + '\n Time : ' + this.data.checkInTime + '\n';
+    this.userMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ':' + this.providerName;
+    // + '\nToken Number :' + this.data.token + '\n Time : ' + this.data.checkInTime + '\n';
 
     this.userMsg_secondline = ' How to join the video call 1. When it is your turn, click on the following link - ' + this.meetingLink + '2. Wait for' + this.providerName + ' to join ';
 
-    this.providerMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + ' \n ' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ':' + this.consumerName + '\nToken Number :' + this.data.token + '\n Time : ' + this.data.checkInTime + '\n';
+    this.providerMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + ' \n ' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ':' + this.consumerName;
+    // + '\nToken Number :' + this.data.token + '\n Time : ' + this.data.checkInTime + '\n';
 
     this.providerMsg_secondLine = 'How to join the video call 1. When it is your turn, click on the following link - ' + this.meetingLink + '2. Click on join Now ';
     switch (this.data.app) {
