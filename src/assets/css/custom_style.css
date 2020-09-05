@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  font-family: poppins !important;
+  font-family: 'Poppins', sans-serif !important;
   font-weight: 400;
   letter-spacing: .2px;
   -moz-osx-font-smoothing: grayscale;
@@ -11403,7 +11403,7 @@ header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .ma
 .consumerpopupmainclass label, .consumerpopupmainclass input,
  .specialclass div, .specialclass label, .specialclass input,
  .mat-menu-item, .info-lst li, .about_us_text,.mat-form-field, .cal-mod-instrct{
-  font-family: poppins !important;
+  font-family: 'Poppins', sans-serif !important;
 }
 header.consumer .tp-1 .tp-l {
   margin-right: 0px;
