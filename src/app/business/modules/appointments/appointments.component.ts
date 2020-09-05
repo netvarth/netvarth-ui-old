@@ -415,7 +415,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getLocationList();
     this.getServices();
     this.getProviders();
-    this.cronHandle = observableInterval(30000).subscribe(() => {
+    this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
   }
@@ -541,8 +541,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.shared_functions.setitemonLocalStorage('sysdate', res);
         });
   }
-  ngOnDestroy(): void {
-
+  ngOnDestroy() {
+    if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+    }
   }
   ngAfterViewInit() {
     setTimeout(() => {
