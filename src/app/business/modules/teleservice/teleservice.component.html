@@ -17,7 +17,7 @@
                             <!-- First Page -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding " *ngIf="step === 1">
                                 <!-- Service Name -->
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-10 pad-10">
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10">
                                     <div>
                                         <h2 class="serv-name-color fnt-lrge">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                                 <!-- Warning If telemode is WhatsApp/Phone -->
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-10 pad-10"
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10"
                                     *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && is_web">
                                     <div>
                                         <div class="custmer-font-wght">
