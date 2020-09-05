@@ -29,7 +29,8 @@
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                 <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-5">
-                                    {{showCheckinButtonCaption()}} For  <a class="lnk pointer-cursor action mgn-lt-10" (click)="changeService()">Change
+                                    {{showCheckinButtonCaption()}} For <a class="lnk pointer-cursor action mgn-lt-10"
+                                        (click)="changeService()">Change
                                         Service</a></div>
                                 <div class="col-sm-12 col-xs-12 col-md-12">
                                     <div class="card-body" *ngIf="sel_ser">
@@ -46,7 +47,7 @@
                                         </div>
                                         <h6 class="card-title service">
                                             {{sel_ser_det.name}}
-                                        </h6>                                       
+                                        </h6>
                                         <div class="">
                                             <div class="prepay-amt mgn-bt-20" *ngIf="sel_ser_det.isPrePayment">
                                                 <!-- {{prepayment_amnt_cap}} -->
@@ -143,15 +144,15 @@
                                     <div class="icon-add pull-left" *ngIf="settingsjson.futureDateWaitlist"
                                         (click)="calculateDate(1)"></div>
                                 </div>
-                                <div class="pull-left " *ngIf="settingsjson.futureDateWaitlist">
-                                    <div class="pickerouter caldiv">
-                                        <mat-datepicker-toggle matSuffix [for]="picker">
-                                        </mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                        <input class="form-control hidden" type="text" matInput [matDatepicker]="picker"
-                                            [min]="minDate" [max]="maxDate" [value]="ddate"
-                                            (dateChange)="handleFutureDateChange($event)">
-                                    </div>
+                                <div class="pickerouter caldiv pull-left" *ngIf="settingsjson.futureDateWaitlist">
+
+                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker"
+                                        [min]="minDate" [max]="maxDate" [value]="ddate"
+                                        (dateChange)="handleFutureDateChange($event)">
+
                                 </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -177,12 +178,13 @@
                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
                                     Waiting in Line
                                 </div>
-                                
+
                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                     <h6 class="card-title serv-time">
                                         <span *ngIf="sel_queue_personaahead <= 0">0 People</span>
                                         <span *ngIf="sel_queue_personaahead == 1">1<span> Person</span></span>
-                                        <span *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span> People</span></span>
+                                        <span *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
+                                                People</span></span>
                                         <span *ngIf="calc_mode=='NoCalc'">
                                             <span *ngIf="!isFuturedate">
                                                 <!-- <strong>Today
@@ -197,7 +199,7 @@
                                             *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                                             <!-- {{today_cap}} {{estimateCaption}}:
                                             <span>{{sel_queue_waitingmins}}</span> -->
-                                            
+
                                             <!-- <span *ngIf="sel_queue_personaahead <= 0">0 People</span>
                                             <span *ngIf="sel_queue_personaahead == 1">1<span> Person</span></span>
                                             <span *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span> People</span></span> -->
@@ -215,15 +217,16 @@
 
                                             <ng-container *ngIf="isFuturedate">
                                                 <!-- <span>{{nextavailableCaption}} -->
-                                                    <span><span class="color-grey"> \ </span>{{sel_day}}
-                                                        {{sel_checkindate | date: dateFormat}},
-                                                        {{sel_queue_servicetime}}</span>
-                                                    <!-- </span> -->
+                                                <span><span class="color-grey"> \ </span>{{sel_day}}
+                                                    {{sel_checkindate | date: dateFormat}},
+                                                    {{sel_queue_servicetime}}</span>
+                                                <!-- </span> -->
                                             </ng-container>
                                             <ng-container *ngIf="!isFuturedate">
                                                 <!-- {{today_cap}}
                                                 {{checkinsCaption}}: -->
-                                                <span><span class="color-grey"> \ </span>{{sel_queue_servicetime}}</span>
+                                                <span><span class="color-grey"> \
+                                                    </span>{{sel_queue_servicetime}}</span>
                                             </ng-container>
 
                                         </span>
@@ -292,7 +295,8 @@
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
                                             <div class="checkin-btn-bp pointer-cursor" (click)="handleCheckinClicked()">
-                                                <span *ngIf="!sel_ser_det.isPrePayment">Confirm {{showCheckinButtonCaption()}}</span>
+                                                <span *ngIf="!sel_ser_det.isPrePayment">Confirm
+                                                    {{showCheckinButtonCaption()}}</span>
                                                 <span *ngIf="sel_ser_det.isPrePayment">Proceed to Payment</span> <i
                                                     class="fa fa-long-arrow-right mgn-lt-5"></i>
                                             </div>

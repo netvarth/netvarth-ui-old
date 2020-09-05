@@ -28,8 +28,9 @@
                                 </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-5">Appointment For <a class="lnk pointer-cursor action mgn-lt-10" (click)="changeService()">Change
-                                    Service</a></div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-5">Appointment For <a
+                                        class="lnk pointer-cursor action mgn-lt-10" (click)="changeService()">Change
+                                        Service</a></div>
                                 <div class="col-sm-12 col-xs-12 col-md-12">
                                     <div class="card-body" *ngIf="sel_ser">
                                         <div class="service-icon pull-left"
@@ -45,7 +46,7 @@
                                         </div>
                                         <h6 class="card-title service">
                                             {{sel_ser_det.name}}
-                                        </h6>                                        
+                                        </h6>
                                         <div class="">
                                             <div class="prepay-amt mgn-bt-20" *ngIf="sel_ser_det.isPrePayment">
                                                 <!-- {{prepayment_amnt_cap}} -->
@@ -142,15 +143,15 @@
                                     <div class="icon-add pull-left" *ngIf="settingsjson.futureDateWaitlist"
                                         (click)="calculateDate(1)"></div>
                                 </div>
-                                <div class="pull-left " *ngIf="settingsjson.futureDateWaitlist">
-                                        <div class="pickerouter caldiv">
-                                        <mat-datepicker-toggle matSuffix [for]="picker">
-                                        </mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                        <input class="form-control hidden" type="text" matInput [matDatepicker]="picker"
-                                            [min]="minDate" [max]="maxDate" [value]="ddate"
-                                            (dateChange)="handleFutureDateChange($event)">
-                                    </div>
+                                <div class="pickerouter caldiv pull-left " *ngIf="settingsjson.futureDateWaitlist">
+
+                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <input class="" style="visibility:hidden; width:1px" type="text" [matDatepicker]="picker"
+                                        [min]="minDate" [max]="maxDate" [value]="ddate"
+                                        (dateChange)="handleFutureDateChange($event)">
+
                                 </div>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -177,7 +178,7 @@
                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">Booking For <a
                                             class="lnk pointer-cursor action mgn-lt-10"
-                                            (click)="handleSideScreen('members')">Change 
+                                            (click)="handleSideScreen('members')">Change
                                             <!-- <i class="fa fa-pencil"></i> -->
                                         </a>
                                     </div>
@@ -231,7 +232,8 @@
                                         </mat-chip-list>
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-10 mgn-bt-5 no-padding">Appointment Slot</div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-10 mgn-bt-5 no-padding">
+                                            Appointment Slot</div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                             <h6 class="card-title serv-time" *ngIf="apptTime">
                                                 <span
@@ -468,8 +470,7 @@
                         <ng-container *ngFor="let service of servicesjson; let i = index">
                             <!-- *ngIf="!service.provider || (service.provider && service.provider.id==userId)" -->
                             <div class="bus-item-medium" [class.div-selected-outline]="service.id==sel_ser">
-                                <div class="card card-item-n no-padding "
-                                    >
+                                <div class="card card-item-n no-padding ">
                                     <div class="card-item-title">
                                         <a class="pointer-cursor"
                                             (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
@@ -488,16 +489,17 @@
                                             </b>
                                         </a>
                                         <p class="title-style"
-                                        *ngIf="service.provider && service.provider.businessName">
-                                        {{service.provider.businessName}}</p>
-                                    </div>    
+                                            *ngIf="service.provider && service.provider.businessName">
+                                            {{service.provider.businessName}}</p>
+                                    </div>
                                     <div class="card-item-content">
                                         <div class="card-item-content-action">
-                                            <div class="checkin-btn-bp1 mgn-up-10" (click)="handleServiceSel(service.id)">
+                                            <div class="checkin-btn-bp1 mgn-up-10"
+                                                (click)="handleServiceSel(service.id)">
                                                 Select
                                             </div>
                                         </div>
-                                    </div>                                
+                                    </div>
                                 </div>
                             </div>
                         </ng-container>
@@ -511,9 +513,9 @@
                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                         <ng-container *ngFor="let dept of departments; let i = index">
                             <!-- *ngIf="!service.provider || (service.provider && service.provider.id==userId)" -->
-                            <div class="bus-item-medium bus-item-medium-dpt" [class.div-selected-outline]="dept.departmentId==selected_dept.departmentId">
-                                <div class="card card-item-n no-padding "
-                                    >
+                            <div class="bus-item-medium bus-item-medium-dpt"
+                                [class.div-selected-outline]="dept.departmentId==selected_dept.departmentId">
+                                <div class="card card-item-n no-padding ">
                                     <div class="card-item-title">
                                         <a (click)="handleDepartment(dept)">
                                             <b>

@@ -2045,7 +2045,7 @@ sup {
 
 .form-level-settings {
   font-size: .8rem !important;
-  font-family: 'Roboto Slab', sans-serif !important;
+  /* font-family: 'Roboto Slab', sans-serif !important; */
   color: #999999 !important;
   font-style: italic !important;
   /* text-align: justify; */
@@ -2054,7 +2054,7 @@ sup {
 }
 .head-level-settings {
   font-size: .85rem !important;
-  font-family: 'Roboto Slab', sans-serif !important;
+  /* font-family: 'Roboto Slab', sans-serif !important; */
   color: #999999 !important;
   font-style: italic !important;
   text-align: justify;
@@ -5638,7 +5638,7 @@ li.separator.setsplit {
 
 .settings_info {
   font-size: .75rem !important;
-  font-family: 'Roboto Slab', sans-serif !important;
+  /* font-family: 'Roboto Slab', sans-serif !important; */
   color: #999999 !important;
   /* text-align: justify; */
   line-height: 2;
@@ -8796,7 +8796,7 @@ owl-carousel .bt3.active {
 
 .batch-hint {
   font-size: .75rem;
-  font-family: 'Roboto Slab', sans-serif;
+  /* font-family: 'Roboto Slab', sans-serif; */
 }
 
 .batch .ynw-common-form-nm .c-ot .item {
@@ -11327,7 +11327,7 @@ background-color: #f0f0f5 !important;
   font-weight: 500;
 }
 .express-signup {
-  font-family: sans-serif !important;
+  /* font-family: sans-serif !important; */
   text-align: center;
 }
 .wizard-popup-text {

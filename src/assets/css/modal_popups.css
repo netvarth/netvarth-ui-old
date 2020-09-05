@@ -1029,14 +1029,14 @@
 }
 
 .signupmainclass div, .signupmainclass label, .signupmainclass input, .loginmainclass div, .loginmainclass label, .loginmainclass input, .moreoptionsmainclass div, .moreoptionsmainclass label, .moreoptionsmainclass input, .forgotpasswordmainclass div, .forgotpasswordmainclass label, .forgotpasswordmainclass input, .commonpopupmainclass div, .commonpopupmainclass label, .commonpopupmainclass input, .googlemainmappopup div, .googlemainmappopup label, .googlemainmappopup input, .outer-card div, .outer-card label, .outer-card input, .consumerpopupmainclass div, .consumerpopupmainclass label, .consumerpopupmainclass input, .specialclass div, .specialclass label, .specialclass input {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: .875rem;
     font-weight: 500;
 }
 
 .signupmainclass div .mat-slide-toggle-content, .signupmainclass label .mat-slide-toggle-content, .signupmainclass input .mat-slide-toggle-content, .loginmainclass div .mat-slide-toggle-content, .loginmainclass label .mat-slide-toggle-content, .loginmainclass input .mat-slide-toggle-content, .moreoptionsmainclass div .mat-slide-toggle-content, .moreoptionsmainclass label .mat-slide-toggle-content, .moreoptionsmainclass input .mat-slide-toggle-content, .forgotpasswordmainclass div .mat-slide-toggle-content, .forgotpasswordmainclass label .mat-slide-toggle-content, .forgotpasswordmainclass input .mat-slide-toggle-content, .commonpopupmainclass div .mat-slide-toggle-content, .commonpopupmainclass label .mat-slide-toggle-content, .commonpopupmainclass input .mat-slide-toggle-content, .googlemainmappopup div .mat-slide-toggle-content, .googlemainmappopup label .mat-slide-toggle-content, .googlemainmappopup input .mat-slide-toggle-content, .outer-card div .mat-slide-toggle-content, .outer-card label .mat-slide-toggle-content, .outer-card input .mat-slide-toggle-content, .consumerpopupmainclass div .mat-slide-toggle-content, .consumerpopupmainclass label .mat-slide-toggle-content, .consumerpopupmainclass input .mat-slide-toggle-content, .specialclass div .mat-slide-toggle-content, .specialclass label .mat-slide-toggle-content, .specialclass input .mat-slide-toggle-content {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
 }
@@ -1044,7 +1044,7 @@
 .signupmainclass .mat-dialog-title, .loginmainclass .mat-dialog-title, .moreoptionsmainclass .mat-dialog-title, .forgotpasswordmainclass .mat-dialog-title, .commonpopupmainclass .mat-dialog-title, .googlemainmappopup .mat-dialog-title, .outer-card .mat-dialog-title, .consumerpopupmainclass .mat-dialog-title, .specialclass .mat-dialog-title {
     margin: 0;
     padding: 15px 20px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     font-size: 1.25rem;
     font-weight: 600;
@@ -3117,7 +3117,7 @@
 .consumerpopupmainclass .mat-dialog-title {
     margin: 0;
     padding: 20px 20px 10px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-size: 1.25rem;
     font-weight: 600;
