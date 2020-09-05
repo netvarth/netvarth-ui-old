@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
-import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -21,12 +20,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 export class HeaderComponent implements OnInit, OnDestroy {
   @Input() headerTitle: string;
   @Input() includedfrom: string;
-  @Input() passedDomain: string;
-  @Input() passedkwdet: any = [];
-  @Input() passedRefine: any = [];
-  @Output() searchclick = new EventEmitter<any>();
   @Output() scrollhideclass = new EventEmitter<any>();
-  @Input() source;
+  // @Input() source;
   sign_in_cap = Messages.SIGN_IN_CAP;
   join_cap = Messages.JOIN_CAP;
   are_you_ser_pro = Messages.ARE_YOU_SER_PRO_CAP;
@@ -62,17 +57,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   small_device_display = false;
   show_small_device_queue_display = false;
   returnedFromCheckDetails = false;
-  breadcrumb_moreoptions: any = [];
   apis_loaded = false;
-  breadcrumbs_init = [
-    {
-      // title: Messages.DASHBOARD_TITLE,
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
-    }
-  ];
   noFilter = true;
   arr: any = [];
-  breadcrumbs = this.breadcrumbs_init;
   server_date;
   isServiceBillable = true;
   subscription: Subscription;
@@ -91,7 +78,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   inboxCntFetched;
   showmobileSubmenu = false;
   showlocation = false;
-  @Input() moreOptions: any = [];
   urls_class = [
     { url: '\/provider\/bwizard', class: 'itl-steps' },
     { url: '\/provider\/settings\/.+', class: 'dashb' },
@@ -100,10 +86,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isprovider = false;
   ctype;
   active_license;
-  public searchfields: SearchFields = new SearchFields();
-  locationholder = { 'autoname': '', 'name': '', 'lat': '', 'lon': '', 'typ': '' };
-  keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': '' };
-  selected_domain = '';
   avoidClear = 1;
   upgradablepackages: any = [];
   main_loading = false;
@@ -112,19 +94,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   provsignTooltip = '';
   api_error = null;
   showLearnMore = false;
-  passedDet = {};
   screenHeight;
   hideMenu = false;
   qAvailability;
-  jsonlist: any = [];
-  popSearches: any = [];
-  public popular_searches: any = [];
-  showmorepopularoptions = false;
-  showMorepopularOptionsOverlay = false;
   origin = 'header';
-  showmoreSearch = false;
-  maxCount = 5;
-  searchLength = 0;
   account_type;
   licenseMetrics: any = [];
   selectedpkgMetrics: any = [];
@@ -148,10 +121,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.getUserdetails();
           this.handleHeaderclassbasedonURL();
           break;
-        // case 'upgradelicence':
-        //   this.setLicense();
-        //   this.getUpgradablePackages();
-        //   break;
         case 'main_loading':
           this.main_loading = message.action || false;
           break;
@@ -164,29 +133,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
           break;
         case 'learn_more':
-          // this.showLearnMore = true;
-          // this.scrollhideclass.emit(false);
-          // this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
           this.router.navigate(['/provider/learnmore/' + message.target.scrollKey]);
           break;
         case 'faq':
-          // this.showLearnMore = true;
-          // this.scrollhideclass.emit(false);
-          // this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
           this.router.navigate(['/provider/faq/' + message.target.scrollKey]);
-          break;
-        // case 'instant_q':
-        //   this.qAvailability = message.qAvailability;
-        //   break;
-        case 'popularList':
-          this.jsonlist = message.target;
-          if (this.jsonlist) {
-            this.popular_search(this.jsonlist);
-          }
-          break;
-        case 'popularSearchList':
-          this.jsonlist = message.target;
-          this.popular_search(this.jsonlist);
           break;
       }
       this.getBusinessdetFromLocalstorage();
@@ -210,7 +160,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
     this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
-    // this.setLicense();
     this.getBusinessdetFromLocalstorage();
     this.isprovider = this.shared_functions.isBusinessOwner();
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
@@ -224,13 +173,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // if (this.cronHandle) {
       //   this.cronHandle.unsubscribe();
       // }
-    }
-    // if (this.ctype === 'provider') {
-    //   this.isAvailableNow();
-    //   this.getLicenseDetails();
-    // }
-    if (this.jsonlist && this.ctype !== 'provider') {
-      this.popular_search(this.jsonlist);
     }
     if (this.ctype === 'consumer') {
     this.getInboxUnreadCnt();
@@ -444,93 +386,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         break;
     }
   }
-  switchtoConsumer() {
-    const pdata = { 'ttype': 'fromprovider' };
-    this.shared_functions.sendSwitchMessage(pdata);
-    this.showmobileSubmenu = false;
-    const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
-    const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
-    const password = this.shared_service.get(enc_pwd, projectConstants.KEY);
-    setTimeout(() => {
-      this.shared_service.ProviderLogout()
-        .subscribe(() => {
-          this.shared_functions.clearLocalstorage();
-          const post_data = {
-            'countryCode': '+91',
-            'loginId': ynw.loginId,
-            'password': password
-          };
-          this.shared_functions.consumerLogin(post_data);
-          this.shared_functions.setitemonLocalStorage('jld', enc_pwd);
-        },
-          () => {
-          }
-        );
-    }, 2000);
-
-  }
-  switchtoProvider() {
-    const pdata = { 'ttype': 'fromconsumer' };
-    this.shared_functions.sendSwitchMessage(pdata);
-    const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
-    const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
-    const password = this.shared_service.get(enc_pwd, projectConstants.KEY);
-    this.shared_service.ConsumerLogout()
-      .subscribe(() => {
-        this.shared_functions.clearLocalstorage();
-        const post_data = {
-          'countryCode': '+91',
-          'loginId': ynw.loginId,
-          'password': password
-        };
-        this.shared_functions.providerLogin(post_data)
-          .then(
-            res => {
-              this.shared_functions.setitemonLocalStorage('jld', enc_pwd);
-            },
-            error => {
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            }
-          );
-        this.shared_functions.setitemonLocalStorage('jld', enc_pwd);
-      }
-      );
-  }
-  createProviderAccount() {
-    const ynw = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    const firstname = ynw.firstName;
-    const lastname = ynw.lastName;
-    const mobile = ynw.primaryPhoneNumber;
-    const storage_Data = {
-      fname: firstname,
-      lname: lastname,
-      ph: mobile
-    };
-    this.shared_functions.setitemonLocalStorage('ynw-createprov', storage_Data);
-    this.shared_service.ConsumerLogout()
-      .subscribe(() => {
-        this.shared_functions.clearLocalstorage();
-        const moreOptions = {
-          isCreateProv: true,
-          dataCreateProv: storage_Data
-        };
-        this.doSignup('provider', moreOptions);
-        this.router.navigate(['/']);
-      },
-        () => {
-        }
-      );
-  }
-  handlesearchClick(ob) {
-    this.searchclick.emit(ob);
-  }
   getInboxUnreadCnt() {
     let usertype;
-    // if (this.ctype === 'provider') {
-    //   usertype = 'account';
-    // } else {
     usertype = this.ctype;
-    // }
     this.shared_service.getInboxUnreadCount(usertype)
       .subscribe(data => {
         this.inboxCntFetched = true;
@@ -570,62 +428,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         () => {
         });
   }
-  popularClicked(kw) {
-    this.showmorepopularoptions = false;
-    this.popular_searches = kw;
-    const pdata = { 'ttype': 'popular', 'target': this.popular_searches };
-    this.shared_functions.sendMessage(pdata);
-  }
-  popular_search(jsonlist) {
-    this.popSearches = [];
-    this.showmoreSearch = false;
-    if (jsonlist && jsonlist.length === 0) {
-      this.popSearches = this.shared_functions.getitemfromLocalStorage('popularSearch');
-    } else {
-      this.popSearches = jsonlist;
-    }
-    if (this.popSearches) {
-      this.searchLength = this.popSearches.length;
-      for (let i = 0; i < this.popSearches.length; i++) {
-        if (i < this.maxCount) {
-          this.popSearches[i].show = true;
-        }
-      }
-    }
-  }
-  showMoreItems() {
-    if (this.showmorepopularoptions) {
-      this.showmorepopularoptions = false;
-      this.showMorepopularOptionsOverlay = false;
-    } else {
-      this.showmorepopularoptions = true;
-      this.showMorepopularOptionsOverlay = true;
-    }
-  }
-  closeMorepopularoptions() {
-    this.showmorepopularoptions = false;
-    this.showMorepopularOptionsOverlay = false;
-  }
-  showpopularSerach(origin) {
-    this.showmoreSearch = false;
-    if (origin === 'more' && this.popSearches) {
-      for (let i = 0; i < this.popSearches.length; i++) {
-        if (i >= this.maxCount) {
-          this.popSearches[i].show = true;
-        }
-      }
-      this.showmoreSearch = true;
-    }
-    if (origin === 'less') {
-      for (let i = 0; i < this.popSearches.length; i++) {
-        if (i >= this.maxCount) {
-          this.popSearches[i].show = false;
-        }
-      }
-      this.showmoreSearch = false;
-    }
-  }
-
   gotoPricing() {
     this.router.navigate(['business', 'jaldeepricing']);
 

@@ -42,6 +42,7 @@ import { ConsumerDonationModule } from './components/donations/consumer-donation
 import { CheckinDetailComponent } from './components/home/checkindetail.component';
 import { ApptDetailComponent } from './components/home/appointmentdetail.component';
 import { MeetingDetailsComponent } from './components/meeting-details/meeting-details.component';
+import { SearchFormModule } from '../shared/components/search-form/search-form.module';
 
 @NgModule({
   imports: [
@@ -64,7 +65,8 @@ import { MeetingDetailsComponent } from './components/meeting-details/meeting-de
     CheckinAddMemberModule,
     LoadingSpinnerModule,
     ConsumerAppointmentModule,
-    ConsumerDonationModule
+    ConsumerDonationModule,
+    SearchFormModule
   ],
   declarations: [
     ConsumerComponent,

@@ -13,6 +13,7 @@ export class Razorpaymodel {
     name: string;
     description: string;
     image: string;
+    retry: boolean;
     prefill = this.razorprefillmodel;
     modal: {
         // We should prevent closing of the form when esc key is pressed.

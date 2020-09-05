@@ -87,7 +87,7 @@ header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx .noti-no {
     background-color: #00cc96;
     color: #fff;
     text-align: center;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: bold;
     font-size: .65rem;
     top: -5px;
@@ -276,7 +276,7 @@ header.consumer .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .
     font-size: .875rem;
     padding-left: 40px;
     text-overflow: ellipsis;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     color: #222223;
@@ -365,7 +365,7 @@ header.consumer .tp-srch .sa-dm .mat-form-field .mat-form-field-wrapper .mat-for
     border-radius: 0px;
     /*display: flex;*/
     align-items: center;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     font-size: .875rem;
@@ -416,7 +416,7 @@ header.consumer .tp-srch .sa-dm .mat-form-field .mat-form-field-wrapper .mat-for
 header.consumer .tp-srch .sa-src {
     width: 100%;
     flex-shrink: 1;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
@@ -441,7 +441,7 @@ header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .ma
 header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-infix .mat-input-element, header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-infix .mat-input-element {
     height: 50px;
     padding: 15px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     font-size: 0.875rem;
@@ -472,7 +472,7 @@ header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .ma
 header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label, header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper .mat-form-field-label {
     padding-left: 15px;
     padding-top: 10px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
 }
@@ -864,7 +864,7 @@ header.dashb .lg-opt .bnps .mn-title .title-bn, header.dashb .lg-opt .bnps .mn-t
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     width: 100%;
 }
@@ -888,7 +888,7 @@ header.dashb .lg-opt .bnps .mn-title .title-bn, header.dashb .lg-opt .bnps .mn-t
 }
 
 header.dashb .lg-opt .bnps .mn-title .title-ps {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: .875rem;
     font-weight: 400;
@@ -924,7 +924,7 @@ header.dashb .lg-opt .bnps .inbx .ot-bx .noti-no {
     background-color: #00cc96;
     color: #fff;
     text-align: center;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: bold;
     font-size: .65rem;
     top: -2px;
@@ -1294,7 +1294,7 @@ header.dashb .mobile-menu .row .menu-outer .outer .sect2 .mn-title .title-bn, he
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     width: 100%;
 }
@@ -1316,7 +1316,7 @@ header.dashb .mobile-menu .row .menu-outer .outer .sect2 .mn-title .title-bn, he
 }
 
 header.dashb .mobile-menu .row .menu-outer .outer .sect2 .mn-title .title-ps {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: .875rem;
     font-weight: 400;
@@ -1426,7 +1426,7 @@ footer.dashb .sect3 .spt-controls .list li .alert-count {
     background-color: #00cc96;
     color: #1c1d21;
     text-align: center;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: bold;
     font-size: .70rem;
     top: 2px;
@@ -1696,7 +1696,7 @@ footer.dashb.show .stp-box {
 
 footer {
     color: #fff;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
@@ -2075,7 +2075,7 @@ footer .sect2 p {
     background: #fff;
     height: 60px;
     font-size: 1.125rem;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     color: #222223;
 }
@@ -2176,7 +2176,7 @@ footer .sect2 p {
 
 header {
     padding: 20px 0;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     background: #fff;
   }

@@ -8,34 +8,30 @@
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
     <div class="container">
         <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
-            <div  *ngIf = "source !== 'business'" class="lgo col-md-3 col-xs-5 pull-left">
+            <div *ngIf="source !== 'business'" class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
-        </div>
-        <div *ngIf="includedfrom =='phome'" class="pull-right">
-            <span class="visible-xs visible-sm hamburg">
-                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                    <i class="fa fa-bars"></i>
-                </button>
-                <mat-menu #menu="matMenu">
-                        <a class="mob-nav-item"  (click)="gotoproducts()"> Jaldee Products</a>
+            </div>
+            <div *ngIf="includedfrom =='phome'" class="pull-right">
+                <span class="visible-xs visible-sm hamburg">
+                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <a class="mob-nav-item" (click)="gotoproducts()"> Jaldee Products</a>
                         <a class="mob-nav-item" (click)="gotoPricing()">Jaldee Pricing</a>
-                      <!-- <a class="mob-nav-item"  (click)="gotosales()">Jaldee Sales</a> -->
-                      <a class="mob-nav-item" (click)="gotocontactus()">Contact us</a>
-                    <!-- <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                        <i class="icon-delete"></i>
-                        <span>delete</span>
-                    </button> -->
-                </mat-menu>
-            </span>
-            <ul class="navul" class="hidden-xs hidden-sm">
-                <li class="navli"  (click)="gotoproducts()"> Jaldee Products</li>
-                <li class="navli" (click)="gotoPricing()">Jaldee Pricing</li>
-              <li class="navli"  (click)="gotosales()">Jaldee Sales</li>
-              <li class="navli" (click)="gotocontactus()">Contact us</li>
+                        <a class="mob-nav-item" (click)="gotocontactus()">Contact us</a>
+                    </mat-menu>
+                </span>
+                <ul class="navul" class="hidden-xs hidden-sm">
+                    <li class="navli" (click)="gotoproducts()"> Jaldee Products</li>
+                    <li class="navli" (click)="gotoPricing()">Jaldee Pricing</li>
+                    <li class="navli" (click)="gotosales()">Jaldee Sales</li>
+                    <li class="navli" (click)="gotocontactus()">Contact us</li>
 
-            </ul> 
-        </div>
-            <div class="tc1 col-md-3 col-xs-7 no-padding-small ml-auto" *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
+                </ul>
+            </div>
+            <div class="tc1 col-md-3 col-xs-7 no-padding-small ml-auto"
+                *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
                 <div class="topsignouter" [matTooltipClass]="tooltipcls" [matTooltip]="custsignTooltip"><button
                         class="sgn" (click)="doLogin('consumer')"
                         *ngIf="!shared_functions.checkLogin()">{{sign_in_cap}}</button> <button class="jn"
@@ -70,7 +66,7 @@
                     </div>
                 </div>
                 <div class="lgmem">
-                    <span class="lgin" *ngIf = "source !== 'business'">
+                    <span class="lgin" *ngIf="source !== 'business'">
                         <i *ngIf="qAvailability && qAvailability.availableNow" class="fa fa-circle avail"></i><i
                             *ngIf="qAvailability && !qAvailability.availableNow"
                             class="fa fa-circle notavail"></i>{{userdet.userName | capitalizeFirst}}
@@ -189,8 +185,6 @@
                                         {{change_password}}</li>
                                     <li (click)="redirectto('change-mobile')"><i class="icon-mobile"></i>
                                         {{change_mobile}}</li>
-                                    <!-- <li (click)="switchtoConsumer()" *ngIf="isprovider"><i class="icon-switch"></i>
-                                        {{switch_to_consumer}}</li> -->
                                     <li (click)="doLogout()"><i class="icon-logout"></i> {{logout_cap}}</li>
                                 </ul>
                             </div>
@@ -202,17 +196,16 @@
     </ng-container>
 </header>
 <header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home' && includedfrom!='phome'">
-    <div class="container">
-        <div class="col-md-22 col-xs-12 col-sm-12" style="padding:15px 0;">
+    <div class="container no-padding">
+        <div class="col-md-22 col-xs-12 col-sm-12 no-padding">
             <div class="tp-1">
-                <div class="tp-l lgo" *ngIf = "source !== 'business'"><a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee logo"></a>
+                <div class="tp-l lgo" *ngIf="source !== 'business'"><a routerLink="/"><img
+                            src="assets/images/jaldee-logo.png" alt="Jaldee logo"></a>
                 </div>
                 <div class="tp-r">
                     <div class="tc1">
                         <div class="topsignouter">
-                            <!-- <button *ngIf = "source == 'business'" class="sgn">Play Store</button>
-                            <button *ngIf = "source == 'business'" class="jn">App Store</button> -->
-                            <div *ngIf = "source == 'business'" class="app-btn">
+                            <!-- <div *ngIf = "source == 'business'" class="app-btn">
                                 <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="app-btn1">
                                   <img [lazySrc]="images.jaldee_playstore" lazySrcVisible="visible"
                                     alt="Download Business app from Google Play"></a> &nbsp;
@@ -220,10 +213,10 @@
                                   <img [lazySrc]="images.jaldee_appstore" lazySrcVisible="visible"
                                     alt="Download Business app from App Store">
                                 </a>
-                              </div>
+                              </div> -->
                             <button class="sgn" (click)="doLogin('consumer')"
-                                *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button> <button class="jn"
-                                (click)="doSignup('consumer')"
+                                *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button>
+                            <button class="jn" (click)="doSignup('consumer')"
                                 *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{join_cap}}</button>
                             <ng-container *ngIf="ctype=='consumer'">
                                 <div class="bnps">
@@ -238,10 +231,10 @@
                                 </div>
                             </ng-container>
                             <div class="lgmem" *ngIf="ctype=='consumer'">
-                                <span class="lgin">
-                                    {{userdet.userName}}
+                                <span class="lgin cust">
+                                    <span class="hidden-xs">{{userdet.userName}}</span>
                                     <button mat-icon-button [matMenuTriggerFor]="menu">
-                                        <i class="icon-angle-down"></i>
+                                        <i class="fa fa-user-circle-o" ></i>
                                     </button>
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="redirectto('dashboard')">
@@ -264,24 +257,10 @@
                                             <i class="icon-members"></i>
                                             <span>{{family_members}}</span>
                                         </button>
-                                        <!-- <button mat-menu-item (click)="switchtoProvider()"
-                                            *ngIf="!isprovider && provider_loggedin">
-                                            <i class="icon-switch"></i>
-                                            <span>{{switch_to_provider}}</span>
-                                        </button> -->
-                                        <!-- <button mat-menu-item (click)="createProviderAccount()"
-                                            *ngIf="!isprovider && consumer_loggedin">
-                                            <i class="icon-createprovider"></i>
-                                            <span>{{create_pro_accnt}}</span>
-                                        </button> -->
                                         <button mat-menu-item (click)="help()">
                                             <i data-icon="B"></i>
                                             <span>{{help_cap}}</span>
                                         </button>
-                                        <!-- <button mat-menu-item (click)="faq()">
-        <i data-icon="B"></i>
-        <span>FAQ</span>
-    </button> -->
                                         <button mat-menu-item (click)="doLogout()">
                                             <i class="icon-logout"></i>
                                             <span>{{logout_cap}}</span>
@@ -299,35 +278,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-22 col-xs-12 col-sm-12 no-padding " *ngIf="source !== 'business'">
-            <div class="tp-1">
-                <app-search style="width: 100%" [showopennow]="0" [searchfields]="searchfields"
-                    [includedfrom]="'consumer_header'" [passedRefine]="passedRefine"
-                    (searchclick)="handlesearchClick($event)" [passedDomain]="passedDomain" [passedkwdet]="passedkwdet">
-                </app-search>
-            </div>
-        </div>
-
-        <div class="col-md-22 col-xs-12 col-sm-12 no-padding" *ngIf="source !== 'business'">
-            <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="popSearches !== null && searchLength > 0">
-                <div class="row popular">
-                    <p class="pop-search"><b style="padding-right: 10px; line-height:40px">Popular Searches: </b>
-                        <span class="pointer-cursor" *ngFor="let kw of popSearches" (click)="popularClicked(kw)">
-                            <a *ngIf="kw.autoname && kw.show">{{kw.autoname}}</a>
-                            <a *ngIf="kw.displayname && kw.show">{{kw.displayname}}</a>
-                        </span>
-                        <a class="learnmore-pointer" style="padding-left:10px !important;"
-                            *ngIf="searchLength > maxCount && !showmoreSearch"
-                            (click)="showpopularSerach('more')">more...</a>
-                        <a class="learnmore-pointer" style="padding-left:10px !important;" *ngIf="showmoreSearch"
-                            (click)="showpopularSerach('less')">less...</a>
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
 </header>
-
 <div style="background: white" *ngIf="ctype=='provider' && headercls=='dashb'">
     <div class="col-md-12">
         <div class="row">
@@ -345,10 +297,6 @@
                         (click)="upgradeMembership()" style="color: #00aef2" class="pointer-cursor"> <b> Upgrade license
                             now</b> </span> for more features.</span>
             </p>
-            <!-- <p style="width: 100%; text-align: left;" *ngIf="active_license=='Diamond'">Your current
-                license is
-                <i style="color:red">{{active_license}}</i>.
-            </p> -->
         </div>
     </div>
 </div>

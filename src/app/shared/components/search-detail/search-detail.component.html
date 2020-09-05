@@ -1,6 +1,7 @@
 <app-header *ngIf="showsearchsection && obtainedRefined" [headerTitle]="'Header'"
-    (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet"
-    [passedRefine]="searchcommononlyrefine_arr"></app-header>
+   ></app-header>
+     <app-search-form *ngIf="showsearchsection && obtainedRefined" (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet"
+   [passedRefine]="searchcommononlyrefine_arr"></app-search-form> 
 <section class="content">
     <div class="container">
         <div class="row">
@@ -600,7 +601,7 @@
                                     *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
                                     <ng-container
                                         *ngIf="search_result.fields['estimatedtime_det']['personAhead'] || search_result.fields['estimatedtime_det']['personAhead'] === 0">
-                                        <div class="checkin-est" style="margin-bottom: 5px"
+                                        <div class="checkin-est"
                                             *ngIf="!search_result.fields['opennow']">
                                             <span class="est-time">Next Available Time</span>
                                             <span

@@ -15,7 +15,7 @@
     height: 40px;
     line-height: 40px;
     align-items: center;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     color: rgba(0, 0, 0, 0.7);
     -moz-transition: all 300ms;
@@ -61,7 +61,7 @@
 }
 
 .mat-snack-bar-container .mat-simple-snackbar {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .mat-checkbox, .mat-select, .mat-form-field {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
 }
 
@@ -95,7 +95,7 @@
     outline: none !important;
     color: #fff !important;
     font-size: .875rem !important;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     position: relative;
@@ -198,7 +198,7 @@
     background: white;
     /* border: 1px solid #b6cdd8; */
     border-bottom: 1px solid #b6cdd8;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: 0.875rem;
     font-weight: 500;
@@ -277,7 +277,7 @@
     width: 100px;
     padding: 10px;
     border: 1px solid #b6cdd8;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: 0.875rem;
     font-weight: 500;
@@ -307,7 +307,7 @@
 }
 
 .mat-form-field {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
 }
 
@@ -353,7 +353,7 @@
 .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
     height: 40px;
     padding: 10px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     background: white;
     border-bottom: 1px solid #b6cdd8;
@@ -399,7 +399,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 
 .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
     /* background: transparent; */
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     padding: 0 20px;
     font-size: 1.25rem;
@@ -478,7 +478,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     padding-left: 0px;
     padding-right: 0px;
     padding-bottom: 20px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
@@ -523,7 +523,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   
   .cdk-overlay-container .mat-dialog-container .mat-select-content .mat-option {
     padding: 0 10px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: .875rem;
     font-weight: 500;
@@ -542,7 +542,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   
   .cdk-overlay-container .mat-select-panel {
     box-shadow: none !important;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: .875rem;
     font-weight: 500;
@@ -560,7 +560,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   }
   
   .cdk-overlay-container .mat-select-panel .mat-option-text {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
   }
@@ -601,7 +601,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   }
   
   .cdk-overlay-container .mat-autocomplete-panel .mat-option {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: .875rem;
     font-weight: 500;
@@ -611,7 +611,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   .cdk-overlay-container .mat-autocomplete-panel .mat-optgroup .mat-optgroup-label {
     background: #00aef2;
     color: #fff;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-size: .875rem;
     font-weight: 600 !important;
@@ -626,7 +626,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     border-bottom-left-radius: 0px !important;; 
   }
   .mat-expansion-panel-header, .mat-expansion-panel-content {
-    font-family: 'Montserrat', sans-serif !important
+    /* font-family: 'Montserrat', sans-serif !important */
   }
  .custom.mat-card{
    padding:0.5px!important;

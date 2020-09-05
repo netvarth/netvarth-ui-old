@@ -744,7 +744,7 @@ figure:hover img {
 .srch-slider-features h1 {
   font-weight: 600 !important;
   font-size: 1.75rem !important;
-  font-family: 'arial' !important;
+  /* font-family: 'arial' !important; */
 }
 
 .srch-slider-features .jd_feat {
@@ -1603,7 +1603,7 @@ marquee p {
   letter-spacing: 1px !important;
   line-height: 1.9 !important;
   text-align: -webkit-auto !important;
-  font-family: 'Montserrat', sans-serif !important;
+  /* font-family: 'Montserrat', sans-serif !important; */
 }
 
 .phome p.sub-txt {
@@ -1611,7 +1611,7 @@ marquee p {
   color: #51585f !important;
   max-width: 800px !important;
   margin: 20px 0 !important;
-  font-family: 'Montserrat', sans-serif !important;
+  /* font-family: 'Montserrat', sans-serif !important; */
 }
 
 .phome img {
@@ -5802,7 +5802,7 @@ font-family: mons;
 .navbar.navbar-clean a {
   color: #000000;
   font-weight: 600;
-  font-family: 'Montserrat'-Regular
+  /* font-family: 'Montserrat'-Regular */
 }
 
 .navbar.navbar-clean ul > li > a:hover,
@@ -5935,7 +5935,7 @@ transition: all 0.3s ease 0s !important;
   margin-bottom: 37px;
 }
 .input100 {
-  font-family: 'Montserrat'-Regular;
+  /* font-family: 'Montserrat'-Regular; */
   font-size: 15px;
   color: #555555;
   line-height: 1.2;
@@ -5980,7 +5980,7 @@ transition: all 0.3s ease 0s !important;
   background: linear-gradient(left, #21d4fd, #b721ff);
 }
 .focus-input100::after {
-  font-family: 'Montserrat'-Regular;
+  /* font-family: 'Montserrat'-Regular; */
   font-size: 15px;
   color: #999999;
   line-height: 1.2;
@@ -6093,7 +6093,7 @@ transition: all 0.3s ease 0s !important;
 }
 
 .login100-form-btn {
-  font-family: 'Montserat'-Medium;
+  /* font-family: 'Montserat'-Medium; */
   font-size: 15px;
   color: #fff;
   line-height: 1.2;
@@ -6142,7 +6142,7 @@ transition: all 0.3s ease 0s !important;
   right: 0px;
   pointer-events: none;
 
-  font-family: montserat-Regular;
+  /* font-family: montserat-Regular; */
   color: #c80000;
   font-size: 13px;
   line-height: 1.4;
@@ -6411,7 +6411,7 @@ margin: 0px;
 
 .comingsoon{
   font-size: 30px;
-  font-family: 'Montserrat', sans-serif !important;
+  /* font-family: 'Montserrat', sans-serif !important; */
   animation:blinkingText 1.2s infinite;
 }
 @keyframes blinkingText{

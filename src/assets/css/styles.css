@@ -1208,7 +1208,7 @@ body { font-size: 1rem !important}
 }
 
 .content.see-pages .outer-card .card .form-group .mat-radio-group .mat-radio-button {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     margin-right: 10px;
 }

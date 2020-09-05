@@ -1528,6 +1528,7 @@ export const Messages = {
   'GOOD_CAP': 'Good',
   'VERY_GOOD_CAP': ' Very Good',
 
-  'SEND_MESSAGE': 'The [customer] does not have a mobile number/email'
+  'SEND_MESSAGE': 'The [customer] does not have a mobile number/email',
+  'WAITINGLINE': 'Waiting In Line'
 };
 

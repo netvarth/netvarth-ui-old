@@ -1060,7 +1060,31 @@ export class SharedFunctions {
     }
     return rethr + retmin;
   }
-
+  convertMinutesToHourMinuteForCheckin(mins) {
+    let rethr = '';
+    let retmin = '';
+    if (mins > 0) {
+      const hr = Math.floor(mins / 60);
+      const min = Math.floor(mins % 60);
+      if (hr > 0) {
+        if (hr > 1) {
+          rethr = hr + 'Hrs';
+        } else {
+          rethr = hr + 'Hr';
+        }
+      }
+      if (min > 0) {
+        if (min > 1) {
+          retmin = ' ' + min + 'Mins';
+        } else {
+          retmin = ' ' + min + 'Min';
+        }
+      }
+    } else {
+      retmin = '' + 0 + 'Min';
+    }
+    return rethr + retmin;
+  }
   providerConvertMinutesToHourMinute(mins) {
     let rethr = '';
     let retmin = '';

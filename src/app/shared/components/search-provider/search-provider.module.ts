@@ -5,6 +5,7 @@ import { MaterialModule } from '../../modules/common/material.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { HeaderModule } from '../../modules/header/header.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { SearchFormModule } from '../search-form/search-form.module';
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
         MaterialModule,
         CapitalizeFirstPipeModule,
         HeaderModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        SearchFormModule
     ],
     declarations: [
         SearchProviderComponent

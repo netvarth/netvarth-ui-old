@@ -17,6 +17,7 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ConsumerCheckinHistoryListModule } from '../../modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { SearchProviderModule } from '../search-provider/search-provider.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { SearchFormModule } from '../search-form/search-form.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -33,7 +34,8 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
         SearchDetailRoutingModule,
         SearchProviderModule,
         RouterModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        SearchFormModule
     ],
     declarations: [
         SearchDetailComponent,
@@ -41,7 +43,6 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
         ConsumerWaitlistHistoryComponent
     ],
     entryComponents: [
-       
     ]
 })
 
