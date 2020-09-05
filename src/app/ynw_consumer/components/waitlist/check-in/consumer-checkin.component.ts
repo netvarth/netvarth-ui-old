@@ -475,7 +475,8 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     editPhone() {
-        this.edit = false;
+        // this.edit = false;
+        this.action = 'phone';
         this.selected_phone = this.userPhone;
     }
     validateEmail(mail) {
