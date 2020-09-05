@@ -556,10 +556,21 @@
                                                 <li *ngFor="let serv of search_result.fields.serviceList"
                                                     (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">{{serv.name
                                                     | capitalizeFirst}}
-                                                    <span *ngIf="serv.serviceType == 'virtualService'">
+                                                    <!-- <span *ngIf="serv.serviceType == 'virtualService'">
                                                         (<i class="fa fa-video-camera cal-mod-font"
                                                             aria-hidden="true"></i>)
-                                                    </span></li>
+                                                    </span> -->
+                                                    <span *ngIf="serv.serviceType == 'virtualService'">
+                                                        <i class="fa fa-phone"
+                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 3"></i>
+                                                        <i class="fa meet-icon"
+                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 2"></i>
+                                                        <i class="fa zoom-icon"
+                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 1"></i>
+                                                        <i class="fa fa-whatsapp whtsap-ic font-bolder"
+                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 0"></i>
+                                                    </span>
+                                                </li>
                                             </ul>
                                         </div>
 
@@ -644,9 +655,20 @@
                                             <li *ngFor="let appointmentService of search_result.fields.appointmentServiceList"
                                                 (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
                                                 {{appointmentService.name}}
-                                                <span *ngIf="appointmentService.serviceType == 'virtualService'">
+                                                <!-- <span *ngIf="appointmentService.serviceType == 'virtualService'">
                                                     (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
-                                                </span></li>
+                                                </span> -->
+                                                <span *ngIf="appointmentService.serviceType == 'virtualService'">
+                                                    <i class="fa fa-phone"
+                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 3"></i>
+                                                    <i class="fa meet-icon"
+                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 2"></i>
+                                                    <i class="fa zoom-icon"
+                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 1"></i>
+                                                    <i class="fa fa-whatsapp whtsap-ic font-bolder"
+                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 0"></i>
+                                                </span>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="donat-service" *ngIf="search_result.fields.departments">
@@ -682,9 +704,10 @@
                                             <li *ngFor="let donationService of search_result.fields.donationServices"
                                                 (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'donationList')">
                                                 {{donationService.name}}
-                                                <span *ngIf="donationService.serviceType == 'virtualService'">
+                                                <!-- <span *ngIf="donationService.serviceType == 'virtualService'">
                                                     (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
-                                                </span></li>
+                                                </span> -->
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

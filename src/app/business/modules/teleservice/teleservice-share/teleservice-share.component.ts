@@ -144,7 +144,7 @@ export class TeleServiceShareComponent implements OnInit {
         this.msg_to_me = this.providerMsg_firstLine + this.providerMsg_secondLine;
         break;
       case 'Phone':
-        this.msg_to_user = 'Call to this number ' + this.data.meetingLink;
+        this.msg_to_user = 'Will get a call from ' + this.data.busnsName;
         this.msg_to_me = 'Call to this number ' + this.data.meetingLink;
         break;
       case 'Zoom':

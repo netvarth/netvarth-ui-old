@@ -605,6 +605,7 @@ ul.details.badges li {
     margin: auto !important;
     margin-bottom: 10px !important;
     float: left;
+    max-width: 150px;
   }
   .bus-item-long {
     width: 95%;
@@ -648,7 +649,16 @@ ul.details.badges li {
     width: 50% !important;
   }
 }
-
+@media (min-width: 450px) and (max-width: 600px) {
+  .bus-item {
+    width: 33% !important;
+  }
+}
+@media (min-width: 620px) and (max-width: 991px) {
+  .bus-item {
+    width: 25% !important;
+  }
+}
 @media (min-width: 992px) and (max-width: 1200px) {
   .bus-item {
     width: 20% !important;
@@ -658,21 +668,13 @@ ul.details.badges li {
   }
 }
 
-@media (min-width: 320px) and (max-width: 374px) {
-  .bus-item {
-    width: 100% !important;
-  }
-  /* .bus-item .card.card-item-n {
-    width: 200px !important;
-  } */
-}
-
-@media (max-width: 320px) {
+@media (max-width: 374px) {
   .bus-item {
     width: 50% !important;
   }
   .bus-item .card.card-item-n {
-    width: 100% !important;
+    width: 95% !important;
+    margin: auto !important;
   }
 }
 

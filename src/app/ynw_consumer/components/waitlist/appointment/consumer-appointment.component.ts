@@ -1582,7 +1582,7 @@ export class ConsumerAppointmentComponent implements OnInit {
           // alert(JSON.parse(user.profilePicture)['url']);
           return JSON.parse(user.profilePicture)['url'];
         }
-        return 'assets/images/avatar5.png';
+        return 'assets/images/img-null.svg';
     }
     gotoAttachments() {
         this.action = 'attachment';

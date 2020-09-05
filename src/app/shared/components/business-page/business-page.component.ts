@@ -637,9 +637,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.getServiceByLocationid(this.locationjson[i].id, i);
               this.getApptServiceByLocationid(this.locationjson[i].id, i);
               this.locationjson[i]['checkins'] = [];
-              if (this.userType === 'consumer') {
-                this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
-              }
+              // if (this.userType === 'consumer') {
+              //   this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
+              // }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
               if (this.businessjson.id && this.userId) {
                 // appt_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
@@ -2007,6 +2007,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       // alert(JSON.parse(user.profilePicture)['url']);
       return JSON.parse(user.profilePicture)['url'];
     }
-    return 'assets/images/avatar5.png';
+    return 'assets/images/img-null.svg';
   }
 }
