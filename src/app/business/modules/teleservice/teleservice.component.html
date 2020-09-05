@@ -17,21 +17,21 @@
                             <!-- First Page -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding " *ngIf="step === 1">
                                 <!-- Service Name -->
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-10 pad-10">
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10">
                                     <div>
-                                        <h5 class="serv-name-color">
+                                        <h2 class="serv-name-color fnt-lrge">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
                                             <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon"></i>
                                             <i *ngIf="callingModes === 'WhatsApp'"
                                                 class="fa fa-whatsapp fa-lg whtsap-ic"></i>
                                             <i *ngIf="callingModes === 'Phone'" class="fa fa-mobile"></i>
                                             &nbsp;{{serv_name}}
-                                        </h5><br>
+                                        </h2><br>
                                         <h6 class="txt-grn" *ngIf="servStarted">Service is in progress...</h6>
                                     </div>
                                 </div>
                                 <!-- Warning If telemode is WhatsApp/Phone -->
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-10 pad-10"
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign pad-10"
                                     *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && is_web">
                                     <div>
                                         <div class="custmer-font-wght">

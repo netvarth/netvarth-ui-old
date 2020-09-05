@@ -108,6 +108,11 @@ export class TeleServiceComponent implements OnInit {
                 data => {
                     this.data = data;
                     console.log(this.data);
+                    if (this.data.waitlistStatus === 'started') {
+                        this.servStarted = true;
+                    } else {
+                        this.servStarted = false;
+                    }
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
@@ -117,7 +122,7 @@ export class TeleServiceComponent implements OnInit {
                     }
                     this.getMeetingDetails();
                     if (this.waiting_type === 'checkin') {
-                        this.chkinTeleserviceJoinLink();
+                      //  this.chkinTeleserviceJoinLink();
                         this.consumer_fname = this.data.waitlistingFor[0].firstName;
                         this.consumer_lname = this.data.waitlistingFor[0].lastName;
                         if (this.data.waitlistingFor[0].phoneNo) {
@@ -132,6 +137,11 @@ export class TeleServiceComponent implements OnInit {
                 data => {
                     this.data = data;
                     console.log(this.data);
+                    if (this.data.apptStatus === 'Started') {
+                        this.servStarted = true;
+                    } else {
+                        this.servStarted = false;
+                    }
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
@@ -140,7 +150,7 @@ export class TeleServiceComponent implements OnInit {
                         this.emailPresent = true;
                     }
                     this.getMeetingDetails();
-                    this.apptTeleserviceJoinLink();
+                   // this.apptTeleserviceJoinLink();
                     this.consumer_fname = this.data.appmtFor[0].userName;
                 });
     }
@@ -178,14 +188,14 @@ export class TeleServiceComponent implements OnInit {
                         } else if (this.data.waitlistStatus === 'started') {
                             this.shared_functions.openSnackBar('Service already started!');
                         }
-                        // this.chkinTeleserviceJoinLink();
+                         this.chkinTeleserviceJoinLink();
                     } else {
                         if (this.data.apptStatus !== 'Started') {
                             this.changeWaitlistStatus(this.data, 'Started');
                         } else if (this.data.apptStatus === 'Started') {
                             this.shared_functions.openSnackBar('Service already started!');
                         }
-                        //    this.apptTeleserviceJoinLink();
+                            this.apptTeleserviceJoinLink();
                     }
                 }
             }
@@ -338,6 +348,7 @@ export class TeleServiceComponent implements OnInit {
 
         });
     }
+
     // Meeting detail popup
     meetingDetails() {
         this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
@@ -354,7 +365,9 @@ export class TeleServiceComponent implements OnInit {
                 app: this.callingModes,
                 waitingId: this.waiting_id,
                 waitingType: this.waiting_type,
-                busnsName : this.busnes_name
+                busnsName : this.busnes_name,
+                token: this.data.token,
+                checkInTime: this.data.checkInTime
             }
         });
         this.startTeledialogRef.afterClosed().subscribe(result => {
