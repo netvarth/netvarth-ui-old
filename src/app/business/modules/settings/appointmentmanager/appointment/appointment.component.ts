@@ -1224,7 +1224,9 @@ export class AppointmentComponent implements OnInit {
             };
             this.provider_services.getUsers(filter).subscribe(
                 (users: any) => {
+                    const filteredUser = users.filter(user => user.schedules && user.status === 'ACTIVE');
                     this.users = [];
+                    this.users = filteredUser;
                     let found = false;
                     for (let serviceIndex = 0; serviceIndex < this.servicesjson.length; serviceIndex++) {
                         for (let userIndex = 0; userIndex < users.length; userIndex++) {
@@ -1294,7 +1296,9 @@ export class AppointmentComponent implements OnInit {
         };
         this.provider_services.getUsers(filter).subscribe(
             (users: any) => {
-                this.users = users;
+                const filteredUser = users.filter(user => user.schedules && user.status === 'ACTIVE');
+                this.users = [];
+                this.users = filteredUser;
                 this.users.push(this.userN);
                 if (this.selectUser) {
                     const userDetails = this.users.filter(user => user.id === this.selectUser);

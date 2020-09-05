@@ -112,7 +112,8 @@ export const Messages = {
   'ADWORD_EXCEED_LIMIT': 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/Add-on for more benefits',
 
   // WaitlistManager
-  'ONLINE_CHECKIN_SAVED': 'Waitlist settings saved successfully',
+  // 'ONLINE_CHECKIN_SAVED': 'Waitlist settings saved successfully',
+  'ONLINE_CHECKIN_SAVED': 'QManager settings saved successfully',
   'SERVICE_UPDATED': 'Service updated successfully',
   'LABEL_UPDATED': 'Label updated successfully',
   'LABEL_ADDED': 'Label created successfully',
@@ -163,6 +164,15 @@ export const Messages = {
   'PHONE_OR_TAB': 'Send meeting details to your phone/tablet where',
   'IS_INSTALD': 'is available',
   'SEND_REMINDER': 'Send a reminder that the service will begin in',
+  // Teleservice reminder and meeting details
+  'WIL_BEGN': ' will begin. ',
+  'PLS_B_REDY': 'Please be ready.',
+  'HW_TO_JOIN':  'How to join the video call - ',
+  'UR_TURN': 'When it is your turn, Click on the following link - ',
+  'WAIT': 'Wait for ',
+  'JOIN': ' to join',
+  'NET_CNNCT': 'Remember to keep your internet connection turned on to receive the call.',
+  'CAL_U': ' will be calling you shortly. ',
 
   // Payment Setting
   'PAYSETTING_SAV_SUCC': 'Payment settings saved successfully',
@@ -1064,6 +1074,8 @@ export const Messages = {
   'WAITLIST_LOC_STATUS_CAP': 'Location Status',
   'WAITLIST_SET_BASE_CAP': 'Set as base location',
   'WAITLIST_SCHEDULE_CAP': 'Schedule',
+  'WAITLIST_QUEUE_CAP': 'Working Hours',
+
 
   // App-ynw_provider-components-provider-waitlist-locations
   'ADD_NEW_LOC_CAP': 'Add Location',
@@ -1190,7 +1202,7 @@ export const Messages = {
 
   // Jaldee Online
   'JALDEE_ONLINE_DISABLED_MSG': 'Your [customer]s cannot  see you or access you online',
-  'JALDEEONLINE_ENABLED_MSG': 'Your [customer]s can see you online',
+  'JALDEEONLINE_ENABLED_MSG': 'Your [customer]s can see you or access you online',
   'JALDEE_ONLINE_ENABLED_MSG': 'Your [customer]s can see you online by scanning Jaldee QR code and link ',
   'REMEM_MSG_CAP': 'Default bank account selected for online payment is Jaldee bank, if applicable you can set your own bank account from Payment settings.',
   'PROFILE_ENABLED_MSG': 'Your [customer]s can search and find you on Jaldee.com',
@@ -1525,6 +1537,7 @@ export const Messages = {
   'GOOD_CAP': 'Good',
   'VERY_GOOD_CAP': ' Very Good',
 
-  'SEND_MESSAGE': 'The [customer] does not have a mobile number/email'
+  'SEND_MESSAGE': 'The [customer] does not have a mobile number/email',
+  'WAITINGLINE': 'Waiting In Line'
 };
 

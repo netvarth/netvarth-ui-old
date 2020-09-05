@@ -122,6 +122,7 @@ export class DisplayboardDetailComponent implements OnInit {
     footers = 2;
     headerSetting = false;
     footerSetting = false;
+    qboardscaption = 'Add QBoard';
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -136,6 +137,7 @@ export class DisplayboardDetailComponent implements OnInit {
         );
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.value === 'view') {
+                this.qboardscaption = 'QBoard Details';
                 this.actionparam = qparams.value;
             }
         }
@@ -159,6 +161,7 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     addQSet() {
         this.qsetAction = 'add';
+        this.qboardscaption = 'Add QBoard query';
         this.showMode = 'QSET';
         this.source = 'DBOARD';
         this.qsetId = null;
@@ -168,11 +171,14 @@ export class DisplayboardDetailComponent implements OnInit {
             this.getDisplayboardQSets();
         }
         if (qset.source === 'QLIST' && !qset.action) {
+            this.qboardscaption = 'QBoard queries';
             this.source = 'DBOARD';
             this.showMode = 'QSETS';
         } else if (qset.source === 'DBOARD') {
+            this.qboardscaption = 'Add QBoard';
             this.showMode = 'DBOARD'; // when click back to statusboard button
         } else {
+            this.qboardscaption = 'Add QBoard query';
             this.showDboard = false;
             this.qsetAction = qset.action;
             this.qsetId = qset.id;
@@ -181,6 +187,7 @@ export class DisplayboardDetailComponent implements OnInit {
         }
     }
     qSetListClicked() {
+        this.qboardscaption = 'QBoard queries';
         this.source = 'DBOARD';
         this.showMode = 'QSETS';
     }
@@ -303,6 +310,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
                 this.editLayoutbyId(data);
                 this.actionparam = 'view';
+                this.qboardscaption = 'QBoard Details';
             },
                 error => {
                     this.api_loading = false;
@@ -326,6 +334,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                 this.editLayoutbyId(this.layoutData.id);
                 this.actionparam = 'view';
+                this.qboardscaption = 'QBoard Details';
             },
                 error => {
                     this.api_loading = false;
@@ -335,9 +344,10 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     onCancel() {
         if (this.actionparam === 'edit') {
+            this.qboardscaption = 'QBoard Details';
             this.actionparam = 'view';
         } else {
-            this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
         }
     }
     getDisplayboardQSets() {
@@ -373,6 +383,7 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     editlayout(id) {
         this.actionparam = 'edit';
+        this.qboardscaption = 'Edit QBoard';
         this.editLayoutbyId(id);
     }
     resetApiErrors() {
@@ -385,5 +396,8 @@ export class DisplayboardDetailComponent implements OnInit {
         this.selectedQboardlist.push({ 'qBoard': this.qBoardFilterMultictrl.value.displayName, 'interval': this.nestedRefreshInterval });
         this.sbDetailslist.push({ 'sbId': this.qBoardFilterMultictrl.value.id, 'sbInterval': this.nestedRefreshInterval });
         this.clearQboardSelected();
+    }
+    redirecToQmanager() {
+        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
     }
 }

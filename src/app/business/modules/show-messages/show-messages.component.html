@@ -1,0 +1,44 @@
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="data.type === 'why-jaldee'">Why Jaldee
+    business?
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button></h1>
+<div class="col-md-12" mat-dialog-content *ngIf="data.type === 'why-jaldee'">
+    <li class="mgn-bt-20">With Jaldee Business, you can...</li>
+    <li class="mgn-bt-20">Issue tokens and appointment online.</li>
+    <li class="mgn-bt-20">Manage walk-ins, phone-ins and online check-ins under one roof.</li>
+    <li class="mgn-bt-20">Avoid queues.</li>
+    <li class="mgn-bt-20">Collect Online Payments</li>
+    <li class="mgn-bt-20">Promote Social Distancings</li>
+    <li class="mgn-bt-20">Expand your Business </li>
+    <li class="mgn-bt-20">Offer Tele-conultations and many more...</li>
+</div>
+<div class="col-md-12 wizard-popup-text" mat-dialog-content *ngIf="data.type === 'skip'">
+    Reach out to Jaldee whenever you need.<br>
+    Jaldee team is there to help you out in any circumstances<br>
+    Contact us: 8880125000<br>
+    E-mail: support@jaldee.com<br>
+    <div class="locate-customer mgtop40">
+        <button type="button" class="cs-btn bt1" (click)="closeDialog()">Ok</button>
+    </div>
+</div>
+
+<div class="col-md-12" mat-dialog-content *ngIf="data.type === 'waitlist'">
+    <div class="waitlist-hint"> If you want to enable the QManager, first create a queue.</div>
+    To create a queue:
+    <div class="mgn-up-5"> 1. Click on 'Queues (Working Hours)' below<br>
+        2. Click on 'Add Queue'<br>
+        3. Configure the queue the way you want to and then click on 'SAVE'</div>
+    <div class="locate-customer mgtop40">
+        <button type="button" class="cs-btn bt1" (click)="closeDialog()">Ok</button>
+    </div>
+</div>
+<div class="col-md-12" mat-dialog-content *ngIf="data.type === 'appt'">
+    <div class="waitlist-hint"> If you want to enable the Appointment Manager, first create a schedule </div>
+    To create a schedule:
+    <div class="mgn-up-5"> 1. Click on 'Schedules (Working Hours)' below<br>
+        2. Click on 'Add Schedule' <br>
+        3. Configure the schedule the way you want to and then click on 'SAVE'.</div>
+    <div class="locate-customer mgtop40">
+        <button type="button" class="cs-btn bt1" (click)="closeDialog()">Ok</button>
+    </div>
+</div>

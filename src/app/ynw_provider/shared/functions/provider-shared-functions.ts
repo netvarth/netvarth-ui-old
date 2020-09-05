@@ -306,8 +306,8 @@ export class ProviderSharedFuctions {
     return new Promise((resolve, reject) => {
       ob.provider_services.changeProviderApptStatus(waitlist.uid, action, post_data)
         .subscribe(
-          () => {
-            resolve('changeWaitlistStatusApi');
+          (data) => {
+            resolve(data);
             let status_msg = '';
             switch (action) {
               case 'Arrived': status_msg = 'arrived'; break;
@@ -337,8 +337,8 @@ export class ProviderSharedFuctions {
     return new Promise((resolve, reject) => {
       ob.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action, post_data)
         .subscribe(
-          () => {
-            resolve('changeWaitlistStatusApi');
+          (data) => {
+            resolve(data);
             let status_msg = '';
             switch (action) {
               case 'REPORT': status_msg = '[arrived]'; break;
@@ -392,8 +392,8 @@ export class ProviderSharedFuctions {
         phone = waitlist[0].providerConsumer.phoneNo;
       } else {
         uuid = waitlist[0].ynwUuid || null;
-        name = waitlist[0].consumer.firstName ? waitlist[0].consumer.firstName : '' + ' ' +
-          waitlist[0].consumer.lastName ? waitlist[0].consumer.lastName : '';
+        name = waitlist[0].waitlistingFor[0].firstName ? waitlist[0].waitlistingFor[0].firstName : '' + ' ' +
+          waitlist[0].waitlistingFor[0].lastName ? waitlist[0].waitlistingFor[0].lastName : '';
         email = waitlist[0].waitlistingFor[0].email;
         phone = waitlist[0].waitlistingFor[0].phoneNo;
         phone_history = waitlist[0].waitlistPhoneNumber;
@@ -554,3 +554,4 @@ export class ProviderSharedFuctions {
     return message;
   }
 }
+

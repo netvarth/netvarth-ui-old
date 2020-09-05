@@ -79,6 +79,9 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     user_type = 'me';
     usrSelected = 'me';
     isPrevStep = false;
+    serviceProgress = false;
+    ynwUser: any;
+    msg_to_me;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -95,6 +98,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
     ngOnInit() {
+        this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
         if (this.waiting_type === 'checkin') {
             this.getProviderWaitlstById();
         } else {
@@ -150,7 +154,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             });
     }
     selectHeadsup(stp6?) {
-        console.log(stp6);
         this.msg_to_user = '';
         // this.getMeetingDetails();
         this.isPrevStep = false;
@@ -234,7 +237,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         }
     }
     sendMessage() {
-        console.log(this.isPrevStep);
         const post_data = {
             medium: {
                 email: this.email,
@@ -319,22 +321,26 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         if (this.waiting_type === 'checkin') {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
-                    if (action === 'DONE') {
-                        this.shared_functions.openSnackBar('Meeting has been ended');
-                        this.router.navigate(['provider', 'check-ins']);
-                    } else {
-                        this.getProviderWaitlstById();
+                    if (result) {
+                        if (action === 'DONE') {
+                            this.shared_functions.openSnackBar('Meeting has been ended');
+                            this.router.navigate(['provider', 'check-ins']);
+                        } else {
+                            this.getProviderWaitlstById();
+                        }
                     }
                 }
                 );
         } else {
             this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
-                    if (action === 'Completed') {
-                        this.shared_functions.openSnackBar('Meeting has been ended');
-                        this.router.navigate(['provider', 'appointments']);
-                    } else {
-                        this.getProviderApptById();
+                    if (result) {
+                        if (action === 'Completed') {
+                            this.shared_functions.openSnackBar('Meeting has been ended');
+                            this.router.navigate(['provider', 'appointments']);
+                        } else {
+                            this.getProviderApptById();
+                        }
                     }
                 }
                 );
@@ -346,7 +352,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         if (stp6) {
             this.isPrevStep = true;
         }
-        this.getMeetingDetails('me');
+        this.getMeetingDetails();
         this.step = 4;
     }
     reminder() {
@@ -370,44 +376,29 @@ export class CallingModesComponent implements OnInit, OnDestroy {
     }
     getMeetingDetails(usr_typ?) {
         this.starting_url = '';
-        console.log(usr_typ);
         if (this.waiting_type === 'checkin') {
             this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.waiting_id).
                 subscribe((meetingdata) => {
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
-
-                    if (usr_typ && usr_typ === 'user') {
-                        switch (this.callingModes) {
-                            case 'WhatsApp':
-                                this.msg_to_user = '1. Wait for your turn\n\n2. When it is time you will recieve a WhatsApp call from ' + this.busnes_name ;
-                              break;
-                            case 'Phone':
-                                this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + '. Please be ready';
-                              break;
-                            case 'Zoom':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n\n2. Wait for your ' + this.provider_label + ' to join';
-                              break;
-                            case 'GoogleMeet':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n\n2. Wait for your ' + this.provider_label + ' to join';
-                              break;
-                          }
-                    } else if (usr_typ && usr_typ === 'me') {
-                        switch (this.callingModes) {
-                            case 'WhatsApp':
-                                this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right of the screen ' ;
-                              break;
-                            case 'Phone':
-                                this.msg_to_user = 'Call to this number ' + this.starting_url;
-                              break;
-                            case 'Zoom':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Join meeting ' ;
-                              break;
-                            case 'GoogleMeet':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Click on join button ' ;
-                              break;
-                          }
-                    }
+                    switch (this.callingModes) {
+                        case 'WhatsApp':
+                            this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right of the screen ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right corner of the screen to start the video consultation ' ;
+                          break;
+                        case 'Phone':
+                            this.msg_to_user = 'Call to this number ' + this.starting_url;
+                            this.msg_to_me = 'Call to this number ' + this.starting_url;
+                          break;
+                        case 'Zoom':
+                            this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Join meeting ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Join meeting ' ;
+                          break;
+                        case 'GoogleMeet':
+                            this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Click on join button ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on join button ' ;
+                          break;
+                      }
                 });
         } else {
             this.shared_services.getApptMeetingDetails(this.callingModes, this.waiting_id).
@@ -415,42 +406,24 @@ export class CallingModesComponent implements OnInit, OnDestroy {
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
 
-                    if (usr_typ && usr_typ === 'user') {
-                        switch (this.callingModes) {
-                            case 'WhatsApp':
-                                this.msg_to_user = '1. Wait for your turn\n\n2. When it is time you will recieve a WhatsApp call from ' + this.busnes_name ;
-                              break;
-                            case 'Phone':
-                                this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + '. Please be ready';
-                              break;
-                            case 'Zoom':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n\n2. Wait for your ' + this.provider_label + ' to join';
-                              break;
-                            case 'GoogleMeet':
-                                this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n\n2. Wait for your ' + this.provider_label + ' to join';
-                              break;
-                          }
-                        // if (this.callingModes !== 'Phone') {
-                        //     this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Wait for your ' + this.provider_label + ' to join';
-                        // } else {
-                        //     this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + '. Please be ready';
-                        // }
-                    } else if (usr_typ && usr_typ === 'me') {
-                        switch (this.callingModes) {
-                            case 'WhatsApp':
-                                this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right corner of the screen to start the video consultation ' ;
-                              break;
-                            case 'Phone':
-                                this.msg_to_user = 'Call to this number ' + this.starting_url;
-                              break;
-                            case 'Zoom':
-                                this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Join meeting ' ;
-                              break;
-                            case 'GoogleMeet':
-                                this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on join button ' ;
-                              break;
-                          }
-                    }
+                    switch (this.callingModes) {
+                        case 'WhatsApp':
+                            this.msg_to_user = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right of the screen ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on the video icon on the top right corner of the screen to start the video consultation ' ;
+                          break;
+                        case 'Phone':
+                            this.msg_to_user = 'Call to this number ' + this.starting_url;
+                            this.msg_to_me = 'Call to this number ' + this.starting_url;
+                          break;
+                        case 'Zoom':
+                            this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Join meeting ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Join meeting ' ;
+                          break;
+                        case 'GoogleMeet':
+                            this.msg_to_user = 'How to start the service:\n\n1. Click on the following link - ' + this.starting_url + '\n2. Click on join button ' ;
+                            this.msg_to_me = 'How to start the service:\n\n 1. Click on the following link - ' + this.starting_url + '\n 2. Click on join button ' ;
+                          break;
+                      }
 
                 });
         }
@@ -483,6 +456,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.step = 5;
     }
     amReady() {
+        this.serviceProgress = false;
         if (this.waiting_type === 'checkin') {
             if (this.data.waitlistStatus !== 'started') {
                 this.changeWaitlistStatus(this.data, 'STARTED');
@@ -498,6 +472,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             }
             this.apptTeleserviceJoinLink();
         }
+        this.serviceProgress = true;
         this.step = 6;
     }
     copyInfo() {
@@ -521,11 +496,11 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.selectedTime = obj;
         this.selectHeadsup();
     }
-    handleUserTypeSelection(obj) {
-        this.user_type = obj;
-        console.log(this.user_type);
-        this.getMeetingDetails(this.user_type);
-    }
+    // handleUserTypeSelection(obj) {
+    //     this.user_type = obj;
+    //     console.log(this.user_type);
+    //     this.getMeetingDetails();
+    // }
     copyReminderInfo() {
         const info = document.getElementById('reminderData');
         if (window.getSelection) {
@@ -538,8 +513,20 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             this.shared_functions.openSnackBar('Reminder copied to clipboard');
         }
     }
-    copyMeetingDetailsInfo() {
-        const info = document.getElementById('meetDetailsData');
+    copyUsrMeetingDetailsInfo() {
+        const info = document.getElementById('usrmeetDetailsData');
+        if (window.getSelection) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(info);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            document.execCommand('Copy');
+            this.shared_functions.openSnackBar('Meeting Details copied to clipboard');
+        }
+    }
+    copyMyMeetingDetailsInfo() {
+        const info = document.getElementById('mymeetDetailsData');
         if (window.getSelection) {
             const selection = window.getSelection();
             const range = document.createRange();
@@ -556,7 +543,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             this.isPrevStep = true;
         }
         this.step = 8;
-        console.log(this.isPrevStep);
     }
     amNotReady() {
         this.step = 1;
@@ -565,18 +551,17 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         this.step = 7;
     }
     redirecToPreviousPage() {
-        this._location.back();
-        // if (this.step === 1) {
-        //     this._location.back();
-        // } else if (this.step === 2 || this.step === 4 || this.step === 5 || this.step === 6) {
-        //     this.step = 1;
-        // } else if (this.step === 7 || this.step === 8) {
-        //     this.step = 6;
-        // }
-        // console.log(this.isPrevStep);
+       // this._location.back();
+         if (this.step === 1) {
+            this._location.back();
+        } else if (((this.step === 2 || this.step === 4 || this.step === 8) && !this.serviceProgress) || this.step === 6 || this.step === 5) {
+            this.serviceProgress = false;
+            this.step = 1;
+        } else if (this.step === 7 || ((this.step === 2 || this.step === 4 || this.step === 8) && this.serviceProgress)) {
+            this.step = 6;
+        }
     }
     backtoProgresPage() {
-        console.log(this.isPrevStep);
         if (this.isPrevStep) {
             this.step = 6;
         } else {
@@ -598,7 +583,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.data = data;
-                    console.log(this.data);
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
@@ -630,7 +614,6 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.data = data;
-                    console.log(this.data);
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;

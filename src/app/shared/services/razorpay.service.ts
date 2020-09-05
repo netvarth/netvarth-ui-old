@@ -44,6 +44,7 @@ export class RazorpayService {
     });
   }
   payWithRazor(razorModel, usertype, checkin_type?, livetrack?, account_id?, uuid?) {
+    razorModel.retry = false;
     //   theme: {
     //     color: '#F37254'
     //   }

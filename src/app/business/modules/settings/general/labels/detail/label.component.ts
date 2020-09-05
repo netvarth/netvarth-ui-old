@@ -71,6 +71,11 @@ export class LabelComponent implements OnInit {
         this.waitlist_label = this.shared_functions.getTerminologyTerm('waitlist');
         this.activated_route.params.subscribe(params => {
             this.actionparam = params.id;
+            if (this.actionparam === 'view') {
+                this.labelcaption = 'Label Details';
+            } else if (this.actionparam === 'edit') {
+                this.labelcaption = ' Edit Label';
+            }
         }
         );
         this.activated_route.queryParams.subscribe(
@@ -95,7 +100,6 @@ export class LabelComponent implements OnInit {
 
     }
     editLabelbyId(id) {
-        this.labelcaption = 'Edit Label';
         this.provider_services.getLabel(id).subscribe(data => {
             this.labelData = data;
             const breadcrumbs = [];
@@ -249,6 +253,6 @@ export class LabelComponent implements OnInit {
         }
     }
     redirecToGeneral() {
-        this.router.navigate(['provider', 'settings' , 'general' , 'labels']);
+        this.router.navigate(['provider', 'settings', 'general', 'labels']);
     }
 }

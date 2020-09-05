@@ -657,6 +657,12 @@ export class SharedServices {
     // const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid + '/date/' + pdate;
     return this.servicemeta.httpGet(url);
   }
+
+  getSlotsByLocationServiceandDate(locid, servid, pdate?, accountid?) {
+    const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
+
   getTodaysAvailableTimeSlots(date, sheduleid, accountid?) {
     const url = 'consumer/appointment/schedule/' + sheduleid + '/' + date + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
@@ -785,6 +791,14 @@ export class SharedServices {
   }
   getProviderSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid?) {
     const url = 'provider/appointment/schedule/location/' + locid + '/service/' + servid;
+    return this.servicemeta.httpGet(url);
+  }
+  getConsumerWaitlistMeetingDetails(uuid, mode, accountId) {
+    const url = 'consumer/waitlist/' + uuid + '/meetingDetails/' + mode + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  getConsumerApptMeetingDetails(uuid, mode, accountId) {
+    const url = 'consumer/appointment/' + uuid + '/meetingDetails/' + mode + '?account=' + accountId;
     return this.servicemeta.httpGet(url);
   }
 }

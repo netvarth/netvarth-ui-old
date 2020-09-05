@@ -8,6 +8,7 @@ import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -36,11 +37,25 @@ export class InboxListComponent implements OnInit, OnDestroy {
   showImages: any = [];
   messages: any = [];
   users: any = [];
+  domain: any;
+  breadcrumb_moreoptions: any = [];
+  breadcrumbs = [
+      {
+          title: 'Inbox'
+      }
+  ];
   constructor(private inbox_services: InboxServices,
     private dialog: MatDialog, private provider_services: ProviderServices,
-    private shared_functions: SharedFunctions) { }
+    private shared_functions: SharedFunctions, private routerobj: Router) { }
 
   ngOnInit() {
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
+    this.breadcrumb_moreoptions = {
+      'show_learnmore': true, 'scrollKey': 'inbox',
+      'actions': [
+          { 'title': 'Help', 'type': 'learnmore' }]
+  };
     this.getUsers();
     this.terminologies = this.shared_functions.getTerminologies();
     this.inbox_services.getBussinessProfile()
@@ -143,7 +158,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
           this.messages = data;
           this.sortMessages();
           this.loading = false;
-          this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
         },
         () => {
 
@@ -186,4 +200,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+  performActions(action) {
+    if (action === 'learnmore') {
+        this.routerobj.navigate(['/provider/' + this.domain + '/inbox']);
+    }
+}
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { Messages } from '../../../shared/constants/project-messages';
 import { GoogleMapComponent } from '../googlemap/googlemap.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -13,6 +13,9 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ViewChild } from '@angular/core';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
+import { JoyrideService } from 'ngx-joyride';
+import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
+import { ShowMessageComponent } from '../../../business/modules/show-messages/show-messages.component';
 
 @Component({
   selector: 'app-provider-bwizard',
@@ -96,7 +99,7 @@ export class ProviderbWizardComponent implements OnInit {
   foodServc_frmsentns = Messages.FOODSRVC_FORMLEVEL_CAP;
   remem_msg = Messages.REMEM_MSG_CAP;
   rupee_symbol = '₹';
-  @ViewChild('bnameId', {static: false}) bnameIdref: ElementRef;
+  @ViewChild('bnameId', { static: false }) bnameIdref: ElementRef;
   tbprof;
 
 
@@ -190,6 +193,42 @@ export class ProviderbWizardComponent implements OnInit {
   qAvailability: any = [];
   loadCompleted = false;
   duration = { hour: 0, minute: 0 };
+  subDomainLinks = {
+    'physiciansSurgeons': 'https://forms.gle/r3vEqUNpMVsc6EsB9',
+    'dentists': 'https://forms.gle/N4JrJD4ZGkneHjVBA',
+    'alternateMedicinePractitioners': 'https://forms.gle/QzRcjW5ShPHkVFfYA',
+    'personalFitness': 'https://forms.gle/irMZHtfQ9fmpetjW9',
+    'beautyCare': 'https://forms.gle/EMU8C1iig7EuHSnp9',
+    'taxConsultants': 'https://forms.gle/aFVo6YAnJZgwgMMk8',
+    'stockbroker': 'https://forms.gle/PjAnwvo9X6DxvXgW6',
+    'lawyers': 'https://forms.gle/Knor9qf89V8H2Sv89',
+    'geologist': 'https://forms.gle/mWTrsZkGFLfy6gbe7',
+    'financialAdviser': 'https://forms.gle/Rzb7GTbB8j55sjxS8',
+    'civilArchitects': 'https://forms.gle/1D1evCotn2KepLaz8',
+    'charteredAccountants': 'https://forms.gle/1r1vb9c4PgtgNwPY9',
+    'auditor': 'https://forms.gle/CrQEnY9CETgo21So6',
+    'sweetShop': 'https://forms.gle/hogjk95Aj9NPCSVU7',
+    'restaurants': 'https://forms.gle/Gfbp9d6FPuumwc3A9',
+    'juiceParlour': 'https://forms.gle/WzrdnWHVe9e79iLbA',
+    'iceCreamParlour': 'https://forms.gle/JwNY7vobpNya8RbK6',
+    'homefood': 'https://forms.gle/yySrX5FQHojyA5QE9',
+    'homebaker': 'https://forms.gle/PJPcCZWfyivR9cjBA',
+    'coffeeShop': 'https://forms.gle/m74wTbYAjcy3bXVb7',
+    'caterer': 'https://forms.gle/JaZ9DmtqRZpcPLnU7',
+    'bakery': 'https://forms.gle/zctXApAa5ARjbJTv5',
+    'nbfc': 'https://forms.gle/sucFibLELaipHe4WA',
+    'insurance': 'https://forms.gle/LscT1JDzv5vNWCi97',
+    'bank': 'https://forms.gle/m9DT9XByaP6ZasLw8',
+    'temple': 'https://forms.gle/Tm42NMMgw4HPFHkR7',
+    'poojari': 'https://forms.gle/ijzm4omHpwDHsLqh7',
+    'veterinarydoctor': 'https://forms.gle/kJxSgovts5UuGQ2WA',
+    'petcare': 'https://forms.gle/wNNui5Gak1ju24HF9',
+    'vastu': 'https://forms.gle/B9c34Gu3wL41Ayub6',
+    'Astrologer': 'https://forms.gle/NYhVeWFMRwHyYuYz8',
+    'supermarket': 'https://forms.gle/hYbHhK5BS8aAhgkv7',
+    'miscellaneous': 'https://forms.gle/nxsqUwtfv8hhBfJ86',
+  };
+  expressSignupClicked = false;
   constructor(
     private fb: FormBuilder,
     public shared_functions: SharedFunctions,
@@ -199,7 +238,8 @@ export class ProviderbWizardComponent implements OnInit {
     public shared_service: SharedServices,
     private dialog: MatDialog,
     private routerobj: Router, private qservice: QuestionService,
-    @Inject(DOCUMENT) public document
+    @Inject(DOCUMENT) public document,
+    private readonly joyrideService: JoyrideService
   ) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
@@ -666,9 +706,53 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   skipMe() {
-    this.redirecttoProfile();
+    if (this.subDomainLinks[this.bProfile.serviceSubSector.subDomain]) {
+      this.showSection('skip');
+    } else {
+      this.redirecttoProfile();
+    }
   }
-  
+  letsGetStarted() {
+    const dialogRef = this.dialog.open(ProviderStartTourComponent, {
+      width: '25%',
+      panelClass: ['popup-class', 'commonpopupmainclass']
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'startTour') {
+        this.joyrideService.startTour(
+
+          {
+            steps: ['step1@provider/settings', 'step2@provider/settings', 'step3@provider/settings', 'step4'],
+            showPrevButton: false,
+            stepDefaultPosition: 'top',
+            themeColor: '#212f23'
+          }
+          // Your steps order
+        ).subscribe(
+
+          step => {
+            /*Do something*/
+            console.log('Location', window.location.href, 'Path', window.location.pathname);
+            console.log('Next:', step);
+          },
+          error => {
+            /*handle error*/
+          },
+          () => {
+            this.redirecttoProfile();
+          }
+        );
+
+      } else {
+        this.redirecttoProfile();
+      }
+
+
+    });
+
+  }
   changeSchedule_clicked() {
     this.ischange_schedule_clicked = true;
   }
@@ -817,8 +901,8 @@ export class ProviderbWizardComponent implements OnInit {
     // } else { // if sufficient data is there, then show the bprofile
     //   this.redirecttoProfile();
     // }
-   // this.letsGetStarted();
-   this.redirecttoProfile();
+    // this.letsGetStarted();
+    this.redirecttoProfile();
   }
   resetErrors() {
     this.error_Exists = false;
@@ -1423,5 +1507,33 @@ export class ProviderbWizardComponent implements OnInit {
   handlegridCancel(obj) {
     this.showAddSection = false;
   }
+  expressSignup() {
+    window.open(this.subDomainLinks[this.bProfile.serviceSubSector.subDomain], '_blank');
+    this.expressSignupClicked = true;
+  }
+  providerLogout() {
+    this.shared_functions.doLogout()
+      .then(
+        () => {
+          this.routerobj.navigate(['/home']);
+        },
+        () => {
+        }
+      );
+  }
+  showSection(type) {
+    const dialogRef = this.dialog.open(ShowMessageComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'type': type
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (type === 'skip') {
+        this.redirecttoProfile();
+      }
+    });
+  }
 }
-

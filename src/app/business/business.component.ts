@@ -109,9 +109,9 @@ export class BusinessComponent implements OnInit {
     this.provider_services.getAccountContactInfo().subscribe(
       data => {
         this.contactInfo = data;
-        // if (!this.contactInfo.primaryEmail) {
-        this.getProfile();
-        // }
+        if (!this.contactInfo.primaryEmail) {
+          this.getProfile();
+        }
       }
     );
   }
@@ -119,12 +119,14 @@ export class BusinessComponent implements OnInit {
     const dialogref = this.dialog.open(UpdateEmailComponent, {
       width: '40%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true
+      disableClose: true,
+      data: {
+        profile: this.profile
+      }
     });
     dialogref.afterClosed().subscribe(
       result => {
         if (result) {
-          this.updateEmail(result);
         }
       }
     );
@@ -145,34 +147,19 @@ export class BusinessComponent implements OnInit {
   updateEmail(email) {
     const post_data = {
       'primaryEmail': email,
-      'primaryPhoneNumber': this.contactInfo.primaryPhoneNumber
+      'primaryPhoneNumber': this.contactInfo.primaryPhoneNumber,
+      'contactFirstName': this.contactInfo.contactFirstName,
+      'contactLastName': this.contactInfo.contactLastName
     };
     this.provider_services.updateAccountContactInfo(post_data).subscribe(
       data => {
-        if (!this.profile.basicInfo.emailVerified) {
-          this.updateAccountEmail(email);
-        }
       },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }
-  updateAccountEmail(email) {
-    const post_data = {
-      'basicInfo': {
-        'id': this.profile.basicInfo.id,
-        'firstName': this.profile.basicInfo.firstName,
-        'lastName': this.profile.basicInfo.lastName,
-        'email': email
-      }
-    };
-    const passtyp = 'provider/profile';
-    this.shared_service.updateProfile(post_data, passtyp)
-      .subscribe(
-        () => {
-        });
-  }
+
   getProviderLogo(bname = '', bsector = '', bsubsector = '') {
     let blogo;
     this.provider_services.getProviderLogo()
@@ -200,9 +187,9 @@ export class BusinessComponent implements OnInit {
       .then(
         data => {
           bProfile = data;
-           if (!localStorage.getItem('newProvider') && bProfile['accountType'] === 'BRANCH') {
+          if (!localStorage.getItem('newProvider')) {
             this.getAccountContactInfo();
-           }
+          }
           this.shared_functions.setitemToGroupStorage('accountId', bProfile.id);
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header

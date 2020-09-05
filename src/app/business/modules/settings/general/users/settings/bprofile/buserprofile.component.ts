@@ -30,6 +30,8 @@ import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic
 
 export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
+  jaldeeonline_on_cap: string;
+  jaldeeonline_off_cap: string;
   onlinepresence_status_str: string;
   onlinepresence_status: any;
   notedialogRef: MatDialogRef<ProPicPopupComponent, any>;
@@ -282,6 +284,8 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
 
   ngOnInit() {
     this.user_datastorage.setWeightageArray([]);
+    this.jaldeeonline_on_cap = Messages.JALDEEONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
+    this.jaldeeonline_off_cap = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
     this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_searchh_cap = Messages.FRM_LEVEL_PUBLIC_SEARCHH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_search_off_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);

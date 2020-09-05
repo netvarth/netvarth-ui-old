@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { ShowMessageComponent } from '../../show-messages/show-messages.component';
 
 @Component({
     selector: 'app-waitlistmgr',
@@ -67,6 +68,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     isManualMode = false;
     is_data_chnge: any;
     confirmdialogRef;
+    today_waitlist_count: any = 0;
+    future_waitlist_count: any = 0;
     constructor(private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
         private router: Router,
@@ -94,9 +97,9 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        if (this.domain === 'healthCare') {
+        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
             this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
-          }
+        }
         this.account_type = user.accountType;
         this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.loading = true;
@@ -121,6 +124,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                         this.getWaitlistMgr();
                     }
                 });
+        this.getTodayWLCount();
+        this.getFutureWLCount();
     }
     getDisplayboardCount() {
         let layout_list: any = [];
@@ -347,17 +352,31 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     }
     handleCheckinPresence(event) {
         const is_check = (event.checked) ? 'Enable' : 'Disable';
-        this.provider_services.setCheckinPresence(is_check)
-            .subscribe(
-                () => {
-                    this.shared_functions.openSnackBar('QManager ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
-                    this.getGlobalSettingsStatus();
-                },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getGlobalSettingsStatus();
+        if (event.checked && this.queues_count === 0) {
+            const confirmdialogRef = this.dialog.open(ShowMessageComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass'],
+                disableClose: true,
+                data: {
+                  'type': 'waitlist'
                 }
-            );
+              });
+            confirmdialogRef.afterClosed().subscribe(result => {
+                this.waitlist_status = false;
+            });
+        } else {
+            this.provider_services.setCheckinPresence(is_check)
+                .subscribe(
+                    () => {
+                        this.shared_functions.openSnackBar('QManager ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+                        this.getGlobalSettingsStatus();
+                    },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.getGlobalSettingsStatus();
+                    }
+                );
+        }
     }
     // getDepartmentsCount() {
     //     this.loading = true;
@@ -407,34 +426,47 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                 showTokenId: false
             };
         }
-        this.confirmdialogRef = this.dialog.open(ConfirmBoxComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                'message': 'Are you sure you want to change your queue system? This will effect your tokens/check-ins'
-            }
-        });
-        this.confirmdialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.provider_services.setWaitlistMgr(postData)
-                    .subscribe(
-                        () => {
-                            this.getWaitlistMgr();
-                            this.is_data_chnge = 0;
-                            this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
-                        },
-                        error => {
-                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        });
-            } else {
-                if (qSystem === 'token') {
-                    this.qSystem = 'fifo';
-                } else {
-                    this.qSystem = 'token';
+        if (this.today_waitlist_count === 0 && this.future_waitlist_count === 0) {
+            this.provider_services.setWaitlistMgr(postData)
+                .subscribe(
+                    () => {
+                        this.getWaitlistMgr();
+                        this.is_data_chnge = 0;
+                        this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                    },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+        } else {
+            this.confirmdialogRef = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    'message': 'Are you sure you want to change your queue system? This will effect your tokens/check-ins'
                 }
-            }
-        });
+            });
+            this.confirmdialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.provider_services.setWaitlistMgr(postData)
+                        .subscribe(
+                            () => {
+                                this.getWaitlistMgr();
+                                this.is_data_chnge = 0;
+                                this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                            },
+                            error => {
+                                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            });
+                } else {
+                    if (qSystem === 'token') {
+                        this.qSystem = 'fifo';
+                    } else {
+                        this.qSystem = 'token';
+                    }
+                }
+            });
+        }
     }
     setWaitingTime(ev) {
         if (ev.checked) {
@@ -516,6 +548,28 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             this.trnArndTime = 0;
         }
     }
+    getTodayWLCount() {
+        const Mfilter = {};
+        Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+        this.provider_services.getwaitlistTodayCount(Mfilter)
+            .subscribe(
+                data => {
+                    this.today_waitlist_count = data;
+                },
+                () => {
+                });
+    }
+    getFutureWLCount() {
+        const Mfilter = {};
+        Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+        this.provider_services.getWaitlistFutureCount(Mfilter)
+            .subscribe(
+                data => {
+                    this.future_waitlist_count = data;
+                },
+                () => {
+                });
+    }
     redirecToSettings() {
         this.routerobj.navigate(['provider', 'settings']);
     }
@@ -523,3 +577,4 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/q-manager']);
     }
 }
+

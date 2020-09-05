@@ -55,6 +55,7 @@ export class DisplayboardsComponent implements OnInit {
     hideAddToGroup = false;
     sel_QBoard: any;
     activeGroup: any;
+    qboardscaption = 'QBoards';
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -110,6 +111,7 @@ export class DisplayboardsComponent implements OnInit {
 
     addDisplayboardGroup() {
         this.action = 'addToGroup';
+        this.qboardscaption = 'Qboard group';
         this.qBoardsSelected = [];
         const breadcrumbs = [];
         this.breadcrumbs_init.map((e) => {
@@ -295,11 +297,13 @@ export class DisplayboardsComponent implements OnInit {
         }
     }
     onCancel() {
+        this.qboardscaption = 'QBoards';
         this.breadcrumbs = this.breadcrumbs_init;
         this.activeGroup = null;
         this.action = 'list';
     }
     saveQBoardGroup() {
+        this.qboardscaption = 'QBoards';
         let name = '';
         if (this.displayName) {
             name = this.displayName.trim().replace(/ /g, '_');
@@ -352,5 +356,11 @@ export class DisplayboardsComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
+    }
+    redirecToQmanager() {
+        this.routerobj.navigate(['provider', 'settings' , 'appointmentmanager' ]);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->q-boards']);
     }
 }

@@ -216,7 +216,10 @@ export class BranchUserDetailComponent implements OnInit {
                         if (this.actionparam.type === 'edit') {
                             this.type = this.user_data.userType;
                             if (this.sector === 'healthCare') {
-                                this.type = 'DOCTOR';
+                                if (this.type === 'PROVIDER') {
+                                    this.type = 'DOCTOR';
+                                }
+                                
                             }
                             // this.createForm();
                             this.updateForm();

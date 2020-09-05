@@ -83,8 +83,8 @@
     </mat-slide-toggle> &nbsp;{{onlinepresence_status_str}}
       <p class="head-level-settings">
 
-        <span class="inactive" *ngIf="!onlinepresence_status">Your profile is not listed in jaldee.com</span>
-        <span class="active" *ngIf="onlinepresence_status">Your profile is listed in jaldee.com</span>
+        <span class="inactive" *ngIf="!onlinepresence_status">{{jaldeeonline_off_cap}}</span>
+        <span class="active" *ngIf="onlinepresence_status">{{jaldeeonline_on_cap}}</span>
 
       </p>
 

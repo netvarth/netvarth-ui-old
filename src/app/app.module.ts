@@ -57,6 +57,7 @@ import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
+import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
 import { ShareService } from 'ngx-sharebuttons';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();

@@ -181,11 +181,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
         if (this.showTakeaTour) {
-          if (this.accountType === 'BRANCH') {
-            this.getAccountContactInfo();
-          } else {
-            this.letsGetStarted();
-          }
+          this.getAccountContactInfo();
         }
       });
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
@@ -241,10 +237,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   bprofileLoaded = false;
   showIncompleteButton = true;
   ngOnInit() {
-      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
-    if (this.domain === 'healthCare') {
+    if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
       this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
     }
     this.accountType = user.accountType;
@@ -339,45 +335,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     const dialogref = this.dialog.open(UpdateEmailComponent, {
       width: '40%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true
+      disableClose: true,
+      data: {
+        profile: this.profile
+      }
     });
     dialogref.afterClosed().subscribe(
       result => {
         if (result) {
           this.letsGetStarted();
-          this.updateEmail(result);
         }
       }
     );
-  }
-  updateEmail(email) {
-    const post_data = {
-      'primaryEmail': email,
-      'primaryPhoneNumber': this.contactInfo.primaryPhoneNumber
-    };
-    this.provider_services.updateAccountContactInfo(post_data).subscribe(
-      data => {
-        this.updateAccountEmail(email);
-      },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      }
-    );
-  }
-  updateAccountEmail(email) {
-    const post_data = {
-      'basicInfo': {
-        'id': this.profile.basicInfo.id,
-        'firstName': this.profile.basicInfo.firstName,
-        'lastName': this.profile.basicInfo.lastName,
-        'email': email
-      }
-    };
-    const passtyp = 'provider/profile';
-    this.shared_services.updateProfile(post_data, passtyp)
-      .subscribe(
-        () => {
-        });
   }
 
   letsGetStarted() {
@@ -411,12 +380,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
           () => {
             //this.routerobj.navigate(['.'], {});
             // this.redirecttoProfile();
-            this.routerobj.navigate(['provider', 'settings'], { });
+            this.routerobj.navigate(['provider', 'settings'], {});
           }
         );
 
       } else {
-        this.routerobj.navigate(['provider', 'settings'], { });
+        this.routerobj.navigate(['provider', 'settings'], {});
       }
 
 
@@ -783,7 +752,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       case 'specializations':
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'specializations']);
         break;
-        case 'jaldeeonline':
+      case 'jaldeeonline':
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldeeonline']);
         break;
       case 'languages':

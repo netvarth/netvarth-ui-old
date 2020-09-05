@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-keywords',
@@ -15,4 +16,10 @@ export class KeywordsComponent {
             title: 'Jaldee Search Keywords'
         }
     ];
+    constructor(
+        private routerobj: Router,
+    ) { }
+    redirecToLicenseInvoice() {
+        this.routerobj.navigate(['provider', 'license']);
+    }
 }

@@ -52,6 +52,9 @@ export class DepartmentDetailComponent implements OnInit {
     departments: any;
     dept_default = false;
     serviceArray;
+    userlist: any = [];
+    users: any = [];
+    provider_label = '';
     constructor(private changeDetectorRef: ChangeDetectorRef,
         private router: Router,
         private dialog: MatDialog,
@@ -64,6 +67,7 @@ export class DepartmentDetailComponent implements OnInit {
     }
     ngOnInit() {
         this.loading = true;
+        this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
         // this.getServices();
         this.getDepartments();
         if (this.dept_id === 'add') {
@@ -84,6 +88,7 @@ export class DepartmentDetailComponent implements OnInit {
             this.selected_action = 'add';
         }
         this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
+        this.getUsers();
         // this.loading = false;
     }
     checkServiceExists(name) {
@@ -175,6 +180,16 @@ export class DepartmentDetailComponent implements OnInit {
             }
         }
     }
+    getUsers() {
+                    this.provider_services.getUsers().subscribe(
+                        (data: any) => {
+                            this.users = data;
+                        },
+
+                        (error: any) => {
+                            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+    }
     createDepartment(post_data) {
         this.provider_services.createDepartment(post_data)
             .subscribe(
@@ -237,12 +252,14 @@ export class DepartmentDetailComponent implements OnInit {
         this.showAllServices = true;
     }
     getDepartmentDetails() {
+        console.log(this.dept_id);
         this.loading = true;
         this.getServices().then(
             res => {
                 this.provider_services.getDepartmentById(this.dept_id)
                     .subscribe(
                         data => {
+                            this.userlist = [];
                             this.add_it_now_show = true;
                             this.dept_data = data;
                             if (this.dept_data.isDefault === true) {
@@ -267,6 +284,13 @@ export class DepartmentDetailComponent implements OnInit {
                                 }
                             }
                             this.dept_services = newserviceArray;
+                            for (const usr of this.users) {
+                                if (usr.deptId === this.dept_data.departmentId) {
+                                    this.userlist.push(usr);
+                                    this.dept_data['users'] = this.userlist;
+                                }
+
+                            }
                             this.loading = false;
                         },
                         () => {

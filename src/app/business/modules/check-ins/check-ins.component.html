@@ -7,7 +7,7 @@
 <section *ngIf="!showDashbard && !apiloading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12"  id="bcrumbHeader">
   <div class="token-appt" *ngIf="message">
-    {{message}} Go to <a class="underline" (click)="gotoSettings()"> Settings</a>
+    {{message}} <br>Go to <a class="underline" (click)="gotoSettings()"> Settings</a>
   </div>
   <div class="token-appt" *ngIf="message1">
     {{message1}} Go to <a class="underline" (click)="gotoQmanager()"> Jaldee QManager</a>
@@ -751,7 +751,6 @@
                           [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
                         </div>
-
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
                           {{checkin.queue.queueStartTime + ' - ' + checkin.queue.queueEndTime}}
                         </div>
@@ -836,9 +835,12 @@
                             [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' &&getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
                           <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
-                          <span
+                            <span
                             [ngClass]="{'dash': (!small_device_display && getVirtualMode(checkin.virtualService) === 'GoogleMeet' || getVirtualMode(checkin.virtualService) === 'Zoom')?true:false}"
-                            *ngIf="!small_device_display">Start</span>
+                            *ngIf="!small_device_display">
+                            <!-- Start -->
+                            {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Start'}}
+                          </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('DONE', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"

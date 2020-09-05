@@ -128,4 +128,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   gotoStatements() {
     this.router.navigate(['provider', 'license', 'Statements']);
   }
+  redirecToLicenseInvoice() {
+    this.router.navigate(['provider', 'license']);
+}
 }

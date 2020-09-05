@@ -1,17 +1,9 @@
-<div class="wrapper b-home {{activeSkin}}" style="height: auto; min-height: 100%;" >
+<div class="wrapper b-home {{activeSkin}}" style="height: auto; min-height: 100%;">
     <app-header></app-header>
     <app-menu></app-menu>
     <div class="content-wrapper cont-outer" [class.loading-style]="apiloading">
-        <router-outlet *ngIf="!apiloading">
-            <!-- <div class="outer-loader-bus" *ngIf="apiloading">
-                        <mat-spinner></mat-spinner>
-                    </div> -->
-        </router-outlet>
+        <router-outlet *ngIf="!apiloading"></router-outlet>
         <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
     </div>
     <app-footernew></app-footernew>
-    <!-- <app-settings></app-settings> -->
 </div>
-<!-- <div *ngIf="apiloading" style="margin-top: 100px"> -->
-    
-<!-- </div> -->

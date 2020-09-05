@@ -1206,10 +1206,10 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
         }
       );
   }
-
-
   redirecToSettings() {
     this.routerobj.navigate(['provider', 'settings']);
-
+  }
+  redirecToHelp() {
+    this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline']);
   }
 }

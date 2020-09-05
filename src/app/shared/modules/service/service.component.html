@@ -226,8 +226,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         [ngModelOptions]="{standalone: true}"> </textarea>
                 </mat-form-field>
             </div>
-            <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH'  && !serviceFrom && action === 'add' && !is_donation">
-                            <mat-checkbox   [(ngModel)]="userspecific"  [ngModelOptions]="{standalone: true}">
+            <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH'  && !serviceFrom && action === 'add' && !is_donation && users_list.length >= 1">
+                            <mat-checkbox   [(ngModel)]="userspecific" [ngModelOptions]="{standalone: true}" >
                                 User specific
                             </mat-checkbox>
                 <mat-form-field class="example-full-width" *ngIf="userspecific && users_list.length >= 1">

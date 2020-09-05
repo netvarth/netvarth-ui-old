@@ -2,7 +2,7 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { Router, NavigationExtras, RoutesRecognized } from '@angular/router';
+import { Router, NavigationExtras, RoutesRecognized, ActivatedRoute } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
@@ -300,6 +300,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private provider_shared_functions: ProviderSharedFuctions,
     public dateformat: DateFormatPipe,
     private dialog: MatDialog,
+    public activateroute: ActivatedRoute,
     private router: Router) {
     this.onResize();
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -329,6 +330,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.started_upper, value: 'started' },
       { name: this.arrived_upper, value: 'arrived' },
       { name: this.done_upper, value: 'complete' }];
+
+      this.activateroute.queryParams.subscribe(params => {
+       if (params.servStatus) {
+        this.statusAction = 'started';
+       }
+    });
   }
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
@@ -366,8 +373,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       tabHeader = document.getElementById('tabHeader').offsetHeight;
     }
     this.topHeight = qHeader + tabHeader;
-    console.log(this.topHeight);
-    console.log(window.pageYOffset);
     if (header) {
       if (window.pageYOffset > (this.topHeight + 50)) {
         header.classList.add('sticky');
@@ -1138,6 +1143,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getFutureWL() {
     this.resetCheckList();
     this.loading = true;
+    this.futureAppointments = [];
     if (this.filter.futurecheckin_date === null) {
       this.getTomorrowDate();
     }
@@ -2371,38 +2377,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
 
-  showCallingModes(modes, action) {
-    console.log(modes);
+ showCallingModes(modes, action) {
     if (!modes.consumer) {
       this.consumr_id = modes.providerConsumer.id;
     } else {
       this.consumr_id = modes.consumer.id;
     }
-    // this.changeWaitlistStatus(modes, action);
-    // this.notedialogRef = this.dialog.open(CallingModesComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true,
-    //   data: {
-    //     modes: modes.virtualService,
-    //     uuid: modes.ynwUuid,
-    //     consumerid: this.consumr_id,
-    //     qdata: modes,
-    //     type: 'checkin',
-    //     action: action
-    //   }
-    // });
-    // this.notedialogRef.afterClosed().subscribe(result => {
-    //   this.refresh();
-    // });
-    //  this.router.navigate(['provider', 'teleservice']);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         waiting_id: modes.ynwUuid,
         type: 'checkin'
       }
     };
-    this.router.navigate(['provider', 'teleservice'], navigationExtras);
+    this.router.navigate(['provider', 'telehealth'], navigationExtras);
   }
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
@@ -2608,8 +2595,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   checkDashboardVisibility() {
     if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
-        this.message = 'To access the dashboard, go to Settings > Jaldee Profile > Business Profile and set up your profile. You also need to create a service and a queue and enable Jaldee QManager.';
+        this.provider_services.getWaitlistMgr()
+       .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        if ( this.showToken ) {
+        this.tokenOrCheckin = 'Tokens';
+        this.message = 'To access ' + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
       } else {
+        this.tokenOrCheckin = 'Check-ins';
+        this.message = 'To access '  + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
+      }
+    });
+  } else {
         this.message1 = 'Enable Jaldee QManager in your settings to access ' + this.tokenOrCheckin + ' dashboard.';
       }
       this.apiloading = false;

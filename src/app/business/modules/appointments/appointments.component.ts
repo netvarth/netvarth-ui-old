@@ -5,12 +5,12 @@ import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ApplyLabelComponent } from '../check-ins/apply-label/apply-label.component';
 import { MatDialog } from '@angular/material';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
-// import { CallingModesComponent } from '../calling-modes/calling-modes.component';
+import { CallingModesComponent } from '../check-ins/calling-modes/calling-modes.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -318,6 +318,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
     private router: Router,
+    public activateroute: ActivatedRoute,
     private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.onResize();
@@ -345,6 +346,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.started_upper, value: 'started' },
       { name: this.arrived_upper, value: 'Arrived' },
       { name: this.done_upper, value: 'complete' }];
+    this.activateroute.queryParams.subscribe(params => {
+        if (params.servStatus) {
+         this.statusAction = 'started';
+        }
+     });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -372,8 +378,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       tabHeader = document.getElementById('apptsTimeTypes').offsetHeight;
     }
     this.topHeight = qHeader + tabHeader;
-    console.log(this.topHeight);
-    console.log(window.pageYOffset);
     if (header) {
       if (window.pageYOffset >= (this.topHeight + 50)) {
         header.classList.add('sticky');
@@ -1193,7 +1197,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getFutureAppointmentsCount(Mfilter = null) {
-    console.log(Mfilter);
     // let no_filter = false;
     const queueid = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
     if (!Mfilter) {
@@ -1598,9 +1601,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.time_type === 3) {
-      if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
-        api_filter['schedule-eq'] = this.filteredSchedule.toString();
-      }
+       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
+      api_filter['schedule-eq'] = this.filteredSchedule.toString();
+    }
       if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
         api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
       }
@@ -2493,8 +2496,24 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getVirtualServiceCount(virtualService) {
     return Object.keys(virtualService).length;
   }
-
-
+  generateLink(modes) {
+    this.notedialogRef = this.dialog.open(CallingModesComponent, {
+      width: '20%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        modes: modes.virtualService,
+        uuid: modes.uid,
+        linkValue: this.gnr_link,
+        qdata: modes,
+        type: 'appt'
+      }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
+  }
   smsAppt() {
     const _this = this;
     let appt;
@@ -2835,7 +2854,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
-                checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].appmtDate).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].appmtTime + '</td>';
+                checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].appmtDate).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.getSingleTime(this.historyCheckins[i].appmtTime) + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].appmtFor[0].firstName + ' ' + this.historyCheckins[i].appmtFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
@@ -2925,32 +2944,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   showCallingModes(modes, action) {
-    console.log(modes);
     if (!modes.consumer) {
       this.consumr_id = modes.providerConsumer.id;
     } else {
       this.consumr_id = modes.consumer.id;
     }
-    // this.notedialogRef = this.dialog.open(CallingModesComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true,
-    //   data: {
-    //     modes: modes.virtualService,
-    //     uuid: modes.uid,
-    //     consumerid: this.consumr_id,
-    //     qdata: modes,
-    //     type: 'appt',
-    //     action: action
-    //   }
-    // });
-    const navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
       queryParams: {
         waiting_id: modes.uid,
         type: 'appt'
       }
     };
-    this.router.navigate(['provider', 'teleservice'], navigationExtras);
+    this.router.navigate(['provider', 'telehealth'], navigationExtras);
   }
   scrollToSection(curTime) {
     // if (this.time_type === 2) {
@@ -3156,7 +3161,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   checkDashboardVisibility() {
     if (!this.apptStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
-        this.message = 'To access the dashboard, go to Settings > Jaldee Profile > Business Profile and set up your profile. You also need to create a service and a schedule and enable Jaldee Appointment Manager.';
+        this.message = 'To access Appointments dashboard, set up the profile and turn on Jaldee Appointment Manager in Settings.';
       } else {
         this.message1 = 'Enable Jaldee Appointment Manager in your settings to access Appointments dashboard.';
       }
