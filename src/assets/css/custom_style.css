@@ -11432,3 +11432,6 @@ header.consumer .tp-1 .tp-l {
 .lgin.cust .fa-user-circle-o{
   font-size:1.25rem !important;
 }
+.inbox-unreadmsg {
+  font-weight: bolder !important;
+}

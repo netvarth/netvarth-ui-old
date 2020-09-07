@@ -24,22 +24,22 @@
                                                 aria-hidden="true"></i>
                                         </span>
                                     </div>
-                                    <div class="td td3">
+                                    <div class="td td3" [class.inbox-unreadmsg]="!message.read && isRecievedOrSent(message) === 'receive'">
                                         <div class="result" *ngIf="isRecievedOrSent(message) === 'receive'">{{message.owner.name | capitalizeFirst}}
                                         </div>
                                         <div class="result" *ngIf="isRecievedOrSent(message) === 'sent'">{{message.receiver.name | capitalizeFirst}}
                                         </div>
                                     </div>
-                                    <div class="td td2">
+                                    <div class="td td2" [class.inbox-unreadmsg]="!message.read && isRecievedOrSent(message) === 'receive'">
                                         <div class="result">{{(message.service !== null)? message.service : ' - '}}
                                         </div>
                                     </div>
-                                    <div class="td td4">
+                                    <div class="td td4" [class.inbox-unreadmsg]="!message.read && isRecievedOrSent(message) === 'receive'">
                                         <div class="result">
                                             {{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:30)+'.....':shared_functions.firstToUpper(message.msg) }}
                                         </div>
                                     </div>
-                                    <div class="td td1">
+                                    <div class="td td1" [class.inbox-unreadmsg]="!message.read && isRecievedOrSent(message) === 'receive'">
                                         <div class="result">{{formatDateDisplay(message.timeStamp)}}</div>
                                     </div>
                                 </div>
