@@ -121,7 +121,8 @@ export class JaldeeOnlineComponent implements OnInit {
       disableClose: true,
       data: {
         accencUid: accEncUid,
-        path: this.wndw_path
+        path: this.wndw_path,
+        businessName: this.bProfile.businessName
       }
     });
 

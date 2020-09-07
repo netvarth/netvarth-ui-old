@@ -164,7 +164,7 @@ export class AboutMeComponent implements OnInit {
       .subscribe(
         () => {
 
-          this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_CREATED);
+          this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_UPDATED);
           this.disableButton = false;
           console.log(this.domain_fields_mandatory.length);
           console.log(this.subdomain_fields_mandatory.length);
