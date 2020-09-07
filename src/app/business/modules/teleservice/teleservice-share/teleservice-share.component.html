@@ -88,7 +88,7 @@
 <div *ngIf="!providerView" class="mat-dialog-actions ">
   <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
     <!-- <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button> -->
-    <button type="button" mat-button (click)="sendMessage()" class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
+    <button type="button" [disabled]="!sms && !email && !pushnotify" mat-button (click)="sendMessage()" class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
   </div>
 </div>
 
