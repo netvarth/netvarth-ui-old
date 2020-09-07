@@ -205,6 +205,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   emailId: any;
   settings: any = [];
   showToken = false;
+  spname: any;
+  provider_label: any;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -265,6 +267,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       );
     this.bill_load_complete = 1;
     this.getProviderSettings();
+    this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -451,6 +454,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
           if (this.bill_data.displayNotes || this.bill_data.privateNotes || this.discountDisplayNotes || this.discountPrivateNotes) {
             this.billNotesExists = true;
+          }
+          if (this.bill_data.accountProfile.providerBusinessName) {
+            this.spname = this.bill_data.accountProfile.providerBusinessName;
+            console.log(this.spname);
           }
           if (this.showPayWorkBench) {
             this.showPayment();
