@@ -167,8 +167,8 @@ export const Messages = {
   // Teleservice reminder and meeting details
   'WIL_BEGN': ' will begin. ',
   'PLS_B_REDY': 'Please be ready.',
-  'HW_TO_JOIN':  'How to join the video call - ',
-  'UR_TURN': 'When it is your turn, Click on the following link - ',
+  'HW_TO_JOIN':  'How to join the video call - \n',
+  'UR_TURN': 'When it is your turn, Click on the following link - \n',
   'WAIT': 'Wait for ',
   'JOIN': ' to join',
   'NET_CNNCT': 'Remember to keep your internet connection turned on to receive the call.',
