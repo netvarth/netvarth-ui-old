@@ -1,13 +1,13 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { projectConstants } from '../../../../../app.component';
-import {  Meta } from '@angular/platform-browser';
+import {  Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-qrcodegenerator',
   templateUrl: './qrcodegenerator.component.html'
 })
-export class QRCodeGeneratorComponent implements OnInit {
+export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
   accuid: any;
   qr_code_cId = false;
   qr_code_oId = false;
@@ -22,6 +22,7 @@ export class QRCodeGeneratorComponent implements OnInit {
   constructor(private changeDetectorRef: ChangeDetectorRef,
     public dialogRef: MatDialogRef<QRCodeGeneratorComponent>,
     private angular_meta: Meta,
+    private titleService: Title ,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
@@ -53,6 +54,9 @@ export class QRCodeGeneratorComponent implements OnInit {
     this.imageUrl = this.wpath + 'assets/images/logo.png';
     this.qrCodegenerateOnlineID(this.accuid);
   }
+  ngOnDestroy() {
+    this.titleService.setTitle('Jaldee');
+  }
   qrCodegenerateOnlineID(valuetogenerate) {
     this.qr_value = projectConstants.PATH + valuetogenerate;
     this.qr_code_oId = true;
@@ -60,14 +64,14 @@ export class QRCodeGeneratorComponent implements OnInit {
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
       this.angular_meta.addTags([
-        //  { property: 'og:url', content: this.shareLink },
+         { property: 'og:title', content: this.data.businessName },
         { property: 'og:image', content: this.imageUrl },
         { property: 'og:type', content: 'link' },
         { property: 'og:description', content: this.description },
 
       ]);
     }, 50);
-   // this.titleService.setTitle('Jaldee');
+
     console.log('sharelink...' + this.shareLink);
     console.log('qrcode...' + this.qrCodePath);
 

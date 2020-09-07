@@ -22,6 +22,7 @@ import { ProPicPopupComponent } from '../../../../../bprofile/pro-pic-popup/pro-
 })
 
 export class AboutmeComponent implements OnInit, OnDestroy {
+  logoDetails = null;
   showVirtualFields = false;
   notedialogRef: MatDialogRef<ProPicPopupComponent, any>;
   subdomain_fields_mandatory = [];
@@ -647,12 +648,35 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       }
     }
   }
+  getBusinessProfileLogo() {
+    this.provider_services.getUserBussinessProfile(this.userId)
+      .subscribe(
+        logodata => {
+         this.logoDetails = logodata;
+          if ( this.logoDetails.logo) {
+            this.blogo[0] =  this.logoDetails.logo;
+            console.log(this.blogo[0]);
+            const cnow = new Date();
+            const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+            this.cacheavoider = dd;
+            if (this.blogo[0]) {
+              this.logoExist = true;
+            } else {
+              this.logoExist = false;
+            }
+            this.user_datastorage.updateProfilePicWeightage(true);
+          } else {
+            this.user_datastorage.updateProfilePicWeightage(false);
+          }
+        });
+      }
+
   uploadLogo(passdata) {
     // this.provider_services.uploadLogo(passdata)
     this.provider_services.uploaduserLogo(passdata, this.userId)
       .subscribe(
         data => {
-          this.getBusinessProfile();
+          this.getBusinessProfileLogo();
         },
         error => {
           this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -687,7 +711,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
-      this.getUser();
+      this.getBusinessProfileLogo();
     });
   }
   resetApiErrors() {
