@@ -381,6 +381,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     onSubmit(form_data) {
         if (form_data.serviceType === 'virtualService') {
+            this.tool_id = this.tool_id.trim();
             this.teleCallingModes = {
                 'callingMode': this.tool_name,
                 'value': this.tool_id,
