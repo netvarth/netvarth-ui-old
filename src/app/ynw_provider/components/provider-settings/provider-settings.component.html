@@ -326,8 +326,8 @@
                       <div class="box-footer no-padding">
                           <ul class="nav nav-stacked set-block-3">
                               <li class="form-level-settings">
-                                  <a><strong>Appointment Booking </strong>system . <strong>Take appointments .
-                                      </strong><strong>Fixed Time Slots</strong> for consultations .</a>
+                                  <a><strong>Appointment booking </strong>system . <strong>Take appointments .
+                                      </strong><strong>Set time slots</strong> for your consultations .</a>
                               </li>
                               <li (click)="redirecTo('appointmentmanager')">
                                   <a class="pointer-cursor">
@@ -435,7 +435,8 @@
                                       <p *ngIf="location_count == 0" class="req-flds-cap">
                                           <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Locations are
                                           not created</p>
-                                      <p class="settings_info">All the locations you operate from</p>
+                                      <p class="settings_info" *ngIf="multipeLocationAllowed == true">All the locations you operate from.</p>
+                                      <p class="settings_info" *ngIf="multipeLocationAllowed == false">Edit your location here.</p>
                                   </a>
                               </li>
                               <li *ngIf="accountType=='BRANCH'" (click)="redirecTo('departments')">
@@ -445,13 +446,13 @@
                                               class="pull-right badge bg-blue">{{departmentCount}}</span>
                                           <span *ngIf="!filterbydepartment" class="pull-right">Off</span>
                                       </span>
-                                      <p class="settings_info">Add departments here</p>
+                                      <p class="settings_info">Add departments here.</p>
                                   </a>
                               </li>
                               <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('users')">
                                   <a class="pointer-cursor">
                                       <span class="lnk setings">Users</span>
-                                      <p class="settings_info">Create or manage users</p>
+                                      <p class="settings_info">Create or manage users.</p>
                                   </a>
                               </li>
                               <li (click)="redirecTo('livetrack')">
@@ -486,18 +487,18 @@
                               <li (click)="redirecTo('labels')">
                                   <a class="pointer-cursor">
                                       <span class="lnk setings">{{customfields_cap}}</span>
-                                      <p class="settings_info">Add or manage your labels here</p>
+                                      <p class="settings_info">Add or manage your labels here.</p>
                                   </a>
                               </li>
                               <li>
                                   <a class="pointer-cursor" (click)="redirecTo('customview')">
                                       <span class="lnk setings">Custom Views</span>
-                                      <p class="settings_info">Create or manage custom views</p>
+                                      <p class="settings_info">Create or manage custom views.</p>
                                   </a>
                               </li>
 
                           </ul>
-                      </div>
+                      </div>  
                   </div>
               </div>
               <!-- <div class="col-md-6 col-lg-4 col-12 set-block">
