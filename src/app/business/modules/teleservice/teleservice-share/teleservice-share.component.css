@@ -2,7 +2,7 @@
   height: 180px !important;
   border: 1px solid !important;
   border-color: #b5abab !important;
-  overflow: hidden !important;
+  /* overflow: hidden !important; */
 } 
 .mgn-up-40 {
   margin-top: 40px;

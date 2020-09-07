@@ -32,7 +32,7 @@ import { FormMessageDisplayService } from './shared/modules/form-message-display
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import 'hammerjs';
-import { LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
+import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
@@ -57,7 +57,6 @@ import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
-import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
 import { ShareService } from 'ngx-sharebuttons';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -148,7 +147,7 @@ export function init_app(globalService: GlobalService) {
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: [] }
   ],

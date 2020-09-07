@@ -116,10 +116,10 @@ export class TeleServiceShareComponent implements OnInit {
           this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName + this.calling_u_cap + this.ready_cap;
           break;
         case 'Zoom':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' ' + this.begin_cap + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '  ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
+          this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' ' + this.begin_cap + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '    ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
           break;
         case 'GoogleMeet':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your video Call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' ' + this.begin_cap + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '  ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
+          this.msg_to_user = 'In ' + this.selectedTime + ', your video Call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' ' + this.begin_cap + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '    ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
           break;
       }
     }
@@ -127,15 +127,15 @@ export class TeleServiceShareComponent implements OnInit {
   // Meeting detail textarea msg content
   getMeetingDetailsData() {
 
-    this.userMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ' : ' + this.providerName;
+    this.userMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n\n' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ' : ' + this.providerName;
     // + '\nToken Number :' + this.data.token + '\n Time : ' + this.data.checkInTime + '\n';
 
-    this.userMsg_secondline = '\nHow to join the video call \n1. When it is your turn, click on the following link - ' + this.meetingLink + '\n2. Wait for ' + this.providerName + ' to join ';
+    this.userMsg_secondline = '\n\nHow to join the video call \n\n1. When it is your turn, click on the following link -\n' + this.meetingLink + '\n\n2. Wait for ' + this.providerName + ' to join ';
 
-    this.providerMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' : ' + this.consumerName;
+    this.providerMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n\n' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' : ' + this.consumerName;
     // + '\nToken Number :' + this.data.token + '\n Time : ' + this.data.checkInTime + '\n';
 
-    this.providerMsg_secondLine = '\nHow to join the video call \n1. When it is your turn, click on the following link - ' + this.meetingLink + '\n2. Click on join Now ';
+    this.providerMsg_secondLine = '\n\nHow to join the video call \n\n1. When it is your turn, click on the following link -\n' + this.meetingLink + '\n\n2. Click on join Now ';
     switch (this.data.app) {
       case 'WhatsApp':
         this.userMsg_secondline = '* You will receive a call from ' + this.data.busnsName + ' when it is your turn.';
@@ -144,7 +144,7 @@ export class TeleServiceShareComponent implements OnInit {
         this.msg_to_me = this.providerMsg_firstLine + this.providerMsg_secondLine;
         break;
       case 'Phone':
-        this.msg_to_user = 'Call to this number ' + this.data.meetingLink;
+        this.msg_to_user = 'Will get a call from ' + this.data.busnsName;
         this.msg_to_me = 'Call to this number ' + this.data.meetingLink;
         break;
       case 'Zoom':

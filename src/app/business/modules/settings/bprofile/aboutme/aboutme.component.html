@@ -66,7 +66,7 @@
                           errorMsg="Please enter the profile summary">
                         </app-field-error-display>
                       </div>
-                      <div *ngIf="showVirtualFields">
+                      <div  [hidden]="showVirtualFields==false">
 
                         <!--mandatory fields -->
 
@@ -254,7 +254,7 @@
                           </div>
                         </ng-container>
                         <ng-container
-                          *ngIf="(normal_subdomainfield_show==3 || normal_subdomainfield_show==4) && bProfile.businessName">
+                          *ngIf="(normal_subdomainfield_show==3 || normal_subdomainfield_show==4)">
                           <div class="acc-cont" *ngFor="let fields of subdomain_fields_mandatory">
                             <ng-container>
                               <div class="cd-b">
@@ -432,7 +432,7 @@
                         &nbsp;&nbsp;&nbsp;
                         <button type="submit" [disabled]="!aboutmeForm.valid || disableButton" class="cs-btn bt1"
                           mat-button>{{save_btn_cap}}</button>
-                          
+
                       </div>
                     </form>
                   </div>
