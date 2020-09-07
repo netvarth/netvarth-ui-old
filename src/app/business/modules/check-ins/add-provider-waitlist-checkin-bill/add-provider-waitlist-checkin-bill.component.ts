@@ -457,7 +457,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
           if (this.bill_data.accountProfile.providerBusinessName) {
             this.spname = this.bill_data.accountProfile.providerBusinessName;
-            console.log(this.spname);
           }
           if (this.showPayWorkBench) {
             this.showPayment();
