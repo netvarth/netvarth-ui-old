@@ -31,13 +31,13 @@
                                             <span
                                                 class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
                                         </td>
-                                        <td data-title="Servicefor">
+                                        <td data-title="Service for">
                                                 {{his_wait.waitlistingFor[0].firstName || '' | capitalizeFirst}} {{his_wait.waitlistingFor[0].lastName || '' | capitalizeFirst}}</td>
                                         <td data-title="Service" class="td6">
                                             {{his_wait.service.name || '' | capitalizeFirst}}</td>
                                         <td data-title="Location" class="td2">
                                             {{his_wait.queue.location.place || '' | capitalizeFirst}}</td>
-                                        <td data-title="Date/Time" class="td3">{{his_wait.date | date: dateFormat }}
+                                        <td data-title="Date" class="td3">{{his_wait.date | date: dateFormat }}
                                         </td>
                                         <td data-title="Status" class="td4">
                                             <span
