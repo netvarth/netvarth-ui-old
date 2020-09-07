@@ -115,10 +115,22 @@
                                 </div>
                                 <div class="service-outer" *ngIf="servicesjson.length > 0">
                                     <ng-container>
-                                        <mat-form-field *ngIf="servicesjson.length == 1">
+                                        <!-- <mat-form-field *ngIf="servicesjson.length == 1">
                                             <input matInput *ngFor="let serv of servicesjson" [readonly]="true"
                                                 placeholder="Service" value="{{serv.name | capitalizeFirst}}">
-                                        </mat-form-field>
+                                        </mat-form-field> -->
+                                        <span *ngIf="servicesjson.length == 1">
+                                          <ng-container *ngFor="let serv of servicesjson">
+                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic"></i>
+                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
+                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
+                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'" class="fa fa-mobile custId-qr pad-rt-5"
+                                              aria-hidden="true"></i>
+                                              <span class="dash">{{serv.name | capitalizeFirst}}</span>
+                                            <!-- <input matInput [readonly]="true" placeholder="Service" value="{{serv.name | capitalizeFirst}}"> -->
+                                          </ng-container>
+
+                                        </span>
                                         <mat-form-field *ngIf="servicesjson.length > 1">
                                             <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser"
                                                 #servsel (selectionChange)="handleServiceSel(servsel.value)">
@@ -434,7 +446,7 @@
                                             </div>
                                         </div>
                                     </ng-container>
-                                    <!-- <ng-container *ngIf="step==3 && showCreateMember"> 
+                                    <!-- <ng-container *ngIf="step==3 && showCreateMember">
                                         </ng-container> -->
                                     <!-- <ng-container *ngIf="!showCreateMember"> <button mat-button
                                             class="cs-btn bt1 backtocheckin" (click)="handleGoBack(1)">OK -->
