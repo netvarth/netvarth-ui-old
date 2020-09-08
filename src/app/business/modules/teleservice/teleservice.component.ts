@@ -325,7 +325,8 @@ export class TeleServiceComponent implements OnInit {
     // Sending rest API to consumer and provider about service starting
     chkinTeleserviceJoinLink() {
         const uuid_data = {
-            'mode': this.callingModes
+            'mode': this.callingModes,
+            'recipients': ['PROVIDER', 'CONSUMER']
         };
         this.shared_services.consumerWtlstTeleserviceWithId(uuid_data, this.waiting_id).
             subscribe((modeData) => {
@@ -333,7 +334,8 @@ export class TeleServiceComponent implements OnInit {
     }
     apptTeleserviceJoinLink() {
         const uuid_data = {
-            'mode': this.callingModes
+            'mode': this.callingModes,
+            'recipients': ['PROVIDER', 'CONSUMER']
         };
         this.shared_services.consumerApptTeleserviceWithId(uuid_data, this.waiting_id).
             subscribe((modeData) => {
