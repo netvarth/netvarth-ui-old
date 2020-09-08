@@ -138,9 +138,9 @@ export class TeleServiceShareComponent implements OnInit {
     this.providerMsg_secondLine = '\n\nHow to join the video call \n\n1. When it is your turn, click on the following link -\n' + this.meetingLink + '\n\n2. Click on join Now ';
     switch (this.data.app) {
       case 'WhatsApp':
-        this.userMsg_secondline = '* You will receive a call from ' + this.data.busnsName + ' when it is your turn.';
+        this.userMsg_secondline = '\n* You will receive a call from ' + this.data.busnsName + ' when it is your turn.';
         this.msg_to_user = this.userMsg_firstLine + this.userMsg_secondline;
-        this.providerMsg_secondLine = '* To start the video call, click on the link- ' + this.data.meetingLink + ' on your phone or WhatsApp enabled device';
+        this.providerMsg_secondLine = '\n* To start the video call, click on the link- ' + this.data.meetingLink + ' on your phone or WhatsApp enabled device';
         this.msg_to_me = this.providerMsg_firstLine + this.providerMsg_secondLine;
         break;
       case 'Phone':
