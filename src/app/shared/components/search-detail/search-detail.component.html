@@ -717,7 +717,7 @@
                                 <span (click)="providerDetClicked(search_result)" class="checkin-btn">Donate</span>
                             </div>
                         </div>
-                        <div class="bottom-sect" *ngIf="!showButton(search_result) && (search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message'] || search_result.fields['apptMessage'])">
+                        <div class="bottom-sect" *ngIf="!showButton(search_result) && search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['message'] || search_result.fields['apptMessage'])">
                             <div class="bt-l">
                                 <div class="wt-tme">
                                     <div class="wt-tme notallowed">
