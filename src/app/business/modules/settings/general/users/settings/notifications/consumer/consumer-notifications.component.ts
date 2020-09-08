@@ -56,17 +56,25 @@ export class ConsumerNotificationUserComponent implements OnInit {
   earlyAPPTNotificatonSettings = { eventType: 'EARLY', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, personsAhead: '' };
   prefinalWLNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   prefinalAPPTNotificationSettings = { eventType: 'PREFINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
+  firstAPPTNotificationSettings = { eventType: 'FIRSTNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: ''};
+  secondAPPTNotificationSettings = { eventType: 'SECONDNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '' };
+  thirdAPPTNotificationSettings = { eventType: 'THIRDNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '' };
+  fourthAPPTNotificationSettings = { eventType: 'FORTHNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '' };
   finalWLNotificationSettings = { eventType: 'FINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   finalAPPTNotificationSettings = { eventType: 'FINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
   wlAddNotificationSettings = { eventType: 'WAITLISTADD', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   apptAddNotificationSettings = { eventType: 'APPOINTMENTADD', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
   showButton: any = {};
   customer_label = '';
-  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false };
+  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false,'FIRST_APPT': false, 'SECOND_APPT': false, 'THIRD_APPT': false, 'FOURTH_APPT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false };
   consumerNotification;
   notification_statusstr: string;
   wltstPersonsahead;
   apptPersonsahead;
+  firstApptTime;
+  secondApptTime;
+  thirdApptTime;
+  fourthApptTime;
   userId: any;
   appointment_status: any;
   waitlistStatus: any;
@@ -74,6 +82,10 @@ export class ConsumerNotificationUserComponent implements OnInit {
   settings: any = [];
   showToken = false;
   api_loading = true;
+  firstapptNotificationTime ;
+  secondapptNotificationTime ;
+  thirdapptNotificationTime ;
+  fourthapptNotificationTime ;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -209,7 +221,27 @@ export class ConsumerNotificationUserComponent implements OnInit {
         this.cSettings['EARLY_APPT'] = true;
         this.earlyAPPTNotificatonSettings = notificationObj;
         this.apptPersonsahead = (notificationObj['personsAhead']) ? true : false;
-      } else if (notificationObj['eventType'] === 'PREFINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
+      } 
+      else if (notificationObj['eventType'] === 'FIRSTNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings['FIRST_APPT'] = true;
+        this.firstAPPTNotificationSettings = notificationObj;
+        this.firstApptTime = (notificationObj['time']) ? true : false;
+      } 
+      else if (notificationObj['eventType'] === 'SECONDNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings['SECOND_APPT'] = true;
+        this.secondAPPTNotificationSettings = notificationObj;
+        this.secondApptTime = (notificationObj['time']) ? true : false;
+      } 
+      else if (notificationObj['eventType'] === 'THIRDNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings['THIRD_APPT'] = true;
+        this.thirdAPPTNotificationSettings = notificationObj;
+        this.thirdApptTime = (notificationObj['time']) ? true : false;
+      } else if (notificationObj['eventType'] === 'FORTHNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings['FOURTH_APPT'] = true;
+        this.fourthAPPTNotificationSettings = notificationObj;
+        this.fourthApptTime = (notificationObj['time']) ? true : false;
+      } 
+      else if (notificationObj['eventType'] === 'PREFINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['PREFINAL_APPT'] = true;
         this.prefinalAPPTNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
@@ -245,6 +277,18 @@ export class ConsumerNotificationUserComponent implements OnInit {
       activeInput = this.prefinalAPPTNotificationSettings;
     } else if (type === 'FINAL_APPT') {
       activeInput = this.finalAPPTNotificationSettings;
+    }
+    else if (type === 'FIRST_APPT') {
+      activeInput = this.firstAPPTNotificationSettings;
+    }
+    else if (type === 'SECOND_APPT') {
+      activeInput = this.secondAPPTNotificationSettings;
+    }
+    else if (type === 'THIRD_APPT') {
+      activeInput = this.thirdAPPTNotificationSettings;
+    }
+    else if (type === 'FOURTH_APPT') {
+      activeInput = this.fourthAPPTNotificationSettings;
     }
     if (this.cSettings[type]) {
       //activeInput.providerId = this.userId;
