@@ -103,4 +103,10 @@ export class DepartmentListComponent implements OnInit {
 
         }
     }
+    redirecToDepartments() {
+        this.router.navigate(['provider', 'settings' , 'general' , 'departments']);
+    }
+    addDept() {
+        this.router.navigate(['provider', 'settings', 'general', 'department', 'add']);
+    }
 }

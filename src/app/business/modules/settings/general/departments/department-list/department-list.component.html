@@ -1,13 +1,31 @@
-<section>
+<!-- <section>
     <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
         [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section>
+</section> -->
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToDepartments()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span>
+            </button>&nbsp;&nbsp;&nbsp;Department List
+        </h5>
+    </div>
+  </section>
 <section>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card" *ngIf="loading">
                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
+                <div class="col-md-12 no-padding">
+                    <ul class="nav jd-custom-nav chkn-dash">
+                         <li class="dropdown notifications-menu pull-right">
+                            <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addDept()"
+                                  class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                  <span><i class="fa fa-plus"></i>Add Department</span>
+                            </a>
+                         </li>
+                    </ul>
                 </div>
                 <div class="card" *ngIf="!loading">
                     <!-- <p class="form-level-settings">You can create departments here.</p> -->
