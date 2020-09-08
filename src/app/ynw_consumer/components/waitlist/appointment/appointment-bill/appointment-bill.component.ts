@@ -165,6 +165,9 @@ export class ConsumerAppointmentBillComponent implements OnInit {
                 if (params.type) {
                     this.checkIn_type = params.type;
                 }
+                if (this.source === 'history') {
+                    this.checkIn_type = 'appt_historybill';
+                }
                    if (params.details) {
                     this.razorpayDetails = JSON.parse(params.details);
                     this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;

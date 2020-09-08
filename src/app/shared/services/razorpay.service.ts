@@ -71,6 +71,12 @@ export class RazorpayService {
         } else if (checkin_type === 'waitlist') {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
+        } else if (checkin_type === 'appt_historybill') {
+          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'history'], navigationExtras));
+        }  else if (checkin_type === 'checkin_historybill') {
+          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras));
         } else if (checkin_type === 'donations') {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'donations']));

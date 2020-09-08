@@ -161,6 +161,9 @@ export class ConsumerCheckinBillComponent implements OnInit {
                         }
                     ];
                 }
+                if (this.source === 'history') {
+                    this.checkIn_type = 'checkin_historybill';
+                }
                 if (params.type) {
                     this.checkIn_type = params.type;
                 }
