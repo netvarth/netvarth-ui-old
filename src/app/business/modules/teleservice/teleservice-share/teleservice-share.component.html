@@ -22,7 +22,7 @@
   </div>
   <div class="mgn-bt-10 reminder">
     <mat-form-field id="reminder">
-      <textarea matInput class="form-control tel_srv_txtarea" id="message" placeholder="" [(ngModel)]="msg_to_user"
+      <textarea matInput class="form-control tel_srv_txtarea" id="message" placeholder="{{msg_to_user === ''? ' Enter your message here':''}}" [(ngModel)]="msg_to_user"
         (ngModelChange)="dataChanged($event)">
         </textarea>
     </mat-form-field>
