@@ -1851,7 +1851,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   showProviderDetails(provid, locId) {
-    this.routerobj.navigate(['searchdetail', provid], { queryParams: { locId: locId } });
+    this.routerobj.navigate(['searchdetail', provid], { queryParams: { locId: locId, src: 'srch' } });
   }
 
   handlerefineddomainchange(val) {
