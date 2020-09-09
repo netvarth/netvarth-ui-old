@@ -384,13 +384,13 @@
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <div class="form-group col-md-4 col-xs-7 col-sm-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput min="0" max="1000" type="text"
+                    <mat-form-field >
+                      <input matInput min="0"  type="text"
                         [(ngModel)]="firstAPPTNotificationSettings.time"
                         placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('FIRST_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                        (keypress)="showSubmit('FIRST_APPT');numberOnly($event)" (keyup)="isvalid($event)"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(firstAPPTNotificationSettings.time)}}</small><br>
                       <div class="mgn-up-5" *ngIf="firstApptTime && !firstAPPTNotificationSettings.time"
-                        style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
+                        style="color: red;"> Time is required</div>
                       <!-- <span>
                         <ul class="info-lst form-level-early-hint">
                           <li style="padding-top: 6px;">
@@ -437,12 +437,12 @@
                   </mat-expansion-panel-header>
                   <div class="form-group col-md-4 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput min="0" max="1000" type="text"
+                      <input matInput min="0"  type="text"
                         [(ngModel)]="secondAPPTNotificationSettings.time"
                         placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('SECOND_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                        (keypress)="showSubmit('SECOND_APPT');numberOnly($event)" (keyup)="isvalid($event)"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(secondAPPTNotificationSettings.time)}}</small><br>
                       <div class="mgn-up-5" *ngIf="secondApptTime && !secondAPPTNotificationSettings.time"
-                        style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
+                        style="color: red;">Time is required</div>
                       <!-- <span>
                         <ul class="info-lst form-level-early-hint">
                           <li style="padding-top: 6px;">
@@ -490,12 +490,12 @@
                   </mat-expansion-panel-header>
                   <div class="form-group col-md-4 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput min="0" max="1000" type="text"
+                      <input matInput min="0"  type="text"
                         [(ngModel)]="thirdAPPTNotificationSettings.time"
                         placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('THIRD_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                        (keypress)="showSubmit('THIRD_APPT');numberOnly($event)" (keyup)="isvalid($event)"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(thirdAPPTNotificationSettings.time)}}</small><br>
                       <div class="mgn-up-5" *ngIf="thirdApptTime && !thirdAPPTNotificationSettings.time"
-                        style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
+                        style="color: red;">Time is required</div>
                       <!-- <span>
                         <ul class="info-lst form-level-early-hint">
                           <li style="padding-top: 6px;">
@@ -542,12 +542,12 @@
                   </mat-expansion-panel-header>
                   <div class="form-group col-md-4 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput min="0" max="1000" type="text"
+                      <input matInput min="0"  type="text"
                         [(ngModel)]="fourthAPPTNotificationSettings.time"
                         placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('FOURTH_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                        (keypress)="showSubmit('FOURTH_APPT');numberOnly($event)" (keyup)="isvalid($event)"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(fourthAPPTNotificationSettings.time)}}</small><br>
                       <div class="mgn-up-5" *ngIf="fourthApptTime && !fourthAPPTNotificationSettings.time"
-                        style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
+                        style="color: red;">Time is required</div>
                       <!-- <span>
                         <ul class="info-lst form-level-early-hint">
                           <li style="padding-top: 6px;">
