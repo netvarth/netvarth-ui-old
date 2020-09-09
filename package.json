@@ -29,6 +29,7 @@
     "@ckeditor/ckeditor5-angular": "^1.2.3",
     "@ckeditor/ckeditor5-build-decoupled-document": "^18.0.0",
     "@kolkov/angular-editor": "^1.1.2",
+    "@microsoft/signalr": "^3.1.7",
     "@ng-bootstrap/ng-bootstrap": "^4.1.1",
     "@nicky-lenaers/ngx-scroll-to": "^3.0.1",
     "@syncfusion/ej2-angular-calendars": "^17.4.50",
@@ -52,11 +53,18 @@
     "ngx-owl-carousel": "^2.0.7",
     "ngx-qrcode2": "0.0.9",
     "ngx-scrollbar": "^2.3.0",
+    "ngx-sharebuttons": "^8.0.1",
     "nl2br-pipe": "^1.2.3",
     "node-sass": "^4.13.1",
     "rxjs": "^6.5.4",
+    "twilio-video": "^2.7.2",
     "underscore": "^1.8.3",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "@fortawesome/angular-fontawesome": "^0.5.0",
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-brands-svg-icons": "^5.14.0",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.25",
@@ -82,6 +90,7 @@
     "ts-node": "~5.0.1",
     "tslint": "^5.16.0",
     "typescript": "^3.5.3",
-    "webpack-bundle-analyzer": "^3.3.2"
+    "webpack-bundle-analyzer": "^3.3.2",
+    "@types/twilio-video": "^2.0.9"
   }
 }

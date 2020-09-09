@@ -12,6 +12,9 @@ import { ManageProviderComponent } from './shared/components/manage-provider/man
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
+import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
+import { TwilioService } from './shared/services/twilio-service';
+import { LiveChatClientComponent } from './shared/components/twilio/twilio-live-client.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -39,6 +42,8 @@ const routes: Routes = [
         path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
         canActivate: [AuthGuardProvider]
     },
+    { path: 'client', component: LiveChatClientComponent},
+    {path: 'video',  component: LiveChatComponent},
     { path: 'home/:id', loadChildren: () => import('./shared/modules/about-jaldee/about-jaldee.module').then(m => m.AboutJaldeeModule) },
     { path: 'maintenance', component: MaintenanceComponent },
     { path: ':id', component: BusinessPageComponent },
@@ -54,6 +59,9 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes, {
         // preloadingStrategy: PreloadAllModules
     })],
+    providers: [
+        TwilioService
+    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

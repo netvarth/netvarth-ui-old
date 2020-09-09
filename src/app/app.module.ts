@@ -76,7 +76,8 @@ import { PaymentLinkComponent } from './shared/components/payment-link/payment-l
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
-import { ShareService } from 'ngx-sharebuttons';
+import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
+import { LiveChatClientComponent } from './shared/components/twilio/twilio-live-client.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -107,7 +108,9 @@ export function init_app(globalService: GlobalService) {
     CheckYourStatusComponent,
     PaymentLinkComponent,
     JdnComponent,
-    UpdateProfilePopupComponent
+    UpdateProfilePopupComponent,
+    LiveChatComponent,
+    LiveChatClientComponent
     // PhomeComponent,
   ],
   entryComponents: [
@@ -184,7 +187,7 @@ export function init_app(globalService: GlobalService) {
     SearchDetailServices,
     ProviderDetailService,
     ProviderDataStorageService,
-    ShareService,
+    SharedServices,
     Title,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
