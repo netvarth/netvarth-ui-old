@@ -3,7 +3,7 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading top-row ">
-                    <a class="pull-left back-btn" *ngIf="userId && pSource" (click)="goBack()"><i
+                    <a class="pull-left back-btn" *ngIf="(userId && pSource) || pSource === 'srch' " (click)="goBack()"><i
                             class="fa fa-arrow-left"></i></a>
                 </div>
                 <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
@@ -29,7 +29,7 @@
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
                                 <h3 *ngIf="businessjson.businessName">{{businessjson.businessName | capitalizeFirst}}
                                 </h3>
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding"
                                     *ngIf="locationjson && locationjson.length == 1">
                                     <h6 *ngIf="!locationjson[0].isPlaceisSame"><a [href]="locationjson[0].googleMapUrl"
                                             target="_blank" *ngIf="locationjson[0].googleMapUrl!=''"><i
