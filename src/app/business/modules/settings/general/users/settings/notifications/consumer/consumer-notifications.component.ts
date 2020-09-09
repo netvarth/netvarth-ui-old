@@ -323,7 +323,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
     const hours = Math.floor(val / 60);
     const minutes = val % 60;
   return hours + ' Hr ' + minutes + ' min' ;
-  }
+  } 
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);

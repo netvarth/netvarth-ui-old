@@ -321,7 +321,7 @@ export class ConsumerNotificationsComponent implements OnInit {
         }
       );
     }
-  }
+  } 
   timeinHrMin(val) {
     const hours = Math.floor(val / 60);
     const minutes = val % 60;

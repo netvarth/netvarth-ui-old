@@ -485,7 +485,7 @@
             </mat-expansion-panel-header>
             <div class="form-group col-md-4 col-xs-7 col-sm-4">
               <mat-form-field class="example-full-width">
-                <input matInput min="0"  type="text"
+                <input matInput min="0" type="text"
                   [(ngModel)]="thirdAPPTNotificationSettings.time"
                   placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
                   (keypress)="showSubmit('THIRD_APPT');numberOnly($event)" (keyup)="isvalid($event)"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(thirdAPPTNotificationSettings.time)}}</small><br>
