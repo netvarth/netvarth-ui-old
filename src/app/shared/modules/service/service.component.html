@@ -68,35 +68,35 @@
                     <span>{{service_data.multiples}}</span>
                 </div>
             </div>
-            <div class="c-ot" *ngIf="is_donation">
+            <!-- <div class="c-ot" *ngIf="is_donation">
                 <div class="item" *ngIf="service_data.notificationType && service_data.serviceType === 'donationService' && service_data.notification === true" style="width: 70%;">
                     <span class="ttle"
-                        >{{end_cause_notify_cap}}</span>
+                        >{{end_cause_notify_cap}}</span> -->
                         <!-- <span class="noti-it"
                             *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span> -->
-                        <span class="noti-it"
+                        <!-- <span class="noti-it"
                             >{{end_of_service_notify[service_data.notificationType]}}</span>
                 </div>
-            </div>
-            <div class="c-ot" *ngIf="!is_donation">
+            </div> -->
+            <!-- <div class="c-ot" *ngIf="!is_donation"> -->
                 <!-- <div class="item" style="margin-right: 10px;" *ngIf="subdomainsettings.serviceBillable">
                     <span>{{tax_applicable_cap}}:
                         <span class="noti-it" [class.yes]="service_data.taxable==true"
                             [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
                         'Yes' : 'No'}}</span></span>
                 </div> -->
-                <div class="item" *ngIf="service_data.notificationType && service_data.serviceType !== 'donationService'&& service_data.notification">
-                    <span class="ttle">{{end_service_notify_cap}}</span>
+                <!-- <div class="item" *ngIf="service_data.notificationType && service_data.serviceType !== 'donationService'&& service_data.notification">
+                    <span class="ttle">{{end_service_notify_cap}}</span> -->
                         <!-- <span class="noti-it"
                             *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span> -->
-                        <span class="noti-it"
+                        <!-- <span class="noti-it"
                             >{{end_of_service_notify[service_data.notificationType]}}</span>
-                </div>
+                </div> -->
                 <div class="item" *ngIf="service.serviceType !== 'virtualService' && is_lvtrack_enable && service_data.livetrack">
                     <span class="ttle">Live tracking </span>
                     <span>{{(service_data.livetrack ? 'On': 'Off')}}</span>
                 </div>
-            </div>
+            <!-- </div> -->
             <div class="btm-ctrl">
                 <div class="ctrl enable-disable">
                     <span *ngIf="!is_donation" class="ttle">{{serv_status}}</span>
