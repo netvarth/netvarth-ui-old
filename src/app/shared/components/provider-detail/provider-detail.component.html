@@ -60,9 +60,9 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div *ngIf="specializationslist.length == 1" class="question-header">Specialization
+                                <div *ngIf="specializationslist.length == 1" class="question-header mgn-up-5">Specialization
                                 </div>
-                                <div *ngIf="specializationslist.length > 1" class="question-header">Specializations
+                                <div *ngIf="specializationslist.length > 1" class="question-header mgn-up-5">Specializations
                                 </div>
                                 <div class="question-value1">
                                     <span *ngFor="let spec of specializationslist;"
@@ -143,7 +143,7 @@
                     <!-- </ul> -->
                     <!-- </div> -->
                     <!-- </div> -->
-                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10" *ngIf="showMore">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 showmoresec" *ngIf="showMore">
                         <!-- 
                         <p class="pro-desc question-valuearr">
                             <span *ngIf="bNameStart!=''" [innerHTML]="bNameStart | nl2br"></span><span
@@ -152,7 +152,7 @@
                                 (click)="showDesc()">{{more_cap}}</span>
                             <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">{{less_cap}}</span>
                         </p> -->
-                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-20" *ngIf="showMore">
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10">
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                 <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10">
                                     <div class="question-header">Area of Specialization</div>
@@ -1021,7 +1021,7 @@
                                     <div class="card-item-content-action">
                                         <div class="" style="padding-bottom: 10px">
                                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                                <div class="checkin-btn-bp"
+                                                <div class="checkin-btn-bp donate-btn-bp"
                                                     (click)="payClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)">
                                                     Donate</div>
                                             </div>

@@ -867,15 +867,17 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 if (this.appttime_arr[i]['availableSchedule']) {
                   this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                   this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
-                  this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
-                  if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
+                  this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];                  
+                }
+                if (this.appttime_arr[i]['availableSlots'])  {
+                  this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
+                  if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                     this.locationjson[locindx]['apptAvailableToday'] = true;
-                    this.locationjson[locindx]['appttime_det']['caption'] = 'Available';
-                    this.locationjson[locindx]['appttime_det']['date'] = 'Today';
+                    this.locationjson[locindx]['appttime_det']['date'] = 'Today' + ', ' + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                   } else {
                     this.locationjson[locindx]['apptAvailableToday'] = false;
-                    this.locationjson[locindx]['appttime_det']['caption'] = 'Available On';
-                    this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSchedule']['availableDate'], { 'rettype': 'monthname' });
+                    this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
+                    + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                   }
                 }
                 console.log(this.locationjson[locindx]);
@@ -1888,14 +1890,16 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
-                if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
+              }
+              if (this.appttime_arr[i]['availableSlots'])  {
+                this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
+                if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                   this.locationjson[locindx]['apptAvailableToday'] = true;
-                  this.locationjson[locindx]['appttime_det']['caption'] = 'Available';
-                  this.locationjson[locindx]['appttime_det']['date'] = 'Today';
+                  this.locationjson[locindx]['appttime_det']['date'] = 'Today' + ', ' + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                 } else {
                   this.locationjson[locindx]['apptAvailableToday'] = false;
-                  this.locationjson[locindx]['appttime_det']['caption'] = 'Available On';
-                  this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSchedule']['availableDate'], { 'rettype': 'monthname' });
+                  this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
+                  + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                 }
               }
               console.log(this.locationjson[locindx]);
@@ -1906,6 +1910,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+  getSingleTime(slot) {
+    const slots = slot.split('-');
+    return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+  }
+  getAvailableSlot(slots) {
+    let slotAvailable = '';
+    for (let i = 0; i < slots.length; i++) {
+      if (slots[i].active) {
+        slotAvailable = this.getSingleTime(slots[i].time);
+        break;
+      }
+    }
+    return slotAvailable;
   }
   getServiceByDept(department) {
     if (department && department.departmentId) {

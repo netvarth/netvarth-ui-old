@@ -200,7 +200,7 @@ ul.bus-actions-horiz li {
   ul.bus-actions li {
     display: inline-block !important;
   }
-  .bus-title-content {
+  .bus-title-content, .showmoresec {
     text-align: center;
   }
   ul.details.contact {
@@ -279,7 +279,7 @@ ul.bus-actions-horiz li {
   font-weight: 600 !important;
   color: #3a3030;
   font-size: 0.8rem;
-  line-height: 25px;
+  /* line-height: 25px; */
 }
 
 .playstore-icon {
@@ -381,7 +381,7 @@ ul.details.badges li {
   h6 {
     font-size: 1rem!important;
   }
-  .bus-title-content h6, .bus-title-content h3 {
+  .bus-title-content h3 {
     margin-bottom: 0px !important;
   }
 }
@@ -501,20 +501,6 @@ ul.details.badges li {
   height: 25px !important;
 }
 
-.donate-btn-bp {
-  background: linear-gradient(to right, #c6a0a0 0%, #ffa313 100%);
-  height: 25px;
-  max-width: 100%;
-  /* text-transform: uppercase; */
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  color: white;
-  transition: all .3s ease;
-  cursor: pointer;
-}
-
 .appt-btn-bp {
   background: linear-gradient(to right, #3c8dbc 0%, #00cc96 100%);
   height: 25px;
@@ -599,12 +585,26 @@ ul.details.badges li {
   padding: 7px !important;
 }
 
+.donate-btn-bp {
+  background: #ffa313 !important);
+  /* height: 25px;
+  max-width: 100%; */
+  /* text-transform: uppercase; */
+  /* overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  color: white;
+  transition: all .3s ease;
+  cursor: pointer; */
+}
+
 @media (min-width: 320px) and (max-width: 500px) {
   .bus-item .card.card-item-n {
     width: 95% !important;
     margin: auto !important;
     margin-bottom: 10px !important;
-    float: left;
+    /* float: left; */
     max-width: 150px;
   }
   .bus-item-long {

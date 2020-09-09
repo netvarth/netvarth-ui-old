@@ -69,9 +69,9 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div *ngIf="specializationslist.length == 1" class="question-header">Specialization
+                                <div *ngIf="specializationslist.length == 1" class="question-header mgn-up-5">Specialization
                                 </div>
-                                <div *ngIf="specializationslist.length > 1" class="question-header">Specializations
+                                <div *ngIf="specializationslist.length > 1" class="question-header mgn-up-5">Specializations
                                 </div>
                                 <div class="question-value1">
                                     <span *ngFor="let spec of specializationslist;"
@@ -138,7 +138,7 @@
                     <!-- </ul> -->
                     <!-- </div> -->
                     <!-- </div> -->
-                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10" *ngIf="showMore">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 showmoresec" *ngIf="showMore">
                         <!-- 
                         <p class="pro-desc question-valuearr">
                             <span *ngIf="bNameStart!=''" [innerHTML]="bNameStart | nl2br"></span><span
@@ -147,7 +147,7 @@
                                 (click)="showDesc()">{{more_cap}}</span>
                             <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">{{less_cap}}</span>
                         </p> -->
-                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-20" *ngIf="showMore">
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10" *ngIf="showMore">
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                 <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10">
                                     <div class="question-header">Area of Specialization</div>
@@ -178,7 +178,7 @@
                                     *ngIf="socialMedialist.length>0">
                                     <div class="question-header">Social Media</div>
                                     <div class="question-value1">
-                                        <ul class="details socialmedia no-padding">
+                                        <ul class="details socialmedia m0 no-padding">
                                             <li *ngFor="let soc of socialMedialist"><a rel="noopener" [href]="soc.value"
                                                     target="_blank"><i [class]="getSocialdet(soc.resource, 'iconClass')"
                                                         [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
@@ -189,7 +189,7 @@
                                 <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10">
                                     <div class="question-header">Amenities</div>
                                     <div class="question-value1">
-                                        <ul class="details badges no-padding">
+                                        <ul class="details badges m0 no-padding">
                                             <ng-container *ngIf="locationjson && locationjson.length > 0">
                                                 <li *ngIf="locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none'"
                                                     [matTooltip]="'Parking Type: ' + locationjson[0].parkingType">
@@ -223,7 +223,7 @@
                                     *ngIf="phonelist.length > 0 || emaillist.length > 0">
                                     <div class="question-header">Contact Details</div>
                                     <div class="question-value1">
-                                        <ul class="details  no-padding">
+                                        <ul class="details m0 no-padding">
                                             <li *ngIf="phonelist.length > 0">
                                                 <span *ngFor="let phone of phonelist">
                                                     <span class="glyphicon glyphicon-user one" style="width:20px"
@@ -999,7 +999,7 @@
                                     <div class="card-item-content-action">
                                         <div class="" style="padding-bottom: 10px">
                                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                                <div class="checkin-btn-bp"
+                                                <div class="checkin-btn-bp donate-btn-bp "
                                                     (click)="payClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)">
                                                     Donate</div>
                                             </div>
