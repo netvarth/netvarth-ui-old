@@ -14,7 +14,7 @@ export class IntegrationSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'My Profile',
+            title: 'My Account',
             url: '/provider/settings/bprofile'
         },
         {
