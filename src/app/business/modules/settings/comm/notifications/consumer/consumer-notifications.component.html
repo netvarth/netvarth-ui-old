@@ -19,7 +19,7 @@
 <section *ngIf="!waitlistStatus && !appointment_status && !donations_status && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
     <div class="token-appt">
-      To setup ‘Notifications’, Appointment manager/QManager/Donations need to be enabled from your settings.
+      To setup â€˜Notificationsâ€™, Appointment manager/QManager/Donations need to be enabled from your settings.
     </div>
   </div>
 </section>
@@ -388,7 +388,7 @@
                       <input matInput min="0"  type="text"
                         [(ngModel)]="firstAPPTNotificationSettings.time"
                         placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('FIRST_APPT');numberOnly($event)" (keyup)="isvalid($event)"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(firstAPPTNotificationSettings.time)}}</small><br>
+                        (keypress)="showSubmit('FIRST_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
                       <div class="mgn-up-5" *ngIf="firstApptTime && !firstAPPTNotificationSettings.time"
                         style="color: red;"> Time is required</div>
                       <!-- <span>
@@ -401,6 +401,7 @@
                       </span> -->
                     </mat-form-field>
                   </div>
+                  <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(firstAPPTNotificationSettings.time)}}</small></div>
                   <div class="clearfix"></div>
                   <ul class="notifications">
                     <li class="mgn-lt-10">
@@ -440,7 +441,7 @@
                       <input matInput min="0"  type="text"
                         [(ngModel)]="secondAPPTNotificationSettings.time"
                         placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('SECOND_APPT');numberOnly($event)" (keyup)="isvalid($event)"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(secondAPPTNotificationSettings.time)}}</small><br>
+                        (keypress)="showSubmit('SECOND_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
                       <div class="mgn-up-5" *ngIf="secondApptTime && !secondAPPTNotificationSettings.time"
                         style="color: red;">Time is required</div>
                       <!-- <span>
@@ -453,6 +454,7 @@
                       </span> -->
                     </mat-form-field>
                   </div>
+                  <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(secondAPPTNotificationSettings.time)}}</small></div>
                   <div class="clearfix"></div>
                   <ul class="notifications">
                     <li class="mgn-lt-10">
@@ -493,7 +495,7 @@
                       <input matInput min="0"  type="text"
                         [(ngModel)]="thirdAPPTNotificationSettings.time"
                         placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('THIRD_APPT');numberOnly($event)" (keyup)="isvalid($event)"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(thirdAPPTNotificationSettings.time)}}</small><br>
+                        (keypress)="showSubmit('THIRD_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
                       <div class="mgn-up-5" *ngIf="thirdApptTime && !thirdAPPTNotificationSettings.time"
                         style="color: red;">Time is required</div>
                       <!-- <span>
@@ -506,6 +508,7 @@
                       </span> -->
                     </mat-form-field>
                   </div>
+                  <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(thirdAPPTNotificationSettings.time)}}</small></div>
                   <div class="clearfix"></div>
                   <ul class="notifications">
                     <li class="mgn-lt-10">
@@ -545,7 +548,7 @@
                       <input matInput min="0"  type="text"
                         [(ngModel)]="fourthAPPTNotificationSettings.time"
                         placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('FOURTH_APPT');numberOnly($event)" (keyup)="isvalid($event)"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(fourthAPPTNotificationSettings.time)}}</small><br>
+                        (keypress)="showSubmit('FOURTH_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
                       <div class="mgn-up-5" *ngIf="fourthApptTime && !fourthAPPTNotificationSettings.time"
                         style="color: red;">Time is required</div>
                       <!-- <span>
@@ -558,6 +561,7 @@
                       </span> -->
                     </mat-form-field>
                   </div>
+                  <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(fourthAPPTNotificationSettings.time)}}</small></div>
                   <div class="clearfix"></div>
                   <ul class="notifications">
                     <li class="mgn-lt-10">
