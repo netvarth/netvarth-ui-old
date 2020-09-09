@@ -371,6 +371,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     }
                     if (this.action === 'add' && this.departments.length > 0) {
                         this.serviceForm.get('department').setValue(this.departments[0].departmentId);
+                        this.departId = this.departments[0].departmentId;
+                        this.getUsers();
                     }
                 }
                 },
