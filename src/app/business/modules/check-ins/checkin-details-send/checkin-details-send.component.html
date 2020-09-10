@@ -20,7 +20,7 @@
                         <div><span style="font-size: x-large;">Appointment Details</span></div><br>
                         <p>Appointment for : {{consumer_fname}}</p>
                         <p>Service : {{serv_name}}</p>
-                        <p>Appointment Date & Time: {{date}}, {{appttime}}</p>
+                        <p>Appointment Date & Time: {{date}}, {{getSingleTime(appttime)}}</p>
                         <!-- <p *ngIf = "deptName">Department : {{deptName}}</p> -->
                         <p *ngIf = "Schedulestime">Schedule : {{schedulename}} [{{Schedulestime}} - {{Scheduleetime}}]</p>
                         <p *ngIf = "spfname && splname">Service Provider: {{spfname}} {{splname}}</p>

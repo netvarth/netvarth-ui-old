@@ -104,6 +104,10 @@ export class CheckinDetailsSendComponent implements OnInit {
     back() {
         this.dialogRef.close();
     }
+    getSingleTime(slot) {
+      const slots = slot.split('-');
+      return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    }
     sendMessage() {
       if (this.chekintype === 'Waitlist') {
           if (this.sms === true) {
