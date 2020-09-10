@@ -526,9 +526,12 @@
                                   <i class="fa fa-phone"
                                     [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                                     *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Phone'"></i>
-                                  <i class="fa fa-whatsapp whtsap-ic"
+                                  <i class="fa wtsapaud-icon"
                                     [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
+                                    <i class="fa wtsapvid-icon"
+                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                                   </div>
                                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                     <span class="checkin-label mgn-rt-10"
@@ -613,9 +616,12 @@
                                     <i class="fa fa-phone"
                                       [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                                       *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
-                                    <i class="fa fa-whatsapp whtsap-ic"
+                                    <i class="fa wtsapaud-icon"
                                       [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                                      *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
+                                      <i class="fa wtsapvid-icon"
+                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                      *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                                     <span *ngIf="!small_device_display">
                                       <!-- Start -->
                                       {{appt.apptStatus === 'Started' ? 'Resume': 'Start'}}
@@ -1018,9 +1024,12 @@
                         <i class="fa fa-phone"
                           [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Phone'"></i>
-                        <i class="fa fa-whatsapp whtsap-ic"
+                        <i class="fa wtsapaud-icon"
                           [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
+                          <i class="fa wtsapvid-icon"
+                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="checkin-label mgn-rt-10"
@@ -1105,9 +1114,12 @@
                             *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
                           <i class="fa fa-phone" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
-                          <i class="fa fa-whatsapp whtsap-ic"
+                          <i class="fa wtsapaud-icon"
                             [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                            *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
+                            <i class="fa wtsapvid-icon"
+                            [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                            <span
                             [ngClass]="{'dash': (!small_device_display && getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
                             *ngIf="!small_device_display">
