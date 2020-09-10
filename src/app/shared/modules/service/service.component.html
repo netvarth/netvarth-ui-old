@@ -206,7 +206,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                             <i *ngIf="mode === 'WhatsApp'" [ngClass]="{'fa wtsapaud-icon': (serv_mode === 'audioService' || (service_data && service_data.serviceType==='virtualService' && service_data.virtualServiceType === 'audioService')), 'fa wtsapvid-icon': (serv_mode === 'videoService' || (service_data && service_data.serviceType==='virtualService' && service_data.virtualServiceType === 'videoService'))}"  aria-hidden="true"></i>
                             <i *ngIf="mode === 'Zoom'" class="fa zoom-icon"></i>
                             <i *ngIf="mode === 'GoogleMeet'" class="fa meet-icon" ></i>
-                            <i *ngIf="mode === 'Phone'" class="fa fa-mobile fa-lg" aria-hidden="true"></i>
+                            <i *ngIf="mode === 'Phone'" class="fa phon-icon" aria-hidden="true"></i>
                            <span class="dash">{{mode}}</span> 
                         </mat-option>
                     </mat-select>

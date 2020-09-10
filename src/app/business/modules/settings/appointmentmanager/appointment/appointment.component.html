@@ -125,7 +125,7 @@
                                             <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'videoService'" class="fa wtsapvid-icon"></i>
                                             <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
                                             <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
-                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'" class="fa fa-mobile custId-qr pad-rt-5"
+                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'" class="fa phon-icon"
                                               aria-hidden="true"></i>
                                               <span class="dash">{{serv.name | capitalizeFirst}}</span>
                                             <!-- <input matInput [readonly]="true" placeholder="Service" value="{{serv.name | capitalizeFirst}}"> -->
@@ -145,7 +145,7 @@
                                                     <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                                                         class="fa meet-icon"></i>
                                                     <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'"
-                                                        class="fa fa-mobile custId-qr pad-rt-5" aria-hidden="true"></i>
+                                                        class="fa phon-icon" aria-hidden="true"></i>
                                                     <span class="dash">{{serv.name | capitalizeFirst}}</span>
                                                 </mat-option>
                                             </mat-select>

@@ -703,7 +703,7 @@ ul.bus-actions li a.lnk {
   font-size: 1.5rem !important;
 }
 
-.service-icon .meet-icon{
+.service-icon .meet-icon, .service-icon .phon-icon{
   width: 25px !important;
 }
 .service-icon .zoom-icon {

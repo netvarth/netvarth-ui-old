@@ -12,7 +12,7 @@
     <ul>
       <li *ngFor="let service of serviceJson" (click)="showServiceDetail(service, businessjson.businessName)">
         <span *ngIf="service.serviceType === 'virtualService'">
-          <i class="fa fa-phone"
+          <i class="fa phon-icon"
             *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
           <i class="fa meet-icon"
             *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
