@@ -2420,7 +2420,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getProviders() {
     const apiFilter = {};
-    apiFilter['userType-neq'] = 'ASSISTANT';
+    apiFilter['userType-eq'] = 'PROVIDER';
     // let filter = 'userType-neq :"assistant"'
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
