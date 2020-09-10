@@ -287,7 +287,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
                 <div>
                     <mat-form-field>
-                        <input min="0" matInput type="text" class="form-control number-ip-sm" id="minprice"
+                        <input min="1" matInput type="text" class="form-control number-ip-sm" id="minprice"
                             maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'minDonationAmount')"
                             placeholder="Minimum Amount ({{rupee_symbol}}) *" formControlName="minDonationAmount"
                             autocomplete="off">
@@ -301,7 +301,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </div>
                 <div>
                     <mat-form-field>
-                        <input min="0" matInput type="text" class="form-control number-ip-sm" id="maxprice"
+                        <input min="1" matInput type="text" class="form-control number-ip-sm" id="maxprice"
                             maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'maxDonationAmount')"
                             placeholder="Maximum Amount ({{rupee_symbol}}) *" formControlName="maxDonationAmount"
                             autocomplete="off">
@@ -316,7 +316,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group" *ngIf="is_donation">
                 <mat-form-field>
-                    <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
+                    <input min="1" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
                         id="multiples" pattern="[0-9]+" maxlength="10" (keypress)="isNumeric($event)"
                         (keyup)="isvalid($event, 'multiples')" placeholder="Multiples*" formControlName="multiples"
                         autocomplete="off">
