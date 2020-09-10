@@ -51,21 +51,21 @@
             <div class="outer3" *ngIf="data.serdet && data.serdet.totalAmount && data.serdet.totalAmount != 0">
                 <div class="duration">
                     <span>{{price_cap}} : </span><span style="font-weight: bold">&nbsp;
-                        <span>&#8377; </span>{{data.serdet.totalAmount}}
+                        <span class="rupee-font">&#8377; </span>{{data.serdet.totalAmount}}
                     </span>
                 </div>
             </div>
             <div class="outer4" *ngIf="data.serdet && data.serdet.isPrePayment">
                 <div class="prepayment">
                     <span>{{prepayment_amount}} : </span><span style="font-weight: bold">
-                        <span>&#8377; </span>{{data.serdet.minPrePaymentAmount}}
+                        <span class="rupee-font">&#8377; </span>{{data.serdet.minPrePaymentAmount}}
                     </span>
                 </div>
             </div>
             <div class="outer4" *ngIf="data.serdet && data.serdet.prePayment">
                 <div class="prepayment">
                     <span>{{prepayment_amount}} : </span><span style="font-weight: bold">
-                        <span>&#8377; </span>{{data.serdet.minAmount}}
+                        <span class="rupee-font">&#8377; </span>{{data.serdet.minAmount}}
                     </span>
                 </div>
             </div>

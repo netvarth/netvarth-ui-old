@@ -35,7 +35,7 @@
                                     <span class="waitlist_for">
                                         {{payments.paymentGateway}}</span></div>
                                 <div class="item" *ngIf="payments.amount"><span class="ttle">Amount</span>
-                                    <span class="waitlist_for">
+                                    <span class="waitlist_for rupee-font">
                                         {{payments.amount |
                                                     currency:'&#8377; ' }}</span></div>
                                 <div class="item" *ngIf="payments.status"><span class="ttle">Status</span>
@@ -43,11 +43,11 @@
                                         {{payments.status
                                                     | capitalizeFirst}}</span></div>
                                 <div class="item"><span class="ttle">Refudable</span>
-                                    <a *ngIf="payments.refundableAmount > 0" class="waitlist_for pointer-cursor"
+                                    <a *ngIf="payments.refundableAmount > 0" class="waitlist_for pointer-cursor rupee-font"
                                         style="text-decoration: underline;" (click)="showRefunds()">
                                         {{payments.refundableAmount |
                                                                 currency:'&#8377; '}}</a>
-                                    <span *ngIf="payments.refundableAmount == 0" class="waitlist_for">
+                                    <span *ngIf="payments.refundableAmount == 0" class="waitlist_for rupee-font">
                                         {{payments.refundableAmount |
                                                                                         currency:'&#8377; '}}</span>
                                 </div>
@@ -69,7 +69,7 @@
                                                                             | capitalizeFirst}}</span>
                                                         </div>
                                                         <div class="td two">{{refund.refundBy | capitalizeFirst }}</div>
-                                                        <div class="td three">{{refund.amount |
+                                                        <div class="td three rupee-font">{{refund.amount |
                                                                         currency:'&#8377; ' }}</div>
                                                     </div>
                                                 </div>

@@ -134,7 +134,7 @@
                                         </div> -->
                                 <div class="lt0 payment"
                                     *ngIf="appointment.amountDue>0 && (appointment.billViewStatus=='Show') && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'">
-                                    <span class="paytext"><span>Amount Due : <span>&#8377;
+                                    <span class="paytext"><span>Amount Due : <span class="rupee-font">&#8377;
                                             </span>{{appointment.amountDue}}
                                         </span><a class="bt3 cust-btn pointer-cursor"
                                             (click)="viewBill(appointment,'appointment')">Pay</a></span>
@@ -400,7 +400,7 @@
                                 </div> -->
                                         <div class="lt0 payment"
                                             *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show') && waitlist.waitlistStatus != 'cancelled'">
-                                            <span class="paytext"><span>Amount Due : <span>&#8377;
+                                            <span class="paytext"><span>Amount Due : <span class="rupee-font">&#8377;
                                                     </span>{{waitlist.amountDue}}
                                                 </span><a class="bt3 cust-btn pointer-cursor"
                                                     (click)="viewBill(waitlist,'checkin')">Pay</a></span>

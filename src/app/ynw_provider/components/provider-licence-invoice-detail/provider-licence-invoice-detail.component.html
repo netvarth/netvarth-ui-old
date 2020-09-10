@@ -62,7 +62,7 @@
             <span class="amount-pay">
                 <span *ngIf="source !== 'payment-history'"> Amount to pay</span>
                 <span *ngIf="source === 'payment-history'"> Amount paid</span>
-                <span class="result"
+                <span class="result rupee-font"
                     style="float: right">{{invoice.amount | currency:'&#8377; '}}</span></span>
 
         </div>
@@ -80,11 +80,11 @@
             <tbody>
                 <tr *ngIf="invoice.licensePkgDetails">
                     <td>{{invoice.licensePkgDetails.licenseName}}</td>
-                    <td class="invoice-head">{{invoice.licensePkgDetails.amount | currency:'&#8377; '}}</td>
+                    <td class="invoice-head rupee-font">{{invoice.licensePkgDetails.amount | currency:'&#8377; '}}</td>
                 </tr>
                 <tr *ngFor="let addon of invoice.addonDetails">
                     <td>{{addon.addonName}}</td>
-                    <td class="invoice-head">{{addon.amount | currency:'&#8377; '}}</td>
+                    <td class="invoice-head rupee-font">{{addon.amount | currency:'&#8377; '}}</td>
                 </tr>
                 <tr *ngIf="invoice.creditDebitJson">
                     <td><b>License Adjustments</b></td>
@@ -95,9 +95,11 @@
                           <td>{{crdt_debtJson.amount | currency:'&#8377; '}}</td> -->
                     <td>{{crdt_debtJson.publicNote}}</td>
                     <td class="invoice-head" *ngIf="crdt_debtJson.type =='debit'">
-                        {{crdt_debtJson.amount | currency:'&#8377; '}}(Dr)</td>
+                        <span class="rupee-font">{{crdt_debtJson.amount | currency:'&#8377; '}}</span>
+                        (Dr)</td>
                     <td class="invoice-head" *ngIf="crdt_debtJson.type =='credit'">
-                        {{crdt_debtJson.amount | currency:'&#8377; '}}(Cr)</td>
+                        <span class="rupee-font">{{crdt_debtJson.amount | currency:'&#8377; '}}</span>
+                        (Cr)</td>
                 </tr>
                 <!-- <tr *ngIf="licenseDiscounts">
 
@@ -109,7 +111,7 @@
                     <td class="invoiceTotal" style="text-align: left">{{discount.name}} <span
                             *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
                     </td>
-                    <td class="price invoice-head">(-){{discount.discountedAmt| currency:'&#8377; '}}</td>
+                    <td class="price invoice-head rupee-font">(-){{discount.discountedAmt| currency:'&#8377; '}}</td>
                 </tr>
 
 
@@ -135,7 +137,7 @@
 
                 <tr>
                     <td class="invoiceTotal"><b>Total</b></td>
-                    <td class="invoice-head">{{invoice.amount | currency:'&#8377; '}}</td>
+                    <td class="invoice-head rupee-font">{{invoice.amount | currency:'&#8377; '}}</td>
                 </tr>
             </tbody>
         </table>
@@ -271,7 +273,7 @@
                 </div>
                 <div class="pay-det-row">
                     <span class="label">{{amount_cap}} :
-                        <span class="result">
+                        <span class="result rupee-font">
                             <b>{{payment.amount | currency:'&#8377; '}}</b></span></span>
                 </div>
                 <div class="pay-det-row">

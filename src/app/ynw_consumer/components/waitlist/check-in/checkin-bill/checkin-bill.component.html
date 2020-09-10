@@ -57,14 +57,15 @@
                                                                 <div class="c-row one servlist">
                                                                     <div class="name">
                                                                         {{service.serviceName | capitalizeFirst}}
-                                                                        {{service.price | currency:'&#8377; '}}
+                                                                        <span class="rupee-font">{{service.price | currency:'&#8377; '}}</span>
+                                                                        
                                                                         <span [matTooltipClass]="tooltipcls"
                                                                             [matTooltip]="'Taxable'"
                                                                             *ngIf="service.GSTpercentage > 0"><sup>Tax</sup></span>
                                                                     </div>
                                                                     <div class="quantity">{{qnty_cap}}
                                                                         {{service.quantity}}</div>
-                                                                    <div class="price">{{(service.quantity * service.price) |
+                                                                    <div class="price rupee-font">{{(service.quantity * service.price) |
                                             currency:'&#8377; '}}</div>
                                                                 </div>
                                                                 <div class="c-row two section-two">
@@ -72,7 +73,7 @@
                                                                         *ngFor="let discount of service.discount">
                                                                         <div class="name">{{discount.name}}
                                                                         </div>
-                                                                        <div class="price">(-){{discount.discountValue |
+                                                                        <div class="price rupee-font">(-){{discount.discountValue |
                                                 currency:'&#8377; '}}</div>
                                                                     </div>
                                                                 </div>
@@ -81,7 +82,7 @@
                                                                     <div class="name">
                                                                         {{sub_tot_cap}}
                                                                     </div>
-                                                                    <div class="price">{{service.netRate |
+                                                                    <div class="price rupee-font">{{service.netRate |
                                             currency:'&#8377; '}}</div>
                                                                 </div>
                                                             </div>
@@ -91,14 +92,16 @@
                                                             <div class="list-content">
                                                                 <div class="c-row one itemlist">
                                                                     <div class="name">
-                                                                        {{item.itemName | capitalizeFirst}} - {{item.price |
-                                                currency:'&#8377; '}} <span [matTooltipClass]="tooltipcls"
+                                                                        {{item.itemName | capitalizeFirst}} - 
+                                                                        <span class="rupee-font">{{item.price |
+                                                                            currency:'&#8377; '}} </span>
+                                                                        <span [matTooltipClass]="tooltipcls"
                                                                             [matTooltip]="'Taxable'"
                                                                             *ngIf="item.GSTpercentage > 0"><sup>Tax</sup></span>
                                                                     </div>
                                                                     <div class="quantity">{{qnty_cap}}
                                                                         {{item.quantity}}</div>
-                                                                    <div class="price">{{(item.quantity * item.price) |
+                                                                    <div class="price rupee-font">{{(item.quantity * item.price) |
                                             currency:'&#8377; '}}</div>
                                                                 </div>
                                                                 <div class="c-row two section-two">
@@ -106,7 +109,7 @@
                                                                         *ngFor="let discount of item.discount">
                                                                         <div class="name">{{discount.name}}
                                                                         </div>
-                                                                        <div class="price">(-){{discount.discountValue |
+                                                                        <div class="price rupee-font">(-){{discount.discountValue |
                                                 currency:'&#8377; '}}</div>
                                                                     </div>
                                                                 </div>
@@ -115,7 +118,7 @@
                                                                     <div class="name">
                                                                         {{sub_tot_cap}}
                                                                     </div>
-                                                                    <div class="price">{{item.netRate |
+                                                                    <div class="price rupee-font">{{item.netRate |
                                             currency:'&#8377; '}}</div>
                                                                 </div>
                                                             </div>
@@ -126,7 +129,7 @@
                                                                     <div class="name">
                                                                         {{gross_amnt_cap}}
                                                                     </div>
-                                                                    <div class="price">
+                                                                    <div class="price rupee-font">
                                                                         {{bill_data.netTotal | currency:'&#8377; '}}
                                                                     </div>
                                                                 </div>
@@ -134,7 +137,7 @@
                                                                     <div class="discount-row two-col"
                                                                         *ngIf="bill_data.jdn && bill_data.jdn.discount">
                                                                         <div class="name">JDN</div>
-                                                                        <div class="price">(-){{bill_data.jdn.discount |
+                                                                        <div class="price rupee-font">(-){{bill_data.jdn.discount |
                                                 currency:'&#8377; '}}</div>
                                                                     </div>
                                                                 </div>
@@ -144,7 +147,7 @@
                                                                         <div class="name">
                                                                             {{discount.name}}
                                                                         </div>
-                                                                        <div class="price">(-){{discount.discValue |
+                                                                        <div class="price rupee-font">(-){{discount.discValue |
                                                 currency:'&#8377; '}}</div>
                                                                     </div>
                                                                 </div>
@@ -154,7 +157,7 @@
                                                                         <div class="name">
                                                                             {{coupon.name}}
                                                                         </div>
-                                                                        <div class="price">(-){{coupon.couponValue |
+                                                                        <div class="price rupee-font">(-){{coupon.couponValue |
                                                 currency:'&#8377; '}}</div>
                                                                     </div>
                                                                 </div>
@@ -164,7 +167,7 @@
                                                                         <div class="name">
                                                                             {{jcoupon.key}}
                                                                         </div>
-                                                                        <div class="price">
+                                                                        <div class="price rupee-font">
                                                                             <span>(-)</span>
                                                                             <span (click)="showJCCouponNote(jcoupon)"
                                                                                 [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value |
@@ -177,12 +180,13 @@
                                                                     <div class="discount-row two-col">
                                                                         <div class="name">
                                                                             <span class="tax-top">Tax
-                                                                                {{bill_data.taxPercentage}}% of {{bill_data.taxableTotal |
-                                                    currency:'&#8377; '}}</span><br /><span
+                                                                                <span class="rupee-font">  {{bill_data.taxPercentage}}% of {{bill_data.taxableTotal |
+                                                                                    currency:'&#8377; '}}</span>
+                                                                              </span><br /><span
                                                                                 class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
                                                                                 SGST-{{bill_data.taxPercentage/2}}%)</span>
                                                                         </div>
-                                                                        <div class="price">(+){{bill_data.totalTaxAmount |
+                                                                        <div class="price rupee-font">(+){{bill_data.totalTaxAmount |
                                                 currency:'&#8377; '}}</div>
                                                                     </div>
                                                                 </div>
@@ -191,7 +195,7 @@
                                                                     <div class="name">
                                                                         Net Total
                                                                     </div>
-                                                                    <div class="price">{{bill_data.netRate |
+                                                                    <div class="price rupee-font">{{bill_data.netRate |
                                             currency:'&#8377; '}}</div>
                                                                 </div>
                                                                 <div class="c-row two section-two"
@@ -200,7 +204,7 @@
                                                                         <div class="name">
                                                                             Amount Paid
                                                                         </div>
-                                                                        <div class="price">{{bill_data.totalAmountPaid |
+                                                                        <div class="price rupee-font">{{bill_data.totalAmountPaid |
                                                 currency:'&#8377; '}}</div>
                                                                     </div>
                                                                 </div>
@@ -209,13 +213,13 @@
                                                                     <div class="name">
                                                                         Amount Due
                                                                     </div>
-                                                                    <div class="price">{{bill_data.amountDue |
+                                                                    <div class="price rupee-font">{{bill_data.amountDue |
                                             currency:'&#8377; '}}</div>
                                                                 </div>
                                                                 <div class="c-row one two-col"
                                                                     *ngIf="bill_data.amountDue < 0">
                                                                     <div class="name">Refundable Amount</div>
-                                                                    <div class="price">{{refund_value |
+                                                                    <div class="price rupee-font">{{refund_value |
 											currency:'&#8377; '}}</div>
                                                                 </div>
                                                             </div>

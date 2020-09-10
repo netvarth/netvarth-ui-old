@@ -61,8 +61,12 @@
                                                 <div class="lc4-1" *ngIf="currentlicense_details.dueAmount > 0">
                                                     <div class="lt mgn-bt-10">
                                                         <div>
-                                                            <span class="amount">{{due_amt}}:&nbsp;&nbsp;<strong>{{currentlicense_details.dueAmount
-                                                                        | currency:'&#8377;'}}</strong>
+                                                            <span class="amount">{{due_amt}}:&nbsp;&nbsp;<strong>
+                                                                <span class="rupee-font">
+                                                                    {{currentlicense_details.dueAmount
+                                                                        | currency:'&#8377;'}}
+                                                                </span>
+                                                               </strong>
                                                             </span> <span class="amount" *ngIf="invoices.length != 0">
                                                                 <strong> - {{currentlicense_details.nextPaymentOn
                                                                         | date: dateFormat }}</strong>
@@ -125,13 +129,15 @@
                                                                 Package:&nbsp;&nbsp;<strong>{{currentlicense_details.accountLicense.displayName}}</strong>
                                                             </div>
                                                             <div class="ln-hgt-24" *ngIf="showAmounts">Grand Total:
-                                                                &nbsp;&nbsp;<strong>{{grandTotal
-                                                                    | currency:'&#8377;'}}</strong></div>
+                                                                &nbsp;&nbsp;<strong class="rupee-font">
+                                                                    {{grandTotal
+                                                                    | currency:'&#8377;'}}
+                                                                </strong></div>
                                                             <div class="ln-hgt-24" *ngIf="showAmounts">Applied Discount:
-                                                                &nbsp;&nbsp;<strong>{{appliedDiscount
+                                                                &nbsp;&nbsp;<strong class="rupee-font">{{appliedDiscount
                                                                     | currency:'&#8377;'}}</strong></div>
                                                             <div class="ln-hgt-24" *ngIf="showAmounts">Net Total:
-                                                                &nbsp;&nbsp;<strong>{{netTotal
+                                                                &nbsp;&nbsp;<strong class="rupee-font">{{netTotal
                                                                     | currency:'&#8377;'}}</strong></div>                                                          
                                                         </div>
                                                         <div>
@@ -209,7 +215,7 @@
                                                             {{invoice.dueDate | date: dateFormat }}
                                                         </td>
                                                         <td data-title="Amount">
-                                                            <strong>{{invoice.amount | currency:'&#8377; '}}</strong>
+                                                            <strong class="rupee-font">{{invoice.amount | currency:'&#8377; '}}</strong>
                                                         </td>
                                                         <td data-title="Period" *ngIf="!hide_invoiceperiod">
                                                             {{invoice.periodFrom | date: dateFormat }} -
@@ -226,7 +232,10 @@
                                                         <td>
                                                             <span *ngIf="(invoices.length-1) == i" class="cs-btn bt3"
                                                                 (click)="makePayment(invoice)">Pay
-                                                                {{invoice.amount | currency:'&#8377; '}}</span>
+                                                                <span class="rupee-font">
+                                                                    {{invoice.amount | currency:'&#8377; '}}
+                                                                </span>
+                                                                </span>
                                                         </td>
                                                         <td>
                                                             <p *ngIf="invoice.isPeriodic" class="form-level-settings">
