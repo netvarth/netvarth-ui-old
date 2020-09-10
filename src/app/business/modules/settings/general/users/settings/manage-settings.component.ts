@@ -714,4 +714,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
         });
     // this.loading = false;
   }
+  redirecToUsers() {
+    this.routerobj.navigate(['provider',  'settings' , 'general' , 'users']);
+}
 }

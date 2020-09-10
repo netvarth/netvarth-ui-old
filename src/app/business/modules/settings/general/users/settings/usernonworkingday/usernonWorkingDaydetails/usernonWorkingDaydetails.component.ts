@@ -312,4 +312,7 @@ export class UsernonWorkingDaydetailsComponent implements OnInit {
     this.api_error = null;
     this.api_success = null;
   }
+  redirecToUserHolidaylist() {
+    this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings' , 'holidays']);
+  }
 }

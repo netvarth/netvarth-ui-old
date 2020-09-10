@@ -349,4 +349,11 @@ export class BranchUsersComponent implements OnInit {
             });
 
     }
+    redirecToGeneral() {
+        this.routerobj.navigate(['provider', 'settings', 'general']);
+      }
+      redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/general->branchsps']);
+    }
+
 }
