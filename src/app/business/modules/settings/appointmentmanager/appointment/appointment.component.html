@@ -121,7 +121,8 @@
                                         </mat-form-field> -->
                                         <span *ngIf="servicesjson.length == 1">
                                           <ng-container *ngFor="let serv of servicesjson">
-                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic"></i>
+                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'audioService'" class="fa wtsapaud-icon"></i>
+                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'videoService'" class="fa wtsapvid-icon"></i>
                                             <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
                                             <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
                                             <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'" class="fa fa-mobile custId-qr pad-rt-5"
@@ -135,8 +136,10 @@
                                             <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser"
                                                 #servsel (selectionChange)="handleServiceSel(servsel.value)">
                                                 <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
-                                                    <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp'"
-                                                        class="fa fa-whatsapp whtsap-ic"></i>
+                                                    <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'audioService'"
+                                                        class="fa wtsapaud-icon"></i>
+                                                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'videoService'"
+                                                        class="fa wtsapvid-icon"></i>
                                                     <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
                                                         class="fa zoom-icon"></i>
                                                     <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"

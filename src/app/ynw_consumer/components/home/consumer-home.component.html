@@ -58,8 +58,10 @@
                                                 *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                             <i class="fa zoom-icon"
                                                 *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                            <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                            <i class="fa wtsapaud-icon"
+                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='audioService'"></i>
+                                                <i class="fa wtsapvid-icon"
+                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='videoService'"></i>
                                         </span>
                                         {{appointment.service.name | capitalizeFirst}} </span>
                                     for <span class="forwhom" *ngFor="let user of appointment.appmtFor">
@@ -325,8 +327,10 @@
                                                         *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                     <i class="fa zoom-icon"
                                                         *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                    <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                    <i class="fa wtsapaud-icon"
+                                                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='audioService'"></i>
+                                                        <i class="fa wtsapvid-icon"
+                                                        *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 {{waitlist.service.name | capitalizeFirst}}</span> for <span
                                                 class="forwhom" *ngFor="let user of waitlist.waitlistingFor">

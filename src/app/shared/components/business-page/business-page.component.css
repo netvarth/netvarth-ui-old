@@ -835,6 +835,9 @@ ul.details.badges li {
 .service-icon .zoom-icon {
   width: 35px !important;
 }
+.service-icon .wtsapaud-icon, .service-icon .wtsapvid-icon {
+  width: 40px !important;
+}
 
 .bus-item .card-item-content .title-style.mgn-bt-m-5 {
   margin-bottom: -5px !important;

@@ -707,7 +707,10 @@ ul.bus-actions li a.lnk {
   width: 25px !important;
 }
 .service-icon .zoom-icon {
-  width: 30px !important;
+  width: 30px !important; 
+}
+.service-icon .wtsapaud-icon, .service-icon .wtsapvid-icon {
+  width: 40px !important;
 }
 
 .bus-item .card-item-content .title-style.mgn-bt-m-5 {
