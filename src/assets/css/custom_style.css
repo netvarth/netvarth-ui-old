@@ -10504,18 +10504,32 @@ a {
 }
 
 .zoom-icon {
-  content: url(../images/zoom.png);
+  content: url(../images/teleservice/zoom.svg);
+  top: 4px;
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+}
+.meet-icon {
+  content: url(../images/teleservice/gmeet.svg);
   top: 3px;
   position: relative;
   padding-right: 1px;
   width: 15px;
 }
-.meet-icon {
-  content: url(../images/meet.png);
-  top: 3px;
+.wtsapaud-icon {
+  content: url(../images/teleservice/whatsappAudio.svg);
+  top: 4px;
   position: relative;
   padding-right: 1px;
-  width: 15px;
+  width: 26px;
+}
+.wtsapvid-icon {
+  content: url(../images/teleservice/whatsappVideo.svg);
+  top: 4px;
+  position: relative;
+  padding-right: 1px;
+  width: 26px;
 }
 
 .vid-ic-pd {

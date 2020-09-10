@@ -203,7 +203,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-label>Select <span *ngIf="serv_mode === 'videoService'">Video</span><span *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
                     <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name" name="toolname" [ngModelOptions]="{standalone: true}">
                         <mat-option *ngFor="let mode of telemodes" [value]="mode">
-                            <i *ngIf="mode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic" aria-hidden="true"></i>
+                            <i *ngIf="mode === 'WhatsApp'" class="fa wtsapaud-icon" aria-hidden="true"></i>
                             <i *ngIf="mode === 'Zoom'" class="fa zoom-icon"></i>
                             <i *ngIf="mode === 'GoogleMeet'" class="fa meet-icon" ></i>
                             <i *ngIf="mode === 'Phone'" class="fa fa-mobile fa-lg" aria-hidden="true"></i>

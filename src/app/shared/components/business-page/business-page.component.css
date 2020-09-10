@@ -829,8 +829,11 @@ ul.details.badges li {
   font-size: 1.5rem !important;
 }
 
-.service-icon .meet-icon, .service-icon .zoom-icon {
+.service-icon .meet-icon {
   width: 25px !important;
+}
+.service-icon .zoom-icon {
+  width: 35px !important;
 }
 
 .bus-item .card-item-content .title-style.mgn-bt-m-5 {
