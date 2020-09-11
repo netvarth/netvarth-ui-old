@@ -216,7 +216,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
     this.provider_services.patchUserbProfile(pdata, this.userId)
       .subscribe(
         () => {
-          this.sharedfunctionobj.openSnackBar(Messages.BPROFILE_UPDATED);
+          this.sharedfunctionobj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           if (this.domain_fields_mandatory.length !== 0 || this.subdomain_fields_mandatory.length !== 0) {
             this.showVirtualFields = true;
@@ -237,7 +237,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_UPDATED');
-          this.sharedfunctionobj.openSnackBar(Messages.BPROFILE_UPDATED);
+          this.sharedfunctionobj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           if ( this.domain_fields_mandatory.length !== 0 &&  this.domain_fields_mandatory.some(domain => (domain.value === '') || (domain.value === undefined))
            || this.subdomain_fields_mandatory.length !== 0 && this.subdomain_fields_mandatory.some(subdomain => (subdomain.value === '') || (subdomain.value === undefined))) {
