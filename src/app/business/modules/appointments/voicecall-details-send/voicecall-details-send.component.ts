@@ -72,4 +72,3 @@ export class VoicecallDetailsSendComponent implements OnInit {
     );
   }
 }
-

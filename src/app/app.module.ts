@@ -165,7 +165,6 @@ export function init_app(globalService: GlobalService) {
     ForgotPasswordModule,
     SetPasswwordModule,
     JoyrideModule.forRoot()
-
   ],
   providers: [
     AuthGuardConsumer,

@@ -329,3 +329,4 @@ export class CustomersListComponent implements OnInit {
         this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
     }
 }
+

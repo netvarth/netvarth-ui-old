@@ -16,3 +16,4 @@ import { VoicecallDetailsComponent } from './voicecall-details.component';
     exports: [VoicecallDetailsComponent]
 })
 export class VoicecallDetailsModule { }
+

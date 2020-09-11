@@ -28,8 +28,6 @@ import { CheckinDetailsSendModule } from './checkin-details-send/checkin-details
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { VoicecallDetailsModule } from './voicecall-details/voicecall-details.modules';
 // import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
-
-
 @NgModule({
     imports: [
         CheckinsRoutingModule,
