@@ -491,14 +491,16 @@
                                                 (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
                                                 {{appointmentService.name}}
                                                 <span *ngIf="appointmentService.serviceType == 'virtualService'">
-                                                    <i class="fa fa-phone"
+                                                    <i class="fa phon-icon"
                                                         *ngIf="appointmentService.virtualCallingModes &&appointmentService.virtualCallingModes[0].callingMode == 'Phone'"></i>
                                                     <i class="fa meet-icon"
                                                         *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'GoogleMeet'"></i>
                                                     <i class="fa zoom-icon"
                                                         *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'Zoom'"></i>
-                                                    <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp'"></i>
+                                                    <i class="fa wtsapaud-icon"
+                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='audioService'"></i>
+                                                        <i class="fa wtsapvid-icon"
+                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                             </li>
                                         </ul>
@@ -561,14 +563,16 @@
                                                             aria-hidden="true"></i>)
                                                     </span> -->
                                                     <span *ngIf="serv.serviceType == 'virtualService'">
-                                                        <i class="fa fa-phone"
+                                                        <i class="fa phon-icon"
                                                             *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'Phone'"></i>
                                                         <i class="fa meet-icon"
                                                             *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'GoogleMeet'"></i>
                                                         <i class="fa zoom-icon"
                                                             *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'Zoom'"></i>
-                                                        <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'WhatsApp'"></i>
+                                                            <i class="fa wtsapaud-icon"
+                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'WhatsApp' && serv.virtualServiceType ==='audioService'"></i>
+                                                            <i class="fa wtsapvid-icon"
+                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'WhatsApp' && serv.virtualServiceType ==='videoService'"></i>
                                                     </span>
                                                 </li>
                                             </ul>
@@ -659,14 +663,16 @@
                                                     (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
                                                 </span> -->
                                                 <span *ngIf="appointmentService.serviceType == 'virtualService'">
-                                                    <i class="fa fa-phone"
+                                                    <i class="fa phon-icon"
                                                         *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'Phone'"></i>
                                                     <i class="fa meet-icon"
                                                         *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'GoogleMeet'"></i>
                                                     <i class="fa zoom-icon"
                                                         *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'Zoom'"></i>
-                                                    <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp'"></i>
+                                                        <i class="fa wtsapaud-icon"
+                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='audioService'"></i>
+                                                        <i class="fa wtsapvid-icon"
+                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                             </li>
                                         </ul>
