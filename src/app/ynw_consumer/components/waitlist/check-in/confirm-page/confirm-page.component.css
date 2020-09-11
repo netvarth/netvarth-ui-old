@@ -148,3 +148,6 @@
   width: 100%;
   color: #00cc96;
 }
+.content {
+  padding: 15px 0px !important;
+}
