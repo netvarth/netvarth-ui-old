@@ -19,6 +19,7 @@ import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { CheckinDetailsSendComponent } from './checkin-details-send/checkin-details-send.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
 import { interval as observableInterval, Subscription } from 'rxjs';
+import { VoicecallDetailsComponent } from './voicecall-details/voicecall-details.component';
 
 @Component({
   selector: 'app-checkins',
@@ -263,6 +264,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   windowScrolled: boolean;
   topHeight = 0;
   smsdialogRef: any;
+  voicedialogRef: any;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -331,10 +333,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.arrived_upper, value: 'arrived' },
       { name: this.done_upper, value: 'complete' }];
 
-      this.activateroute.queryParams.subscribe(params => {
-       if (params.servStatus) {
+    this.activateroute.queryParams.subscribe(params => {
+      if (params.servStatus) {
         this.statusAction = 'started';
-       }
+      }
     });
   }
   payStatusList = [
@@ -1534,6 +1536,22 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     this.doSearch();
   }
+  CreateVoiceCall() {
+    const _this = this;
+    let checkin;
+    Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+      checkin = _this.appointmentsChecked[apptIndex];
+    });
+    this.voicedialogRef = this.dialog.open(VoicecallDetailsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        checkin_id: checkin.ynwUuid
+        // chekintype: 'appointment'
+      }
+    });
+  }
   clearFilter() {
     this.resetFilter();
     this.resetLabelFilter();
@@ -2375,7 +2393,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
 
- showCallingModes(modes, action) {
+  showCallingModes(modes, action) {
     if (!modes.consumer) {
       this.consumr_id = modes.providerConsumer.id;
     } else {
@@ -2594,18 +2612,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
         this.provider_services.getWaitlistMgr()
-       .subscribe(data => {
-        this.settings = data;
-        this.showToken = this.settings.showTokenId;
-        if ( this.showToken ) {
-        this.tokenOrCheckin = 'Tokens';
-        this.message = 'To access ' + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
+          .subscribe(data => {
+            this.settings = data;
+            this.showToken = this.settings.showTokenId;
+            if (this.showToken) {
+              this.tokenOrCheckin = 'Tokens';
+              this.message = 'To access ' + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
+            } else {
+              this.tokenOrCheckin = 'Check-ins';
+              this.message = 'To access ' + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
+            }
+          });
       } else {
-        this.tokenOrCheckin = 'Check-ins';
-        this.message = 'To access '  + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
-      }
-    });
-  } else {
         this.message1 = 'Enable Jaldee QManager in your settings to access ' + this.tokenOrCheckin + ' dashboard.';
       }
       this.apiloading = false;

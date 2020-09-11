@@ -507,28 +507,29 @@
                                     (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
                                 <td class="parent-selection parent-title td-one">
                                   <div class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)"
-                                  *ngIf="appt.appmtFor[0].firstName">
+                                    *ngIf="appt.appmtFor[0].firstName">
                                     {{appt.appmtFor[0].firstName}}
                                     {{appt.appmtFor[0].lastName}}</div>
-                                    <div class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)"
+                                  <div class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)"
                                     *ngIf="!appt.appmtFor[0].firstName">
-                                    {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
+                                    {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}
+                                  </div>
                                 </td>
                                 <td class="title td-two">
                                   <div class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3"
                                     *ngIf="servicesCount>1">{{appt.service.name}}
                                     <i class="fa meet-icon"
-                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
-                                  <i class="fa zoom-icon"
-                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Zoom'"></i>
-                                  <i class="fa fa-phone"
-                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Phone'"></i>
-                                  <i class="fa fa-whatsapp whtsap-ic"
-                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                    *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                      *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
+                                    <i class="fa zoom-icon"
+                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                      *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Zoom'"></i>
+                                    <i class="fa fa-phone"
+                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                      *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Phone'"></i>
+                                    <i class="fa fa-whatsapp whtsap-ic"
+                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                      *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
                                   </div>
                                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                     <span class="checkin-label mgn-rt-10"
@@ -538,6 +539,7 @@
                                     Batch: {{appt.batchId}}
                                   </div> -->
                                 </td>
+
                                 <td class="td-three">
                                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                     <span class="icon-cloud icon-btn1 mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
@@ -1000,33 +1002,33 @@
                         <div class="pull-left mgn-lt-5 date greenc bold" *ngIf="time_type!=3">
                           {{getSingleTime(appt.appmtTime)}}</div>
                         <div class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
-                        *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">
+                          *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">
                           {{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}</div>
-                          <div class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
+                        <div class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
                           *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{appt.service.name}}
-                          <i class="fa meet-icon"
-                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
-                        <i class="fa zoom-icon"
-                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Zoom'"></i>
-                        <i class="fa fa-phone"
-                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Phone'"></i>
-                        <i class="fa fa-whatsapp whtsap-ic"
-                          [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                          *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                          <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                            *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
+                          <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                            *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Zoom'"></i>
+                          <i class="fa fa-phone" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                            *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'Phone'"></i>
+                          <i class="fa fa-whatsapp whtsap-ic"
+                            [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                            *ngIf="appt.service.serviceType === 'virtualService' && getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="checkin-label mgn-rt-10"
                             *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
                         </div>
                       </td>
+                      <td class="td-three"><button (click)="CreateVoiceCall()">
+                          Voice call
+                        </button></td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
@@ -1108,7 +1110,7 @@
                           <i class="fa fa-whatsapp whtsap-ic"
                             [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
-                           <span
+                          <span
                             [ngClass]="{'dash': (!small_device_display && getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
                             *ngIf="!small_device_display">
                             <!-- Start -->
@@ -1151,7 +1153,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- <div class="col-md-12 no-padding">
         <ul class="icon-hints-ul no-padding">
           <li class="icon-hints-li"><i class="fa fa-refresh"></i> Refresh</li>

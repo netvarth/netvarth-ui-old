@@ -19,6 +19,7 @@ import { CheckinDetailsSendComponent } from '../check-ins/checkin-details-send/c
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
 import { interval as observableInterval, Subscription } from 'rxjs';
+import { VoicecallDetailsSendComponent } from './voicecall-details-send/voicecall-details-send.component';
 
 @Component({
   selector: 'app-appointments',
@@ -282,6 +283,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   slotsloading = false;
   showNoSlots: boolean;
   smsdialogRef: any;
+  voicedialogRef: any;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -347,10 +349,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.arrived_upper, value: 'Arrived' },
       { name: this.done_upper, value: 'complete' }];
     this.activateroute.queryParams.subscribe(params => {
-        if (params.servStatus) {
-         this.statusAction = 'started';
-        }
-     });
+      if (params.servStatus) {
+        this.statusAction = 'started';
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -1236,7 +1238,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // if (queueid && queueid.length > 0) {
       //   Mfilter['schedule-eq'] = queueid.toString();
       // }
-    //  no_filter = true;
+      //  no_filter = true;
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
@@ -1603,9 +1605,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.time_type === 3) {
-       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
-      api_filter['schedule-eq'] = this.filteredSchedule.toString();
-    }
+      if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
+        api_filter['schedule-eq'] = this.filteredSchedule.toString();
+      }
       if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
         api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
       }
@@ -2949,7 +2951,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.consumr_id = modes.consumer.id;
     }
-      const navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       queryParams: {
         waiting_id: modes.uid,
         type: 'appt'
@@ -3040,6 +3042,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQId);
     }
     this.loadApiSwitch('reloadAPIs');
+  }
+  CreateVoiceCall() {
+    const _this = this;
+    let appt;
+    Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+      appt = _this.appointmentsChecked[apptIndex];
+    });
+    this.voicedialogRef = this.dialog.open(VoicecallDetailsSendComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        uuid: appt.uid,
+        // chekintype: 'appointment'
+      }
+    });
   }
   resetFields() {
     this.today_waitlist_count = 0;

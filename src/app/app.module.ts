@@ -78,6 +78,7 @@ import { JoyrideModule } from 'ngx-joyride';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
 import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
 import { LiveChatClientComponent } from './shared/components/twilio/twilio-live-client.component';
+import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -107,6 +108,7 @@ export function init_app(globalService: GlobalService) {
     ManageProviderComponent,
     CheckYourStatusComponent,
     PaymentLinkComponent,
+    VoicecallDetailsSendComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
     LiveChatComponent,
@@ -121,6 +123,7 @@ export function init_app(globalService: GlobalService) {
     ExistingCheckinComponent,
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
+    VoicecallDetailsSendComponent,
     CouponsComponent,
     RequestForComponent,
     ConsumerPaymentmodeComponent,

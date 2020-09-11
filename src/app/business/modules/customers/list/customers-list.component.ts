@@ -8,6 +8,7 @@ import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/function
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { VoicecallDetailsSendComponent } from '../../appointments/voicecall-details-send/voicecall-details-send.component';
 @Component({
     selector: 'app-customers-list',
     templateUrl: './customers-list.component.html'
@@ -76,7 +77,10 @@ export class CustomersListComponent implements OnInit {
     customer: any = [];
     providerLabels: any;
     selectedIndex: any = [];
-
+    selectedcustomersforcall: any[];
+    customerlist: any;
+    customerDetails: any;
+    voicedialogRef: any;
     constructor(private provider_services: ProviderServices,
         private router: Router,
         public dialog: MatDialog,
@@ -255,6 +259,7 @@ export class CustomersListComponent implements OnInit {
 
     selectcustomers(index) {
         this.selectedcustomersformsg = [];
+        this.selectedcustomersforcall = [];
         if (this.customerSelected[index]) {
             delete this.customerSelected[index];
             this.customerselection--;
@@ -272,6 +277,13 @@ export class CustomersListComponent implements OnInit {
                 }
             }
         }
+        for (let i = 0; i < this.customerSelected.length; i++) {
+            if (this.customerSelected[i]) {
+                if (this.selectedcustomersforcall.indexOf(this.customers[i]) === -1) {
+                    this.selectedcustomersforcall.push(this.customers[i]);
+                }
+            }
+        }
     }
     CustomersInboxMessage() {
         let customerlist = [];
@@ -282,7 +294,20 @@ export class CustomersListComponent implements OnInit {
                 () => { }
             );
     }
-
+    CreateVoiceCall() {
+        this.customerlist = this.selectedcustomersforcall;
+        for (let i in this.customerlist) {
+            this.customerDetails = this.customerlist[i];
+        }
+        this.voicedialogRef = this.dialog.open(VoicecallDetailsSendComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                custId: this.customerDetails.id
+            }
+        });
+    }
     editCustomer(customer) {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'edit' }

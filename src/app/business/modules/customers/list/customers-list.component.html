@@ -46,6 +46,12 @@
                 <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
               </a>
             </li>
+            <li class="dropdown notifications-menu">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" (click)="CreateVoiceCall()"
+                data-toggle="dropdown"><span class="statuslink " *ngIf="customerselection" [matTooltip]="'Voice Call'">
+                  <i class="fa fa-phone"></i> Voice Call</span>
+              </a>
+            </li>
           </ul>
         </div>
 

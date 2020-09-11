@@ -1505,4 +1505,12 @@ export class ProviderServices {
       const url = 'provider/email/notification';
       return this.servicemeta.httpPut(url, data);
    }
+   createVoiceCall(data) {
+      const url = 'provider/appointment/createJaldeeMeetingrequest';
+      return this.servicemeta.httpPost(url, data);
+   }
+   createWaitlistVoiceCall(data) {
+      const url = 'provider/waitlist/createJaldeeMeetingrequest';
+      return this.servicemeta.httpPost(url, data);
+   }
 }
