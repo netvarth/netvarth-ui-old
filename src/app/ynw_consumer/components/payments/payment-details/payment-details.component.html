@@ -42,7 +42,7 @@
                                     <span class="waitlist_for">
                                         {{payments.status
                                                     | capitalizeFirst}}</span></div>
-                                <div class="item"><span class="ttle">Refudable</span>
+                                <div class="item"><span class="ttle">Refundable</span>
                                     <a *ngIf="payments.refundableAmount > 0" class="waitlist_for pointer-cursor rupee-font"
                                         style="text-decoration: underline;" (click)="showRefunds()">
                                         {{payments.refundableAmount |
