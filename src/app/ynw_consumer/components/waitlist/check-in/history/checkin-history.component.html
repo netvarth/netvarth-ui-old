@@ -34,7 +34,12 @@
                                         <td data-title="Service for">
                                                 {{his_wait.waitlistingFor[0].firstName || '' | capitalizeFirst}} {{his_wait.waitlistingFor[0].lastName || '' | capitalizeFirst}}</td>
                                         <td data-title="Service" class="td6">
-                                            {{his_wait.service.name || '' | capitalizeFirst}}</td>
+                                            {{his_wait.service.name || '' | capitalizeFirst}}
+                                            <i *ngIf="his_wait.service.serviceType==='virtualService' && his_wait.service.virtualCallingModes[0].callingMode==='GoogleMeet'" class="fa meet-icon"></i>
+                                            <i *ngIf="his_wait.service.serviceType==='virtualService' && his_wait.service.virtualCallingModes[0].callingMode==='Zoom'" class="fa meet-icon" class="fa zoom-icon"></i>
+                                            <i *ngIf="his_wait.service.serviceType==='virtualService' && his_wait.service.virtualCallingModes[0].callingMode==='WhatsApp'" class="fa meet-icon" class="fa wtsapaud-icon"></i>
+                                            <i *ngIf="his_wait.service.serviceType==='virtualService' && his_wait.service.virtualCallingModes[0].callingMode==='Phone'" class="fa meet-icon" class="fa phon-icon"></i>
+                                        </td>
                                         <td data-title="Location" class="td2">
                                             {{his_wait.queue.location.place || '' | capitalizeFirst}}</td>
                                         <td data-title="Date" class="td3">{{his_wait.date | date: dateFormat }}
