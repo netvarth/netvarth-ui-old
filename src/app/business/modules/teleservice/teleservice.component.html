@@ -22,8 +22,10 @@
                                         <h2 class="serv-name-color fnt-lrge">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon "></i>
                                             <i *ngIf="callingModes === 'GoogleMeet'" class="fa meet-icon video-wdth"></i>
-                                            <i *ngIf="callingModes === 'WhatsApp'"
+                                            <i *ngIf="callingModes === 'WhatsApp' && serv_type === 'audioService'"
                                                 class="fa wtsapaud-icon"></i>
+                                            <i *ngIf="callingModes === 'WhatsApp' && serv_type === 'videoService'"
+                                                class="fa wtsapvid-icon"></i>
                                             <i *ngIf="callingModes === 'Phone'" class="fa phon-icon video-wdth"></i>
                                             &nbsp;{{serv_name}}
                                         </h2><br>

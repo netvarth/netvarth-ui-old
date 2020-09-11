@@ -33,6 +33,9 @@ textarea {
 .wtsapaud-icon {
     width: 35px !important;
 }
+.wtsapvid-icon {
+    width: 35px !important;
+}
 .phon-icon {
     width: 25px !important;
 }
@@ -46,6 +49,9 @@ textarea {
     width: 15px !important;
 }
 .strtaudio .wtsapaud-icon {
+    width: 18px !important;
+}
+.strtaudio .wtsapvid-icon {
     width: 18px !important;
 }
 

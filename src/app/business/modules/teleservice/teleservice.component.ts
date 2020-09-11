@@ -42,6 +42,7 @@ export class TeleServiceComponent implements OnInit {
     starting_url: string;
     meetlink_data;
     servStarted = false;
+    serv_type: any;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -112,6 +113,7 @@ export class TeleServiceComponent implements OnInit {
                         this.servStarted = false;
                     }
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
+                    this.serv_type = this.data.service.virtualServiceType;
                     if (this.data.provider) {
                         this.busnes_name = this.data.provider.firstName + ' ' + this.data.provider.lastName;
                     } else {
@@ -146,6 +148,7 @@ export class TeleServiceComponent implements OnInit {
                         this.servStarted = false;
                     }
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
+                    this.serv_type = this.data.service.virtualServiceType;
                     if (this.data.provider) {
                         this.busnes_name = this.data.provider.firstName + ' ' + this.data.provider.lastName;
                     } else {
