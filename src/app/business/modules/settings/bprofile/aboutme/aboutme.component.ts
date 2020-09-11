@@ -137,9 +137,11 @@ export class AboutMeComponent implements OnInit {
     //  return;
     // }
     if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
+      // this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
+      this.sharedfunctionObj.openSnackBar(Messages.BUSINESS_NAME_MAX_LENGTH_MSG, { 'panelClass': 'snackbarerror' });
     } else if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
+      // this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
+      this.sharedfunctionObj.openSnackBar(Messages.BUSINESS_DESC_MAX_LENGTH_MSG, { 'panelClass': 'snackbarerror' });
     } else {
       const post_itemdata = {
         'businessName': form_data.bname,
