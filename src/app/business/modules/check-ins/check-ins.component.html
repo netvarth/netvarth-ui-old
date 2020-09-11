@@ -826,13 +826,12 @@
                           *ngIf="(time_type==1||time_type==3) && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="showCallingModes(checkin, 'STARTED')">
-                          <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
-                              <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
-                          <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                              <span *ngIf="checkin.service.serviceType === 'virtualService' && (getVirtualMode(checkin.virtualService) === 'GoogleMeet'||getVirtualMode(checkin.virtualService) === 'Phone')">&nbsp;&nbsp;</span>
+                              <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'Zoom'"></i>
-                          <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'Phone'"></i>
                           <!-- <i class="fa fa-whatsapp whtsap-ic"
                             [ngClass]="{'tool-pading': !small_device_display?true:false}"

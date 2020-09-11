@@ -10504,7 +10504,7 @@ a {
 }
 
 .zoom-icon {
-  content: url(../images/teleservice/zoom.svg);
+  content: url(../images/teleservice/Zoom-01.svg);
   top: 4px;
   position: relative;
   padding-right: 1px;
@@ -10518,14 +10518,14 @@ a {
   width: 15px;
 }
 .wtsapaud-icon {
-  content: url(../images/teleservice/whatsappAudio.svg);
+  content: url(../images/teleservice/whatsapp_audio.svg);
   top: 4px;
   position: relative;
   padding-right: 1px;
   width: 26px;
 }
 .wtsapvid-icon {
-  content: url(../images/teleservice/whatsappVideo.svg);
+  content: url(../images/teleservice/whatsapp_video.svg);
   top: 4px;
   position: relative;
   padding-right: 1px;

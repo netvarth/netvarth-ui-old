@@ -607,6 +607,7 @@
                                     *ngIf="time_type==1 && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                                     (click)="showCallingModes(appt, 'Started')">
+                                    <span *ngIf="appt.service.serviceType === 'virtualService' && (getVirtualMode(appt.virtualService) === 'GoogleMeet'||getVirtualMode(appt.virtualService) === 'Phone')">&nbsp;&nbsp;</span>
                                     <i class="fa meet-icon"
                                       [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                                       *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
@@ -1108,6 +1109,7 @@
                           *ngIf="time_type==1 && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="showCallingModes(appt, 'Started')">
+                          <span *ngIf="appt.service.serviceType === 'virtualService' && (getVirtualMode(appt.virtualService) === 'GoogleMeet'||getVirtualMode(appt.virtualService) === 'Phone')">&nbsp;&nbsp;</span>
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1120,9 +1122,7 @@
                             <i class="fa wtsapvid-icon"
                             [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
-                           <span
-                            [ngClass]="{'dash': (!small_device_display && getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
-                            *ngIf="!small_device_display">
+                           <span *ngIf="!small_device_display">
                             <!-- Start -->
                             {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
                           </span>
