@@ -1384,7 +1384,7 @@ export const Messages = {
   'FRM_LEVEL_ADDITIONAL_MSG': 'Add other details of you or your business so that [customer]s can understand you more.',
   'FRM_LEVEL_VERI_MSG': 'To upgrade verification level contact Jaldee.',
   'FRM_LEVEL_GALLERY_MSG': 'Add images and catchy captions to boost your [customer]\'s check-ins',
-  'FRM_LEVEL_SOCIAL_MSG': 'To connect with [customer]s on your social media platform, add your social media links here.',
+  'FRM_LEVEL_SOCIAL_MSG': 'Add your social media accounts here.These will get displayed on your profile.',
 
   // form-level-provider-waitlist
   'FRM_LEVEL_WAIT_TIME_CALC_MSG': 'Choose one of the four wait-time calculation options. This calculated time is the standby time after which your [customer] can avail the services.',
