@@ -242,7 +242,7 @@
                                                     style="display: block;">{{getSingleTime(apptTime.time)}}</span><span>
                                                     {{sel_checkindate | date: dateFormat}}</span>
                                             </h6>
-                                        </div>
+                                        </div> 
                                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
                                             <div class="checkin-btn-bp pointer-cursor"  [class.disableActn]="apptdisable" (click)="handleApptClicked()">
                                                 <span *ngIf="!sel_ser_det.isPrePayment">Confirm Appointment</span>
