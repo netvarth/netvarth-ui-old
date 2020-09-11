@@ -69,6 +69,8 @@ export class CheckinDetailComponent implements OnInit {
     callingModes;
     callingModesDisplayName = projectConstants.CALLING_MODES;
     phonenumber;
+    servsDetails: any;
+    iconClass: string;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -106,6 +108,28 @@ export class CheckinDetailComponent implements OnInit {
         this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('checkin');
         this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
         this.phonenumber = waitlistjson.waitlistPhoneNumber;
+        this.servsDetails = waitlistjson.service;
+        if (this.servsDetails.serviceType === 'virtualService') {
+
+            switch (this.servsDetails.virtualCallingModes[0].callingMode) {
+                case 'Zoom': {
+                    this.iconClass = 'fa zoom-icon';
+                    break;
+                }
+                case 'GoogleMeet': {
+                    this.iconClass = 'fa meet-icon';
+                    break;
+                }
+                case 'WhatsApp': {
+                    this.iconClass = 'fa wtsapaud-icon';
+                    break;
+                }
+                case 'Phone': {
+                    this.iconClass = 'fa phon-icon';
+                    break;
+                }
+            }
+        }
     }
     ngOnInit() {
     }

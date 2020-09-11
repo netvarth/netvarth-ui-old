@@ -69,6 +69,8 @@ export class ApptDetailComponent implements OnInit {
     callingModes;
     callingModesDisplayName = projectConstants.CALLING_MODES;
     phonenumber;
+    servsDetails: any;
+    iconClass: string;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -101,6 +103,29 @@ export class ApptDetailComponent implements OnInit {
         this.statusUpdatedTime = apptlistjson.statusUpdatedTime;
         this.consumerNote = apptlistjson.consumerNote;
         this.callingModes = apptlistjson.virtualService;
+        this.servsDetails = apptlistjson.service;
+        if (this.servsDetails.serviceType === 'virtualService') {
+
+            switch (this.servsDetails.virtualCallingModes[0].callingMode) {
+                case 'Zoom': {
+                    this.iconClass = 'fa zoom-icon';
+                    break;
+                }
+                case 'GoogleMeet': {
+                    this.iconClass = 'fa meet-icon';
+                    break;
+                }
+                case 'WhatsApp': {
+                    this.iconClass = 'fa wtsapaud-icon';
+                    break;
+                }
+                case 'Phone': {
+                    this.iconClass = 'fa phon-icon';
+                    break;
+                }
+            }
+        }
+
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
         this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
         this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('checkin');
