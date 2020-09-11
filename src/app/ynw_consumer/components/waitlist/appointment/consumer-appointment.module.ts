@@ -15,14 +15,15 @@ import { ConsumerAppointmentLiveTrackComponent } from './livetrack/livetrack.com
 import { ConsumerAppointmentPaymentComponent } from './payment/payment.component';
 import { ConsumerAppointmentHistoryComponent } from './history/appointment-history.component';
 import { ConsumerAppointmentBillComponent } from './appointment-bill/appointment-bill.component';
-
+import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
 @NgModule({
     declarations: [
         ConsumerAppointmentComponent,
         ConsumerAppointmentPaymentComponent,
         ConsumerAppointmentLiveTrackComponent,
         ConsumerAppointmentHistoryComponent,
-        ConsumerAppointmentBillComponent
+        ConsumerAppointmentBillComponent,
+        ConfirmPageComponent
     ],
     imports: [
         FormMessageDisplayModule,

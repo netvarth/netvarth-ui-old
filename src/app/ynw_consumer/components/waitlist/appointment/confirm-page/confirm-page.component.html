@@ -1,0 +1,81 @@
+<section class="container no-padding">
+    <div class="content loc-list">
+        <div class="card p0">
+            <div class="copy locd" *ngIf="!apiloading">
+                <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding">
+                    <div class="info-img">
+                        <img src="assets/images/new bg.png"></div>
+                    <div class="details">
+                        <div class="book-head"> Booking Confirmed </div>
+                        <div class="book-details"> Booking details </div>
+                        <table class="book-details-sub">
+                            <tbody>
+                                <tr>
+                                    <td width="48%" align="right">Name of the provider</td>
+                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                    <td>{{appointment.providerAccount?.businessName}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="48%" align="right">Where </td>
+                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                    <td> {{appointment.location?.place}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="48%" align="right">Service</td>
+                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                    <td> {{appointment.service?.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="48%" align="right">Time window </td>
+                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                    <td> {{appointment.appmtDate | date: dateFormat }},
+                                        {{getSingleTime(appointment.appmtTime)}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="48%" align="right">Confirmation No</td>
+                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                    <td> {{appointment.appointmentEncId}}</td>
+                                </tr>
+                                <tr *ngIf="appointment.service?.minPrePaymentAmount">
+                                    <td width="48%" align="right">Pre Payment amount</td>
+                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                    <td> {{appointment.service.minPrePaymentAmount}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="book-status"> Current status </div>
+                        <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
+                            <a href="{{path}}status/{{appointment.appointmentEncId}}" target="blank">
+                                {{path}}status/{{appointment.appointmentEncId}}</a></div>
+                        <!-- <div class="txt-align-center mgn-up-10"
+                            *ngIf="appointment.consumer && appointment.consumer.userProfile.emailVerified"> A booking
+                            confirmation has been sent to your email
+                            address.</div> -->
+                        <!-- <div class="update-email"
+                            *ngIf="appointment.consumer && !appointment.consumer.userProfile.emailVerified">
+                            <input placeholder="Email" [(ngModel)]="email"><span class="email-btn"
+                                (click)="updateEmail()">Ok</span>
+                        </div> -->
+                        <!-- <div class="notes" *ngIf="appointment.service && appointment.service.postInfoEnabled">
+                            <div class="preinfo-title">{{appointment.service.postInfoTitle}} </div>
+                            <div [innerHTML]="appointment.service.postInfoText">
+                            </div>
+                        </div> -->
+                        <div class="ok-btn">
+                            <span class="pointer-cursor" (click)="okClick()">
+                                Ok</span></div>
+                    </div>
+                </div>
+                <div class="powered-by">
+                    <div class="poweredby-text">
+                        <div class="one">powered by</div>
+                        <div class="two">
+                            <img _ngcontent-jvc-c15="" alt="Jaldee" src="assets/images/home/logo-icon.png"
+                                style="width: 15px;">&nbsp;Jaldee</div>
+                    </div>
+                </div>
+            </div>
+            <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
+        </div>
+    </div>
+</section>

@@ -16,14 +16,15 @@ import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcru
 import { ConsumerCheckinHistoryComponent } from './history/checkin-history.component';
 import { PagerModule } from '../../../../shared/modules/pager/pager.module';
 import { ConsumerCheckinBillComponent } from './checkin-bill/checkin-bill.component';
-
+import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
 @NgModule({
     declarations: [
         ConsumerCheckinComponent,
         ConsumerPaymentComponent,
         ConsumerLiveTrackComponent,
         ConsumerCheckinHistoryComponent,
-        ConsumerCheckinBillComponent
+        ConsumerCheckinBillComponent,
+        ConfirmPageComponent
     ],
     imports: [
         FormMessageDisplayModule,
