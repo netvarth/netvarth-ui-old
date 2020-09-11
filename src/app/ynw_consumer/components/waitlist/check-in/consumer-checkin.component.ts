@@ -833,7 +833,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 this.addCheckInConsumer(post_Data);
             }
         }
-    }
+    } 
     addCheckInConsumer(post_Data) {
         this.api_loading = true;
         this.shared_services.addCheckin(this.account_id, post_Data)
