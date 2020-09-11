@@ -400,7 +400,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
         if (this.checkCouponValid(this.jCoupon)) {
             this.applyAction(this.jCoupon, this.bill_data.uuid);
         } else {
-            this.sharedfunctionObj.openSnackBar('Coupon Invalid', { 'panelClass': 'snackbarerror' });
+            this.sharedfunctionObj.openSnackBar('Enter a Coupon ', { 'panelClass': 'snackbarerror' });
         }
     }
     clearJCoupon() {
