@@ -219,6 +219,7 @@ export class ConsumerCheckinComponent implements OnInit {
     selectedService: any;
     note_cap = 'Add Note';
     servicedialogRef: any;
+    checkindisable = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -724,6 +725,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.main_heading = 'Family Members';
     }
     handleCheckinClicked() {
+        this.checkindisable = true;
         this.resetApi();
         let error = '';
         if (this.step === 1) {
@@ -735,6 +737,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 this.saveCheckin();
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.checkindisable = false;
                 // this.api_error = error;
             }
         }
@@ -865,6 +868,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 error => {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.checkindisable = false;
                     this.api_loading = false;
                 });
     }
@@ -1113,6 +1117,7 @@ export class ConsumerCheckinComponent implements OnInit {
         } else {
             // this.api_error = derror;
             this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            this.disable = false;
         }
     }
     handleNote() {

@@ -211,6 +211,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     selectedService: any;
     note_cap = '';
     servicedialogRef: any;
+    apptdisable = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -621,6 +622,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.main_heading = 'Family Members';
     }
     handleApptClicked() {
+        this.apptdisable = true;
         this.resetApi();
         let error = '';
         if (this.step === 1) {
@@ -632,6 +634,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.saveCheckin();
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.apptdisable = false;
             }
         }
     }
@@ -763,6 +766,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
+                    this.apptdisable = false;
                 });
     }
     addEmail() {
@@ -981,6 +985,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 });
         } else {
             this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            this.disable = false;
         }
     }
     handleNote() {

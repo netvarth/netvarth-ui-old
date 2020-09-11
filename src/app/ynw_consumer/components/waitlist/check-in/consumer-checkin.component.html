@@ -297,7 +297,7 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                            <div class="checkin-btn-bp pointer-cursor" (click)="handleCheckinClicked()">
+                                            <div class="checkin-btn-bp pointer-cursor" [class.disableActn]="checkindisable"(click)="handleCheckinClicked()">
                                                 <span *ngIf="!sel_ser_det.isPrePayment">Confirm
                                                     {{showCheckinButtonCaption()}}</span>
                                                 <span *ngIf="sel_ser_det.isPrePayment">Proceed to Payment</span> <i
