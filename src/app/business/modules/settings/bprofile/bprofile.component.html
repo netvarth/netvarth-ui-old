@@ -150,8 +150,9 @@
                       <div class="div-outline custId-cursor"
                         [ngClass]="{'div-grn-outline':aboutmefilled,'div-red-outline':!aboutmefilled }"
                         (click)="gotoAboutMe()">
-                        <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
-                        <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red" aria-hidden="true"></i>
+                        <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                        <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right" aria-hidden="true"></i>
+                        <i class="fa person-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">About Me</span>
                       </div>
                     </div>
@@ -160,8 +161,9 @@
                     <div class="cd-b" (click)="editLocation()">
                       <div class="div-outline custId-cursor"
                         [ngClass]="{'div-grn-outline':locationFilled,'div-red-outline':!locationFilled }">
-                        <i *ngIf="locationFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
-                        <i *ngIf="!locationFilled" class="fa fa-exclamation-circle fa-lg fa-red" aria-hidden="true"></i>
+                        <i *ngIf="locationFilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                        <i *ngIf="!locationFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right" aria-hidden="true"></i>
+                        <i class="fa locat-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">Location</span>
                       </div>
                     </div>
@@ -170,9 +172,10 @@
                     <div class="cd-b" (click)="  gotoSpecializations()">
                       <div class="div-outline custId-cursor"
                         [ngClass]="{'div-grn-outline':specializeFilled,'div-red-outline':!specializeFilled }">
-                        <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
-                        <i *ngIf="!specializeFilled" class="fa fa-exclamation-circle fa-lg fa-red"
+                        <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                        <i *ngIf="!specializeFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
                           aria-hidden="true"></i>
+                          <i class="fa certify-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">Specializations</span>
                       </div>
                     </div>
@@ -189,7 +192,8 @@
                     <!-- Languages Known -->
                     <div class="cd-b" (click)="gotoLanguages()">
                       <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':languageFilled}">
-                        <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                        <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                        <i class="fa lang-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">Languages Known</span>
                       </div>
                     </div>
@@ -198,8 +202,9 @@
                     <div class="cd-b">
                       <div class="div-outline custId-cursor"
                         [ngClass]="{'div-grn-outline':(galryFilled && mediaFilled)}" (click)="gotoMedia()">
-                        <i *ngIf="(galryFilled && mediaFilled)" class="fa fa-check-circle fa-lg fa-grn"
+                        <i *ngIf="(galryFilled && mediaFilled)" class="fa fa-check-circle fa-lg fa-grn fl-right"
                           aria-hidden="true"></i>
+                          <i class="fa galry-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">Gallery and Social Media</span>
                       </div>
                     </div>
@@ -210,7 +215,8 @@
                         [ngClass]="{'div-grn-outline':(contactInfoPhFilled && contactInfoMailFilled)}"
                         (click)="gotoPrivacy()">
                         <i *ngIf="(contactInfoPhFilled && contactInfoMailFilled)"
-                          class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                          class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                          <i class="fa contct-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">Contact Information</span>
                       </div>
                     </div>

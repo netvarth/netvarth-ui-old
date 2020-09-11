@@ -10538,6 +10538,48 @@ a {
   padding-right: 1px;
   width: 15px;
 }
+.person-icon {
+  content: url(../images/userprofile/userprofile.svg);
+  top: 2px;
+  position: relative;
+  padding-right: 1px;
+  width: 20px;
+}
+.locat-icon {
+  content: url(../images/userprofile/location.svg);
+  top: 2px;
+  position: relative;
+  padding-right: 1px;
+  width: 20px;
+}
+.certify-icon {
+  content: url(../images/userprofile/certificate.svg);
+  top: 2px;
+  position: relative;
+  padding-right: 1px;
+  width: 20px;
+}
+.lang-icon {
+  content: url(../images/userprofile/language.svg);
+  top: 2px;
+  position: relative;
+  padding-right: 1px;
+  width: 20px;
+}
+.contct-icon {
+  content: url(../images/userprofile/contact_phone.svg);
+  top: 2px;
+  position: relative;
+  padding-right: 1px;
+  width: 20px;
+}
+.galry-icon {
+  content: url(../images/userprofile/perm_media.svg);
+  top: 2px;
+  position: relative;
+  padding-right: 1px;
+  width: 20px;
+}
 
 .vid-ic-pd {
   padding: 5px 7px 5px 8px !important;
