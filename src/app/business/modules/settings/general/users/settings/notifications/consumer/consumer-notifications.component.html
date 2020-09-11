@@ -12,7 +12,7 @@
 <section *ngIf="!waitlistStatus && !appointment_status && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
   <div class="token-appt">
-    To setup â€˜Notificationsâ€™, Appointment manager/QManager need to be enabled from your settings.
+    To setup 'Notifications', Appointment manager/QManager need to be enabled from your settings.
   </div>
 </div>
 </section>
@@ -207,7 +207,7 @@
           <mat-expansion-panel [expanded]="false">
             <mat-expansion-panel-header class="mgn-bt-10">
               <mat-panel-title class="block-level">Appointment Notifications<br>
-                <span class="form-level-settings">{{mode_of_notify}}</span>
+                <span class="form-level-settings">Specify how and when your {{customer_label}}s need to be notified about their appointment</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
@@ -336,9 +336,8 @@
               <mat-accordion class="acc-btn">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Add Appointment Notifications
-                      <br> <span class="form-level-settings">Notify a {{customer_label}} via
-                        SMS/Email/Notifications when a Appointment happens.</span>
+                    <mat-panel-title class="block-level"> Appointment Confirmation Notifications
+                      <br> <span class="form-level-settings">Notify {{customer_label}} when appointment is confirmed.</span>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <ul class="notifications">
@@ -369,16 +368,22 @@
               </mat-accordion>
               <div class="clearfix"></div>
             
-        <div class="clearfix"></div>
-
+              <mat-accordion class="acc-btn">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
+                    <mat-panel-title class="block-level">Appointment Reminder Notifications<br>
+                      <span class="form-level-settings">Setup upto 4 reminder notifications to be sent to your {{customer_label}} prior to his/her appointment.</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
         <mat-accordion class="acc-btn">
           <mat-expansion-panel>
             <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
               <mat-panel-title class="block-level"> First Reminder<br>
-                <span class="form-level-settings">First time reminder to the {{customer_label}} </span>
+                <span class="form-level-settings">This will be sent 24 hours prior to the appointment. </span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="form-group col-md-4 col-xs-7 col-sm-4">
+            <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
               <mat-form-field class="example-full-width">
                 <input matInput min="0"  type="text"
                   [(ngModel)]="firstAPPTNotificationSettings.time"
@@ -386,17 +391,10 @@
                   (keypress)="showSubmit('FIRST_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
                 <div class="mgn-up-5" *ngIf="firstApptTime && !firstAPPTNotificationSettings.time"
                   style="color: red;">Time is required</div>
-                <!-- <span>
-                  <ul class="info-lst form-level-early-hint">
-                    <li style="padding-top: 6px;">
-                      The n<sup style="color: black;">th</sup> {{customer_label}} to whom the notification should
-                      be sent.
-                    </li>
-                  </ul>
-                </span> -->
+                
               </mat-form-field>
             </div>
-            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(firstAPPTNotificationSettings.time)}}</small></div>
+            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(firstAPPTNotificationSettings.time)}}</small></div> -->
             <div class="clearfix"></div>
             <ul class="notifications">
               <li class="mgn-lt-10">
@@ -428,10 +426,10 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
               <mat-panel-title class="block-level"> Second Reminder<br>
-                <span class="form-level-settings">Second time reminder to the {{customer_label}} </span>
+                <span class="form-level-settings">This will be sent 8 hours prior to the appointment. </span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="form-group col-md-4 col-xs-7 col-sm-4">
+            <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
               <mat-form-field class="example-full-width">
                 <input matInput min="0"  type="text"
                   [(ngModel)]="secondAPPTNotificationSettings.time"
@@ -439,17 +437,10 @@
                   (keypress)="showSubmit('SECOND_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
                 <div class="mgn-up-5" *ngIf="secondApptTime && !secondAPPTNotificationSettings.time"
                   style="color: red;">Time is required</div>
-                <!-- <span>
-                  <ul class="info-lst form-level-early-hint">
-                    <li style="padding-top: 6px;">
-                      The n<sup style="color: black;">th</sup> {{customer_label}} to whom the notification should
-                      be sent.
-                    </li>
-                  </ul>
-                </span> -->
+               
               </mat-form-field>
             </div>
-            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(secondAPPTNotificationSettings.time)}}</small></div>
+            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(secondAPPTNotificationSettings.time)}}</small></div> -->
             <div class="clearfix"></div>
             <ul class="notifications">
               <li class="mgn-lt-10">
@@ -482,10 +473,10 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
               <mat-panel-title class="block-level"> Third Reminder<br>
-                <span class="form-level-settings">Third time reminder to the {{customer_label}} </span>
+                <span class="form-level-settings">This will be sent 4 hours prior to the appointment. </span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="form-group col-md-4 col-xs-7 col-sm-4">
+            <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
               <mat-form-field class="example-full-width">
                 <input matInput min="0" type="text"
                   [(ngModel)]="thirdAPPTNotificationSettings.time"
@@ -493,17 +484,10 @@
                   (keypress)="showSubmit('THIRD_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
                 <div class="mgn-up-5" *ngIf="thirdApptTime && !thirdAPPTNotificationSettings.time"
                   style="color: red;">Time is required</div>
-                <!-- <span>
-                  <ul class="info-lst form-level-early-hint">
-                    <li style="padding-top: 6px;">
-                      The n<sup style="color: black;">th</sup> {{customer_label}} to whom the notification should
-                      be sent.
-                    </li>
-                  </ul>
-                </span> -->
+               
               </mat-form-field>
             </div>
-            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(thirdAPPTNotificationSettings.time)}}</small></div>
+            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(thirdAPPTNotificationSettings.time)}}</small></div> -->
             <div class="clearfix"></div>
             <ul class="notifications">
               <li class="mgn-lt-10">
@@ -535,10 +519,10 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
               <mat-panel-title class="block-level"> Fourth Reminder<br>
-                <span class="form-level-settings">Fourth time reminder to the {{customer_label}} </span>
+                <span class="form-level-settings">This will be sent 1 hour prior to the appointment. </span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="form-group col-md-4 col-xs-7 col-sm-4">
+            <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
               <mat-form-field class="example-full-width">
                 <input matInput min="0"  type="text"
                   [(ngModel)]="fourthAPPTNotificationSettings.time"
@@ -546,17 +530,10 @@
                   (keypress)="showSubmit('FOURTH_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
                 <div class="mgn-up-5" *ngIf="fourthApptTime && !fourthAPPTNotificationSettings.time"
                   style="color: red;">Time is required</div>
-                <!-- <span>
-                  <ul class="info-lst form-level-early-hint">
-                    <li style="padding-top: 6px;">
-                      The n<sup style="color: black;">th</sup> {{customer_label}} to whom the notification should
-                      be sent.
-                    </li>
-                  </ul>
-                </span> -->
+               
               </mat-form-field>
             </div>
-            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(fourthAPPTNotificationSettings.time)}}</small></div>
+            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(fourthAPPTNotificationSettings.time)}}</small></div> -->
             <div class="clearfix"></div>
             <ul class="notifications">
               <li class="mgn-lt-10">
@@ -586,6 +563,9 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
+</div>
+</mat-expansion-panel>
+</mat-accordion>
 
       </div>
     </div>
