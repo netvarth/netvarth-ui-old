@@ -165,7 +165,6 @@ export class AboutMeComponent implements OnInit {
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
         () => {
-
           this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           console.log(this.domain_fields_mandatory.length);
