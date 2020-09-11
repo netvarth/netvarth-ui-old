@@ -4,14 +4,14 @@
 </section> -->
 <section class="">
   <div class="card title-gb">
-      <h5 class="mgn-up-10">
-        <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
-          <span class="fa fa-chevron-left">&nbsp;Back</span>
-        </button>&nbsp;&nbsp;&nbsp; My Account
-        <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
-          Help
-        </button> 
-  </h5>
+    <h5 class="mgn-up-10">
+      <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
+        <span class="fa fa-chevron-left">&nbsp;Back</span>
+      </button>&nbsp;&nbsp;&nbsp; My Account
+      <button type="button" style="float: right;" class="btn default profile-back" (click)="redirecToHelp()">
+        Help
+      </button>
+    </h5>
   </div>
 </section>
 <section>
@@ -49,7 +49,8 @@
                   <div class="ctrl" *ngIf="!showIncompleteButton">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <!-- <h3 class="bus-prof-head">Business Profile</h3> -->
-                      <h6 style="margin-top: 0 !important;" *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">Profile Strength-
+                      <h6 style="margin-top: 0 !important;" *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">
+                        Profile Strength-
                         <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
                       </h6>
 
@@ -77,10 +78,11 @@
                   </div>
                   <br>
                   <div class="cd-b" *ngIf="!showIncompleteButton">
-                      <div class="div-outline custId-cursor"
-                      [ngClass]="{'div-grn-outline':onlinepresence_status,'div-red-outline':!onlinepresence_status }" (click)="reDirectToJaldeeOnline();">
+                    <div class="div-outline custId-cursor"
+                      [ngClass]="{'div-grn-outline':onlinepresence_status,'div-red-outline':!onlinepresence_status }"
+                      (click)="reDirectToJaldeeOnline();">
                       <span class="fontstyl">Jaldee Online &nbsp;&nbsp;</span>
-                        <span class="head-level-settings"><span class="inactive " *ngIf="!onlinepresence_status">
+                      <span class="head-level-settings"><span class="inactive " *ngIf="!onlinepresence_status">
                           <i class="fa fa-times"></i> Inactive</span>
                         <span class="active " *ngIf="onlinepresence_status">
                           <i class="fa fa-check"></i> Active</span></span>
@@ -88,14 +90,40 @@
 
                       <p class="head-level-settings">
 
-                          <span class="inactive" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </span>
-                          <span class="active" *ngIf="onlinepresence_status">{{jaldee_online_enabled_msg}}</span>
+                        <span class="inactive" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </span>
+                        <span class="active" *ngIf="onlinepresence_status">{{jaldee_online_enabled_msg}}</span>
 
-                        </p>
+                      </p>
+                      <div class="bus-prof-qr-sec">
+                        <ul class="sbl">
+                          <li class="acc-url-li mgn-up-10">
 
+                            <strong> Jaldee QR code and link &nbsp;&nbsp;</strong>
+                            <span *ngIf="!bProfile.customId">
+                              <span class="custid jld-link" rel="noopener" target="_blank">
+                                {{wndw_path}}{{bProfile.accEncUid}}
+                              </span>
+                              <span class="custid">
+                                <i class="fa fa-qrcode custId-cursor pad-left-20 font-lrge"
+                                  (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" [matTooltip]="'QR code'"></i>
+                              </span>
+                            </span>
+                            <span *ngIf="bProfile.customId">
+                              <span class="custid jld-link" rel="noopener" target="_blank">
+                                {{wndw_path}}{{bProfile.customId}}
+                              </span>
+                              <span class="custid">
+                                <i class="fa fa-qrcode custId-cursor pad-left-20 font-lrge"
+                                  (click)="qrCodegeneraterOnlineID(bProfile.customId)" [matTooltip]="'QR code'"></i>
+                              </span>
+                            </span>
+                            <br>
+                          </li>
+                        </ul>
                       </div>
-
                     </div>
+
+                  </div>
                 </div>
                 <!-- <div class="col-md-12 ct-l col-xs-12 no-padding">
                                     </div> -->
@@ -150,8 +178,10 @@
                       <div class="div-outline custId-cursor"
                         [ngClass]="{'div-grn-outline':aboutmefilled,'div-red-outline':!aboutmefilled }"
                         (click)="gotoAboutMe()">
-                        <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
-                        <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right" aria-hidden="true"></i>
+                        <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
+                          aria-hidden="true"></i>
+                        <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
+                          aria-hidden="true"></i>
                         <i class="fa person-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">About Me</span>
                       </div>
@@ -161,8 +191,10 @@
                     <div class="cd-b" (click)="editLocation()">
                       <div class="div-outline custId-cursor"
                         [ngClass]="{'div-grn-outline':locationFilled,'div-red-outline':!locationFilled }">
-                        <i *ngIf="locationFilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
-                        <i *ngIf="!locationFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right" aria-hidden="true"></i>
+                        <i *ngIf="locationFilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
+                          aria-hidden="true"></i>
+                        <i *ngIf="!locationFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
+                          aria-hidden="true"></i>
                         <i class="fa locat-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">Location</span>
                       </div>
@@ -172,10 +204,11 @@
                     <div class="cd-b" (click)="  gotoSpecializations()">
                       <div class="div-outline custId-cursor"
                         [ngClass]="{'div-grn-outline':specializeFilled,'div-red-outline':!specializeFilled }">
-                        <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                        <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
+                          aria-hidden="true"></i>
                         <i *ngIf="!specializeFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
                           aria-hidden="true"></i>
-                          <i class="fa certify-icon"></i> &nbsp;&nbsp;
+                        <i class="fa certify-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">Specializations</span>
                       </div>
                     </div>
@@ -192,7 +225,8 @@
                     <!-- Languages Known -->
                     <div class="cd-b" (click)="gotoLanguages()">
                       <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':languageFilled}">
-                        <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                        <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
+                          aria-hidden="true"></i>
                         <i class="fa lang-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">Languages Known</span>
                       </div>
@@ -204,7 +238,7 @@
                         [ngClass]="{'div-grn-outline':(galryFilled && mediaFilled)}" (click)="gotoMedia()">
                         <i *ngIf="(galryFilled && mediaFilled)" class="fa fa-check-circle fa-lg fa-grn fl-right"
                           aria-hidden="true"></i>
-                          <i class="fa galry-icon"></i> &nbsp;&nbsp;
+                        <i class="fa galry-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">Gallery and Social Media</span>
                       </div>
                     </div>
@@ -216,7 +250,7 @@
                         (click)="gotoPrivacy()">
                         <i *ngIf="(contactInfoPhFilled && contactInfoMailFilled)"
                           class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
-                          <i class="fa contct-icon"></i> &nbsp;&nbsp;
+                        <i class="fa contct-icon"></i> &nbsp;&nbsp;
                         <span class="fontstyl">Contact Information</span>
                       </div>
                     </div>
@@ -457,7 +491,7 @@
 
                           <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
                             <div class="acc-cont" *ngFor="let fields of domain_fields_nonmandatory">
-                              <ng-container >
+                              <ng-container>
                                 <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
                                   <mat-expansion-panel [expanded]="fields['value']" [disabled]="!fields['value']"
                                     [hideToggle]="!fields['value']">
