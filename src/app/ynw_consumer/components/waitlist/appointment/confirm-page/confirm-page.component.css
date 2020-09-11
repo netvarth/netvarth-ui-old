@@ -1,11 +1,12 @@
 
 .post-info {
   display: flex;
-  min-height: 500px;
+  min-height: 600px;
 }
 .details{
   width: 100%;
   line-height: 25px;
+  position: absolute;
 }
 .book-head {
   color: #008000;
@@ -77,7 +78,7 @@
   margin-bottom: 20px;
 }
 .info-img img{
-  width: 250px;
+  width: 230px;
 }
 @media (max-width: 991px) { 
   .info-img img{

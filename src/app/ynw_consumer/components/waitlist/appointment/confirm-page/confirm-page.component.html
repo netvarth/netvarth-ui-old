@@ -15,6 +15,11 @@
                                     <td width="2%">&nbsp;:&nbsp;</td>
                                     <td>{{appointment.providerAccount?.businessName}}</td>
                                 </tr>
+                                <tr *ngIf="appointment.provider">
+                                    <td width="48%" align="right">{{provider_label | capitalizeFirst}}</td>
+                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                    <td>{{appointment.provider.firstName}} {{appointment.provider.lastName}}</td>
+                                </tr>
                                 <tr>
                                     <td width="48%" align="right">Where </td>
                                     <td width="2%">&nbsp;:&nbsp;</td>

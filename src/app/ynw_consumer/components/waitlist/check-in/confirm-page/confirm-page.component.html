@@ -15,6 +15,11 @@
                                     <td width="2%">&nbsp;:&nbsp;</td>
                                     <td>{{waitlist.providerAccount?.businessName}}</td>
                                 </tr>
+                                <tr *ngIf="waitlist.provider">
+                                    <td width="48%" align="right">{{provider_label | capitalizeFirst}}</td>
+                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                    <td>{{waitlist.provider.firstName}} {{waitlist.provider.lastName}}</td>
+                                </tr>
                                 <tr *ngIf="waitlist.token">
                                     <td width="48%" align="right">Token No </td>
                                     <td width="2%">&nbsp;:&nbsp;</td>
@@ -98,4 +103,3 @@
         </div>
     </div>
 </section>
-<!-- Persons ahead	0 anenkil kanikkano -->

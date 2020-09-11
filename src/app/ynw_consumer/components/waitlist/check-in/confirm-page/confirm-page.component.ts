@@ -25,10 +25,12 @@ export class ConfirmPageComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   email;
   apiloading = true;
+  provider_label;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions
   ) {
+    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     this.route.queryParams.subscribe(
       params => {
         // this.shared_functions.setitemonLocalStorage('inPostInfo', true);
