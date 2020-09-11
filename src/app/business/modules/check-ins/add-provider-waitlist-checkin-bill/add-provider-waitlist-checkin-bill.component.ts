@@ -1330,9 +1330,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        mobilenumber: this.bill_data.billFor.alternativePhoneNo,
+        // mobilenumber: this.bill_data.billFor.alternativePhoneNo,
         emailId: this.emailId,
-        // mobilenumber : this.checkin.waitlistPhoneNumber,
+        mobilenumber : this.checkin.waitlistPhoneNumber,
         uuid : this.uuid
       }
     });
