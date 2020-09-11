@@ -249,9 +249,9 @@
                                     <div class="clearfix"></div>
                                     <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                         <div class="card-body">
-                                            <h6 class="card-title service">
-                                                {{waitlist_for[0].firstName | capitalizeFirst}}
-                                                {{waitlist_for[0].lastName | capitalizeFirst}}
+                                            <h6 class="card-title service" *ngFor="let member of waitlist_for">
+                                                {{member.firstName | capitalizeFirst}}
+                                                {{member.lastName | capitalizeFirst}}
                                             </h6>
                                             <div class="">
                                                 <i class="fa fa-mobile "></i>
@@ -600,6 +600,17 @@
                             <div class="member-outer">
                                 <div class="member-list mgn-up-10">
                                     <ul class="member-ul">
+                                        <ng-container *ngIf="multipleMembers_allowed">
+                                            <li *ngFor="let memb of familymembers">
+                                                <mat-checkbox
+                                                    (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName, $event)"
+                                                    [value]="memb.userProfile.id"
+                                                    [checked]="isChecked(memb.userProfile.id)">
+                                                    {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
+                                                </mat-checkbox>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngIf="!multipleMembers_allowed">
                                         <mat-radio-group>
                                             <li *ngFor="let memb of familymembers" class="members">
                                                 <mat-radio-button
@@ -610,6 +621,7 @@
                                                 </mat-radio-button>
                                             </li>
                                         </mat-radio-group>
+                                    </ng-container>
                                     </ul>
                                 </div>
                             </div>

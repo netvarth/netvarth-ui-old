@@ -26,8 +26,8 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let his_wait of history">
-                                        <td data-title="Service Provider" (click)="providerDetail(his_wait.provider)"
-                                            class="td1">
+                                        <td data-title="Service Provider" (click)="providerDetail(his_wait.providerAccount)"
+                                            class="td1 provider-name pointer-cursor">
                                             <span
                                                 class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
                                         </td>

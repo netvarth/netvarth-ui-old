@@ -11501,3 +11501,6 @@ header.consumer .tp-1 .tp-l {
 .rupee-font {
   /* font-family: serif; */
 }
+.history-tbl .provider-name .name{
+  color: #3c8dbc!important;
+}

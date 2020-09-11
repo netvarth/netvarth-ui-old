@@ -241,4 +241,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
       return false;
     }
   }
+  providerDetail(provider) {
+    this.router.navigate(['searchdetail', provider.uniqueId]);
+  }
 }

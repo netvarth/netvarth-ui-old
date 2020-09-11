@@ -240,4 +240,8 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
         }
       );
   }
+  providerDetail(provider) {
+    console.log(provider);
+    this.router.navigate(['searchdetail', provider.uniqueId]);
+  }
 }
