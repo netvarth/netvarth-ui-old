@@ -245,3 +245,4 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 }
+
