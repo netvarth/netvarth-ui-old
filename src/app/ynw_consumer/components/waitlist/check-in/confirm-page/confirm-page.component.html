@@ -4,7 +4,7 @@
             <div class="copy locd" *ngIf="!apiloading">
                 <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding">
                     <div class="info-img">
-                        <img src="assets/images/new bg.png"></div>
+                        <img src="assets/images/bg-01.png"></div>
                     <div class="details">
                         <div class="book-head"> Booking Confirmed </div>
                         <div class="book-details"> Booking details </div>
@@ -33,7 +33,21 @@
                                 <tr>
                                     <td width="48%" align="right">Service</td>
                                     <td width="2%">&nbsp;:&nbsp;</td>
-                                    <td> {{waitlist.service?.name}}</td>
+                                    <td>
+                                        <span class="service-icon"
+                                            *ngIf="waitlist.service && waitlist.service.serviceType == 'virtualService'">
+                                            <i class="fa phon-icon"
+                                                *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                            <i class="fa meet-icon"
+                                                *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                            <i class="fa zoom-icon"
+                                                *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                            <i class="fa wtsapaud-icon"
+                                                *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='audioService'"></i>
+                                            <i class="fa wtsapvid-icon"
+                                                *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='videoService'"></i>
+                                        </span>
+                                        {{waitlist.service?.name}}</td>
                                 </tr>
                                 <tr>
                                     <td width="48%" align="right">Time window </td>

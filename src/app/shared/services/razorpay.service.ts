@@ -83,21 +83,11 @@ export class RazorpayService {
         } else if (checkin_type === 'payment_link') {
           this.ngZone.run(() => this.router.navigate(['pay', livetrack], navigationExtras));
         } else if (checkin_type === 'checkin_prepayment') {
-          if (livetrack === true) {
-            this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'track', uuid], navigationExtras));
-          } else {
-            this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            this.ngZone.run(() => this.router.navigate(['consumer'], { queryParams: { 'source': 'checkin_prepayment' } }));
-          }
+          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { 'uuid': uuid, 'account_id': account_id } }));
         } else if (checkin_type === 'appt_prepayment') {
-          if (livetrack === true) {
-            this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'track', uuid], navigationExtras));
-          } else {
-            this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            this.ngZone.run(() => this.router.navigate(['consumer'], { queryParams: { 'source': 'appt_prepayment' } }));
-          }
+          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { 'uuid': uuid, 'account_id': account_id } }));
         }
       } else {
         this.router.navigate(['provider', 'license', 'payments'], navigationExtras);
