@@ -28,7 +28,7 @@
                 </div>
                 <div class="item" *ngIf="service_data.totalAmount!=0">
                     <span class="ttle">{{price_cap}}</span>
-                    <span class="rupee-font">{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                    <span class="rupee-font" >{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.isPrePayment">
                     <span class="ttle">{{pre_pay_amt}}</span>
