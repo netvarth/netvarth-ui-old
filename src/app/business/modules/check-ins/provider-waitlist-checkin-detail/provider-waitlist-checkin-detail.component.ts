@@ -77,6 +77,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   callingModes = projectConstants.CALLING_MODES;
   pos = false;
   breadcrumbs;
+  iconClass: string;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -136,7 +137,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
               title: 'Token'
             }
           ];
-         this.breadcrumbs = this.breadcrumbs_init;
+          this.breadcrumbs = this.breadcrumbs_init;
         } else {
           this.breadcrumbs_init = [
             {
@@ -160,6 +161,30 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          if (this.waitlist_data.service.serviceType === 'virtualService') {
+            switch (this.waitlist_data.service.virtualCallingModes[0].callingMode) {
+              case 'Zoom': {
+                this.iconClass = 'fa zoom-icon';
+                break;
+              }
+              case 'GoogleMeet': {
+                this.iconClass = 'fa meet-icon';
+                break;
+              }
+              case 'WhatsApp': {
+                if (this.waitlist_data.service.virtualServiceType === 'audioService') {
+                  this.iconClass = 'fa wtsapaud-icon';
+                } else {
+                  this.iconClass = 'fa wtsapvid-icon';
+                }
+                break;
+              }
+              case 'Phone': {
+                this.iconClass = 'fa phon-icon';
+                break;
+              }
+            }
+          }
           const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
           if (interval) {
             this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);
