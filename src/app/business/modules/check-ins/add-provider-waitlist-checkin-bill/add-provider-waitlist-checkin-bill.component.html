@@ -441,7 +441,7 @@
 															<div class="c-row one">
 																<div class="name">
 																	{{service.serviceName | capitalizeFirst}}
-																	<span class="rupee-font">{{service.price | currency:'&#8377; '}}</span>
+																	<span class="rupee-font">{{service.price | currency:'&#8377;'}}</span>
 																	 <sup
 																		[matTooltipClass]="tooltipcls"
 																		[matTooltip]="'Taxable'"
@@ -461,7 +461,7 @@
 																	*ngIf="!source && bill_data.checkinStatus !== 'cancelled' || 
 																(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
 																<span class="rupee-font">{{(service.quantity * service.price) |
-																	currency:'&#8377; '}}</span>
+																	currency:'&#8377;'}}</span>
 																
 											</div>
 																<div class="price"
@@ -469,7 +469,7 @@
 											((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 											<span class="rupee-font">	
 											{{(service.quantity * service.price) |
-												currency:'&#8377; '}}
+												currency:'&#8377;'}}
 											</span>
 						</div>
 																<div class="price"
@@ -547,7 +547,7 @@
 																	<div class="name">{{discount.name}}</div>
 																	<div class="price">
 																		<span class="rupee-font">(-){{discount.discountValue |
-																			currency:'&#8377; '}}</span>											 <i (click)="removeServiceDiscount(service.serviceId, discount.id)"
+																			currency:'&#8377;'}}</span>											 <i (click)="removeServiceDiscount(service.serviceId, discount.id)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></div>
 																</div>
@@ -556,7 +556,7 @@
 																*ngIf="service.discount && service.discount.length > 0">
 																<div class="name">{{sub_tot_cap}}</div>
 																<div class="price rupee-font">{{service.netRate |
-												currency:'&#8377; '}}</div>
+												currency:'&#8377;'}}</div>
 															</div>
 														</div>
 														<div class="more"
@@ -609,7 +609,7 @@
 															<div class="c-row one">
 																<div class="name">
 																	{{item.itemName | capitalizeFirst}}
-																	<span class="rupee-font">{{item.price|currency:'&#8377; '}}</span>											
+																	<span class="rupee-font">{{item.price|currency:'&#8377;'}}</span>											
 																	<sup [matTooltipClass]="tooltipcls"
 																		[matTooltip]="'Taxable'"
 																		*ngIf="item.GSTpercentage > 0">Tax</sup>
@@ -618,7 +618,7 @@
 																	{{qnty_cap}}
 																	{{item.quantity}}</div>
 																<div class="price rupee-font">{{(item.quantity * item.price) |
-													currency:'&#8377; '}}</div>
+													currency:'&#8377;'}}</div>
 															</div>
 															<div class="c-row two section-two">
 																<!--When click MENU this section shows-->
@@ -673,7 +673,7 @@
 																	*ngFor="let discount of item.discount">
 																	<div class="name">{{discount.name}}</div>
 																	<div class="price rupee-font">(-){{discount.discountValue |
-													currency:'&#8377; '}} <i (click)="removeItemDiscount(item.itemId, discount.id)" class="fa fa-window-close"
+													currency:'&#8377;'}} <i (click)="removeItemDiscount(item.itemId, discount.id)" class="fa fa-window-close"
 																			aria-hidden="true"></i></div>
 																</div>
 															</div>
@@ -681,7 +681,7 @@
 																*ngIf="item.discount &&item.discount.length > 0">
 																<div class="name">{{sub_tot_cap}}</div>
 																<div class="price rupee-font">{{item.netRate |
-												currency:'&#8377; '}}</div>
+												currency:'&#8377;'}}</div>
 															</div>
 														</div>
 														<div class="more"
@@ -714,20 +714,20 @@
 																<tr class="amt gross">
 																	<td class="name">{{gross_amnt_cap}}</td>
 																	<td class="price rupee-font">
-																		{{bill_data.netTotal | currency:'&#8377; '}}
+																		{{bill_data.netTotal | currency:'&#8377;'}}
 																	</td>
 																</tr>
 																<tr class="amt discount"
 																	*ngIf="bill_data.jdn && bill_data.jdn.discount">
 																	<td class="name">JDN</td>
 																	<td class="price rupee-font">(-){{bill_data.jdn.discount|
-													currency:'&#8377; '}} </td>
+													currency:'&#8377;'}} </td>
 																</tr>
 																<tr class="amt discount"
 																	*ngFor="let discount of bill_data.discount">
 																	<td class="name">{{discount.name}}</td>
 																	<td class="price rupee-font">(-){{discount.discValue |
-													currency:'&#8377; '}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeOrderDiscount(discount)"
+													currency:'&#8377;'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeOrderDiscount(discount)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></td>
 																</tr>
@@ -735,7 +735,7 @@
 																	*ngFor="let coupon of bill_data.providerCoupon">
 																	<td class="name">{{coupon.name}}</td>
 																	<td class="price rupee-font">(-){{coupon.couponValue |
-													currency:'&#8377; '}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeProviderCoupon(coupon)"
+													currency:'&#8377;'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeProviderCoupon(coupon)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></td>
 																</tr>
@@ -747,7 +747,7 @@
 																		<span (click)="showJCCouponNote(jcoupon)"
 																			[class.couponAmt]="jcoupon.value.value === '0.0'"
 																			style="margin-right: 5px">{{jcoupon.value.value |
-													currency:'&#8377; '}}</span> <i *ngIf="bill_data.billStatus!='Settled'"
+													currency:'&#8377;'}}</span> <i *ngIf="bill_data.billStatus!='Settled'"
 																			(click)="removeJCoupon(jcoupon.key)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></td>
@@ -758,17 +758,17 @@
 												
 																			<span class="rupee-font">
 																				{{bill_data.taxableTotal |
-															currency:'&#8377; '}}
+															currency:'&#8377;'}}
 																			</span>							</span><span class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
 																			SGST-{{bill_data.taxPercentage/2}}%)</span>
 																	</td>
 																	<td class="price rupee-font">(+){{bill_data.totalTaxAmount |
-													currency:'&#8377; '}}</td>
+													currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt gross">
 																	<td class="name">{{nettotal_cap}}</td>
-																	<td class="price">{{bill_data.netRate |
-													currency:'&#8377; '}}</td>
+																	<td class="price  rupee-font">{{bill_data.netRate |
+													currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt paid"
 																	*ngIf="bill_data.totalAmountPaid > 0">
@@ -776,17 +776,17 @@
 																			(click)="showpaidSection()">{{amount_paid_cap}}</span>
 																	</td>
 																	<td class="price rupee-font">{{bill_data.totalAmountPaid |
-													currency:'&#8377; '}}</td>
+													currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt total" *ngIf="bill_data.amountDue >= 0">
 																	<td class="name">{{amountdue_cap}}</td>
 																	<td class="price rupee-font">{{bill_data.amountDue |
-													currency:'&#8377; '}}</td>
+													currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt total" *ngIf="bill_data.amountDue < 0">
 																	<td class="name">Refund</td>
 																	<td class="price rupee-font">{{refund_value |
-													currency:'&#8377; '}}</td>
+													currency:'&#8377;'}}</td>
 																</tr>
 
 
@@ -849,7 +849,7 @@
 																</div>
 																<div class="td two">
 																	<span class="amt rupee-font">{{payment.amount |
-													currency:'&#8377; ' }}</span> <span class="others"> <span class="status"> <span
+													currency:'&#8377;'}}</span> <span class="others"> <span class="status"> <span
 																				class="title">{{status_cap}}</span>
 																			<span><span
 																					[class]="payment.status | lowercase">{{payment.status
@@ -894,7 +894,7 @@
 																	<div class="td two">
 																		{{refund.refundBy | capitalizeFirst }}</div>
 																	<div class="td three rupee-font">{{refund.amount |
-													currency:'&#8377; ' }}</div>
+													currency:'&#8377;' }}</div>
 																</div>
 															</div>
 														</div>
