@@ -215,7 +215,7 @@
                                                             {{invoice.dueDate | date: dateFormat }}
                                                         </td>
                                                         <td data-title="Amount">
-                                                            <strong class="rupee-font">{{invoice.amount | currency:'&#8377; '}}</strong>
+                                                            <strong class="rupee-font">{{invoice.amount | currency:'&#8377;'}}</strong>
                                                         </td>
                                                         <td data-title="Period" *ngIf="!hide_invoiceperiod">
                                                             {{invoice.periodFrom | date: dateFormat }} -
@@ -233,7 +233,7 @@
                                                             <span *ngIf="(invoices.length-1) == i" class="cs-btn bt3"
                                                                 (click)="makePayment(invoice)">Pay
                                                                 <span class="rupee-font">
-                                                                    {{invoice.amount | currency:'&#8377; '}}
+                                                                    {{invoice.amount | currency:'&#8377;'}}
                                                                 </span>
                                                                 </span>
                                                         </td>
