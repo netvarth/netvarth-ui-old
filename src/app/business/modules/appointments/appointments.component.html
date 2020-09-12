@@ -358,7 +358,18 @@
                                     <mat-checkbox *ngFor="let service of service_list"
                                       [checked]="services.indexOf(service.id) !== -1"
                                       (change)="setFilterDataCheckbox('service', service.id, $event)">
-                                      {{service.name}}</mat-checkbox>
+                                      {{service.name}}
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                        class="fa meet-icon"></i>
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                        class="fa zoom-icon"></i>
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                                        class="fa phon-icon"></i>
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                                        class="fa wtsapaud-icon"></i>
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                                        class="fa wtsapvid-icon"></i>
+                                    </mat-checkbox>
                                   </li>
                                 </div>
                                 <div *ngIf="time_type === 3">
@@ -882,7 +893,19 @@
                                     <mat-checkbox *ngFor="let service of service_list"
                                       [checked]="services.indexOf(service.id) !== -1"
                                       (change)="setFilterDataCheckbox('service', service.id, $event)">
-                                      {{service.name}}</mat-checkbox>
+                                      {{service.name}}
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                      class="fa meet-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                      class="fa zoom-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                                      class="fa phon-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                                      class="fa wtsapaud-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                                      class="fa wtsapvid-icon"></i>
+
+                                    </mat-checkbox>
                                   </li>
                                 </div>
                                 <div *ngIf="time_type === 3">
