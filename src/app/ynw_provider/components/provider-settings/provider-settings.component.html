@@ -18,13 +18,22 @@
                       <!-- Add the bg color to the header using any of the bg-* classes -->
                       <div class="widget-user-header bg-blue">
                           <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls"
-                              [matTooltip]="bprofileTooltip">My Account
+                              [matTooltip]="bprofileTooltip">My Profile
                               <i class="fa fa-gears fl-right lnk"></i>
                               <div>
-                              <div joyrideStep="step1" [stepContent]="text1" title="My Account">
+                              <div joyrideStep="step1" [stepContent]="text1" title="My Profile">
                               </div>
                               <ng-template #text1>
-                                      Your basic information about you goes here. For example, your name, location, profile picture...
+                                      Set up this section first!<br>
+                                      <br>
+                                      Once you set this up, you should be able to- <br>
+                                      <br>
+                                      Showcase your business and the services you offer.<br>
+                                      <br>
+                                      Make your profile public so you can be found on Jaldee.com and the Jaldee mobile App.<br>
+                                      <br>
+                                      Generate your personal Jaldee link and QR code and share it with the world.
+
                               </ng-template>
                           </div>
                               <!-- <div joyrideStep="step1" title="Jaldee Online"
@@ -195,13 +204,18 @@
                               [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Jaldee QManager
                               <i class="fa fa-gears fl-right lnk"></i>
                               <div>
-                                  <div joyrideStep="step2" [stepContent]="text2" title="Do you issue tokens to your customers?">
+                                  <div joyrideStep="step2" [stepContent]="text2" title="Jaldee QManager">
                                   </div>
                                   <ng-template #text2>
-                                          Use the Jaldee QManager to:<br>
-                                          <span style="color: black;">*</span>Create 'Queues' by entering your working schedule.<br>
-                                          <span style="color: black;">*</span>Add the services you offer to these 'Queues'<br>
-                                          <span style="color: black;" >*</span>Start issuing tokens to your customers using the 'Queues' you have created.
+                                          Jaldee recommends it's innovative virtual queue system over the traditional appointment system.<br>
+                                          <br>
+                                          Benefits of the Jaldee QManager:<br>
+                                          <br>
+                                          <span style="color: black;">*</span>Create virtual queues. Let your customers check-in to queues online anywhere.<br>
+                                          <br>
+                                          <span style="color: black;">*</span>You issue tokens to your customers online.<br>
+                                          <br>
+                                          <span style="color: black;" >*</span>Jaldee sends alerts to your customers in real time about current queue waiting time, how many are in line and their turn.
 
                                   </ng-template>
                               </div>
@@ -304,14 +318,19 @@
                               Jaldee Appointment Manager
                               <i class="fa fa-gears fl-right lnk"></i>
                               <div>
-                                  <div joyrideStep="step3" [stepContent]="text3" title="Do you fix appointments or take bookings with your customers?">
+                                  <div joyrideStep="step3" [stepContent]="text3" title="Jaldee Appointment Manager">
                                   </div>
                                   <ng-template #text3>
                                       <div>
-                                          Use the Jaldee Appointment Manager to:<br>
-                                          <span style="color: black;">*</span> Create a 'Schedule' based on your work timings.<br>
-                                          <span style="color: black;">*</span> Add the services you offer to your 'Schedule'<br>
-                                          <span style="color: black;">*</span> Start issuing appointments to your customers using the 'Schedule' you have created.
+                                          Use the Jaldee appointment manager to set up your appointment system.<br>
+                                          <br>
+                                          Features of the Jaldee Appointment Manager:<br>
+                                          <br>
+                                          <span style="color: black;">*</span> Specify the time when you want to offer services. Customers can select these time slots and book appointments.<br>
+                                          <br>
+                                          <span style="color: black;">*</span> Jaldee will send reminders to customers so they dont miss their appointments<br>
+                                          <br>
+                                          <span style="color: black;">***</span> PLEASE NOTE: Unlike the Virtual Queue Sytem, the appointment system does not send out alerts for information like up-to-date waiting time and service delays.<span style="color: black;">***</span>
                                       </div>
                                   </ng-template>
                               </div>
