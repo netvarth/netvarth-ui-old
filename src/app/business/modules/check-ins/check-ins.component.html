@@ -135,12 +135,14 @@
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
               <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="activeQs">
-                <button class="item cust-button-3"
+                  <button class="item cust-button-3"
                   [ngClass]="{active: isQueueSelected(queue.id)?true:false, disabled: queue.queueState === 'ENABLED'?false:true}"
                   (click)="viewQClicked(queue)" *ngFor="let queue of activeQs;let i = index">
-                  <span *ngIf="!queue.instantQueue">{{queue.name}}<br />
+                  <span *ngIf="!queue.instantQueue">{{queue.name}}<br /><input  style="margin:0px;" [checked]="isQueueSelected(queue.id)" type="checkbox" class="ckbx pull-left"
+                    />&nbsp;
                     {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}</span>
-                  <span *ngIf="queue.instantQueue">InstantQ<br />
+                  <span *ngIf="queue.instantQueue">InstantQ<br /><input style="margin:0px;" [checked]="isQueueSelected(queue.id)" type="checkbox" class="ckbx pull-left"
+                    />&nbsp;
                     {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}</span>
                 </button>
               </owl-carousel>
