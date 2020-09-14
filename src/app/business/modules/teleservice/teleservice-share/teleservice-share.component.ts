@@ -121,17 +121,17 @@ export class TeleServiceShareComponent implements OnInit {
     this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
     this.videocall_msg = 'Follow these instructions to join the video call:\n1. You will recieve an alert that the ' + this.data.app + ' call has started.\nOpen the following link- ' + this.meetingLink;
     this.waitFor = '\n3. Wait for the video call to begin';
-    this.providr_msg = 'How to start the video call -\n1. Open on the following link - ' + this.meetingLink;
+    this.providr_msg = 'How to start the video call -\n1. Open the following link - ' + this.meetingLink;
     this.aloJoin = '\n2. Allow ' + this.customer_label + ' to join the call when you are prompted';
 
     switch (this.data.app) {
       case 'WhatsApp':
         if (this.data.serviceDetail.virtualServiceType === 'videoService') {
           this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on +'  + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
-          this.msg_to_me = 'Follow these instructions to start the video call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + ' (Your phone/tablet should have WhatsApp installed)\n2. Start the video call';
+          this.msg_to_me = 'Follow these instructions to start the video call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the video call';
         } else {
           this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp audio call on +'  + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
-          this.msg_to_me = 'Follow these instructions to start the audio call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + ' (Your phone/tablet should have WhatsApp installed)\n2. Start the audio call';
+          this.msg_to_me = 'Follow these instructions to start the audio call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the audio call';
         }
         break;
       case 'Phone':

@@ -618,7 +618,7 @@
                                     *ngIf="time_type==1 && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                                     (click)="showCallingModes(appt, 'Started')">
-                                    <span *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;&nbsp;</span>
+                                    <span *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                                     <i class="fa meet-icon"
                                       [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                                       *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
@@ -634,6 +634,7 @@
                                       <i class="fa wtsapvid-icon"
                                       [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                                       *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
+                                      <span *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                                     <span *ngIf="!small_device_display">
                                       <!-- Start -->
                                       {{appt.apptStatus === 'Started' ? 'Resume': 'Start'}}
@@ -1147,7 +1148,7 @@
                           *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="showCallingModes(appt, 'Started')">
-                          <span *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;&nbsp;</span>
+                          <span *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1160,6 +1161,7 @@
                             <i class="fa wtsapvid-icon"
                             [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
+                            <span *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                            <span *ngIf="!small_device_display">
                             <!-- Start -->
                             {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
