@@ -11510,6 +11510,7 @@ header.consumer .tp-1 .tp-l {
 }
 .joyride-step__title {
   color: rgba(255, 255, 255, 0.87) !important;
+  font-weight: 700 !important;
 }
 .joyride-button {
   color: #322dce !important;
@@ -11524,4 +11525,7 @@ header.consumer .tp-1 .tp-l {
 }
 .joyride-arrow__top {
   border-bottom: 11px solid #322dce !important;
+}
+.joyride-step__close{
+  color: white !important;
 }
