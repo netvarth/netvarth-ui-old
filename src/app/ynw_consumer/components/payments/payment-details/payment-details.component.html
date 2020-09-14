@@ -17,6 +17,9 @@
                             </div>
                             <h2>Payment details</h2>
                             <div class="tp" *ngIf="payments">
+                                <div class="item"><span class="ttle">Consumer Name</span> <span>
+                                            {{payments.customerName | capitalizeFirst }}
+                                        </span></div>
                                 <div class="item"><span class="ttle">Date & Time</span> <span>
                                         {{stringtoDate(payments.paymentOn,
                                         'date')}} {{stringtoDate(payments.paymentOn,
