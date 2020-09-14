@@ -29,7 +29,7 @@
 
         <div class="outer">
             <div class="outer1 line">
-                <div class="name">
+                <span class="name" >  
                     <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">{{data.serdet.name | capitalizeFirst}}
                        <span>
                         <i class="fa fa-phone"
@@ -43,7 +43,7 @@
                        </span> 
                     </span>
                     <span *ngIf="this.data.serdet.taxable"><sup>Tax</sup></span>
-                </div>
+                </span>
                 <div class="description" *ngIf="data.serdet && data.serdet.description">
                         {{data.serdet.description}}
                     </div>
