@@ -310,7 +310,7 @@
                                 <ng-container *ngIf="loc['appttime_det'] && !loc['appttime_det']['message']">
                                     <ng-container *ngFor="let service of loc['apptservices'][deptUser.departmentId]">
                                         <div class="bus-item"
-                                            *ngIf="!service.provider || (service.provider && service.provider.id==userId)">
+                                            *ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">
                                             <div class="card card-item-n no-padding">
                                                 <div class="card-item-title">
                                                     <a class="pointer-cursor"
@@ -369,7 +369,7 @@
                                     *ngIf="loc['estimatedtime_det'] && !loc['estimatedtime_det']['message'] && loc['waitlist']">
                                     <ng-container *ngFor="let service of loc['wlservices'][deptUser.departmentId]">
                                         <div class="bus-item"
-                                            *ngIf="!service.provider || (service.provider && service.provider.id==userId)">
+                                            *ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">
                                             <div class="card card-item-n no-padding">
                                                 <div class="card-item-title">
                                                     <a class="pointer-cursor"
@@ -827,7 +827,7 @@
                         <ng-container *ngIf="loc['appttime_det'] && !loc['appttime_det']['message']">
                             <ng-container *ngFor="let service of loc['apptservices']">
                                 <div class="bus-item"
-                                    *ngIf="!service.provider || (service.provider && service.provider.id==userId)">
+                                    *ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">
                                     <div class="card card-item-n no-padding">
                                         <div class="card-item-title">
                                             <a class="pointer-cursor"
@@ -882,7 +882,7 @@
                             *ngIf="loc['estimatedtime_det'] && !loc['estimatedtime_det']['message']  && loc['waitlist']">
                             <ng-container *ngFor="let service of loc['wlservices']">
                                 <div class="bus-item"
-                                    *ngIf="!service.provider || (service.provider && service.provider.id==userId)">
+                                    *ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">
                                     <div class="card card-item-n no-padding">
                                         <div class="card-item-title">
                                             <a class="pointer-cursor"
