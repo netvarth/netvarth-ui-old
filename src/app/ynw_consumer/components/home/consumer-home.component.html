@@ -127,7 +127,9 @@
                                 </div>
                                 <div class="lt0 underline" *ngIf="appointment.service.serviceType === 'virtualService' && appointment.apptStatus !== 'Completed'
                                          && appointment.apptStatus !== 'Cancelled'">
-                                    <a (click)="getMeetingDetails(appointment,'appt')"> Meeting details </a>
+                                    <a (click)="getMeetingDetails(appointment,'appt')"> <span *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualServiceType === 'videoService'">Video call instructions</span>
+                                    <span *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualServiceType === 'audioService'">Audio call instructions</span>
+                                     </a>
                                 </div>
                                 <!-- <div class="lt0 payment"
                                             *ngIf="!appointment.parentUuid && appointment.apptStatus=='prepaymentPending'">
@@ -395,7 +397,10 @@
                                         </div>
                                         <div class="lt0 underline" *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.waitlistStatus !== 'done'
                                          && waitlist.waitlistStatus !== 'cancelled'">
-                                            <a (click)="getMeetingDetails(waitlist,'waitlist')"> Meeting details </a>
+                                            <a (click)="getMeetingDetails(waitlist,'waitlist')"> 
+                                                <span *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualServiceType === 'videoService'">Video call instructions</span>
+                                                <span *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualServiceType === 'audioService'">Audio call instructions</span>
+                                            </a>
                                         </div>
                                         <!-- <div class="lt0 payment"
                                     *ngIf="!waitlist.parentUuid && waitlist.waitlistStatus=='prepaymentPending'">
