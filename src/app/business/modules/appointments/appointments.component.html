@@ -859,7 +859,22 @@
                                       Female</mat-checkbox>
                                   </li>
                                 </div> -->
-
+                                <div *ngIf="locations.length > 0 && time_type === 3">
+                                  <label class="filterHeaders">Locations</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox [checked]="allLocationSelected"
+                                      (change)="setFilterDataCheckbox('location', 'all', $event)">
+                                      All</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox *ngFor="let loc of locations" [checked]="filterLocation.indexOf(loc.id) !== -1"
+                                      (change)="setFilterDataCheckbox('location', loc.id, $event)">
+                                      {{loc.place}}
+                                    </mat-checkbox>
+                                  </li>
+                                </div>
                                 <div *ngIf="schedules.length > 0 && time_type === 3">
                                   <label class="filterHeaders">schedules</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">

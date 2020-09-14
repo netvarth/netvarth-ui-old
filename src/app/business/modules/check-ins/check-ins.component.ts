@@ -85,6 +85,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     phone_number: '',
     checkinEncId: '',
     queue: 'all',
+    location: 'all',
     service: 'all',
     waitlist_status: 'all',
     waitlistMode: 'all',
@@ -104,6 +105,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     phone_number: false,
     checkinEncId: false,
     queue: false,
+    location: false,
     service: false,
     waitlist_status: false,
     payment_status: false,
@@ -248,11 +250,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   service_list: any = [];
   allServiceSelected = false;
   allQSelected = false;
+  allLocationSelected = false;
   allGenderSlected = false;
   allAgeSlected = false;
   genderList: any = [];
   filterService: any = [];
   filterQ: any = [];
+  filterLocation: any = [];
   consumr_id: any;
   notedialogRef: any;
   locateCustomerdialogRef;
@@ -331,10 +335,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.arrived_upper, value: 'arrived' },
       { name: this.done_upper, value: 'complete' }];
 
-      this.activateroute.queryParams.subscribe(params => {
-       if (params.servStatus) {
+    this.activateroute.queryParams.subscribe(params => {
+      if (params.servStatus) {
         this.statusAction = 'started';
-       }
+      }
     });
   }
   payStatusList = [
@@ -636,6 +640,33 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.filterQ.length === this.queues.length) {
         this.filter['queue'] = 'all';
         this.allQSelected = true;
+      }
+    }
+
+    if (type === 'location') {
+      if (value === 'all') {
+        this.filterLocation = [];
+        this.allLocationSelected = false;
+        if (event.checked) {
+          for (const q of this.locations) {
+            if (this.filterLocation.indexOf(q.id) === -1) {
+              this.filterLocation.push(q.id);
+            }
+          }
+          this.allLocationSelected = true;
+        }
+      } else {
+        this.allLocationSelected = false;
+        const indx = this.filterLocation.indexOf(value);
+        if (indx === -1) {
+          this.filterLocation.push(value);
+        } else {
+          this.filterLocation.splice(indx, 1);
+        }
+      }
+      if (this.filterLocation.length === this.locations.length) {
+        this.filter['location'] = 'all';
+        this.allLocationSelected = true;
       }
     }
 
@@ -1052,6 +1083,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (chkSrc) {
       if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
         this.resetFilter();
+        this.resetFilterValues();
         this.resetLabelFilter();
       }
     }
@@ -1408,9 +1440,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
-      if (this.selected_location && this.selected_location.id) {
-        Mfilter['location-eq'] = this.selected_location.id;
-      }
+      // if (this.selected_location && this.selected_location.id) {
+      //   Mfilter['location-eq'] = this.selected_location.id;
+      // }
+
       // if (queueid && queueid.length > 0) {
       //   Mfilter['queue-eq'] = queueid.toString();
       // }
@@ -1549,6 +1582,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filterService = [];
     this.apptStatuses = [];
     this.filterQ = [];
+    this.filterLocation = [];
     this.paymentStatuses = [];
     this.apptModes = [];
     this.allAgeSlected = false;
@@ -1558,6 +1592,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allPayStatusSelected = false;
     this.allModeSelected = false;
     this.allQSelected = false;
+    this.allLocationSelected = false;
   }
   setFilterdobMaxMin() {
     this.filter_dob_start_max = new Date();
@@ -1638,11 +1673,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.time_type === 3) {
-
       if (this.filterQ.length > 0 && this.filter.queue !== 'all') {
         api_filter['queue-eq'] = this.filterQ.toString();
       }
-
+      if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
+        api_filter['location-eq'] = this.filterLocation.toString();
+      }
       if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
         api_filter['billPaymentStatus-eq'] = this.paymentStatuses.toString();
       }
@@ -1669,8 +1705,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.genderList.toString();
       }
     }
-    if (this.selected_location && this.selected_location.id) {
-      api_filter['location-eq'] = this.selected_location.id;
+    if (this.time_type !== 3) {
+      if (this.selected_location && this.selected_location.id) {
+        api_filter['location-eq'] = this.selected_location.id;
+      }
     }
     if (this.filter.waitlist_status === 'all') {
       api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
@@ -1717,6 +1755,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       phone_number: false,
       checkinEncId: false,
       queue: false,
+      location: false,
       service: false,
       waitlist_status: false,
       payment_status: false,
@@ -1733,6 +1772,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       phone_number: '',
       checkinEncId: '',
       queue: 'all',
+      location: 'all',
       service: 'all',
       waitlist_status: 'all',
       payment_status: 'all',
@@ -2049,7 +2089,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date') {
         this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'waitlistMode') {
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode') {
         this.filter[type] = 'all';
       } else if (type === 'waitlist_status') {
         this.statusMultiCtrl = [];
@@ -2375,7 +2415,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
 
- showCallingModes(modes, action) {
+  showCallingModes(modes, action) {
     if (!modes.consumer) {
       this.consumr_id = modes.providerConsumer.id;
     } else {
@@ -2594,18 +2634,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
         this.provider_services.getWaitlistMgr()
-       .subscribe(data => {
-        this.settings = data;
-        this.showToken = this.settings.showTokenId;
-        if ( this.showToken ) {
-        this.tokenOrCheckin = 'Tokens';
-        this.message = 'To access ' + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
+          .subscribe(data => {
+            this.settings = data;
+            this.showToken = this.settings.showTokenId;
+            if (this.showToken) {
+              this.tokenOrCheckin = 'Tokens';
+              this.message = 'To access ' + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
+            } else {
+              this.tokenOrCheckin = 'Check-ins';
+              this.message = 'To access ' + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
+            }
+          });
       } else {
-        this.tokenOrCheckin = 'Check-ins';
-        this.message = 'To access '  + this.tokenOrCheckin + ' dashboard, set up the profile and turn on Jaldee Queue Manager in Settings.';
-      }
-    });
-  } else {
         this.message1 = 'Enable Jaldee QManager in your settings to access ' + this.tokenOrCheckin + ' dashboard.';
       }
       this.apiloading = false;
