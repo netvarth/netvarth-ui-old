@@ -222,6 +222,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   futureAllowed = true;
   galleryenabledArr = [];
   gallerydisabledArr = [];
+  onlinePresence = false;
   // cSource  = 'qr';
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -324,6 +325,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       }
       if (qparams.src) {
         this.pSource = qparams.src;
+      }
+      if (qparams.onlinePresence) {
+        this.onlinePresence = qparams.onlinePresence;
       }
       // if (qparams.pId) {
       //   this.businessid = qparams.pId;
@@ -446,6 +450,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
+            this.onlinePresence = this.businessjson.onlinePresence;
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;
@@ -1952,7 +1957,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     const account = this.provider_id + '_' + userId;
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        src: 'bp'
+        src: 'bp',
+        onlinePresence: this.businessjson.onlinePresence
       }
     };
     this.routerobj.navigate([account], navigationExtras);

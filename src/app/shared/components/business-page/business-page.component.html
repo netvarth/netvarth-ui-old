@@ -332,7 +332,7 @@
                                                     <div class="card-item-content-action">
                                                         <div class="checkin-btn-bp"
                                                             (click)="appointmentClicked(loc, service)"
-                                                            *ngIf="loc['apptAllowed'] && businessjson.onlinePresence">
+                                                            *ngIf="loc['apptAllowed'] && onlinePresence">
                                                             Appointment
                                                         </div>
                                                         <!-- <div class="checkin-btn-bp"
@@ -375,7 +375,7 @@
                                                 <div class="card-item-content">
                                                     <div class="card-item-content-info">
                                                         <ng-container
-                                                            *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
+                                                            *ngIf="loc['waitlist'] && onlinePresence && loc['estimatedtime_det']">
                                                             <ng-container
                                                                 *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                                                                 <p class="title-style mgn-bt-m-5"
@@ -422,7 +422,7 @@
                                                     </div>
                                                     <div class="card-item-content-action">
                                                         <div class="" style="padding-bottom: 10px"
-                                                            *ngIf="loc['waitlist'] && businessjson.onlinePresence">
+                                                            *ngIf="loc['waitlist'] && onlinePresence">
                                                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
                                                                 *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
                                                                 <div class="checkin-btn-bp"
@@ -559,7 +559,7 @@
                                                         <div class="card-item-content-action">
                                                             <div class="checkin-btn-bp"
                                                                 (click)="appointmentClicked(loc, service)"
-                                                                *ngIf="loc['apptAllowed'] && businessjson.onlinePresence">
+                                                                *ngIf="loc['apptAllowed'] && onlinePresence">
                                                                 Appointment
                                                             </div>
                                                             <!-- <div class="checkin-btn-bp"
@@ -602,7 +602,7 @@
                                                     <div class="card-item-content">
                                                         <div class="card-item-content-info">
                                                             <ng-container
-                                                                *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
+                                                                *ngIf="loc['waitlist'] && onlinePresence && loc['estimatedtime_det']">
                                                                 <ng-container
                                                                     *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                                                                     <p class="title-style mgn-bt-m-5"
@@ -650,7 +650,7 @@
                                                         </div>
                                                         <div class="card-item-content-action">
                                                             <div class="" style="padding-bottom: 10px"
-                                                                *ngIf="loc['waitlist'] && businessjson.onlinePresence">
+                                                                *ngIf="loc['waitlist'] && onlinePresence">
                                                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
                                                                     *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
                                                                     <div class="checkin-btn-bp"
@@ -717,7 +717,7 @@
                                                         <div class="card-item-content">
                                                             <div class="card-item-content-info">
                                                                 <ng-container
-                                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
+                                                                    *ngIf="loc['waitlist'] && onlinePresence && loc['estimatedtime_det']">
                                                                     <ng-container
                                                                         *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                                                                         <p class="title-style mgn-bt-m-5"
@@ -766,7 +766,7 @@
                                                             </div>
                                                             <div class="card-item-content-action">
                                                                 <div class="" style="padding-bottom: 10px"
-                                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence">
+                                                                    *ngIf="loc['waitlist'] && onlinePresence">
                                                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
                                                                         *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
                                                                         <div class="checkin-btn-bp"
@@ -844,7 +844,7 @@
                                             </div>
                                             <div class="card-item-content-action">
                                                 <div class="checkin-btn-bp" (click)="appointmentClicked(loc, service)"
-                                                    *ngIf="loc['apptAllowed'] && businessjson.onlinePresence">
+                                                    *ngIf="loc['apptAllowed'] && onlinePresence">
                                                     Appointment
                                                 </div>
                                                 <!-- <div class="checkin-btn-bp"
@@ -887,7 +887,7 @@
                                         <div class="card-item-content">
                                             <div class="card-item-content-info">
                                                 <ng-container
-                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
+                                                    *ngIf="loc['waitlist'] && onlinePresence && loc['estimatedtime_det']">
                                                     <ng-container
                                                         *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                                                         <p class="title-style mgn-bt-m-5"
@@ -929,7 +929,7 @@
                                             </div>
                                             <div class="card-item-content-action">
                                                 <div class="" style="padding-bottom: 10px"
-                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence">
+                                                    *ngIf="loc['waitlist'] && onlinePresence">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
                                                         *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
                                                         <div class="checkin-btn-bp"
@@ -985,7 +985,7 @@
                         </ng-container>
                     </ng-container>
                     <ng-container
-                        *ngIf="businessjson.donationFundRaising && businessjson.onlinePresence && donationServicesjson.length >= 1">
+                        *ngIf="businessjson.donationFundRaising && onlinePresence && donationServicesjson.length >= 1">
                         <div class="bus-item" *ngFor="let service of donationServicesjson">
                             <div class="card card-item-n no-padding">
                                 <!-- <img [src]="(service.servicegallery && service.servicegallery.length > 0)? service.servicegallery[0].thumbUrl:'assets/images/img-null.svg'"
