@@ -44,6 +44,7 @@ export class RazorpayService {
     });
   }
   payWithRazor(razorModel, usertype, checkin_type?, livetrack?, account_id?, uuid?) {
+    let razorInterval;
     razorModel.retry = false;
     //   theme: {
     //     color: '#F37254'
@@ -56,6 +57,7 @@ export class RazorpayService {
     const options = razorModel;
     options.handler = ((response, error) => {
       options.response = response;
+      clearTimeout(razorInterval);
       const navigationExtras: NavigationExtras = {
         queryParams: {
           'details': JSON.stringify(options.response),
@@ -112,5 +114,9 @@ export class RazorpayService {
     });
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
     rzp.open();
+    razorInterval = setTimeout(() => {
+      rzp.close();
+      location.reload();
+    }, 540000);
   }
 }
