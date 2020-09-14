@@ -11504,3 +11504,24 @@ header.consumer .tp-1 .tp-l {
 .history-tbl .provider-name .name{
   color: #3c8dbc!important;
 }
+.joyride-step__container{
+  color: #fff!important;
+  background-color: #322dce!important;
+}
+.joyride-step__title {
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+.joyride-button {
+  color: #322dce !important;
+  background-color: #fff !important;
+}
+.joyride-step__body {
+  color: #fff!important;
+
+}
+.joyride-arrow__left{
+  border-right: 11px solid #322dce !important;
+}
+.joyride-arrow__top {
+  border-bottom: 11px solid #322dce !important;
+}
