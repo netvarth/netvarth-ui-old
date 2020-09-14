@@ -505,7 +505,8 @@
                                                     *ngIf="waitlist.amountDue>0 && waitlist.waitlistStatus != 'cancelled'"
                                                     (click)="viewBill(waitlist,'checkin')">Bill</span>
                                             </li>
-                                            <li (click)="makeFailedPayment(waitlist)"
+                                            <li (click)="makeFailedPayment(waitlist)"  
+                                            
                                                 *ngIf="!waitlist.parentUuid && waitlist.waitlistStatus=='prepaymentPending'">
                                                 <span class="payment">{{make_pay_cap}}</span>
                                             </li>
@@ -661,7 +662,7 @@
                     </div>
                     <div class="brd-bt">&nbsp;</div>
                     <div class="col-md-12 mgn-up-10 mgn-bt-10"><a class="pointer-cursor underline"
-                            (click)="gotoDonations()">Go to Donations</a></div>
+                            (click)="gotoDonations()">Go to History</a></div>   
                 </mat-expansion-panel>
             </mat-accordion>
         </div>
