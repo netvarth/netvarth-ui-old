@@ -15,15 +15,15 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 })
 export class CheckinDetailComponent implements OnInit {
     waitlist: any;
-    breadcrumbs = [
-        {
-            title: 'Dashboard',
-            url: '/consumer'
-        },
-        {
-            title: 'Checkin Details'
-        }
-    ];
+    // breadcrumbs = [
+    //     {
+    //         title: 'Dashboard',
+    //         url: '/consumer'
+    //     },
+    //     {
+    //         title: 'Checkin Details'
+    //     }
+    // ];
     api_loading = true;
     waitlistdata: any;
     go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
@@ -71,6 +71,8 @@ export class CheckinDetailComponent implements OnInit {
     phonenumber;
     servsDetails: any;
     iconClass: string;
+    showtoken: any;
+    breadcrumbs = [];
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -109,6 +111,28 @@ export class CheckinDetailComponent implements OnInit {
         this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
         this.phonenumber = waitlistjson.waitlistPhoneNumber;
         this.servsDetails = waitlistjson.service;
+        this.showtoken = waitlistjson.showToken;
+        if (this.showtoken) {
+            this.breadcrumbs = [
+                {
+                    title: 'Dashboard',
+                    url: '/consumer'
+                },
+                {
+                    title: 'Token Details'
+                }
+            ];
+        } else {
+            this.breadcrumbs = [
+                {
+                    title: 'Dashboard',
+                    url: '/consumer'
+                },
+                {
+                    title: 'Checkin Details'
+                }
+            ];
+        }
         if (this.servsDetails.serviceType === 'virtualService') {
 
             switch (this.servsDetails.virtualCallingModes[0].callingMode) {

@@ -15,7 +15,8 @@
                                 <span class="backtodashboard" (click)="gotoPrev()"><span
                                         class="strong">{{go_back_cap}}</span></span>
                             </div>
-                            <h2>{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
+                            <h2 *ngIf="!showtoken">{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
+                            <h2 *ngIf="showtoken">Token  {{details_cap}}</h2>
                             <div class="tp" *ngIf="waitlistdata">
                                 <div class="item"><span class="ttle">{{bname_cap}}</span> <span>
                                         {{BusinessName | capitalizeFirst}}
@@ -68,7 +69,8 @@
                 </div>
                 <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
                     <div class="card">
-                        <h2>{{checkin_label |capitalizeFirst}} waitlistStatus</h2>
+                        <h2 *ngIf="!showtoken">{{checkin_label |capitalizeFirst}} waitlistStatus</h2>
+                        <h2 *ngIf="showtoken">Token Status</h2>
                         <div class="c-history-outer">
                             <ul class="c-history">
                                 <li class="{{status}}">
