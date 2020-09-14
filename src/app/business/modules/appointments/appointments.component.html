@@ -140,8 +140,10 @@
                 <button class="item cust-button-3"
                   [ngClass]="{active: isQueueSelected(schedule.id)?true:false, disabled: schedule.apptState === 'ENABLED'?false:true}"
                   (click)="viewQClicked(schedule)" *ngFor="let schedule of activeSchedules;let i = index">
-                  {{schedule.name}}<br />
-                  {{schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' + schedule.apptSchedule.timeSlots[0]['eTime']}}
+                  <span> {{schedule.name}}<br />
+                  <input  style="margin:0px;"  [checked]="isQueueSelected(schedule.id)" type="checkbox" class="ckbx pull-left"
+                  />&nbsp;
+                  {{schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' + schedule.apptSchedule.timeSlots[0]['eTime']}}</span>
                 </button>
               </owl-carousel>
               <div class="owl-theme">
