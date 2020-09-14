@@ -399,7 +399,7 @@
                                          && waitlist.waitlistStatus !== 'cancelled'">
                                             <a (click)="getMeetingDetails(waitlist,'waitlist')"> 
                                                 <span *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualServiceType === 'videoService'">Video call instructions</span>
-                                                <span *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualServiceType === 'audioService'">Audio call instructions</span>
+                                                <span *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualServiceType === 'audioService'">Phone call instructions</span>
                                             </a>
                                         </div>
                                         <!-- <div class="lt0 payment"
