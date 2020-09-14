@@ -1187,6 +1187,7 @@ export class SharedFunctions {
     const sec = parseInt(timesp[2], 10);
     let ampm = '';
     let retstr = '';
+    console.log(hr);
     if (hr >= 12) {
       hr = hr - 12;
       if (hr === 0) {
@@ -1197,6 +1198,9 @@ export class SharedFunctions {
       } else {
         ampm = 'PM';
       }
+    } else if (hr === 0) {
+      hr = 12;
+      ampm = 'AM';
     } else {
       ampm = 'AM';
     }
