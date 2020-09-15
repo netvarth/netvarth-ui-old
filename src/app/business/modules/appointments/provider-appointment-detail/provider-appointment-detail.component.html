@@ -74,9 +74,11 @@
                     *ngIf="waitlist_data.appmtFor[0].primaryMobileNo && waitlist_data.appmtFor[0].primaryMobileNo.length === 10">({{waitlist_data.appmtFor[0].primaryMobileNo}})</span>
                   </span>
                 </div>
-                <div class="item"><span class="ttle">{{service_cap}}</span><span> {{waitlist_data.service.name |
+                <div class="item"><span class="ttle">{{service_cap}}</span><span> 
+                  <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]=iconClass></i>
+                  {{waitlist_data.service.name |
                     capitalizeFirst}}
-                    <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]=iconClass></i>
+                    
                     <span *ngIf="waitlist_data.service.deptName">
                       ({{waitlist_data.service.deptName}})</span></span></div>
                 <div class="item"><span class="ttle">Schedule</span>

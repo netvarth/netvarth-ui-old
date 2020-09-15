@@ -690,7 +690,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           for (let i = 0; i < this.appttime_arr.length; i++) {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
-              this.fav_providers[index]['locations'][locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              this.fav_providers[index]['locations'][locindx]['apptAllowed'] = this.appttime_arr[i]['apptEnabled'];
               if (this.appttime_arr[i]['availableSchedule']) {
                 this.fav_providers[index]['locations'][locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.fav_providers[index]['locations'][locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
@@ -748,11 +748,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             locindx = provids_locid[i].locindx;
             this.fav_providers[index]['locations'][locindx]['waitingtime_res'] = waitlisttime_arr[i];
             this.fav_providers[index]['locations'][locindx]['estimatedtime_det'] = [];
+            this.fav_providers[index]['locations'][locindx]['waitlist'] = waitlisttime_arr[i]['waitlistEnabled'];
             if (waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.fav_providers[index]['locations'][locindx]['isCheckinAllowed'] = waitlisttime_arr[i]['isCheckinAllowed'];
               this.fav_providers[index]['locations'][locindx]['personAhead'] = waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
               this.fav_providers[index]['locations'][locindx]['calculationMode'] = waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
-              this.fav_providers[index]['locations'][locindx]['waitlist'] = waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
+              // this.fav_providers[index]['locations'][locindx]['waitlist'] = waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
               this.fav_providers[index]['locations'][locindx]['showToken'] = waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
               this.fav_providers[index]['locations'][locindx]['onlineCheckIn'] = waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
               this.fav_providers[index]['locations'][locindx]['isAvailableToday'] = waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
