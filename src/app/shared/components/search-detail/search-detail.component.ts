@@ -1042,7 +1042,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           for (let i = 0; i < this.appttime_arr.length; i++) {
             if (provids[i]) {
               srchindx = provids[i].searchindx;
-              this.search_data.hits.hit[srchindx].fields['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              this.search_data.hits.hit[srchindx].fields['apptAllowed'] = this.appttime_arr[i]['apptEnabled'];
               if (this.appttime_arr[i]['availableSchedule']) {
                 this.search_data.hits.hit[srchindx].fields['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.search_data.hits.hit[srchindx].fields['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
@@ -1104,9 +1104,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             this.search_data.hits.hit[srchindx].fields['waitingtime_res'] = this.waitlisttime_arr[i];
             this.search_data.hits.hit[srchindx].fields['estimatedtime_det'] = [];
             this.search_data.hits.hit[srchindx].fields['waitingtime_res'] = this.waitlisttime_arr[i];
+            this.search_data.hits.hit[srchindx].fields['waitlist'] = this.waitlisttime_arr[i]['waitlistEnabled'];
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
-              this.search_data.hits.hit[srchindx].fields['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
+              // this.search_data.hits.hit[srchindx].fields['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
