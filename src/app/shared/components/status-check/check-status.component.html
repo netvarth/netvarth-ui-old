@@ -56,10 +56,17 @@
                       </div>
                       <div class="lt0 knw-stat-line-h">
                         <span class="service">Service: </span> 
-                        <span class="forwhom">{{statusInfo.service.name | capitalizeFirst}} 
-                            <i *ngIf="statusInfo.service.serviceType == 'virtualService'"
-                            class="fa fa-video-camera know-status-i" style="font-size: smaller !important;padding-left: 0px !important;"
-                            aria-hidden="true"></i>
+                        <span class="forwhom">{{statusInfo.service.name | capitalizeFirst}}
+                            <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='GoogleMeet'"
+                            class="fa meet-icon know-status-i"></i>
+                            <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='Zoom'"
+                            class="fa zoom-icon know-status-i"></i>
+                            <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='WhatsApp' && statusInfo.service.virtualServiceType =='audioService'"
+                            class="fa wtsapaud-icon know-status-i"></i>
+                            <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='WhatsApp' && statusInfo.service.virtualServiceType =='videoService'"
+                            class="fa wtsapvid-icon know-status-i"></i>
+                            <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='Phone'"
+                            class="fa phon-icon know-status-i"></i>
                         </span>
                       </div>
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.provider">
