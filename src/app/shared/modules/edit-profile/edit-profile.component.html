@@ -151,9 +151,12 @@
 </section>
 
 <section *ngIf="curtype!='consumer'" class="myaccount">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">My Account</h5>
+    </div>
     <div class="content see-pages">
         <div class="related-links">
-            <div class="outer-card">
+            <div class="outer-card">                
                 <div class="card">
                     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                     <form *ngIf="!loading" [formGroup]="editProfileForm" novalidate (ngSubmit)="editProfileForm.valid &&

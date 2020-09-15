@@ -81,9 +81,12 @@
 </section>
 
 <section *ngIf="curtype!='consumer'">
-  <div class="content see-pages">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">Change Mobile #</h5>
+  </div>
+  <div class="content see-pages mgn-up-10">
     <div class="related-links">
-      <div class="outer-card">
+      <div class="outer-card">        
         <div class="card">
           <div *ngIf="step==1" class="change-phone-div">
             <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)"

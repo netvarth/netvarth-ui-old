@@ -1228,7 +1228,7 @@ sup {
 
 @media(max-width:500px) {
   .cdk-overlay-container .mat-autocomplete-panel .mat-option {
-    line-height: 15px!important;
+    line-height: 30px!important;
   }
   .grid-flex {
     display: flex;
@@ -11839,48 +11839,75 @@ img.busN-logo {
 .content.search-details-list .mat-expansion-panel-header {
   padding: 0 10px !important;
 }
-@media only screen and (max-width: 575px){
-.content .c-outer .sidebar {
+
+@media only screen and (max-width: 575px) {
+  .content .c-outer .sidebar {
     width: 75%;
+  }
 }
-}
-@media only screen and (max-width: 767px){
-.content .c-outer .sidebar, .content .c-outer .left-pane {
+
+@media only screen and (max-width: 768px) {
+  .content .c-outer .sidebar, .content .c-outer .left-pane {
     position: relative;
     width: 50%;
     z-index: 102;
     margin-right: 0;
     margin-top: 0;
     margin-bottom: 0;
+  }
 }
+@media only screen and (max-width: 992px) {
+.content.search-details-list .left-pane {
+  width: 32% !important;
+}
+}
+
+@media only screen and (max-width: 767px) {
+  .content.search-details-list .left-pane {
+    width: 60% !important;
+  }
+}
+@media only screen and (max-width: 575px) {
 .content.search-details-list .left-pane {
   width: 75% !important;
 }
-.history-tbl .provider-name .name{
+}
+.history-tbl .provider-name .name {
   color: #3c8dbc!important;
 }
-.joyride-step__container{
+
+.joyride-step__container {
   color: #fff!important;
   background-color: #322dce!important;
 }
+
 .joyride-step__title {
   color: rgba(255, 255, 255, 0.87) !important;
   font-weight: 700 !important;
 }
+
 .joyride-button {
   color: #322dce !important;
   background-color: #fff !important;
 }
+
 .joyride-step__body {
   color: #fff!important;
-
 }
-.joyride-arrow__left{
+
+.joyride-arrow__left {
   border-right: 11px solid #322dce !important;
 }
+
 .joyride-arrow__top {
   border-bottom: 11px solid #322dce !important;
 }
-.joyride-step__close{
+
+.joyride-step__close {
   color: white !important;
+}
+
+.search-details-list .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }

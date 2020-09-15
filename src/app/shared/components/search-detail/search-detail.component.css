@@ -175,7 +175,10 @@
     margin: auto;
   }
   .ratingstar {
-    width:12px !important;
+    width: 12px !important;
+  }
+  .content.search-details-list .left-pane {
+    width: 80% !important;
   }
 }
 
@@ -185,7 +188,15 @@
     height: 70px !important;
     margin: auto;
   }
- 
+  @media only screen and (min-width:575px) and (max-width: 768px) {
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  .content.search-details-list .left-pane {
+    width: 90% !important;
+  }
 }
 
 .bus-page p {
@@ -288,15 +299,19 @@ ul.bus-actions-horiz li {
 .pad-rt-0 {
   padding-right: 0 !important;
 }
+
 .pad-bt-0 {
   padding-bottom: 0 !important;
 }
+
 .pad-bt-5 {
   padding-bottom: 5px !important;
 }
-.pad-up-5{
+
+.pad-up-5 {
   padding-top: 5px !important;
 }
+
 .bus-title-content h6 a {
   font-size: 0.8rem !important;
 }
@@ -355,14 +370,17 @@ ul.bus-actions-horiz li {
 .bus-title-content h6 {
   margin-bottom: 3px !important;
 }
+
 h3 {
   font-size: 18px!important;
 }
+
 @media screen and (max-width: 768px) {
   h3 {
     font-size: 14px!important;
   }
 }
+
 @media screen and (max-width: 575px) {
   h3 {
     font-size: 14px!important;
@@ -382,9 +400,10 @@ ul.bus-actions li a.lnk {
   font-weight: 500 !important;
   font-size: 0.80rem !important;
 }
+
 ul.bus-actions-horiz li {
   display: inline-block;
-  margin:0 !important;
+  margin: 0 !important;
   margin-right: 5px !important;
 }
 
@@ -393,22 +412,26 @@ ul.bus-actions-horiz li {
   height: 55px !important;
   font-weight: 600;
   padding-top: 5px;
-  font-size:0.8rem !important;
+  font-size: 0.8rem !important;
 }
+
 .smalldevicebx .img {
   width: 35px;
   margin-top: -5px;
   height: 35px;
 }
+
 .smalldevicebx .img1 {
   width: 25px;
-  height:30px;
+  height: 30px;
 }
+
 .smalldevicebx .img2 {
   width: 30px;
   height: 25px;
   margin-bottom: 5px;
 }
+
 .like-btn {
   border: 1px solid #5f75bc;
   border-radius: 40px;
@@ -430,4 +453,12 @@ ul.bus-actions-horiz li {
   .like-btn {
     display: inline-block !important;
   }
+}
+
+.search-details-list .searc .mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: none !important;
+}
+.hide-refine {
+  font-size: 1.25rem !important;
+  font-weight: bold;
 }

@@ -25,7 +25,9 @@
                                 <div class="rs-box">
                                     <div class="refine-srch"
                                         *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && additionalRefineCondition()">
+                                        
                                         <span class="ttle" *ngIf="showrefinedsection">{{refine_search_cap}}</span>
+                                        <span class="pull-right mgn-rt-10 hide-refine" (click)="showrefinedsection = false"><i class="fa fa-angle-left"></i> </span>
                                     </div>
                                     <div *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
                                         <div class="bx-block"
@@ -257,7 +259,7 @@
                                     <div class="ct-r ml-auto">
                                         <div class="fltr">
                                             <div class="search_sort_display">
-                                                <button class="pull-right"
+                                                <button class="pull-right"  *ngIf="search_data.hits.found > 1"
                                                     style="display:flex;justify-content:center;align-items:center;margin-top: 3px;"
                                                     mat-icon-button>
                                                     <i class="icon-filter-one" style="font-size: large"
@@ -381,7 +383,7 @@
                                         </div>
                                         <div class="col-md-9 col-xs-9 col-sm-9 col-lg-10 bus-title-content no-padding-small">
                                             <div class="col-md-8 col-xs-10 col-sm-8 col-lg-8 no-padding">
-                                                <div class=""
+                                                <div class="pointer-cursor" (click)="providerDetClicked(search_result)"
                                                     [ngClass]="{'col-md-9':(search_result.fields.ynw_verified_level > 1)?true:false}">
                                                     <h3>{{search_result.fields.title | capitalizeFirst}} <span class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1" 
                                                         (click)="openJdn(search_result)" [matTooltip]="jdnTooltip"><img
