@@ -211,7 +211,6 @@ export class ConsumerAppointmentComponent implements OnInit {
     selectedService: any;
     note_cap = '';
     servicedialogRef: any;
-    apptdisable = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -622,7 +621,6 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.main_heading = 'Family Members';
     }
     handleApptClicked() {
-        this.apptdisable = true;
         this.resetApi();
         let error = '';
         if (this.step === 1) {
@@ -634,7 +632,6 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.saveCheckin();
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.apptdisable = false;
             }
         }
     }
@@ -766,7 +763,6 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
-                    this.apptdisable = false;
                 });
     }
     addEmail() {
@@ -985,7 +981,6 @@ export class ConsumerAppointmentComponent implements OnInit {
                 });
         } else {
             this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
-            this.disable = false;
         }
     }
     handleNote() {
@@ -1045,7 +1040,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
     }
-    disableMinus() { 
+    disableMinus() {
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);

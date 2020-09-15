@@ -15,7 +15,7 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
 import { SearchModule } from './shared/modules/search/search.module';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
-import { HeaderModule } from './shared/modules/header/header.module';
+// import { HeaderModule } from './shared/modules/header/header.module';
 import { CheckInModule } from './shared/modules/check-in/check-in.module';
 import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { AppComponent, projectConstants } from './app.component';
@@ -77,6 +77,8 @@ import { ProviderDataStorageService } from './ynw_provider/services/provider-dat
 import { JoyrideModule } from 'ngx-joyride';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
 import { ShareService } from 'ngx-sharebuttons';
+import { ConsumerFooterModule } from './ynw_consumer/components/footer/footer.module';
+import { HeaderModule } from './shared/modules/header/header.module';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -158,8 +160,8 @@ export function init_app(globalService: GlobalService) {
     SalesChannelModule,
     ForgotPasswordModule,
     SetPasswwordModule,
-    JoyrideModule.forRoot()
-
+    JoyrideModule.forRoot(),
+    ConsumerFooterModule
   ],
   providers: [
     AuthGuardConsumer,

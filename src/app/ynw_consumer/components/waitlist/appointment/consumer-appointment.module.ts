@@ -10,12 +10,13 @@ import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-m
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { OwlModule } from 'ngx-owl-carousel';
-import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { ConsumerAppointmentLiveTrackComponent } from './livetrack/livetrack.component';
 import { ConsumerAppointmentPaymentComponent } from './payment/payment.component';
 import { ConsumerAppointmentHistoryComponent } from './history/appointment-history.component';
 import { ConsumerAppointmentBillComponent } from './appointment-bill/appointment-bill.component';
+import { HeaderModule } from '../../../../shared/modules/header/header.module';
 import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
+
 @NgModule({
     declarations: [
         ConsumerAppointmentComponent,
@@ -37,7 +38,7 @@ import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
         OwlModule,
-        BreadCrumbModule
+        HeaderModule
     ],
     exports: [ConsumerAppointmentComponent]
 })

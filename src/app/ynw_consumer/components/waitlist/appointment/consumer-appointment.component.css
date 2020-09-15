@@ -677,7 +677,7 @@ ul.bus-actions li a.lnk {
 .panel-heading {
   width: 100%;
   font-size: 0.75rem;
-  height: 35px;
+  height: 40px;
   /* font-family: poppins !important; */
 }
 
@@ -694,7 +694,7 @@ ul.bus-actions li a.lnk {
 
 .back-btn {
   margin-left: 5px;
-  font-size: 1.10rem !important;
+  font-size: 1.25rem !important;
   margin-top: -5px;
 }
 
@@ -1146,6 +1146,9 @@ height: 150px !important;
 
 .bus-item-medium.div-selected-outline  .card.card-item-n{
   border: 5px solid #106e76 !important;
+}
+.wtsapaud-icon {
+  top: -2px !important;
 }
 .disableActn{ 
   background: #dbdbdb !important;

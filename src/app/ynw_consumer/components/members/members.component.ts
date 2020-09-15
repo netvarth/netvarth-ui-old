@@ -7,6 +7,7 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { AddMembersHolderComponent } from '../../components/add-members-holder/add-members-holder.component';
 // import { AddMemberComponent } from '../add-member/add-member.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-consumer-members',
@@ -42,7 +43,8 @@ curtype;
   constructor(private consumer_services: ConsumerServices,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private location: Location) { }
 
   ngOnInit() {
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
@@ -63,7 +65,9 @@ curtype;
       );
 
   }
-
+goBack() {
+  this.location.back();
+}
   doRemoveMember(member) {
 
     if (!member.user) {

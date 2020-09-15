@@ -266,19 +266,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['consumer', 'payments']);
   }
   showcheckindetails(waitlist) {
-    const waitlistJSON = JSON.stringify(waitlist);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        waitlist: waitlistJSON
+        uuid: waitlist.ynwUuid,
+        providerId: waitlist.providerAccount.id
       }
     };
     this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
   }
   showApptdetails(apptlist) {
-    const apptlistJSON = JSON.stringify(apptlist);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        apptlist: apptlistJSON
+        uuid: apptlist.uid,
+        providerId: apptlist.providerAccount.id
       }
     };
     this.router.navigate(['consumer', 'apptdetails'], navigationExtras);

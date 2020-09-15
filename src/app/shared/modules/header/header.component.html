@@ -8,7 +8,11 @@
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
     <div class="container">
         <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
-            <div *ngIf="source !== 'business'" class="lgo col-md-3 col-xs-5 pull-left">
+            <div *ngIf="includedfrom =='phome'" class="lgo col-md-3 col-xs-5 pull-left">
+                <a routerLink="/"><img class="busN-logo" src="assets/images/jaldee-businesslogo.png"
+                        alt="Jaldee Logo"></a>
+            </div>
+            <div *ngIf="includedfrom !='phome'" class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
             </div>
             <div *ngIf="includedfrom =='phome'" class="pull-right">
@@ -89,11 +93,7 @@
                             <button mat-menu-item (click)="redirectto('change-mobile')" *ngIf="!hideMenu">
                                 <i class="icon-mobile"></i>
                                 <span>{{change_mobile}}</span>
-                            </button>
-                            <!-- <button mat-menu-item (click)="switchtoConsumer()" *ngIf="isprovider && !hideMenu">
-                                <i class="icon-switch"></i>
-                                <span>{{switch_to_consumer}}</span>
-                            </button> -->
+                            </button>                           
                             <button mat-menu-item (click)="doLogout()">
                                 <i class="icon-logout"></i>
                                 <span>{{logout_cap}}</span>
@@ -199,21 +199,9 @@
     <div class="container no-padding">
         <div class="col-md-22 col-xs-12 col-sm-12 no-padding">
             <div class="tp-1">
-                <div class="tp-l lgo" *ngIf="source !== 'business'"><a routerLink="/"><img
-                            src="assets/images/jaldee-logo.png" alt="Jaldee logo"></a>
-                </div>
                 <div class="tp-r">
-                    <div class="tc1">
+                    <div class="tc1" [ngClass]="{'pad-rt-10 mgn-up-5': (!shared_functions.checkLogin() && pageSource == 'details')}">
                         <div class="topsignouter">
-                            <!-- <div *ngIf = "source == 'business'" class="app-btn">
-                                <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="app-btn1">
-                                  <img [lazySrc]="images.jaldee_playstore" lazySrcVisible="visible"
-                                    alt="Download Business app from Google Play"></a> &nbsp;
-                                <a href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee" class="app-btn2">
-                                  <img [lazySrc]="images.jaldee_appstore" lazySrcVisible="visible"
-                                    alt="Download Business app from App Store">
-                                </a>
-                              </div> -->
                             <button class="sgn" (click)="doLogin('consumer')"
                                 *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button>
                             <button class="jn" (click)="doSignup('consumer')"
@@ -234,7 +222,7 @@
                                 <span class="lgin cust">
                                     <span class="hidden-xs">{{userdet.userName}}</span>
                                     <button mat-icon-button [matMenuTriggerFor]="menu">
-                                        <i class="fa fa-user-circle-o" ></i>
+                                        <i class="fa fa-user-circle-o"></i>
                                     </button>
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="redirectto('dashboard')">
@@ -269,7 +257,8 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="isprovidertop" *ngIf="!shared_functions.checkLogin() && source !== 'business' "><b
+                        <div class="isprovidertop"
+                            *ngIf="!shared_functions.checkLogin() && source !== 'business' && pageSource!='details'"><b
                                 style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
                                 (click)="providerLinkClicked()">{{click_here_cap}}</button>
@@ -280,23 +269,3 @@
         </div>
     </div>
 </header>
-<div style="background: white" *ngIf="ctype=='provider' && headercls=='dashb'">
-    <div class="col-md-12">
-        <div class="row">
-            <p *ngIf="active_license === 'Gold - FREE Trial 45 days' && license_message != ''"
-                style="color: red; width: 100%; text-align: left;">
-                Your current plan is Gold. 45 days free trial package will expire {{license_message}}.
-                <span style="color: #00aef2" *ngIf="account_type === 'INDEPENDENT_SP'"> <span
-                        (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
-                        </b></span><span style="color: red"> to Upgrade License.</span></span>
-            </p>
-            <p style="width: 100%; text-align: left;"
-                *ngIf="active_license !== 'Gold - FREE Trial 45 days' && active_license !== 'Diamond' && source !== 'business'">
-                Your current license is
-                <i style="color:red">{{active_license}}.</i><span *ngIf="account_type === 'INDEPENDENT_SP'"><span
-                        (click)="upgradeMembership()" style="color: #00aef2" class="pointer-cursor"> <b> Upgrade license
-                            now</b> </span> for more features.</span>
-            </p>
-        </div>
-    </div>
-</div>

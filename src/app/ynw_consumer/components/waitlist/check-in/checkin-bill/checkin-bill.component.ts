@@ -119,6 +119,7 @@ export class ConsumerCheckinBillComponent implements OnInit {
         public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
         private cdRef: ChangeDetectorRef,
+        private location: Location
     ) {
         this.activated_route.queryParams.subscribe(
             params => {
@@ -176,7 +177,9 @@ export class ConsumerCheckinBillComponent implements OnInit {
 
             });
     }
-
+    goBack () {
+        this.location.back();
+    }
     ngOnInit() {
     }
     getWaitlist() {

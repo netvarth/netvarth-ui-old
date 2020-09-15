@@ -18,6 +18,7 @@ import { ConsumerCheckinHistoryListModule } from '../../modules/consumer-checkin
 import { SearchProviderModule } from '../search-provider/search-provider.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { SearchFormModule } from '../search-form/search-form.module';
+import { ConsumerFooterModule } from '../../../ynw_consumer/components/footer/footer.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -35,7 +36,8 @@ import { SearchFormModule } from '../search-form/search-form.module';
         SearchProviderModule,
         RouterModule,
         LoadingSpinnerModule,
-        SearchFormModule
+        SearchFormModule,
+        ConsumerFooterModule
     ],
     declarations: [
         SearchDetailComponent,

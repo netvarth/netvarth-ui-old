@@ -83,7 +83,7 @@ ul.bus-actions li {
 
 ul.bus-actions li a.lnk {
   font-weight: 500 !important;
-  font-size: 0.65rem !important;
+  font-size: 0.80rem !important;
 }
 ul.bus-actions-horiz li {
   display: inline-block;
@@ -586,7 +586,7 @@ ul.details.badges li {
 }
 
 .donate-btn-bp {
-  background: #ffa313 !important);
+  background: #ffa313 !important;
   /* height: 25px;
   max-width: 100%; */
   /* text-transform: uppercase; */
@@ -800,7 +800,7 @@ ul.details.badges li {
 .panel-heading {
   width: 100%;
   font-size: 0.75rem;
-  height: 35px;
+  height: 40px;
   /* font-family: poppins !important; */
 }
 
@@ -817,7 +817,7 @@ ul.details.badges li {
 
 .back-btn {
   margin-left: 5px;
-  font-size: 1.10rem !important;
+  font-size: 1.25rem !important;
   margin-top: -5px;
 }
 
@@ -890,3 +890,5 @@ ul.details.badges li {
 .pad-bt-10 {
   padding-bottom: 10px !important;
 }
+
+

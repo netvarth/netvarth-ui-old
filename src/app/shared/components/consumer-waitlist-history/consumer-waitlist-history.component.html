@@ -1,22 +1,31 @@
-<app-header [headerTitle]="'Header'"></app-header>
-<app-search-form (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet"></app-search-form>
-<section class="content consumer-dash">
+<section class="content consumer-dash consumer-appthistory">
     <div class="container">
-        <div class="row">
-            <div class="c-outer">
-                <div class="c-body">
-                    <div class="bk-ctrl">
-                        <span class="backtoresults" (click)="backtoProviderDetails()">{{back_to_cap}} <span class="strong">{{provider_details}}</span></span>
-                    </div>
-                    <div class="card history one">
-
-                      <app-consumer-checkin-history-list
-                      [params]="params" *ngIf="provider_id"></app-consumer-checkin-history-list>
-
+        <div class="panel panel-default">
+            <div class="panel-heading top-row ">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <a class="pull-left back-btn mgn-up-5" (click)="backtoProviderDetails()"><i class="fa fa-arrow-left"></i></a>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                </div>
+            </div>
+            <div class="panel-body no-padding">
+                <!-- <app-search-form (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet">
+                </app-search-form> -->
+                <div class="row m0 p0">
+                    <div class="c-outer m0">
+                        <div class="c-body">
+                            <div class="card title-gb">
+                                <h5 class="mgn-up-10 mgn-lt-5">Check-ins/Tokens History</h5>
+                            </div>
+                            <div class="card history one no-padding">
+                                <app-consumer-checkin-history-list [params]="params" *ngIf="provider_id">
+                                </app-consumer-checkin-history-list>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<app-footer></app-footer>

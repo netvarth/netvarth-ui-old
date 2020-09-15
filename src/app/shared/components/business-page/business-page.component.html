@@ -3,13 +3,13 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading top-row ">
-                    <a class="pull-left back-btn" *ngIf="userId && pSource" (click)="goBack()"><i
+                    <a class="pull-left back-btn mgn-up-5" *ngIf="userId && pSource" (click)="goBack()"><i
                             class="fa fa-arrow-left"></i></a>
                     <a href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"
-                        class="pull-right mgn-lt-10"><i
+                        class="pull-right mgn-lt-10 mgn-up-10"><i
                             class="fa playstore-icon ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><span
                             class="apptext">Get it on Google Play</span></a>
-                    <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="pull-right"><i
+                    <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="pull-right mgn-up-10"><i
                             class="fa appstore-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><span
                             class="apptext">Available on the
                             App store</span></a>
@@ -298,15 +298,15 @@
                                                         <span class="service-icon"
                                                             *ngIf="service.serviceType == 'virtualService'">
                                                             <i class="fa phon-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                             <i class="fa meet-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                             <i class="fa zoom-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                             <i class="fa wtsapaud-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
                                                                 <i class="fa wtsapvid-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                         </span>
                                                         <b>
                                                             {{service.name | capitalizeFirst}}
@@ -357,15 +357,15 @@
                                                         <span class="service-icon"
                                                             *ngIf="service.serviceType == 'virtualService'">
                                                             <i class="fa phon-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                             <i class="fa meet-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                             <i class="fa zoom-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                                 <i class="fa wtsapaud-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
                                                                 <i class="fa wtsapvid-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                         </span>
                                                         <b>
                                                             {{service.name | capitalizeFirst}}
@@ -525,15 +525,15 @@
                                                             <span class="service-icon"
                                                                 *ngIf="service.serviceType == 'virtualService'">
                                                                 <i class="fa phon-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                 <i class="fa meet-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 &&  service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                                 <i class="fa zoom-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                                     <i class="fa wtsapaud-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
                                                                     <i class="fa wtsapvid-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                             </span>
                                                             <b>
                                                                 {{service.name | capitalizeFirst}}
@@ -584,15 +584,15 @@
                                                             <span class="service-icon"
                                                                 *ngIf="service.serviceType == 'virtualService'">
                                                                 <i class="fa phon-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                 <i class="fa meet-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                                 <i class="fa zoom-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                                     <i class="fa wtsapaud-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
                                                                     <i class="fa wtsapvid-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                             </span>
                                                             <b>
                                                                 {{service.name | capitalizeFirst}}
@@ -699,15 +699,15 @@
                                                                 <span class="service-icon"
                                                                     *ngIf="service.serviceType == 'virtualService'">
                                                                     <i class="fa phon-icon"
-                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                     <i class="fa meet-icon"
-                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                                     <i class="fa zoom-icon"
-                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                                         <i class="fa wtsapaud-icon"
-                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
                                                                         <i class="fa wtsapvid-icon"
-                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                                 </span>
                                                                 <b>
                                                                     {{service.name | capitalizeFirst}}
@@ -814,15 +814,15 @@
                                                 <span class="service-icon"
                                                     *ngIf="service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                     <i class="fa meet-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                     <i class="fa zoom-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                         <i class="fa wtsapaud-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
                                                         <i class="fa wtsapvid-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <b>
                                                     {{service.name | capitalizeFirst}}
@@ -869,15 +869,15 @@
                                                 <span class="service-icon"
                                                     *ngIf="service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                     <i class="fa meet-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                     <i class="fa zoom-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                         <i class="fa wtsapaud-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
                                                         <i class="fa wtsapvid-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <b>
                                                     {{service.name | capitalizeFirst}}
@@ -1005,7 +1005,7 @@
                                                     Upto
                                                 </p>
                                                 <p class="title-style mgn-up-5-m">
-                                                    &#x20b9;&nbsp;{{service.maxDonationAmount}}
+                                                    <span class="rupee-font">&#x20b9;</span><span>{{service.maxDonationAmount}}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -1028,17 +1028,4 @@
         </div>
     </div>
 </section>
-<footer class="buspdetail main-footer" style="margin-left: 0px">
-    <div class="pull-right hidden-xs footer_info">
-    </div>
-    <span class="footer_info">Powered by Jaldee Inc.</span> 
-    <!-- &nbsp; 
-    <span class="
-    footer_info">All rights
-        reserved.
-    </span> -->
-    <span > <a class="logo">
-            <span class="logo-lg pull-right"><img class="buisnessPageJaldeeLogo" src="assets/images/jaldee-logo.png"
-                    alt="Jaldee"></span>
-        </a></span>
-</footer>
+<app-consumer-footer></app-consumer-footer>

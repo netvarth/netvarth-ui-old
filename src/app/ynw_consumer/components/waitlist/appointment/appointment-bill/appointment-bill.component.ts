@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { projectConstants } from '../../../../../app.component';
 import {  ActivatedRoute } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
@@ -119,6 +119,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
         public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
         private cdRef: ChangeDetectorRef,
+        private location: Location
     ) {
         this.activated_route.queryParams.subscribe(
             params => {
@@ -130,38 +131,36 @@ export class ConsumerAppointmentBillComponent implements OnInit {
                 }
                 if (params.uuid) {
                     this.uuid = params.uuid;
-
                 }
                 if (params.source) {
                     this.source = params.source;
                 }
-
                 this.getAppointment();
-                if (this.source === 'history') {
-                    this.breadcrumbs = [
-                        {
-                            title: 'My Jaldee',
-                            url: 'consumer'
-                        },
-                        {
-                            title: 'Appointment History',
-                            url: 'consumer/appointment/history'
-                        },
-                        {
-                            title: 'Bill'
-                        }
-                    ];
-                } else {
-                    this.breadcrumbs = [
-                        {
-                            title: 'My Jaldee',
-                            url: 'consumer'
-                        },
-                        {
-                            title: 'Bill'
-                        }
-                    ];
-                }
+                // if (this.source === 'history') {
+                //     this.breadcrumbs = [
+                //         {
+                //             title: 'My Jaldee',
+                //             url: 'consumer'
+                //         },
+                //         {
+                //             title: 'Appointment History',
+                //             url: 'consumer/appointment/history'
+                //         },
+                //         {
+                //             title: 'Bill'
+                //         }
+                //     ];
+                // } else {
+                //     this.breadcrumbs = [
+                //         {
+                //             title: 'My Jaldee',
+                //             url: 'consumer'
+                //         },
+                //         {
+                //             title: 'Bill'
+                //         }
+                //     ];
+                // }
                 if (params.type) {
                     this.checkIn_type = params.type;
                 }
@@ -176,7 +175,9 @@ export class ConsumerAppointmentBillComponent implements OnInit {
               }
             });
     }
-
+    goBack () {
+        this.location.back();
+    }
     ngOnInit() {
     }
     getAppointment() {

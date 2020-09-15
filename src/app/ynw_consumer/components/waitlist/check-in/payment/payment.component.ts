@@ -18,16 +18,16 @@ export class ConsumerPaymentComponent implements OnInit {
     uuid: any;
     accountId: any;
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
-    breadcrumbs = [
-        {
-            title: 'My Jaldee',
-            url: '/consumer'
-        },
-        {
-            title: 'Payment'
-        }
-    ];
-    breadcrumb_moreoptions: any = [];
+    // breadcrumbs = [
+    //     {
+    //         title: 'My Jaldee',
+    //         url: '/consumer'
+    //     },
+    //     {
+    //         title: 'Payment'
+    //     }
+    // ];
+    // breadcrumb_moreoptions: any = [];
     activeWt: any;
     livetrack: any;
     prepaymentAmount: number;
@@ -145,6 +145,9 @@ export class ConsumerPaymentComponent implements OnInit {
         let paymentWay;
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
+    }
+    goBack () {
+        this.router.navigate(['/']);
     }
     paytmPayment() {
         let paymentWay;

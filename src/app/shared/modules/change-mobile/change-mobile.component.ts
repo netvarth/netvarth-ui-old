@@ -7,6 +7,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-change-mobile',
@@ -36,21 +37,24 @@ export class ChangeMobileComponent implements OnInit {
   curtype;
   usertype;
   submit_data = { 'phonenumber': null };
-  breadcrumbs_init = [
-    {
-      title: this.changemob_cap,
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-mobile'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
+  // breadcrumbs_init = [
+  //   {
+  //     title: this.changemob_cap,
+  //     url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-mobile'
+  //   }
+  // ];
+  // breadcrumbs = this.breadcrumbs_init;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router
+    public router: Router,
+    private location: Location
   ) { }
-
+  goBack () {
+    this.location.back();
+  }
   ngOnInit() {
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.spForm = this.fb.group({

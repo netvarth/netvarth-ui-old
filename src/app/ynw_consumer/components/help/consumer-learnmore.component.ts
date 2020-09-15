@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { Location } from '@angular/common';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-consumer-learnmore',
@@ -21,7 +22,8 @@ export class ConsumerLearnmoreComponent implements  OnInit {
   go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
   constructor(
     private _scrollToService: ScrollToService,
-    private _location: Location
+    private _location: Location,
+    public shared_functions: SharedFunctions
   ) { }
   ngOnInit() {
     this.activeMenu = 'searchh';

@@ -63,7 +63,9 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
                 this.pid = params.pid;
             });
     }
-
+    goBack () {
+        this.router.navigate(['/']);
+    }
     ngOnInit() {
         this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {

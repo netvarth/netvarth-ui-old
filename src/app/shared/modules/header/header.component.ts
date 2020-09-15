@@ -19,7 +19,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 export class HeaderComponent implements OnInit, OnDestroy {
   @Input() headerTitle: string;
-  @Input() includedfrom: string;
+  @Input() includedfrom;
   @Output() scrollhideclass = new EventEmitter<any>();
   // @Input() source;
   sign_in_cap = Messages.SIGN_IN_CAP;
@@ -54,6 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   sendmsgdialogRef;
   screenWidth;
   isCheckin;
+  pageSource;
   small_device_display = false;
   show_small_device_queue_display = false;
   returnedFromCheckDetails = false;
@@ -156,6 +157,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.scrollhideclass.emit(false);
   }
   ngOnInit() {
+    this.pageSource = this.includedfrom;
     this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
     this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
     this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');

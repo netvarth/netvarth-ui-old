@@ -1,7 +1,156 @@
-<section [ngClass]="{'container': curtype=='consumer'}">
+<!-- <section [ngClass]="{'container': curtype=='consumer'}">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section> -->
+<section *ngIf="curtype=='consumer'" class="myaccount">
+    <div class="content see-pages cons-members">
+
+        <div class="panel panel-default">
+            <div class="panel-heading top-row ">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                </div>
+            </div>
+            <div class="panel-body no-padding">
+                <div class="card title-gb">
+                    <h5 class="mgn-up-10">My Account</h5>
+                </div>
+
+
+                <div class="related-links">
+                    <div class="outer-card">
+                        <div class="card">
+                            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                            <form *ngIf="!loading" [formGroup]="editProfileForm" novalidate (ngSubmit)="editProfileForm.valid &&
+                    onSubmit(editProfileForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
+                                <div class="innercard">
+                                    <div class="leftcard">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="first_name"
+                                                    placeholder="First Name" formControlName="first_name"
+                                                    autocomplete="off">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
+                                                [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'first_name',
+                                        {
+                                        'required' : 'First name is required',
+                                        'pattern' : 'Only alphabets are allowed'
+                                        })">
+                                            </app-field-error-display>
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="fnameerror != null && !fed_service.isFieldValid(editProfileForm,'first_name')"
+                                                [errorMsg]="fnameerror">
+                                            </app-field-error-display>
+                                        </div>
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="last_name"
+                                                    placeholder="Last Name" formControlName="last_name"
+                                                    autocomplete="off">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
+                                                [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'last_name',
+                                        {
+                                        'required' : 'Last name is required',
+                                        'pattern' : 'Only alphabets are allowed'
+                                        })">
+                                            </app-field-error-display>
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="lnameerror != null && !fed_service.isFieldValid(editProfileForm,'last_name')"
+                                                [errorMsg]="lnameerror">
+                                            </app-field-error-display>
+                                        </div>
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="email"
+                                                    formControlName="email" placeholder="Email(user@xyz.com)"
+                                                    autocomplete="off" (keyup)="showConfrmEmail($event)"
+                                                    onpaste="return false;" oncopy="return false" oncut="return false"
+                                                    ondrag="return false" ondrop="return false">
+                                            </mat-form-field>
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="emailerror != null && !fed_service.isFieldValid(editProfileForm,'email')"
+                                                [errorMsg]="emailerror">
+                                            </app-field-error-display>
+                                        </div>
+                                        <div class="form-group" *ngIf="confrmshow">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="email1"
+                                                    formControlName="email1" placeholder="Re-enter Email(user@xyz.com)"
+                                                    autocomplete="off" onpaste="return false;" oncopy="return false"
+                                                    oncut="return false" ondrag="return false" ondrop="return false">
+                                            </mat-form-field>
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="email1error != null && !fed_service.isFieldValid(editProfileForm,'email1')"
+                                                [errorMsg]="email1error">
+                                            </app-field-error-display>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="gender">{{gender_cap}} </label>
+                                            <mat-radio-group formControlName="gender">
+                                                <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
+                                                <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
+                                                <mat-radio-button value="others">Others</mat-radio-button>
+                                            </mat-radio-group>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
+                                                errorMsg="Please select the gender.">
+                                            </app-field-error-display>
+                                        </div>
+                                        <div class="form-group col-md-7 no-padding picker-form-group">
+                                            <mat-form-field>
+                                                <input matInput [matDatepicker]="picker" placeholder="Date of birth"
+                                                    #inputdob formControlName="dob" [max]="tday" [min]="minday" disabled
+                                                    class="nofocus" tabindex="-1">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
+                                                errorMsg="Please select the date of birth.">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                    <div class="cardright">
+                                        <div class="grayouter">
+                                            <div class="form-group">
+                                                <label class="col-form-label">{{phone_no_cap}}</label>
+                                                <span>{{phonenoHolder}}</span>
+                                                <ul class="info-lst">
+                                                    <li>{{edit_phone_no_cap}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" mat-button [disabled]="!editProfileForm.valid"
+                                    class="cs-btn bt1">{{update_btn}}</button>
+                            </form>
+                        </div>
+                        <div class="right-menu">
+                            <div class="right-menu-header">{{related_links_cap}}</div>
+                            <ul class="related-link">
+                                <li (click)="shared_functions.redirectto('change-password')" class="icon-password">
+                                    {{change_password_cap}}</li>
+                                <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">
+                                    {{change_mobile_cap}}</li>
+                                <li (click)="shared_functions.redirectto('members')" class="icon-members">
+                                    {{family_members_cap}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
-<section [ngClass]="{'container': curtype=='consumer'}">
+
+<section *ngIf="curtype!='consumer'" class="myaccount">
     <div class="content see-pages">
         <div class="related-links">
             <div class="outer-card">
@@ -72,15 +221,6 @@
                                         [errorMsg]="email1error">
                                     </app-field-error-display>
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label class="col-form-label" for="email">{{email_cap}}</label>
-                                    <input type="text" class="form-control" id="email" autofocus
-                                    formControlName="email" (keyup)="isVerified(spForm.controls['email'].value)" autocomplete="off">
-                                    <div *ngIf="is_verified" class="verified">{{verified_cap}}</div>
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'email')"
-                                    errorMsg="Please enter a valid email.">
-                                    </app-field-error-display>
-                                </div> -->
                                 <div class="form-group">
                                     <label class="col-form-label" for="gender">{{gender_cap}} </label>
                                     <mat-radio-group formControlName="gender">
@@ -130,8 +270,6 @@
                             {{change_password_cap}}</li>
                         <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">
                             {{change_mobile_cap}}</li>
-                        <li (click)="shared_functions.redirectto('members')" class="icon-members"
-                            *ngIf="curtype=='consumer'">{{family_members_cap}}</li>
                     </ul>
                 </div>
             </div>

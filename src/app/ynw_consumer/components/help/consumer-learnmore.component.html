@@ -1,5 +1,18 @@
-<div class="container">
-        <div class="card cons-help" style="background-color: #f2f2f2">
+<div class="container cons-inbox">
+    <div class="panel panel-default">
+        <div class="panel-heading top-row ">
+          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+          </div>
+          <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+            <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+          </div>
+        </div>
+        <div class="panel-body no-padding">
+            <div class="card title-gb">
+                <h5 class="mgn-up-10">Help</h5>
+              </div>
+        <!-- <div class="card cons-help" style="background-color: #f2f2f2">
                         <div class="col-md-12" >
                             <div class="row">
                                 <div class="col-md-2" style="font-weight:600 ; font-size:large">Help</div>
@@ -7,13 +20,13 @@
                                 <i class="material-icons">keyboard_arrow_left</i><span style="font-size: small" class="pointlist"><b> Go Back</b></span></a></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     
         <div class="card cons-content-card">
                 <div class="modal-body col-md-12 no-padding">
                     <div class="row">
                         <div class="col-md-3 help" style="border-right: 1px solid lightgray">
-                            <ul>
+                            <ul class="pad-lt-0 lmenu-hlp">
                                 <li class="pointlist" [ngClass]="{'helpcolor': (activeMenu == 'searchh')}"><a (click)="menuclicked('searchh')">Search </a></li>
                                 <li class="pointlist" [ngClass]="{'helpcolor': (activeMenu == 'refine')}"><a (click)="menuclicked('refine')">Refine Search </a></li>
                                 <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'claim')}"><a (click)="menuclicked('claim')">Claim My Business </a></li>
@@ -432,6 +445,8 @@
 <li><strong>ADVANCED :</strong> This is the highest verification level in Jaldee. Here in addition to Id proof, mobile number and certificate verification, Jaldee team also physically check and verify the authenticity of the business. This verification level’s badge is a golden crown shown in the provider profile in search results.</li>
 </ul>
 </section>
+</div>
+</div>
 </div>
 </div>
 </div>
