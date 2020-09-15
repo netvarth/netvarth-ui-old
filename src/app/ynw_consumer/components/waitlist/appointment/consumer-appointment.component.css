@@ -737,6 +737,7 @@ ul.bus-actions li a.lnk {
 
 .c-checkin-new .card-img {
   width: 100% !important;
+  max-width: 100px !important;
   height: auto !important;
 }
 
@@ -897,10 +898,10 @@ ul.bus-actions li a.lnk {
   /* font-size: 0.75rem !important; */
   transition: all .3s ease;
   cursor: pointer;
-  padding: 8px !important;
+  padding: 7px !important;
   background: #334b99 !important;
   border-radius: 20px !important;
-  font-size: 0.9rem !important;
+  font-size: 1.2rem !important;
   font-weight: 500;
 }
 /* .service-icon {
