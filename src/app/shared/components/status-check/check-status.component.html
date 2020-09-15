@@ -79,8 +79,9 @@
                         <div class="lt0 knw-stat-line-h"
                           *ngIf="statusInfo.estimated_date=='' && statusInfo.waitlistStatus != 'cancelled'">
                           {{statusInfo.estimated_caption}}: <span class="time now">
-                            {{statusInfo.estimated_timenow}}</span><span>
-                            {{statusInfo.estimated_time}}</span>
+                            {{statusInfo.estimated_timenow}}</span><br>
+                            <span>
+                            Time Window: {{statusInfo.estimated_time}}</span>
                         </div>
                         <div class="lt0 knw-stat-line-h"
                           *ngIf="statusInfo.estimated_date!='' && (statusInfo.waitlistStatus && statusInfo.waitlistStatus != 'cancelled')">
