@@ -1,63 +1,57 @@
 <!-- <section class="container no-padding">
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section> -->
-<section>
-    <div class="container cons-payments">
-        <div class="row bill-section">
-
-            <div class="panel panel-default">
-                <div class="panel-heading top-row ">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <a class="pull-left back-btn mgn-up-5" routerLink="/"><i class="fa fa-arrow-left"></i></a>
-                    </div>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                        <app-header *ngIf="shared_functions.checkLogin()"></app-header>
-                    </div>
+<section class="container no-padding cons-payments no-padding-small">
+    <div class="row bill-section">
+        <div class="panel panel-default">
+            <div class="panel-heading top-row ">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <a class="pull-left back-btn mgn-up-5" routerLink="/"><i class="fa fa-arrow-left"></i></a>
                 </div>
-                <div class="panel-body no-padding">
-                    <div class="c-outer">
-                        <div class="c-body">
-                            <div class="card title-gb">
-                                <h5 class="mgn-up-10">Payments Log</h5>
-                            </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                    <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                </div>
+            </div>
+            <div class="panel-body no-padding">
+                <div class="c-outer">
+                    <div class="c-body">
+                        <div class="card title-gb">
+                            <h5 class="mgn-up-10">Payments Log</h5>
+                        </div>
 
 
 
-                            <div class="c-outer bill-section-content">
-                                <div class="c-body bill-wrapper">
-                                    <div class="card history one section-four no-padding">
-                                        <div class="list-outer consumer-pay">
-                                            <div class="listing" *ngFor="let payment of payments; let i = index">
-                                                <div class="wrap pointer-cursor" (click)="gotoPayment(payment.id)">
-                                                    <div class="td one" style="flex-basis: 10% !important">
-                                                        <span *ngIf="payment.txnType==='Appointment'"
-                                                            style="font-size: 1.2rem;"
-                                                            [matTooltip]="'Appointment'">A</span>
-                                                        <span *ngIf="payment.txnType==='Waitlist'"
-                                                            style="font-size: 1.2rem;"
-                                                            [matTooltip]="'Appointment'">C</span>
-                                                        <span *ngIf="payment.txnType==='Donation'"
-                                                            style="font-size: 1.2rem;"
-                                                            [matTooltip]="'Donation'">D</span>
-                                                    </div>
-                                                    <div class="td one proname" style="flex-basis: 70% !important">
-                                                        <div class="accname">
-                                                            {{payment.accountName}} </div>
-                                                        <div class="mode"> {{payment.acceptPaymentBy}} </div>
-                                                    </div>
-                                                    <div class="td three"
-                                                        style="flex-basis: 30% !important;padding: 10px !important;">
-                                                        <div class="th three amount rupee-font">{{payment.amount |
-                                            currency:'&#8377; ' }}</div>
-                                                        <div class="th one">{{payment.status
-                                            | capitalizeFirst}}</div>
-                                                    </div>
+                        <div class="c-outer bill-section-content">
+                            <div class="c-body bill-wrapper">
+                                <div class="card history one section-four no-padding">
+                                    <div class="list-outer consumer-pay">
+                                        <div class="listing" *ngFor="let payment of payments; let i = index">
+                                            <div class="wrap pointer-cursor" (click)="gotoPayment(payment.id)">
+                                                <div class="td one" style="flex-basis: 10% !important">
+                                                    <span *ngIf="payment.txnType==='Appointment'"
+                                                        style="font-size: 1.2rem;" [matTooltip]="'Appointment'">A</span>
+                                                    <span *ngIf="payment.txnType==='Waitlist'"
+                                                        style="font-size: 1.2rem;" [matTooltip]="'Appointment'">C</span>
+                                                    <span *ngIf="payment.txnType==='Donation'"
+                                                        style="font-size: 1.2rem;" [matTooltip]="'Donation'">D</span>
                                                 </div>
-                                                <div class="wrap">
-                                                    <div class="two col-xs-12 col-md-3"><span class="date">{{stringtoDate(payment.paymentOn,
+                                                <div class="td one proname" style="flex-basis: 70% !important">
+                                                    <div class="accname">
+                                                        {{payment.accountName}} </div>
+                                                    <div class="mode"> {{payment.acceptPaymentBy}} </div>
+                                                </div>
+                                                <div class="td three"
+                                                    style="flex-basis: 30% !important;padding: 10px !important;">
+                                                    <div class="th three amount rupee-font">{{payment.amount |
+                                            currency:'&#8377; ' }}</div>
+                                                    <div class="th one">{{payment.status
+                                            | capitalizeFirst}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="wrap">
+                                                <div class="two col-xs-12 col-md-3"><span class="date">{{stringtoDate(payment.paymentOn,
                                         'date')}} </span><span class="time">{{stringtoDate(payment.paymentOn,
 											'time')}}</span></div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
