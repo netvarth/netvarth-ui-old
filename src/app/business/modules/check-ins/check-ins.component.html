@@ -635,17 +635,18 @@
                                     <mat-checkbox *ngFor="let service of services"
                                       [checked]="filterService.indexOf(service.id) !== -1"
                                       (change)="setFilterDataCheckbox('service', service.id, $event)">
-                                      {{service.name}} &nbsp;
                                       <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
-                                        class="fa meet-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
-                                        class="fa zoom-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
-                                        class="fa phon-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
-                                        class="fa wtsapaud-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                        class="fa wtsapvid-icon"></i>
+                                      class="fa meet-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                      class="fa zoom-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                                      class="fa phon-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                                      class="fa wtsapaud-icon"></i>
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                                      class="fa wtsapvid-icon"></i>&nbsp;
+                                      {{service.name}}
+                                   
                                     </mat-checkbox>
                                   </li>
                                 </div>
@@ -771,7 +772,7 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{checkin.service.name}}
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -782,6 +783,8 @@
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'audioService'"></i>
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
+                          {{checkin.service.name}}
+                          
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
                           {{checkin.queue.queueStartTime + ' - ' + checkin.queue.queueEndTime}}

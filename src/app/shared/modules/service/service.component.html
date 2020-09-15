@@ -5,12 +5,13 @@
             *ngIf="service_data.status=='ACTIVE'"
             [matTooltip]="(!is_virtual_enable && service.serviceType === 'virtualService') ? 'Please turn on Teleservice in settings' : ''"></span>
         <div class="ot-it">
-            <h4>{{service_data.name | capitalizeFirst}}
+            <h4>
                 <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
                 <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
                 <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'Phone'" class="fa phon-icon"></i>
                 <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'audioService'" class="fa wtsapaud-icon"></i>
                 <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'videoService'" class="fa wtsapvid-icon"></i>
+                {{service_data.name | capitalizeFirst}}
                 <span  *ngIf="service.provider && !userId ">({{service.provider.firstName}})</span>
             </h4>
             <div class="it-des">

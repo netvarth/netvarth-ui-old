@@ -1,5 +1,6 @@
-<h1 class="mat-dialog-title">{{data.details.service.name}}
+<h1 class="mat-dialog-title">
     <i *ngIf="data.details.service.serviceType === 'virtualService'" [class]=iconClass></i>
+    {{data.details.service.name}}
     <button #queue mat-dialog-close class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>

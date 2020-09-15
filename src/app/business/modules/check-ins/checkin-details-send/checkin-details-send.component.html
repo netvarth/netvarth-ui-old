@@ -6,8 +6,9 @@
                             <div *ngIf="showToken"><span style="font-size: x-large;">Token Details</span></div><br>
                             <p *ngIf="!showToken">Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
                             <p *ngIf = "showToken">Token for : {{consumer_fname}} {{consumer_lname}}</p>
-                            <p>Service : {{serv_name}} 
+                            <p>Service : 
                                 <i *ngIf="data.qdata.service.serviceType === 'virtualService'" [class]=iconClass></i>
+                                {{serv_name}} 
                             </p>
                             <p *ngIf = "deptName">Department : {{deptName}}</p>
                             <p *ngIf = "qstarttime">Queue : {{qname}} [{{qstarttime}} - {{qendtime}}]</p>
