@@ -27,7 +27,7 @@
                                         *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && additionalRefineCondition()">
                                         
                                         <span class="ttle" *ngIf="showrefinedsection">{{refine_search_cap}}</span>
-                                        <span class="pull-right mgn-rt-10 hide-refine" (click)="showrefinedsection = false"><i class="fa fa-angle-left"></i> </span>
+                                        <span class="pull-right mgn-rt-10 hide-refine pointer-cursor" (click)="showrefinedsection = false"><i class="fa fa-angle-left"></i> </span>
                                     </div>
                                     <div *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
                                         <div class="bx-block"
