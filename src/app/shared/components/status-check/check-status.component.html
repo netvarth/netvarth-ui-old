@@ -92,6 +92,7 @@
                               *ngIf="statusInfo.estimated_date_type == 'date'">{{statusInfo.estimated_date| date: dateFormatSp }}</span>
                             <span *ngIf="statusInfo.estimated_date_type == 'string'">{{statusInfo.estimated_date}}
                             </span>
+                            
                             <span
                               *ngIf="statusInfo.calculationMode != 'NoCalc'">, {{statusInfo.estimated_time}}</span></span>
                           <span> {{statusInfo.estimated_timeslot}}</span>
