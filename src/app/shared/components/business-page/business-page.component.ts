@@ -469,9 +469,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               // this.specializationslist = this.businessjson.specialization;
 
               for (let i = 0; i < this.businessjson.specialization.length; i++) {
-                if (i <= 1) {
+                if (i <= 1 && this.businessjson.specialization[i] !== 'Not Applicable') {
                   this.specializationslist.push(this.businessjson.specialization[i]);
-                } else {
+                } else if (this.businessjson.specialization[i] !== 'Not Applicable') {
                   this.specializationslist_more.push(this.businessjson.specialization[i]);
                 }
               }
@@ -1648,10 +1648,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             locindx = provids_locid[i].locindx;
             this.locationjson[locindx]['waitingtime_res'] = this.waitlisttime_arr[i];
             this.locationjson[locindx]['estimatedtime_det'] = [];
+            this.locationjson[locindx]['waitlist'] = this.waitlisttime_arr[i]['waitlistEnabled'];
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.locationjson[locindx]['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
               this.locationjson[locindx]['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
-              this.locationjson[locindx]['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
+              // this.locationjson[locindx]['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
               this.locationjson[locindx]['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
               this.locationjson[locindx]['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
               this.locationjson[locindx]['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
@@ -1894,7 +1895,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           for (let i = 0; i < this.appttime_arr.length; i++) {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
-              this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['apptEnabled'];
               this.locationjson[locindx]['appttime_det'] = [];
               if (this.appttime_arr[i]['availableSchedule']) {
                 this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];

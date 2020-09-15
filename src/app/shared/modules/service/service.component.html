@@ -5,7 +5,13 @@
             *ngIf="service_data.status=='ACTIVE'"
             [matTooltip]="(!is_virtual_enable && service.serviceType === 'virtualService') ? 'Please turn on Teleservice in settings' : ''"></span>
         <div class="ot-it">
-            <h4>{{service_data.name | capitalizeFirst}}
+            <h4>
+                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
+                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
+                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'Phone'" class="fa phon-icon"></i>
+                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'audioService'" class="fa wtsapaud-icon"></i>
+                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'videoService'" class="fa wtsapvid-icon"></i>
+                {{service_data.name | capitalizeFirst}}
                 <span  *ngIf="service.provider && !userId ">({{service.provider.firstName}})</span>
             </h4>
             <div class="it-des">
@@ -23,11 +29,11 @@
                 </div>
                 <div class="item" *ngIf="service_data.totalAmount!=0">
                     <span class="ttle">{{price_cap}}</span>
-                    <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                    <span class="rupee-font" >{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.isPrePayment">
                     <span class="ttle">{{pre_pay_amt}}</span>
-                    <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                    <span class="rupee-font">{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.serviceType && !is_donation">
                     <span class="ttle">Service Type</span>
@@ -203,10 +209,12 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-label>Select <span *ngIf="serv_mode === 'videoService'">Video</span><span *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
                     <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name" name="toolname" [ngModelOptions]="{standalone: true}">
                         <mat-option *ngFor="let mode of telemodes" [value]="mode">
+                            <span *ngIf="(mode == 'GoogleMeet'||mode == 'Phone')">&nbsp;</span>
                             <i *ngIf="mode === 'WhatsApp'" [ngClass]="{'fa wtsapaud-icon': (serv_mode === 'audioService' || (service_data && service_data.serviceType==='virtualService' && service_data.virtualServiceType === 'audioService')), 'fa wtsapvid-icon': (serv_mode === 'videoService' || (service_data && service_data.serviceType==='virtualService' && service_data.virtualServiceType === 'videoService'))}"  aria-hidden="true"></i>
                             <i *ngIf="mode === 'Zoom'" class="fa zoom-icon"></i>
                             <i *ngIf="mode === 'GoogleMeet'" class="fa meet-icon" ></i>
                             <i *ngIf="mode === 'Phone'" class="fa phon-icon" aria-hidden="true"></i>
+                            <span *ngIf="(mode == 'GoogleMeet'||mode == 'Phone')">&nbsp;</span>
                            <span class="dash">{{mode}}</span> 
                         </mat-option>
                     </mat-select>

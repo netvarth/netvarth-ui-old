@@ -48,7 +48,8 @@
                                 class="link"> <i class="fa fa-video-camera cal-mod-font"
                                     aria-hidden="true"></i></span>&nbsp;
                             <span>
-                                <i class="fa phon-icon" style="color: black;"
+                                <span *ngIf="service.serviceType === 'virtualService' && (service.virtualCallingModes[0].callingMode === 'Phone'||service.virtualCallingModes[0].callingMode === 'GoogleMeet')">&nbsp;</span>
+                                <i class="fa phon-icon" 
                                     *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                 <i class="fa meet-icon"
                                     *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>

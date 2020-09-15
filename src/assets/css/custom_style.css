@@ -9811,7 +9811,7 @@ button.cust-button-2.tme {
 
 .know-status-i {
   padding: 0 !important;
-  padding-left: 10px !important;
+  padding-left: 0px !important;
 }
 
 .knw-stat-line-h {
@@ -10560,7 +10560,7 @@ a {
   top: 4px;
   position: relative;
   padding-right: 1px;
-  width: 25px;
+  width: 24px;
 }
 
 .phon-icon {

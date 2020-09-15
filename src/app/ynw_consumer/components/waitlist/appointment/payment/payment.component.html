@@ -32,7 +32,9 @@
                                         </div>
                                         <div class="mainouter checkin-page ">
                                             <div class="servicefor-outer btborder">
-                                                <div>{{this.activeWt.service.name}} <i *ngIf="activeWt.service.serviceType === 'virtualService'" [class]=iconClass></i></div>
+                                                <div>
+                                                <i *ngIf="activeWt.service.serviceType === 'virtualService'" [class]=iconClass></i>
+                                            {{activeWt.service.name}}</div>
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
