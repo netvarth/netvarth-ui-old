@@ -95,6 +95,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     domain: any;
     user;
     userId: any;
+    tooltipcls = projectConstants.TOOLTIP_CLS;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
