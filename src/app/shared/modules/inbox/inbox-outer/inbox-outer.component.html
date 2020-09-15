@@ -1,26 +1,24 @@
-<section class="cons-inbox">
+<section class="container cons-inbox no-padding no-padding-small">
   <div class="content comn-cls m0 p0">
-    <div class="container no-padding">
-      <div class="row">
-        <div class="panel panel-default">
-          <div class="panel-heading top-row ">
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-              <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
-            </div>
-            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-              <app-header *ngIf="shared_functions.checkLogin()"></app-header>
-            </div>
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading top-row ">
+          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
           </div>
-          <div class="panel-body no-padding">
-            <div class="c-outer m0 p0">
-              <div class="c-body">
-                <div class="card title-gb">
-                  <h5 class="mgn-up-10">Inbox</h5>
-                </div>
-                <div class="card p0">
-                  <app-inbox-list [messages]="messages" [fromsource]="'inbox'" (reloadApi)="getInboxMessages()"
-                    *ngIf="obtainedMsgs"></app-inbox-list>
-                </div>
+          <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+            <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+          </div>
+        </div>
+        <div class="panel-body no-padding">
+          <div class="c-outer m0 p0">
+            <div class="c-body">
+              <div class="card title-gb">
+                <h5 class="mgn-up-10">Inbox</h5>
+              </div>
+              <div class="card p0">
+                <app-inbox-list [messages]="messages" [fromsource]="'inbox'" (reloadApi)="getInboxMessages()"
+                  *ngIf="obtainedMsgs"></app-inbox-list>
               </div>
             </div>
           </div>

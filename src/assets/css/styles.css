@@ -1476,9 +1476,9 @@ body { font-size: 1rem !important}
 }
 
 @media only screen and (max-width: 575px) {
-    .content.see-pages .outer-card .right-menu {
+    /* .content.see-pages .outer-card .right-menu {
         margin-left: 0;
-    }
+    } */
 }
 
 .content.see-pages .outer-card .right-menu .right-menu-header {
