@@ -489,7 +489,6 @@
                                         <ul *ngIf="search_result.fields.allServices">
                                             <li *ngFor="let appointmentService of search_result.fields.allServices"
                                                 (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
-                                                {{appointmentService.name}}
                                                 <span *ngIf="appointmentService.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
                                                         *ngIf="appointmentService.virtualCallingModes &&appointmentService.virtualCallingModes[0].callingMode == 'Phone'"></i>
@@ -502,6 +501,8 @@
                                                         <i class="fa wtsapvid-icon"
                                                         *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='videoService'"></i>
                                                 </span>
+                                                {{appointmentService.name}}
+                                               
                                             </li>
                                         </ul>
                                     </div>
@@ -556,12 +557,7 @@
                                                 Service(s)</span>
                                             <ul>
                                                 <li *ngFor="let serv of search_result.fields.serviceList"
-                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">{{serv.name
-                                                    | capitalizeFirst}}
-                                                    <!-- <span *ngIf="serv.serviceType == 'virtualService'">
-                                                        (<i class="fa fa-video-camera cal-mod-font"
-                                                            aria-hidden="true"></i>)
-                                                    </span> -->
+                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">
                                                     <span *ngIf="serv.serviceType == 'virtualService'">
                                                         <i class="fa phon-icon"
                                                             *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'Phone'"></i>
@@ -574,6 +570,13 @@
                                                             <i class="fa wtsapvid-icon"
                                                             *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'WhatsApp' && serv.virtualServiceType ==='videoService'"></i>
                                                     </span>
+                                                    {{serv.name
+                                                    | capitalizeFirst}}
+                                                    <!-- <span *ngIf="serv.serviceType == 'virtualService'">
+                                                        (<i class="fa fa-video-camera cal-mod-font"
+                                                            aria-hidden="true"></i>)
+                                                    </span> -->
+                                                    
                                                 </li>
                                             </ul>
                                         </div>
@@ -658,10 +661,6 @@
                                         <ul *ngIf="search_result.fields.appointmentServiceList">
                                             <li *ngFor="let appointmentService of search_result.fields.appointmentServiceList"
                                                 (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
-                                                {{appointmentService.name}}
-                                                <!-- <span *ngIf="appointmentService.serviceType == 'virtualService'">
-                                                    (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
-                                                </span> -->
                                                 <span *ngIf="appointmentService.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
                                                         *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'Phone'"></i>
@@ -674,6 +673,8 @@
                                                         <i class="fa wtsapvid-icon"
                                                         *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='videoService'"></i>
                                                 </span>
+                                                {{appointmentService.name}}
+                                                
                                             </li>
                                         </ul>
                                     </div>

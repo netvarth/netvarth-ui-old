@@ -56,8 +56,8 @@
                       </div>
                       <div class="lt0 knw-stat-line-h">
                         <span class="service">Service: </span> 
-                        <span class="forwhom">{{statusInfo.service.name | capitalizeFirst}}
-                            <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='GoogleMeet'"
+                        <span class="forwhom">
+                          <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='GoogleMeet'"
                             class="fa meet-icon know-status-i"></i>
                             <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='Zoom'"
                             class="fa zoom-icon know-status-i"></i>
@@ -67,6 +67,8 @@
                             class="fa wtsapvid-icon know-status-i"></i>
                             <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='Phone'"
                             class="fa phon-icon know-status-i"></i>
+                          {{statusInfo.service.name | capitalizeFirst}}
+                            
                         </span>
                       </div>
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.provider">

@@ -23,17 +23,20 @@
                         <td class="chk-service" data-title="Token" *ngIf="!chkin.batchName && chkin.token">
                             {{chkin.token}}</td>
                         <td class="chk-service" data-title="Batch" *ngIf="chkin.batchName">{{chkin.batchName}}</td>
-                        <td class="chk-service" data-title="Service">{{chkin.service.name | capitalizeFirst}}
+                        <td class="chk-service" data-title="Service">
+                            <span *ngIf="chkin.service.serviceType === 'virtualService' && (chkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||chkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                             <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
-                                class="fa meet-icon"></i>
-                            <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'Zoom'"
-                                class="fa zoom-icon"></i>
-                            <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'Phone'"
-                                class="fa phon-icon"></i>
-                            <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && chkin.service.virtualServiceType === 'audioService'"
-                                class="fa wtsapaud-icon"></i>
-                            <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && chkin.service.virtualServiceType === 'videoService'"
-                                class="fa wtsapvid-icon"></i>
+                            class="fa meet-icon"></i>
+                        <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                            class="fa zoom-icon"></i>
+                        <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'Phone'"
+                            class="fa phon-icon"></i>
+                        <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && chkin.service.virtualServiceType === 'audioService'"
+                            class="fa wtsapaud-icon"></i>
+                        <i *ngIf="chkin.service.serviceType === 'virtualService' && chkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && chkin.service.virtualServiceType === 'videoService'"
+                            class="fa wtsapvid-icon"></i>
+                            {{chkin.service.name | capitalizeFirst}}
+                           
                         </td>
                         <td class="chk-service" data-title="For">
                             {{getWaitlistingFor(chkin.waitlistingFor) | capitalizeFirst}}</td>
