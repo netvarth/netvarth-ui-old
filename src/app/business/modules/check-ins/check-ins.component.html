@@ -131,16 +131,18 @@
             </div>
           </nav>
         </header>
-        <div class="head mgn-up-5 mgn-bt-5" *ngIf="activeQs && activeQs.length > 0" id="qHeader">
+        <div class="head mgn-up-5 mgn-bt-5" *ngIf="activeQs && activeQs.length > 0 && time_type !==3" id="qHeader">
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
               <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="activeQs">
-                <button class="item cust-button-3"
+                  <button class="item cust-button-3"
                   [ngClass]="{active: isQueueSelected(queue.id)?true:false, disabled: queue.queueState === 'ENABLED'?false:true}"
                   (click)="viewQClicked(queue)" *ngFor="let queue of activeQs;let i = index">
-                  <span *ngIf="!queue.instantQueue">{{queue.name}}<br />
+                  <span *ngIf="!queue.instantQueue">{{queue.name}}<br /><input  style="margin:0px;" [checked]="isQueueSelected(queue.id)" type="checkbox" class="ckbx pull-left"
+                    />&nbsp;
                     {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}</span>
-                  <span *ngIf="queue.instantQueue">InstantQ<br />
+                  <span *ngIf="queue.instantQueue">InstantQ<br /><input style="margin:0px;" [checked]="isQueueSelected(queue.id)" type="checkbox" class="ckbx pull-left"
+                    />&nbsp;
                     {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}</span>
                 </button>
               </owl-carousel>
@@ -584,7 +586,22 @@
                                       Female</mat-checkbox>
                                   </li>
                                 </div> -->
-
+                                <div *ngIf="locations.length > 0 && time_type === 3">
+                                  <label class="filterHeaders">Locations</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox [checked]="allLocationSelected"
+                                      (change)="setFilterDataCheckbox('location', 'all', $event)">
+                                      All</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox *ngFor="let loc of locations" [checked]="filterLocation.indexOf(loc.id) !== -1"
+                                      (change)="setFilterDataCheckbox('location', loc.id, $event)">
+                                      {{loc.place}}
+                                    </mat-checkbox>
+                                  </li>
+                                </div>
                                 <div *ngIf="queues.length > 0 && time_type === 3">
                                   <label class="filterHeaders">Queues</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -618,7 +635,18 @@
                                     <mat-checkbox *ngFor="let service of services"
                                       [checked]="filterService.indexOf(service.id) !== -1"
                                       (change)="setFilterDataCheckbox('service', service.id, $event)">
-                                      {{service.name}}</mat-checkbox>
+                                      {{service.name}} &nbsp;
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                        class="fa meet-icon"></i>
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                        class="fa zoom-icon"></i>
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                                        class="fa phon-icon"></i>
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                                        class="fa wtsapaud-icon"></i>
+                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                                        class="fa wtsapvid-icon"></i>
+                                    </mat-checkbox>
                                   </li>
                                 </div>
                                 <div *ngIf="time_type === 3">
@@ -745,14 +773,15 @@
                       <td class="title td-two">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{checkin.service.name}}
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'GoogleMeet'"></i>
+                            *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'Zoom'"></i>
-                          <i class="fa fa-phone" [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'Phone'"></i>
-                          <i class="fa fa-whatsapp whtsap-ic"
-                            [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
+                            *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                          <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                          <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'audioService'"></i>
+                          <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
                           {{checkin.queue.queueStartTime + ' - ' + checkin.queue.queueEndTime}}
@@ -762,9 +791,6 @@
                             *ngFor="let label of checkin.label | keyvalue">{{label.value}}</span>
                         </div>
                       </td>
-                      <td class="td-three"><button (click)="CreateVoiceCall()">
-                          Voice call
-                        </button></td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="icon-cloud mgn-rt-10" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -817,7 +843,7 @@
                             &nbsp;Call</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('STARTED', checkin)"
-                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService || (checkin.virtualService && time_type==3))"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
@@ -827,24 +853,24 @@
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a> -->
                         <a class="statusText btn-play pointer-cursor"
-                          *ngIf="time_type==1 && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
+                          *ngIf="(time_type==1||time_type==3) && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="showCallingModes(checkin, 'STARTED')">
-                          <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
-                              <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
-                          <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'GoogleMeet'"></i>
-                          <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'Zoom'"></i>
-                          <i class="fa fa-phone" [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="checkin.service.serviceType === 'virtualService' && getVirtualMode(checkin.virtualService) === 'Phone'"></i>
-                          <i class="fa fa-whatsapp whtsap-ic"
-                            [ngClass]="{'tool-pading': !small_device_display?true:false}"
-                            *ngIf="checkin.service.serviceType === 'virtualService' &&getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
-                          <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
                           <span
-                            [ngClass]="{'dash': (!small_device_display && getVirtualMode(checkin.virtualService) === 'GoogleMeet' || getVirtualMode(checkin.virtualService) === 'Zoom')?true:false}"
-                            *ngIf="!small_device_display">
+                            *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                          <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                          <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                          <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                          <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'audioService'"></i>
+                          <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
+                            <span
+                            *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                          <span *ngIf="!small_device_display">
                             <!-- Start -->
                             {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Start'}}
                           </span>

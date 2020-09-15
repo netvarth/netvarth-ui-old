@@ -52,14 +52,16 @@
                                     class="link"> <i class="fa fa-video-camera cal-mod-font"
                                         aria-hidden="true"></i></span>&nbsp;
                                 <span>
-                                    <i class="fa fa-phone" style="color: black;"
+                                    <i class="fa phon-icon" style="color: black;"
                                         *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                     <i class="fa meet-icon"
                                         *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                     <i class="fa zoom-icon"
                                         *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                    <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                        *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                    <i class="fa wtsapaud-icon"
+                                        *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"></i>
+                                        <i class="fa wtsapvid-icon"
+                                        *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"></i>
                                 </span>
                             </td>
                             <td>

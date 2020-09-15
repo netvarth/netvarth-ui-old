@@ -12,10 +12,12 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { OwlModule } from 'ngx-owl-carousel';
 import { ConsumerPaymentComponent } from './payment/payment.component';
 import { ConsumerLiveTrackComponent } from './livetrack/livetrack.component';
-import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { ConsumerCheckinHistoryComponent } from './history/checkin-history.component';
 import { PagerModule } from '../../../../shared/modules/pager/pager.module';
 import { ConsumerCheckinBillComponent } from './checkin-bill/checkin-bill.component';
+import { HeaderModule } from '../../../../shared/modules/header/header.module';
+import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
+
 
 @NgModule({
     declarations: [
@@ -23,7 +25,8 @@ import { ConsumerCheckinBillComponent } from './checkin-bill/checkin-bill.compon
         ConsumerPaymentComponent,
         ConsumerLiveTrackComponent,
         ConsumerCheckinHistoryComponent,
-        ConsumerCheckinBillComponent
+        ConsumerCheckinBillComponent,
+        ConfirmPageComponent
     ],
     imports: [
         FormMessageDisplayModule,
@@ -37,8 +40,8 @@ import { ConsumerCheckinBillComponent } from './checkin-bill/checkin-bill.compon
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
         OwlModule,
-        BreadCrumbModule,
-        PagerModule
+        PagerModule,
+        HeaderModule
     ],
     exports: [ConsumerCheckinComponent]
 })

@@ -16,6 +16,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
+import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
 
 @Component({
   selector: 'app-bprofile',
@@ -273,7 +274,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
       url: '/provider/settings'
     },
     {
-      title: 'My Profile'
+      title: 'My Account'
     }
   ];
   businessConfig: any = [];
@@ -1211,5 +1212,23 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
   }
   redirecToHelp() {
     this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline']);
+  }
+  qrCodegeneraterOnlineID(accEncUid) {
+    this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        accencUid: accEncUid,
+        path: this.wndw_path,
+        businessName: this.bProfile.businessName
+      }
+    });
+
+    this.qrdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.getBusinessProfile();
+      }
+    });
   }
 }

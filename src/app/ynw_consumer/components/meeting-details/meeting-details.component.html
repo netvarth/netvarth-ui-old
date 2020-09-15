@@ -1,24 +1,43 @@
 <h1 class="mat-dialog-title">{{data.details.service.name}}
+    <i *ngIf="data.details.service.serviceType === 'virtualService'" [class]=iconClass></i>
     <button #queue mat-dialog-close class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
 <mat-dialog-content>
-    <div *ngIf="data.details.service.virtualCallingModes[0].callingMode != 'Phone' 
-    && data.details.service.virtualCallingModes[0].callingMode != 'WhatsApp'">
-        How to start the service:
-        <div class="mgn-up-10">Step 1: Click on the following link
+    <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'Zoom'">
+        Follow these instructions to join the video call:
+        <div class="mgn-up-10">1: You will recieve an alert that the Zoom call has started.
+        </div>
+        <div class="mgn-up-5">2: When it is your turn, click on the following link -
             <a href="{{meetingDetails.startingUl}}" target="blank">{{meetingDetails.startingUl}}</a>
         </div>
-        <div class="mgn-up-5">Step 2: Click on 'Join Now'.</div>
-        <div class="mgn-up-10" style="font-size: smaller">If you can not see the 'Join Now' button, please sign into
-            your Google account first.
+        <div class="mgn-up-5" style="font-size: smaller">(If you do not have Zoom installed you will be prompted to install Zoom)
+        </div>
+        <div class="mgn-up-5">
+            3. Wait for the video call to start 
         </div>
     </div>
-    <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
-        Provider will call you in this number {{data.details.virtualService['WhatsApp']}}
+    <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'GoogleMeet'">
+        Follow these instructions to join the video call:
+        <div class="mgn-up-10">1: You will recieve an alert that the Google Meet call has started.
+        </div>
+        <div class="mgn-up-5">2: When it is your turn, click on the following link -
+            <a href="{{meetingDetails.startingUl}}" target="blank">{{meetingDetails.startingUl}}</a>
+        </div>
+        <div class="mgn-up-5" style="font-size: smaller">(If you are not already signed into google you must sign in)
+        </div>
+        <div class="mgn-up-5">
+            3. Wait for the video call to start 
+        </div>
+    </div>
+    <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'WhatsApp' && data.details.service.virtualServiceType === 'videoService'">
+        * When it is time for your call, you will receive a WhatsApp video call on - +91{{data.details.virtualService['WhatsApp']}}.<br> Please remember to keep your phone's internet connection on.
+    </div>
+    <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'WhatsApp' && data.details.service.virtualServiceType === 'audioService'">
+        * When it is time for your call, you will receive a WhatsApp audio call on - +91{{data.details.virtualService['WhatsApp']}}.<br> Please remember to keep your phone's internet connection on.
     </div>
     <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'Phone'">
-        Provider will call you in this number {{data.details.virtualService['Phone']}}
+        * When it is time for your call, you will receive a call on - +91{{data.details.virtualService['Phone']}}
     </div>
 </mat-dialog-content>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -121,12 +121,19 @@ export class ProviderNotificationsComponent implements OnInit {
   settings: any = [];
   showToken = false;
   api_loading = true;
+  crumbtitle;
+  breadcrmbTitle;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
+    public route: ActivatedRoute,
     private shared_functions: SharedFunctions,
     public provider_services: ProviderServices) {
     this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.route.queryParams.subscribe(
+      params => {
+          this.crumbtitle = params.type;
+        });
   }
 
   ngOnInit() {
@@ -137,12 +144,19 @@ export class ProviderNotificationsComponent implements OnInit {
     this.getGlobalSettingsStatus();
     this.getNotificationList();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
+    console.log(this.crumbtitle);
+    if (this.crumbtitle == 'Hospital') {
+      this.breadcrmbTitle = 'Hospital';
+    } else {
+      this.breadcrmbTitle = this.provider_label;
+    }
+    console.log(this.breadcrmbTitle);
     const breadcrumbs = [];
     this.breadcrumbs_init.map((e) => {
       breadcrumbs.push(e);
     });
     breadcrumbs.push({
-      title: this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1)
+      title: this.breadcrmbTitle
     });
     this.breadcrumbs = breadcrumbs;
     this.getProviderSettings();

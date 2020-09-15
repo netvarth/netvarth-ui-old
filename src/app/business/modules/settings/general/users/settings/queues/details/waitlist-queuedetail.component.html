@@ -1,7 +1,15 @@
-<section>
+<!-- <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section> -->
+<section class="">
+        <div class="card title-gb">
+            <h5 class="mgn-up-10"> 
+             <button type="button" class="btn default profile-back" (click)="redirecToUserqueues()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+                {{queuecaption}}
+            </h5>     
+        </div>
 </section>
-
 <section>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
@@ -59,7 +67,13 @@
                                             <div class="item">
                                                 <span class="ttle">{{service_cap}}</span> <span class="it0"
                                                     *ngFor="let service of queue_data.services">
-                                                    <span class="itm">{{service.name | capitalizeFirst}}</span>
+                                                    <span class="itm">{{service.name | capitalizeFirst}}
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'" class="fa phon-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'" class="fa wtsapaud-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'" class="fa wtsapvid-icon"></i>
+                                                    </span>
                                                 </span>
                                             </div>
                                         </div>
@@ -281,6 +295,11 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             (change)="handleServicechecbox(i)"
                                             [checked]="services_list[i].checked === true">
                                             {{service.name | capitalizeFirst}}
+                                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'" class="fa phon-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'" class="fa wtsapaud-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'" class="fa wtsapvid-icon"></i>
                                         </mat-checkbox>
                                     </div>
                                 </section>

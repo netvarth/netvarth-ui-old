@@ -83,7 +83,7 @@ ul.bus-actions li {
 
 ul.bus-actions li a.lnk {
   font-weight: 500 !important;
-  font-size: 0.65rem !important;
+  font-size: 0.80rem !important;
 }
 ul.bus-actions-horiz li {
   display: inline-block;
@@ -407,7 +407,7 @@ ul.details.badges li {
   transition: 0.3s;
   border-radius: 5px;
   width: 150px !important;
-  height: 200px;
+  height: 220px;
   margin: auto;
   padding: 0px !important;
   border: 1px solid #106e76 !important;
@@ -455,7 +455,7 @@ ul.details.badges li {
 
 .bus-item .card.card-item-n img, .bus-item .card.card-item-n .card-item-title {
   border-radius: 5px 5px 0 0;
-  height: 82px;
+  height: 100px;
   font-size: 0.8rem !important;
   border-bottom: 1px solid #106e76 !important;
   text-align: center;
@@ -803,7 +803,7 @@ ul.details.badges li {
 .panel-heading {
   width: 100%;
   font-size: 0.75rem;
-  height: 35px;
+  height: 40px;
   /* font-family: poppins !important; */
 }
 
@@ -820,7 +820,7 @@ ul.details.badges li {
 
 .back-btn {
   margin-left: 5px;
-  font-size: 1.10rem !important;
+  font-size: 1.25rem !important;
   margin-top: -5px;
 }
 
@@ -829,8 +829,14 @@ ul.details.badges li {
   font-size: 1.5rem !important;
 }
 
-.service-icon .meet-icon, .service-icon .zoom-icon {
+.service-icon .meet-icon,  .service-icon .phon-icon{
   width: 25px !important;
+}
+.service-icon .zoom-icon {
+  width: 35px !important;
+}
+.service-icon .wtsapaud-icon, .service-icon .wtsapvid-icon {
+  width: 40px !important;
 }
 
 .bus-item .card-item-content .title-style.mgn-bt-m-5 {

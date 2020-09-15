@@ -222,6 +222,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   futureAllowed = true;
   galleryenabledArr = [];
   gallerydisabledArr = [];
+  onlinePresence = false;
   // cSource  = 'qr';
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -325,6 +326,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       if (qparams.src) {
         this.pSource = qparams.src;
       }
+      if (qparams.onlinePresence) {
+        this.onlinePresence = qparams.onlinePresence;
+      }
       // if (qparams.pId) {
       //   this.businessid = qparams.pId;
       // }
@@ -353,7 +357,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         // this.provider_id = params.get('id');
         const customId = params.get('id').replace(/\s/g, '');
 
-        const inputValues = customId.split('_');
+        const inputValues = customId.split('___');
 
         if (inputValues.length > 1) {
           this.provider_id = inputValues[0];
@@ -446,6 +450,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
+            this.onlinePresence = this.businessjson.onlinePresence;
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;
@@ -868,9 +873,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 if (this.appttime_arr[i]['availableSchedule']) {
                   this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                   this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
-                  this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];                  
+                  this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
                 }
-                if (this.appttime_arr[i]['availableSlots'])  {
+                if (this.appttime_arr[i]['availableSlots']) {
                   this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
                   if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                     this.locationjson[locindx]['apptAvailableToday'] = true;
@@ -878,7 +883,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                   } else {
                     this.locationjson[locindx]['apptAvailableToday'] = false;
                     this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
-                    + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
+                      + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                   }
                 }
                 console.log(this.locationjson[locindx]);
@@ -1896,7 +1901,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
               }
-              if (this.appttime_arr[i]['availableSlots'])  {
+              if (this.appttime_arr[i]['availableSlots']) {
                 this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
                 if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                   this.locationjson[locindx]['apptAvailableToday'] = true;
@@ -1904,7 +1909,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 } else {
                   this.locationjson[locindx]['apptAvailableToday'] = false;
                   this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
-                  + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
+                    + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                 }
               }
               console.log(this.locationjson[locindx]);
@@ -1949,10 +1954,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    const account = this.provider_id + '_' + userId;
+    const account = this.provider_id + '___' + userId;
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        src: 'bp'
+        src: 'bp',
+        onlinePresence: this.businessjson.onlinePresence
       }
     };
     this.routerobj.navigate([account], navigationExtras);

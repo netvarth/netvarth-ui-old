@@ -9,15 +9,15 @@ import { Messages } from '../../../shared/constants/project-messages';
 })
 export class ConsumerDonationsComponent implements OnInit {
     payments: any;
-    breadcrumbs = [
-        {
-            title: 'My Jaldee',
-            url: 'consumer'
-        },
-        {
-            title: 'Donations'
-        }
-    ];
+    // breadcrumbs = [
+    //     {
+    //         title: 'My Jaldee',
+    //         url: 'consumer'
+    //     },
+    //     {
+    //         title: 'Donations'
+    //     }
+    // ];
     date_cap = Messages.DATE_CAP;
     time_cap = Messages.TIME_CAP;
     refundable_cap = Messages.REFUNDABLE_CAP;

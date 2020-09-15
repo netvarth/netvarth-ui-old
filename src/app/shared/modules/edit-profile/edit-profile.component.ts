@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-profile',
@@ -62,9 +63,12 @@ export class EditProfileComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router
+    public router: Router,
+    private location: Location
   ) { }
-
+  goBack () {
+    this.location.back();
+  }
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;

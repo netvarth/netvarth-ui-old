@@ -858,11 +858,8 @@ export class ConsumerCheckinComponent implements OnInit {
                 };
                 if (this.sel_ser_det.isPrePayment) {
                     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
-                } else if (this.sel_ser_det.livetrack) {
-                    this.router.navigate(['consumer', 'checkin', 'track', this.trackUuid], navigationExtras);
                 } else {
-                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC'));
-                    this.router.navigate(['consumer']);
+                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
                 }
             },
                 error => {

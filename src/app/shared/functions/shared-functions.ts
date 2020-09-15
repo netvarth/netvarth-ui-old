@@ -1197,6 +1197,9 @@ export class SharedFunctions {
       } else {
         ampm = 'PM';
       }
+    } else if (hr === 0) {
+      hr = 12;
+      ampm = 'AM';
     } else {
       ampm = 'AM';
     }
@@ -1607,4 +1610,7 @@ export class SharedFunctions {
     return blob;
   }
 
+  getNumberArray(n: number): any[] {
+    return Array(n);
+  }
 }

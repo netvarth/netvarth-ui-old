@@ -43,6 +43,7 @@ import { CheckinDetailComponent } from './components/home/checkindetail.componen
 import { ApptDetailComponent } from './components/home/appointmentdetail.component';
 import { MeetingDetailsComponent } from './components/meeting-details/meeting-details.component';
 import { SearchFormModule } from '../shared/components/search-form/search-form.module';
+import { ConsumerFooterModule } from './components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { SearchFormModule } from '../shared/components/search-form/search-form.m
     LoadingSpinnerModule,
     ConsumerAppointmentModule,
     ConsumerDonationModule,
-    SearchFormModule
+    SearchFormModule,
+    ConsumerFooterModule
   ],
   declarations: [
     ConsumerComponent,

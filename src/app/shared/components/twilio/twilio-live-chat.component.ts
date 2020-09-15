@@ -105,7 +105,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
         // const accessToken = projectConstants.TWILIO_ACCESSTOKEN;
-        this.twilioService.connectToRoom(projectConstantsLocal.TWILIO_ACCESSTOKEN, {
+        this.twilioService.connectToRoom(projectConstantsLocal.TWILIO_ACCESSTOKEN1, {
             name: 'Manis-room',
             // name: 'Mani',
             audio: true,

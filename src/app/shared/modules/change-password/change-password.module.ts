@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { ChangePasswordComponent } from './change-password.component';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
+import { HeaderModule } from '../header/header.module';
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.
         MaterialModule,
         ReactiveFormsModule,
         FormMessageDisplayModule,
-        BreadCrumbModule
+        BreadCrumbModule,
+        HeaderModule
     ],
     declarations: [
         ChangePasswordComponent

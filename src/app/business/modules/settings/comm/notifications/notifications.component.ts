@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
@@ -37,6 +37,10 @@ export class NotificationsComponent implements OnInit {
     provider_label = '';
     custmr_domain_terminology = '';
     provdr_domain_terminology = '';
+    accountType: any;
+    isCorp = false;
+    isMultilevel = false;
+    sub_domain;
 
     constructor(
         private router: Router,
@@ -45,14 +49,19 @@ export class NotificationsComponent implements OnInit {
         private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions
     ) {
-        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-        this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+       
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        this.domain = user.sector;
+        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.accountType = user_data.accountType;
+        this.domain = user_data.sector || null;
+        this.sub_domain = user_data.subSector || null;
+        console.log(this.sub_domain);
+        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+        this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
         this.getSMSglobalSettings();
         this.getSMSCredits();
+        this.getDomainSubdomainSettings();
         this.genrl_notification_cap = Messages.GENRL_NOTIFICATION_MSG.replace('[provider]', this.provider_label);
         this.frm_cust_notification_cap = Messages.FRM_LEVEL_CUST_NOTIFICATION_MSG.replace('[customer]', this.customer_label);
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
@@ -65,7 +74,18 @@ export class NotificationsComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'consumer']);
     }
     gotoProvider() {
-        this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'provider']);
+        let title;
+        if (this.sub_domain == ('hospital' || 'dentalHosp' || 'alternateMedicineHosp' || 'veterinaryhospital' ) && this.accountType == 'BRANCH' && this.isMultilevel) {
+            title = 'Hospital';
+        } else {
+            title = 'Provider';
+        }
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                type: title
+            }
+        };
+        this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'provider'], navigationExtras);
     }
     getSMSCredits() {
         this.provider_services.getSMSCredits().subscribe(data => {
@@ -102,6 +122,21 @@ export class NotificationsComponent implements OnInit {
         }, (error) => {
             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.getSMSglobalSettings();
+        });
+    }
+    getDomainSubdomainSettings() {
+        return new Promise((resolve, reject) => {
+            this.provider_services.domainSubdomainSettings(this.domain, this.sub_domain)
+                .subscribe(
+                    (data: any) => {
+                        this.isCorp = data.isCorp;
+                        this.isMultilevel = data.isMultilevel;
+                        console.log(this.isMultilevel);
+                    },
+                    error => {
+                        reject(error);
+                    }
+                );
         });
     }
     learnmore_clicked(mod, e) {

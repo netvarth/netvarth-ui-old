@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -186,8 +186,8 @@ export class ConsumerDonationComponent implements OnInit {
     notes = false;
     attachments = false;
     action: any = '';
-    breadcrumbs;
-    breadcrumb_moreoptions: any = [];
+    // breadcrumbs;
+    // breadcrumb_moreoptions: any = [];
     showEditView = false;
     slots;
     freeSlots: any = [];
@@ -208,7 +208,8 @@ export class ConsumerDonationComponent implements OnInit {
         public _sanitizer: DomSanitizer,
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
-        public winRef: WindowRefService ) {
+        public winRef: WindowRefService,
+        private location: Location ) {
         this.route.queryParams.subscribe(
             params => {
                 // tslint:disable-next-line:radix
@@ -221,15 +222,15 @@ export class ConsumerDonationComponent implements OnInit {
             });
     }
     ngOnInit() {
-        this.breadcrumbs = [
-            {
-                title: 'My Jaldee',
-                url: 'consumer'
-            },
-            {
-                title: 'Donations'
-            }
-        ];
+        // this.breadcrumbs = [
+        //     {
+        //         title: 'My Jaldee',
+        //         url: 'consumer'
+        //     },
+        //     {
+        //         title: 'Donations'
+        //     }
+        // ];
         this.getServicebyLocationId(this.sel_loc);
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
@@ -577,6 +578,9 @@ export class ConsumerDonationComponent implements OnInit {
             this.email1error = 'Email and Re-entered Email do not match';
             this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
         }
+    }
+    goBack() {
+        this.location.back();
     }
     handleGoBack(cstep) {
         this.resetApi();

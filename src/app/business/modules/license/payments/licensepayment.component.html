@@ -9,7 +9,7 @@
                     <div class="copy one col-xs-12 col-sm-12 no-padding">                     
                         <div class="pay-section card">                
                           <div *ngIf ="paidStatus == 'false'">
-                             <div style="padding-bottom: 10px">Prepayment Amount: <b>&#8377;{{prepayAmount}}</b></div> 
+                             <div style="padding-bottom: 10px">Prepayment Amount: <b class="rupee-font">&#8377;{{prepayAmount}}</b></div> 
                               <div style="padding-bottom: 10px">Payment Options
                               <div><p class="settings_info" style="display: inline;">Choose your payment options from here</p></div>
                               </div>
@@ -20,7 +20,7 @@
                          </div>
     
                          <div  *ngIf ="paidStatus == 'true'">
-                            <div style="padding-bottom: 10px"><b>&#8377; {{prepayAmount}}</b></div> 
+                            <div style="padding-bottom: 10px"><b class="rupee-font">&#8377; {{prepayAmount}}</b></div> 
                             <i class="fa fa-check-circle"  style="color: green;"><span style="font-size: large;">Paid Successfully</span> </i><br><br>
                                 <div class="ivc">
                                     <div class="pay-det-row">

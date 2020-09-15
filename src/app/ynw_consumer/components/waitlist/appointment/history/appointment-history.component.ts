@@ -47,19 +47,20 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
   bill_cap = Messages.BILL_CAPTION;
   rate_your_visit = Messages.RATE_YOU_VISIT;
   no_prev_checkins_avail_cap = Messages.NO_PREV_CHECKINS_AVAIL_CAP;
-  breadcrumbs = [
-    {
-      title: 'My Jaldee',
-      url: '/consumer'
-    },
-    //  {
-    //   title: 'Checkins'
-    // },
-    {
-      title: 'Appointment History'
-    }
-  ];
-  breadcrumb_moreoptions: any = [];
+  loading = true;
+  // breadcrumbs = [
+  //   {
+  //     title: 'My Jaldee',
+  //     url: '/consumer'
+  //   },
+  //   //  {
+  //   //   title: 'Checkins'
+  //   // },
+  //   {
+  //     title: 'Appointment History'
+  //   }
+  // ];
+  // breadcrumb_moreoptions: any = [];
 
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router,
@@ -235,9 +236,14 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
       .subscribe(
         data => {
           this.history = data;
+          this.loading = false;
         },
         error => {
+          this.loading = false;
         }
       );
+  }
+  providerDetail(provider) {
+    this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 }

@@ -1,104 +1,143 @@
-<section class="container">
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section>
 <section>
     <div class="content comn-cls checkin-details">
         <div class="container">
             <div class="row">
-                <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
-                    <div class="card" *ngIf="!api_loading">
-                        <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                <div class="panel panel-default">
+                    <div class="panel-heading top-row ">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <a class="pull-left back-btn mgn-up-5" (click)="gotoPrev()"><i
+                                    class="fa fa-arrow-left"></i></a>
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                        </div>
                     </div>
-                    <div class="card" *ngIf="api_loading">
-                        <div class="c-details">
-                            <div class="bk-ctrl">
-                                <span class="backtodashboard" (click)="gotoPrev()"><span
-                                        class="strong">{{go_back_cap}}</span></span>
-                            </div>
-                            <h2>{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
-                            <div class="tp" *ngIf="waitlistdata">
-                                <div class="item"><span class="ttle">{{bname_cap}}</span> <span>
-                                        {{BusinessName | capitalizeFirst}}
-                                    </span></div>
-                                <div class="item"><span class="ttle">{{date_cap}}</span> <span>
-                                        {{date| date:dateFormatSp}}
-                                    </span></div>
-                                <div class="item"><span class="ttle">{{location_cap}}</span><span>{{locn
-    | capitalizeFirst}}</span></div>
-                                <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
-                                    <span class="waitlist_for">
-                                        {{firstname | capitalizeFirst}} {{lastname | capitalizeFirst}}</span></div>
-                                <!-- <span
-    *ngIf="user.primaryMobileNo && user.primaryMobileNo.length === 10">({{user.primaryMobileNo}})</span>
-    </span> 
-    </div> -->
-                                <div class="item"><span class="ttle">{{service_cap}}</span> {{service |
-    capitalizeFirst}} <span *ngIf="deptName">({{deptName}}) </span></div>
-                                <div class="item"><span class="ttle">{{queue_cap}}</span>
-                                    {{queueStart}} - {{queueEnd}}</div>
-                                <div class="item"><span class="ttle">{{pay_status_cap}}</span>
-                                    {{paymntstats}} </div>
-                                    <div class="item" *ngIf="phonenumber"><span class="ttle">Phone number</span>
-                                        {{phonenumber}} </div>
-                                <div class="item" *ngIf="batchName"><span class="ttle">Batch</span><span>{{batchName}}</span></div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <!-- <div class="mgn-bt-20" *ngIf="callingModes">
+                    <div class="panel-body no-padding">
+                        <div class="c-outer m0">
+                            <div class="c-body">
+                                <div class="card title-gb">
+                                    <h5 class="mgn-up-10">Check-in Details</h5>
+                                </div>
+                                <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
+                                    <div class="card" *ngIf="!api_loading">
+                                        <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                                    </div>
+                                    <div class="card" *ngIf="api_loading">
+                                        <div class="c-details">
+                                            <!-- <div class="bk-ctrl">
+                                                <span class="backtodashboard" (click)="gotoPrev()"><span
+                                                        class="strong">{{go_back_cap}}</span></span>
+                                            </div> -->
+                                             <h2 *ngIf="!showtoken">{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
+                            				<h2 *ngIf="showtoken">Token  {{details_cap}}</h2>
+                                            <div class="tp" *ngIf="waitlist">
+                                                <div class="item"><span class="ttle">{{bname_cap}}</span> <span>
+                                                        {{waitlist.providerAccount.businessName | capitalizeFirst}}
+                                                    </span></div>
+                                                <div class="item"><span class="ttle">{{date_cap}}</span> <span>
+                                                        {{waitlist.date | date:dateFormatSp}}
+                                                    </span></div>
+                                                <div class="item"><span class="ttle">{{location_cap}}</span>
+                                                    <span>{{waitlist.queue.location.place | capitalizeFirst}}</span>
+                                                </div>
+                                                <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
+                                                    <span class="waitlist_for">
+                                                        {{waitlist.waitlistingFor[0].firstName | capitalizeFirst}}
+                                                        {{waitlist.waitlistingFor[0].lastName | capitalizeFirst}}</span>
+                                                </div>
+                                                <div class="item"><span class="ttle">{{service_cap}}</span>
+                                                    <span class="service-icon"
+                                                        *ngIf="waitlist.service.serviceType == 'virtualService'">
+                                                        <i class="fa phon-icon"
+                                                            *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                        <i class="fa meet-icon"
+                                                            *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                        <i class="fa zoom-icon"
+                                                            *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        <i class="fa wtsapaud-icon"
+                                                            *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='audioService'"></i>
+                                                        <i class="fa wtsapvid-icon"
+                                                            *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='videoService'"></i>
+                                                    </span>
+                                                    {{waitlist.service.name | capitalizeFirst}} <span
+                                                        *ngIf="deptName">({{waitlist.service.deptName}}) </span></div>
+                                                <div class="item"><span class="ttle">{{queue_cap}}</span>
+                                                    {{waitlist.queue.queueStartTime}} - {{waitlist.queue.queueEndTime}}
+                                                </div>
+                                                <div class="item"><span class="ttle">{{pay_status_cap}}</span>
+                                                    {{waitlist.paymentStatus}} </div>
+                                                <div class="item" *ngIf="waitlist.waitlistPhoneNumber"><span
+                                                        class="ttle">Phone
+                                                        number</span>
+                                                    {{waitlist.waitlistPhoneNumber}} </div>
+                                                <div class="item" *ngIf="waitlist.batchName"><span
+                                                        class="ttle">Batch</span><span>{{waitlist.batchName}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <!-- <div class="mgn-bt-20" *ngIf="callingModes">
                                 <h2> Calling modes </h2>
                                 <div class="mgn-bt-5" *ngFor="let mode of callingModes | keyvalue">
                                     <span>{{callingModesDisplayName[mode.key]}}: </span> <span> {{mode.value}}</span>
                                 </div>
                             </div> -->
-                            <div class="clearfix"></div>
-                            <div class="btm" *ngIf="waitlistdata">
-                                <button class="cs-btn bt3 communicate"
-                                    (click)="addCommonMessage(waitlistdata)">{{send_msg_cap}}</button>
+                                            <div class="clearfix"></div>
+                                            <div class="btm" *ngIf="waitlist">
+                                                <button class="cs-btn bt3 communicate"
+                                                    (click)="addCommonMessage(waitlistdata)">{{send_msg_cap}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card p0">
+                                        <mat-accordion class="communication-history">
+                                            <mat-expansion-panel>
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                        {{comm_history_cap}}
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <app-inbox-list [messages]="communication_history"
+                                                    [fromsource]="'consumer-waitlist'"
+                                                    (reloadApi)="getCommunicationHistory()"></app-inbox-list>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                </div>
+                                <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
+                                    <div class="card">
+                                        <h2>{{checkin_label |capitalizeFirst}} Status</h2>
+                                        <div class="c-history-outer" *ngIf="waitlist && waitlist.waitlistStatus">
+                                            <ul class="c-history">
+                                                <li class="{{waitlist.waitlistStatus}}">
+                                                    <div class="action">{{waitlist.waitlistStatus}}</div>
+                                                    <div class="time">
+                                                        {{ waitlist.statusUpdatedTime | date: dateTimeFormat}}</div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card p0">
+                                        <mat-accordion class="provider-notes">
+                                            <mat-expansion-panel>
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                        {{cust_notes_cap | capitalizeFirst}}
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="pnotes"
+                                                    *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">
+                                                    <p>{{consumerNote}}</p>
+                                                </div>
+                                                <div
+                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">
+                                                    <p>{{no_cus_notes_cap}}</p>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card p0">
-                        <mat-accordion class="communication-history">
-                            <mat-expansion-panel>
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                        {{comm_history_cap}}
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <app-inbox-list [messages]="communication_history" [fromsource]="'consumer-waitlist'"
-                                    (reloadApi)="getCommunicationHistory()"></app-inbox-list>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-                    </div>
-                </div>
-                <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
-                    <div class="card">
-                        <h2>{{checkin_label |capitalizeFirst}} waitlistStatus</h2>
-                        <div class="c-history-outer">
-                            <ul class="c-history">
-                                <li class="{{status}}">
-                                    <div class="action">{{status}}</div>
-                                    <div class="time">{{ statusUpdatedTime| date: dateTimeFormat}}</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card p0">
-                        <mat-accordion class="provider-notes">
-                            <mat-expansion-panel>
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                        <!-- {{provider_label |capitalizeFirst}} Notes -->
-                                        {{cust_notes_cap | capitalizeFirst}}
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <div class="pnotes" *ngIf="waitlistdata && consumerNote &&consumerNote !== ''">
-                                    <p>{{consumerNote}}</p>
-                                </div>
-                                <div *ngIf="waitlistdata &&consumerNote === '' || !consumerNote">
-                                    <p>{{no_cus_notes_cap}}</p>
-                                </div>
-                            </mat-expansion-panel>
-                        </mat-accordion>
                     </div>
                 </div>
             </div>

@@ -9,9 +9,9 @@ import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-memb
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { OwlModule } from 'ngx-owl-carousel';
-import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { ConsumerDonationsComponent } from './donations.component';
 import { ConsumerDonationComponent } from './details/consumer-donation.component';
+import { HeaderModule } from '../../../shared/modules/header/header.module';
 
 @NgModule({
     declarations: [
@@ -30,7 +30,7 @@ import { ConsumerDonationComponent } from './details/consumer-donation.component
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
         OwlModule,
-        BreadCrumbModule
+        HeaderModule
     ],
     exports: [ConsumerDonationsComponent]
 })

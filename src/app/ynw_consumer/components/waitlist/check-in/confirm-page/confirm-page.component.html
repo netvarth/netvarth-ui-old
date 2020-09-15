@@ -1,0 +1,133 @@
+<section class="container no-padding confirm-aptckn">
+    <div class="content loc-list">
+        <div class="panel panel-default">
+            <div class="panel-heading top-row ">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                </div>
+            </div>
+            <div class="panel-body no-padding">
+                <div class="card p0">
+                    <div class="copy locd" *ngIf="!apiloading">
+                        <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding">
+                            <div class="info-img">
+                                <img src="assets/images/bg-01.png"></div>
+                            <div class="details">
+                                <div class="book-head"> Booking Confirmed </div>
+                                <div class="book-details"> Booking details </div>
+                                <table class="book-details-sub">
+                                    <tbody>
+                                        <tr>
+                                            <td width="48%" align="right">Name of the provider</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{waitlist.providerAccount?.businessName}}</td>
+                                        </tr>
+                                         <tr *ngIf="waitlist.provider">
+                                    <td width="48%" align="right">{{provider_label | capitalizeFirst}}</td>
+                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                    <td>{{waitlist.provider.firstName}} {{waitlist.provider.lastName}}</td>
+                                </tr>
+                                        <tr *ngIf="waitlist.token">
+                                            <td width="48%" align="right">Token No </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{waitlist.token}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="48%" align="right">Where </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{waitlist.queue?.location.place}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="48%" align="right">Service</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> 
+                                            <span class="service-icon"
+                                            *ngIf="waitlist.service && waitlist.service.serviceType == 'virtualService'">
+                                            <i class="fa phon-icon"
+                                                *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                            <i class="fa meet-icon"
+                                                *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                            <i class="fa zoom-icon"
+                                                *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                            <i class="fa wtsapaud-icon"
+                                                *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='audioService'"></i>
+                                            <i class="fa wtsapvid-icon"
+                                                *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='videoService'"></i>
+                                        </span>
+                                            {{waitlist.service?.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="48%" align="right">Time window </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{waitlist.date | date: dateFormat }},
+                                                {{waitlist.queue.queueStartTime}} -
+                                                {{waitlist.queue.queueEndTime}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="48%" align="right">Confirmation No</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{waitlist.checkinEncId}}</td>
+                                        </tr>
+                                        <tr *ngIf="waitlist.service?.minPrePaymentAmount">
+                                            <td width="48%" align="right">Pre Payment amount</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{waitlist.service.minPrePaymentAmount}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="book-status"> Current status </div>
+                                <table class="status-table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;Persons ahead
+                                            </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{waitlist.personsAhead}}</td>
+                                        </tr>
+                                        <tr *ngIf="getWaitTime(waitlist)">
+                                            <td width="48%" align="right"><i class="fa fa-clock-o"></i>&nbsp;Est wait
+                                                Time </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{getWaitTime(waitlist)}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
+                                    <a href="{{path}}status/{{waitlist.checkinEncId}}" target="blank">
+                                        {{path}}status/{{waitlist.checkinEncId}}</a></div>
+                                <!-- <div class="txt-align-center mgn-up-10" *ngIf="waitlist.consumer.email_verified"> A booking
+                            confirmation
+                            has been sent to your email
+                            address.</div> -->
+                                <!-- <div class="update-email" *ngIf="waitlist.consumer && !waitlist.consumer.email_verified">
+                            <input placeholder="Email" [(ngModel)]="email"><span class="email-btn"
+                                (click)="updateEmail()">Ok</span>
+                        </div> -->
+                                <!-- <div class="notes" *ngIf="waitlist.service && waitlist.service.postInfoEnabled">
+                            <div class="preinfo-title">{{waitlist.service.postInfoTitle}} </div>
+                            <div [innerHTML]="waitlist.service.postInfoText">
+                            </div>
+                        </div> -->
+                                <div class="ok-btn">
+                                    <span class="pointer-cursor" (click)="okClick()">
+                                        Ok</span></div>
+                            </div>
+                        </div>
+                        <div class="powered-by">
+                            <div class="poweredby-text">
+                                <div class="one">powered by</div>
+                                <div class="two">
+                                    <img _ngcontent-jvc-c15="" alt="Jaldee" src="assets/images/home/logo-icon.png"
+                                        style="width: 15px;">&nbsp;Jaldee</div>
+                            </div>
+                        </div>
+                    </div>
+                    <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Persons ahead	0 anenkil kanikkano -->

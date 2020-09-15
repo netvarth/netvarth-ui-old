@@ -98,6 +98,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     showBatchFields = false;
     batch = false;
+    Schedulescaption = 'Add Schedule';
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -278,6 +279,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.apptSchedule) {
+                        this.Schedulescaption = 'Schedule Details';
                         schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.apptSchedule);
                     }
                     this.display_schedule = [];
@@ -293,6 +295,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.action === 'edit') {
+                        this.Schedulescaption = 'Edit Schedule';
                         this.createForm();
                     }
                 },
@@ -354,6 +357,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     }
     addEditProviderQueue() {
         this.action = 'edit';
+        this.Schedulescaption = 'Edit Schedule';
         this.createForm();
     }
     changeProviderScheduleStatus(obj) {
@@ -695,6 +699,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             //     'batch':false
             // };
             if (this.action === 'edit') {
+                this.Schedulescaption = 'Schedule Details';
                 this.editProviderSchedule(post_data);
             } else {
                 this.addProviderSchedule(post_data);
@@ -747,6 +752,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     closeClick() {
         if (this.action === 'edit' && this.params.action !== 'editFromList' && this.params.source !== 'location_detail') {
             this.action = 'view';
+            this.Schedulescaption = 'Schedule Details';
         } else {
             this._location.back();
         }
@@ -912,4 +918,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             this.amForm.get('qserveonce').setValue(2);
         }
     }
+    redirecToUserSchedule() {
+        this.router.navigate(['provider', 'settings', 'general', 'users' , this.userId , 'settings' , 'schedules']);
+     }
 }

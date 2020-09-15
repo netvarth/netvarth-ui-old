@@ -41,14 +41,13 @@ export class TeleServiceShareComponent implements OnInit {
   providerView = true;
   cancel_btn_cap = Messages.CANCEL_BTN;
   send_btn_cap = Messages.SEND_BTN;
-  begin_cap: any;
-  ready_cap: any;
-  how_join_cap: any;
-  turn_cap: any;
-  wait_cap: any;
-  join_cap: any;
   internt_cap: any;
-  calling_u_cap: any;
+  videocall_msg: string;
+  signinGoogle: string;
+  instalZoom: string;
+  waitFor: string;
+  aloJoin: string;
+  providr_msg: string;
 
 
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
@@ -65,14 +64,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.serviceName = this.data.serviceDetail.name;
     this.meetingLink = this.data.meetingLink;
     this.consumerName = this.data.consumerName;
-    this.begin_cap = this.shared_functions.getProjectMesssages('WIL_BEGN');
-    this.ready_cap = this.shared_functions.getProjectMesssages('PLS_B_REDY');
-    this.how_join_cap = this.shared_functions.getProjectMesssages('HW_TO_JOIN');
-    this.turn_cap = this.shared_functions.getProjectMesssages('UR_TURN');
-    this.wait_cap = this.shared_functions.getProjectMesssages('WAIT');
-    this.join_cap = this.shared_functions.getProjectMesssages('JOIN');
     this.internt_cap = this.shared_functions.getProjectMesssages('NET_CNNCT');
-    this.calling_u_cap = this.shared_functions.getProjectMesssages('CAL_U');
     if (this.data.reminder) {
       this.getReminderData();
       this.providerView = false;
@@ -97,63 +89,62 @@ export class TeleServiceShareComponent implements OnInit {
   // Reminder textarea msg content
   getReminderData() {
     if (this.data.status) {
-      // if (this.data.app !== 'Phone') {
-      //   this.msg_to_user = 'Your ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' is on progress';
-      // } else {
-      //   this.msg_to_user = 'Your ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' is on progress';
-      // }
       this.msg_to_user = '';
     } else {
+      this.instalZoom = '\n(If you do not have Zoom installed you will be prompted to install Zoom)';
+      this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
+      this.videocall_msg = ' , your ' + this.data.app + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will recieve an alert that the ' + this.data.app + ' call has started.\nWhen it is your turn, click on the following link- ' + this.meetingLink;
+      this.waitFor = '\n3. Wait for the video call to start';
       switch (this.data.app) {
         case 'WhatsApp':
           if (this.data.serviceDetail.virtualServiceType === 'videoService') {
-            this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName + this.calling_u_cap + this.ready_cap + '\n\n' + this.internt_cap;
+            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp video call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           } else {
-            this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName + this.calling_u_cap + this.ready_cap + '.\n\n' + this.internt_cap;
+            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           }
           break;
         case 'Phone':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your audio call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' ' + this.begin_cap + '\n\n' + this.data.busnsName + this.calling_u_cap + this.ready_cap;
+          this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a phone call on +91' + this.meetingLink + '.';
           break;
         case 'Zoom':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your video call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' ' + this.begin_cap + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '    ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
+          this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.instalZoom + this.waitFor;
           break;
         case 'GoogleMeet':
-          this.msg_to_user = 'In ' + this.selectedTime + ', your video Call via ' + this.data.app + ' for ' + this.data.serviceDetail.name + ' with ' + this.data.busnsName + ' ' + this.begin_cap + this.ready_cap + '\n\n' + this.how_join_cap + '\n1.  ' + this.turn_cap + '    ' + this.data.meetingLink + '\n\n2.  ' + this.wait_cap + this.data.busnsName + this.join_cap;
+          this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.signinGoogle + this.waitFor;
           break;
       }
     }
   }
   // Meeting detail textarea msg content
   getMeetingDetailsData() {
+    this.instalZoom = '\n(If you do not have Zoom installed you will be prompted to install Zoom)';
+    this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
+    this.videocall_msg = 'Follow these instructions to join the video call:\n1. You will recieve an alert that the ' + this.data.app + ' call has started.\nOpen the following link- ' + this.meetingLink;
+    this.waitFor = '\n3. Wait for the video call to begin';
+    this.providr_msg = 'How to start the video call -\n1. Open the following link - ' + this.meetingLink;
+    this.aloJoin = '\n2. Allow ' + this.customer_label + ' to join the call when you are prompted';
 
-    this.userMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n\n' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ' : ' + this.providerName;
-    // + '\nToken Number :' + this.data.token + '\n Time : ' + this.data.checkInTime + '\n';
-
-    this.userMsg_secondline = '\n\nHow to join the video call \n\n1. When it is your turn, click on the following link -\n' + this.meetingLink + '\n\n2. Wait for ' + this.providerName + ' to join ';
-
-    this.providerMsg_firstLine = 'Meeting Details for your Video Call via ' + this.data.app + ' for ' + this.serviceName + '\n\n' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' : ' + this.consumerName;
-    // + '\nToken Number :' + this.data.token + '\n Time : ' + this.data.checkInTime + '\n';
-
-    this.providerMsg_secondLine = '\n\nHow to join the video call \n\n1. When it is your turn, click on the following link -\n' + this.meetingLink + '\n\n2. Click on join Now ';
     switch (this.data.app) {
       case 'WhatsApp':
-        this.userMsg_secondline = '\n* You will receive a call from ' + this.data.busnsName + ' when it is your turn.';
-        this.msg_to_user = this.userMsg_firstLine + this.userMsg_secondline;
-        this.providerMsg_secondLine = '\n* To start the video call, click on the link- ' + this.data.meetingLink + ' on your phone or WhatsApp enabled device';
-        this.msg_to_me = this.providerMsg_firstLine + this.providerMsg_secondLine;
+        if (this.data.serviceDetail.virtualServiceType === 'videoService') {
+          this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on +'  + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          this.msg_to_me = 'Follow these instructions to start the video call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the video call';
+        } else {
+          this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp audio call on +'  + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          this.msg_to_me = 'Follow these instructions to start the audio call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the audio call';
+        }
         break;
       case 'Phone':
-        this.msg_to_user = 'Will get a call from ' + this.data.busnsName;
-        this.msg_to_me = 'Call to this number ' + this.data.meetingLink;
+        this.msg_to_user = 'When it is time for your phone call, you will receive a call on +' + this.meetingLink;
+        this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no- ' + this.meetingLink;
         break;
       case 'Zoom':
-        this.msg_to_user = this.userMsg_firstLine + this.userMsg_secondline;
-        this.msg_to_me = this.providerMsg_firstLine + this.providerMsg_secondLine;
+        this.msg_to_user = this.videocall_msg + this.instalZoom + this.waitFor;
+        this.msg_to_me = this.providr_msg + this.instalZoom + this.aloJoin;
         break;
       case 'GoogleMeet':
-        this.msg_to_user = this.userMsg_firstLine + this.userMsg_secondline;
-        this.msg_to_me = this.providerMsg_firstLine + this.providerMsg_secondLine;
+        this.msg_to_user = this.videocall_msg + this.signinGoogle + this.waitFor;
+        this.msg_to_me = this.providr_msg + this.signinGoogle + this.aloJoin;
         break;
     }
   }

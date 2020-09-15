@@ -4,7 +4,7 @@
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><img src="assets/images/home/logo-business.png" alt="Jaldee"></span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><img src="assets/images/home/logo-business.png" alt="Jaldee"></span>
+    <span class="logo-lg"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee"></span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top" role="navigation">
@@ -26,15 +26,19 @@
         </li>
          <li [matTooltip]="'Take a tour'" *ngIf="!iswiz">
           <a (click)="tourIconClicked()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="fa fa-plane">
-              <div joyrideStep="step4"  title="Still have some doubts?" [stepContent]="text4"  ></div>
+            <!-- <i class="fa fa-plane"> -->
+              Take a tour
+              <div joyrideStep="step4"  title="Reach Out To Us" [stepContent]="text4"  ></div>
               <ng-template #text4>
                 <div>
-                  Call us on <span style="color: blue;">888-012-5000</span> or click on this icon to view the tour again
+                  We offer free support and we are always ready to help.<br>
+                  <br>
+                  Call us at- <span style="color: white;"><b>888-012-5000</b></span><br>
+                  Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
 
                 </div>
             </ng-template>
-            </i>
+            <!-- </i> -->
           </a>
         </li>
         <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">

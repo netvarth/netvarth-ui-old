@@ -11,6 +11,7 @@ import { InboxServices } from './inbox.service';
 import { InboxRoutingModule } from './inbox-routing.module';
 import { InboxOuterComponent } from './inbox-outer/inbox-outer.component';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { HeaderModule } from '../header/header.module';
 @NgModule({
     imports: [
         CapitalizeFirstPipeModule,
@@ -22,7 +23,8 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
         FormsModule,
         BreadCrumbModule,
         InboxRoutingModule,
-        Nl2BrPipeModule
+        Nl2BrPipeModule,
+        HeaderModule
     ],
     entryComponents: [
       InboxListComponent

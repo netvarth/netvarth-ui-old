@@ -1,0 +1,79 @@
+<section class="container no-padding confirm-aptckn">
+    <div class="content loc-list">
+        <div class="panel panel-default">
+            <div class="panel-heading top-row ">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
+                </div>
+            </div>
+            <div class="panel-body no-padding">
+                <div class="card p0">
+                    <div class="copy locd" *ngIf="!apiloading">
+                        <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding">
+                            <div class="info-img">
+                                <img src="assets/images/newbg.png"></div>
+                            <div class="details">
+                                <div class="book-head"> Booking Confirmed </div>
+                                <div class="book-details"> Booking details </div>
+                                <table class="book-details-sub">
+                                    <tbody>
+                                        <tr>
+                                            <td width="48%" align="right">Name of the provider</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{appointment.providerAccount?.businessName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="48%" align="right">Where </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{appointment.location?.place}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="48%" align="right">Service</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{appointment.service?.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="48%" align="right">Time window </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{appointment.appmtDate | date: dateFormat }},
+                                                {{getSingleTime(appointment.appmtTime)}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="48%" align="right">Confirmation No</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{appointment.appointmentEncId}}</td>
+                                        </tr>
+                                        <tr *ngIf="appointment.service?.minPrePaymentAmount">
+                                            <td width="48%" align="right">Pre Payment amount</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{appointment.service.minPrePaymentAmount}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="book-status"> Current status </div>
+                                <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
+                                    <a href="{{path}}status/{{appointment.appointmentEncId}}" target="blank">
+                                        {{path}}status/{{appointment.appointmentEncId}}</a></div>                               
+                                <div class="ok-btn">
+                                    <span class="pointer-cursor" (click)="okClick()">
+                                        Ok</span></div>
+                            </div>
+                        </div>
+                        <div class="powered-by">
+                            <div class="poweredby-text">
+                                <div class="one">powered by</div>
+                                <div class="two">
+                                    <img _ngcontent-jvc-c15="" alt="Jaldee" src="assets/images/home/logo-icon.png"
+                                        style="width: 15px;">&nbsp;Jaldee
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

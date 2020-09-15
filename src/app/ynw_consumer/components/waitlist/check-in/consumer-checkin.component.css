@@ -677,7 +677,7 @@ ul.bus-actions li a.lnk {
 .panel-heading {
   width: 100%;
   font-size: 0.75rem;
-  height: 35px;
+  height: 40px;
   /* font-family: poppins !important; */
 }
 
@@ -694,7 +694,7 @@ ul.bus-actions li a.lnk {
 
 .back-btn {
   margin-left: 5px;
-  font-size: 1.10rem !important;
+  font-size: 1.25rem !important;
   margin-top: -5px;
 }
 
@@ -703,8 +703,14 @@ ul.bus-actions li a.lnk {
   font-size: 1.5rem !important;
 }
 
-.service-icon .meet-icon, .service-icon .zoom-icon {
+.service-icon .meet-icon, .service-icon .phon-icon {
   width: 25px !important;
+}
+.service-icon .zoom-icon {
+  width: 30px !important; 
+}
+.service-icon .wtsapaud-icon, .service-icon .wtsapvid-icon {
+  width: 40px !important;
 }
 
 .bus-item .card-item-content .title-style.mgn-bt-m-5 {
@@ -1140,4 +1146,13 @@ height: 150px !important;
 
 .bus-item-medium.div-selected-outline  .card.card-item-n{
   border: 5px solid #106e76 !important;
+}
+.wtsapaud-icon {
+  top: -2px !important;
+}
+.disableActn{
+  background: #dbdbdb !important;
+  color: #999999 !important;
+  border: none !important;
+  pointer-events: none !important;
 }

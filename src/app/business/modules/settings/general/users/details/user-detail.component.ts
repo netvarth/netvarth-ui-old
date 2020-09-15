@@ -83,6 +83,7 @@ export class BranchUserDetailComponent implements OnInit {
     sector;
     selectedsubDomain: any = [];
     // selected_dept;
+    usercaption = 'Add User';
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -214,12 +215,12 @@ export class BranchUserDetailComponent implements OnInit {
                     res => {
                         this.user_data = res;
                         if (this.actionparam.type === 'edit') {
+                            this.usercaption = 'User Details';
                             this.type = this.user_data.userType;
                             if (this.sector === 'healthCare') {
                                 if (this.type === 'PROVIDER') {
                                     this.type = 'DOCTOR';
                                 }
-                                
                             }
                             // this.createForm();
                             this.updateForm();
@@ -416,4 +417,7 @@ export class BranchUserDetailComponent implements OnInit {
                 }
             );
     }
+    redirecToUsersl() {
+        this.router.navigate(['provider', 'settings',  'general' , 'users']);
+      }
 }

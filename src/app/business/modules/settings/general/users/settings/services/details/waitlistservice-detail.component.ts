@@ -46,6 +46,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     userId: any;
     userDetails: any;
     showGallery = false;
+    servicecaption = 'Add Service';
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -131,6 +132,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         if (serviceActionModel.action === 'add') {
                             this.createService(post_itemdata2);
                         } else if (serviceActionModel.action === 'edit') {
+                            this.servicecaption = 'Edit Service';
                             post_itemdata2.id = this.service_id;
                             this.updateService(post_itemdata2);
                         } else if (serviceActionModel.action === 'changestatus') {
@@ -138,10 +140,12 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         }
                     } else {
                         if (serviceActionModel.action === 'edit') {
+                            this.servicecaption = ' Edit Service';
                             this.serviceParams['action'] = 'edit';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else if (serviceActionModel.action === 'close' && serviceActionModel.source !== 'add') {
                             this.serviceParams['action'] = 'show';
+                            this.servicecaption = 'Service Details';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else {
                             this.router.navigate(['/provider/settings/general/users/' + this.userId + '/settings/services']);
@@ -212,6 +216,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                 data => {
                     this.serviceParams['service'] = data;
                     this.serviceParams['action'] = 'show';
+                    this.servicecaption = 'Service Details';
                     this.status = this.serviceParams['service'].status;
                     this.setGalleryImages(this.serviceParams['service'].servicegallery || []);
                     // remove multiple end breadcrumb on edit function
@@ -225,6 +230,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
+                        this.servicecaption = 'Edit Service';
                         this.serviceParams['action'] = 'edit';
                     }
                     this.servicesService.initServiceParams(this.serviceParams);
@@ -345,5 +351,9 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings',
             'services']);
         this.api_loading = false;
+    }
+    redirecToUserServices() {
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings',
+        'services']);
     }
 }

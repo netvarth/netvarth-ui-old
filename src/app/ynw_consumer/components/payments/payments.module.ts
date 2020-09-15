@@ -7,6 +7,7 @@ import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { ConsumerPaymentDetailsComponent } from './payment-details/payment-details.component';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { HeaderModule } from '../../../shared/modules/header/header.module';
 @NgModule({
     declarations: [
         ConsumerPaymentsComponent,
@@ -18,7 +19,8 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
         CommonModule,
         SharedModule,
         CapitalizeFirstPipeModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        HeaderModule
     ],
     exports: [
         ConsumerPaymentsComponent

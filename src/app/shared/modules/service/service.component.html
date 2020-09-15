@@ -68,35 +68,35 @@
                     <span>{{service_data.multiples}}</span>
                 </div>
             </div>
-            <div class="c-ot" *ngIf="is_donation">
+            <!-- <div class="c-ot" *ngIf="is_donation">
                 <div class="item" *ngIf="service_data.notificationType && service_data.serviceType === 'donationService' && service_data.notification === true" style="width: 70%;">
                     <span class="ttle"
-                        >{{end_cause_notify_cap}}</span>
+                        >{{end_cause_notify_cap}}</span> -->
                         <!-- <span class="noti-it"
                             *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span> -->
-                        <span class="noti-it"
+                        <!-- <span class="noti-it"
                             >{{end_of_service_notify[service_data.notificationType]}}</span>
                 </div>
-            </div>
-            <div class="c-ot" *ngIf="!is_donation">
+            </div> -->
+            <!-- <div class="c-ot" *ngIf="!is_donation"> -->
                 <!-- <div class="item" style="margin-right: 10px;" *ngIf="subdomainsettings.serviceBillable">
                     <span>{{tax_applicable_cap}}:
                         <span class="noti-it" [class.yes]="service_data.taxable==true"
                             [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
                         'Yes' : 'No'}}</span></span>
                 </div> -->
-                <div class="item" *ngIf="service_data.notificationType && service_data.serviceType !== 'donationService'&& service_data.notification">
-                    <span class="ttle">{{end_service_notify_cap}}</span>
+                <!-- <div class="item" *ngIf="service_data.notificationType && service_data.serviceType !== 'donationService'&& service_data.notification">
+                    <span class="ttle">{{end_service_notify_cap}}</span> -->
                         <!-- <span class="noti-it"
                             *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span> -->
-                        <span class="noti-it"
+                        <!-- <span class="noti-it"
                             >{{end_of_service_notify[service_data.notificationType]}}</span>
-                </div>
+                </div> -->
                 <div class="item" *ngIf="service.serviceType !== 'virtualService' && is_lvtrack_enable && service_data.livetrack">
                     <span class="ttle">Live tracking </span>
                     <span>{{(service_data.livetrack ? 'On': 'Off')}}</span>
                 </div>
-            </div>
+            <!-- </div> -->
             <div class="btm-ctrl">
                 <div class="ctrl enable-disable">
                     <span *ngIf="!is_donation" class="ttle">{{serv_status}}</span>
@@ -203,10 +203,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-label>Select <span *ngIf="serv_mode === 'videoService'">Video</span><span *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
                     <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name" name="toolname" [ngModelOptions]="{standalone: true}">
                         <mat-option *ngFor="let mode of telemodes" [value]="mode">
-                            <i *ngIf="mode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic" aria-hidden="true"></i>
+                            <i *ngIf="mode === 'WhatsApp'" [ngClass]="{'fa wtsapaud-icon': (serv_mode === 'audioService' || (service_data && service_data.serviceType==='virtualService' && service_data.virtualServiceType === 'audioService')), 'fa wtsapvid-icon': (serv_mode === 'videoService' || (service_data && service_data.serviceType==='virtualService' && service_data.virtualServiceType === 'videoService'))}"  aria-hidden="true"></i>
                             <i *ngIf="mode === 'Zoom'" class="fa zoom-icon"></i>
                             <i *ngIf="mode === 'GoogleMeet'" class="fa meet-icon" ></i>
-                            <i *ngIf="mode === 'Phone'" class="fa fa-mobile fa-lg" aria-hidden="true"></i>
+                            <i *ngIf="mode === 'Phone'" class="fa phon-icon" aria-hidden="true"></i>
                            <span class="dash">{{mode}}</span> 
                         </mat-option>
                     </mat-select>
@@ -287,7 +287,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
                 <div>
                     <mat-form-field>
-                        <input min="0" matInput type="text" class="form-control number-ip-sm" id="minprice"
+                        <input min="1" matInput type="text" class="form-control number-ip-sm" id="minprice"
                             maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'minDonationAmount')"
                             placeholder="Minimum Amount ({{rupee_symbol}}) *" formControlName="minDonationAmount"
                             autocomplete="off">
@@ -301,7 +301,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </div>
                 <div>
                     <mat-form-field>
-                        <input min="0" matInput type="text" class="form-control number-ip-sm" id="maxprice"
+                        <input min="1" matInput type="text" class="form-control number-ip-sm" id="maxprice"
                             maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'maxDonationAmount')"
                             placeholder="Maximum Amount ({{rupee_symbol}}) *" formControlName="maxDonationAmount"
                             autocomplete="off">
@@ -316,7 +316,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group" *ngIf="is_donation">
                 <mat-form-field>
-                    <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
+                    <input min="1" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
                         id="multiples" pattern="[0-9]+" maxlength="10" (keypress)="isNumeric($event)"
                         (keyup)="isvalid($event, 'multiples')" placeholder="Multiples*" formControlName="multiples"
                         autocomplete="off">

@@ -4,7 +4,7 @@
   <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
   <span class="fa fa-chevron-left">&nbsp;Back</span>
   </button>&nbsp;&nbsp;&nbsp;
-  My Profile</h5>
+  My Account</h5>
   </div>
  </section>
  <section>
@@ -116,8 +116,9 @@
   <div class="div-outline custId-cursor"
   [ngClass]="{'div-grn-outline':aboutmefilled,'div-red-outline':!aboutmefilled }"
   (click)="gotoAboutMe()">
-  <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
-  <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red" aria-hidden="true"></i>
+  <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+  <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right" aria-hidden="true"></i>
+  <i class="fa person-icon"></i> &nbsp;&nbsp;
   <span class="fontstyl">About Me</span>
   </div>
   </div>
@@ -127,9 +128,10 @@
   <div class="cd-b" (click)="specializations()">
   <div class="div-outline custId-cursor"
   [ngClass]="{'div-grn-outline':specializeFilled,'div-red-outline':!specializeFilled }">
-  <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
-  <i *ngIf="!specializeFilled" class="fa fa-exclamation-circle fa-lg fa-red"
+  <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+  <i *ngIf="!specializeFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
   aria-hidden="true"></i>
+  <i class="fa certify-icon"></i> &nbsp;&nbsp;
   <span class="fontstyl">Specializations</span>
   </div>
   </div>
@@ -141,7 +143,8 @@
   <!-- Languages Known -->
   <div class="cd-b" (click)="languagesKnown()">
   <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':languageFilled}">
-  <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+  <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+  <i class="fa lang-icon"></i> &nbsp;&nbsp;
   <span class="fontstyl">Languages Known</span>
   </div>
   </div>
@@ -149,8 +152,9 @@
   <div class="cd-b">
   <div class="div-outline custId-cursor"
   [ngClass]="{'div-grn-outline':( mediaFilled)}" (click)="galerySocialmedia()">
-  <i *ngIf="( mediaFilled)" class="fa fa-check-circle fa-lg fa-grn"
+  <i *ngIf="( mediaFilled)" class="fa fa-check-circle fa-lg fa-grn fl-right"
   aria-hidden="true"></i>
+  <i class="fa galry-icon"></i> &nbsp;&nbsp;
   <span class="fontstyl"> Social Media</span>
   </div>
   </div>

@@ -3,13 +3,13 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading top-row ">
-                    <a class="pull-left back-btn" *ngIf="userId && pSource" (click)="goBack()"><i
+                    <a class="pull-left back-btn mgn-up-5" *ngIf="userId && pSource" (click)="goBack()"><i
                             class="fa fa-arrow-left"></i></a>
                     <a href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"
-                        class="pull-right mgn-lt-10"><i
+                        class="pull-right mgn-lt-10 mgn-up-10"><i
                             class="fa playstore-icon ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><span
                             class="apptext">Get it on Google Play</span></a>
-                    <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="pull-right"><i
+                    <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="pull-right mgn-up-10"><i
                             class="fa appstore-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><span
                             class="apptext">Available on the
                             App store</span></a>
@@ -290,21 +290,23 @@
                                 <ng-container *ngIf="loc['appttime_det'] && !loc['appttime_det']['message']">
                                     <ng-container *ngFor="let service of loc['apptservices'][deptUser.departmentId]">
                                         <div class="bus-item"
-                                            *ngIf="!service.provider || (service.provider && service.provider.id==userId)">
+                                            *ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">
                                             <div class="card card-item-n no-padding">
                                                 <div class="card-item-title">
                                                     <a class="pointer-cursor"
                                                         (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
                                                         <span class="service-icon"
                                                             *ngIf="service.serviceType == 'virtualService'">
-                                                            <i class="fa fa-phone"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                            <i class="fa phon-icon"
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                             <i class="fa meet-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                             <i class="fa zoom-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                            <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                            <i class="fa wtsapaud-icon"
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                                <i class="fa wtsapvid-icon"
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                         </span>
                                                         <b>
                                                             {{service.name | capitalizeFirst}}
@@ -330,7 +332,7 @@
                                                     <div class="card-item-content-action">
                                                         <div class="checkin-btn-bp"
                                                             (click)="appointmentClicked(loc, service)"
-                                                            *ngIf="loc['apptAllowed'] && businessjson.onlinePresence">
+                                                            *ngIf="loc['apptAllowed'] && onlinePresence">
                                                             Appointment
                                                         </div>
                                                         <!-- <div class="checkin-btn-bp"
@@ -347,21 +349,23 @@
                                     *ngIf="loc['estimatedtime_det'] && !loc['estimatedtime_det']['message'] && loc['waitlist']">
                                     <ng-container *ngFor="let service of loc['wlservices'][deptUser.departmentId]">
                                         <div class="bus-item"
-                                            *ngIf="!service.provider || (service.provider && service.provider.id==userId)">
+                                            *ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">
                                             <div class="card card-item-n no-padding">
                                                 <div class="card-item-title">
                                                     <a class="pointer-cursor"
                                                         (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
                                                         <span class="service-icon"
                                                             *ngIf="service.serviceType == 'virtualService'">
-                                                            <i class="fa fa-phone"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                            <i class="fa phon-icon"
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                             <i class="fa meet-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                             <i class="fa zoom-icon"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                            <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                <i class="fa wtsapaud-icon"
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                                <i class="fa wtsapvid-icon"
+                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                         </span>
                                                         <b>
                                                             {{service.name | capitalizeFirst}}
@@ -371,7 +375,7 @@
                                                 <div class="card-item-content">
                                                     <div class="card-item-content-info">
                                                         <ng-container
-                                                            *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
+                                                            *ngIf="loc['waitlist'] && onlinePresence && loc['estimatedtime_det']">
                                                             <ng-container
                                                                 *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                                                                 <p class="title-style mgn-bt-m-5"
@@ -418,7 +422,7 @@
                                                     </div>
                                                     <div class="card-item-content-action">
                                                         <div class="" style="padding-bottom: 10px"
-                                                            *ngIf="loc['waitlist'] && businessjson.onlinePresence">
+                                                            *ngIf="loc['waitlist'] && onlinePresence">
                                                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
                                                                 *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
                                                                 <div class="checkin-btn-bp"
@@ -520,14 +524,16 @@
                                                             (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
                                                             <span class="service-icon"
                                                                 *ngIf="service.serviceType == 'virtualService'">
-                                                                <i class="fa fa-phone"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                <i class="fa phon-icon"
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                 <i class="fa meet-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 &&  service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                                 <i class="fa zoom-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                             </span>
                                                             <b>
                                                                 {{service.name | capitalizeFirst}}
@@ -553,7 +559,7 @@
                                                         <div class="card-item-content-action">
                                                             <div class="checkin-btn-bp"
                                                                 (click)="appointmentClicked(loc, service)"
-                                                                *ngIf="loc['apptAllowed'] && businessjson.onlinePresence">
+                                                                *ngIf="loc['apptAllowed'] && onlinePresence">
                                                                 Appointment
                                                             </div>
                                                             <!-- <div class="checkin-btn-bp"
@@ -577,14 +583,16 @@
                                                             (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
                                                             <span class="service-icon"
                                                                 *ngIf="service.serviceType == 'virtualService'">
-                                                                <i class="fa fa-phone"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                <i class="fa phon-icon"
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                 <i class="fa meet-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                                 <i class="fa zoom-icon"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                             </span>
                                                             <b>
                                                                 {{service.name | capitalizeFirst}}
@@ -594,7 +602,7 @@
                                                     <div class="card-item-content">
                                                         <div class="card-item-content-info">
                                                             <ng-container
-                                                                *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
+                                                                *ngIf="loc['waitlist'] && onlinePresence && loc['estimatedtime_det']">
                                                                 <ng-container
                                                                     *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                                                                     <p class="title-style mgn-bt-m-5"
@@ -642,7 +650,7 @@
                                                         </div>
                                                         <div class="card-item-content-action">
                                                             <div class="" style="padding-bottom: 10px"
-                                                                *ngIf="loc['waitlist'] && businessjson.onlinePresence">
+                                                                *ngIf="loc['waitlist'] && onlinePresence">
                                                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
                                                                     *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
                                                                     <div class="checkin-btn-bp"
@@ -690,14 +698,16 @@
                                                                 (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
                                                                 <span class="service-icon"
                                                                     *ngIf="service.serviceType == 'virtualService'">
-                                                                    <i class="fa fa-phone"
-                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa phon-icon"
+                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                     <i class="fa meet-icon"
-                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                                     <i class="fa zoom-icon"
-                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                    <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                        <i class="fa wtsapaud-icon"
+                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                                        <i class="fa wtsapvid-icon"
+                                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                                 </span>
                                                                 <b>
                                                                     {{service.name | capitalizeFirst}}
@@ -707,7 +717,7 @@
                                                         <div class="card-item-content">
                                                             <div class="card-item-content-info">
                                                                 <ng-container
-                                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
+                                                                    *ngIf="loc['waitlist'] && onlinePresence && loc['estimatedtime_det']">
                                                                     <ng-container
                                                                         *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                                                                         <p class="title-style mgn-bt-m-5"
@@ -756,7 +766,7 @@
                                                             </div>
                                                             <div class="card-item-content-action">
                                                                 <div class="" style="padding-bottom: 10px"
-                                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence">
+                                                                    *ngIf="loc['waitlist'] && onlinePresence">
                                                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
                                                                         *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
                                                                         <div class="checkin-btn-bp"
@@ -796,21 +806,23 @@
                         <ng-container *ngIf="loc['appttime_det'] && !loc['appttime_det']['message']">
                             <ng-container *ngFor="let service of loc['apptservices']">
                                 <div class="bus-item"
-                                    *ngIf="!service.provider || (service.provider && service.provider.id==userId)">
+                                    *ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">
                                     <div class="card card-item-n no-padding">
                                         <div class="card-item-title">
                                             <a class="pointer-cursor"
                                                 (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
                                                 <span class="service-icon"
                                                     *ngIf="service.serviceType == 'virtualService'">
-                                                    <i class="fa fa-phone"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                    <i class="fa phon-icon"
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                     <i class="fa meet-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                     <i class="fa zoom-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                    <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        <i class="fa wtsapaud-icon"
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                        <i class="fa wtsapvid-icon"
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <b>
                                                     {{service.name | capitalizeFirst}}
@@ -832,7 +844,7 @@
                                             </div>
                                             <div class="card-item-content-action">
                                                 <div class="checkin-btn-bp" (click)="appointmentClicked(loc, service)"
-                                                    *ngIf="loc['apptAllowed'] && businessjson.onlinePresence">
+                                                    *ngIf="loc['apptAllowed'] && onlinePresence">
                                                     Appointment
                                                 </div>
                                                 <!-- <div class="checkin-btn-bp"
@@ -849,21 +861,23 @@
                             *ngIf="loc['estimatedtime_det'] && !loc['estimatedtime_det']['message']  && loc['waitlist']">
                             <ng-container *ngFor="let service of loc['wlservices']">
                                 <div class="bus-item"
-                                    *ngIf="!service.provider || (service.provider && service.provider.id==userId)">
+                                    *ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">
                                     <div class="card card-item-n no-padding">
                                         <div class="card-item-title">
                                             <a class="pointer-cursor"
                                                 (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
                                                 <span class="service-icon"
                                                     *ngIf="service.serviceType == 'virtualService'">
-                                                    <i class="fa fa-phone"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                    <i class="fa phon-icon"
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                     <i class="fa meet-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                     <i class="fa zoom-icon"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                    <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        <i class="fa wtsapaud-icon"
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                                                        <i class="fa wtsapvid-icon"
+                                                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <b>
                                                     {{service.name | capitalizeFirst}}
@@ -873,7 +887,7 @@
                                         <div class="card-item-content">
                                             <div class="card-item-content-info">
                                                 <ng-container
-                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
+                                                    *ngIf="loc['waitlist'] && onlinePresence && loc['estimatedtime_det']">
                                                     <ng-container
                                                         *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                                                         <p class="title-style mgn-bt-m-5"
@@ -915,7 +929,7 @@
                                             </div>
                                             <div class="card-item-content-action">
                                                 <div class="" style="padding-bottom: 10px"
-                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence">
+                                                    *ngIf="loc['waitlist'] && onlinePresence">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
                                                         *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
                                                         <div class="checkin-btn-bp"
@@ -971,7 +985,7 @@
                         </ng-container>
                     </ng-container>
                     <ng-container
-                        *ngIf="businessjson.donationFundRaising && businessjson.onlinePresence && donationServicesjson.length >= 1">
+                        *ngIf="businessjson.donationFundRaising && onlinePresence && donationServicesjson.length >= 1">
                         <div class="bus-item" *ngFor="let service of donationServicesjson">
                             <div class="card card-item-n no-padding">
                                 <!-- <img [src]="(service.servicegallery && service.servicegallery.length > 0)? service.servicegallery[0].thumbUrl:'assets/images/img-null.svg'"
@@ -991,7 +1005,7 @@
                                                     Upto
                                                 </p>
                                                 <p class="title-style mgn-up-5-m">
-                                                    &#x20b9;&nbsp;{{service.maxDonationAmount}}
+                                                    <span class="rupee-font">&#x20b9;</span><span>{{service.maxDonationAmount}}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -1014,17 +1028,4 @@
         </div>
     </div>
 </section>
-<footer class="buspdetail main-footer" style="margin-left: 0px">
-    <div class="pull-right hidden-xs footer_info">
-    </div>
-    <span class="footer_info">Powered by Jaldee Inc.</span> 
-    <!-- &nbsp; 
-    <span class="
-    footer_info">All rights
-        reserved.
-    </span> -->
-    <span > <a class="logo">
-            <span class="logo-lg pull-right"><img class="buisnessPageJaldeeLogo" src="assets/images/jaldee-logo.png"
-                    alt="Jaldee"></span>
-        </a></span>
-</footer>
+<app-consumer-footer></app-consumer-footer>

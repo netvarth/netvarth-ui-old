@@ -6,7 +6,9 @@
                             <div *ngIf="showToken"><span style="font-size: x-large;">Token Details</span></div><br>
                             <p *ngIf="!showToken">Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
                             <p *ngIf = "showToken">Token for : {{consumer_fname}} {{consumer_lname}}</p>
-                            <p>Service : {{serv_name}}</p>
+                            <p>Service : {{serv_name}} 
+                                <i *ngIf="data.qdata.service.serviceType === 'virtualService'" [class]=iconClass></i>
+                            </p>
                             <p *ngIf = "deptName">Department : {{deptName}}</p>
                             <p *ngIf = "qstarttime">Queue : {{qname}} [{{qstarttime}} - {{qendtime}}]</p>
                             <p>Date & Time: {{date}}, {{time}}</p>
@@ -19,8 +21,10 @@
                 <div>
                         <div><span style="font-size: x-large;">Appointment Details</span></div><br>
                         <p>Appointment for : {{consumer_fname}}</p>
-                        <p>Service : {{serv_name}}</p>
-                        <p>Appointment Date & Time: {{date}}, {{appttime}}</p>
+                        <p>Service : {{serv_name}}
+                            <i *ngIf="data.qdata.service.serviceType === 'virtualService'" [class]=iconClass></i>
+                        </p>
+                        <p>Appointment Date & Time: {{date}}, {{getSingleTime(appttime)}}</p>
                         <!-- <p *ngIf = "deptName">Department : {{deptName}}</p> -->
                         <p *ngIf = "Schedulestime">Schedule : {{schedulename}} [{{Schedulestime}} - {{Scheduleetime}}]</p>
                         <p *ngIf = "spfname && splname">Service Provider: {{spfname}} {{splname}}</p>

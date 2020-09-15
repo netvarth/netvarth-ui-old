@@ -5,12 +5,14 @@ import { ConsumerAppointmentLiveTrackComponent } from './livetrack/livetrack.com
 import { ConsumerAppointmentPaymentComponent } from './payment/payment.component';
 import { ConsumerAppointmentHistoryComponent } from './history/appointment-history.component';
 import { ConsumerAppointmentBillComponent } from './appointment-bill/appointment-bill.component';
+import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent },
     { path: 'payment/:id', component: ConsumerAppointmentPaymentComponent },
     { path: 'track/:id', component: ConsumerAppointmentLiveTrackComponent },
     { path: 'history', component: ConsumerAppointmentHistoryComponent },
-    { path: 'bill', component: ConsumerAppointmentBillComponent }
+    { path: 'bill', component: ConsumerAppointmentBillComponent },
+    { path: 'confirm', component: ConfirmPageComponent}
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],

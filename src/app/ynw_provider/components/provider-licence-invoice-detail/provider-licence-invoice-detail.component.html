@@ -62,8 +62,8 @@
             <span class="amount-pay">
                 <span *ngIf="source !== 'payment-history'"> Amount to pay</span>
                 <span *ngIf="source === 'payment-history'"> Amount paid</span>
-                <span class="result"
-                    style="float: right">{{invoice.amount | currency:'&#8377; '}}</span></span>
+                <span class="result rupee-font"
+                    style="float:right">{{invoice.amount | currency:'&#8377;'}}</span></span>
 
         </div>
         <div style="border-bottom:2px solid #ddd"></div>
@@ -80,11 +80,11 @@
             <tbody>
                 <tr *ngIf="invoice.licensePkgDetails">
                     <td>{{invoice.licensePkgDetails.licenseName}}</td>
-                    <td class="invoice-head">{{invoice.licensePkgDetails.amount | currency:'&#8377; '}}</td>
+                    <td class="invoice-head rupee-font">{{invoice.licensePkgDetails.amount | currency:'&#8377;'}}</td>
                 </tr>
                 <tr *ngFor="let addon of invoice.addonDetails">
                     <td>{{addon.addonName}}</td>
-                    <td class="invoice-head">{{addon.amount | currency:'&#8377; '}}</td>
+                    <td class="invoice-head rupee-font">{{addon.amount | currency:'&#8377;'}}</td>
                 </tr>
                 <tr *ngIf="invoice.creditDebitJson">
                     <td><b>License Adjustments</b></td>
@@ -95,9 +95,11 @@
                           <td>{{crdt_debtJson.amount | currency:'&#8377; '}}</td> -->
                     <td>{{crdt_debtJson.publicNote}}</td>
                     <td class="invoice-head" *ngIf="crdt_debtJson.type =='debit'">
-                        {{crdt_debtJson.amount | currency:'&#8377; '}}(Dr)</td>
+                        <span class="rupee-font">{{crdt_debtJson.amount | currency:'&#8377;'}}</span>
+                        (Dr)</td>
                     <td class="invoice-head" *ngIf="crdt_debtJson.type =='credit'">
-                        {{crdt_debtJson.amount | currency:'&#8377; '}}(Cr)</td>
+                        <span class="rupee-font">{{crdt_debtJson.amount | currency:'&#8377;'}}</span>
+                        (Cr)</td>
                 </tr>
                 <!-- <tr *ngIf="licenseDiscounts">
 
@@ -109,33 +111,33 @@
                     <td class="invoiceTotal" style="text-align: left">{{discount.name}} <span
                             *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
                     </td>
-                    <td class="price invoice-head">(-){{discount.discountedAmt| currency:'&#8377; '}}</td>
+                    <td class="price invoice-head rupee-font">(-){{discount.discountedAmt| currency:'&#8377;'}}</td>
                 </tr>
 
 
                 <tr class="invoice-discount">
                     <td class="invoiceTotal">Previous Balance </td>
                     <!-- <td class="previousDue" style="text-align: end;" (click)="togglePreviousDue();"><a class="pointlist" style="text-decoration: underline;">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}</a></td> -->
-                    <td class="previousDue" style="text-align: end;">(+){{invoice.balance | currency:'INR':'symbol':'.2-2'}}</td>
+                    <td class="previousDue rupee-font" style="text-align: end;">(+){{invoice.balance | currency:'INR':'symbol':'.2-2'}}</td>
                   </tr> 
               
     
                       <tr [hidden]="previousStatements.addonDetailsArray.length === 0 || showPreviousDue == false" *ngFor="let addon of previousStatements.addonDetailsArray">
                         <td >{{addon.addonName}}</td>
-                        <td style="text-align: right">{{addon.amount| currency: 'INR':'symbol':'.2-2' }} <sub *ngIf="addon.discountTotal">(-  {{addon.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</sub></td>
+                        <td style="text-align: right" class="rupee-font">{{addon.amount| currency: 'INR':'symbol':'.2-2' }} <sub *ngIf="addon.discountTotal">(-  {{addon.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</sub></td>
                       
     
                       </tr>
                       <tr [hidden]="previousStatements.licensePkgDetailsArray.length === 0 || showPreviousDue == false" *ngFor="let license of previousStatements.licensePkgDetailsArray">
                         <td >{{license.licenseName}}</td>
-                        <td style="text-align: right">{{license.amount| currency: 'INR':'symbol':'.2-2'}} <sub *ngIf="license.discountTotal">(- {{license.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</sub></td>                      </tr>
+                        <td style="text-align: right" class="rupee-font">{{license.amount| currency: 'INR':'symbol':'.2-2'}} <sub *ngIf="license.discountTotal">(- {{license.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</sub></td>                      </tr>
                     
               
                   <tr>
 
                 <tr>
                     <td class="invoiceTotal"><b>Total</b></td>
-                    <td class="invoice-head">{{invoice.amount | currency:'&#8377; '}}</td>
+                    <td class="invoice-head rupee-font">{{invoice.amount | currency:'&#8377;'}}</td>
                 </tr>
             </tbody>
         </table>
@@ -271,8 +273,8 @@
                 </div>
                 <div class="pay-det-row">
                     <span class="label">{{amount_cap}} :
-                        <span class="result">
-                            <b>{{payment.amount | currency:'&#8377; '}}</b></span></span>
+                        <span class="result rupee-font">
+                            <b>{{payment.amount | currency:'&#8377;'}}</b></span></span>
                 </div>
                 <div class="pay-det-row">
                     <span class="label">{{payment_cap}} {{date_cap}} :
