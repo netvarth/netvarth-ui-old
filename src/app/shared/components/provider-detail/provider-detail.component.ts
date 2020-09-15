@@ -465,7 +465,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               for (let i = 0; i < this.businessjson.specialization.length; i++) {
                 if (i <= 1 && this.businessjson.specialization[i] !== 'Not Applicable') {
                   this.specializationslist.push(this.businessjson.specialization[i]);
-                } else if (this.businessjson.specialization[i] !== 'Not Applicable'){
+                } else if (this.businessjson.specialization[i] !== 'Not Applicable') {
                   this.specializationslist_more.push(this.businessjson.specialization[i]);
                 }
               }

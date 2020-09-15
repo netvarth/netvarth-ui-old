@@ -469,9 +469,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               // this.specializationslist = this.businessjson.specialization;
 
               for (let i = 0; i < this.businessjson.specialization.length; i++) {
-                if (i <= 1) {
+                if (i <= 1 && this.businessjson.specialization[i] !== 'Not Applicable') {
                   this.specializationslist.push(this.businessjson.specialization[i]);
-                } else {
+                } else if (this.businessjson.specialization[i] !== 'Not Applicable') {
                   this.specializationslist_more.push(this.businessjson.specialization[i]);
                 }
               }
