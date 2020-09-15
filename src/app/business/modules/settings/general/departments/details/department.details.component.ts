@@ -55,6 +55,7 @@ export class DepartmentDetailComponent implements OnInit {
     userlist: any = [];
     users: any = [];
     provider_label = '';
+    deptcaption = 'Add Department';
     constructor(private changeDetectorRef: ChangeDetectorRef,
         private router: Router,
         private dialog: MatDialog,
@@ -163,6 +164,7 @@ export class DepartmentDetailComponent implements OnInit {
             if (form_data.action === 'add') {
                 this.createDepartment(post_itemdata2);
             } else if (form_data.action === 'edit') {
+                // this.deptcaption = 'Edit Department';
                 post_itemdata2.id = this.dept_id;
                 this.updateDepartment(post_itemdata2);
             } else if (form_data.action === 'changestatus') {
@@ -170,10 +172,12 @@ export class DepartmentDetailComponent implements OnInit {
             }
         } else {
             if (form_data.action === 'edit') {
+                this.deptcaption = 'Edit Department';
                 this.selected_action = 'edit';
                 this.changeDetectorRef.detectChanges();
             } else if (form_data.action === 'close' && form_data.source !== 'add') {
                 this.selected_action = 'show';
+                this.deptcaption = 'Department Details';
                 this.changeDetectorRef.detectChanges();
             } else {
                 this.router.navigate(['provider/settings/general/departments/list']);
@@ -267,6 +271,7 @@ export class DepartmentDetailComponent implements OnInit {
                             }
                             this.dept_services = this.dept_data.serviceIds;
                             this.selected_action = 'show';
+                            this.deptcaption = 'Department Details';
                             const breadcrumbs = [];
                             this.breadcrumbs_init.map((e) => {
                                 breadcrumbs.push(e);
@@ -347,5 +352,8 @@ export class DepartmentDetailComponent implements OnInit {
                     this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
+    }
+    redirecToDepartments() {
+        this.router.navigate(['provider', 'settings' , 'general' , 'departments' , 'list']);
     }
 }

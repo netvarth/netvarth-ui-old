@@ -22,6 +22,7 @@ import { ProPicPopupComponent } from '../../../../../bprofile/pro-pic-popup/pro-
 })
 
 export class AboutmeComponent implements OnInit, OnDestroy {
+  logoDetails = null;
   showVirtualFields = false;
   notedialogRef: MatDialogRef<ProPicPopupComponent, any>;
   subdomain_fields_mandatory = [];
@@ -215,7 +216,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
     this.provider_services.patchUserbProfile(pdata, this.userId)
       .subscribe(
         () => {
-          this.sharedfunctionobj.openSnackBar(Messages.BPROFILE_UPDATED);
+          this.sharedfunctionobj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           if (this.domain_fields_mandatory.length !== 0 || this.subdomain_fields_mandatory.length !== 0) {
             this.showVirtualFields = true;
@@ -236,7 +237,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_UPDATED');
-          this.sharedfunctionobj.openSnackBar(Messages.BPROFILE_UPDATED);
+          this.sharedfunctionobj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           if ( this.domain_fields_mandatory.length !== 0 &&  this.domain_fields_mandatory.some(domain => (domain.value === '') || (domain.value === undefined))
            || this.subdomain_fields_mandatory.length !== 0 && this.subdomain_fields_mandatory.some(subdomain => (subdomain.value === '') || (subdomain.value === undefined))) {
@@ -647,12 +648,35 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       }
     }
   }
+  getBusinessProfileLogo() {
+    this.provider_services.getUserBussinessProfile(this.userId)
+      .subscribe(
+        logodata => {
+         this.logoDetails = logodata;
+          if ( this.logoDetails.logo) {
+            this.blogo[0] =  this.logoDetails.logo;
+            console.log(this.blogo[0]);
+            const cnow = new Date();
+            const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+            this.cacheavoider = dd;
+            if (this.blogo[0]) {
+              this.logoExist = true;
+            } else {
+              this.logoExist = false;
+            }
+            this.user_datastorage.updateProfilePicWeightage(true);
+          } else {
+            this.user_datastorage.updateProfilePicWeightage(false);
+          }
+        });
+      }
+
   uploadLogo(passdata) {
     // this.provider_services.uploadLogo(passdata)
     this.provider_services.uploaduserLogo(passdata, this.userId)
       .subscribe(
         data => {
-          this.getBusinessProfile();
+          this.getBusinessProfileLogo();
         },
         error => {
           this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -687,7 +711,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
-      this.getUser();
+      this.getBusinessProfileLogo();
     });
   }
   resetApiErrors() {

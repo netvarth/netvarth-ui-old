@@ -4,6 +4,7 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { projectConstants } from '../../../../../../app.component';
 
 @Component({
     'selector': 'app-department-list',
@@ -14,6 +15,8 @@ export class DepartmentListComponent implements OnInit {
     deptObj;
     breadcrumb_moreoptions: any = [];
     loading = true;
+    tooltipcls = projectConstants.TOOLTIP_CLS;
+    add_button = Messages.ADD_BUTTON;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -102,5 +105,11 @@ export class DepartmentListComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/general->departments']);
 
         }
+    }
+    redirecToDepartments() {
+        this.router.navigate(['provider', 'settings' , 'general' , 'departments']);
+    }
+    addDept() {
+        this.router.navigate(['provider', 'settings', 'general', 'department', 'add']);
     }
 }

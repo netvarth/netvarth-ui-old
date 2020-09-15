@@ -42,6 +42,7 @@ export class TeleServiceComponent implements OnInit {
     starting_url: string;
     meetlink_data;
     servStarted = false;
+    serv_type: any;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -112,7 +113,13 @@ export class TeleServiceComponent implements OnInit {
                         this.servStarted = false;
                     }
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
-                    this.busnes_name = this.data.providerAccount.businessName;
+                    this.serv_type = this.data.service.virtualServiceType;
+                    if (this.data.provider) {
+                        this.busnes_name = this.data.provider.firstName + ' ' + this.data.provider.lastName;
+                    } else {
+                        this.busnes_name = this.data.providerAccount.businessName;
+                    }
+                    console.log(this.busnes_name);
                     this.serv_name = this.data.service.name;
                     this.servDetails = this.data.service;
                     if (this.data.waitlistingFor[0].email) {
@@ -141,7 +148,13 @@ export class TeleServiceComponent implements OnInit {
                         this.servStarted = false;
                     }
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
-                    this.busnes_name = this.data.providerAccount.businessName;
+                    this.serv_type = this.data.service.virtualServiceType;
+                    if (this.data.provider) {
+                        this.busnes_name = this.data.provider.firstName + ' ' + this.data.provider.lastName;
+                    } else {
+                        this.busnes_name = this.data.providerAccount.businessName;
+                    }
+                  //  this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
                     this.servDetails = this.data.service;
                     if (this.data.providerConsumer.email) {
@@ -325,7 +338,8 @@ export class TeleServiceComponent implements OnInit {
     // Sending rest API to consumer and provider about service starting
     chkinTeleserviceJoinLink() {
         const uuid_data = {
-            'mode': this.callingModes
+            'mode': this.callingModes,
+            'recipients': ['PROVIDER', 'CONSUMER']
         };
         this.shared_services.consumerWtlstTeleserviceWithId(uuid_data, this.waiting_id).
             subscribe((modeData) => {
@@ -333,7 +347,8 @@ export class TeleServiceComponent implements OnInit {
     }
     apptTeleserviceJoinLink() {
         const uuid_data = {
-            'mode': this.callingModes
+            'mode': this.callingModes,
+            'recipients': ['PROVIDER', 'CONSUMER']
         };
         this.shared_services.consumerApptTeleserviceWithId(uuid_data, this.waiting_id).
             subscribe((modeData) => {

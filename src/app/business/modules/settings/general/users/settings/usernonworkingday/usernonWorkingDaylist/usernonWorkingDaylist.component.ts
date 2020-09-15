@@ -202,4 +202,7 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
         (error) => {
         });
   }
+  redirecToUserSettings() {
+    this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings']);
+  }
 }

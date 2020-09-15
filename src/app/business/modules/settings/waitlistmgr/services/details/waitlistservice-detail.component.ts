@@ -145,7 +145,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         }
                     } else {
                         if (serviceActionModel.action === 'edit') {
-                            this.servicecaption = ' Edit Serviec';
+                            this.servicecaption = ' Edit Service';
                             this.serviceParams['action'] = 'edit';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else if (serviceActionModel.action === 'close' && serviceActionModel.source !== 'add') {

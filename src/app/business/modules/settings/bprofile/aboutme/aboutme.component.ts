@@ -141,9 +141,11 @@ export class AboutMeComponent implements OnInit {
     //  return;
     // }
     if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
+      // this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
+      this.sharedfunctionObj.openSnackBar(Messages.BUSINESS_NAME_MAX_LENGTH_MSG, { 'panelClass': 'snackbarerror' });
     } else if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
+      // this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
+      this.sharedfunctionObj.openSnackBar(Messages.BUSINESS_DESC_MAX_LENGTH_MSG, { 'panelClass': 'snackbarerror' });
     } else {
       const post_itemdata = {
         'businessName': form_data.bname,
@@ -167,8 +169,7 @@ export class AboutMeComponent implements OnInit {
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
         () => {
-
-          this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_UPDATED);
+          this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           console.log(this.domain_fields_mandatory.length);
           console.log(this.subdomain_fields_mandatory.length);
@@ -199,7 +200,7 @@ export class AboutMeComponent implements OnInit {
       .subscribe(
         () => {
           // this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
-          this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_UPDATED);
+          this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           setTimeout(() => {
             this.redirecToBprofile();

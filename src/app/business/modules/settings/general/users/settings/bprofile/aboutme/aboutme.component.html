@@ -98,7 +98,7 @@
                                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')" errorMsg="Please describe your business/service in brief">
                                                             </app-field-error-display>
                                                         </div>
-                                                        <div *ngIf="showVirtualFields">
+                                                        <div [hidden]="showVirtualFields==false">
                                                           <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
                                                             <div *ngFor="let fields of domain_fields_mandatory">
                                                               <ng-container >
@@ -436,7 +436,7 @@
                                                                                         (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">
                                                                                         <i class="icon-edit"></i>
                                                                                         <span>{{edit_cap}}</span>
-                                                                                      </button> 
+                                                                                      </button>
                                                                                       <button type="button" mat-menu-item
                                                                                         (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">
                                                                                         <i class="icon-delete"></i>

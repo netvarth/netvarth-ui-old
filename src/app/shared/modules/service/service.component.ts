@@ -169,9 +169,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
                                             'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
                                             'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
-                                            'minDonationAmount': this.service_data['minDonationAmount'] || this.serviceForm.get('minDonationAmount').value || '0',
-                                            'maxDonationAmount': this.service_data['maxDonationAmount'] || this.serviceForm.get('maxDonationAmount').value || '0',
-                                            'multiples': this.service_data['multiples'] || this.serviceForm.get('multiples').value || '0',
+                                            'minDonationAmount': this.service_data['minDonationAmount'] || this.serviceForm.get('minDonationAmount').value || '1',
+                                            'maxDonationAmount': this.service_data['maxDonationAmount'] || this.serviceForm.get('maxDonationAmount').value || '1',
+                                            'multiples': this.service_data['multiples'] || this.serviceForm.get('multiples').value || '1',
                                             'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
                                                 this.service_data['minPrePaymentAmount'] !== 0
                                             ) ? true : false,
@@ -206,9 +206,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
                                             'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
                                             'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
-                                            'minDonationAmount': this.service_data['minDonationAmount'] || this.serviceForm.get('minDonationAmount').value || '0',
-                                            'maxDonationAmount': this.service_data['maxDonationAmount'] || this.serviceForm.get('maxDonationAmount').value || '0',
-                                            'multiples': this.service_data['multiples'] || this.serviceForm.get('multiples').value || '0',
+                                            'minDonationAmount': this.service_data['minDonationAmount'] || this.serviceForm.get('minDonationAmount').value || '1',
+                                            'maxDonationAmount': this.service_data['maxDonationAmount'] || this.serviceForm.get('maxDonationAmount').value || '1',
+                                            'multiples': this.service_data['multiples'] || this.serviceForm.get('multiples').value || '1',
                                             'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
                                                 this.service_data['minPrePaymentAmount'] !== 0
                                             ) ? true : false,
@@ -371,6 +371,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     }
                     if (this.action === 'add' && this.departments.length > 0) {
                         this.serviceForm.get('department').setValue(this.departments[0].departmentId);
+                        this.departId = this.departments[0].departmentId;
+                        this.getUsers();
                     }
                 }
                 },
@@ -381,6 +383,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     onSubmit(form_data) {
         if (form_data.serviceType === 'virtualService') {
+          //  this.tool_id = this.tool_id.trim();
             this.teleCallingModes = {
                 'callingMode': this.tool_name,
                 'value': this.tool_id,
@@ -513,9 +516,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     serviceDuration: [''],
                     totalAmount: [0],
-                    minDonationAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
-                    maxDonationAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
-                    multiples: [0, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    minDonationAmount: [1, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    maxDonationAmount: [1, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    multiples: [1, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
                     notification: [true],
@@ -550,9 +553,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     serviceDuration: [''],
                     totalAmount: [0],
-                    minDonationAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
-                    maxDonationAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
-                    multiples: [0, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    minDonationAmount: [1, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    maxDonationAmount: [1, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    multiples: [1, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
                     notification: [true],

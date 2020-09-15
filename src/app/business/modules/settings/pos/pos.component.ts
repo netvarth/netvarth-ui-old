@@ -144,7 +144,7 @@ export class POSComponent implements OnInit {
     const value = (event.checked) ? true : false;
     const status = (value) ? 'enabled' : 'disabled';
     this.provider_services.setProviderPOSStatus(value).subscribe(data => {
-      this.shared_functions.openSnackBar('POS settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.shared_functions.openSnackBar('Billing settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
       this.getPOSSettings();
     }, (error) => {
       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

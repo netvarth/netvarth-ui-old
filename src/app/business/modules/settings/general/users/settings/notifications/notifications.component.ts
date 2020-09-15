@@ -126,4 +126,7 @@ export class NotificationsUserComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
         }
     }
+    redirecToUserSettings() {
+        this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings']);
+    }
 }

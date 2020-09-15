@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../../../../../../../shared/functions/shared
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../../../app.component';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-user-services',
@@ -13,6 +14,7 @@ import { projectConstants } from '../../../../../../../../app.component';
 export class WaitlistServicesComponent implements OnInit, OnDestroy {
     add_new_serv_cap = Messages.SER_ADD_NEW_SER_CAP;
     est_duration_cap = Messages.SER_EST_DURATION_CAP;
+    services_cap = Messages.WAITLIST_SERVICES_CAP;
     min_cap = Messages.SER_MIN_CAP;
     price_cap = Messages.SER_PRICE_CAP;
     isServiceBillable = false;
@@ -71,6 +73,9 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' },
             { 'title': 'Help', 'type': 'learnmore' }]
         };
+        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare')  {
+            this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
+          }
     }
 
     ngOnDestroy() {
@@ -209,4 +214,10 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
           this.setPaginationFilter(pgefilter);
           this.getServices(pgefilter);
       }
+      redirecToUserSettings() {
+        this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings']);
+      }
+      addservice() {
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'services', 'add']);
+       }
 }

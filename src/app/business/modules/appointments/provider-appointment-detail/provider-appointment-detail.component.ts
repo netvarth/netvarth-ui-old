@@ -82,6 +82,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   availableSlotDetails: any = [];
   callingModes = projectConstants.CALLING_MODES;
   pos = false;
+  iconClass: string;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -143,6 +144,30 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.waitlist_data = data;
+          if (this.waitlist_data.service.serviceType === 'virtualService') {
+            switch (this.waitlist_data.service.virtualCallingModes[0].callingMode) {
+              case 'Zoom': {
+                this.iconClass = 'fa zoom-icon';
+                break;
+              }
+              case 'GoogleMeet': {
+                this.iconClass = 'fa meet-icon';
+                break;
+              }
+              case 'WhatsApp': {
+                if (this.waitlist_data.service.virtualServiceType === 'audioService') {
+                  this.iconClass = 'fa wtsapaud-icon';
+                } else {
+                  this.iconClass = 'fa wtsapvid-icon';
+                }
+                break;
+              }
+              case 'Phone': {
+                this.iconClass = 'fa phon-icon';
+                break;
+              }
+            }
+          }
           // this.getTimeSlots();
           if (this.waitlist_data.appmtTime) {
             this.apptTime = this.waitlist_data.appmtTime;

@@ -3,6 +3,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { OnInit, Component } from '@angular/core';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-provider-jcoupon-details',
   templateUrl: './provider-jcoupon-details.component.html',
@@ -57,6 +58,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   checkin_label = '';
   constructor(private provider_servicesobj: ProviderServices,
     public shared_functions: SharedFunctions,
+    private location: Location,
     private router: ActivatedRoute) { this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
   ngOnInit() {
     this.router.params
@@ -98,7 +100,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
     return this.shared_functions.formatDateDisplay(dateStr);
   }
   redirecToJaldeeBilling() {
-
+    this.location.back();
   }
   changecouponStatus(jcCoupon) {
     const jc_coupon_status = (jcCoupon.couponState === 'ENABLED') ? 'disable' : 'enable';

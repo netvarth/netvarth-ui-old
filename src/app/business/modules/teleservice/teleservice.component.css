@@ -24,9 +24,38 @@ textarea {
     height:30px;
     padding-bottom: 10px;
 }
-.meet-icon, .zoom-icon {
+.meet-icon, .wtsapvid-icon {
     width: 20px !important;
 }
+.zoom-icon {
+    width: 30px !important;
+}
+.wtsapaud-icon {
+    width: 35px !important;
+}
+.wtsapvid-icon {
+    width: 35px !important;
+}
+.phon-icon {
+    width: 25px !important;
+}
+.strtvideo .zoom-icon {
+    width: 20px !important;
+}
+.strtvideo .meet-icon {
+    width: 15px !important;
+}
+.strtaudio .phon-icon {
+    width: 15px !important;
+}
+.strtaudio .wtsapaud-icon {
+    width: 18px !important;
+}
+.strtaudio .wtsapvid-icon {
+    width: 18px !important;
+}
+
+
 .ln-hgt-30 {
     line-height: 30px;
 }

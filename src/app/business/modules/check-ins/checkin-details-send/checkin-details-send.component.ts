@@ -39,6 +39,7 @@ export class CheckinDetailsSendComponent implements OnInit {
     SEND_MESSAGE = '';
     settings: any = [];
     showToken = false;
+  iconClass: string;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
@@ -52,6 +53,31 @@ export class CheckinDetailsSendComponent implements OnInit {
     this.getProviderSettings();
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.bname = this.data.qdata.providerAccount.businessName;
+    console.log(this.data.qdata);
+    if (this.data.qdata.service.serviceType === 'virtualService') {
+      switch (this.data.qdata.service.virtualCallingModes[0].callingMode) {
+        case 'Zoom': {
+          this.iconClass = 'fa zoom-icon';
+          break;
+        }
+        case 'GoogleMeet': {
+          this.iconClass = 'fa meet-icon';
+          break;
+        }
+        case 'WhatsApp': {
+          if (this.data.qdata.service.virtualServiceType === 'audioService') {
+            this.iconClass = 'fa wtsapaud-icon';
+          } else {
+            this.iconClass = 'fa wtsapvid-icon';
+          }
+          break;
+        }
+        case 'Phone': {
+          this.iconClass = 'fa phon-icon';
+          break;
+        }
+      }
+    }
     if (this.chekintype === 'Waitlist') {
         this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;
         this.consumer_lname = this.data.qdata.waitlistingFor[0].lastName;
@@ -103,6 +129,10 @@ export class CheckinDetailsSendComponent implements OnInit {
   }
     back() {
         this.dialogRef.close();
+    }
+    getSingleTime(slot) {
+      const slots = slot.split('-');
+      return this.shared_functions.convert24HourtoAmPm(slots[0]);
     }
     sendMessage() {
       if (this.chekintype === 'Waitlist') {

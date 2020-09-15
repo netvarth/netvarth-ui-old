@@ -969,4 +969,10 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                     });
         });
     }
+    redirecToUserSettings() {
+      this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings']);
+    }
+    adduserqueue() {
+      this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'queues', 'add']);
+    }
 }

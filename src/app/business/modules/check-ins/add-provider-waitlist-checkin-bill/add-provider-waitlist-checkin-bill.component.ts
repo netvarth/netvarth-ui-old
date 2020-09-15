@@ -207,6 +207,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   showToken = false;
   spname: any;
   provider_label: any;
+  mobilenumber: any;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -335,6 +336,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         data => {
           this.checkin = data;
           this.emailId = this.checkin.providerConsumer.email;
+          this.mobilenumber = this.checkin.phoneNumber;
           this.getWaitlistBill();
           this.getPrePaymentDetails()
             .then(
@@ -361,6 +363,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
+          this.mobilenumber = this.checkin.waitlistPhoneNumber,
           this.emailId = this.checkin.waitlistingFor[0].email;
           this.getWaitlistBill();
           this.getPrePaymentDetails()
@@ -1330,9 +1333,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        mobilenumber: this.bill_data.billFor.alternativePhoneNo,
         emailId: this.emailId,
-        // mobilenumber : this.checkin.waitlistPhoneNumber,
+        mobilenumber : this.mobilenumber,
         uuid : this.uuid
       }
     });

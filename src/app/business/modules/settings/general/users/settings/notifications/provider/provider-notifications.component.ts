@@ -959,4 +959,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
   }
+  redirecToUserNotifications() {
+    this.routerobj.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings' ,'notifications']);
+  }
 }

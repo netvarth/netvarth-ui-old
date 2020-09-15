@@ -97,6 +97,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     enddateError = false;
     minDate;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    queuecaption = 'Add Queue';
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -287,6 +288,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.queueSchedule) {
+                        this.queuecaption = 'Queue Details';
                         schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.queueSchedule);
                     }
                     this.display_schedule = [];
@@ -302,6 +304,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.action === 'edit') {
+                        this.queuecaption = 'Edit Queue';
                         this.createForm();
                     }
                 },
@@ -328,6 +331,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.api_loading = false;
     }
     addEditProviderQueue() {
+        this.queuecaption = 'Edit Queue';
         this.action = 'edit';
         this.createForm();
     }
@@ -642,6 +646,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 // }
             };
             if (this.action === 'edit') {
+                this.queuecaption = 'Queue Details';
                 this.editProviderQueue(post_data);
             } else {
                 this.addProviderQueue(post_data);
@@ -694,6 +699,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     closeClick() {
         if (this.action === 'edit' && this.params.action !== 'editFromList' && this.params.source !== 'location_detail') {
             this.action = 'view';
+            this.queuecaption = 'Queue Details';
         } else {
             this._location.back();
         }
@@ -873,4 +879,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             this.showEditSection = false;
         }
     }
+    redirecToUserqueues() {
+        this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings' , 'queues']);
+     }
 }

@@ -168,4 +168,10 @@ export class DepartmentsComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/general->departments']);
         }
     }
+    redirecToGeneral() {
+        this.router.navigate(['provider', 'settings' , 'general']);
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/general->departments']);
+    }
 }

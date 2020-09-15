@@ -969,5 +969,11 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
                     });
         });
     }
+    redirecToUserSettings() {
+        this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings']);
+    }
+    adduserschedules() {
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'schedules', 'add']);
+    }
 }
 

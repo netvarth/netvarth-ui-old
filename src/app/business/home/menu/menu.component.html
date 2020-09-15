@@ -29,7 +29,7 @@
             </div> -->
     <!-- <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && qAvailability.timeRange">
                 Today I'm available <br/>
-                after {{qAvailability.timeRange.eTime}} 
+                after {{qAvailability.timeRange.eTime}}
             </div>  -->
     <!-- </div> -->
     <!-- </div>
@@ -140,16 +140,21 @@
         </a>
       </li>
       <li class="separator"></li>
-      <!-- <li>
+      <li>
         <a class="pointer-cursor" routerLink="license" (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="icon-license"></i> <span> License</span>
         </a>
-      </li> -->
+      </li>
       <li>
         <a class="pointer-cursor" routerLink="settings" (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-gears"></i> <span> Settings</span>
         </a>
       </li>
+      <!-- <li>
+        <a class="pointer-cursor" routerLink="reports" (click)="closeMenu()" routerLinkActive="active-lnk">
+          <i class="fa fa-reports"></i> <span> Reports</span>
+        </a>
+      </li> -->
       <li *ngIf="accountType=='BRANCH'">
         <a class="pointer-cursor" routerLink="settings/general/users" (click)="closeMenu()"
           routerLinkActive="active-lnk">

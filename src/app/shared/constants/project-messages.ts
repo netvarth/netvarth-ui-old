@@ -81,6 +81,7 @@ export const Messages = {
   'BPROFILE_IMAGE_UPLOAD': 'Uploaded successfully',
   'BPROFILE_SOCIALMEDIA_SAVED': 'Social media link added successfully',
   'BPROFILE_SOCIALMEDIA_UPDATE': 'Social media link updated successfully',
+  'BPROFILE_ABOUT_UPDATED': 'Profile updated successfully',
   'BPROFILE_UPDATED': 'Business Profile updated successfully',
   'BPROFILE_LOGOUPLOADED': 'Profile image uploaded successfully',
   'BPROFILE_LOGODELETE_CONF': 'Remove Profile image?',
@@ -138,7 +139,7 @@ export const Messages = {
   'NEW_DONATION_TOOLTIP': 'Please add this cause to the relevant Queues by editing it',
   'WAITLIST_TURNTIME_INVALID': 'Please enter a valid waiting time',
   'SELECT_TELE_MODE': 'Please select the mode',
-  'SELECT_TELE_TOOL': 'Please select the tool',
+  'SELECT_TELE_TOOL': 'Please select the App',
   // Inbox
   'MESSAGE_SENT': 'Message sent successfully',
 
@@ -161,7 +162,7 @@ export const Messages = {
   'TELE_NOT_SUPPORTED': 'is not supported on this device.',
   'SENDING_MEET_DETAILS': 'Send the meeting details to your phone or tablet where',
   'IS_AVAILABLE': 'is available to you',
-  'PHONE_OR_TAB': 'Send meeting details to your phone/tablet where',
+  'PHONE_OR_TAB': 'Send meeting instructions to your phone/tablet where',
   'IS_INSTALD': 'is available',
   'SEND_REMINDER': 'Send a reminder that the service will begin in',
   // Teleservice reminder and meeting details
@@ -171,7 +172,7 @@ export const Messages = {
   'UR_TURN': 'When it is your turn, Click on the following link - \n',
   'WAIT': 'Wait for ',
   'JOIN': ' to join',
-  'NET_CNNCT': 'Remember to keep your internet connection turned on to receive the call.',
+  'NET_CNNCT': 'Please remember to keep your internet connection on.',
   'CAL_U': ' will be calling you shortly. ',
 
   // Payment Setting
@@ -1384,7 +1385,7 @@ export const Messages = {
   'FRM_LEVEL_ADDITIONAL_MSG': 'Add other details of you or your business so that [customer]s can understand you more.',
   'FRM_LEVEL_VERI_MSG': 'To upgrade verification level contact Jaldee.',
   'FRM_LEVEL_GALLERY_MSG': 'Add images and catchy captions to boost your [customer]\'s check-ins',
-  'FRM_LEVEL_SOCIAL_MSG': 'To connect with [customer]s on your social media platform, add your social media links here.',
+  'FRM_LEVEL_SOCIAL_MSG': 'Add your social media accounts here.These will get displayed on your profile.',
 
   // form-level-provider-waitlist
   'FRM_LEVEL_WAIT_TIME_CALC_MSG': 'Choose one of the four wait-time calculation options. This calculated time is the standby time after which your [customer] can avail the services.',

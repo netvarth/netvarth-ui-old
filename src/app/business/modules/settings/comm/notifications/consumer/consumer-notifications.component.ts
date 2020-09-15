@@ -56,6 +56,10 @@ export class ConsumerNotificationsComponent implements OnInit {
   earlyDONATNotificatonSettings = { eventType: 'EARLY', resourceType: 'DONATION', sms: false, email: false, pushNotification: false, personsAhead: '' };
   prefinalWLNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   prefinalAPPTNotificationSettings = { eventType: 'PREFINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
+  firstAPPTNotificationSettings = { eventType: 'FIRSTNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '1440'};
+  secondAPPTNotificationSettings = { eventType: 'SECONDNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '480' };
+  thirdAPPTNotificationSettings = { eventType: 'THIRDNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '240' };
+  fourthAPPTNotificationSettings = { eventType: 'FORTHNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '60' };
   prefinalDONATNotificationSettings = { eventType: 'PREFINAL', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
   finalWLNotificationSettings = { eventType: 'FINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   finalAPPTNotificationSettings = { eventType: 'FINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
@@ -65,11 +69,15 @@ export class ConsumerNotificationsComponent implements OnInit {
   donatAddNotificationSettings = { eventType: 'DONATIONSERVICE', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
   showButton: any = {};
   customer_label = '';
-  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false, 'DONATIONSERVICE': false };
+  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'FIRST_APPT': false, 'SECOND_APPT': false, 'THIRD_APPT': false, 'FOURTH_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false, 'DONATIONSERVICE': false };
   consumerNotification;
   notification_statusstr: string;
   wltstPersonsahead;
   apptPersonsahead;
+  firstApptTime;
+  secondApptTime;
+  thirdApptTime;
+  fourthApptTime;
   donatPersonsahead;
   appointment_status: any;
   waitlistStatus: any;
@@ -77,6 +85,10 @@ export class ConsumerNotificationsComponent implements OnInit {
   settings: any = [];
   showToken = false;
   api_loading = true;
+  firstapptNotificationTime ;
+  secondapptNotificationTime ;
+  thirdapptNotificationTime ;
+  fourthapptNotificationTime ;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -197,7 +209,30 @@ export class ConsumerNotificationsComponent implements OnInit {
       } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['FINAL_APPT'] = true;
         this.finalAPPTNotificationSettings = notificationObj;
-      } else if (notificationObj['eventType'] === 'DONATIONSERVICE' && notificationObj['resourceType'] === 'DONATION') {
+      } 
+
+      else if (notificationObj['eventType'] === 'FIRSTNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings['FIRST_APPT'] = true;
+        this.firstAPPTNotificationSettings = notificationObj;
+        this.firstApptTime = (notificationObj['time']) ? true : false;
+      } 
+      else if (notificationObj['eventType'] === 'SECONDNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings['SECOND_APPT'] = true;
+        this.secondAPPTNotificationSettings = notificationObj;
+        this.secondApptTime = (notificationObj['time']) ? true : false;
+      } 
+      else if (notificationObj['eventType'] === 'THIRDNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings['THIRD_APPT'] = true;
+        this.thirdAPPTNotificationSettings = notificationObj;
+        this.thirdApptTime = (notificationObj['time']) ? true : false;
+      } else if (notificationObj['eventType'] === 'FORTHNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings['FOURTH_APPT'] = true;
+        this.fourthAPPTNotificationSettings = notificationObj;
+        this.fourthApptTime = (notificationObj['time']) ? true : false;
+      } 
+      
+      
+      else if (notificationObj['eventType'] === 'DONATIONSERVICE' && notificationObj['resourceType'] === 'DONATION') {
         this.cSettings['DONATIONSERVICE'] = true;
         this.donatAddNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'DONATION') {
@@ -240,7 +275,20 @@ export class ConsumerNotificationsComponent implements OnInit {
       activeInput = this.prefinalAPPTNotificationSettings;
     } else if (type === 'FINAL_APPT') {
       activeInput = this.finalAPPTNotificationSettings;
-    } else if (type === 'DONATIONSERVICE') {
+    } 
+    else if (type === 'FIRST_APPT') {
+      activeInput = this.firstAPPTNotificationSettings;
+    }
+    else if (type === 'SECOND_APPT') {
+      activeInput = this.secondAPPTNotificationSettings;
+    }
+    else if (type === 'THIRD_APPT') {
+      activeInput = this.thirdAPPTNotificationSettings;
+    }
+    else if (type === 'FOURTH_APPT') {
+      activeInput = this.fourthAPPTNotificationSettings;
+    }
+    else if (type === 'DONATIONSERVICE') {
       activeInput = this.donatAddNotificationSettings;
     } else if (type === 'EARLY_DONAT') {
       activeInput = this.earlyDONATNotificatonSettings;
@@ -273,6 +321,11 @@ export class ConsumerNotificationsComponent implements OnInit {
         }
       );
     }
+  } 
+  timeinHrMin(val) {
+    const hours = Math.floor(val / 60);
+    const minutes = val % 60;
+  return hours + ' Hr ' + minutes + ' min' ;
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
