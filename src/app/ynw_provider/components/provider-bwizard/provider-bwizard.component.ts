@@ -19,7 +19,9 @@ import { ShowMessageComponent } from '../../../business/modules/show-messages/sh
 
 @Component({
   selector: 'app-provider-bwizard',
-  templateUrl: './provider-bwizard.component.html'
+  templateUrl: './provider-bwizard.component.html',
+  styleUrls: ['./provider-bwizard.component.css']
+
 })
 
 export class ProviderbWizardComponent implements OnInit {
