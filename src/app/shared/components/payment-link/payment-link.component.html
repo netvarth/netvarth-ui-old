@@ -69,7 +69,11 @@
                                                                               class="title">{{gstin_cap}}</span>
                                                                           <span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
                                                                       </span>
-                                                                  </div>
+                                                                      <span class="columns" *ngIf="username">
+                                                                            <span class="title">{{provider_label | capitalizeFirst}}:</span>
+                                                                            <span class="dynamic">{{username}}</span>
+                                                                        </span>
+                                                                   </div>
                                                               </div>
                                                             </div>
                       

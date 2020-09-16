@@ -73,6 +73,7 @@ export class CheckinDetailComponent implements OnInit {
     iconClass: string;
     showtoken: any;
     breadcrumbs = [];
+    tokennumber: any;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -111,6 +112,9 @@ export class CheckinDetailComponent implements OnInit {
         this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
         this.phonenumber = waitlistjson.waitlistPhoneNumber;
         this.servsDetails = waitlistjson.service;
+         if (waitlistjson.token) {
+          this.tokennumber = waitlistjson.token;
+        }
         this.showtoken = waitlistjson.showToken;
         if (this.showtoken) {
             this.breadcrumbs = [

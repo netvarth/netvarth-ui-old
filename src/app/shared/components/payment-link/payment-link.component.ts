@@ -111,6 +111,8 @@ export class PaymentLinkComponent implements OnInit {
   providername: any;
   description: any;
   businessname: any;
+  username: any;
+  provider_label: any;
 
   constructor(
     public provider_services: ProviderServices,
@@ -134,6 +136,7 @@ export class PaymentLinkComponent implements OnInit {
       this.bname = bdetails.bn || '';
     }
     this.getuuid();
+    this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
   }
   getuuid() {
     this.provider_services.Paymentlinkcheck(this.genid)
@@ -149,6 +152,9 @@ export class PaymentLinkComponent implements OnInit {
             this.billPaymentStatus = this.bill_data.billPaymentStatus;
             this.uuid = this.bill_data.uuid;
             this.accountId = this.bill_data.id;
+          }
+          if (this.bill_data.accountProfile.providerBusinessName) {
+            this.username = this.bill_data.accountProfile.providerBusinessName;
           }
 
           for (let i = 0; i < this.bill_data.discount.length; i++) {

@@ -98,6 +98,8 @@
                 </div>
                 <div class="item" *ngIf="waitlist_data.phoneNumber"><span class="ttle">Phone
                     number</span><span>{{waitlist_data.phoneNumber}}</span></div>
+                <div class="item" *ngIf="waitlist_data.provider"><span class="ttle">{{provider_label | capitalizeFirst}}</span>
+                  <span>{{spfname | capitalizeFirst}} {{splname}}</span></div>
                 <div class="item" *ngIf="userDet['sector'] == 'foodJoints' && waitlist_data.partySize"><span
                     class="ttle">{{party_size_cap}}</span><span>
                     {{waitlist_data.partySize}}</span></div>

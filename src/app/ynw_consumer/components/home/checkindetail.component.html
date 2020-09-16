@@ -28,6 +28,9 @@
                                 <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
                                     <span class="waitlist_for">
                                         {{firstname | capitalizeFirst}} {{lastname | capitalizeFirst}}</span></div>
+                                <div *ngIf = "tokennumber" class="item"><span class="ttle">Token number</span>
+                                     <span class="waitlist_for">
+                                           {{tokennumber}}</span></div>
                                 <div class="item"><span class="ttle">{{service_cap}}</span> 
                                     <i *ngIf="servsDetails.serviceType === 'virtualService'" [class]=iconClass></i>
                                     {{service | capitalizeFirst}}<span
