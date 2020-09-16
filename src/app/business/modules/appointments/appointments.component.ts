@@ -3084,18 +3084,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.loadApiSwitch('reloadAPIs');
   }
-  CreateVoiceCall() {
-    const _this = this;
-    let appt;
-    Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-      appt = _this.appointmentsChecked[apptIndex];
-    });
+  CreateVoiceCall(appt?) {
+    let appmt;
+    appmt = appt.uid;
     this.voicedialogRef = this.dialog.open(VoicecallDetailsSendComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        uuid: appt.uid,
+        uuid: appmt,
         // chekintype: 'appointment'
       }
     });

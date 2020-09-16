@@ -1078,7 +1078,7 @@
                             *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
                         </div>
                       </td>
-                      <td class="td-three"><button (click)="CreateVoiceCall()">
+                      <td class="td-three"><button (click)="CreateVoiceCall( appt)">
                         Voice call
                        </button></td>
                       <td class="td-three">

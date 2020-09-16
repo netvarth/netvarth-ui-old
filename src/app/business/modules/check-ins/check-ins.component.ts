@@ -2663,18 +2663,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoSettings() {
     this.router.navigate(['/provider/settings']);
   }
-  CreateVoiceCall() {
-    const _this = this;
-    let checkin;
-    Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-      checkin = _this.appointmentsChecked[apptIndex];
-    });
+  CreateVoiceCall(wtlst?) {
+    let waitlist;
+      waitlist = wtlst.ynwUuid;
     this.voicedialogRef = this.dialog.open(VoicecallDetailsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        checkin_id: checkin.ynwUuid
+        checkin_id: waitlist
         // chekintype: 'appointment'
       }
     });

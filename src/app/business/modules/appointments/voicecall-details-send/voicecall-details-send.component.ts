@@ -24,7 +24,6 @@ export class VoicecallDetailsSendComponent implements OnInit {
     public dialogRef: MatDialogRef<VoicecallDetailsSendComponent>) {
     this.uuid = this.data.uuid;
     this.userid = this.data.custId;
-    console.log(this.userid);
     this.chekintype = this.data.chekintype;
   }
   ngOnInit() {

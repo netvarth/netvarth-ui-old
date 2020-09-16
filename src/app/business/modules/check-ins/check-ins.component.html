@@ -791,7 +791,7 @@
                             *ngFor="let label of checkin.label | keyvalue">{{label.value}}</span>
                         </div>
                       </td>
-                      <td class="td-three"><button (click)="CreateVoiceCall()">
+                      <td class="td-three"><button (click)="CreateVoiceCall(checkin)">
                         Voice call
                        </button></td>
                       <td class="td-three">
