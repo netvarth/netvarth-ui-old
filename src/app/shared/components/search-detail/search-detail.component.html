@@ -570,6 +570,7 @@
                                                             <i class="fa wtsapvid-icon"
                                                             *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'WhatsApp' && serv.virtualServiceType ==='videoService'"></i>
                                                     </span>
+                                                    <span *ngIf="serv.virtualCallingModes && (serv.virtualCallingModes[0].callingMode == 'Phone'||serv.virtualCallingModes[0].callingMode == 'GoogleMeet')">&nbsp;</span>
                                                     {{serv.name
                                                     | capitalizeFirst}}
                                                     <!-- <span *ngIf="serv.serviceType == 'virtualService'">
