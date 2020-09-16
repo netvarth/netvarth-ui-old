@@ -1078,6 +1078,9 @@
                             *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
                         </div>
                       </td>
+                      <td class="td-three"><button (click)="CreateVoiceCall()">
+                        Voice call
+                       </button></td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"

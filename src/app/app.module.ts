@@ -76,9 +76,11 @@ import { PaymentLinkComponent } from './shared/components/payment-link/payment-l
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
-import { ShareService } from 'ngx-sharebuttons';
 import { ConsumerFooterModule } from './ynw_consumer/components/footer/footer.module';
 import { HeaderModule } from './shared/modules/header/header.module';
+import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
+import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
+import { LiveChatClientComponent } from './shared/components/twilio/twilio-live-client.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();

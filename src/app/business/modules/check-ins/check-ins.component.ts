@@ -19,6 +19,7 @@ import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { CheckinDetailsSendComponent } from './checkin-details-send/checkin-details-send.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
 import { interval as observableInterval, Subscription } from 'rxjs';
+import { VoicecallDetailsComponent } from './voicecall-details/voicecall-details.component';
 
 @Component({
   selector: 'app-checkins',
@@ -158,6 +159,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   tomorrowDate;
   apis_loaded = false;
   carouselOne;
+  voicedialogRef: any;
   account_type;
   active_user;
   domain;
