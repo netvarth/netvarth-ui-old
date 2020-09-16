@@ -73,7 +73,7 @@
                     <div class="service-outer" *ngIf="queuejson.length > 0">
                       <ng-container>
                         <mat-form-field *ngIf="queuejson.length == 1">
-                          <input matInput *ngFor="let queue of queuejson" [readonly]="true" placeholder="Queue"
+                          <input matInput *ngFor="let queue of queuejson" [readonly]="true" placeholder="Schedule"
                             value="{{queue.name | capitalizeFirst}}">
                         </mat-form-field>
                         <mat-form-field *ngIf="queuejson.length > 1">
