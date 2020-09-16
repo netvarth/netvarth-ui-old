@@ -338,7 +338,6 @@ export class CheckYourStatusComponent implements OnInit {
     time1 = time[2].trim();
     t2 = time1.slice(2);
     appx_ret.time = t2;
-    console.log(appx_ret);
     return appx_ret;
   }
 }

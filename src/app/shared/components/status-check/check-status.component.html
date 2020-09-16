@@ -143,7 +143,7 @@
                   has been {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}} on
                   {{getCancelledTime(statusInfo).date}}, {{getCancelledTime(statusInfo).time}}
                 </span>
-                <span class="" *ngIf="statusInfo.waitlistStatus !== 'Cancelled'">
+                <span class="" *ngIf="statusInfo.waitlistStatus !== 'cancelled'">
                   <ng-container *ngIf="statusInfo.showToken"> Token</ng-container>
                   <ng-container *ngIf="!statusInfo.showToken"> Check-in</ng-container>
                   has been {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}

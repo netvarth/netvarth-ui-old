@@ -326,9 +326,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       if (qparams.src) {
         this.pSource = qparams.src;
       }
-      if (qparams.onlinePresence) {
-        this.onlinePresence = qparams.onlinePresence;
-      }
       // if (qparams.pId) {
       //   this.businessid = qparams.pId;
       // }
@@ -418,10 +415,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.getbusinessprofiledetails_json('terminologies', true);
           // this.getbusinessprofiledetails_json('coupon', true);
           // this.getbusinessprofiledetails_json('jaldeediscount', true);
+          this.getbusinessprofiledetails_json('businessProfile', true);
           if (this.userId) {
             this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
           } else {
-            this.getbusinessprofiledetails_json('businessProfile', true);
             this.getbusinessprofiledetails_json('virtualFields', true);
             this.getbusinessprofiledetails_json('services', true);
             this.getbusinessprofiledetails_json('apptServices', true);
@@ -446,78 +443,80 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         switch (section) {
           case 'businessProfile': {
-            this.api_loading = false;
-            this.pageFound = true;
-            this.socialMedialist = [];
-            this.businessjson = res;
-            this.onlinePresence = this.businessjson.onlinePresence;
-            this.branch_id = this.businessjson.branchId;
-            this.account_Type = this.businessjson.accountType;
-            this.business_exists = true;
-            this.provider_bussiness_id = this.businessjson.id;
-            if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
-              if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-                this.bLogo = this.businessjson.logo.url + '?' + new Date();
+            this.onlinePresence = res['onlinePresence'];
+            if (!this.userId) {
+              this.api_loading = false;
+              this.pageFound = true;
+              this.socialMedialist = [];
+              this.businessjson = res;
+              this.branch_id = this.businessjson.branchId;
+              this.account_Type = this.businessjson.accountType;
+              this.business_exists = true;
+              this.provider_bussiness_id = this.businessjson.id;
+              if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
+                if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
+                  this.bLogo = this.businessjson.logo.url + '?' + new Date();
+                }
+              } else {
+                // this.bLogo = '';
+                this.bLogo = '../../../assets/images/img-null.svg';
               }
-            } else {
-              // this.bLogo = '';
-              this.bLogo = '../../../assets/images/img-null.svg';
-            }
-            this.specializationslist = [];
-            this.specializationslist_more = [];
-            if (this.businessjson.specialization) {
-              // this.specializationslist = this.businessjson.specialization;
+              this.specializationslist = [];
+              this.specializationslist_more = [];
+              if (this.businessjson.specialization) {
+                // this.specializationslist = this.businessjson.specialization;
 
-              for (let i = 0; i < this.businessjson.specialization.length; i++) {
-                if (i <= 1 && this.businessjson.specialization[i] !== 'Not Applicable') {
-                  this.specializationslist.push(this.businessjson.specialization[i]);
-                } else if (this.businessjson.specialization[i] !== 'Not Applicable') {
-                  this.specializationslist_more.push(this.businessjson.specialization[i]);
+                for (let i = 0; i < this.businessjson.specialization.length; i++) {
+                  if (i <= 1 && this.businessjson.specialization[i] !== 'Not Applicable') {
+                    this.specializationslist.push(this.businessjson.specialization[i]);
+                  } else if (this.businessjson.specialization[i] !== 'Not Applicable') {
+                    this.specializationslist_more.push(this.businessjson.specialization[i]);
+                  }
                 }
               }
+              if (this.businessjson.socialMedia) {
+                this.socialMedialist = this.businessjson.socialMedia;
+              }
+              if (this.businessjson.emails) {
+                this.emaillist = this.businessjson.emails;
+              }
+              if (this.businessjson.phoneNumbers) {
+                this.phonelist = this.businessjson.phoneNumbers;
+              }
+              this.getbusinessprofiledetails_json('gallery', true);
+              if (this.userType === 'consumer') {
+                this.getFavProviders();
+              }
+              const holdbName = this.businessjson.businessDesc || '';
+              const maxCnt = 120;
+              if (holdbName.length > maxCnt) {
+                this.bNameStart = holdbName.substr(0, maxCnt);
+                this.bNameEnd = holdbName.substr(maxCnt, holdbName.length);
+              } else {
+                this.bNameStart = holdbName;
+              }
+              this.ratingenabledCnt = this.businessjson.avgRating || 0;
+              if (this.ratingenabledCnt > 0) {
+                this.ratingenabledCnt = this.sharedFunctionobj.ratingRounding(this.ratingenabledCnt);
+              }
+              const ratingenabledInt = parseInt(this.ratingenabledCnt.toString(), 10);
+              if (ratingenabledInt < this.ratingenabledCnt) {
+                this.ratingenabledHalf = true;
+                this.ratingenabledCnt = ratingenabledInt;
+                this.ratingdisabledCnt = 5 - (ratingenabledInt + 1);
+              } else {
+                this.ratingdisabledCnt = 5 - ratingenabledInt;
+              }
+              this.ratingenabledArr = [];
+              this.ratingdisabledArr = [];
+              for (let i = 0; i < this.ratingenabledCnt; i++) {
+                this.ratingenabledArr.push(i);
+              }
+              for (let i = 0; i < this.ratingdisabledCnt; i++) {
+                this.ratingdisabledArr.push(i);
+              }
+              this.getbusinessprofiledetails_json('location', true);
             }
-            if (this.businessjson.socialMedia) {
-              this.socialMedialist = this.businessjson.socialMedia;
-            }
-            if (this.businessjson.emails) {
-              this.emaillist = this.businessjson.emails;
-            }
-            if (this.businessjson.phoneNumbers) {
-              this.phonelist = this.businessjson.phoneNumbers;
-            }
-            this.getbusinessprofiledetails_json('gallery', true);
-            if (this.userType === 'consumer') {
-              this.getFavProviders();
-            }
-            const holdbName = this.businessjson.businessDesc || '';
-            const maxCnt = 120;
-            if (holdbName.length > maxCnt) {
-              this.bNameStart = holdbName.substr(0, maxCnt);
-              this.bNameEnd = holdbName.substr(maxCnt, holdbName.length);
-            } else {
-              this.bNameStart = holdbName;
-            }
-            this.ratingenabledCnt = this.businessjson.avgRating || 0;
-            if (this.ratingenabledCnt > 0) {
-              this.ratingenabledCnt = this.sharedFunctionobj.ratingRounding(this.ratingenabledCnt);
-            }
-            const ratingenabledInt = parseInt(this.ratingenabledCnt.toString(), 10);
-            if (ratingenabledInt < this.ratingenabledCnt) {
-              this.ratingenabledHalf = true;
-              this.ratingenabledCnt = ratingenabledInt;
-              this.ratingdisabledCnt = 5 - (ratingenabledInt + 1);
-            } else {
-              this.ratingdisabledCnt = 5 - ratingenabledInt;
-            }
-            this.ratingenabledArr = [];
-            this.ratingdisabledArr = [];
-            for (let i = 0; i < this.ratingenabledCnt; i++) {
-              this.ratingenabledArr.push(i);
-            }
-            for (let i = 0; i < this.ratingdisabledCnt; i++) {
-              this.ratingdisabledArr.push(i);
-            }
-            this.getbusinessprofiledetails_json('location', true);
             break;
           }
           case 'services': {
@@ -873,9 +872,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 if (this.appttime_arr[i]['availableSchedule']) {
                   this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                   this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
-                  this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];                  
+                  this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
                 }
-                if (this.appttime_arr[i]['availableSlots'])  {
+                if (this.appttime_arr[i]['availableSlots']) {
                   this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
                   if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                     this.locationjson[locindx]['apptAvailableToday'] = true;
@@ -883,7 +882,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                   } else {
                     this.locationjson[locindx]['apptAvailableToday'] = false;
                     this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
-                    + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
+                      + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                   }
                 }
                 console.log(this.locationjson[locindx]);
@@ -1902,7 +1901,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
               }
-              if (this.appttime_arr[i]['availableSlots'])  {
+              if (this.appttime_arr[i]['availableSlots']) {
                 this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
                 if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                   this.locationjson[locindx]['apptAvailableToday'] = true;
@@ -1910,7 +1909,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 } else {
                   this.locationjson[locindx]['apptAvailableToday'] = false;
                   this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
-                  + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
+                    + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                 }
               }
               console.log(this.locationjson[locindx]);
@@ -1958,8 +1957,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     const account = this.provider_id + '_' + userId;
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        src: 'bp',
-        onlinePresence: this.businessjson.onlinePresence
+        src: 'bp'
       }
     };
     this.routerobj.navigate([account], navigationExtras);
