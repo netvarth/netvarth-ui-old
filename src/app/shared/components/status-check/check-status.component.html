@@ -120,7 +120,9 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="book-status"> Current status </div>
+              <div class="book-status"
+                *ngIf="statusInfo.apptStatus !== 'Arrived' && statusInfo.apptStatus !== 'Confirmed'"> Current status
+              </div>
               <table class="status-table" *ngIf="getWaitTime(statusInfo)">
                 <tbody>
                   <tr>
@@ -140,31 +142,32 @@
                 <span class="cancelled" *ngIf="statusInfo.waitlistStatus === 'cancelled'">
                   <ng-container *ngIf="statusInfo.showToken"> Token</ng-container>
                   <ng-container *ngIf="!statusInfo.showToken"> Check-in</ng-container>
-                  has been {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}} on
-                  {{getCancelledTime(statusInfo).date}}, {{getCancelledTime(statusInfo).time}}
+                  {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
+                  <!-- on {{getCancelledTime(statusInfo).date}}, {{getCancelledTime(statusInfo).time}} -->
                 </span>
-                <span class="" *ngIf="statusInfo.waitlistStatus !== 'cancelled'">
+                <span class="green" *ngIf="statusInfo.waitlistStatus !== 'cancelled'">
                   <ng-container *ngIf="statusInfo.showToken"> Token</ng-container>
                   <ng-container *ngIf="!statusInfo.showToken"> Check-in</ng-container>
-                  has been {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
+                  {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
                 </span>
               </div>
               <div class="txt-align-center"
                 *ngIf="statusInfo.apptStatus && statusInfo.apptStatus !== 'Arrived' && statusInfo.apptStatus !== 'Confirmed'">
                 <span class="cancelled"
                   *ngIf="statusInfo.apptStatus === 'Cancelled' || statusInfo.apptStatus === 'Rejected'">
-                  Appointment has been {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}} on
-                  {{getCancelledTime(statusInfo).date}}, {{getCancelledTime(statusInfo).time}}
+                  Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
+                  <!-- on {{getCancelledTime(statusInfo).date}}, {{getCancelledTime(statusInfo).time}} -->
                 </span>
-                <span class="" *ngIf="statusInfo.apptStatus !== 'Cancelled' && statusInfo.apptStatus !== 'Rejected'">
-                  Appointment has been {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
+                <span class="green"
+                  *ngIf="statusInfo.apptStatus !== 'Cancelled' && statusInfo.apptStatus !== 'Rejected'">
+                  Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
                 </span>
               </div>
               <div class="ok-btn">
                 <span class="pointer-cursor" (click)="okClick()">
                   Ok</span></div>
             </div>
-            <div class="pull-right" *ngIf="source=='new' && (type=='wl' || type=='appt')">
+            <div class="txt-align-center" *ngIf="source=='new' && (type=='wl' || type=='appt')">
               <a class="status-check" (click)="showStatusInput()"> Check another status</a>
             </div>
           </div>
