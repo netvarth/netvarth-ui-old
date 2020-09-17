@@ -272,7 +272,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
           title: 'Settings'
         });
         this.breadcrumbs = breadcrumbs;
-if (this.domainList && this.domainList.bdata) {
+		if (this.domainList && this.domainList.bdata) {
         for (let i = 0; i < this.domainList.bdata.length; i++) {
           if (this.domainList.bdata[i].domain === this.domain) {
             for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
