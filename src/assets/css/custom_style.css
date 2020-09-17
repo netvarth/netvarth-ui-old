@@ -11210,3 +11210,17 @@ a {
 .takeTourTitle{
   font-size: 1.5rem !important;
 }
+
+
+.header-nav {
+  font-size: .8rem !important;
+}
+.header-nav .nav>li>a {
+  padding: 15px 10px !important
+}
+.user-menu i.fa-user {
+  line-height: inherit !important;
+}
+.navbar-custom-menu .navbar-nav>li>a>i {
+  font-size: 1rem;
+}
