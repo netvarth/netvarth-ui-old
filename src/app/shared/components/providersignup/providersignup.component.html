@@ -59,7 +59,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     target="_blank">{{terms_cond_cap}}</a></span>
                         </div>
                         <div class="form-group form-button">
-                            <input type="submit" name="signup" id="signup" class="form-submit" value="Next"
+                            <input type="submit" name="signup" id="signup" class="form-submit-next" value="Next" [ngClass]="{'disableCss': (signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid)}"
                                 [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid"
                                 (click)="registerClicked()">
                         </div>
