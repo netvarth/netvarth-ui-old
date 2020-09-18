@@ -645,7 +645,9 @@ export class ProviderCheckinComponent implements OnInit {
             taxable: serv.taxable,
             serviceType: serv.serviceType,
             virtualServiceType: serv.virtualServiceType,
-            virtualCallingModes: serv.virtualCallingModes
+            virtualCallingModes: serv.virtualCallingModes,
+            consumerNoteMandatory: serv.consumerNoteMandatory,
+            consumerNoteTitle: serv.consumerNoteTitle
         };
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {

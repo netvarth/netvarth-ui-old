@@ -11952,3 +11952,6 @@ img.busN-logo {
   padding: 10px;
   width: 100%;
 }
+.disp-flex {
+  display: flex !important;
+}
