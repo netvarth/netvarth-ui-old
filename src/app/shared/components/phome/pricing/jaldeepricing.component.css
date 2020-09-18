@@ -896,3 +896,43 @@ body {
 .ultimite .price {
   background: #DD4B5E;
 }
+.addons_sub_head {
+  /* background: #1f427a ; */
+color: #3772aa;
+text-align: left !important; 
+border-top: 1px solid #ddd !important;
+font-size: 15px;
+font-weight: 700;
+
+}
+
+.addon th {
+  width: 100rem !important;
+padding: 15px;
+        text-align: center;
+        /* background-color: #E4E4E4; */
+        font-weight: 800 !important;
+        background: #2f702e  !important;
+        font-size: .875rem !important;
+        color: white !important;
+        line-height: 1.75 !important;
+        letter-spacing: .3px !important;
+        font-family: 'Montserrat', sans-serif !important;
+}
+div.addon {
+  border: 1px solid #ddd !important;
+  width: 50% !important;
+  overflow-x: auto !important;
+  /* overflow-y: visible!important; */
+  padding-bottom: 20px !important;
+  padding-bottom: 20px !important;
+  padding-top: 30px !important;
+  padding: .5rem;
+  
+
+}
+.addon td {
+  text-align: left;
+  background: white;
+  
+}
