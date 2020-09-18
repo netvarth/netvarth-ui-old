@@ -1293,8 +1293,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
             else{
               this.billicon  = false;
-            }
-           
+            }     
       }
       Object.keys(this.appointmentsChecked).forEach(key => {
         this.activeAppointment = this.appointmentsChecked[key];
