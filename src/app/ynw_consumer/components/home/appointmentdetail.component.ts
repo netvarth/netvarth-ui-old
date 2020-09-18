@@ -71,6 +71,7 @@ export class ApptDetailComponent implements OnInit {
     phonenumber;
     servsDetails: any;
     iconClass: string;
+    apptlistjson: any = [];
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -85,25 +86,25 @@ export class ApptDetailComponent implements OnInit {
                 this.waitlistdata = qParams;
             });
         this.apptlist = this.waitlistdata.apptlist || null;
-        const apptlistjson = JSON.parse(this.apptlist);
-        this.BusinessName = apptlistjson.providerAccount.businessName;
-        this.providerId = apptlistjson.providerAccount.id;
-        this.ynwUuid = apptlistjson.uid;
-        this.date = apptlistjson.appmtDate;
-        this.locn = apptlistjson.location.place;
-        this.firstname = apptlistjson.appmtFor[0].firstName;
-        this.lastname = apptlistjson.appmtFor[0].lastName;
-        this.service = apptlistjson.service.name;
-        this.deptName = apptlistjson.service.deptName;
-        this.queueStart = apptlistjson.schedule.apptSchedule.timeSlots[0].sTime;
-        this.queueEnd = apptlistjson.schedule.apptSchedule.timeSlots[0].eTime;
-        this.paymntstats = apptlistjson.paymentStatus;
-        this.batchname = apptlistjson.batchId;
-        this.status = apptlistjson.apptStatus;
-        this.statusUpdatedTime = apptlistjson.statusUpdatedTime;
-        this.consumerNote = apptlistjson.consumerNote;
-        this.callingModes = apptlistjson.virtualService;
-        this.servsDetails = apptlistjson.service;
+        this.apptlistjson = JSON.parse(this.apptlist);
+        this.BusinessName = this.apptlistjson.providerAccount.businessName;
+        this.providerId = this.apptlistjson.providerAccount.id;
+        this.ynwUuid = this.apptlistjson.uid;
+        this.date = this.apptlistjson.appmtDate;
+        this.locn = this.apptlistjson.location.place;
+        this.firstname = this.apptlistjson.appmtFor[0].firstName;
+        this.lastname = this.apptlistjson.appmtFor[0].lastName;
+        this.service = this.apptlistjson.service.name;
+        this.deptName = this.apptlistjson.service.deptName;
+        this.queueStart = this.apptlistjson.schedule.apptSchedule.timeSlots[0].sTime;
+        this.queueEnd = this.apptlistjson.schedule.apptSchedule.timeSlots[0].eTime;
+        this.paymntstats = this.apptlistjson.paymentStatus;
+        this.batchname = this.apptlistjson.batchId;
+        this.status = this.apptlistjson.apptStatus;
+        this.statusUpdatedTime = this.apptlistjson.statusUpdatedTime;
+        this.consumerNote = this.apptlistjson.consumerNote;
+        this.callingModes = this.apptlistjson.virtualService;
+        this.servsDetails = this.apptlistjson.service;
         if (this.servsDetails.serviceType === 'virtualService') {
 
             switch (this.servsDetails.virtualCallingModes[0].callingMode) {
@@ -130,7 +131,7 @@ export class ApptDetailComponent implements OnInit {
         this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
         this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('checkin');
         this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
-        this.phonenumber = apptlistjson.phoneNumber;
+        this.phonenumber = this.apptlistjson.phoneNumber;
     }
     ngOnInit() {
     }

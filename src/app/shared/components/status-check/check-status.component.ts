@@ -194,10 +194,8 @@ export class CheckYourStatusComponent implements OnInit {
     if (encId) {
       this.api_loading = true;
       if (encId.split('-')[0] === 'c') {
-        this.type = 'wl';
         this.getWLDetails(encId);
       } else {
-        this.type = 'appt';
         this.getApptDetails(encId);
       }
     }
@@ -210,6 +208,7 @@ export class CheckYourStatusComponent implements OnInit {
           const wlInfo = data;
           this.statusInfo = data;
           this.foundDetails = true;
+          this.type = 'wl';
           this.api_loading = false;
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
@@ -277,6 +276,7 @@ export class CheckYourStatusComponent implements OnInit {
         (data: any) => {
           this.foundDetails = true;
           this.api_loading = false;
+          this.type = 'appt';
           const wlInfo = data;
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);

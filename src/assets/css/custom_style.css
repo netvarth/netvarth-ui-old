@@ -11547,3 +11547,8 @@ header.consumer .tp-1 .tp-l {
   max-height: 50px;
   overflow: hidden;
 }
+.postDesc {
+  border: 1px solid;
+  padding: 10px;
+  width: 100%;
+}

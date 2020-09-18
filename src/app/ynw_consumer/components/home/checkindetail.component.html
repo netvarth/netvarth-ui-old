@@ -16,7 +16,7 @@
                                         class="strong">{{go_back_cap}}</span></span>
                             </div>
                             <h2 *ngIf="!showtoken">{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
-                            <h2 *ngIf="showtoken">Token  {{details_cap}}</h2>
+                            <h2 *ngIf="showtoken">Token {{details_cap}}</h2>
                             <div class="tp" *ngIf="waitlistdata">
                                 <div class="item"><span class="ttle">{{bname_cap}}</span> <span>
                                         {{BusinessName | capitalizeFirst}}
@@ -24,17 +24,18 @@
                                 <div class="item"><span class="ttle">{{date_cap}}</span> <span>
                                         {{date| date:dateFormatSp}}
                                     </span></div>
-                                <div class="item"><span class="ttle">{{location_cap}}</span><span>{{locn | capitalizeFirst}}</span></div>
+                                <div class="item"><span
+                                        class="ttle">{{location_cap}}</span><span>{{locn | capitalizeFirst}}</span>
+                                </div>
                                 <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
                                     <span class="waitlist_for">
                                         {{firstname | capitalizeFirst}} {{lastname | capitalizeFirst}}</span></div>
-                                <div *ngIf = "tokennumber" class="item"><span class="ttle">Token number</span>
-                                     <span class="waitlist_for">
-                                           {{tokennumber}}</span></div>
-                                <div class="item"><span class="ttle">{{service_cap}}</span> 
+                                <div *ngIf="tokennumber" class="item"><span class="ttle">Token number</span>
+                                    <span class="waitlist_for">
+                                        {{tokennumber}}</span></div>
+                                <div class="item"><span class="ttle">{{service_cap}}</span>
                                     <i *ngIf="servsDetails.serviceType === 'virtualService'" [class]=iconClass></i>
-                                    {{service | capitalizeFirst}}<span
-                                        *ngIf="deptName">({{deptName}}) </span></div>
+                                    {{service | capitalizeFirst}}<span *ngIf="deptName">({{deptName}}) </span></div>
                                 <div class="item"><span class="ttle">{{queue_cap}}</span>
                                     {{queueStart}} - {{queueEnd}}</div>
                                 <div class="item"><span class="ttle">{{pay_status_cap}}</span>
@@ -43,6 +44,12 @@
                                     {{phonenumber}} </div>
                                 <div class="item" *ngIf="batchName"><span
                                         class="ttle">Batch</span><span>{{batchName}}</span></div>
+                                <div class="postDesc"
+                                    *ngIf="waitlistjson.service && waitlistjson.service.postInfoEnabled">
+                                    <h2> {{waitlistjson.service.postInfoTitle}} </h2>
+                                    <div [innerHTML]="waitlistjson.service.postInfoText">
+                                    </div>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                             <!-- <div class="mgn-bt-20" *ngIf="callingModes">

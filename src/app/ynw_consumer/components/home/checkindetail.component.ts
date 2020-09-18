@@ -74,6 +74,7 @@ export class CheckinDetailComponent implements OnInit {
     showtoken: any;
     breadcrumbs = [];
     tokennumber: any;
+    waitlistjson: any = [];
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -88,34 +89,34 @@ export class CheckinDetailComponent implements OnInit {
                 this.waitlistdata = qParams;
             });
         this.waitlist = this.waitlistdata.waitlist || null;
-        const waitlistjson = JSON.parse(this.waitlist);
-        this.BusinessName = waitlistjson.providerAccount.businessName;
-        this.ProviderId = waitlistjson.providerAccount.id;
-        this.ynwUuid = waitlistjson.ynwUuid;
-        this.date = waitlistjson.date;
-        this.locn = waitlistjson.queue.location.place;
-        this.firstname = waitlistjson.waitlistingFor[0].firstName;
-        this.lastname = waitlistjson.waitlistingFor[0].lastName;
-        this.service = waitlistjson.service.name;
-        this.deptName = waitlistjson.service.deptName;
-        this.queueStart = waitlistjson.queue.queueStartTime;
-        this.queueEnd = waitlistjson.queue.queueEndTime;
-        this.paymntstats = waitlistjson.paymentStatus;
-        this.batchname = waitlistjson.batchName;
-        this.status = waitlistjson.waitlistStatus;
-        this.statusUpdatedTime = waitlistjson.statusUpdatedTime;
-        this.consumerNote = waitlistjson.consumerNote;
-        this.callingModes = waitlistjson.virtualService;
+        this.waitlistjson = JSON.parse(this.waitlist);
+        this.BusinessName = this.waitlistjson.providerAccount.businessName;
+        this.ProviderId = this.waitlistjson.providerAccount.id;
+        this.ynwUuid = this.waitlistjson.ynwUuid;
+        this.date = this.waitlistjson.date;
+        this.locn = this.waitlistjson.queue.location.place;
+        this.firstname = this.waitlistjson.waitlistingFor[0].firstName;
+        this.lastname = this.waitlistjson.waitlistingFor[0].lastName;
+        this.service = this.waitlistjson.service.name;
+        this.deptName = this.waitlistjson.service.deptName;
+        this.queueStart = this.waitlistjson.queue.queueStartTime;
+        this.queueEnd = this.waitlistjson.queue.queueEndTime;
+        this.paymntstats = this.waitlistjson.paymentStatus;
+        this.batchname = this.waitlistjson.batchName;
+        this.status = this.waitlistjson.waitlistStatus;
+        this.statusUpdatedTime = this.waitlistjson.statusUpdatedTime;
+        this.consumerNote = this.waitlistjson.consumerNote;
+        this.callingModes = this.waitlistjson.virtualService;
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
         this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
         this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('checkin');
         this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
-        this.phonenumber = waitlistjson.waitlistPhoneNumber;
-        this.servsDetails = waitlistjson.service;
-         if (waitlistjson.token) {
-          this.tokennumber = waitlistjson.token;
+        this.phonenumber = this.waitlistjson.waitlistPhoneNumber;
+        this.servsDetails = this.waitlistjson.service;
+        if (this.waitlistjson.token) {
+            this.tokennumber = this.waitlistjson.token;
         }
-        this.showtoken = waitlistjson.showToken;
+        this.showtoken = this.waitlistjson.showToken;
         if (this.showtoken) {
             this.breadcrumbs = [
                 {
