@@ -524,7 +524,8 @@
                             <button class="cs-btn bt3 width-100" (click)="handleSideScreen('members')">Add / Change
                                 Member</button>
                             <button class="cs-btn bt3 width-100 mgn-up-20"
-                                (click)="handleSideScreen('note')">{{note_cap}}</button>
+                                (click)="handleSideScreen('note')">{{sel_ser_det.consumerNoteTitle}}
+                                <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span></button>
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="imagefile.click()">
                                 <!-- <button type="button" class="cs-btn btn-attach bt_attach"
                                         (click)="imagefile.click()" [matTooltip]="'Attach files'"> -->

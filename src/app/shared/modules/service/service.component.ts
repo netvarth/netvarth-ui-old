@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
- 
+
 @Component({
     selector: 'app-jaldee-service',
     templateUrl: './service.component.html'
@@ -120,6 +120,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
         'lastName': 'Service'
     };
     include_video = false;
+    preInfoEnabled = false;
+    postInfoEnabled = false;
     preInfoText = '';
     postInfoText = '';
     preInfoTitle = '';
@@ -129,8 +131,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
     showConsumerNote = false;
     showInfo = false;
     showInfoType;
-    preInfoEnabled = false;
-    postInfoEnabled = false;
+    tempPreInfoEnabled = false;
+    tempPostInfoEnabled = false;
+    tempPreInfoText = '';
+    tempPostInfoText = '';
+    tempPreInfoTitle = '';
+    tempPostInfoTitle = '';
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -386,20 +392,20 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 data => {
                     this.filterDepart = data['filterByDept'];
                     if (this.filterDepart) {
-                    for (let i = 0; i < data['departments'].length; i++) {
-                        if (data['departments'][i].departmentStatus === 'ACTIVE') {
-                            this.departments.push(data['departments'][i]);
+                        for (let i = 0; i < data['departments'].length; i++) {
+                            if (data['departments'][i].departmentStatus === 'ACTIVE') {
+                                this.departments.push(data['departments'][i]);
+                            }
+                            if (data['departments'][i].departmentId === deptid) {
+                                this.departmentName = data['departments'][i].departmentName;
+                            }
                         }
-                        if (data['departments'][i].departmentId === deptid) {
-                            this.departmentName = data['departments'][i].departmentName;
+                        if (this.action === 'add' && this.departments.length > 0) {
+                            this.serviceForm.get('department').setValue(this.departments[0].departmentId);
+                            this.departId = this.departments[0].departmentId;
+                            this.getUsers();
                         }
                     }
-                    if (this.action === 'add' && this.departments.length > 0) {
-                        this.serviceForm.get('department').setValue(this.departments[0].departmentId);
-                        this.departId = this.departments[0].departmentId;
-                        this.getUsers();
-                    }
-                }
                 },
                 error => {
                     this.sharedFunctons.apiErrorAutoHide(this, error);
@@ -408,7 +414,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     onSubmit(form_data) {
         if (form_data.serviceType === 'virtualService') {
-          //  this.tool_id = this.tool_id.trim();
+            //  this.tool_id = this.tool_id.trim();
             this.teleCallingModes = {
                 'callingMode': this.tool_name,
                 'value': this.tool_id,
@@ -749,8 +755,25 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.showConsumerNote = !this.showConsumerNote;
     }
     showInfoSection() {
-        this.showInfo = !this.showInfo;
+        if (!this.showInfo) {
+            this.tempPreInfoEnabled = this.preInfoEnabled;
+            this.tempPreInfoText = this.preInfoText;
+            this.tempPreInfoTitle = this.preInfoTitle;
+            this.tempPostInfoEnabled = this.postInfoEnabled;
+            this.tempPostInfoText = this.postInfoText;
+            this.tempPostInfoTitle = this.postInfoTitle;
+            this.showInfo = true;
+        } else {
+            this.showInfo = false;
+        }
     }
-
+    cancelChanges() {
+        this.preInfoEnabled = this.tempPreInfoEnabled;
+        this.preInfoText = this.tempPreInfoText;
+        this.preInfoTitle = this.tempPreInfoTitle;
+        this.postInfoEnabled = this.tempPostInfoEnabled;
+        this.postInfoText = this.tempPostInfoText;
+        this.postInfoTitle = this.tempPostInfoTitle;
+        this.showInfo = false;
+    }
 }
-

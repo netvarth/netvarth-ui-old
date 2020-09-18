@@ -500,6 +500,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             preInfoEnabled: serv.preInfoEnabled,
             preInfoTitle: serv.preInfoTitle,
             preInfoText: serv.preInfoText,
+            consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
