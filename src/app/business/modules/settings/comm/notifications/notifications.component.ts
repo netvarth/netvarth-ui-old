@@ -56,7 +56,7 @@ export class NotificationsComponent implements OnInit {
         this.accountType = user_data.accountType;
         this.domain = user_data.sector || null;
         this.sub_domain = user_data.subSector || null;
-        console.log(this.sub_domain);
+        // console.log(this.sub_domain);
         this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
         this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
         this.getSMSglobalSettings();
@@ -131,7 +131,7 @@ export class NotificationsComponent implements OnInit {
                     (data: any) => {
                         this.isCorp = data.isCorp;
                         this.isMultilevel = data.isMultilevel;
-                        console.log(this.isMultilevel);
+                        // console.log(this.isMultilevel);
                     },
                     error => {
                         reject(error);

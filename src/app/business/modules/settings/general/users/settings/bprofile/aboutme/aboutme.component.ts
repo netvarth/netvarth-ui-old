@@ -102,7 +102,6 @@ export class AboutmeComponent implements OnInit, OnDestroy {
   ) {
     this.activated_route.params.subscribe(params => {
       this.userId = params.id;
-      console.log(this.userId);
     });
   }
   ngOnInit() {
@@ -127,17 +126,13 @@ export class AboutmeComponent implements OnInit, OnDestroy {
   getUser() {
     this.provider_services.getUser(this.userId)
       .subscribe((data: any) => {
-        console.log(data);
         this.subDomainId = data.subdomain;
         this.user_arr = data;
         for (let i = 0; i < this.domainList.bdata.length; i++) {
           if (this.domainList.bdata[i].domain === this.domain) {
             for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
               if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
-                console.log(this.domainList.bdata[i].subDomains[j]);
                 this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
-                console.log(this.subDomain);
-
                 this.getBusinessProfile();
               }
             }
@@ -151,7 +146,6 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       _this.provider_services.getUserBussinessProfile(_this.userId)
         .subscribe(
           data => {
-            console.log(data);
             resolve(data);
           },
           () => {
@@ -262,8 +256,6 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.bProfile = data;
-          console.log('bProfile...' + this.bProfile);
-          console.log(this.bProfile);
           if (this.bProfile) {
             this.createForm();
           }
@@ -278,7 +270,6 @@ export class AboutmeComponent implements OnInit, OnDestroy {
           loginuserdata.accStatus = this.bProfile.status;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
           this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
-          console.log(this.domain);
           this.provider_services.getVirtualFields(this.domain).subscribe(
             domainfields => {
               this.provider_services.getVirtualFields(this.domain, this.subDomain).subscribe(
@@ -288,16 +279,13 @@ export class AboutmeComponent implements OnInit, OnDestroy {
                   this.userAdditionalInfoDomainFields = this.provider_shared_functions.getUserAdditionalNonDomainMandatoryFields();
                   this.userAdditionalInfoSubDomainFields = this.provider_shared_functions.getUserAdditionalNonSubDomainMandatoryFields();
                   this.getDomainVirtualFields();
-                  console.log(this.subDomain);
                   if (this.subDomain) {
                     this.getSubDomainVirtualFields();
                   }
                 });
             });
-          console.log(this.bProfile.logo);
           if (this.bProfile.logo) {
             this.blogo[0] = this.bProfile.logo;
-            console.log(this.blogo[0]);
             const cnow = new Date();
             const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
             this.cacheavoider = dd;
@@ -655,7 +643,6 @@ export class AboutmeComponent implements OnInit, OnDestroy {
          this.logoDetails = logodata;
           if ( this.logoDetails.logo) {
             this.blogo[0] =  this.logoDetails.logo;
-            console.log(this.blogo[0]);
             const cnow = new Date();
             const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
             this.cacheavoider = dd;

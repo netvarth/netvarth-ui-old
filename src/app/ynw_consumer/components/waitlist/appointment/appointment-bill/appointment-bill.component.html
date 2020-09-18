@@ -8,11 +8,7 @@
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading top-row ">
-                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i
-                                        class="fa fa-arrow-left"></i></a>
-                            </div>
-                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                                 <app-header *ngIf="sharedfunctionObj.checkLogin()"></app-header>
                             </div>
                         </div>
@@ -20,7 +16,7 @@
                             <div class="c-outer m0">
                                 <div class="c-body">
                                     <div class="card title-gb">
-                                        <h5 class="mgn-up-10">Bill</h5>
+                                        <h5 class="mgn-up-10">Bill <a class="pull-right back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
                                     </div>
 
                                     <div class="copy one">

@@ -183,7 +183,7 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
       .subscribe(
         data => {
           this.bProfile = data;
-          console.log('bProfile..' + JSON.stringify(this.bProfile));
+          // console.log('bProfile..' + JSON.stringify(this.bProfile));
           this.provider_datastorageobj.set('bProfile', data);
           // getting the user details saved in local storage
           const loginuserdata = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');

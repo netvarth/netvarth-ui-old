@@ -169,7 +169,6 @@ export class ConsumerNotificationUserComponent implements OnInit {
       .subscribe(
         data => {
           this.notificationList = data;
-          console.log(this.notificationList);
           if (this.notificationList) {
             this.setNotifications(this.notificationList);
           }

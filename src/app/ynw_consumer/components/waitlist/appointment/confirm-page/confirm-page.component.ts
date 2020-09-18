@@ -57,6 +57,5 @@ export class ConfirmPageComponent implements OnInit {
     }
   }
   updateEmail() {
-    console.log(this.email);
   }
 }

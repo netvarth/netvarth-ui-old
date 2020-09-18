@@ -53,7 +53,7 @@ export class CheckinDetailsSendComponent implements OnInit {
     this.getProviderSettings();
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.bname = this.data.qdata.providerAccount.businessName;
-    console.log(this.data.qdata);
+    // console.log(this.data.qdata);
     if (this.data.qdata.service.serviceType === 'virtualService') {
       switch (this.data.qdata.service.virtualCallingModes[0].callingMode) {
         case 'Zoom': {

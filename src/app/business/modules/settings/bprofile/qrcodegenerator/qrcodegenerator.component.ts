@@ -48,7 +48,7 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
 
     this.customId = this.data.customId;
     // this.window_path = this.data.pathUrl;
-    console.log(this.wpath + this.accuid);
+    // console.log(this.wpath + this.accuid);
     this.shareLink = this.wpath + this.accuid;
     this.description = 'You can book my services by just clicking this link';
     this.imageUrl = this.wpath + 'assets/images/logo.png';
@@ -72,8 +72,8 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
       ]);
     }, 50);
 
-    console.log('sharelink...' + this.shareLink);
-    console.log('qrcode...' + this.qrCodePath);
+    // console.log('sharelink...' + this.shareLink);
+    // console.log('qrcode...' + this.qrCodePath);
 
   }
   // qrCodegenerateCustID(valuetogenerate) {

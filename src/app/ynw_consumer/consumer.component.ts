@@ -23,7 +23,6 @@ export class ConsumerComponent implements OnInit {
     this.shared_functions.getProfile()
       .then(
         (data: any) => {
-          console.log(data);
           this.userProfile = data;
           if (this.userProfile.userProfile.firstName === 'undefined' && this.userProfile.userProfile.lastName === 'undefined') {
             this.updateProfilePopup();
@@ -39,7 +38,6 @@ export class ConsumerComponent implements OnInit {
     dialogref.afterClosed().subscribe(
       result => {
         if (result) {
-          console.log(result);
           this.updateProfile(result);
         }
       });

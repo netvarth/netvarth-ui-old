@@ -811,7 +811,6 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
         }
-        console.log(this.selectedUser);
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
@@ -826,7 +825,6 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
             if (!this.is_wtsap_empty) {
-                console.log(post_Data);
                 this.addCheckInConsumer(post_Data);
             }
         }
@@ -1238,7 +1236,6 @@ export class ConsumerCheckinComponent implements OnInit {
         for (let i = 0; i < this.departments.length; i++) {
             if (deptId === this.departments[i].departmentId) {
                 this.selected_dept = this.departments[i];
-                console.log(this.selected_dept);
                 break;
             }
         }
@@ -1438,14 +1435,12 @@ export class ConsumerCheckinComponent implements OnInit {
 
     getServiceById(serviceId) {
         let selectedService;
-        console.log(this.servicesjson);
         for (const service of this.servicesjson) {
             if (service.id === serviceId) {
                 selectedService = service;
                 break;
             }
         }
-        console.log(selectedService);
         return selectedService;
     }
 
@@ -1759,7 +1754,6 @@ export class ConsumerCheckinComponent implements OnInit {
         this.coupon_status = null;
     }
     getPic(user) {
-        console.log(user);
         if (user.profilePicture) {
           // alert(JSON.parse(user.profilePicture)['url']);
           return JSON.parse(user.profilePicture)['url'];
@@ -1831,7 +1825,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 break;
             }
         }
-        console.log(selectedUser);
+        // console.log(selectedUser);
         if (selectedUser['businessName']) {
             return selectedUser['businessName'];
         } else {

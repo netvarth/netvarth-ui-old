@@ -706,7 +706,6 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         this.shared_functions.sendMessage(pdata);
         this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
         if (passParam['callback'] === 'communicate') {
-          console.log(passParam);
           this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment();

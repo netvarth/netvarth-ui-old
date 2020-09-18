@@ -317,7 +317,7 @@ export class BranchUserDetailComponent implements OnInit {
             // post_data1['subdomain'] = input.selectedSubDomain;
             post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
         }
-        console.log(post_data1);
+        // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('USERUPDATED_ADDED'), { 'panelclass': 'snackbarerror' });

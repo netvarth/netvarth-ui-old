@@ -65,7 +65,6 @@ export class ApptDetailComponent implements OnInit {
         this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
             (data) => {
                 this.appt = data;
-                console.log(this.appt);
             },
             (error) => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

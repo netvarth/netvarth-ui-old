@@ -87,7 +87,6 @@ export class CheckinDetailComponent implements OnInit {
         this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
             (data) => {
                 this.waitlist = data;
-                console.log(this.waitlist);
             },
             (error) => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

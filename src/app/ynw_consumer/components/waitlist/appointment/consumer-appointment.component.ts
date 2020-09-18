@@ -1107,7 +1107,6 @@ export class ConsumerAppointmentComponent implements OnInit {
         for (let i = 0; i < this.departments.length; i++) {
             if (deptId === this.departments[i].departmentId) {
                 this.selected_dept = this.departments[i];
-                console.log(this.selected_dept);
                 break;
             }
         }
@@ -1573,7 +1572,6 @@ export class ConsumerAppointmentComponent implements OnInit {
         return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
     }
     getPic(user) {
-        console.log(user);
         if (user.profilePicture) {
           // alert(JSON.parse(user.profilePicture)['url']);
           return JSON.parse(user.profilePicture)['url'];
@@ -1635,7 +1633,6 @@ export class ConsumerAppointmentComponent implements OnInit {
         // if (this.servicesjson[0] && this.servicesjson[0].id) {
         //     this.handleServiceSel(this.servicesjson[0].id);
         // }
-        console.log(this.servicesjson);
         this.action = 'service';
     }
     getUserName(id) {
@@ -1646,7 +1643,6 @@ export class ConsumerAppointmentComponent implements OnInit {
                 break;
             }
         }
-        console.log(selectedUser);
         if (selectedUser['businessName']) {
             return selectedUser['businessName'];
         } else {

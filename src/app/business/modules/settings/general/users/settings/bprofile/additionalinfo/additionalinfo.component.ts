@@ -122,7 +122,6 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 this.breadcrumbs = breadcrumbs;
                 for (let i = 0; i < this.domainList.bdata.length; i++) {
                     if (this.domainList.bdata[i].domain === this.domain) {
-                        console.log('domainList..'+this.domainList.bdata[i].domain);
                         for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
                             if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
                                 this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;

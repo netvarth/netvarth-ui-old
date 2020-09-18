@@ -261,7 +261,6 @@ export class ConsumerJoinComponent implements OnInit {
         error => {
           this.actionstarted = false;
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          console.log(this.api_error);
         }
       );
     

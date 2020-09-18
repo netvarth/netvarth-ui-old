@@ -434,7 +434,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
     this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
       this.businessProfile_show = 1;
       this.businessweightageArray = result;
-      console.log(JSON.stringify(this.businessweightageArray));
+      // console.log(JSON.stringify(this.businessweightageArray));
 
       if (this.businessweightageArray.length !== 0) {
         this.weightageValue = this.calculateWeightage(result);

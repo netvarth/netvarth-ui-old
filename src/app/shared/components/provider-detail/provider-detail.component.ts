@@ -222,6 +222,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   futureAllowed = true;
   galleryenabledArr = [];
   gallerydisabledArr = [];
+  onlinePresence = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -323,6 +324,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
       if (qparams.src) {
         this.pSource = qparams.src;
+      }
+      if (qparams.onlinePresence) {
+        this.onlinePresence = qparams.onlinePresence;
       }
       // if (qparams.pId) {
       //   this.businessid = qparams.pId;
@@ -445,6 +449,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
+            this.onlinePresence = this.businessjson.onlinePresence;
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;
@@ -542,7 +547,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'gallery': {
             this.galleryenabledArr = []; // For showing gallery
-
             this.tempgalleryjson = res;
             let indx = 0;
             if (this.bLogo !== '') {
@@ -880,7 +884,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                       + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                   }
                 }
-                console.log(this.locationjson[locindx]);
                 if (this.appttime_arr[i]['message']) {
                   this.locationjson[locindx]['appttime_det']['message'] = this.appttime_arr[i]['message'];
                 }
@@ -1226,7 +1229,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else {
           this.locationjson[passedIndx]['wlservices'] = data;
         }
-        console.log(this.locationjson[passedIndx]['wlservices']);
       },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -1241,7 +1243,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else {
           this.locationjson[passedIndx]['apptservices'] = data;
         }
-        console.log(this.locationjson[passedIndx]['wlservices']);
       },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -1903,7 +1904,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                     + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                 }
               }
-              console.log(this.locationjson[locindx]);
               if (this.appttime_arr[i]['message']) {
                 this.locationjson[locindx]['appttime_det']['message'] = this.appttime_arr[i]['message'];
               }
