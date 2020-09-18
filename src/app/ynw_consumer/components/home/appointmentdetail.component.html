@@ -60,7 +60,7 @@
                                                 {{appt.phoneNumber}} </div>
                                             <div class="item" *ngIf="appt.batchId"><span
                                                     class="ttle">Batch</span><span>{{appt.batchId}}</span></div>
-                                            <div class="postDesc" *ngIf="appt.service && appt.service.postInfoEnabled">
+                                            <div class="box-style" *ngIf="appt.service && appt.service.postInfoEnabled">
                                                 <h2> {{appt.service.postInfoTitle}} </h2>
                                                 <div [innerHTML]="appt.service.postInfoText">
                                                 </div>

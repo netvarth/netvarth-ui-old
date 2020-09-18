@@ -4,7 +4,7 @@
     <section class="">
         <div class="card title-gb">
             <h5 class="mgn-up-10"> 
-             <button type="button" class="btn default profile-back" (click)="redirecToApptServices()">
+             <button *ngIf="!hideBack" type="button" class="btn default profile-back" (click)="redirecToApptServices()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
                 {{servicecaption}}
             </h5>     

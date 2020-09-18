@@ -39,6 +39,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     breadcrumbs = this.breadcrumbs_init;
     subscription: Subscription; // for gallery
     serviceSubscription: Subscription; // from service module
+    infoSubscription: Subscription; // for gallery
     servstatus;
     can_change_hours = Messages.BPROFILE_CHANGE_SERVICE_WORKING_HOURS_CAP;
     click_here_cap = Messages.CLICK_HERE_CAP;
@@ -47,6 +48,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     userDetails: any;
     showGallery = false;
     servicecaption = 'Add Service';
+    hideBack = false;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -69,6 +71,9 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.subscription) {
             this.subscription.unsubscribe();
+        }
+        if (this.infoSubscription) {
+            this.infoSubscription.unsubscribe();
         }
         if (this.serviceSubscription) {
             this.serviceSubscription.unsubscribe();
@@ -104,6 +109,16 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.breadcrumbs = breadcrumbs;
                 }
                 this.initServiceParams();
+            });
+            this.infoSubscription = this.sharedfunctionObj.getMessage().subscribe(message => {
+                switch (message.ttype) {
+                    case 'hide-back':
+                        this.hideBack = true;
+                        break;
+                    case 'show-back':
+                        this.hideBack = false;
+                        break;
+                }
             });
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             if (input.ttype === 'image-upload') {
