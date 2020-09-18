@@ -61,6 +61,11 @@
     .info-img img{
       width: 50px !important;
     }
+    .notes {
+      width: auto !important;
+      margin-right: 10px;
+      margin-left: 10px;
+    }
   }
   .powered-by {
     position: absolute;
@@ -132,4 +137,12 @@ text-decoration: underline;
 }
 .green {
   color: #00cc96;
+}
+.notes {
+  border: 1px solid;
+  padding: 10px;
+  width: 70%;
+  margin: auto;
+  align-items: center;
+  margin-top: 10px;
 }
