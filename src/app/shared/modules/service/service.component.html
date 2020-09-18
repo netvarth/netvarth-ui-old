@@ -455,7 +455,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         before
                         confirming their service booking</div>
                     <div class="mgn-up-15" *ngIf="showConsumerNote">
-                        Button label: <span *ngIf="!showEditSection">{{consumerNote}}&nbsp; <i class="fa fa-pencil"
+                        Button label: <span *ngIf="!showEditSection">{{consumerNote}}&nbsp; <i class="fa fa-pencil pointer-cursor"
                                 (click)="editClicked()"></i></span>
                         <div class="settings_info">
                             Name this button accordingly so that {{customer_label}} will add the relevant information.
