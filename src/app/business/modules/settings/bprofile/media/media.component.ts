@@ -90,9 +90,9 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.getGalleryImages();
         this.getBusinessProfile();
         this.subscription = this.galleryService.getMessage().subscribe(input => {
-            console.log(input.ttype);
+            // console.log(input.ttype);
             if (input.ttype === 'image-upload') {
-              console.log(input.ttype );
+            //   console.log(input.ttype );
                 this.provider_services.uploadGalleryImages(input.value)
                     .subscribe(
                         () => {

@@ -240,7 +240,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
     this.subscription = this.user_datastorage.getWeightageArray().subscribe(result => {
       this.businessProfile_weightageArray = result;
-      console.log( JSON.stringify(this.businessProfile_weightageArray));
+      // console.log( JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
     });
   }
@@ -562,7 +562,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       _this.provider_services.getUserBussinessProfile(_this.userId)
         .subscribe(
           data => {
-            console.log(data);
+            // console.log(data);
             resolve(data);
           },
           () => {

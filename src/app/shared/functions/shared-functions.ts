@@ -644,7 +644,6 @@ export class SharedFunctions {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         ob.handle_searchstatus();
       } else {
         ob.getPublicSearch();
@@ -675,7 +674,6 @@ export class SharedFunctions {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         ob.handle_searchstatus();
       } else {
         ob.getPublicSearch();

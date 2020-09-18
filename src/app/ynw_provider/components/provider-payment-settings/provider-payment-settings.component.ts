@@ -236,12 +236,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.initPaymentSettings(this.paySettings, 1, paymenttype);
     }
     initPaymentSettings(paySettings, type, mode?) {
-        console.log(paySettings);
-        console.log(type);
-        console.log(mode);
-
-
-
         if (mode !== undefined) {
             if (mode === 'paytm') {
                 this.paystatus = paySettings.onlinePayment || false;

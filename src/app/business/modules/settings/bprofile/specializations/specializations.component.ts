@@ -85,7 +85,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                         data['serviceSubSector']['displayName'] : '';
                     if (this.bProfile.specialization) {
                         if (this.bProfile.specialization.length > 0) {
-                          console.log(this.bProfile.specialization);
+                          // console.log(this.bProfile.specialization);
                            this.selspecialization_arr = this.bProfile.specialization;
                           } else {
                             this.selspecialization_arr = [];

@@ -896,7 +896,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                     }
                   }
                 } catch (e) {
-                  console.log(e);
                 }
                 this.search_data.hits.hit[i].fields['specializationFiltered'] = specTemp;
                 if (this.search_data.hits.hit[i].fields.specialization_displayname && this.search_data.hits.hit[i].fields.specialization_displayname.length > 2) {
@@ -904,7 +903,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 } else {
                   this.search_data.hits.hit[i].fields['specializationMore'] = false;
                 }
-                console.log(this.search_data.hits.hit[i].fields['specializationFiltered']);
                 try {
                   if (this.search_data.hits.hit[i].fields.services) {
                     this.search_data.hits.hit[i].fields.serviceList = JSON.parse(this.search_data.hits.hit[i].fields.services);
@@ -988,7 +986,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 }
 
               }
-              console.log(this.search_data.hits);
               this.getWaitingTime(this.result_providdet);
               this.getApptTime(this.result_providdet);
               this.search_result_count = this.search_data.hits.found || 0;
@@ -2267,7 +2264,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   getNumberArray(num) {
-    console.log(num);
     return this.shared_functions.getNumberArray(num);
   }
 }

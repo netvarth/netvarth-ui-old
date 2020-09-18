@@ -144,13 +144,13 @@ export class ProviderNotificationsComponent implements OnInit {
     this.getGlobalSettingsStatus();
     this.getNotificationList();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
-    console.log(this.crumbtitle);
+    // console.log(this.crumbtitle);
     if (this.crumbtitle == 'Hospital') {
       this.breadcrmbTitle = 'Hospital';
     } else {
       this.breadcrmbTitle = this.provider_label;
     }
-    console.log(this.breadcrmbTitle);
+    // console.log(this.breadcrmbTitle);
     const breadcrumbs = [];
     this.breadcrumbs_init.map((e) => {
       breadcrumbs.push(e);
@@ -201,7 +201,7 @@ export class ProviderNotificationsComponent implements OnInit {
       for (const notifyList of notificationList) {
         if (notifyList.eventType && notifyList.eventType === 'WAITLISTADD') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
-            console.log(this.SelchkinNotify);
+            // console.log(this.SelchkinNotify);
             this.SelchkinNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -228,7 +228,7 @@ export class ProviderNotificationsComponent implements OnInit {
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
-            console.log(this.SelchkincnclNotify);
+            // console.log(this.SelchkincnclNotify);
             this.SelchkincnclNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -358,9 +358,9 @@ export class ProviderNotificationsComponent implements OnInit {
     }
   }
   selectChekinCanclNotify(event) {
-    console.log(this.SelchkincnclNotify);
+    // console.log(this.SelchkincnclNotify);
     this.SelchkincnclNotify = event.checked;
-    console.log(this.SelchkincnclNotify);
+    // console.log(this.SelchkincnclNotify);
     if (!this.SelchkincnclNotify) {
       this.checkinCancelNotifications('cancelcheckin');
     }
@@ -994,12 +994,12 @@ export class ProviderNotificationsComponent implements OnInit {
         chekincancelMode = 'UPDATE';
       }
     }
-    console.log(this.SelchkincnclNotify);
+    // console.log(this.SelchkincnclNotify);
     if (!this.SelchkincnclNotify) {
       this.em1_arr = [];
       this.ph1_arr = [];
       this.cheknCancelPushph_arr = [];
-      //this.cancelpush = false;
+      // this.cancelpush = false;
     }
     this.savecancelNotification_json.resourceType = 'CHECKIN';
     this.savecancelNotification_json.eventType = 'WAITLISTCANCEL';

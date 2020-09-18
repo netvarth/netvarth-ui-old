@@ -547,7 +547,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'gallery': {
             this.galleryenabledArr = []; // For showing gallery
-
             this.tempgalleryjson = res;
             let indx = 0;
             if (this.bLogo !== '') {
@@ -885,7 +884,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                       + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                   }
                 }
-                console.log(this.locationjson[locindx]);
                 if (this.appttime_arr[i]['message']) {
                   this.locationjson[locindx]['appttime_det']['message'] = this.appttime_arr[i]['message'];
                 }
@@ -1231,7 +1229,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else {
           this.locationjson[passedIndx]['wlservices'] = data;
         }
-        console.log(this.locationjson[passedIndx]['wlservices']);
       },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -1246,7 +1243,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else {
           this.locationjson[passedIndx]['apptservices'] = data;
         }
-        console.log(this.locationjson[passedIndx]['wlservices']);
       },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -1908,7 +1904,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                     + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                 }
               }
-              console.log(this.locationjson[locindx]);
               if (this.appttime_arr[i]['message']) {
                 this.locationjson[locindx]['appttime_det']['message'] = this.appttime_arr[i]['message'];
               }

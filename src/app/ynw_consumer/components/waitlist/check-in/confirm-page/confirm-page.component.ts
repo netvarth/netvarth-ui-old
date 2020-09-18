@@ -54,7 +54,7 @@ export class ConfirmPageComponent implements OnInit {
     // this.shared_functions.removeitemfromLocalStorage('inPostInfo');
   }
   updateEmail() {
-    console.log(this.email);
+    // console.log(this.email);
   }
   getWaitTime(waitlist) {
     if (waitlist.calculationMode !== 'NoCalc') {

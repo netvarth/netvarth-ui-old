@@ -101,7 +101,7 @@ export class InvoiceStatusComponent {
       if (this.invoiceStatus.indexOf(status) !== -1) {
         const indexofStatus = this.invoiceStatus.indexOf(status);
         if (indexofStatus >= 0) {
-          console.log(this.invoiceStatus.splice(indexofStatus, 1));
+          // console.log(this.invoiceStatus.splice(indexofStatus, 1));
         }
         passingStatus = this.invoiceStatus.toString();
         this.filter[type] = passingStatus;

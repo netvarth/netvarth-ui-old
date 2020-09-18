@@ -92,11 +92,9 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   }
   onMbnmberChange(event) {
     this.mobilenumber = event.target.value;
-    console.log(this.mobilenumber);
   }
   onEmailChange(event) {
     this.emailId = event.target.value;
-    console.log(this.emailId);
   }
   isNumeric(evt) {
     if (evt === 'name') {

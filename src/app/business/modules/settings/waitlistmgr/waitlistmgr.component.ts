@@ -187,7 +187,6 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.getBussinessProfile()
             .subscribe(
                 data => {
-                    console.log(data);
                     this.bProfile = data;
                     if (this.bProfile.baseLocation) {
                         this.locationExists = true;

@@ -333,7 +333,7 @@ export class CustomViewComponent implements OnInit {
                             }
                         }
                     }
-                    console.log(this.users_list);
+                    // console.log(this.users_list);
                     // else {
                     //     this.departmentSelection();
                     // }

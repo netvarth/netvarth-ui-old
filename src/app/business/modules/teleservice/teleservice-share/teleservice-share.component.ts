@@ -151,7 +151,6 @@ export class TeleServiceShareComponent implements OnInit {
 
   // Copy textarea content
   copyMessageInfo(elementId, Message) {
-    console.log(elementId);
     const info = document.getElementById(elementId);
     if (window.getSelection) {
       const selection = window.getSelection();
