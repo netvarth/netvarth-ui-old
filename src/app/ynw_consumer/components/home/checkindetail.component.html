@@ -2,7 +2,7 @@
     <div class="content p0 comn-cls checkin-details">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading top-row ">                    
+                <div class="panel-heading top-row ">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                         <app-header *ngIf="shared_functions.checkLogin()"></app-header>
                     </div>
@@ -11,7 +11,8 @@
                     <div class="c-outer m0">
                         <div class="c-body">
                             <div class="card title-gb">
-                                <h5 class="mgn-up-10">Check-in Details <a class="pull-right back-btn" (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
+                                <h5 class="mgn-up-10">Check-in Details <a class="pull-right back-btn"
+                                        (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
                             </div>
                             <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
                                 <div class="card" *ngIf="!api_loading">
@@ -67,6 +68,12 @@
                                                 {{waitlist.waitlistPhoneNumber}} </div>
                                             <div class="item" *ngIf="waitlist.batchName"><span
                                                     class="ttle">Batch</span><span>{{waitlist.batchName}}</span>
+                                            </div>
+                                            <div class="postDesc"
+                                                *ngIf="waitlist.service && waitlist.service.postInfoEnabled">
+                                                <h2> {{waitlist.service.postInfoTitle}} </h2>
+                                                <div [innerHTML]="waitlist.service.postInfoText">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
