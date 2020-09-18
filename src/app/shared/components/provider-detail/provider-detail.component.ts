@@ -1948,8 +1948,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const account = this.provider_id + '___' + userId;
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        src: 'bp',
-        onlinePresence: this.businessjson.onlinePresence
+        src: 'bp'
       }
     };
     this.routerobj.navigate([account], navigationExtras);

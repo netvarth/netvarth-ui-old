@@ -131,7 +131,7 @@
         </ul>
     </div>
     <form [formGroup]="serviceForm" novalidate (ngSubmit)="serviceForm.valid &&
-onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'"
+onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show' && !showInfo"
         class="ynw-common-form-nm wiz-service serviceform">
         <ng-container>
             <div class="form-group">
@@ -348,11 +348,11 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
                 </mat-radio-group>
             </div> -->
-            <div class="form-group inline" *ngIf="!is_virtual_serv && is_lvtrack_enable && !is_donation">
+            <!-- <div class="form-group inline" *ngIf="!is_virtual_serv && is_lvtrack_enable && !is_donation">
                 <label class="col-form-label">Enable Live Track</label>
                 <mat-slide-toggle class="example-margin" formControlName="livetrack">
                 </mat-slide-toggle>
-            </div>
+            </div> -->
             <div class="mgn-bt-20">
                 <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
                     style="font-size: 1.1rem;">
@@ -416,14 +416,56 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <!-- </mat-expansion-panel>
 </mat-accordion> -->
             </div>
-            <!-- <div class="mgn-bt-20" *ngIf="!is_virtual_serv && is_lvtrack_enable">
+            <div class="mgn-bt-20">
                 <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
                     style="font-size: 1.1rem;">
                     Additional Info</a>
-                <div class="settings_info" *ngIf="!is_donation"> 
-                    Live tracking and more</div>
-            </div> -->
-            <div class="row mgn-lt-5 mgn-up-20" *ngIf="!is_donation">
+                <!-- <div class="settings_info" *ngIf="!is_donation"> 
+                    Live tracking and more</div> -->
+            </div>
+            <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings && !is_donation">
+                <div class="form-group inline" *ngIf="!is_virtual_serv && is_lvtrack_enable">
+                    <label class="col-form-label">Enable Live Track</label>
+                    <mat-slide-toggle class="example-margin" formControlName="livetrack">
+                    </mat-slide-toggle>
+                </div>
+                <div class="form-group">
+                    <!-- <div> -->
+                    <!-- <label style="margin-bottom: 0 !important;">Take note from consumer
+                            <mat-slide-toggle class="example-margin" formControlName="consumerNoteMandatory"
+                                (change)="changeConsumerNoteStatus($event)">
+                            </mat-slide-toggle>
+                        </label> -->
+                    <mat-checkbox formControlName="consumerNoteMandatory" (change)="changeConsumerNoteStatus($event)">
+                        Take note from consumer
+                    </mat-checkbox>
+                    <!-- </div> -->
+                    <ng-container *ngIf="showConsumerNote">
+                        <div class="form-group">
+                            <mat-form-field>
+                                <input matInput min="0" [(ngModel)]="consumerNote" [ngModelOptions]="{standalone: true}"
+                                    autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                </div>
+                <!-- <mat-chip-list class="service-info">
+                    <mat-chip class="pointer-cursor" (click)="showInfoSection('pre')">
+                        <i class="fa fa-check-circle" *ngIf="preInfoEnabled"></i>Pre Instrunctions
+                    </mat-chip>
+                    <mat-chip class="pointer-cursor" (click)="showInfoSection('post')">
+                        <i class="fa fa-check-circle" *ngIf="postInfoEnabled"></i>Post
+                        Instrunctions</mat-chip>
+                </mat-chip-list> -->
+                <div class="mgn-up-10 mgn-bt-10">
+                    Do you want to convey special instructions to your patients about the service ?
+                    <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
+                        Yes</span>
+                    <a class="mgn-lt-5" *ngIf="preInfoEnabled || postInfoEnabled" (click)="showInfoSection()">
+                        Edit <i class="fa fa-pencil"></i></a>
+                    <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
+                        <i class="fa fa-check"></i> Added</div>
+                </div>
                 <!-- <section class="mgn-bt-30">
                     <label style="margin-bottom: 0 !important" class="col-form-label">Service Price</label>
                     <div class="settings_info">
@@ -492,4 +534,58 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="message-two" (click)="gotoManageQueue()">{{go_to_service_cap}}</div>
         </ng-container>
     </form>
+
+    <div class="ynw-common-form-nm pre-post" *ngIf="showInfo">
+        <div class="mgn-bt-20 mgn-up-20">
+            <div class="form-group preinfo">
+                <label class="col-form-label">Pre instructions&nbsp;&nbsp;</label>
+                <mat-slide-toggle class="example-margin" [(ngModel)]="preInfoEnabled">
+                </mat-slide-toggle>
+            </div>
+            <div class="form-level-settings">Pre instructions</div>
+            <div class="form-group pre-post-info" *ngIf="preInfoEnabled">
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Title" autocomplete="off" [(ngModel)]="preInfoTitle"
+                        [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+
+                <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
+                    <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
+                        [ngModelOptions]="{standalone: true}">
+                    </ckeditor>
+                </div>
+                <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv no-padding">
+                    <button mat-button class="cs-btn bt1 savemember" (click)="showInfoSection()">OK</button>
+                </div> -->
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="mgn-bt-20 mgn-up-20">
+            <div class="form-group postinfo">
+                <label class="col-form-label">Post instructions&nbsp;&nbsp;</label>
+                <mat-slide-toggle class="example-margin" [(ngModel)]="postInfoEnabled">
+                </mat-slide-toggle>
+            </div>
+            <div class="form-level-settings">Post instructions</div>
+            <div class="form-group pre-post-info" *ngIf="postInfoEnabled">
+                <mat-form-field>
+                    <input matInput type="text" class="form-control" placeholder="Title" autocomplete="off"
+                        [(ngModel)]="postInfoTitle" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+
+                <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
+                    <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="postInfoText"
+                        [ngModelOptions]="{standalone: true}">
+                    </ckeditor>
+                </div>
+                <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv no-padding">
+                    <button mat-button class="cs-btn bt1 savemember" (click)="showInfoSection()">OK</button>
+                </div> -->
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv no-padding">
+            <button mat-button class="cs-btn bt1 savemember" (click)="showInfoSection()">Back</button>
+        </div>
+    </div>
 </div>

@@ -10,6 +10,7 @@ import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/fu
 import { UserDataStorageService } from './user-datastorage.service';
 import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
+import { SharedServices } from '../../../../../../shared/services/shared-services';
 
 @Component({
   selector: 'app-managesettings',
@@ -212,7 +213,8 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     private sharedfunctionObj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
     private activatedRoot: ActivatedRoute,
-    private provider_services: ProviderServices
+    private provider_services: ProviderServices,
+    private shared_service: SharedServices
   ) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
@@ -270,7 +272,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
           title: 'Settings'
         });
         this.breadcrumbs = breadcrumbs;
-
+		if (this.domainList && this.domainList.bdata) {
         for (let i = 0; i < this.domainList.bdata.length; i++) {
           if (this.domainList.bdata[i].domain === this.domain) {
             for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
@@ -284,6 +286,21 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
             }
           }
         }
+      } else {
+        this.shared_service.bussinessDomains()
+        .subscribe(
+            res => {
+                const today = new Date();
+                const postdata = {
+                    cdate: today,
+                    bdata: res
+                };
+                this.domainList = postdata;
+                this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+            }
+        );
+        
+      }
       });
   }
   getUserPublicSearch() {

@@ -305,24 +305,25 @@ export class TeleServiceComponent implements OnInit {
             if (result) {
                 if (result === 'completed') {
                     if (this.waiting_type === 'checkin') {
-                        if (this.data.waitlistStatus === 'started') {
+                        // if (this.data.waitlistStatus === 'started') {
                             this.changeWaitlistStatus(this.data, 'DONE');
-                        } else {
-                            this.changeWaitlistStatus(this.data, 'STARTED');
-                            setTimeout(() => {
-                                this.changeWaitlistStatus(this.data, 'DONE');
-                            }, 300);
-                        }
+                        // }
+                        // else {
+                        //     this.changeWaitlistStatus(this.data, 'STARTED');
+                        //     setTimeout(() => {
+                        //         this.changeWaitlistStatus(this.data, 'DONE');
+                        //     }, 300);
+                        // }
                         this.redirecToPreviousPage();
                     } else {
-                        if (this.data.apptStatus === 'Started') {
+                        // if (this.data.apptStatus === 'Started') {
                             this.changeWaitlistStatus(this.data, 'Completed');
-                        } else {
-                            this.changeWaitlistStatus(this.data, 'Started');
-                            setTimeout(() => {
-                                this.changeWaitlistStatus(this.data, 'Completed');
-                            }, 300);
-                        }
+                        // } else {
+                        //     this.changeWaitlistStatus(this.data, 'Started');
+                        //     setTimeout(() => {
+                        //         this.changeWaitlistStatus(this.data, 'Completed');
+                        //     }, 300);
+                        // }
                         this.redirecToPreviousPage();
                     }
                 }

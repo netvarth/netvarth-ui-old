@@ -11929,3 +11929,21 @@ img.busN-logo {
     border-bottom: none !important;
 }
 }
+.pre-post .preinfo,
+.pre-post .postinfo {
+  display: flex;
+  margin: 0 !important;
+}
+.prepost-check {
+  color: green;
+  margin-left: 5px;
+  margin-top: 5px;
+  font-size: small;
+}
+.pre-post-info .ck.ck-editor__editable_inline {
+  min-height: 200px;
+}
+.preinfo-text {
+  max-height: 50px;
+  overflow: hidden;
+}

@@ -492,7 +492,14 @@ export class ConsumerAppointmentComponent implements OnInit {
             taxable: serv.taxable,
             serviceType: serv.serviceType,
             virtualServiceType: serv.virtualServiceType,
-            virtualCallingModes: serv.virtualCallingModes
+            virtualCallingModes: serv.virtualCallingModes,
+            postInfoEnabled: serv.postInfoEnabled,
+            postInfoText: serv.postInfoText,
+            postInfoTitle: serv.postInfoTitle,
+            preInfoEnabled: serv.preInfoEnabled,
+            preInfoTitle: serv.preInfoTitle,
+            preInfoText: serv.preInfoText,
+            consumerNoteTitle: serv.consumerNoteTitle
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
@@ -1611,6 +1618,8 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.action = 'members';
         } else if (this.action === 'service' && this.filterDepart) {
             this.action = '';
+        } else if (this.action === 'preInfo') {
+            this.action = '';
         }
     }
     applyPromocode() {
@@ -1679,4 +1688,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     // viewSelectedUser(userId) {
     //     this.router.navigate(['', this.provider_id + '_' + userId]);
     // }
+    showPreInfo() {
+        this.action = 'preInfo';
+    }
 }

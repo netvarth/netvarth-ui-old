@@ -7,6 +7,7 @@ import { MaterialModule } from '../common/material.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { SharedModule } from '../common/shared.module';
 import { AddServiceComponent } from '../../../business/modules/settings/general/users/settings/services/addservice/addservice.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { AddServiceComponent } from '../../../business/modules/settings/general/
         FormMessageDisplayModule,
         CommonModule,
         CapitalizeFirstPipeModule,
-        SharedModule
+        SharedModule,
+        CKEditorModule
     ],
     declarations: [ServiceComponent, AddServiceComponent],
     exports: [ServiceComponent]

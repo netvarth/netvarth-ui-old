@@ -263,6 +263,9 @@ export const projectConstantsLocal = {
   HealthcareService: {
     'service_cap': 'Consultations and Services'
   },
+  PersonalFitness: {
+    personalFitness:  { helphint: 'Personal training session, diet consultation'}
+  },
   TOOLTIP_CLS: 'ynwtooltipcls',
   TOOLTIP_PRIVACYPHONE: 'Example : Cell Phone,  Mobile, Emergency, Main Line, others etc',
   TOOLTIP_PRIVACYEMAIL: 'Example : Office Email id, Personal Email id etc',

@@ -1274,7 +1274,16 @@ export class AppointmentComponent implements OnInit {
                                     }
                                 }
                             }
-                            this.servicesjson = newserviceArray;
+                            if (!this.customer_data.phoneNo) {
+                                this.servicesjson = [];
+                                for (let i = 0; i < newserviceArray.length; i++) {
+                                    if (newserviceArray[i].serviceType !== 'virtualService') {
+                                        this.servicesjson.push(newserviceArray[i]);
+                                    }
+                                }
+                            } else {
+                                this.servicesjson = newserviceArray;
+                            }
                         }
                         if (this.servicesjson.length > 0) {
                             this.sel_ser = this.servicesjson[0].id;
@@ -1330,7 +1339,16 @@ export class AppointmentComponent implements OnInit {
                 }
             }
         }
-        this.servicesjson = newserviceArray;
+        if (!this.customer_data.phoneNo) {
+            this.servicesjson = [];
+            for (let i = 0; i < newserviceArray.length; i++) {
+                if (newserviceArray[i].serviceType !== 'virtualService') {
+                    this.servicesjson.push(newserviceArray[i]);
+                }
+            }
+        } else {
+            this.servicesjson = newserviceArray;
+        }
         if (this.servicesjson.length > 0) {
             this.sel_ser = this.servicesjson[0].id;
             this.setServiceDetails(this.sel_ser);
