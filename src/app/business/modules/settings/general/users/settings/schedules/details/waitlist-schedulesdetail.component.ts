@@ -916,6 +916,9 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
         this.showBatchFields = ev.checked;
         if (ev.checked) {
             this.amForm.get('qserveonce').setValue(2);
+        } else {
+            this.amForm.get('qserveonce').setValue(1);
+            this.sbatchStatus = false;
         }
     }
     redirecToUserSchedule() {
