@@ -93,7 +93,7 @@
                             <button mat-menu-item (click)="redirectto('change-mobile')" *ngIf="!hideMenu">
                                 <i class="icon-mobile"></i>
                                 <span>{{change_mobile}}</span>
-                            </button>                           
+                            </button>
                             <button mat-menu-item (click)="doLogout()">
                                 <i class="icon-logout"></i>
                                 <span>{{logout_cap}}</span>
@@ -199,8 +199,18 @@
     <div class="container no-padding">
         <div class="col-md-22 col-xs-12 col-sm-12 no-padding">
             <div class="tp-1">
+                <div class="tp-l" *ngIf="includedfrom!='checkin' && includedfrom!='appt' &&
+                includedfrom!='payment' && includedfrom!='livetrack'  && includedfrom!='pdetails'">
+                    <a (click)="gotoActiveHome()" class="logo pointer-cursor">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <span class="logo-mini visible-xs"><img src="assets/images/home/logo-icon.png" alt="Jaldee"></span>
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg hidden-xs"><img src="assets/images/jaldee-logo.png" alt="Jaldee"></span>
+                    </a>
+                </div>
                 <div class="tp-r">
-                    <div class="tc1" [ngClass]="{'pad-rt-10 mgn-up-5': (!shared_functions.checkLogin() && pageSource == 'details')}">
+                    <div class="tc1"
+                        [ngClass]="{'pad-rt-10 mgn-up-5': (!shared_functions.checkLogin() && pageSource == 'details')}">
                         <div class="topsignouter">
                             <button class="sgn" (click)="doLogin('consumer')"
                                 *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button>

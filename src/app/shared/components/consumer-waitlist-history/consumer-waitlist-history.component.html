@@ -1,11 +1,8 @@
 <section class="content consumer-dash consumer-appthistory">
     <div class="container">
         <div class="panel panel-default">
-            <div class="panel-heading top-row ">
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <a class="pull-left back-btn mgn-up-5" (click)="backtoProviderDetails()"><i class="fa fa-arrow-left"></i></a>
-                </div>
-                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+            <div class="panel-heading top-row ">                
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <app-header *ngIf="shared_functions.checkLogin()"></app-header>
                 </div>
             </div>
@@ -16,7 +13,7 @@
                     <div class="c-outer m0">
                         <div class="c-body">
                             <div class="card title-gb">
-                                <h5 class="mgn-up-10 mgn-lt-5">Check-ins/Tokens History</h5>
+                                <h5 class="mgn-up-10 mgn-lt-5">Check-ins/Tokens History <a class="pull-right back-btn" (click)="backtoProviderDetails()"><i class="fa fa-arrow-left"></i></a></h5>
                             </div>
                             <div class="card history one no-padding">
                                 <app-consumer-checkin-history-list [params]="params" *ngIf="provider_id">

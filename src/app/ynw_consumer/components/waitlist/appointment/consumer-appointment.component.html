@@ -7,12 +7,14 @@
                         (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-                    <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
+                    <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'appt'"></app-header>
                 </div>
             </div>
-            <!-- <app-header *ngIf="sharedFunctionobj.checkLogin()" [cSource]="cSource"></app-header> -->
             <div class="panel-body no-padding">
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                    <!-- <div class="card title-gb">
+                        <h5 class="mgn-up-10"> <a class="pull-right back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
+                    </div> -->
                     <div class="card p0">
                         <div class="copy locd">
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"

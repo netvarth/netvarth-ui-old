@@ -414,17 +414,16 @@ ul.bus-actions-horiz li {
 }
 
 .smalldevicebx {
-  background: #eee !important;
+  background: #faf9f9 !important;
   height: 55px !important;
   font-weight: 600;
   padding-top: 5px;
   font-size: 0.8rem !important;
 }
 
-.smalldevicebx .img {
-  width: 35px;
-  margin-top: -5px;
-  height: 35px;
+.smalldevicebx .enquiry {
+  width: 30px;
+  height: 30px;
 }
 
 .smalldevicebx .img1 {
@@ -439,9 +438,10 @@ ul.bus-actions-horiz li {
 }
 
 .like-btn {
+  background-color: #faf9f9;
   border: 1px solid #5f75bc;
   border-radius: 40px;
-  padding: 3px 0 3px 0;
+  padding: 5px 0 5px 0;
   /* color: #3a3030; */
   font-weight: 600;
   align-items: center;
@@ -469,3 +469,27 @@ ul.bus-actions-horiz li {
   font-weight: bold;
 }
 
+.prov-name {
+  font-size:15px !important;
+}
+.search-services ul {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+.search-services ul li {
+  list-style: none;
+  display: inline;
+  margin-right: 10px !important;
+}
+
+@media only screen and (max-width: 767px){
+.content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme {
+    justify-content:left;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+}
+
+.link {
+  cursor: pointer;
+}

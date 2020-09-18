@@ -25,9 +25,11 @@
                                 <div class="rs-box">
                                     <div class="refine-srch"
                                         *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && additionalRefineCondition()">
-                                        
+
                                         <span class="ttle" *ngIf="showrefinedsection">{{refine_search_cap}}</span>
-                                        <span class="pull-right mgn-rt-10 hide-refine pointer-cursor" (click)="showrefinedsection = false"><i class="fa fa-angle-left"></i> </span>
+                                        <span class="pull-right mgn-rt-10 hide-refine pointer-cursor"
+                                            (click)="showrefinedsection = false"><i class="fa fa-angle-left"></i>
+                                        </span>
                                     </div>
                                     <div *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
                                         <div class="bx-block"
@@ -259,7 +261,7 @@
                                     <div class="ct-r ml-auto">
                                         <div class="fltr">
                                             <div class="search_sort_display">
-                                                <button class="pull-right"  *ngIf="search_data.hits.found > 1"
+                                                <button class="pull-right" *ngIf="search_data.hits.found > 1"
                                                     style="display:flex;justify-content:center;align-items:center;margin-top: 3px;"
                                                     mat-icon-button>
                                                     <i class="icon-filter-one" style="font-size: large"
@@ -381,13 +383,16 @@
                                                 </ng-container>
                                             </div>
                                         </div>
-                                        <div class="col-md-9 col-xs-9 col-sm-9 col-lg-10 bus-title-content no-padding-small">
-                                            <div class="col-md-8 col-xs-10 col-sm-8 col-lg-8 no-padding">
-                                                <div class="pointer-cursor" (click)="providerDetClicked(search_result)"
-                                                    [ngClass]="{'col-md-9':(search_result.fields.ynw_verified_level > 1)?true:false}">
-                                                    <h3>{{search_result.fields.title | capitalizeFirst}} <span class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1" 
-                                                        (click)="openJdn(search_result)" [matTooltip]="jdnTooltip"><img
-                                                            height="30" width="30" src="./assets/images/JDN.png"></span></h3>
+                                        <div
+                                            class="col-md-9 col-xs-9 col-sm-9 col-lg-10 bus-title-content no-padding-small">
+                                            <div class="col-md-8 col-sm-8 col-lg-8 no-padding"
+                                                [ngClass]="{'col-xs-10':(search_result.fields.ynw_verified_level > 1)?true:false}">
+                                                <div class="pointer-cursor" (click)="providerDetClicked(search_result)">
+                                                    <h3>{{search_result.fields.title | capitalizeFirst}} <span
+                                                            class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1"
+                                                            (click)="openJdn(search_result)"
+                                                            [matTooltip]="jdnTooltip"><img height="30" width="30"
+                                                                src="./assets/images/JDN.png"></span></h3>
                                                     <div
                                                         class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-3 no-padding">
                                                         <h6><a [href]="'https://www.google.com/maps/place/'+search_result.fields.location1+'/@'+search_result.fields.location1+',15z'"
@@ -400,11 +405,6 @@
                                                         *ngIf="search_result.fields.account_type && search_result.fields.account_type == 1">
                                                         <b>{{search_result.fields.branch_name}}</b>
                                                     </div>
-                                                    <div *ngIf="search_result.fields.userCount" class="">
-                                                        <b>{{search_result.fields.userCount}}
-                                                            {{search_result.fields.provider_label}} </b>
-                                                    </div>
-                                                    <div class="clearfix"></div>
                                                     <div *ngIf="search_result && search_result.fields.specializationFiltered && search_result.fields.specializationFiltered.length == 1"
                                                         class="question-header mgn-up-3">
                                                         Specialization
@@ -424,6 +424,10 @@
                                                             class="link pointer-cursor"
                                                             (click)="providerDetClicked(search_result)">...</span>
                                                     </div>
+                                                    <div *ngIf="search_result.fields.userCount" class="mgn-up-5">
+                                                        <h6 class="prov-name"><a>{{search_result.fields.userCount}}
+                                                                {{search_result.fields.provider_label}} </a></h6>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-xs-2 col-sm-4 col-lg-4 no-padding ">
@@ -433,94 +437,61 @@
                                                         [matTooltipClass]="tooltipcls"
                                                         [matTooltip]="'Jaldee verified-basic'">
                                                         <img src="./assets/images/basic.png" alt="Basic"></span>
-                                                    <span class="img pic_align pull-right" 
+                                                    <span class="img pic_align pull-right"
                                                         *ngIf="search_result.fields.ynw_verified_level==3"
                                                         [matTooltipClass]="tooltipcls"
                                                         [matTooltip]="'Jaldee verified-basic plus'"><img
                                                             src="./assets/images/basicpls.png" alt="Basic Plus"></span>
-                                                    <span class="img pic_align pull-right" 
+                                                    <span class="img pic_align pull-right"
                                                         *ngIf="search_result.fields.ynw_verified_level==4"
                                                         [matTooltipClass]="tooltipcls"
                                                         [matTooltip]="'Jaldee verified-advanced'"><img
-                                                            src="./assets/images/premium.png" alt="Advanced"></span>                                                   
-                                                    <!-- <span class="first-time-jc"
-                                                *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer"
-                                                (click)="!btn_clicked && openCoupons(search_result,true)"><i
-                                                    class="fa fa-tag red"></i> {{first_time_coupon}}</span>
-                                            <span class="other-jcs"
-                                                *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0"
-                                                (click)="!btn_clicked && openCoupons(search_result)"
-                                                [matTooltipClass]="tooltipcls" [matTooltip]="couponTooltip"><i
-                                                    class="fa fa-tag blue"></i>
-                                                {{jaldee_coupon}}</span>
-                                            <span class="communicate" (click)="communicateHandler(search_result)"
-                                                *ngIf="search_result.fields.claimable!=1" [matTooltipClass]="tooltipcls"
-                                                [matTooltip]="commTooltip">{{send_messages}}</span>
-                                            <span class="claim-business" (click)="claimBusiness(search_result)"
-                                                *ngIf="search_result.fields.claimable==1">{{claim_my_business_cap}} <i
-                                                    style="font-size: 1.1rem;" class="fa fa-hand-o-up"
-                                                    aria-hidden="true"></i></span> -->
+                                                            src="./assets/images/premium.png" alt="Advanced"></span>
                                                 </div>
-                                                <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs" >
+                                                <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs">
                                                     <ul class="bus-actions no-padding">
                                                         <li>
                                                             <a class="like-btn"
                                                                 (click)="communicateHandler(search_result)">
-                                                                <img class="img" src="./assets/images/enquiry.png" alt="Enquiry"/>
+                                                                <img class="img" src="./assets/images/enquiry.jpeg"
+                                                                    alt="Enquiry" />
                                                                 <span style="display:block">{{send_messages}}</span>
-                                                                <!-- <span>
-                                                                    {{send_messages}}
-                                                                </span> -->
                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </div>
-
-
-                                                <!-- <span class="first-time-jc"
-                                                    *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer"
-                                                    (click)="!btn_clicked && openCoupons(search_result,true)"><i
-                                                        class="fa fa-tag red"></i> {{first_time_coupon}}</span>
-                                                <span class="other-jcs"
-                                                    *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0"
-                                                    (click)="!btn_clicked && openCoupons(search_result)"
-                                                    [matTooltipClass]="tooltipcls" [matTooltip]="couponTooltip"><i
-                                                        class="fa fa-tag blue"></i>
-                                                    {{jaldee_coupon}}</span>
-                                                <span class="claim-business" (click)="claimBusiness(search_result)"
-                                                    *ngIf="search_result.fields.claimable==1">{{claim_my_business_cap}} <i
-                                                        style="font-size: 1.1rem;" class="fa fa-hand-o-up"
-                                                        aria-hidden="true"></i></span> -->
                                             </div>
                                         </div>
                                         <div class="col-xs-12 smalldevicebx mgn-up-10 link visible-xs">
-                                            <span (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1" [matTooltipClass]="tooltipcls"
-                                            [matTooltip]="commTooltip" class=" pic_align pull-left centeralign">
-                                                <img class="img" src="./assets/images/enquiry.png" alt="Enquiry"/>
+                                            <span (click)="communicateHandler(search_result)"
+                                                *ngIf="search_result.fields.claimable!=1" [matTooltipClass]="tooltipcls"
+                                                [matTooltip]="commTooltip" class=" pic_align pull-left centeralign">
+                                                <img class="enquiry" src="./assets/images/enquiry.jpeg" alt="Enquiry" />
                                                 <span style="display:block">{{send_messages}}</span>
-                                            </span> 
-                                            <span class="pic_align pull-left centeralign mgn-lt-20" *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer"
-                                            (click)="!btn_clicked && openCoupons(search_result,true)">
-                                                <img class="img2" src="./assets/images/first_coupon.png" alt="First Time Coupons"/>
+                                            </span>
+                                            <span class="pic_align pull-left centeralign mgn-lt-20"
+                                                *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer"
+                                                (click)="!btn_clicked && openCoupons(search_result,true)">
+                                                <img class="img2" src="./assets/images/first_coupon.png"
+                                                    alt="First Time Coupons" />
                                                 <span style="display:block">{{first_time_coupon}}</span>
                                             </span>
-                                            <span class=" pic_align pull-left centeralign mgn-lt-20" *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0"
-                                            (click)="!btn_clicked && openCoupons(search_result)"
-                                            [matTooltipClass]="tooltipcls" [matTooltip]="couponTooltip">
-                                                <img class="img1" src="./assets/images/jcoupon.png" alt="Jaldee Coupon"/>
-                                                <span style="display:block">{{jaldee_coupon}}</span>
-                                            </span> 
-
-                                            <span class=" pic_align pull-left centeralign mgn-lt-20" (click)="claimBusiness(search_result)"
-                                            *ngIf="search_result.fields.claimable==1">
-                                                <img class="img1" src="./assets/images/claim.png" alt="Claim your Business"/>
-                                                <span style="display:block">{{claim_my_business_cap}}</span>
-                                            </span> 
-                                            <!-- <span class="img pic_align other-jcs"
+                                            <span class=" pic_align pull-left centeralign mgn-lt-20"
                                                 *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0"
                                                 (click)="!btn_clicked && openCoupons(search_result)"
                                                 [matTooltipClass]="tooltipcls" [matTooltip]="couponTooltip">
-                                                    <img src="./assets/images/jcoupon.png" alt="Enquiry"/>{{jaldee_coupon}}</span>                                                                                        -->
+                                                <img class="img1" src="./assets/images/jcoupon.png"
+                                                    alt="Jaldee Coupon" />
+                                                <span style="display:block">{{jaldee_coupon}}</span>
+                                            </span>
+
+                                            <span class=" pic_align pull-left centeralign mgn-lt-20"
+                                                (click)="claimBusiness(search_result)"
+                                                *ngIf="search_result.fields.claimable==1">
+                                                <img class="img1" src="./assets/images/claim.png"
+                                                    alt="Claim your Business" />
+                                                <span style="display:block">{{claim_my_business_cap}}</span>
+                                            </span>
                                         </div>
                                         <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
                                             [modalImages]="image_list_popup"
@@ -535,11 +506,13 @@
                                             *ngIf="showButton(search_result) === 'bookservice'">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
-                                                    <div class="donat-service"
-                                                        *ngIf="!search_result.fields.departments">
-                                                        <span class="sub-title-donate">Services</span>
-                                                        <ul *ngIf="search_result.fields.allServices">
-                                                            <li *ngFor="let appointmentService of search_result.fields.allServices"
+                                                    <div class="search-services"
+                                                        *ngIf="!search_result.fields.departments && search_result.fields.allServices">
+                                                        <span class="question-header">Services Count: </span>
+                                                        <span
+                                                            class="question-value1">{{search_result.fields.allServices.length}}</span>
+                                                        <!-- <ul *ngIf="search_result.fields.allServices">
+                                                            <li class="question-value1 link" *ngFor="let appointmentService of search_result.fields.allServices"
                                                                 (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
                                                                 {{appointmentService.name}}
                                                                 <span
@@ -556,63 +529,89 @@
                                                                         *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='videoService'"></i>
                                                                 </span>
                                                             </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="donat-service" *ngIf="search_result.fields.departments">
-                                                        <span class="sub-title-donate">Departments</span>
-                                                        <ul>
-                                                            <li [class.active]="selectedDepartment==departments"
+                                                        </ul> -->
+                                                        </div>
+                                                        <div class="search-services"
+                                                            *ngIf="search_result.fields.departments">
+                                                            <span class="question-header">Departments Count: </span>
+                                                            <span
+                                                                class="question-value1">{{search_result.fields.departments.length}}</span>
+                                                            <!-- <ul>
+                                                            <li class="question-value1 link" [class.active]="selectedDepartment==departments"
                                                                 *ngFor="let departments of search_result.fields.departments"
                                                                 (click)="providerDetClicked(search_result)">
                                                                 {{departments | capitalizeFirst}}
                                                             </li>
-                                                        </ul>
+                                                        </ul> -->
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div style="flex-grow:1"></div>
-                                            <div class="bottom-actions-root">
-                                                <span (click)="providerDetClicked(search_result)"
-                                                    class="checkin-btn">book
-                                                    service</span>
-                                            </div>
-                                        </div>
-                                        <!-- Book service butoon ends -->
-
-                                        <div class="bottom-sect" *ngIf="showButton(search_result) === 'waitlist'">
-                                            <div class="bt-l">
-                                                <div class="wt-tme"
-                                                    *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message']!='No active services'">
-                                                    <div class="wt-tme notallowed">
-                                                        <ng-container
-                                                            *ngIf="search_result.fields['estimatedtime_det']['message']">
-                                                            {{search_result.fields['estimatedtime_det']['message']}}
-                                                        </ng-container>
+                                                <div style="flex-grow:1"></div>
+                                                <div class="bottom-actions-root">                                                    
+                                                    <div class="checkin-est nrm"
+                                                        *ngIf="search_result.fields.waitlist && !search_result.fields['estimatedtime_det']['message'] && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
+                                                        <span class="est-time"
+                                                            *ngIf="search_result.fields['estimatedtime_det']['caption']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
+                                                        <span class="time-data"
+                                                            *ngIf="search_result.fields['estimatedtime_det']['time']">{{search_result.fields['estimatedtime_det']['time']}}
+                                                        </span>
                                                     </div>
-                                                    <div
-                                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' ||(search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'])">
-                                                        <div
-                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead']">
-                                                            <b>{{search_result.fields['estimatedtime_det']['personAhead']}}
-                                                            </b><span class="people-ahead"
-                                                                *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1">{{people_ahead}}</span>
-                                                            <span class="people-ahead"
-                                                                *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1">{{one_person_ahead}}</span>
-                                                        </div>
-                                                        <div
-                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] === 0">
-                                                            <div class="time-data">
-                                                                {{search_result.fields['estimatedtime_det']['personAhead']}}
-                                                                {{people_ahead}} </div>Be the first in line
-                                                        </div>
+                                                    <div class="checkin-est"
+                                                        *ngIf="search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
+                                                        <!-- <ng-container
+                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] || search_result.fields['estimatedtime_det']['personAhead'] === 0">
+                                                            <div *ngIf="!search_result.fields['opennow']">
+                                                                <span class="est-time">Next Available Time</span>
+                                                                <span
+                                                                    class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
+                                                            </div>                                                           
+                                                        </ng-container> -->
+                                                        <span class=""
+                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{people_ahead}}</span>
+                                                        <span class=""
+                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{one_person_ahead}}</span>
+                                                        <span class=""
+                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
+                                                            the first in line</span>
+                                                    </div>
+                                                    <span (click)="providerDetClicked(search_result)"
+                                                        class="checkin-btn">Book
+                                                        Service</span>
+                                                </div>
+                                            </div>
+                                            <!-- Book service butoon ends -->
 
-                                                        <div class="donat-service"
-                                                            *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
-                                                            <span
-                                                                class="sub-title-donate checkin-service-group">Check-in
-                                                                Service(s)</span>
-                                                            <ul>
-                                                                <li *ngFor="let serv of search_result.fields.serviceList"
+                                            <div class="bottom-sect" *ngIf="showButton(search_result) === 'waitlist'">
+                                                <div class="bt-l">
+                                                    <div class="wt-tme"
+                                                        *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message']!='No active services'">
+                                                        <div class="wt-tme notallowed">
+                                                            <ng-container
+                                                                *ngIf="search_result.fields['estimatedtime_det']['message']">
+                                                                {{search_result.fields['estimatedtime_det']['message']}}
+                                                            </ng-container>
+                                                        </div>
+                                                        <div
+                                                            *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' ||(search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'])">
+                                                            <div
+                                                                *ngIf="search_result.fields['estimatedtime_det']['personAhead']">
+                                                                <b>{{search_result.fields['estimatedtime_det']['personAhead']}}
+                                                                </b><span class="people-ahead"
+                                                                    *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1">{{people_ahead}}</span>
+                                                                <span class="people-ahead"
+                                                                    *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1">{{one_person_ahead}}</span>
+                                                                <span class="people-ahead"
+                                                                    *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
+                                                                    the first in line</span>
+                                                            </div>
+                                                            <div class="search-services"
+                                                                *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
+                                                                <span
+                                                                    class="question-header checkin-service-group">Services Count: </span>
+                                                                <span
+                                                                    class="question-value1">{{search_result.fields.serviceList.length}}</span>
+                                                                <!-- <ul>
+                                                                <li class="question-value1 link" *ngFor="let serv of search_result.fields.serviceList"
                                                                     (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">{{serv.name
                                                 | capitalizeFirst}}
                                                                     <span *ngIf="serv.serviceType == 'virtualService'">
@@ -628,80 +627,104 @@
                                                                             *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'WhatsApp' && serv.virtualServiceType ==='videoService'"></i>
                                                                     </span>
                                                                 </li>
-                                                            </ul>
-                                                        </div>
+                                                            </ul> -->
+                                                            </div>
 
-                                                        <div class="donat-service"
-                                                            *ngIf="search_result.fields.departments">
-                                                            <span
-                                                                class="sub-title-donate checkin-service-group">Department(s)</span>
-                                                            <ul>
-                                                                <li [class.active]="selectedDepartment==departments"
+                                                            <div class="search-services"
+                                                                *ngIf="search_result.fields.departments">
+                                                                <span
+                                                                    class="question-header checkin-service-group">Departments Count: </span>
+                                                                <span
+                                                                    class="question-value1">{{search_result.fields.departments.length}}</span>
+                                                                <!-- <ul>
+                                                                <li class="question-value1 link" [class.active]="selectedDepartment==departments"
                                                                     *ngFor="let departments of search_result.fields.departments">
                                                                     {{departments | capitalizeFirst}}
                                                                 </li>
-                                                            </ul>
-                                                        </div>
+                                                            </ul> -->
+                                                            </div>
 
-                                                        <div class="donat-service"
-                                                            *ngIf="!search_result.fields.departments && !search_result.fields.serviceList && search_result.fields.services">
-                                                            <ul>
-                                                                <li *ngFor="let serv of search_result.fields.services"
-                                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceClick')">{{serv
+                                                            <div class="search-services"
+                                                                *ngIf="!search_result.fields.departments && !search_result.fields.serviceList && search_result.fields.services">
+                                                                <ul>
+                                                                    <li class="question-value1 link"
+                                                                        *ngFor="let serv of search_result.fields.services"
+                                                                        (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceClick')">{{serv
                                                 | capitalizeFirst}}</li>
-                                                            </ul>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div style="flex-grow:1"></div>
-                                            <div class="bottom-actions-root"
-                                                *ngIf="search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['onlineCheckIn'] || search_result.fields.future_checkins==1)">
-                                                <div class="checkin-est nrm"
-                                                    *ngIf="!search_result.fields['estimatedtime_det']['message'] && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
-                                                    <span class="est-time"
-                                                        *ngIf="search_result.fields['estimatedtime_det']['caption']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
-                                                    <span class="time-data"
-                                                        *ngIf="search_result.fields['estimatedtime_det']['time']">{{search_result.fields['estimatedtime_det']['time']}}
-                                                    </span>
+                                                <div style="flex-grow:1"></div>
+                                                <div class="bottom-actions-root"
+                                                    *ngIf="search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['onlineCheckIn'] || search_result.fields.future_checkins==1)">
+                                                    <div class="checkin-est nrm"
+                                                        *ngIf="!search_result.fields['estimatedtime_det']['message'] && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
+                                                        <span class="est-time"
+                                                            *ngIf="search_result.fields['estimatedtime_det']['caption']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
+                                                        <span class="time-data"
+                                                            *ngIf="search_result.fields['estimatedtime_det']['time']">{{search_result.fields['estimatedtime_det']['time']}}
+                                                        </span>
+                                                    </div>
+                                                    <div class="checkin-est"
+                                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
+                                                        <!-- <ng-container
+                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] || search_result.fields['estimatedtime_det']['personAhead'] === 0">
+                                                            <div *ngIf="!search_result.fields['opennow']">
+                                                                <span class="est-time">Next Available Time</span>
+                                                                <span
+                                                                    class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
+                                                            </div>                                                           
+                                                        </ng-container> -->
+                                                        <span class=""
+                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{people_ahead}}</span>
+                                                        <span class=""
+                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{one_person_ahead}}</span>
+                                                        <span class=""
+                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
+                                                            the first in line</span>
+                                                    </div>
+                                                    <div class="checkin-est nrm"
+                                                        *ngIf="!search_result.fields.waitlist && search_result.fields.apptAllowed && search_result.fields['appttime_det']">
+                                                        <span class="est-time"
+                                                            >{{search_result.fields['appttime_det']['caption']}}</span>
+                                                        <span class="time-data"
+                                                            >{{search_result.fields['appttime_det']['date']}}
+                                                        </span>
+                                                    </div>
+                                                    <span class="checkin-btn"
+                                                        (click)="providerDetClicked(search_result)"
+                                                        *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && !search_result.fields['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
+                                search_result.fields)}}</span>
+                                                    <span class="checkin-btn"
+                                                        (click)="providerDetClicked(search_result)"
+                                                        *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
+                                                    <span class="checkin-btn disabled"
+                                                        *ngIf="!search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday']) && (!search_result.fields['estimatedtime_det']['cdate'] || search_result.fields.future_checkins==0)">{{getTerminologyTerm('waitlist',
+                                search_result.fields)}}</span>
+                                                    <span class="checkin-btn disabled"
+                                                        *ngIf="search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday']) && (!search_result.fields['estimatedtime_det']['cdate'] || search_result.fields.future_checkins==0)">{{get_token_btn}}</span>
                                                 </div>
-                                                <ng-container
-                                                    *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
-                                                    <ng-container
-                                                        *ngIf="search_result.fields['estimatedtime_det']['personAhead'] || search_result.fields['estimatedtime_det']['personAhead'] === 0">
-                                                        <div class="checkin-est"
-                                                            *ngIf="!search_result.fields['opennow']">
-                                                            <span class="est-time">Next Available Time</span>
-                                                            <span
-                                                                class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
-                                                        </div>
-                                                    </ng-container>
-                                                </ng-container>
-                                                <span class="checkin-btn" (click)="providerDetClicked(search_result)"
-                                                    *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && !search_result.fields['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
-                                search_result.fields)}}</span>
-                                                <span class="checkin-btn" (click)="providerDetClicked(search_result)"
-                                                    *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
-                                                <span class="checkin-btn disabled"
-                                                    *ngIf="!search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday']) && (!search_result.fields['estimatedtime_det']['cdate'] || search_result.fields.future_checkins==0)">{{getTerminologyTerm('waitlist',
-                                search_result.fields)}}</span>
-                                                <span class="checkin-btn disabled"
-                                                    *ngIf="search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday']) && (!search_result.fields['estimatedtime_det']['cdate'] || search_result.fields.future_checkins==0)">{{get_token_btn}}</span>
                                             </div>
-                                        </div>
-                                        <div class="bottom-sect pdetail" *ngIf="showButton(search_result) === 'appt'">
-                                            <div class="bt-l">
-                                                <div class="wt-tme">
-                                                    <div class="donat-service"
-                                                        *ngIf="!search_result.fields.departments">
-                                                        <span class="sub-title-donate">Appointment Service(s)</span>
-                                                        <ul *ngIf="!search_result.fields.appointmentServiceList">
-                                                            <li *ngFor="let appointmentService of search_result.fields.appt_services"
+                                            <div class="bottom-sect pdetail"
+                                                *ngIf="showButton(search_result) === 'appt'">
+                                                <div class="bt-l">
+                                                    <div class="wt-tme">
+                                                        <div class="search-services"
+                                                            *ngIf="!search_result.fields.departments">
+                                                            <span class="question-header">Services Count: </span>
+                                                            <span class="question-value1"
+                                                                *ngIf="!search_result.fields.appointmentServiceList">{{search_result.fields.appt_services.length}}</span>
+                                                            <span class="question-value1"
+                                                                *ngIf="search_result.fields.appointmentServiceList">{{search_result.fields.appointmentServiceList.length}}</span>
+                                                            <!-- <ul *ngIf="!search_result.fields.appointmentServiceList">
+                                                            <li class="question-value1 link" *ngFor="let appointmentService of search_result.fields.appt_services"
                                                                 (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointent')">
                                                                 {{appointmentService}}</li>
                                                         </ul>
                                                         <ul *ngIf="search_result.fields.appointmentServiceList">
-                                                            <li *ngFor="let appointmentService of search_result.fields.appointmentServiceList"
+                                                            <li class="question-value1 link" *ngFor="let appointmentService of search_result.fields.appointmentServiceList"
                                                                 (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
                                                                 {{appointmentService.name}}
                                                                 <span
@@ -718,81 +741,106 @@
                                                                         *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='videoService'"></i>
                                                                 </span>
                                                             </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="donat-service" *ngIf="search_result.fields.departments">
-                                                        <span class="sub-title-donate">Department(s)</span>
-                                                        <ul>
-                                                            <li [class.active]="selectedDepartment==departments"
+                                                        </ul> -->
+                                                        </div>
+                                                        <div class="search-services"
+                                                            *ngIf="search_result.fields.departments">
+                                                            <span class="question-header">Departments Count: </span>
+                                                            <span
+                                                                class="question-value1">{{search_result.fields.departments.length}}</span>
+                                                            <!-- <ul>
+                                                            <li class="question-value1 link" [class.active]="selectedDepartment==departments"
                                                                 *ngFor="let departments of search_result.fields.departments">
                                                                 {{departments | capitalizeFirst}}
                                                             </li>
-                                                        </ul>
+                                                        </ul> -->
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div style="flex-grow:1"></div>
-                                            <div class="bottom-actions-root">
-                                                <span (click)="providerDetClicked(search_result)"
-                                                    class="checkin-btn">Appointment</span>
-                                            </div>
-                                        </div>
-                                        <div class="bottom-sect pdetail"
-                                            *ngIf="showButton(search_result) === 'donation'">
-                                            <div class="bt-l">
-                                                <div class="wt-tme">
-                                                    <div class="donat-service">
-                                                        <span class="sub-title-donate">Donation Service(s)</span>
-                                                        <ul *ngIf="!search_result.fields.donationServices">
-                                                            <li *ngFor="let donationService of search_result.fields.donation_services"
-                                                                (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'donation')">
-                                                                {{donationService}}</li>
-                                                        </ul>
-                                                        <ul *ngIf="search_result.fields.donationServices">
-                                                            <li *ngFor="let donationService of search_result.fields.donationServices"
-                                                                (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'donationList')">
-                                                                {{donationService.name}}
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                <div style="flex-grow:1"></div>
+                                                <div class="bottom-actions-root">
+                                                    <div class="checkin-est"></div>
+                                                    <span (click)="providerDetClicked(search_result)"
+                                                        class="checkin-btn">Appointment</span>
                                                 </div>
                                             </div>
-                                            <div style="flex-grow:1"></div>
-                                            <div class="bottom-actions-root">
-                                                <span (click)="providerDetClicked(search_result)"
-                                                    class="checkin-btn">Donate</span>
+                                            <div class="bottom-sect pdetail"
+                                                *ngIf="showButton(search_result) === 'donation'">
+                                                <div class="bt-l">
+                                                    <div class="wt-tme">
+                                                        <div
+                                                            *ngIf="(!search_result.fields.donationServices && search_result.fields.donation_services.length > 1) || search_result.fields.donationServices && search_result.fields.donationServices.length > 1">
+                                                            <span class="question-header">Donation Services</span>
+                                                            <ul
+                                                                *ngIf="!search_result.fields.donationServices && search_result.fields.donation_services.length > 1">
+                                                                <li class="question-value1 link"
+                                                                    *ngFor="let donationService of search_result.fields.donation_services"
+                                                                    (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'donation')">
+                                                                    {{donationService}}</li>
+                                                            </ul>
+                                                            <ul
+                                                                *ngIf="search_result.fields.donationServices && search_result.fields.donationServices.length > 1">
+                                                                <li class="question-value1 link"
+                                                                    *ngFor="let donationService of search_result.fields.donationServices"
+                                                                    (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'donationList')">
+                                                                    {{donationService.name}}
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="flex-grow:1"></div>
+                                                <div class="bottom-actions-root">
+                                                    <div class="checkin-est">
+                                                        <span
+                                                            *ngIf="!search_result.fields.donationServices && search_result.fields.donation_services.length == 1">
+                                                            <span
+                                                                (click)="!btn_clicked && checkserviceClicked(search_result.fields.donation_services[0],search_result, 'donation')">
+                                                                {{search_result.fields.donation_services[0]}}</span>
+                                                        </span>
+                                                        <span
+                                                            *ngIf="search_result.fields.donationServices && search_result.fields.donationServices.length == 1">
+                                                            <span
+                                                                (click)="!btn_clicked && checkserviceClicked(search_result.fields.donationServices[0],search_result, 'donation')">
+                                                                {{search_result.fields.donationServices[0].name}}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <span (click)="providerDetClicked(search_result)"
+                                                        class="checkin-btn">Donate</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="bottom-sect pad-bt-0"
-                                            *ngIf="!showButton(search_result) && search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['message'] || search_result.fields['apptMessage'])">
-                                            <div class="bt-l">
-                                                <div class="wt-tme">
-                                                    <div class="wt-tme notallowed">
-                                                        <ng-container
-                                                            *ngIf="search_result.fields['estimatedtime_det']['message']">
-                                                            {{search_result.fields['estimatedtime_det']['message']}}
-                                                        </ng-container>
-                                                        <ng-container
-                                                            *ngIf="!search_result.fields['estimatedtime_det']['message'] && search_result.fields['apptMessage']">
-                                                            {{search_result.fields['apptMessage']}}
-                                                        </ng-container>
+                                            <div class="bottom-sect pad-bt-0"
+                                                *ngIf="!showButton(search_result) && search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['message'] || search_result.fields['apptMessage'])">
+                                                <div class="bt-l">
+                                                    <div class="wt-tme">
+                                                        <div class="wt-tme notallowed">
+                                                            <ng-container
+                                                                *ngIf="search_result.fields['estimatedtime_det']['message']">
+                                                                {{search_result.fields['estimatedtime_det']['message']}}
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="!search_result.fields['estimatedtime_det']['message'] && search_result.fields['apptMessage']">
+                                                                {{search_result.fields['apptMessage']}}
+                                                            </ng-container>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="search_paging">
-                                    <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()"
-                                        (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
+                                    <div class="search_paging">
+                                        <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()"
+                                            (pagerclick)="handle_pageclick($event)" [curpage]="startpageval">
+                                        </app-pager>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
-    </div>
 </section>
 <app-consumer-footer></app-consumer-footer>

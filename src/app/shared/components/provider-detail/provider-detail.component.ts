@@ -222,6 +222,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   futureAllowed = true;
   galleryenabledArr = [];
   gallerydisabledArr = [];
+  onlinePresence = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -323,6 +324,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
       if (qparams.src) {
         this.pSource = qparams.src;
+      }
+      if (qparams.onlinePresence) {
+        this.onlinePresence = qparams.onlinePresence;
       }
       // if (qparams.pId) {
       //   this.businessid = qparams.pId;
@@ -445,6 +449,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
+            this.onlinePresence = this.businessjson.onlinePresence;
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;

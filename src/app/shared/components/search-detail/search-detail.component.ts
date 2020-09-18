@@ -891,7 +891,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 const specTemp = [];
                 try {
                   if (this.search_data.hits.hit[i].fields.specialization_displayname && this.search_data.hits.hit[i].fields.specialization_displayname.length > 0) {
-                    for (let speci = 0; speci < (this.search_data.hits.hit[i].fields.specialization_displayname.length > 2 ? 2 : this.search_data.hits.hit[i].fields.specialization_displayname.length); speci++){
+                    for (let speci = 0; speci < (this.search_data.hits.hit[i].fields.specialization_displayname.length > 2 ? 2 : this.search_data.hits.hit[i].fields.specialization_displayname.length); speci++) {
                       specTemp.push(this.search_data.hits.hit[i].fields.specialization_displayname[speci]);
                     }
                   }
@@ -912,12 +912,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                     //   const filteredArray = this.search_data.hits.hit[i].fields.serviceList.filter(service => service.serviceType !== 'virtualService');
                     //   this.search_data.hits.hit[i].fields.allServices = filteredArray;
                     // }
-                      this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.serviceList;
+                    this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.serviceList;
                   }
                   if (this.search_data.hits.hit[i].fields.appt_services) {
                     this.search_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.search_data.hits.hit[i].fields.appt_services);
                     if (this.search_data.hits.hit[i].fields.appointmentServiceList && this.search_data.hits.hit[i].fields.appointmentServiceList.length > 0) {
-                        this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.appointmentServiceList);
+                      this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.appointmentServiceList);
                     }
                   }
                   if (this.search_data.hits.hit[i].fields.donation_services && this.search_data.hits.hit[i].fields.donation_status === '1') {
@@ -1061,25 +1061,45 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             if (provids[i]) {
               srchindx = provids[i].searchindx;
               this.search_data.hits.hit[srchindx].fields['apptAllowed'] = this.appttime_arr[i]['apptEnabled'];
+              this.search_data.hits.hit[srchindx].fields['appttime_det'] = [];
               if (this.appttime_arr[i]['availableSchedule']) {
                 this.search_data.hits.hit[srchindx].fields['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.search_data.hits.hit[srchindx].fields['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.search_data.hits.hit[srchindx].fields['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
-                if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
+              }
+              if (this.appttime_arr[i]['availableSlots']) {
+                this.search_data.hits.hit[srchindx].fields['appttime_det']['caption'] = 'Next Available Time';
+                if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                   this.search_data.hits.hit[srchindx].fields['apptAvailableToday'] = true;
+                  this.search_data.hits.hit[srchindx].fields['appttime_det']['date'] = 'Today' + ', ' + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                 } else {
                   this.search_data.hits.hit[srchindx].fields['apptAvailableToday'] = false;
+                  this.search_data.hits.hit[srchindx].fields['appttime_det']['date'] = this.shared_functions.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
+                    + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
                 }
               }
             }
-             if (this.appttime_arr[i]['message']) {
+            if (this.appttime_arr[i]['message']) {
               this.search_data.hits.hit[srchindx].fields['apptMessage'] = this.appttime_arr[i]['message'];
             }
           }
         });
     }
   }
-
+  getAvailableSlot(slots) {
+    let slotAvailable = '';
+    for (let i = 0; i < slots.length; i++) {
+      if (slots[i].active) {
+        slotAvailable = this.getSingleTime(slots[i].time);
+        break;
+      }
+    }
+    return slotAvailable;
+  }
+  getSingleTime(slot) {
+    const slots = slot.split('-');
+    return this.shared_functions.convert24HourtoAmPm(slots[0]);
+  }
   private getWaitingTime(provids) {
     if (provids.length > 0) {
       const post_provids: any = [];
@@ -2246,7 +2266,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.providerDetClicked(searchData);
     }
   }
-  getNumberArray (num) {
+  getNumberArray(num) {
     console.log(num);
     return this.shared_functions.getNumberArray(num);
   }
