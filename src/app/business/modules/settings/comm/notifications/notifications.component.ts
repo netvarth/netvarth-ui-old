@@ -49,7 +49,6 @@ export class NotificationsComponent implements OnInit {
         private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions
     ) {
-       
     }
     ngOnInit() {
         const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -75,7 +74,7 @@ export class NotificationsComponent implements OnInit {
     }
     gotoProvider() {
         let title;
-        if (this.sub_domain == ('hospital' || 'dentalHosp' || 'alternateMedicineHosp' || 'veterinaryhospital' ) && this.accountType == 'BRANCH' && this.isMultilevel) {
+        if (this.sub_domain === ('hospital' || 'dentalHosp' || 'alternateMedicineHosp' || 'veterinaryhospital' ) && this.accountType === 'BRANCH' && this.isMultilevel) {
             title = 'Hospital';
         } else {
             title = 'Provider';

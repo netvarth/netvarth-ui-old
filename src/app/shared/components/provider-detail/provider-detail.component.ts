@@ -222,7 +222,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   futureAllowed = true;
   galleryenabledArr = [];
   gallerydisabledArr = [];
-  onlinePresence = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -324,9 +323,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
       if (qparams.src) {
         this.pSource = qparams.src;
-      }
-      if (qparams.onlinePresence) {
-        this.onlinePresence = qparams.onlinePresence;
       }
       // if (qparams.pId) {
       //   this.businessid = qparams.pId;
@@ -449,7 +445,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
-            this.onlinePresence = this.businessjson.onlinePresence;
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;
@@ -547,6 +542,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'gallery': {
             this.galleryenabledArr = []; // For showing gallery
+
             this.tempgalleryjson = res;
             let indx = 0;
             if (this.bLogo !== '') {
@@ -874,6 +870,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                   this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
                 }
                 if (this.appttime_arr[i]['availableSlots']) {
+                  this.locationjson[locindx]['appttime_det']['cdate'] = this.appttime_arr[i]['availableSlots']['date'];
                   this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
                   if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                     this.locationjson[locindx]['apptAvailableToday'] = true;
@@ -1430,7 +1427,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const current_provider = {
       'id': location.id,
       'place': location.place,
-      'cdate': location['estimatedtime_det']['cdate']
+      'location': location,
+      'cdate': location['estimatedtime_det']['cdate'],
+      'service': service
     };
     if (location['isAvailableToday'] && location['availableToday'] && location['onlineCheckIn']) {
       this.changedate_req = false;
@@ -1450,7 +1449,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const current_provider = {
       'id': location.id,
       'place': location.place,
-      'cdate': location['estimatedtime_det']['cdate']
+      'location': location,
+      'cdate': location['appttime_det']['cdate'],
+      'service': service
     };
     if (location.todayAppt && location['apptAvailableToday']) {
       this.changedate_req = false;
@@ -1462,7 +1463,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showAppointment(location.id, location.place, location['estimatedtime_det']['cdate'], service, 'consumer');
+      this.showAppointment(location.id, location.place, location['appttime_det']['cdate'], service, 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider };
       this.doLogin('consumer', passParam);
@@ -1583,7 +1584,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
       futureAppt: this.futureAllowed,
-      service_id: service.id
+      service_id: service.id,
+      sel_date: curdate
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];
@@ -1894,6 +1896,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
               }
               if (this.appttime_arr[i]['availableSlots']) {
+                this.locationjson[locindx]['appttime_det']['cdate'] = this.appttime_arr[i]['availableSlots']['date'];
                 this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
                 if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                   this.locationjson[locindx]['apptAvailableToday'] = true;
@@ -1948,8 +1951,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const account = this.provider_id + '___' + userId;
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        src: 'bp',
-        onlinePresence: this.businessjson.onlinePresence
+        src: 'bp'
       }
     };
     this.routerobj.navigate([account], navigationExtras);

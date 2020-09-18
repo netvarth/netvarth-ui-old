@@ -211,6 +211,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     selectedService: any;
     note_cap = '';
     servicedialogRef: any;
+    apptdisable = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -231,7 +232,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.futureAppt = params.futureAppt;
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
-                this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+                this.sel_checkindate = params.sel_date;
+                // this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
                 this.hold_sel_checkindate = this.sel_checkindate;
                 this.tele_srv_stat = params.tel_serv_stat;
                 if (params.dept) {
@@ -492,7 +494,14 @@ export class ConsumerAppointmentComponent implements OnInit {
             taxable: serv.taxable,
             serviceType: serv.serviceType,
             virtualServiceType: serv.virtualServiceType,
-            virtualCallingModes: serv.virtualCallingModes
+            virtualCallingModes: serv.virtualCallingModes,
+            postInfoEnabled: serv.postInfoEnabled,
+            postInfoText: serv.postInfoText,
+            postInfoTitle: serv.postInfoTitle,
+            preInfoEnabled: serv.preInfoEnabled,
+            preInfoTitle: serv.preInfoTitle,
+            preInfoText: serv.preInfoText,
+            consumerNoteTitle: serv.consumerNoteTitle
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
@@ -621,6 +630,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.main_heading = 'Family Members';
     }
     handleApptClicked() {
+        this.apptdisable = true;
         this.resetApi();
         let error = '';
         if (this.step === 1) {
@@ -632,6 +642,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.saveCheckin();
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.apptdisable = false;
             }
         }
     }
@@ -763,6 +774,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
+                    this.apptdisable = false;
                 });
     }
     addEmail() {
@@ -981,6 +993,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 });
         } else {
             this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            this.disable = false;
         }
     }
     handleNote() {
@@ -1611,6 +1624,8 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.action = 'members';
         } else if (this.action === 'service' && this.filterDepart) {
             this.action = '';
+        } else if (this.action === 'preInfo') {
+            this.action = '';
         }
     }
     applyPromocode() {
@@ -1679,4 +1694,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     // viewSelectedUser(userId) {
     //     this.router.navigate(['', this.provider_id + '_' + userId]);
     // }
+    showPreInfo() {
+        this.action = 'preInfo';
+    }
 }

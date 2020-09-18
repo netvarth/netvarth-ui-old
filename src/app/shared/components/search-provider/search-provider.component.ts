@@ -184,7 +184,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
       this.selectedDepartment = this.selectedDeptOrUser;
       if (this.fiterByDept) {
         if (this.selectedDeptOrUser && this.selectedDeptOrUser.users) {
-        this.usersList = this.selectedDeptOrUser.users;
+          this.usersList = this.selectedDeptOrUser.users;
         }
       } else {
         this.usersList = this.selectedDeptOrUser;
@@ -447,13 +447,13 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     const providforCommunicate = search_result.bProfile.id;
     // check whether logged in as consumer
     if (this.shared_functions.checkLogin()) {
-      this.showCommunicate(providforCommunicate,search_result.bProfile.businessName);
+      this.showCommunicate(providforCommunicate, search_result.bProfile.businessName);
     } else { // show consumer login
       const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: search_result.bProfile.businessName };
       this.doLogin('consumer', passParam);
     }
   }
-  showCommunicate(provid,name?) {
+  showCommunicate(provid, name?) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -465,7 +465,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         type: 'send',
         terminologies: this.terminologiesjson,
         name: name
-       // name: this.businessjson.businessName
+        // name: this.businessjson.businessName
       }
     });
 

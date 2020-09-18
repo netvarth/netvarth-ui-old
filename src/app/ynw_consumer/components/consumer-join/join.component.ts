@@ -181,7 +181,7 @@ export class ConsumerJoinComponent implements OnInit {
     //   firstName: null,
     //   lastName: null
     // };
-   const userProfile = {
+    const userProfile = {
       countryCode: '+91',
       primaryMobileNo: this.loginForm.get('emailId').value || null,
       firstName: this.loginForm.get('first_name').value || null,
@@ -205,7 +205,7 @@ export class ConsumerJoinComponent implements OnInit {
     } else if (firstName && firstName.trim().length < 3) {
       this.api_error = 'First Name is too short';
     } else {
-    this.signUpApiConsumer(this.user_details);
+      this.signUpApiConsumer(this.user_details);
     }
   }
   resendOTPEmail(status) {
@@ -248,7 +248,6 @@ export class ConsumerJoinComponent implements OnInit {
   onOtpSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
-  
     this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
       .subscribe(
         () => {
@@ -263,7 +262,7 @@ export class ConsumerJoinComponent implements OnInit {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
-    
+
   }
   resendOtp(user_details) {
     this.signUpApiConsumer(user_details);

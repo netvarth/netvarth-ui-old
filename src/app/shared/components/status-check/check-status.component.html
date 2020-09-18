@@ -1,182 +1,192 @@
-<header>
-  <div class="container">
-    <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0 ">
-      <div class="lgo col-md-3 col-xs-5 pull-left">
-        <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
-      </div>
-    </div>
-  </div>
-</header>
-<section class="container">
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-  <div class="content loc-list p-checkin ynw-common-form-nm checkin-details sc-frm consumer-dash">
-    <div class="col-md-12 no-padding">
-      <div class="row">
-        <div class="card c-checkins p0">
-          <div class="copy locd">
-            <div class="lbl col-sm-12 col-md-8 col-lg-8">
-              <!-- <h2>Checkin Details</h2> -->
-              <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
-                <div class="col-md-10 col-sm-10 col-xs-10 no-padding">
-                  <mat-form-field>
-                    <input matInput placeholder={{placeText}} class="form-control" [(ngModel)]="encId"
-                      autocomplete="off">
-                  </mat-form-field>
-                </div>
-                <div class="col-md-2 col-xs-2 col-sm-2">
-                  <i class="fa fa-search pointer-cursor" *ngIf="type=='wl'" (click)="getWLDetails(encId)"></i>
-                  <i class="fa fa-search pointer-cursor" *ngIf="type=='appt'" (click)="getApptDetails(encId)"></i>
-                  <i class="fa fa-search pointer-cursor" *ngIf="type!='appt' && type!='wl'" (click)="getDetails(encId)"></i>
-                </div>
+<section class="container no-padding">
+  <div class="content loc-list">
+    <div class="card p0">
+      <div class="copy locd" *ngIf="!api_loading">
+        <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding">
+          <div class="info-img">
+            <img src="assets/images/bg-01.png"></div>
+          <div class="details mgn-up-100">
+            <div class="book-head ynw-common-form-nm" *ngIf="type!='wl' && type!='appt'">
+              <div class="col-md-10 col-xs-10 col-sm-10">
+                <mat-form-field>
+                  <input matInput placeholder='Enter Confirmation id' class="form-control" [(ngModel)]="encId"
+                    autocomplete="off">
+                </mat-form-field>
               </div>
-              <div class="outer banner mgn-up-20 mgn-bt-20 check-status" *ngIf="statusInfo && foundDetails">
-                <div class="item">
-                  <div class="header" style="padding: 1px;">
-                    <div class="lt">
-                      <h6 *ngIf="!statusInfo.appmtFor && !statusInfo.showToken" class="glbl-seting-font-wight">Checkin Details</h6>
-                      <h6 *ngIf="statusInfo.showToken" class="glbl-seting-font-wight">Token Details</h6>
-                      <h6 *ngIf="statusInfo.appmtFor" class="glbl-seting-font-wight">Appointment Details</h6>
-                    </div>
-                  </div>
-                  <div class="details">
-                    <!-- <div class="lt"> -->
-                    <div class="shortcut">
-                      <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.waitlistingFor">
-                        <span *ngIf="!statusInfo.showToken" class="service">Checkin For:</span> 
-                        <span *ngIf="statusInfo.showToken" class="service">Token For:</span> 
-                        <span class="forwhom" *ngFor="let user of statusInfo.waitlistingFor">
-                          {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                        </span>
-                      </div>
-                      <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.appmtFor">
-                        <span class="service">Appointment For: </span><span class="forwhom"
-                          *ngFor="let user of statusInfo.appmtFor">
-                          {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                        </span>
-                      </div>
-                      <div class="lt0 knw-stat-line-h">
-                        <span class="service">Service: </span> 
-                        <span class="forwhom">
-                          <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='GoogleMeet'"
-                            class="fa meet-icon know-status-i"></i>
-                            <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='Zoom'"
-                            class="fa zoom-icon know-status-i"></i>
-                            <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='WhatsApp' && statusInfo.service.virtualServiceType =='audioService'"
-                            class="fa wtsapaud-icon know-status-i"></i>
-                            <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='WhatsApp' && statusInfo.service.virtualServiceType =='videoService'"
-                            class="fa wtsapvid-icon know-status-i"></i>
-                            <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='Phone'"
-                            class="fa phon-icon know-status-i"></i>
-                          {{statusInfo.service.name | capitalizeFirst}}
-                            
-                        </span>
-                      </div>
-                      <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.provider">
-                        <span class="service">Provider: </span> 
-                        <span class="forwhom">{{statusInfo.provider.firstName | capitalizeFirst}} {{statusInfo.provider.lastName | capitalizeFirst}} 
-                        </span>
-                      </div>
-                      <ng-container
-                        *ngIf="statusInfo.estimated_time && (statusInfo.waitlistStatus && (statusInfo.waitlistStatus == 'checkedIn'  || statusInfo.waitlistStatus == 'arrived' || statusInfo.waitlistStatus == 'cancelled'))">
-                        <div class="lt0 knw-stat-line-h"
-                          *ngIf="statusInfo.estimated_date=='' && statusInfo.waitlistStatus != 'cancelled'">
-                          {{statusInfo.estimated_caption}}: <span class="time now">
-                            {{statusInfo.estimated_timenow}}</span><br>
-                            <span>
-                            Time Window: {{statusInfo.estimated_time}}</span>
-                        </div>
-                        <div class="lt0 knw-stat-line-h"
-                          *ngIf="statusInfo.estimated_date!='' && (statusInfo.waitlistStatus && statusInfo.waitlistStatus != 'cancelled')">
-                          {{statusInfo.estimated_caption}}: <span class="time now">
-                            <span
-                              *ngIf="statusInfo.estimated_date_type == 'date'">{{statusInfo.estimated_date| date: dateFormatSp }}</span>
-                            <span *ngIf="statusInfo.estimated_date_type == 'string'">{{statusInfo.estimated_date}}
-                            </span>
-                            
-                            <span
-                              *ngIf="statusInfo.calculationMode != 'NoCalc'">, {{statusInfo.estimated_time}}</span></span>
-                          <span> {{statusInfo.estimated_timeslot}}</span>
-                        </div>
-                        <div class="lt0 knw-stat-line-h"
-                          *ngIf="statusInfo.waitlistStatus && statusInfo.waitlistStatus == 'cancelled'">
-                          <div class="red">
-                            {{statusInfo.cancelled_caption}}:
-                            <span class="time"> {{statusInfo.cancelled_date | date: dateFormatSp}}
-                              {{statusInfo.cancelled_time}}</span>
-                          </div>
-                        </div>
-                      </ng-container>
-                      <ng-container
-                        *ngIf="type=='appt'">
-                        
-                        <div class="lt0 knw-stat-line-h">
-                          <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.apptStatus !== 'Cancelled' && statusInfo.apptStatus !== 'Rejected'">
-                            Appointment Time:
-                            <span> {{statusInfo.estimated_timeslot}}</span>
-                          </div>
-                          <div class="red" *ngIf="statusInfo.apptStatus == 'Cancelled' || statusInfo.apptStatus == 'Rejected'">
-                            {{statusInfo.cancelled_caption}}:
-                            <span class="time"> {{statusInfo.cancelled_date | date: dateFormatSp}}
-                              {{statusInfo.cancelled_time}}</span>
-                          </div>
-                        </div>
-                      </ng-container>
-                      <div class="lt0 knw-stat-line-h"
-                        *ngIf="type=='wl' && statusInfo.waitlistStatus != 'cancelled'">
-                        <span *ngIf="statusInfo.personsAhead === 0"> {{first_person}}</span>
-                        <span *ngIf="statusInfo.personsAhead === 1"> <span class="forwhom">{{statusInfo.personsAhead}}
-                          </span>{{one_person_ahead}} </span>
-                        <span *ngIf="statusInfo.personsAhead > 1"> <span class="forwhom">{{statusInfo.personsAhead}}
-                          </span>{{people_ahead}} </span>
-                      </div>
-                      <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.token">
-                        {{token_no}}:  <span class="token"> {{statusInfo.token}} </span>
-                      </div>
-                      <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.batchId">
-                        Batch: <span class="token">{{statusInfo.batchId}} </span>
-                      </div>
-                      <div class="title">Service Provider:
-                        <span>
-                          <h3>{{statusInfo.providerAccount.businessName || '' | capitalizeFirst}}</h3>
-                        </span>
-                      </div>
-                      <div class="location consumr" *ngIf="statusInfo && statusInfo.queue && statusInfo.queue.location">
-                        Location:
-                        {{statusInfo.queue.location.place || '' | capitalizeFirst}}
-                        <span class="consumr-loc-icon"><a *ngIf="statusInfo.queue.location.googleMapUrl" rel="noopener"
-                            [href]="statusInfo.queue.location.googleMapUrl" target="_blank" class="icon-location"
-                            matTooltip="Click to navigate">
-                          </a></span>
-                      </div>
-                      <div class="location consumr" *ngIf="statusInfo.location">
-                        Location:
-                        {{statusInfo.location.place || '' | capitalizeFirst}}
-                        <span class="consumr-loc-icon"><a [href]="statusInfo.location.googleMapUrl" target="_blank"
-                            class="icon-location" matTooltip="Click to navigate">
-                          </a></span>
-                      </div>
-                      <div class="status-outer knw-stat-line-h glbl-seting-h-div" *ngIf="statusInfo.waitlistStatus">
-                        <div class="done-label">
-                          Status: {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
-                        </div>
-                      </div>
-                      <div class="status-outer knw-stat-line-h glbl-seting-h-div" *ngIf="statusInfo.apptStatus">
-                        <div class="done-label">
-                          Status: {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div class="col-md-2 col-xs-2 col-sm-2 no-padding details-search">
+                <span class="cs-btn bt3 status-btn" (click)="getDetails(encId)">Check your status</span>
               </div>
             </div>
-            <div class="lbr col-sm-12 col-md-4 col-lg-4">
+            <div *ngIf="foundDetails">
+              <div class="book-details" *ngIf="type=='wl' && statusInfo.showToken"> Token details </div>
+              <div class="book-details" *ngIf="type=='wl' && !statusInfo.showToken"> Check-in details </div>
+              <div class="book-details" *ngIf="type=='appt'"> Appointment details </div>
+              <table class="book-details-sub">
+                <tbody>
+                  <tr>
+                    <td width="48%" align="right">Name of the provider</td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{statusInfo.providerAccount?.businessName}}</td>
+                  </tr>
+                  <tr *ngIf="statusInfo.provider">
+                    <td width="48%" align="right">{{provider_label | capitalizeFirst}}</td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{statusInfo.provider.firstName}} {{statusInfo.provider.lastName}}</td>
+                  </tr>
+                  <tr *ngIf="statusInfo.token">
+                    <td width="48%" align="right">Token No </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{statusInfo.token}}</td>
+                  </tr>
+                  <tr *ngIf="statusInfo.batchId">
+                    <td width="48%" align="right">Batch </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{statusInfo.batchId}}</td>
+                  </tr>
+                  <tr *ngIf="type=='wl'">
+                    <td width="48%" align="right">Token For </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>
+                      <span class="forwhom" *ngFor="let user of statusInfo.waitlistingFor">
+                        {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr *ngIf="type=='appt'">
+                    <td width="48%" align="right">Appointment For </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>
+                      <span class="forwhom" *ngFor="let user of statusInfo.appmtFor">
+                        {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr *ngIf="type=='wl'">
+                    <td width="48%" align="right">Location </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td> {{statusInfo.queue?.location.place}}&nbsp;<a [href]="statusInfo.queue.location.googleMapUrl"
+                        target="_blank" class="icon-location" matTooltip="Click to navigate">
+                      </a></td>
+                  </tr>
+                  <tr *ngIf="type=='appt'">
+                    <td width="48%" align="right">Location </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td> {{statusInfo.location.place}}&nbsp;<a [href]="statusInfo.location.googleMapUrl" target="_blank"
+                        class="icon-location" matTooltip="Click to navigate">
+                      </a></td>
+                  </tr>
+                  <tr>
+                    <td width="48%" align="right">Service</td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>
+                      <span class="service-icon"
+                        *ngIf="statusInfo.service && statusInfo.service.serviceType == 'virtualService'">
+                        <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='GoogleMeet'"
+                          class="fa meet-icon know-status-i"></i>
+                        <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='Zoom'"
+                          class="fa zoom-icon know-status-i"></i>
+                        <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='WhatsApp' && statusInfo.service.virtualServiceType =='audioService'"
+                          class="fa wtsapaud-icon know-status-i"></i>
+                        <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='WhatsApp' && statusInfo.service.virtualServiceType =='videoService'"
+                          class="fa wtsapvid-icon know-status-i"></i>
+                        <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='Phone'"
+                          class="fa phon-icon know-status-i"></i>
+                      </span>
+                      {{statusInfo.service?.name}}</td>
+                  </tr>
+                  <tr *ngIf="type=='wl'">
+                    <td width="48%" align="right">Time window </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td> {{statusInfo.date | date: dateFormat }},
+                      {{statusInfo.queue.queueStartTime}} -
+                      {{statusInfo.queue.queueEndTime}}</td>
+                  </tr>
+                  <tr *ngIf="type=='appt'">
+                    <td width="48%" align="right">Appointment Slot </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td> {{statusInfo.appmtDate | date: dateFormat }},
+                      {{getSingleTime(statusInfo.appmtTime)}}</td>
+                  </tr>
+                  <tr>
+                    <td width="48%" align="right">Confirmation No</td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td *ngIf="type=='wl'"> {{statusInfo.checkinEncId}}</td>
+                    <td *ngIf="type=='appt'"> {{statusInfo.appointmentEncId}}</td>
+                  </tr>
+                  <tr *ngIf="statusInfo.service?.minPrePaymentAmount">
+                    <td width="48%" align="right">Pre Payment amount</td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td> {{statusInfo.service.minPrePaymentAmount}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="book-status"
+                *ngIf="statusInfo.apptStatus !== 'Arrived' && statusInfo.apptStatus !== 'Confirmed'"> Current status
+              </div>
+              <table class="status-table" *ngIf="getWaitTime(statusInfo)">
+                <tbody>
+                  <tr>
+                    <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;Persons ahead </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{statusInfo.personsAhead}}</td>
+                  </tr>
+                  <tr>
+                    <td width="48%" align="right"><i class="fa fa-clock-o"></i>&nbsp;Est wait Time </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{getWaitTime(statusInfo)}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="txt-align-center"
+                *ngIf="statusInfo.waitlistStatus && statusInfo.waitlistStatus !== 'arrived' && statusInfo.waitlistStatus !== 'checkedIn'">
+                <span class="cancelled" *ngIf="statusInfo.waitlistStatus === 'cancelled'">
+                  <ng-container *ngIf="statusInfo.showToken"> Token</ng-container>
+                  <ng-container *ngIf="!statusInfo.showToken"> Check-in</ng-container>
+                  {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
+                  <!-- on {{getCancelledTime(statusInfo).date}}, {{getCancelledTime(statusInfo).time}} -->
+                </span>
+                <span class="green" *ngIf="statusInfo.waitlistStatus !== 'cancelled'">
+                  <ng-container *ngIf="statusInfo.showToken"> Token</ng-container>
+                  <ng-container *ngIf="!statusInfo.showToken"> Check-in</ng-container>
+                  {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
+                </span>
+              </div>
+              <div class="txt-align-center"
+                *ngIf="statusInfo.apptStatus && statusInfo.apptStatus !== 'Arrived' && statusInfo.apptStatus !== 'Confirmed'">
+                <span class="cancelled"
+                  *ngIf="statusInfo.apptStatus === 'Cancelled' || statusInfo.apptStatus === 'Rejected'">
+                  Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
+                  <!-- on {{getCancelledTime(statusInfo).date}}, {{getCancelledTime(statusInfo).time}} -->
+                </span>
+                <span class="green"
+                  *ngIf="statusInfo.apptStatus !== 'Cancelled' && statusInfo.apptStatus !== 'Rejected'">
+                  Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
+                </span>
+              </div>
+              <div class="notes" *ngIf="statusInfo.service && statusInfo.service.postInfoEnabled">
+                <div class="preinfo-title">{{statusInfo.service.postInfoTitle}} </div>
+                <div [innerHTML]="statusInfo.service.postInfoText">
+                </div>
+            </div>
+              <div class="ok-btn">
+                <span class="pointer-cursor" (click)="okClick()">
+                  Ok</span></div>
+            </div>
+            <div class="txt-align-center" *ngIf="source=='new' && (type=='wl' || type=='appt')">
+              <a class="status-check" (click)="showStatusInput()"> Check another status</a>
             </div>
           </div>
         </div>
+        <div class="powered-by">
+          <div class="poweredby-text">
+            <div class="one">powered by</div>
+            <div class="two">
+              <img _ngcontent-jvc-c15="" alt="Jaldee" src="assets/images/home/logo-icon.png"
+                style="width: 15px;">&nbsp;Jaldee</div>
+          </div>
+        </div>
       </div>
+      <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </div>
-    <div class="clearfix"></div>
   </div>
 </section>
-<!-- <app-footer [includedfrom]="'home'"></app-footer> -->

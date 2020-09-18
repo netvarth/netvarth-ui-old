@@ -83,6 +83,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   callingModes = projectConstants.CALLING_MODES;
   pos = false;
   iconClass: string;
+  spfname: any;
+  splname: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -182,6 +184,10 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           this.getWaitlistNotes(this.waitlist_data.uid);
           this.getCheckInHistory(this.waitlist_data.uid);
           this.getCommunicationHistory(this.waitlist_data.uid);
+          if (this.waitlist_data.provider) {
+            this.spfname = this.waitlist_data.provider.firstName;
+            this.splname = this.waitlist_data.provider.lastName;
+         }
 
         },
         error => {

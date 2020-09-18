@@ -10,6 +10,7 @@ import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/fu
 import { UserDataStorageService } from './user-datastorage.service';
 import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
+import { SharedServices } from '../../../../../../shared/services/shared-services';
 
 @Component({
   selector: 'app-managesettings',
@@ -212,7 +213,8 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     private sharedfunctionObj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
     private activatedRoot: ActivatedRoute,
-    private provider_services: ProviderServices
+    private provider_services: ProviderServices,
+    private shared_service: SharedServices
   ) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
@@ -249,7 +251,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        }, () => {
+      }, () => {
       });
   }
   ngAfterViewChecked() {
@@ -270,19 +272,34 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
           title: 'Settings'
         });
         this.breadcrumbs = breadcrumbs;
-
-        for (let i = 0; i < this.domainList.bdata.length; i++) {
-          if (this.domainList.bdata[i].domain === this.domain) {
-            for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
-              if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
-                this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
-                // this.getSpecializations(this.domain, this.subDomain);
-                // this.initSpecializations();
-                // this.bProfile['subDomain'] = this.subDomain;
-                this.getBusinessProfile();
+        if (this.domainList && this.domainList.bdata) {
+          for (let i = 0; i < this.domainList.bdata.length; i++) {
+            if (this.domainList.bdata[i].domain === this.domain) {
+              for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
+                if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
+                  this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
+                  // this.getSpecializations(this.domain, this.subDomain);
+                  // this.initSpecializations();
+                  // this.bProfile['subDomain'] = this.subDomain;
+                  this.getBusinessProfile();
                 }
+              }
             }
           }
+        } else {
+          this.shared_service.bussinessDomains()
+            .subscribe(
+              res => {
+                const today = new Date();
+                const postdata = {
+                  cdate: today,
+                  bdata: res
+                };
+                this.domainList = postdata;
+                this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+              }
+            );
+
         }
       });
   }
@@ -293,7 +310,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
           this.public_search = (data && data.toString() === 'true') ? true : false;
           this.jaldee_online_status_str = (this.public_search === true) ? 'On' : 'Off';
           this.jaldee_online_status = this.public_search;
-         },
+        },
         () => {
         }
       );
@@ -319,18 +336,18 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
                   this.userAdditionalInfoSubDomainFields = this.provider_shared_functions.getUserAdditionalNonSubDomainMandatoryFields();
                   this.getDomainVirtualFields();
                   if (this.subDomain) {
-                  this.getSubDomainVirtualFields();
+                    this.getSubDomainVirtualFields();
                   }
                 });
             });
-        if (this.bProfile.logo) {
+          if (this.bProfile.logo) {
             this.blogo = this.bProfile.logo;
             const cnow = new Date();
             const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
             this.cacheavoider = dd;
             this.user_datastorage.updateProfilePicWeightage(true);
           } else {
-           this.user_datastorage.updateProfilePicWeightage(false);
+            this.user_datastorage.updateProfilePicWeightage(false);
           }
           // if (this.bProfile.status === 'ACTIVE') {
           //   this.normal_profile_active = 3;
@@ -341,7 +358,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
           // if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
           //   || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined)) {
           //   // this.getProviderLogo();
-           //   this.normal_basicinfo_show = 3;
+          //   this.normal_basicinfo_show = 3;
           // } else {
           //   this.normal_basicinfo_show = 2;
           // }
@@ -582,9 +599,9 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
         this.profimg_exists = true;
         // const today = new Date();
         //  logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
-         logourl = (this.blogo.url) ? this.blogo.url + '?' + this.cacheavoider : '';
+        logourl = (this.blogo.url) ? this.blogo.url + '?' + this.cacheavoider : '';
       }
-        return this.sharedfunctionObj.showjplimg(logourl);
+      return this.sharedfunctionObj.showjplimg(logourl);
     }
   }
   getBusinessProfileWeightageText() {
@@ -611,7 +628,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       this.progress_bar_four = 0;
       return businessProfileWeightageText;
     } else if
-    (weightage >= 50 && weightage < 75) {
+      (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'info';
@@ -653,7 +670,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   }
   getServiceCount() {
     // this.loading = true;
-    const filter = { 'provider-eq': this.userId , 'serviceType-neq': 'donationService'};
+    const filter = { 'provider-eq': this.userId, 'serviceType-neq': 'donationService' };
     this.provider_services.getServiceCount(filter)
       .subscribe(
         data => {
@@ -687,19 +704,19 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'schedules']);
   }
   gotoOnlineProfile() {
-      this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
-    }
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
+  }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     if (mod === 'notifications') {
-    this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
+      this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
     } else if (mod === 'settings-services' || mod === 'settings-time_windows') {
       this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->' + mod]);
     } else if (mod === 'schedules') {
       this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->' + mod]);
-    }  else if (mod === 'nonworking') {
+    } else if (mod === 'nonworking') {
       this.routerobj.navigate(['/provider/' + this.domain + '/general->' + mod]);
-    }  else  {
+    } else {
       this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
   }
@@ -715,6 +732,6 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     // this.loading = false;
   }
   redirecToUsers() {
-    this.routerobj.navigate(['provider',  'settings' , 'general' , 'users']);
-}
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users']);
+  }
 }

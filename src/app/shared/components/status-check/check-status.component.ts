@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import * as moment from 'moment';
 @Component({
-  'selector': 'app-check-status-component',
-  'templateUrl': './check-status.component.html'
+  selector: 'app-check-status-component',
+  templateUrl: './check-status.component.html',
+  styleUrls: ['./check-status.component.css']
 })
 export class CheckYourStatusComponent implements OnInit {
   api_loading: boolean;
   // checkinDetails: any = [];
-  type;
+  type = '';
   encId;
   waitlist: any;
   statusInfo: any;
@@ -32,12 +33,16 @@ export class CheckYourStatusComponent implements OnInit {
       title: 'Know Your Status'
     }
   ];
+  provider_label = '';
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  source = '';
   constructor(private shared_services: SharedServices,
-    private activated_route: ActivatedRoute,
+    private activated_route: ActivatedRoute, public router: Router,
     private shared_functions: SharedFunctions) {
     this.activated_route.params.subscribe(
       qparams => {
         // this.type = qparams.type;
+        this.source = qparams.id;
         if (qparams.id !== 'new') {
           this.encId = qparams.id;
           if (this.encId.split('-')[0] === 'c') {
@@ -72,6 +77,7 @@ export class CheckYourStatusComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.api_loading = true;
@@ -81,6 +87,8 @@ export class CheckYourStatusComponent implements OnInit {
       } else {
         this.getApptDetails(this.encId);
       }
+    } else {
+      this.api_loading = false;
     }
   }
   getAppxTime(waitlist) {
@@ -177,16 +185,21 @@ export class CheckYourStatusComponent implements OnInit {
       if (waitlist.apptStatus === 'Rejected') {
         appx_ret.cancelled_caption = 'Rejected on ';
       } else {
-      appx_ret.cancelled_caption = 'Cancelled on ';
+        appx_ret.cancelled_caption = 'Cancelled on ';
       }
     }
     return appx_ret;
   }
-  getDetails (encId) {
-    if (encId.split('-')[0] === 'c') {
-      this.getWLDetails(encId);
-    } else {
-      this.getApptDetails(encId);
+  getDetails(encId) {
+    if (encId) {
+      this.api_loading = true;
+      if (encId.split('-')[0] === 'c') {
+        this.type = 'wl';
+        this.getWLDetails(encId);
+      } else {
+        this.type = 'appt';
+        this.getApptDetails(encId);
+      }
     }
   }
   getWLDetails(encId) {
@@ -197,6 +210,7 @@ export class CheckYourStatusComponent implements OnInit {
           const wlInfo = data;
           this.statusInfo = data;
           this.foundDetails = true;
+          this.api_loading = false;
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const waitlist_date = new Date(wlInfo.date);
@@ -232,14 +246,37 @@ export class CheckYourStatusComponent implements OnInit {
         (error) => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.foundDetails = false;
+          this.api_loading = false;
         });
   }
+  getSingleTime(slot) {
+    if (slot) {
+      const slots = slot.split('-');
+      return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    }
+  }
+  getWaitTime(waitlist) {
+    if (this.type === 'wl') {
+      // if (waitlist.calculationMode !== 'NoCalc') {
+      if (waitlist.calculationMode !== 'NoCalc' && (waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'checkedIn')) {
+        if (waitlist.appxWaitingTime === 0) {
+          return 'Now';
+        } else if (waitlist.appxWaitingTime !== 0) {
+          return this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
+        }
+      }
+    } else {
+      return false;
+    }
+  }
+
   getApptDetails(encId) {
     this.foundDetails = false;
     this.shared_services.getApptbyEncId(encId)
       .subscribe(
         (data: any) => {
           this.foundDetails = true;
+          this.api_loading = false;
           const wlInfo = data;
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
@@ -277,11 +314,31 @@ export class CheckYourStatusComponent implements OnInit {
         (error) => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.foundDetails = false;
+          this.api_loading = false;
         });
   }
   getStatusLabel(status) {
     const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
     return label_status;
+  }
+  okClick() {
+    this.router.navigate(['']);
+  }
+  showStatusInput() {
+    this.type = '';
+    this.foundDetails = false;
+  }
+  getCancelledTime(statusInfo) {
+    const appx_ret = { 'date': '', 'time': '' };
+    let time = [];
+    let time1 = [];
+    let t2;
+    appx_ret.date = moment(statusInfo.statusUpdatedTime).format(projectConstants.DISPLAY_DATE_FORMAT)
+    time = statusInfo.statusUpdatedTime.split('-');
+    time1 = time[2].trim();
+    t2 = time1.slice(2);
+    appx_ret.time = t2;
+    return appx_ret;
   }
 }
 

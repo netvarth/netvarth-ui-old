@@ -1057,6 +1057,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
+        console.log(this.bProfile);
         this.bprofileLoaded = true;
         this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
           domainfields => {
@@ -1073,6 +1074,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
                 }
               });
           });
+        this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
+        if (this.subdomain === 'personalFitness') {
+          this.services_hint = projectConstantsLocal.PersonalFitness[this.subdomain].helphint;
+        }
         if (this.bProfile.baseLocation) {
           this.locationExists = true;
         } else {

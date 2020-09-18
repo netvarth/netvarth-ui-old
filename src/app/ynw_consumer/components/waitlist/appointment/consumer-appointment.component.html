@@ -3,8 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <a class="pull-left back-btn mgn-up-5"
-                        (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+                    <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
                     <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'appt'"></app-header>
@@ -12,9 +11,6 @@
             </div>
             <div class="panel-body no-padding">
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                    <!-- <div class="card title-gb">
-                        <h5 class="mgn-up-10"> <a class="pull-right back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
-                    </div> -->
                     <div class="card p0">
                         <div class="copy locd">
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
@@ -23,10 +19,10 @@
                                     class="col-md-4 col-lg-4 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
                                         *ngIf="this.selectedUserParam && selectedUser">
-                                        <div class="col-sm-2 col-xs-3 col-md-4 ">
+                                        <div class="col-sm-3 col-xs-4 col-md-4 ">
                                             <img class="card-img" [src]="getPic(selectedUser)" alt="Profile Pic">
                                         </div>
-                                        <div class="col-sm-10 col-xs-9 col-md-8 no-padding">
+                                        <div class="col-sm-9 col-xs-8 col-md-8 no-padding">
                                             <div class="card-body ">
                                                 <h6 class="card-title mgn-up-5">
                                                     <span
@@ -132,6 +128,13 @@
                                                             </div> -->
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a class="lnk pointer-cursor" *ngIf="sel_ser_det.preInfoEnabled"
+                                                            (click)="showPreInfo()">{{sel_ser_det.preInfoTitle}}</a>
+                                                        <div class="preinfo-text mgn-up-5">
+                                                            <span [innerHTML]="sel_ser_det.preInfoText"></span>
                                                         </div>
                                                     </div>
                                                     <!-- <div class="mgn-bt-5 pre-check-title color-grey">Pre Check In Instructions
@@ -249,8 +252,8 @@
                                                     <mat-chip (click)="handleSideScreen('note')"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-file-text-o mgn-rt-5"
-                                                                aria-hidden="true"></i> Add
-                                                            Note</a></mat-chip>
+                                                                aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}}</a>
+                                                    </mat-chip>
                                                     <mat-chip (click)="gotoAttachments()"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-paperclip mgn-rt-5"
@@ -271,8 +274,8 @@
                                                     </h6>
                                                 </div>
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                    <div class="checkin-btn-bp pointer-cursor" [class.disableActn]="apptdisable"
-                                                        (click)="handleApptClicked()">
+                                                    <div class="checkin-btn-bp pointer-cursor"
+                                                        [class.disableActn]="apptdisable" (click)="handleApptClicked()">
                                                         <span *ngIf="!sel_ser_det.isPrePayment">Confirm
                                                             Appointment</span>
                                                         <span *ngIf="sel_ser_det.isPrePayment">Proceed to Payment</span>
@@ -391,13 +394,14 @@
                         </div>
                         <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                             *ngIf="action=='note'">
-                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">Notes</div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">{{sel_ser_det.consumerNoteTitle}}
+                            </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <mat-form-field>{{note_placeholder}}
-                                    <textarea class="form-control" [(ngModel)]="consumerNote" #consumernote
-                                        (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
-                                        placeholder="{{note_placeholder}}"></textarea>
-                                </mat-form-field>
+                                <!-- <mat-form-field>{{note_placeholder}} -->
+                                <textarea class="form-control mgn-bt-20 mgn-up-20" [(ngModel)]="consumerNote"
+                                    #consumernote (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
+                                    placeholder="{{note_placeholder}}"></textarea>
+                                <!-- </mat-form-field> -->
                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                     <!-- <button mat-button class="cs-btn bt1 backbtn mgn-rt-10" (click)="goBack('note')">
                                     Cancel
@@ -612,10 +616,19 @@
                                 </ng-container>
                             </div>
                         </div>
+                        <div class="lbl preinfoDesc notes"
+                *ngIf="action=='preInfo'">
+                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20 mgn-bt-20" style="font-size: 1rem !important">{{sel_ser_det.preInfoTitle}}
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 mgn-bt-20">
+                    <div [innerHTML]="sel_ser_det.preInfoText">
+                    </div>
+                </div>
+            </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="clearfix"></div>
     </div>
+    <div class="clearfix"></div>
 </section>

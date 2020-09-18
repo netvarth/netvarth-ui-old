@@ -54,6 +54,11 @@
                                 <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
                                     <a href="{{path}}status/{{appointment.appointmentEncId}}" target="blank">
                                         {{path}}status/{{appointment.appointmentEncId}}</a></div>                               
+                                 <div class="notes" *ngIf="appointment.service && appointment.service.postInfoEnabled">
+                            <div class="preinfo-title">{{appointment.service.postInfoTitle}} </div>
+                            <div [innerHTML]="appointment.service.postInfoText">
+                            </div>
+                        </div>
                                 <div class="ok-btn">
                                     <span class="pointer-cursor" (click)="okClick()">
                                         Ok</span></div>
