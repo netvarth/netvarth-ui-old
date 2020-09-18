@@ -451,14 +451,16 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         </mat-slide-toggle>
                     </div>
                     <div class="settings_info">
-                        If enabled, {{customer_label}}s will have to click this button and add certain information before
+                        If enabled, {{customer_label}}s will have to click this button and add certain information
+                        before
                         confirming their service booking</div>
                     <div class="mgn-up-15" *ngIf="showConsumerNote">
                         Button label: <span *ngIf="!showEditSection">{{consumerNote}}&nbsp; <i class="fa fa-pencil"
                                 (click)="editClicked()"></i></span>
                         <div class="settings_info">
                             Name this button accordingly so that {{customer_label}} will add the relevant information.
-                       <div> ex. Delivery Address</div> </div>
+                            <div> ex. Delivery Address</div>
+                        </div>
                         <div class="disp-flex" *ngIf="showEditSection">
                             <mat-form-field class="col-lg-8 col-md-8 col-sm-12 col-xs-12 no-padding">
                                 <input matInput min="0" [(ngModel)]="consumerNote" [ngModelOptions]="{standalone: true}"
@@ -477,7 +479,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
                         <i class="fa fa-check"></i><a (click)="showInfoSection()"> Instructions Added</a></div>
                 </div>
-                <div class="form-group mgn-up-20 col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="!is_virtual_serv && is_lvtrack_enable">
+                <div class="form-group mgn-up-20 col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding"
+                    *ngIf="!is_virtual_serv && is_lvtrack_enable">
                     <div class="disp-flex">
                         <label class="col-form-label">Enable live track to locate your {{customer_label}}&nbsp;&nbsp;
                         </label>
@@ -570,15 +573,11 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <input matInput type="text" placeholder="Title" autocomplete="off" [(ngModel)]="preInfoTitle"
                         [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
-
                 <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
                     <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
                         [ngModelOptions]="{standalone: true}">
                     </ckeditor>
                 </div>
-                <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv no-padding">
-                    <button mat-button class="cs-btn bt1 savemember" (click)="showInfoSection()">OK</button>
-                </div> -->
             </div>
         </div>
         <div class="clearfix"></div>
@@ -601,9 +600,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         [ngModelOptions]="{standalone: true}">
                     </ckeditor>
                 </div>
-                <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv no-padding">
-                    <button mat-button class="cs-btn bt1 savemember" (click)="showInfoSection()">OK</button>
-                </div> -->
             </div>
         </div>
         <div class="clearfix"></div>
