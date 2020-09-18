@@ -48,7 +48,7 @@ export class CheckinDetailComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
         public locationobj: Location,
-        private shared_functions: SharedFunctions,
+        public shared_functions: SharedFunctions,
         @Inject(DOCUMENT) public document,
         private consumer_services: ConsumerServices,
         private sharedServices: SharedServices

@@ -23,7 +23,7 @@ export class ConsumerWaitlistHistoryComponent implements OnInit {
   provider_details = Messages.PROVIDER_DETAILS_CAP;
 
   constructor(
-    private shared_functions: SharedFunctions,
+    public shared_functions: SharedFunctions,
     private locationobj: Location,
     private activaterouterobj: ActivatedRoute) { }
 
