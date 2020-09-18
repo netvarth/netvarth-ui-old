@@ -73,7 +73,7 @@ export class CustomViewComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices) {
         this.activated_route.queryParams.subscribe((qparams) => {
-           // this.loading = true;
+            // this.loading = true;
             this.viewId = qparams.id;
             this.getWaitlistMgr();
             this.getDepartments();
@@ -205,7 +205,7 @@ export class CustomViewComponent implements OnInit {
     }
     getAccountQs() {
         const params = {};
-        let servcIdfrmDept = [];
+        const servcIdfrmDept = [];
         if (this.selectedUsersId && this.selectedUsersId.length > 0) {
             params['provider-eq'] = this.selectedUsersId.toString();
         }
@@ -218,7 +218,7 @@ export class CustomViewComponent implements OnInit {
             if (servcIdfrmDept.length > 0) {
                 params['service-eq'] = servcIdfrmDept.toString();
             }
-           
+
         }
         this.provider_services.getProviderQueues(params)
             .subscribe(
@@ -274,9 +274,9 @@ export class CustomViewComponent implements OnInit {
                                     }
                                 }
                             }
-                            
+
                         }
-                    } 
+                    }
                     if (this.customViewDetails.customViewConditions.users && this.customViewDetails.customViewConditions.users.length > 0) {
                         for (let j = 0; j < this.customViewDetails.customViewConditions.users.length; j++) {
                             for (let i = 0; i < this.filterUsersList.length; i++) {
@@ -358,7 +358,7 @@ export class CustomViewComponent implements OnInit {
                     }
                 }
                 if (j < this.customViewDetails.customViewConditions.users.length) {
-                   // this.getProviderServices();
+                    // this.getProviderServices();
                     if (this.customViewFor === 'Appointment') {
                         this.getAppointmentSchedules();
                     } else {
@@ -472,7 +472,7 @@ export class CustomViewComponent implements OnInit {
         } else {
             this.selectedUsersId.splice(index, 1);
         }
-         this.getProviderServices();
+        this.getProviderServices();
         if (this.customViewFor === 'Appointment') {
             this.getAppointmentSchedules();
         } else {
@@ -573,9 +573,9 @@ export class CustomViewComponent implements OnInit {
 
     getAppointmentSchedules() {
         const params = {};
-       let servcIdfrmDept = [];
+        const servcIdfrmDept = [];
         if (this.selectedDepartments.length > 0) {
-            for (const dept of  this.selectedDepartments) {
+            for (const dept of this.selectedDepartments) {
                 if (dept.serviceIds.length > 0) {
                     servcIdfrmDept.push(dept.serviceIds);
                 }
@@ -588,7 +588,7 @@ export class CustomViewComponent implements OnInit {
         if (this.selectedUsersId && this.selectedUsersId.length > 0) {
             params['provider-eq'] = this.selectedUsersId.toString();
         }
-        
+
         this.provider_services.getProviderSchedules(params)
             .subscribe(
                 (data) => {
@@ -736,6 +736,6 @@ export class CustomViewComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'general', 'customview']);
     }
     redirecToGeneral() {
-        this.router.navigate(['provider', 'settings' , 'general' , 'customview']);
+        this.router.navigate(['provider', 'settings', 'general', 'customview']);
     }
 }

@@ -354,7 +354,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         // this.provider_id = params.get('id');
         const customId = params.get('id').replace(/\s/g, '');
 
-        const inputValues = customId.split('_');
+        const inputValues = customId.split('___');
 
         if (inputValues.length > 1) {
           this.provider_id = inputValues[0];
@@ -875,6 +875,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                   this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
                 }
                 if (this.appttime_arr[i]['availableSlots']) {
+                  this.locationjson[locindx]['appttime_det']['cdate'] = this.appttime_arr[i]['availableSlots']['date'];
                   this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
                   if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                     this.locationjson[locindx]['apptAvailableToday'] = true;
@@ -1438,6 +1439,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     const current_provider = {
       'id': location.id,
       'place': location.place,
+      'location': location,
       'cdate': location['estimatedtime_det']['cdate'],
       'service': service
     };
@@ -1455,11 +1457,13 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
   }
   appointmentClicked(location, service: any) {
+    console.log(location);
     this.futureAllowed = true;
     const current_provider = {
       'id': location.id,
       'place': location.place,
-      'cdate': location['estimatedtime_det']['cdate'],
+      'location': location,
+      'cdate': location['appttime_det']['cdate'],
       'service': service
     };
     if (location.todayAppt && location['apptAvailableToday']) {
@@ -1472,7 +1476,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showAppointment(location.id, location.place, location['estimatedtime_det']['cdate'], service, 'consumer');
+      this.showAppointment(location.id, location.place, location['appttime_det']['cdate'], service, 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider };
       this.doLogin('consumer', passParam);
@@ -1515,10 +1519,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else {
           this.getFavProviders();
-          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1550,9 +1554,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else {
-          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], current_provider['service'] , 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'] , 'consumer');
         }
       }
     });
@@ -1592,7 +1596,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
       futureAppt: this.futureAllowed,
-      service_id: service.id
+      service_id: service.id,
+      sel_date: curdate
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];
@@ -1903,6 +1908,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
               }
               if (this.appttime_arr[i]['availableSlots']) {
+                this.locationjson[locindx]['appttime_det']['cdate'] = this.appttime_arr[i]['availableSlots']['date'];
                 this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
                 if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
                   this.locationjson[locindx]['apptAvailableToday'] = true;
@@ -1955,7 +1961,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    const account = this.provider_id + '_' + userId;
+    const account = this.provider_id + '___' + userId;
     const navigationExtras: NavigationExtras = {
       queryParams: {
         src: 'bp'

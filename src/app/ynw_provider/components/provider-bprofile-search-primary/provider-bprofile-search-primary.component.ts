@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
@@ -111,8 +111,6 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
 
   // saving the primary fields from the bprofile create page
   createPrimaryFields(pdata) {
-  
- 
     this.provider_servicesobj.createPrimaryFields(pdata)
       .subscribe(
         () => {
@@ -129,9 +127,9 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
       .subscribe(
         data => {
 
-          
+
           this.provider_datastorageobj.updateProfilePicWeightage(true);
-          this.data.logoExist  = true;
+          this.data.logoExist = true;
         });
   }
 
@@ -196,10 +194,5 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
 
         }
       );
-
   }
-
-
 }
-
-

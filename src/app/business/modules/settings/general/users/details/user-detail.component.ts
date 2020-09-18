@@ -75,7 +75,7 @@ export class BranchUserDetailComponent implements OnInit {
     departments: any = [];
     userId;
     user_data: any = [];
-    userTypesFormfill: any = [{value: 'ASSISTANT', name: 'ASSISTANT'}, {value: 'PROVIDER', name: 'PROVIDER'}, {value: 'ADMIN', name: 'ADMIN'}];
+    userTypesFormfill: any = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'PROVIDER' }, { value: 'ADMIN', name: 'ADMIN' }];
     dept: any;
     subDom;
     deptLength;
@@ -119,7 +119,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.subsector = user.subSector;
         this.sector = user.sector;
         if (this.sector === 'healthCare') {
-           this.userTypesFormfill = [{value: 'ASSISTANT', name: 'ASSISTANT'}, {value: 'PROVIDER', name: 'DOCTOR'}, {value: 'ADMIN', name: 'ADMIN'}];
+            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'DOCTOR' }, { value: 'ADMIN', name: 'ADMIN' }];
         }
         if (bConfig && bConfig.bdata) {
             for (let i = 0; i < bConfig.bdata.length; i++) {
@@ -198,7 +198,7 @@ export class BranchUserDetailComponent implements OnInit {
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             // selectedSubDomain: [],
             selectedDepartment: [],
-            privileges : [''],
+            privileges: [''],
             selectedUserType: [],
             // address: [],
             // state: [],
@@ -308,7 +308,7 @@ export class BranchUserDetailComponent implements OnInit {
             // 'city': input.city,
             // 'state': input.state,
             // 'deptId': input.selectedDepartment,
-            //'isAdmin' :
+            // 'isAdmin' :
             'userType': input.selectedUserType
         };
         if (input.selectedUserType === 'PROVIDER') {
@@ -337,7 +337,7 @@ export class BranchUserDetailComponent implements OnInit {
         }
     }
     onCancel() {
-        this.router.navigate(['provider', 'settings', 'general', 'users']); 
+        this.router.navigate(['provider', 'settings', 'general', 'users']);
     }
     // onlineProfile() {
     //     this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'bprofile']);
@@ -418,6 +418,6 @@ export class BranchUserDetailComponent implements OnInit {
             );
     }
     redirecToUsersl() {
-        this.router.navigate(['provider', 'settings',  'general' , 'users']);
-      }
+        this.router.navigate(['provider', 'settings', 'general', 'users']);
+    }
 }
