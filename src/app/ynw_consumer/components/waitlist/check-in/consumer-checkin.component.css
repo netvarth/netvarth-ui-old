@@ -1153,3 +1153,7 @@ height: 150px !important;
   border: none !important;
   pointer-events: none !important;
 }
+.preinfoDesc {
+  border: 1px solid;
+  margin: 20px;
+  }

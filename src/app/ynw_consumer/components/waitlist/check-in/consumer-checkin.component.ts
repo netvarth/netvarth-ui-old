@@ -533,6 +533,13 @@ export class ConsumerCheckinComponent implements OnInit {
             virtualServiceType: serv.virtualServiceType,
             virtualCallingModes: serv.virtualCallingModes,
             livetrack: serv.livetrack,
+            postInfoEnabled: serv.postInfoEnabled,
+            postInfoText: serv.postInfoText,
+            postInfoTitle: serv.postInfoTitle,
+            preInfoEnabled: serv.preInfoEnabled,
+            preInfoTitle: serv.preInfoTitle,
+            preInfoText: serv.preInfoText,
+            consumerNoteTitle: serv.consumerNoteTitle
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
@@ -1804,6 +1811,8 @@ export class ConsumerCheckinComponent implements OnInit {
             this.action = 'members';
         } else if (this.action === 'service' && this.filterDepart) {
             this.action = '';
+        } else if (this.action === 'preInfo') {
+            this.action = '';
         }
     }
     applyPromocode() {
@@ -1869,5 +1878,8 @@ export class ConsumerCheckinComponent implements OnInit {
         });
         this.servicedialogRef.afterClosed().subscribe(() => {
         });
+    }
+    showPreInfo() {
+        this.action = 'preInfo';
     }
 }

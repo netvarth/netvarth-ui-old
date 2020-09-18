@@ -163,6 +163,11 @@
                   Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
                 </span>
               </div>
+              <div class="notes" *ngIf="statusInfo.service && statusInfo.service.postInfoEnabled">
+                <div class="preinfo-title">{{statusInfo.service.postInfoTitle}} </div>
+                <div [innerHTML]="statusInfo.service.postInfoText">
+                </div>
+            </div>
               <div class="ok-btn">
                 <span class="pointer-cursor" (click)="okClick()">
                   Ok</span></div>

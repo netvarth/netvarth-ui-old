@@ -116,6 +116,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div>
+                                                <a class="lnk pointer-cursor" *ngIf="sel_ser_det.preInfoEnabled"
+                                                    (click)="showPreInfo()">{{sel_ser_det.preInfoTitle}}</a>
+                                                <div class="preinfo-text mgn-up-5">
+                                                    <span [innerHTML]="sel_ser_det.preInfoText"></span>
+                                                </div>
+                                            </div>
                                             <!-- <div class="mgn-bt-5 pre-check-title color-grey">Pre Check In Instructions
                                             </div>
                                             <div class="ln-hgt-20 pre-instr">If grouping, whether to show a group footer
@@ -223,8 +230,7 @@
                                         <mat-chip-list class="btns">
                                             <mat-chip (click)="handleSideScreen('note')"><a
                                                     class="lnk action pointer-cursor"><i
-                                                        class="fa fa-file-text-o mgn-rt-5" aria-hidden="true"></i> Add
-                                                    Note</a></mat-chip>
+                                                        class="fa fa-file-text-o mgn-rt-5" aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}}</a></mat-chip>
                                             <mat-chip (click)="gotoAttachments()"><a
                                                     class="lnk action pointer-cursor"><i
                                                         class="fa fa-paperclip mgn-rt-5"
@@ -353,13 +359,13 @@
                 </div>
                 <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                     *ngIf="action=='note'">
-                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">Notes</div>
+                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">{{sel_ser_det.consumerNoteTitle}}</div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <mat-form-field>{{note_placeholder}}
-                            <textarea class="form-control" [(ngModel)]="consumerNote" #consumernote
+                        <!-- <mat-form-field>{{note_placeholder}} -->
+                            <textarea class="form-control mgn-bt-20 mgn-up-20" [(ngModel)]="consumerNote" #consumernote
                                 (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
                                 placeholder="{{note_placeholder}}"></textarea>
-                        </mat-form-field>
+                        <!-- </mat-form-field> -->
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                             <!-- <button mat-button class="cs-btn bt1 backbtn mgn-rt-10" (click)="goBack('note')">
                                     Cancel
@@ -567,6 +573,15 @@
                         </ng-container>
                     </div>
                 </div>
+                <div class="lbl preinfoDesc notes"
+                *ngIf="action=='preInfo'">
+                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20 mgn-bt-20" style="font-size: 1rem !important">{{sel_ser_det.preInfoTitle}}
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 mgn-bt-20">
+                    <div [innerHTML]="sel_ser_det.preInfoText">
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
