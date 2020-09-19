@@ -154,6 +154,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   statusAction = 'new';
   screenWidth;
   small_device_display = false;
+   billicon = false;
   waitlist_status = [];
   server_date;
   tomorrowDate;
@@ -300,6 +301,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   tokenOrCheckin;
   refreshTime;
   cronHandle: Subscription;
+  checkin_uuid: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1285,6 +1287,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (totalAppointmentsSelected === 1) {
       this.apptSingleSelection = true;
+      for (let i in this.appointmentsChecked) {
+        this.checkin_uuid = this.appointmentsChecked[i];
+        if (!this.checkin_uuid.parentUuid) {
+              this.billicon  = true;
+            }
+            else{
+              this.billicon  = false;
+            }     
+      }
       Object.keys(this.appointmentsChecked).forEach(key => {
         this.activeAppointment = this.appointmentsChecked[key];
       });

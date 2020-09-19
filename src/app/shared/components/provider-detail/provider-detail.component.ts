@@ -2015,9 +2015,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.showMore = !this.showMore;
   }
   goBack() {
-    this.locationobj.back();
     this.userId = null;
     this.pSource = null;
+    if (this.userId) {
+      this.router.navigate(['/']);
+    } else {
+      this.locationobj.back();
+    }
   }
   getPic(user) {
     if (user.profilePicture) {

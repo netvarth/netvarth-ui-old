@@ -22,7 +22,7 @@ export class InboxOuterComponent implements OnInit {
   obtainedMsgs = false;
 
   constructor(private inbox_services: InboxServices,
-    private shared_functions: SharedFunctions,
+    public shared_functions: SharedFunctions,
     private location: Location) { }
 
   ngOnInit() {

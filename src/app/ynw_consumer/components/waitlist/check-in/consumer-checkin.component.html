@@ -186,7 +186,7 @@
                                                     {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
                                                 </mat-chip>
                                             </mat-chip-list>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv"
+                                            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
                                                 *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
                                                 No timings available.
                                             </div>
@@ -307,8 +307,7 @@
                                                     <mat-chip (click)="handleSideScreen('note')"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-file-text-o mgn-rt-5"
-                                                                aria-hidden="true"></i> Add
-                                                            Note</a></mat-chip>
+                                                                aria-hidden="true"></i> {{sel_ser_det.consumerNoteTitle}} <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span></a></mat-chip>
                                                     <mat-chip (click)="gotoAttachments()"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-paperclip mgn-rt-5"

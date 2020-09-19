@@ -11,7 +11,8 @@
                     <div class="c-outer m0">
                         <div class="c-body">
                             <div class="card title-gb">
-                                <h5 class="mgn-up-10">Appointment Details <a class="pull-right back-btn" (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
+                                <h5 class="mgn-up-10">Appointment Details <a class="pull-right back-btn"
+                                        (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
                             </div>
                             <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
                                 <div class="card" *ngIf="!api_loading">
@@ -59,6 +60,11 @@
                                                 {{appt.phoneNumber}} </div>
                                             <div class="item" *ngIf="appt.batchId"><span
                                                     class="ttle">Batch</span><span>{{appt.batchId}}</span></div>
+                                            <div class="postDesc" *ngIf="appt.service && appt.service.postInfoEnabled">
+                                                <h2> {{appt.service.postInfoTitle}} </h2>
+                                                <div [innerHTML]="appt.service.postInfoText">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="btm" *ngIf="appt">
