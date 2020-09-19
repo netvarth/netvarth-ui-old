@@ -11955,3 +11955,18 @@ img.busN-logo {
 .disp-flex {
   display: flex !important;
 }
+.comma-list {
+  list-style: none;
+  padding: 0px;
+  margin-bottom: 0 !important;
+}
+.comma-list li {
+  display: inline-block;
+  padding-right: 5px;
+}
+.comma-list li::after {
+  content: ",";
+}
+.comma-list li:nth-last-child(1)::after {
+  content: "" !important;
+}
