@@ -274,7 +274,7 @@
                                                                 *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                         </span>
                                                         <b>
-                                                            {{service.name | capitalizeFirst}}
+                                                            {{service.name | capitalizeFirst | limitTo: [45, '...']}}
                                                         </b>
                                                     </a>
 
@@ -282,12 +282,12 @@
                                                 <div class="card-item-content">
                                                     <div class="card-item-content-info">
                                                         <ng-container class="bottom-actions-root"
-                                                            *ngIf="loc['appttime_det']">
+                                                            *ngIf="service.serviceAvailability">
                                                             <p class="price mgn-up-10 mgn-bt-0">
-                                                                {{loc['appttime_det']['caption']}}
+                                                                Next Available Time
                                                             </p>
                                                             <p class="title-style mgn-up-5-m">
-                                                                {{loc['appttime_det']['date']}}</p>
+                                                                {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}</p>
                                                         </ng-container>
                                                     </div>
                                                     <div class="card-item-content-action">
@@ -325,7 +325,7 @@
                                                                 *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                         </span>
                                                         <b>
-                                                            {{service.name | capitalizeFirst}}
+                                                            {{service.name | capitalizeFirst | limitTo: [45, '...']}}
                                                         </b>
                                                     </a>
                                                 </div>
@@ -467,7 +467,7 @@
                                                                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                             </span>
                                                             <b>
-                                                                {{service.name | capitalizeFirst}}
+                                                                {{service.name | capitalizeFirst | limitTo: [45, '...']}}
                                                             </b>
                                                         </a>
 
@@ -475,12 +475,12 @@
                                                     <div class="card-item-content">
                                                         <div class="card-item-content-info">                                                            
                                                             <ng-container class="bottom-actions-root"
-                                                                *ngIf="loc['appttime_det']">
+                                                                *ngIf="service.serviceAvailability">
                                                                 <p class="price mgn-up-10 mgn-bt-0">
-                                                                    {{loc['appttime_det']['caption']}}
+                                                                    Next Available Time
                                                                 </p>
                                                                 <p class="title-style mgn-up-5-m">
-                                                                    {{loc['appttime_det']['date']}}</p>
+                                                                    {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}</p>
                                                             </ng-container>
                                                         </div>
                                                         <div class="card-item-content-action">
@@ -518,7 +518,7 @@
                                                                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                             </span>
                                                             <b>
-                                                                {{service.name | capitalizeFirst}}
+                                                                {{service.name | capitalizeFirst | limitTo: [45, '...']}}
                                                             </b>
                                                         </a>
                                                     </div>
@@ -633,7 +633,7 @@
                                                                         *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                                 </span>
                                                                 <b>
-                                                                    {{service.name | capitalizeFirst}}
+                                                                    {{service.name | capitalizeFirst| limitTo: [45, '...']}}
                                                                 </b>
                                                             </a>
                                                         </div>
@@ -748,18 +748,18 @@
                                                         *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <b>
-                                                    {{service.name | capitalizeFirst}}
+                                                    {{service.name | capitalizeFirst | limitTo: [45, '...']}}
                                                 </b>
                                             </a>
                                         </div>
                                         <div class="card-item-content">
                                             <div class="card-item-content-info">                                               
-                                                <ng-container class="bottom-actions-root" *ngIf="loc['appttime_det']">
+                                                <ng-container class="bottom-actions-root" *ngIf="service.serviceAvailability">
                                                     <p class="price mgn-up-10 mgn-bt-0">
-                                                        {{loc['appttime_det']['caption']}}
+                                                        Next Available Time
                                                     </p>
                                                     <p class="title-style mgn-up-5-m">
-                                                        {{loc['appttime_det']['date']}}</p>
+                                                        {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}</p>
                                                 </ng-container>
                                             </div>
                                             <div class="card-item-content-action">
@@ -796,7 +796,7 @@
                                                         *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <b>
-                                                    {{service.name | capitalizeFirst}}
+                                                    {{service.name | capitalizeFirst | limitTo: [45, '...']}}
                                                 </b>
                                             </a>
                                         </div>
@@ -908,7 +908,7 @@
                                 <div class="card-item-title">
                                     <a class="pointer-cursor"
                                         (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')"><b>
-                                            {{service.name | capitalizeFirst}}
+                                            {{service.name | capitalizeFirst | limitTo: [45, '...']}}
                                         </b> </a>
 
                                 </div>

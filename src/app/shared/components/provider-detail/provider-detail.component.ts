@@ -222,6 +222,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   futureAllowed = true;
   galleryenabledArr = [];
   gallerydisabledArr = [];
+  onlinePresence = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -441,6 +442,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         switch (section) {
           case 'businessProfile': {
+            this.onlinePresence = res['onlinePresence'];
             this.api_loading = false;
             this.pageFound = true;
             this.socialMedialist = [];
@@ -823,6 +825,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         });
     }
   }
+
   getUserApptTime(provids_locid) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
@@ -888,6 +891,32 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
           }
         });
+    }
+  }
+  getAvailabilityforAppt (date, time) {
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const today = new Date(todaydt);
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+      cday = '0' + dd;
+    } else {
+      cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+      cmon = '0' + mm;
+    } else {
+      cmon = '' + mm;
+    }
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
+    if (dtoday === date) {
+      return ('Today' + ', ' + this.getSingleTime(time));
+    } else {
+      return (this.sharedFunctionobj.formatDate(date, { 'rettype': 'monthname' }) + ', '
+        + this.getSingleTime(time));
     }
   }
   getUserbusinessprofiledetails_json(section, userId, modDateReq: boolean) {

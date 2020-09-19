@@ -78,7 +78,7 @@ ul.bus-actions li {
   margin: 5px;
   font-weight: 500 !important;
   font-size: 1.2rem;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 ul.bus-actions li a.lnk {
@@ -446,7 +446,7 @@ ul.bus-actions li a.lnk {
   text-align: center;
   /* background-color: #106e76; */
   display: table;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   padding: 5px !important;
 }
 
@@ -1055,7 +1055,7 @@ height: 150px !important;
   text-align: center;
   /* background-color: #106e76; */
   display: table;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   padding: 5px !important;
 }
 .bus-item-medium-dpt .card.card-item-n img, .bus-item-medium-dpt .card.card-item-n .card-item-title {

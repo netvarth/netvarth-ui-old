@@ -1220,7 +1220,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       });
       canceldialogRef.afterClosed().subscribe(result => {
-        // alert(result);
         status = result;
         if (status === 1) {
           this.makePayment(mode, amount, paynot);

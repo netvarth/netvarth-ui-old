@@ -79,7 +79,7 @@ import { UpdateProfilePopupComponent } from './shared/components/update-profile-
 import { ShareService } from 'ngx-sharebuttons';
 import { ConsumerFooterModule } from './ynw_consumer/components/footer/footer.module';
 import { HeaderModule } from './shared/modules/header/header.module';
-import { TruncatePipe } from './shared/pipes/limitTo.pipe';
+import { TruncateModule } from './shared/pipes/limitTo.module';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -110,8 +110,7 @@ export function init_app(globalService: GlobalService) {
     CheckYourStatusComponent,
     PaymentLinkComponent,
     JdnComponent,
-    UpdateProfilePopupComponent,
-    TruncatePipe
+    UpdateProfilePopupComponent
     // PhomeComponent,
   ],
   entryComponents: [
@@ -163,7 +162,8 @@ export function init_app(globalService: GlobalService) {
     ForgotPasswordModule,
     SetPasswwordModule,
     JoyrideModule.forRoot(),
-    ConsumerFooterModule
+    ConsumerFooterModule,
+    TruncateModule
   ],
   providers: [
     AuthGuardConsumer,
