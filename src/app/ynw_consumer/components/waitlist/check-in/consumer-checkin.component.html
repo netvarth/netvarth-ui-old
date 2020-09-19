@@ -131,12 +131,14 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <a class="lnk pointer-cursor" *ngIf="sel_ser_det.preInfoEnabled"
-                                                            (click)="showPreInfo()">{{sel_ser_det.preInfoTitle}}</a>
+                                                    <div *ngIf="sel_ser_det.preInfoEnabled">
+                                                        <div class="lnk">{{sel_ser_det.preInfoTitle}}</div>
                                                         <div class="preinfo-text mgn-up-5">
                                                             <span [innerHTML]="sel_ser_det.preInfoText"></span>
                                                         </div>
+                                                        <a (click)="showPreInfo()" class="pointer-cursor mgn-up-5">
+                                                            <i class="fa fa-eye"></i>&nbsp;View
+                                                        </a>
                                                     </div>
                                                     <!-- <div class="mgn-bt-5 pre-check-title color-grey">Pre Check In Instructions
                                             </div>
