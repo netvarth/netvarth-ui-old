@@ -79,6 +79,7 @@ import { UpdateProfilePopupComponent } from './shared/components/update-profile-
 import { ShareService } from 'ngx-sharebuttons';
 import { ConsumerFooterModule } from './ynw_consumer/components/footer/footer.module';
 import { HeaderModule } from './shared/modules/header/header.module';
+import { TruncatePipe } from './shared/pipes/limitTo.pipe';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -109,7 +110,8 @@ export function init_app(globalService: GlobalService) {
     CheckYourStatusComponent,
     PaymentLinkComponent,
     JdnComponent,
-    UpdateProfilePopupComponent
+    UpdateProfilePopupComponent,
+    TruncatePipe
     // PhomeComponent,
   ],
   entryComponents: [
