@@ -11955,6 +11955,18 @@ img.busN-logo {
 .disp-flex {
   display: flex !important;
 }
+.wtsap-cal {
+  width: 36px;
+}
+.ph-cal {
+  width: 25px;
+}
+.annualpopup .jaldee-icon {
+  content: url(../images/home/logo-icon.png);
+  top: 10px;
+  position: relative;
+  width: 35px;
+}
 .comma-list {
   list-style: none;
   padding: 0px;
