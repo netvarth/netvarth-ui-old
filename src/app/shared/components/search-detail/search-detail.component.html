@@ -598,6 +598,13 @@
                                                             *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
                                                             the first in line</span>
                                                     </div>
+                                                    <div class="checkin-est" *ngIf="!search_result.fields.waitlist && search_result.fields.apptAllowed && !search_result.fields['apptMessage']">
+                                                    <span class="est-time"
+                                                            >{{search_result.fields['appttime_det']['caption']}}</span>
+                                                        <span class="time-data"
+                                                            >{{search_result.fields['appttime_det']['date']}}
+                                                        </span>
+                                                        </div>
                                                     <span (click)="providerDetClicked(search_result)"
                                                         class="checkin-btn">Book
                                                         Service</span>
@@ -783,7 +790,13 @@
                                                 </div>
                                                 <div style="flex-grow:1"></div>
                                                 <div class="bottom-actions-root">
-                                                    <div class="checkin-est"></div>
+                                                    <div class="checkin-est">
+                                                        <span class="est-time"
+                                                            >{{search_result.fields['appttime_det']['caption']}}</span>
+                                                        <span class="time-data"
+                                                            >{{search_result.fields['appttime_det']['date']}}
+                                                        </span>
+                                                    </div>
                                                     <span (click)="providerDetClicked(search_result)"
                                                         class="checkin-btn">Appointment</span>
                                                 </div>
