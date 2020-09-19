@@ -25,7 +25,7 @@
                         </div>
                         <div class="lbr col-sm-12 col-md-4 col-lg-4" *ngIf="showGallery">
                             <app-jaldee-gallery [source_id]="service_id" [status]="status" [images]="image_list"
-                                *ngIf="service_id">
+                                *ngIf="service_id && !hideBack">
                             </app-jaldee-gallery>
                         </div>
                     </div>

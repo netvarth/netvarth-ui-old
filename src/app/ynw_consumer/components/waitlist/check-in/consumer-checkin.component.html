@@ -131,6 +131,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div>
+                                                        <a class="lnk pointer-cursor" *ngIf="sel_ser_det.preInfoEnabled"
+                                                            (click)="showPreInfo()">{{sel_ser_det.preInfoTitle}}</a>
+                                                        <div class="preinfo-text mgn-up-5">
+                                                            <span [innerHTML]="sel_ser_det.preInfoText"></span>
+                                                        </div>
+                                                    </div>
                                                     <!-- <div class="mgn-bt-5 pre-check-title color-grey">Pre Check In Instructions
                                             </div>
                                             <div class="ln-hgt-20 pre-instr">If grouping, whether to show a group footer
@@ -675,15 +682,15 @@
                                 </ng-container>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="lbl notes preinfoDesc" *ngIf="action=='preInfo'">
-                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20 mgn-bt-20"
-                        style="font-size: 1rem !important">{{sel_ser_det.preInfoTitle}}
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 mgn-bt-20">
-                        <div [innerHTML]="sel_ser_det.preInfoText">
+                        <div class="lbl notes preinfoDesc"
+                        *ngIf="action=='preInfo'">
+                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20 mgn-bt-20" style="font-size: 1rem !important">{{sel_ser_det.preInfoTitle}}
                         </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 mgn-bt-20">
+                            <div [innerHTML]="sel_ser_det.preInfoText">
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>

@@ -1,11 +1,12 @@
 
 .post-info {
   display: flex;
-  min-height: 500px;
+  min-height: 600px;
 }
 .details{
   width: 100%;
   line-height: 25px;
+  position: absolute;
 }
 .book-head {
   color: #008000;
@@ -40,8 +41,7 @@
   margin-top: 10px;
 }
 .ok-btn {
-  margin: auto;
-  width: 150px;
+  text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -77,7 +77,7 @@
   margin-bottom: 20px;
 }
 .info-img img{
-  width: 250px;
+  width: 230px;
 }
 @media (max-width: 991px) { 
   .info-img img{
@@ -139,12 +139,15 @@
     font-size: .75rem !important;
   }
 }
-.status-table {
-  width: 100%;
-  color: #00cc96;
-}
 .preinfo-title {
   margin-bottom: 10px;
   font-weight: 600;
   font-size: 1rem;
+}
+.status-table {
+  width: 100%;
+  color: #00cc96;
+}
+.content {
+  padding: 15px 0px !important;
 }

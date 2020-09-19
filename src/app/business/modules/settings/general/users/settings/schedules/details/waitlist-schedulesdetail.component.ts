@@ -914,12 +914,12 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     }
     EnableBatch(ev) {
         this.showBatchFields = ev.checked;
-        if (ev.checked) {
-            this.amForm.get('qserveonce').setValue(2);
-        } else {
-            this.amForm.get('qserveonce').setValue(1);
-            this.sbatchStatus = false;
-        }
+        // if (ev.checked) {
+        //     this.amForm.get('qserveonce').setValue(2);
+        // } else {
+        //     this.amForm.get('qserveonce').setValue(1);
+        //     this.sbatchStatus = false;
+        // }
     }
     redirecToUserSchedule() {
         this.router.navigate(['provider', 'settings', 'general', 'users' , this.userId , 'settings' , 'schedules']);

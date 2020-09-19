@@ -123,14 +123,14 @@
               <div class="book-status"
                 *ngIf="statusInfo.apptStatus !== 'Arrived' && statusInfo.apptStatus !== 'Confirmed'"> Current status
               </div>
-              <table class="status-table" *ngIf="getWaitTime(statusInfo)">
+              <table class="status-table">
                 <tbody>
-                  <tr>
+                  <tr *ngIf="type=='wl'">
                     <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;Persons ahead </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.personsAhead}}</td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="getWaitTime(statusInfo)">
                     <td width="48%" align="right"><i class="fa fa-clock-o"></i>&nbsp;Est wait Time </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{getWaitTime(statusInfo)}}</td>
