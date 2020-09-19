@@ -767,10 +767,16 @@ export class ServiceComponent implements OnInit, OnDestroy {
             this.tempPostInfoText = this.postInfoText;
             this.tempPostInfoTitle = this.postInfoTitle;
             this.showInfo = true;
-            this.sharedFunctons.sendMessage({'ttype': 'hide-back'});
+            this.sharedFunctons.sendMessage({ 'ttype': 'hide-back' });
         } else {
-            this.showInfo = false;
-            this.sharedFunctons.sendMessage({'ttype': 'show-back'});
+            if (this.preInfoEnabled && this.preInfoTitle === '') {
+                this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
+            } else if (this.preInfoEnabled && this.preInfoTitle === '') {
+                this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
+            } else {
+                this.showInfo = false;
+                this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
+            }
         }
     }
     cancelChanges() {
@@ -781,6 +787,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.postInfoText = this.tempPostInfoText;
         this.postInfoTitle = this.tempPostInfoTitle;
         this.showInfo = false;
-        this.sharedFunctons.sendMessage({'ttype': 'show-back'});
+        this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
     }
 }

@@ -110,16 +110,22 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                 }
                 this.initServiceParams();
             });
-            this.infoSubscription = this.sharedfunctionObj.getMessage().subscribe(message => {
-                switch (message.ttype) {
-                    case 'hide-back':
-                        this.hideBack = true;
-                        break;
-                    case 'show-back':
-                        this.hideBack = false;
-                        break;
-                }
-            });
+        this.infoSubscription = this.sharedfunctionObj.getMessage().subscribe(message => {
+            switch (message.ttype) {
+                case 'hide-back':
+                    this.hideBack = true;
+                    this.servicecaption = 'Pre and Post instructions';
+                    break;
+                case 'show-back':
+                    this.hideBack = false;
+                    if (this.service_id) {
+                        this.servicecaption = 'Edit Service';
+                    } else {
+                        this.servicecaption = 'Add Service';
+                    }
+                    break;
+            }
+        });
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             if (input.ttype === 'image-upload') {
                 this.provider_services.uploadServiceGallery(input.sourceId, input.value)
@@ -369,6 +375,6 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     }
     redirecToUserServices() {
         this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings',
-        'services']);
+            'services']);
     }
 }

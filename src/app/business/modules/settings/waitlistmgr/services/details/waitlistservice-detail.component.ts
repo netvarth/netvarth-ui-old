@@ -115,9 +115,15 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             switch (message.ttype) {
                 case 'hide-back':
                     this.hideBack = true;
+                    this.servicecaption = 'Pre and Post instructions';
                     break;
                 case 'show-back':
                     this.hideBack = false;
+                    if (this.service_id) {
+                        this.servicecaption = 'Edit Service';
+                    } else {
+                        this.servicecaption = 'Add Service';
+                    }
                     break;
             }
         });
