@@ -732,7 +732,7 @@
                                                 </div>
                                             </div>
                                             <div class="bottom-sect pdetail"
-                                                *ngIf="showButton(search_result) === 'appt'">
+                                                *ngIf="showButton(search_result) === 'appt' && !search_result.fields['apptMessage']">
                                                 <div class="bt-l">
                                                     <div class="wt-tme">
                                                         <div class="search-services"
@@ -787,6 +787,10 @@
                                                     <span (click)="providerDetClicked(search_result)"
                                                         class="checkin-btn">Appointment</span>
                                                 </div>
+                                            </div>
+                                            <div class="bottom-sect pdetail pad-up-10"
+                                                *ngIf="showButton(search_result) === 'appt' && search_result.fields['apptMessage']">
+                                                {{search_result.fields['apptMessage']}}
                                             </div>
                                             <div class="bottom-sect pdetail"
                                                 *ngIf="showButton(search_result) === 'donation'">
