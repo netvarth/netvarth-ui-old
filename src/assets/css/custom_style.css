@@ -11555,3 +11555,9 @@ header.consumer .tp-1 .tp-l {
 .disp-flex {
   display: flex !important;
 }
+.wtsap-cal {
+  width: 36px;
+}
+.ph-cal {
+  width: 25px;
+}
