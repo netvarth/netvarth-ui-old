@@ -460,6 +460,30 @@
                                                         </li>
                                                     </ul>
                                                 </div>
+                                                <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs" *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer">
+                                                    <ul class="bus-actions no-padding">
+                                                        <li>
+                                                            <a class="like-btn"
+                                                            (click)="!btn_clicked && openCoupons(search_result,true)">
+                                                                <img class="img" src="./assets/images/first_coupon.png"
+                                                                alt="First Time Coupons" />
+                                                                <span style="display:block">{{first_time_coupon}}</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs" *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0">
+                                                    <ul class="bus-actions no-padding">
+                                                        <li>
+                                                            <a class="like-btn"
+                                                            (click)="!btn_clicked && openCoupons(search_result,true)">
+                                                            <img class="img" src="./assets/images/jcoupon.png"
+                                                            alt="Jaldee Coupon" />
+                                                                <span style="display:block">{{jaldee_coupon}}</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 smalldevicebx mgn-up-10 link visible-xs">
@@ -574,6 +598,13 @@
                                                             *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
                                                             the first in line</span>
                                                     </div>
+                                                    <div class="checkin-est" *ngIf="!search_result.fields.waitlist && search_result.fields.apptAllowed && !search_result.fields['apptMessage']">
+                                                    <span class="est-time"
+                                                            >{{search_result.fields['appttime_det']['caption']}}</span>
+                                                        <span class="time-data"
+                                                            >{{search_result.fields['appttime_det']['date']}}
+                                                        </span>
+                                                        </div>
                                                     <span (click)="providerDetClicked(search_result)"
                                                         class="checkin-btn">Book
                                                         Service</span>
@@ -708,7 +739,7 @@
                                                 </div>
                                             </div>
                                             <div class="bottom-sect pdetail"
-                                                *ngIf="showButton(search_result) === 'appt'">
+                                                *ngIf="showButton(search_result) === 'appt' && !search_result.fields['apptMessage']">
                                                 <div class="bt-l">
                                                     <div class="wt-tme">
                                                         <div class="search-services"
@@ -759,10 +790,20 @@
                                                 </div>
                                                 <div style="flex-grow:1"></div>
                                                 <div class="bottom-actions-root">
-                                                    <div class="checkin-est"></div>
+                                                    <div class="checkin-est">
+                                                        <span class="est-time"
+                                                            >{{search_result.fields['appttime_det']['caption']}}</span>
+                                                        <span class="time-data"
+                                                            >{{search_result.fields['appttime_det']['date']}}
+                                                        </span>
+                                                    </div>
                                                     <span (click)="providerDetClicked(search_result)"
                                                         class="checkin-btn">Appointment</span>
                                                 </div>
+                                            </div>
+                                            <div class="bottom-sect pdetail pad-up-10"
+                                                *ngIf="showButton(search_result) === 'appt' && search_result.fields['apptMessage']">
+                                                {{search_result.fields['apptMessage']}}
                                             </div>
                                             <div class="bottom-sect pdetail"
                                                 *ngIf="showButton(search_result) === 'donation'">

@@ -119,7 +119,6 @@ export class ConsumerPaymentComponent implements OnInit {
                 data => {
                     this.status = data;
                     this.status = this.status.toLowerCase();
-                    alert(pid);
                     if (this.status === 'success') {
                         this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
                         if (this.activeWt.service.livetrack) {

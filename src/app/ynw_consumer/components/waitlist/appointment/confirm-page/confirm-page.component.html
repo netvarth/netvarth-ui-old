@@ -22,18 +22,38 @@
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{appointment.providerAccount?.businessName}}</td>
                                         </tr>
+                                        <tr *ngIf="appointment.provider">
+                                            <td width="48%" align="right">{{provider_label | capitalizeFirst}}</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{appointment.provider.firstName}} {{appointment.provider.lastName}}
+                                            </td>
+                                        </tr>
                                         <tr>
-                                            <td width="48%" align="right">Where </td>
+                                            <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.location?.place}}</td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Service</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{appointment.service?.name}}</td>
+                                            <td>
+                                                <span class="service-icon"
+                                                    *ngIf="appointment.service && appointment.service.serviceType == 'virtualService'">
+                                                    <i class="fa phon-icon"
+                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                    <i class="fa meet-icon"
+                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                    <i class="fa zoom-icon"
+                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                    <i class="fa wtsapaud-icon"
+                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='audioService'"></i>
+                                                    <i class="fa wtsapvid-icon"
+                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='videoService'"></i>
+                                                </span>
+                                                {{appointment.service?.name}}</td>
                                         </tr>
                                         <tr>
-                                            <td width="48%" align="right">Time window </td>
+                                            <td width="48%" align="right">Appointment Slot </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.appmtDate | date: dateFormat }},
                                                 {{getSingleTime(appointment.appmtTime)}}</td>
@@ -53,12 +73,21 @@
                                 <div class="book-status"> Current status </div>
                                 <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
                                     <a href="{{path}}status/{{appointment.appointmentEncId}}" target="blank">
-                                        {{path}}status/{{appointment.appointmentEncId}}</a></div>                               
-                                 <div class="notes" *ngIf="appointment.service && appointment.service.postInfoEnabled">
-                            <div class="preinfo-title">{{appointment.service.postInfoTitle}} </div>
-                            <div [innerHTML]="appointment.service.postInfoText">
-                            </div>
-                        </div>
+                                        {{path}}status/{{appointment.appointmentEncId}}</a></div>
+                                <!-- <div class="txt-align-center mgn-up-10"
+                            *ngIf="appointment.consumer && appointment.consumer.userProfile.emailVerified"> A booking
+                            confirmation has been sent to your email
+                            address.</div> -->
+                                <!-- <div class="update-email"
+                            *ngIf="appointment.consumer && !appointment.consumer.userProfile.emailVerified">
+                            <input placeholder="Email" [(ngModel)]="email"><span class="email-btn"
+                                (click)="updateEmail()">Ok</span>
+                        </div> -->
+                                <div class="notes" *ngIf="appointment.service && appointment.service.postInfoEnabled">
+                                    <div class="preinfo-title">{{appointment.service.postInfoTitle}} </div>
+                                    <div [innerHTML]="appointment.service.postInfoText">
+                                    </div>
+                                </div>
                                 <div class="ok-btn">
                                     <span class="pointer-cursor" (click)="okClick()">
                                         Ok</span></div>
@@ -69,8 +98,7 @@
                                 <div class="one">powered by</div>
                                 <div class="two">
                                     <img _ngcontent-jvc-c15="" alt="Jaldee" src="assets/images/home/logo-icon.png"
-                                        style="width: 15px;">&nbsp;Jaldee
-                                </div>
+                                        style="width: 15px;">&nbsp;Jaldee</div>
                             </div>
                         </div>
                     </div>

@@ -4,7 +4,7 @@
     <section class="">
         <div class="card title-gb">
             <h5 class="mgn-up-10"> 
-             <button type="button" class="btn default profile-back" (click)="redirecToApptServices()">
+             <button *ngIf="!hideBack" type="button" class="btn default profile-back" (click)="redirecToApptServices()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
                 {{servicecaption}}
             </h5>     
@@ -22,7 +22,7 @@
                                 </app-jaldee-service>
                             </div>
                             <div class="lbr col-sm-12 col-md-4 col-lg-4" *ngIf="showGallery">
-                                <app-jaldee-gallery [source_id]="service_id" [status]="status" [images]="image_list" *ngIf="service_id">
+                                <app-jaldee-gallery [source_id]="service_id" [status]="status" [images]="image_list" *ngIf="service_id && !hideBack">
                                 </app-jaldee-gallery>
                                 <!-- <div style="margin-top: 10px;">
                                         <ul class="info-lst">

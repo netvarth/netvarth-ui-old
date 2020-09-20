@@ -493,3 +493,7 @@ ul.bus-actions-horiz li {
 .link {
   cursor: pointer;
 }
+
+.pad-up-10 {
+  padding-top: 10px !important;
+}

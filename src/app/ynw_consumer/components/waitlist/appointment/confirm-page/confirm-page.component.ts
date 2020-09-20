@@ -25,9 +25,11 @@ export class ConfirmPageComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   email;
   apiloading = false;
+  provider_label;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions) {
+    this.provider_label = this.sharedFunctionobj.getTerminologyTerm('provider');
     this.route.queryParams.subscribe(
       params => {
         this.infoParams = params;
@@ -57,5 +59,6 @@ export class ConfirmPageComponent implements OnInit {
     }
   }
   updateEmail() {
+    console.log(this.email);
   }
 }

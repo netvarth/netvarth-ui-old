@@ -6,7 +6,7 @@
     <div class="sa-lc" (click)="setCurrentLocation(locrefrence)">
       <mat-form-field class="search_location_class">
         <i class="fa fa-check icon" *ngIf="isCurrentLocation"></i>
-        <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name" matInput
+        <input type="text" name="location_box" aria-label="locs" [(ngModel)]="location_name" matInput
           [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="" #locrefrence
           (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)" (keyup)="locationClick($event)">
 
@@ -25,8 +25,7 @@
     <div class="sa-dm ml5">
       <mat-form-field class="search_domain">
         <div>
-          <mat-select panelClass="search_domaindropdown_class" [(ngModel)]="selected_domain"
-            [formControl]="myControl_domain" #seldomain (selectionChange)="handledomainchange($event.value)">
+          <mat-select panelClass="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (selectionChange)="handledomainchange($event.value)">
             <mat-option value="All">{{all_cap}}</mat-option>
             <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain">
               {{ domain.displayName }}
@@ -39,7 +38,7 @@
       <mat-form-field floatLabel="never" class="search_keyword_class">
         <mat-label>{{domainSuggestionPlaceholder}}</mat-label>
         <input name="provider_box" id="suggestSearch" #provbox aria-label="provs" aria-label="Search here"
-          [(ngModel)]="kw_autoname" matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" maxlength="50"
+          [(ngModel)]="kw_autoname"  matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" maxlength="50"
           (keyup)="kwtyping($event, $event.target.value)" (click)="filterKeywords($event.target.value)">
         <mat-autocomplete class="srch-auto-c" #autoprov="matAutocomplete" #autotest>
           <div>

@@ -111,6 +111,6 @@ export class IntegrationSettingsComponent implements OnInit {
         this.router.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
     redirecToProfile() {
-        this.router.navigate(['provider', 'settings', 'bprofile']);
+        this.router.navigate(['provider', 'settings']);
     }
 }

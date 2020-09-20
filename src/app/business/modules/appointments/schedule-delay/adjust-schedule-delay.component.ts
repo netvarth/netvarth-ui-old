@@ -64,7 +64,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   today_arrived_count = 0;
   today_checkedin_count = 0;
   users = [];
-  userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
+  userN = { 'id': 0, 'firstName': Messages.NOUSERCAP, 'lastName': '' };
   selected_user;
   domain: any;
   qdata_list;
@@ -494,6 +494,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
       this.shared_services.getProviderSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid)
         .subscribe(data => {
           this.queuejson = data;
+          console.log(this.queuejson);
           if (this.queuejson.length === 1) {
             this.getTodayAppointments(this.queuejson[0].id);
           }

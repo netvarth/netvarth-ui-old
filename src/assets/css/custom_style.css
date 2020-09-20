@@ -11947,11 +11947,38 @@ img.busN-logo {
   max-height: 50px;
   overflow: hidden;
 }
-.postDesc {
+.box-style {
   border: 1px solid;
   padding: 10px;
   width: 100%;
 }
 .disp-flex {
   display: flex !important;
+}
+.wtsap-cal {
+  width: 36px;
+}
+.ph-cal {
+  width: 25px;
+}
+.annualpopup .jaldee-icon {
+  content: url(../images/home/logo-icon.png);
+  top: 10px;
+  position: relative;
+  width: 35px;
+}
+.comma-list {
+  list-style: none;
+  padding: 0px;
+  margin-bottom: 0 !important;
+}
+.comma-list li {
+  display: inline-block;
+  padding-right: 5px;
+}
+.comma-list li::after {
+  content: ",";
+}
+.comma-list li:nth-last-child(1)::after {
+  content: "" !important;
 }

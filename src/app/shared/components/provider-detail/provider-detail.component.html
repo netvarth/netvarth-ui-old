@@ -4,11 +4,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading top-row ">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <a class="pull-left back-btn mgn-up-5"
-                            (click)="goBack()" ><i class="fa fa-arrow-left"></i></a>
+                        <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-                        <app-header *ngIf="sharedFunctionobj.checkLogin()"  [includedfrom]="'pdetails'"></app-header>
+                        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'"></app-header>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -31,7 +30,8 @@
                             <div class="no-padding"
                                 [ngClass]="{'col-md-9':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
-                                <h3 *ngIf="businessjson.businessName">{{businessjson.businessName | capitalizeFirst}}
+                                <h3 class="bus-title" *ngIf="businessjson.businessName">
+                                    {{businessjson.businessName | capitalizeFirst}}
                                 </h3>
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding"
                                     *ngIf="locationjson && locationjson.length == 1">
@@ -49,7 +49,7 @@
                                     *ngIf="bNameStart!='' || bNameEnd!=''">
                                     <div class="question-outer">
                                         <ng-container>
-                                            <div class="question-header">About us
+                                            <div class="question-header">About Us
                                             </div>
                                             <div class="question-value1 ">
                                                 <span *ngIf="bNameStart!=''"
@@ -70,21 +70,18 @@
                                 <div *ngIf="specializationslist.length > 1" class="question-header mgn-up-5">
                                     Specializations
                                 </div>
-                                <div class="question-value1">
-                                    <span *ngFor="let spec of specializationslist;"
-                                        style="display: inline-block;margin-right:10px">
-                                        {{spec}}
-                                    </span>
-                                    <ng-container *ngIf="showmoreSpec  && specializationslist_more.length>0">
-                                        <span *ngFor="let spec of specializationslist_more"
-                                            style="display: inline-block;margin-right:30px">
-                                            {{spec}}
-                                        </span>
-                                    </ng-container>
-                                    <span class="more" *ngIf="!showmoreSpec && specializationslist_more.length>0"
-                                        (click)="showSpec()">...more</span>
-                                    <span class="more" *ngIf="showmoreSpec && specializationslist_more.length>0"
-                                        (click)="showSpec()">less</span>
+                                <div class="question-value1 ">
+                                    <ul class="comma-list">
+                                        <li class="item" *ngFor="let spec of specializationslist">{{spec}}</li>
+                                        <ng-container *ngIf="showmoreSpec  && specializationslist_more.length>0">
+                                            <li class="item" *ngFor="let spec of specializationslist_more">{{spec}}</li>
+                                        </ng-container>
+                                        <li class="more pointer-cursor"
+                                            *ngIf="!showmoreSpec && specializationslist_more.length>0"
+                                            (click)="showSpec()">...</li>
+                                        <!-- <li class="more" *ngIf="showmoreSpec && specializationslist_more.length>0"
+                                            (click)="showSpec()">less</li> -->
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -119,8 +116,10 @@
                                 <li *ngIf="s3CouponList.length>0"><i class="fa fa-tag blue"></i><span
                                         class="icon-jal-coupon pointer-cursor"
                                         (click)="openCoupons()">{{jaldee_coupon}}</span></li>
-                                <li class="centeralign"><a class="mgn-lt-3 lnk pointer-cursor"
+                                <li class="centeralign" *ngIf="!showMore"><a class="mgn-lt-3 lnk pointer-cursor"
                                         (click)="showMoreInfo()">More Info</a></li>
+                                <li class="centeralign" *ngIf="showMore"><a class="mgn-lt-3 lnk pointer-cursor"
+                                        (click)="showMoreInfo()">Less Info</a></li>
                             </ul>
                         </div>
                     </div>
@@ -298,28 +297,25 @@
                                                             <i class="fa wtsapvid-icon"
                                                                 *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                         </span>
-                                                        <b>
-                                                            {{service.name | capitalizeFirst}}
-                                                        </b>
+                                                        <b>{{service.name | capitalizeFirst | limitTo: [45, '...']}}</b>
                                                     </a>
                                                 </div>
                                                 <div class="card-item-content">
-                                                    <div class="card-item-content-info">                                        
+                                                    <div class="card-item-content-info">
                                                         <ng-container class="bottom-actions-root"
-                                                            *ngIf="loc['appttime_det']">
-                                                            <p class="price mgn-up-10 mgn-bt-0">
-                                                                {{loc['appttime_det']['caption']}}
-                                                            </p>
+                                                            *ngIf="service.serviceAvailability">
+                                                            <p class="price mgn-up-10 mgn-bt-0">Next Available Time</p>
                                                             <p class="title-style mgn-up-5-m">
-                                                                {{loc['appttime_det']['date']}}</p>
+                                                                {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}
+                                                            </p>
                                                         </ng-container>
                                                     </div>
                                                     <div class="card-item-content-action">
                                                         <div class="checkin-btn-bp"
                                                             (click)="appointmentClicked(loc, service)"
-                                                            *ngIf="loc['apptAllowed'] && businessjson.onlinePresence">
+                                                            *ngIf="loc['apptAllowed'] && onlinePresence">
                                                             Appointment
-                                                        </div>                                                       
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -330,8 +326,8 @@
                                     *ngIf="loc['estimatedtime_det'] && !loc['estimatedtime_det']['message'] && loc['waitlist']">
                                     <ng-container *ngFor="let service of loc['wlservices'][deptUser.departmentId]">
                                         <div class="bus-item"
-                     						*ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">                                            
-                     						<div class="card card-item-n no-padding">
+                                            *ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">
+                                            <div class="card card-item-n no-padding">
                                                 <div class="card-item-title">
                                                     <a class="pointer-cursor"
                                                         (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
@@ -348,82 +344,54 @@
                                                             <i class="fa wtsapvid-icon"
                                                                 *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                         </span>
-                                                        <b>
-                                                            {{service.name | capitalizeFirst}}
-                                                        </b>
+                                                        <b>{{service.name | capitalizeFirst | limitTo: [45, '...']}}</b>
                                                     </a>
                                                 </div>
                                                 <div class="card-item-content">
                                                     <div class="card-item-content-info">
-                                                        <ng-container
-                                                            *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
-                                                            <ng-container
-                                                                *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
+                                                        <ng-container *ngIf="service.serviceAvailability">
+                                                            <ng-container>
                                                                 <p class="title-style mgn-bt-m-5"
-                                                                    *ngIf="loc['personAhead']!=0 && loc['personAhead'] > 1">
-                                                                    {{loc['personAhead']}} People</p>
-                                                                <p class="title-style mgn-bt-m-5"
-                                                                    *ngIf="loc['personAhead']!=0 && loc['personAhead'] == 1">
+                                                                    *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] > 1">
+                                                                    {{service.serviceAvailability['personAhead']}}
+                                                                    People</p>
+                                                                <p class="title-style mgn-bt-m-5" *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
                                                                     1 Person</p>
-                                                                <p class="price mgn-bt-5"
-                                                                    *ngIf="loc['personAhead'] > 0">
-                                                                    {{waitinglineCap}}</p>
-                                                                <p class="title-style mgn-up-5"
-                                                                    *ngIf="loc['personAhead']==0"> Be
-                                                                    the
-                                                                    first in line</p>
+                                                                <p class="price mgn-bt-5" *ngIf="service.serviceAvailability['personAhead'] > 0">
+                                                                    {{waitinglineCap}}</p> 
+                                                                <p class="title-style mgn-up-5" *ngIf="service.serviceAvailability['personAhead']==0">
+                                                                    Be the first in line</p>
                                                             </ng-container>
-                                                        </ng-container>
-                                                        <ng-container class="bottom-actions-root"
-                                                            *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
-                                                            <ng-container class="checkin-est"
-                                                                *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                                                                <p class="price mgn-bt-0">
-                                                                    {{loc['estimatedtime_det']['caption']}}
-                                                                </p>
-                                                                <p class="title-style mgn-up-5-m">
-                                                                    {{loc['estimatedtime_det']['time']}}
-                                                                </p>
-
-                                                            </ng-container>
-                                                            <ng-container
-                                                                *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId']">
-                                                                <ng-container
-                                                                    *ngIf="loc['personAhead'] || loc['personAhead'] === 0">
-                                                                    <p class="price mgn-bt-0" *ngIf="!loc.opennow">
-                                                                        Next Available Time
+                                                            <ng-container class="bottom-actions-root"
+                                                                *ngIf="service.serviceAvailability">
+                                                                <ng-container class="checkin-est" *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
+                                                                    <p class="price mgn-bt-0"
+                                                                        *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                        Est Wait Time</p>
+                                                                    <p class="price mgn-bt-0" *ngIf="service.serviceAvailability['serviceTime']">
+                                                                        Next Available Time</p>
+                                                                    <p class="title-style mgn-up-5-m" *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                        {{getTimeToDisplay(service.serviceAvailability['queueWaitingTime'])}}
                                                                     </p>
-                                                                    <p class="title-style mgn-up-5-m"
-                                                                        *ngIf="!loc.opennow">
-                                                                        {{loc['estimatedtime_det']['nextAvailDate']}}
+                                                                    <p class="title-style mgn-up-5-m" *ngIf="service.serviceAvailability['serviceTime']">
+                                                                        {{getAvailibilityForCheckin(service.serviceAvailability['availableDate'], service.serviceAvailability['serviceTime'])}}
                                                                     </p>
-
                                                                 </ng-container>
                                                             </ng-container>
                                                         </ng-container>
                                                     </div>
                                                     <div class="card-item-content-action">
                                                         <div class="" style="padding-bottom: 10px"
-                                                            *ngIf="loc['waitlist'] && businessjson.onlinePresence">
-                                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
-                                                                *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
+                                                            *ngIf="service.serviceAvailability">
+                                                            <div
+                                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                                 <div class="checkin-btn-bp"
                                                                     (click)="checkinClicked(loc, service)"
-                                                                    *ngIf="((loc['isAvailableToday'] && loc['availableToday'] && loc['onlineCheckIn']) || 
-                                                (loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist'])) && !loc['showToken']">
+                                                                    *ngIf="service.serviceAvailability['calculationMode'] != 'NoCalc'">
                                                                     {{getTerminologyTerm('waitlist')}}</div>
                                                                 <div class="checkin-btn-bp"
                                                                     (click)="checkinClicked(loc, service)"
-                                                                    *ngIf="((loc['isAvailableToday'] && loc['availableToday'] && loc['onlineCheckIn']) || 
-                                                (loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist'])) && loc['showToken']">
-                                                                    {{get_token_btn}}</div>
-                                                                <div class="checkin-btn-bp disabled"
-                                                                    style="cursor: auto"
-                                                                    *ngIf="!loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!loc['estimatedtime_det']['cdate'] || !settingsjson['futureDateWaitlist'])">
-                                                                    {{getTerminologyTerm('waitlist')}}</div>
-                                                                <div class="checkin-btn-bp disabled"
-                                                                    style="cursor: auto"
-                                                                    *ngIf="loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!loc['estimatedtime_det']['cdate'] || !settingsjson['futureDateWaitlist'])">
+                                                                    *ngIf="service.serviceAvailability['calculationMode']=='NoCalc'">
                                                                     {{get_token_btn}}</div>
                                                             </div>
                                                         </div>
@@ -490,29 +458,26 @@
                                                                 <i class="fa wtsapvid-icon"
                                                                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                             </span>
-                                                            <b>
-                                                                {{service.name | capitalizeFirst}}
-                                                            </b>
+                                                            <b>{{service.name | capitalizeFirst | limitTo: [45, '...']}}</b>
                                                         </a>
-
                                                     </div>
                                                     <div class="card-item-content">
-                                                        <div class="card-item-content-info">                                                          
+                                                        <div class="card-item-content-info">
                                                             <ng-container class="bottom-actions-root"
-                                                                *ngIf="loc['appttime_det']">
-                                                                <p class="price mgn-up-10 mgn-bt-0">
-                                                                    {{loc['appttime_det']['caption']}}
+                                                                *ngIf="service.serviceAvailability">
+                                                                <p class="price mgn-up-10 mgn-bt-0">Next Available Time
                                                                 </p>
                                                                 <p class="title-style mgn-up-5-m">
-                                                                    {{loc['appttime_det']['date']}}</p>
+                                                                    {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}
+                                                                </p>
                                                             </ng-container>
                                                         </div>
                                                         <div class="card-item-content-action">
                                                             <div class="checkin-btn-bp"
                                                                 (click)="appointmentClicked(loc, service)"
-                                                                *ngIf="loc['apptAllowed'] && businessjson.onlinePresence">
+                                                                *ngIf="loc['apptAllowed'] && onlinePresence">
                                                                 Appointment
-                                                            </div>                                                           
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -541,82 +506,54 @@
                                                                 <i class="fa wtsapvid-icon"
                                                                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                             </span>
-                                                            <b>
-                                                                {{service.name | capitalizeFirst}}
-                                                            </b>
+                                                            <b>{{service.name | capitalizeFirst | limitTo: [45, '...']}}</b>
                                                         </a>
                                                     </div>
                                                     <div class="card-item-content">
                                                         <div class="card-item-content-info">
-                                                            <ng-container
-                                                                *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
-                                                                <ng-container
-                                                                    *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
+                                                            <ng-container *ngIf="service.serviceAvailability">
+                                                                <ng-container>
                                                                     <p class="title-style mgn-bt-m-5"
-                                                                        *ngIf="loc['personAhead']!=0 && loc['personAhead'] > 1">
-                                                                        {{loc['personAhead']}} People</p>
-                                                                    <p class="title-style mgn-bt-m-5"
-                                                                        *ngIf="loc['personAhead']!=0 && loc['personAhead'] == 1">
+                                                                        *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] > 1">
+                                                                        {{service.serviceAvailability['personAhead']}}
+                                                                        People</p>
+                                                                    <p class="title-style mgn-bt-m-5" *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
                                                                         1 Person</p>
-                                                                    <p class="price mgn-bt-5"
-                                                                        *ngIf="loc['personAhead'] > 0">
+                                                                    <p class="price mgn-bt-5" *ngIf="service.serviceAvailability['personAhead'] > 0">
                                                                         {{waitinglineCap}}</p>
-                                                                    <p class="title-style mgn-up-5"
-                                                                        *ngIf="loc['personAhead']==0"> Be
-                                                                        the
-                                                                        first in line</p>
+                                                                    <p class="title-style mgn-up-5" *ngIf="service.serviceAvailability['personAhead']==0">
+                                                                        Be the first in line</p>
                                                                 </ng-container>
-                                                            </ng-container>
-                                                            <ng-container class="bottom-actions-root"
-                                                                *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
-                                                                <ng-container class="checkin-est"
-                                                                    *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                                                                    <p class="price mgn-bt-0">
-                                                                        {{loc['estimatedtime_det']['caption']}}
-                                                                    </p>
-                                                                    <p class="title-style mgn-up-5-m">
-                                                                        {{loc['estimatedtime_det']['time']}}
-                                                                    </p>
-
-                                                                </ng-container>
-                                                                <ng-container
-                                                                    *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId']">
-                                                                    <ng-container
-                                                                        *ngIf="loc['personAhead'] || loc['personAhead'] === 0">
-                                                                        <p class="price mgn-bt-0" *ngIf="!loc.opennow">
-                                                                            Next Available Time
+                                                                <ng-container class="bottom-actions-root"
+                                                                    *ngIf="service.serviceAvailability">
+                                                                    <ng-container class="checkin-est" *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
+                                                                        <p class="price mgn-bt-0" *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                            Est Wait Time</p>
+                                                                        <p class="price mgn-bt-0" *ngIf="service.serviceAvailability['serviceTime']">
+                                                                            Next Available Time</p>
+                                                                        <p class="title-style mgn-up-5-m" *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                            {{getTimeToDisplay(service.serviceAvailability['queueWaitingTime'])}}
                                                                         </p>
                                                                         <p class="title-style mgn-up-5-m"
-                                                                            *ngIf="!loc.opennow">
-                                                                            {{loc['estimatedtime_det']['nextAvailDate']}}
+                                                                            *ngIf="service.serviceAvailability['serviceTime']">
+                                                                            {{getAvailibilityForCheckin(service.serviceAvailability['availableDate'], service.serviceAvailability['serviceTime'])}}
                                                                         </p>
-
                                                                     </ng-container>
                                                                 </ng-container>
                                                             </ng-container>
                                                         </div>
                                                         <div class="card-item-content-action">
                                                             <div class="" style="padding-bottom: 10px"
-                                                                *ngIf="loc['waitlist'] && businessjson.onlinePresence">
-                                                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
-                                                                    *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
+                                                                *ngIf="service.serviceAvailability">
+                                                                <div
+                                                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                                     <div class="checkin-btn-bp"
                                                                         (click)="checkinClicked(loc, service)"
-                                                                        *ngIf="((loc['isAvailableToday'] && loc['availableToday'] && loc['onlineCheckIn']) || 
-                                                (loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist'])) && !loc['showToken']">
+                                                                        *ngIf="service.serviceAvailability['calculationMode'] != 'NoCalc'">
                                                                         {{getTerminologyTerm('waitlist')}}</div>
                                                                     <div class="checkin-btn-bp"
                                                                         (click)="checkinClicked(loc, service)"
-                                                                        *ngIf="((loc['isAvailableToday'] && loc['availableToday'] && loc['onlineCheckIn']) || 
-                                                (loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist'])) && loc['showToken']">
-                                                                        {{get_token_btn}}</div>
-                                                                    <div class="checkin-btn disabled"
-                                                                        style="cursor: auto"
-                                                                        *ngIf="!loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!loc['estimatedtime_det']['cdate'] || !settingsjson['futureDateWaitlist'])">
-                                                                        {{getTerminologyTerm('waitlist')}}</div>
-                                                                    <div class="checkin-btn disabled"
-                                                                        style="cursor: auto"
-                                                                        *ngIf="loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!loc['estimatedtime_det']['cdate'] || !settingsjson['futureDateWaitlist'])">
+                                                                        *ngIf="service.serviceAvailability['calculationMode']=='NoCalc'">
                                                                         {{get_token_btn}}</div>
                                                                 </div>
                                                             </div>
@@ -656,84 +593,59 @@
                                                                     <i class="fa wtsapvid-icon"
                                                                         *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                                 </span>
-                                                                <b>
-                                                                    {{service.name | capitalizeFirst}}
-                                                                </b>
+                                                                <b>{{service.name | capitalizeFirst | limitTo: [45, '...']}}</b>
                                                             </a>
                                                         </div>
                                                         <div class="card-item-content">
                                                             <div class="card-item-content-info">
-                                                                <ng-container
-                                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
-                                                                    <ng-container
-                                                                        *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
+                                                                <ng-container *ngIf="service.serviceAvailability">
+                                                                    <ng-container>
                                                                         <p class="title-style mgn-bt-m-5"
-                                                                            *ngIf="loc['personAhead']!=0 && loc['personAhead'] > 1">
-                                                                            {{loc['personAhead']}} People</p>
+                                                                            *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] > 1">
+                                                                            {{service.serviceAvailability['personAhead']}}
+                                                                            People</p>
                                                                         <p class="title-style mgn-bt-m-5"
-                                                                            *ngIf="loc['personAhead']!=0 && loc['personAhead'] == 1">
+                                                                            *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
                                                                             1 Person</p>
-                                                                        <p class="price mgn-bt-5"
-                                                                            *ngIf="loc['personAhead'] > 0">
+                                                                        <p class="price mgn-bt-5" *ngIf="service.serviceAvailability['personAhead'] > 0">
                                                                             {{waitinglineCap}}</p>
-                                                                        <p class="title-style mgn-up-5"
-                                                                            *ngIf="loc['personAhead']==0"> Be
-                                                                            the
-                                                                            first in line</p>
+                                                                        <p class="title-style mgn-up-5" *ngIf="service.serviceAvailability['personAhead']==0">
+                                                                            Be the first in line</p>
                                                                     </ng-container>
-                                                                </ng-container>
-                                                                <ng-container class="bottom-actions-root"
-                                                                    *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
-                                                                    <ng-container class="checkin-est"
-                                                                        *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                                                                        <p class="price mgn-bt-0">
-                                                                            {{loc['estimatedtime_det']['caption']}}
-                                                                        </p>
-                                                                        <p class="title-style mgn-up-5-m">
-                                                                            {{loc['estimatedtime_det']['time']}}
-                                                                        </p>
-
-                                                                    </ng-container>
-                                                                    <ng-container
-                                                                        *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId']">
-                                                                        <ng-container
-                                                                            *ngIf="loc['personAhead'] || loc['personAhead'] === 0">
+                                                                    <ng-container class="bottom-actions-root" *ngIf="service.serviceAvailability">
+                                                                        <ng-container class="checkin-est" *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">vccvv
                                                                             <p class="price mgn-bt-0"
-                                                                                *ngIf="!loc.opennow">
-                                                                                Next Available Time
+                                                                                *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                                Est Wait Time</p>
+                                                                            <p class="price mgn-bt-0"
+                                                                                *ngIf="service.serviceAvailability['serviceTime']">
+                                                                                Next Available Time</p>
+                                                                            <p class="title-style mgn-up-5-m"
+                                                                                *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                                {{getTimeToDisplay(service.serviceAvailability['queueWaitingTime'])}}
                                                                             </p>
                                                                             <p class="title-style mgn-up-5-m"
-                                                                                *ngIf="!loc.opennow">
-                                                                                {{loc['estimatedtime_det']['nextAvailDate']}}
+                                                                                *ngIf="service.serviceAvailability['serviceTime']">
+                                                                                {{getAvailibilityForCheckin(service.serviceAvailability['availableDate'], service.serviceAvailability['serviceTime'])}}
                                                                             </p>
-
                                                                         </ng-container>
                                                                     </ng-container>
                                                                 </ng-container>
                                                             </div>
                                                             <div class="card-item-content-action">
                                                                 <div class="" style="padding-bottom: 10px"
-                                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence">
-                                                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
-                                                                        *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
-                                                                        <div class="checkin-btn-bp"
-                                                                            (click)="checkinClicked(loc, service)"
-                                                                            *ngIf="((loc['isAvailableToday'] && loc['availableToday'] && loc['onlineCheckIn']) || 
-                                                (loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist'])) && !loc['showToken']">
-                                                                            {{getTerminologyTerm('waitlist')}}</div>
-                                                                        <div class="checkin-btn-bp"
-                                                                            (click)="checkinClicked(loc, service)"
-                                                                            *ngIf="((loc['isAvailableToday'] && loc['availableToday'] && loc['onlineCheckIn']) || 
-                                                (loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist'])) && loc['showToken']">
-                                                                            {{get_token_btn}}</div>
-                                                                        <div class="checkin-btn disabled"
-                                                                            style="cursor: auto"
-                                                                            *ngIf="!loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!loc['estimatedtime_det']['cdate'] || !settingsjson['futureDateWaitlist'])">
-                                                                            {{getTerminologyTerm('waitlist')}}</div>
-                                                                        <div class="checkin-btn disabled"
-                                                                            style="cursor: auto"
-                                                                            *ngIf="loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!loc['estimatedtime_det']['cdate'] || !settingsjson['futureDateWaitlist'])">
-                                                                            {{get_token_btn}}</div>
+                                                                    *ngIf="service.serviceAvailability">
+                                                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                                                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                                                            <div class="checkin-btn-bp"
+                                                                                (click)="checkinClicked(loc, service)"
+                                                                                *ngIf="service.serviceAvailability['calculationMode'] != 'NoCalc'">
+                                                                                {{getTerminologyTerm('waitlist')}}</div>
+                                                                            <div class="checkin-btn-bp"
+                                                                                (click)="checkinClicked(loc, service)"
+                                                                                *ngIf="service.serviceAvailability['calculationMode']=='NoCalc'">
+                                                                                {{get_token_btn}}</div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -772,23 +684,25 @@
                                                         *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <b>
-                                                    {{service.name | capitalizeFirst}}
+                                                    {{service.name | capitalizeFirst | limitTo: [45, '...']}}
                                                 </b>
                                             </a>
                                         </div>
                                         <div class="card-item-content">
-                                            <div class="card-item-content-info">                                               
-                                                <ng-container class="bottom-actions-root" *ngIf="loc['appttime_det']">
+                                            <div class="card-item-content-info">
+                                                <ng-container class="bottom-actions-root"
+                                                    *ngIf="service.serviceAvailability">
                                                     <p class="price mgn-up-10 mgn-bt-0">
-                                                        {{loc['appttime_det']['caption']}}
+                                                        Next Available Time
                                                     </p>
                                                     <p class="title-style mgn-up-5-m">
-                                                        {{loc['appttime_det']['date']}}</p>
+                                                        {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}
+                                                    </p>
                                                 </ng-container>
                                             </div>
                                             <div class="card-item-content-action">
                                                 <div class="checkin-btn-bp" (click)="appointmentClicked(loc, service)"
-                                                    *ngIf="loc['apptAllowed'] && businessjson.onlinePresence">
+                                                    *ngIf="loc['apptAllowed'] && onlinePresence">
                                                     Appointment
                                                 </div>
                                             </div>
@@ -820,75 +734,61 @@
                                                         *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <b>
-                                                    {{service.name | capitalizeFirst}}
+                                                    {{service.name | capitalizeFirst | limitTo: [45, '...']}}
                                                 </b>
                                             </a>
                                         </div>
                                         <div class="card-item-content">
                                             <div class="card-item-content-info">
-                                                <ng-container
-                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence && loc['estimatedtime_det']">
-                                                    <ng-container
-                                                        *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
+                                                <ng-container *ngIf="service.serviceAvailability">
+                                                    <ng-container>
                                                         <p class="title-style mgn-bt-m-5"
-                                                            *ngIf="loc['personAhead']!=0 && loc['personAhead'] > 1">
-                                                            {{loc['personAhead']}} People</p>
+                                                            *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] > 1">
+                                                            {{service.serviceAvailability['personAhead']}} People</p>
                                                         <p class="title-style mgn-bt-m-5"
-                                                            *ngIf="loc['personAhead']!=0 && loc['personAhead'] == 1">
+                                                            *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
                                                             1 Person</p>
-                                                        <p class="price mgn-bt-5" *ngIf="loc['personAhead'] > 0">
+                                                        <p class="price mgn-bt-5"
+                                                            *ngIf="service.serviceAvailability['personAhead'] > 0">
                                                             {{waitinglineCap}}</p>
-                                                        <p class="title-style mgn-up-5" *ngIf="loc['personAhead']==0">
-                                                            Be the
-                                                            first in line</p>
+                                                        <p class="title-style mgn-up-5"
+                                                            *ngIf="service.serviceAvailability['personAhead']==0">
+                                                            Be the first in line</p>
                                                     </ng-container>
-                                                </ng-container>
-                                                <ng-container class="bottom-actions-root"
-                                                    *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
-                                                    <ng-container class="checkin-est"
-                                                        *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                                                        <p class="price mgn-bt-0">
-                                                            {{loc['estimatedtime_det']['caption']}}
-                                                        </p>
-                                                        <p class="title-style mgn-up-5-m">
-                                                            {{loc['estimatedtime_det']['time']}}</p>
-
-                                                    </ng-container>
-                                                    <ng-container
-                                                        *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId']">
-                                                        <ng-container
-                                                            *ngIf="loc['personAhead'] || loc['personAhead'] === 0">
-                                                            <p class="price mgn-bt-0" *ngIf="!loc.opennow">
-                                                                Next Available Time
+                                                    <ng-container class="bottom-actions-root">
+                                                        <ng-container class="checkin-est" *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
+                                                            <p class="price mgn-bt-0"
+                                                                *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                Est Wait Time</p>
+                                                            <p class="price mgn-bt-0"
+                                                                *ngIf="service.serviceAvailability['serviceTime']">Next
+                                                                Available Time</p>
+                                                            <p class="title-style mgn-up-5-m"
+                                                                *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                {{getTimeToDisplay(service.serviceAvailability['queueWaitingTime'])}}
                                                             </p>
-                                                            <p class="title-style mgn-up-5-m" *ngIf="!loc.opennow">
-                                                                {{loc['estimatedtime_det']['nextAvailDate']}}</p>
-
+                                                            <p class="title-style mgn-up-5-m"
+                                                                *ngIf="service.serviceAvailability['serviceTime']">
+                                                                {{getAvailibilityForCheckin(service.serviceAvailability['availableDate'], service.serviceAvailability['serviceTime'])}}
+                                                            </p>
                                                         </ng-container>
                                                     </ng-container>
                                                 </ng-container>
                                             </div>
                                             <div class="card-item-content-action">
                                                 <div class="" style="padding-bottom: 10px"
-                                                    *ngIf="loc['waitlist'] && businessjson.onlinePresence">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
-                                                        *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
-                                                        <div class="checkin-btn-bp"
-                                                            (click)="checkinClicked(loc, service)"
-                                                            *ngIf="((loc['isAvailableToday'] && loc['availableToday'] && loc['onlineCheckIn']) || 
-                                            (loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist'])) && !loc['showToken']">
-                                                            {{getTerminologyTerm('waitlist')}}</div>
-                                                        <div class="checkin-btn-bp"
-                                                            (click)="checkinClicked(loc, service)"
-                                                            *ngIf="((loc['isAvailableToday'] && loc['availableToday'] && loc['onlineCheckIn']) || 
-                                            (loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist'])) && loc['showToken']">
-                                                            {{get_token_btn}}</div>
-                                                        <div class="checkin-btn disabled" style="cursor: auto"
-                                                            *ngIf="!loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!loc['estimatedtime_det']['cdate'] || !settingsjson['futureDateWaitlist'])">
-                                                            {{getTerminologyTerm('waitlist')}}</div>
-                                                        <div class="checkin-btn disabled" style="cursor: auto"
-                                                            *ngIf="loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!loc['estimatedtime_det']['cdate'] || !settingsjson['futureDateWaitlist'])">
-                                                            {{get_token_btn}}</div>
+                                                    *ngIf="service.serviceAvailability">
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                                            <div class="checkin-btn-bp"
+                                                                (click)="checkinClicked(loc, service)"
+                                                                *ngIf="service.serviceAvailability['calculationMode'] != 'NoCalc'">
+                                                                {{getTerminologyTerm('waitlist')}}</div>
+                                                            <div class="checkin-btn-bp"
+                                                                (click)="checkinClicked(loc, service)"
+                                                                *ngIf="service.serviceAvailability['calculationMode']=='NoCalc'">
+                                                                {{get_token_btn}}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -925,13 +825,13 @@
                         </ng-container>
                     </ng-container>
                     <ng-container
-                        *ngIf="businessjson.donationFundRaising && businessjson.onlinePresence && donationServicesjson.length >= 1">
+                        *ngIf="businessjson.donationFundRaising && onlinePresence && donationServicesjson.length >= 1">
                         <div class="bus-item" *ngFor="let service of donationServicesjson">
-                            <div class="card card-item-n no-padding">                                
+                            <div class="card card-item-n no-padding">
                                 <div class="card-item-title">
                                     <a class="pointer-cursor"
                                         (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')"><b>
-                                            {{service.name | capitalizeFirst}}
+                                            {{service.name | capitalizeFirst | limitTo: [45, '...']}}
                                         </b> </a>
 
                                 </div>
@@ -943,7 +843,8 @@
                                                     Upto
                                                 </p>
                                                 <p class="title-style mgn-up-5-m">
-                                                    <span class="rupee-font">&#x20b9;</span><span>{{service.maxDonationAmount}}</span>                                                    
+                                                    <span
+                                                        class="rupee-font">&#x20b9;</span><span>{{service.maxDonationAmount}}</span>
                                                 </p>
                                             </div>
                                         </div>

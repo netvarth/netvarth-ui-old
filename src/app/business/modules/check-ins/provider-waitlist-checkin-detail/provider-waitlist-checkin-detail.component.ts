@@ -461,7 +461,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
     const sHours = hours;
     const sMinutes = minutes;
-    // alert(sHours + ':' + sMinutes);
     const mom_date = moment(date);
     mom_date.set('hour', sHours);
     mom_date.set('minute', sMinutes);

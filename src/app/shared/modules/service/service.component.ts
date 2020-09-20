@@ -137,6 +137,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tempPostInfoText = '';
     tempPreInfoTitle = '';
     tempPostInfoTitle = '';
+    showEditSection = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -754,6 +755,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
     changeConsumerNoteStatus() {
         this.showConsumerNote = !this.showConsumerNote;
     }
+    editClicked() {
+        this.showEditSection = !this.showEditSection;
+    }
     showInfoSection() {
         if (!this.showInfo) {
             this.tempPreInfoEnabled = this.preInfoEnabled;
@@ -763,8 +767,16 @@ export class ServiceComponent implements OnInit, OnDestroy {
             this.tempPostInfoText = this.postInfoText;
             this.tempPostInfoTitle = this.postInfoTitle;
             this.showInfo = true;
+            this.sharedFunctons.sendMessage({ 'ttype': 'hide-back' });
         } else {
-            this.showInfo = false;
+            if (this.preInfoEnabled && this.preInfoTitle === '') {
+                this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
+            } else if (this.preInfoEnabled && this.preInfoTitle === '') {
+                this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
+            } else {
+                this.showInfo = false;
+                this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
+            }
         }
     }
     cancelChanges() {
@@ -775,5 +787,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.postInfoText = this.tempPostInfoText;
         this.postInfoTitle = this.tempPostInfoTitle;
         this.showInfo = false;
+        this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
     }
 }

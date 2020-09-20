@@ -222,6 +222,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   futureAllowed = true;
   galleryenabledArr = [];
   gallerydisabledArr = [];
+  onlinePresence = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -441,6 +442,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         switch (section) {
           case 'businessProfile': {
+            this.onlinePresence = res['onlinePresence'];
             this.api_loading = false;
             this.pageFound = true;
             this.socialMedialist = [];
@@ -463,7 +465,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               // this.specializationslist = this.businessjson.specialization;
 
               for (let i = 0; i < this.businessjson.specialization.length; i++) {
-                if (i <= 1 && this.businessjson.specialization[i] !== 'Not Applicable') {
+                if (i <= 2 && this.businessjson.specialization[i] !== 'Not Applicable') {
                   this.specializationslist.push(this.businessjson.specialization[i]);
                 } else if (this.businessjson.specialization[i] !== 'Not Applicable') {
                   this.specializationslist_more.push(this.businessjson.specialization[i]);
@@ -484,7 +486,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.getFavProviders();
             }
             const holdbName = this.businessjson.businessDesc || '';
-            const maxCnt = 120;
+            const maxCnt = 250;
             if (holdbName.length > maxCnt) {
               this.bNameStart = holdbName.substr(0, maxCnt);
               this.bNameEnd = holdbName.substr(maxCnt, holdbName.length);
@@ -823,6 +825,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         });
     }
   }
+
   getUserApptTime(provids_locid) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
@@ -888,6 +891,61 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
           }
         });
+    }
+  }
+  getTimeToDisplay(min) {
+    return this.sharedFunctionobj.convertMinutesToHourMinute(min);
+  }
+  getAvailibilityForCheckin(date, serviceTime) {
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const today = new Date(todaydt);
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+      cday = '0' + dd;
+    } else {
+      cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+      cmon = '0' + mm;
+    } else {
+      cmon = '' + mm;
+    }
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
+    if (dtoday === date) {
+      return ('Today' + ', ' + serviceTime);
+    } else {
+      return (this.sharedFunctionobj.formatDate(date, { 'rettype': 'monthname' }) + ', '
+        + serviceTime);
+    }
+  }
+  getAvailabilityforAppt(date, time) {
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const today = new Date(todaydt);
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+      cday = '0' + dd;
+    } else {
+      cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+      cmon = '0' + mm;
+    } else {
+      cmon = '' + mm;
+    }
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
+    if (dtoday === date) {
+      return ('Today' + ', ' + this.getSingleTime(time));
+    } else {
+      return (this.sharedFunctionobj.formatDate(date, { 'rettype': 'monthname' }) + ', '
+        + this.getSingleTime(time));
     }
   }
   getUserbusinessprofiledetails_json(section, userId, modDateReq: boolean) {
@@ -1428,17 +1486,35 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       'id': location.id,
       'place': location.place,
       'location': location,
-      'cdate': location['estimatedtime_det']['cdate'],
+      'cdate': service.serviceAvailability.availableDate,
       'service': service
     };
-    if (location['isAvailableToday'] && location['availableToday'] && location['onlineCheckIn']) {
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const today = new Date(todaydt);
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+      cday = '0' + dd;
+    } else {
+      cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+      cmon = '0' + mm;
+    } else {
+      cmon = '' + mm;
+    }
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
+    if (dtoday === service.serviceAvailability.availableDate) {
       this.changedate_req = false;
     } else {
       this.changedate_req = true;
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showCheckin(location.id, location.place, location['estimatedtime_det']['cdate'], service, 'consumer');
+      this.showCheckin(location.id, location.place, service.serviceAvailability.availableDate, service, 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: '', current_provider: current_provider };
       this.doLogin('consumer', passParam);
@@ -1450,10 +1526,28 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       'id': location.id,
       'place': location.place,
       'location': location,
-      'cdate': location['appttime_det']['cdate'],
+      'cdate': service.serviceAvailability.nextAvailableDate,
       'service': service
     };
-    if (location.todayAppt && location['apptAvailableToday']) {
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const today = new Date(todaydt);
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+      cday = '0' + dd;
+    } else {
+      cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+      cmon = '0' + mm;
+    } else {
+      cmon = '' + mm;
+    }
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
+    if (dtoday === service.serviceAvailability.nextAvailableDate) {
       this.changedate_req = false;
     } else {
       this.changedate_req = true;
@@ -1463,7 +1557,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showAppointment(location.id, location.place, location['appttime_det']['cdate'], service, 'consumer');
+      this.showAppointment(location.id, location.place, service.serviceAvailability.nextAvailableDate, service, 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider };
       this.doLogin('consumer', passParam);

@@ -9,7 +9,7 @@
                 </div>
                 <div class="panel-body no-padding">
                     <div class="c-outer m0">
-                        <div class="c-body">
+                        <div class="c-body col-md-12 col-xs-12 col-sm-12 no-padding">
                             <div class="card title-gb">
                                 <h5 class="mgn-up-10">Check-in Details <a class="pull-right back-btn"
                                         (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
@@ -69,7 +69,7 @@
                                             <div class="item" *ngIf="waitlist.batchName"><span
                                                     class="ttle">Batch</span><span>{{waitlist.batchName}}</span>
                                             </div>
-                                            <div class="postDesc"
+                                            <div class="box-style"
                                                 *ngIf="waitlist.service && waitlist.service.postInfoEnabled">
                                                 <h2> {{waitlist.service.postInfoTitle}} </h2>
                                                 <div [innerHTML]="waitlist.service.postInfoText">

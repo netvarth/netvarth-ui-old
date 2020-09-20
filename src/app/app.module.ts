@@ -76,12 +76,13 @@ import { PaymentLinkComponent } from './shared/components/payment-link/payment-l
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
+import { ShareService } from 'ngx-sharebuttons';
 import { ConsumerFooterModule } from './ynw_consumer/components/footer/footer.module';
 import { HeaderModule } from './shared/modules/header/header.module';
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
 import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
 import { LiveChatClientComponent } from './shared/components/twilio/twilio-live-client.component';
-
+import { TruncateModule } from './shared/pipes/limitTo.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -167,7 +168,8 @@ export function init_app(globalService: GlobalService) {
     ForgotPasswordModule,
     SetPasswwordModule,
     JoyrideModule.forRoot(),
-    ConsumerFooterModule
+    ConsumerFooterModule,
+    TruncateModule
   ],
   providers: [
     AuthGuardConsumer,
@@ -192,7 +194,7 @@ export function init_app(globalService: GlobalService) {
     SearchDetailServices,
     ProviderDetailService,
     ProviderDataStorageService,
-    SharedServices,
+    ShareService,
     Title,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
