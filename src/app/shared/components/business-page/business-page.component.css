@@ -383,7 +383,10 @@ ul.details.badges li {
   }
   .bus-title-content h3 {
     text-align: center;
-    /* margin-bottom: 0px !important; */
+    margin-bottom: 0px !important;
+  }
+  .single-loc {
+    text-align: center;
   }
   
 }

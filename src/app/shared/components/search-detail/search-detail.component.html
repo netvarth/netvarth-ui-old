@@ -11,10 +11,7 @@
                             [passedRefine]="searchcommononlyrefine_arr"></app-search-form>
                     </div>
                 </div>
-                <div class="panel-body no-padding">
-                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 grey">
-                        
-                    </div> -->
+                <div class="panel-body no-padding">                   
                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <div class="c-outer">
                             <div class="sidebar-overlay" *ngIf="showrefinedsection && additionalRefineCondition()"
@@ -529,49 +526,26 @@
                                         <div class="bottom-sect pdetail"
                                             *ngIf="showButton(search_result) === 'bookservice'">
                                             <div class="bt-l">
-                                                <div class="wt-tme">
+                                                <div class="wt-tme notallowed" *ngIf="search_result.fields['apptMessage'] && search_result.fields['estimatedtime_det']['message']">
+                                                    {{search_result.fields['estimatedtime_det']['message']}}
+                                                 </div>
+                                                <div class="wt-tme" *ngIf="!search_result.fields.departments && search_result.fields.allServices && search_result.fields.allServices.length > 0">
                                                     <div class="search-services"
-                                                        *ngIf="!search_result.fields.departments && search_result.fields.allServices">
+                                                        >
                                                         <span class="question-header">Services Count: </span>
                                                         <span
                                                             class="question-value1">{{search_result.fields.allServices.length}}</span>
-                                                        <!-- <ul *ngIf="search_result.fields.allServices">
-                                                            <li class="question-value1 link" *ngFor="let appointmentService of search_result.fields.allServices"
-                                                                (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
-                                                                {{appointmentService.name}}
-                                                                <span
-                                                                    *ngIf="appointmentService.serviceType == 'virtualService'">
-                                                                    <i class="fa phon-icon"
-                                                                        *ngIf="appointmentService.virtualCallingModes &&appointmentService.virtualCallingModes[0].callingMode == 'Phone'"></i>
-                                                                    <i class="fa meet-icon"
-                                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'GoogleMeet'"></i>
-                                                                    <i class="fa zoom-icon"
-                                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'Zoom'"></i>
-                                                                    <i class="fa wtsapaud-icon"
-                                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='audioService'"></i>
-                                                                    <i class="fa wtsapvid-icon"
-                                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='videoService'"></i>
-                                                                </span>
-                                                            </li>
-                                                        </ul> -->
                                                         </div>
                                                         <div class="search-services"
                                                             *ngIf="search_result.fields.departments">
                                                             <span class="question-header">Departments Count: </span>
                                                             <span
                                                                 class="question-value1">{{search_result.fields.departments.length}}</span>
-                                                            <!-- <ul>
-                                                            <li class="question-value1 link" [class.active]="selectedDepartment==departments"
-                                                                *ngFor="let departments of search_result.fields.departments"
-                                                                (click)="providerDetClicked(search_result)">
-                                                                {{departments | capitalizeFirst}}
-                                                            </li>
-                                                        </ul> -->
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div style="flex-grow:1"></div>
-                                                <div class="bottom-actions-root">                                                    
+                                                <div class="bottom-actions-root">                                                                                                       
                                                     <div class="checkin-est nrm"
                                                         *ngIf="search_result.fields.waitlist && !search_result.fields['estimatedtime_det']['message'] && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
                                                         <span class="est-time"
@@ -582,14 +556,6 @@
                                                     </div>
                                                     <div class="checkin-est"
                                                         *ngIf="search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
-                                                        <!-- <ng-container
-                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] || search_result.fields['estimatedtime_det']['personAhead'] === 0">
-                                                            <div *ngIf="!search_result.fields['opennow']">
-                                                                <span class="est-time">Next Available Time</span>
-                                                                <span
-                                                                    class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
-                                                            </div>                                                           
-                                                        </ng-container> -->
                                                         <span class=""
                                                             *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{people_ahead}}</span>
                                                         <span class=""
@@ -605,9 +571,10 @@
                                                             >{{search_result.fields['appttime_det']['date']}}
                                                         </span>
                                                         </div>
-                                                    <span (click)="providerDetClicked(search_result)"
+                                                    <span (click)="providerDetClicked(search_result)" *ngIf="!search_result.fields['apptMessage'] && search_result.fields['estimatedtime_det'] || !search_result.fields['estimatedtime_det']['message']"
                                                         class="checkin-btn">Book
                                                         Service</span>
+                                                    
                                                 </div>
                                             </div>
                                             <!-- Book service butoon ends -->
@@ -636,29 +603,11 @@
                                                                     the first in line</span>
                                                             </div>
                                                             <div class="search-services"
-                                                                *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
+                                                                *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0 && search_result.fields['estimatedtime_det'] && !search_result.fields['estimatedtime_det']['message']">
                                                                 <span
                                                                     class="question-header checkin-service-group">Services Count: </span>
                                                                 <span
-                                                                    class="question-value1">{{search_result.fields.serviceList.length}}</span>
-                                                                <!-- <ul>
-                                                                <li class="question-value1 link" *ngFor="let serv of search_result.fields.serviceList"
-                                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">{{serv.name
-                                                | capitalizeFirst}}
-                                                                    <span *ngIf="serv.serviceType == 'virtualService'">
-                                                                        <i class="fa phon-icon"
-                                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'Phone'"></i>
-                                                                        <i class="fa meet-icon"
-                                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'GoogleMeet'"></i>
-                                                                        <i class="fa zoom-icon"
-                                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'Zoom'"></i>
-                                                                        <i class="fa wtsapaud-icon"
-                                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'WhatsApp' && serv.virtualServiceType ==='audioService'"></i>
-                                                                        <i class="fa wtsapvid-icon"
-                                                                            *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode == 'WhatsApp' && serv.virtualServiceType ==='videoService'"></i>
-                                                                    </span>
-                                                                </li>
-                                                            </ul> -->
+                                                                    class="question-value1">{{search_result.fields.serviceList.length}}</span>                                                                
                                                             </div>
 
                                                             <div class="search-services"
@@ -666,13 +615,7 @@
                                                                 <span
                                                                     class="question-header checkin-service-group">Departments Count: </span>
                                                                 <span
-                                                                    class="question-value1">{{search_result.fields.departments.length}}</span>
-                                                                <!-- <ul>
-                                                                <li class="question-value1 link" [class.active]="selectedDepartment==departments"
-                                                                    *ngFor="let departments of search_result.fields.departments">
-                                                                    {{departments | capitalizeFirst}}
-                                                                </li>
-                                                            </ul> -->
+                                                                    class="question-value1">{{search_result.fields.departments.length}}</span>                                                                
                                                             </div>
 
                                                             <div class="search-services"
@@ -699,15 +642,7 @@
                                                         </span>
                                                     </div>
                                                     <div class="checkin-est"
-                                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
-                                                        <!-- <ng-container
-                                                            *ngIf="search_result.fields['estimatedtime_det']['personAhead'] || search_result.fields['estimatedtime_det']['personAhead'] === 0">
-                                                            <div *ngIf="!search_result.fields['opennow']">
-                                                                <span class="est-time">Next Available Time</span>
-                                                                <span
-                                                                    class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
-                                                            </div>                                                           
-                                                        </ng-container> -->
+                                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">                                                       
                                                         <span class=""
                                                             *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{people_ahead}}</span>
                                                         <span class=""
@@ -748,43 +683,13 @@
                                                             <span class="question-value1"
                                                                 *ngIf="!search_result.fields.appointmentServiceList">{{search_result.fields.appt_services.length}}</span>
                                                             <span class="question-value1"
-                                                                *ngIf="search_result.fields.appointmentServiceList">{{search_result.fields.appointmentServiceList.length}}</span>
-                                                            <!-- <ul *ngIf="!search_result.fields.appointmentServiceList">
-                                                            <li class="question-value1 link" *ngFor="let appointmentService of search_result.fields.appt_services"
-                                                                (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointent')">
-                                                                {{appointmentService}}</li>
-                                                        </ul>
-                                                        <ul *ngIf="search_result.fields.appointmentServiceList">
-                                                            <li class="question-value1 link" *ngFor="let appointmentService of search_result.fields.appointmentServiceList"
-                                                                (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
-                                                                {{appointmentService.name}}
-                                                                <span
-                                                                    *ngIf="appointmentService.serviceType == 'virtualService'">
-                                                                    <i class="fa phon-icon"
-                                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'Phone'"></i>
-                                                                    <i class="fa meet-icon"
-                                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'GoogleMeet'"></i>
-                                                                    <i class="fa zoom-icon"
-                                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'Zoom'"></i>
-                                                                    <i class="fa wtsapaud-icon"
-                                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='audioService'"></i>
-                                                                    <i class="fa wtsapvid-icon"
-                                                                        *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 'WhatsApp' && appointmentService.virtualServiceType ==='videoService'"></i>
-                                                                </span>
-                                                            </li>
-                                                        </ul> -->
+                                                                *ngIf="search_result.fields.appointmentServiceList">{{search_result.fields.appointmentServiceList.length}}</span>                                                            
                                                         </div>
                                                         <div class="search-services"
                                                             *ngIf="search_result.fields.departments">
                                                             <span class="question-header">Departments Count: </span>
                                                             <span
-                                                                class="question-value1">{{search_result.fields.departments.length}}</span>
-                                                            <!-- <ul>
-                                                            <li class="question-value1 link" [class.active]="selectedDepartment==departments"
-                                                                *ngFor="let departments of search_result.fields.departments">
-                                                                {{departments | capitalizeFirst}}
-                                                            </li>
-                                                        </ul> -->
+                                                                class="question-value1">{{search_result.fields.departments.length}}</span>                                                           
                                                         </div>
                                                     </div>
                                                 </div>

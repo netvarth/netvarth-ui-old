@@ -497,3 +497,6 @@ ul.bus-actions-horiz li {
 .pad-up-10 {
   padding-top: 10px !important;
 }
+.img-circle {
+  border: 1px solid #ddd;
+  }

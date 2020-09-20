@@ -11982,3 +11982,6 @@ img.busN-logo {
 .comma-list li:nth-last-child(1)::after {
   content: "" !important;
 }
+.content .c-outer .c-body .srlst .bottom-sect {
+  padding-bottom: 0 !important;
+}

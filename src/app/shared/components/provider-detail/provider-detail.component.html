@@ -33,7 +33,7 @@
                                 <h3 class="bus-title" *ngIf="businessjson.businessName">
                                     {{businessjson.businessName | capitalizeFirst}}
                                 </h3>
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding"
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
                                     *ngIf="locationjson && locationjson.length == 1">
                                     <h6 *ngIf="!locationjson[0].isPlaceisSame"><a [href]="locationjson[0].googleMapUrl"
                                             target="_blank" *ngIf="locationjson[0].googleMapUrl!=''"><i
