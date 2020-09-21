@@ -481,6 +481,18 @@
                                                         </li>
                                                     </ul>
                                                 </div>
+                                                <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs" *ngIf="search_result.fields.claimable==1">
+                                                    <ul class="bus-actions no-padding">
+                                                        <li>
+                                                            <a class="like-btn"
+                                                            (click)="claimBusiness(search_result)">
+                                                            <img class="img" src="./assets/images/claim.png"
+                                                            alt="Claim your Business" />
+                                                        <span style="display:block">{{claim_my_business_cap}}</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 smalldevicebx mgn-up-10 link visible-xs">
