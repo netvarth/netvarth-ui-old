@@ -898,3 +898,15 @@ ul.details.badges li {
 .pad-bt-10 {
   padding-bottom: 10px !important;
 }
+.verify {
+  width: 100%;
+  float: right;
+}
+.verify span{
+  float: right;
+}
+@media (max-width: 993px) {
+  .verify span{
+    float: none;
+  }
+}

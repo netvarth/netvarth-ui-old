@@ -88,6 +88,14 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 no-padding mgn-up-10">
+                            <div class="verify">
+                                <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
+                                        src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                                <span *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
+                                        src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
+                                <span *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
+                                        src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                            </div>
                             <ul class="bus-actions no-padding" *ngIf="settings_exists && business_exists">
                                 <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
