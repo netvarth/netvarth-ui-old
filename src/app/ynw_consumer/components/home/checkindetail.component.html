@@ -11,7 +11,7 @@
                     <div class="c-outer m0">
                         <div class="c-body col-md-12 col-xs-12 col-sm-12 no-padding">
                             <div class="card title-gb">
-                                <h5 class="mgn-up-10">Check-in Details <a class="pull-right back-btn"
+                                <h5 class="mgn-up-10">{{titlename}} <a class="pull-right back-btn"
                                         (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
                             </div>
                             <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
@@ -40,6 +40,15 @@
                                                 <span class="waitlist_for">
                                                     {{waitlist.waitlistingFor[0].firstName | capitalizeFirst}}
                                                     {{waitlist.waitlistingFor[0].lastName | capitalizeFirst}}</span>
+                                            </div>
+                                            <div *ngIf="waitlist.token" class="item"><span class="ttle">Token Number</span>
+                                                <span class="waitlist_for">{{waitlist.token}}</span>
+                                            </div>
+                                            <div *ngIf="waitlist.provider" class="item"><span class="ttle">{{provider_label | capitalizeFirst}}</span>
+                                                <span class="waitlist_for">
+                                                        {{waitlist.provider.firstName | capitalizeFirst}}
+                                                        {{waitlist.provider.lastName | capitalizeFirst}}
+                                                </span>
                                             </div>
                                             <div class="item"><span class="ttle">{{service_cap}}</span>
                                                 <span class="service-icon"
@@ -107,7 +116,8 @@
                             </div>
                             <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
                                 <div class="card">
-                                    <h2>{{checkin_label |capitalizeFirst}} Status</h2>
+                                    <h2 *ngIf="!showtoken">{{checkin_label |capitalizeFirst}} Status</h2>
+                                    <h2 *ngIf="showtoken">Token Status</h2>
                                     <div class="c-history-outer" *ngIf="waitlist && waitlist.waitlistStatus">
                                         <ul class="c-history">
                                             <li class="{{waitlist.waitlistStatus}}">

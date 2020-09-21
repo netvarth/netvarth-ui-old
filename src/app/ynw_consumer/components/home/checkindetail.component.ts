@@ -44,6 +44,9 @@ export class CheckinDetailComponent implements OnInit {
     ynwUuid: any;
     communication_history: any = [];
     providerId: any;
+    titlename = 'Check-in Details';
+    showtoken: any;
+    provider_label;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -78,6 +81,7 @@ export class CheckinDetailComponent implements OnInit {
         // this.consumerNote = waitlistjson.consumerNote;
         // this.callingModes = waitlistjson.virtualService;
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.provider_label = this.shared_functions.getTerminologyTerm('provider');
         this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
         this.checkin_label = this.shared_functions.getTerminologyTerm('checkin');
         this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
@@ -87,6 +91,10 @@ export class CheckinDetailComponent implements OnInit {
         this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
             (data) => {
                 this.waitlist = data;
+                this.showtoken = this.waitlist.showToken;
+                if (this.showtoken) {
+                    this.titlename = 'Token Details';
+                }
             },
             (error) => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

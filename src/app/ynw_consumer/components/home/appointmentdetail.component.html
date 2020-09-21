@@ -34,6 +34,12 @@
                                                     {{appt.appmtFor[0].firstName | capitalizeFirst}}
                                                     {{appt.appmtFor[0].lastName | capitalizeFirst}}</span>
                                             </div>
+                                            <div *ngIf="appt.provider" class="item"><span class="ttle">{{provider_label | capitalizeFirst}}</span>
+                                                <span class="waitlist_for">
+                                                        {{appt.provider.firstName | capitalizeFirst}}
+                                                        {{appt.provider.lastName | capitalizeFirst}}
+                                                </span>
+                                            </div>
                                             <div class="item"><span class="ttle">{{service_cap}}</span>
                                                 <span class="service-icon"
                                                     *ngIf="appt.service.serviceType == 'virtualService'">
