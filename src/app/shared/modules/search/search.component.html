@@ -1,0 +1,108 @@
+<div class="overlay  moreOptionsOverlay" [class.show]="showMoreOptionsOverlay" (click)="closeMoreoptions()"></div>
+<div class="overlay  moreOptionsOverlay" [class.show]="showMorepopularOptionsOverlay"
+  (click)="closeMorepopularoptions()"></div>
+<ng-container>
+  <div [class.sa-fld]="includedfrom=='home'" [class.tp-srch]="includedfrom=='consumer_header'">
+    <div class="sa-lc" (click)="setCurrentLocation(locrefrence)">
+      <mat-form-field class="search_location_class">
+        <i class="fa fa-check icon" *ngIf="isCurrentLocation"></i>
+        <input type="text" name="location_box" aria-label="locs" [(ngModel)]="location_name" matInput
+          [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="" #locrefrence
+          (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)" (keyup)="locationClick($event)">
+
+        <mat-autocomplete #autoloc="matAutocomplete" class="srch-auto-c">
+          <div *ngIf="locationList">
+            <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname"
+              (onSelectionChange)="setLocation(loc)">
+              <div [innerHTML]="highlightSelText(loc.autoname, 'search_autocompletehighlight', 'location', loc.typ)">
+              </div>
+            </mat-option>
+          </div>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <div class="sa-dm ml5">
+      <mat-form-field class="search_domain">
+        <div>
+          <mat-select panelClass="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (selectionChange)="handledomainchange($event.value)">
+            <mat-option value="All">{{all_cap}}</mat-option>
+            <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain">
+              {{ domain.displayName }}
+            </mat-option>
+          </mat-select>
+        </div>
+      </mat-form-field>
+    </div>
+    <div class="sa-src ml5">
+      <mat-form-field floatLabel="never" class="search_keyword_class">
+        <mat-label>{{domainSuggestionPlaceholder}}</mat-label>
+        <input name="provider_box" id="suggestSearch" #provbox aria-label="provs" aria-label="Search here"
+          [(ngModel)]="kw_autoname"  matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" maxlength="50"
+          (keyup)="kwtyping($event, $event.target.value)" (click)="filterKeywords($event.target.value)">
+        <mat-autocomplete class="srch-auto-c" #autoprov="matAutocomplete" #autotest>
+          <div>
+            <mat-optgroup [label]="kwgroup.displayname" *ngFor="let kwgroup of keywordgroupList" class="search-text">
+              <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname"
+                (click)="setKeyword(kw)">
+                <span
+                  [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>{{ value }}<span
+                  class="item-category">{{(kw.typ === 'kwtitle'? 'Business Name/Keyword ': (kwgroup.name === 'special'? kw.subdomain: (kw.typ === 'onlineid'? 'Business ID ' : '') ))}}</span>
+              </mat-option>
+              <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname"
+                (click)="setKeyword(kw)">
+                <span
+                  [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>{{ value }}<span
+                  class="item-category">{{(kw.typ === 'onlineid'? 'Online ID ': (kwgroup.name === 'special'? 'specialization':''))}}</span>
+              </mat-option> -->
+            </mat-optgroup>
+          </div>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="sa-btn plr0i">
+      <div role="button" tabindex="0" id="search_button" class="search-btn cs-btn anim1"
+        (click)="handleNormalSearchClick()" *ngIf="!showmoreoptionsSec"><span class="icon icon-search"></span></div>
+    </div>
+    <div class="sa-mo flex-shrink-0">
+      <span class="icon icon-filter" (click)="showMoreOptions()" *ngIf="includedfrom!='consumer_header'"
+        [matTooltipClass]="tooltipcls" [matTooltip]="moreoptionsTooltip">{{more_options_cap}}</span>
+      <span class="icon icon-filter" id="morefiltericon" (click)="showMoreOptions()"
+        *ngIf="includedfrom=='consumer_header'" [matTooltipClass]="tooltipcls" [matTooltip]="moreoptionsTooltip"></span>
+    </div>
+    <ng-container>
+      <div class="more-opt" [class.show]="showmoreoptionsSec">
+        <span class="closebtn" (click)="closeMoreoptions()"></span>
+        <div class="mo-content">
+          <app-search-moreoptions *ngIf="showmoreoptionsSec" (searchmoreclick)="handleSearchmoreSearchClick($event)"
+            [passedRefine]="passedRefine"></app-search-moreoptions>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<div class="sa-ps" *ngIf="includedfrom=='home'">
+  <div class="col-md-12" *ngIf="jsonlist">
+    <div class="">
+      <p class="pop-search"><b style="padding-right: 10px; line-height:40px">Popular Searches: </b>
+        <span class="pointer-cursor" *ngFor="let kw of jsonlist" (click)="setKeyword(kw)">
+          <a *ngIf="kw.show"> {{kw.displayname}} </a>
+        </span>
+        <a class="learnmore-pointer" style="padding-left:10px !important;"
+          *ngIf="searchLength > paginationLimit && !showmoreSearch" (click)="showMoreItems('more')">more...</a>
+        <a class="learnmore-pointer" style="padding-left:10px !important;" *ngIf="showmoreSearch"
+          (click)="showMoreItems('less')">less...</a>
+      </p>
+    </div>
+  </div>
+
+  <ng-container>
+    <div class="more-opt popular_search" [class.show]="showmorepopularoptions">
+      <span class="closebtn" (click)="closeMorepopularoptions()"></span>
+      <div class="mo-content">
+        <app-popularsearch-moreoptions *ngIf="showmorepopularoptions" (searchpopularmoreclick)="setKeyword($event)"
+          [passedPSearches]="displaykeywordList"></app-popularsearch-moreoptions>
+      </div>
+    </div>
+  </ng-container>
+</div>

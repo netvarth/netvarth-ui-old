@@ -360,7 +360,6 @@
                                     <mat-checkbox *ngFor="let service of service_list"
                                       [checked]="services.indexOf(service.id) !== -1"
                                       (change)="setFilterDataCheckbox('service', service.id, $event)">
-                                      {{service.name}}
                                       <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                                         class="fa meet-icon"></i>
                                       <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
@@ -371,6 +370,8 @@
                                         class="fa wtsapaud-icon"></i>
                                       <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
                                         class="fa wtsapvid-icon"></i>
+                                      {{service.name}}
+                                      
                                     </mat-checkbox>
                                   </li>
                                 </div>
@@ -529,7 +530,7 @@
                                 </td>
                                 <td class="title td-two">
                                   <div class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3"
-                                    *ngIf="servicesCount>1">{{appt.service.name}}
+                                    *ngIf="servicesCount>1">
                                     <i class="fa meet-icon"
                                     [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
@@ -545,6 +546,8 @@
                                     <i class="fa wtsapvid-icon"
                                     [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
+                                    {{appt.service.name}}
+                                    
                                   </div>
                                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                     <span class="checkin-label mgn-rt-10"
@@ -911,7 +914,6 @@
                                     <mat-checkbox *ngFor="let service of service_list"
                                       [checked]="services.indexOf(service.id) !== -1"
                                       (change)="setFilterDataCheckbox('service', service.id, $event)">
-                                      {{service.name}}
                                       <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                                       class="fa meet-icon"></i>
                                     <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
@@ -922,6 +924,7 @@
                                       class="fa wtsapaud-icon"></i>
                                     <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
                                       class="fa wtsapvid-icon"></i>
+                                      {{service.name}}
 
                                     </mat-checkbox>
                                   </li>
@@ -1056,7 +1059,7 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{appt.service.name}}
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <i class="fa meet-icon"
                           [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
@@ -1072,6 +1075,8 @@
                           <i class="fa wtsapvid-icon"
                           [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
+                          {{appt.service.name}}
+                          
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="checkin-label mgn-rt-10"

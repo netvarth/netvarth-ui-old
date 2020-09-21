@@ -256,7 +256,7 @@ export class DepartmentDetailComponent implements OnInit {
         this.showAllServices = true;
     }
     getDepartmentDetails() {
-        console.log(this.dept_id);
+        // console.log(this.dept_id);
         this.loading = true;
         this.getServices().then(
             res => {
@@ -314,7 +314,7 @@ export class DepartmentDetailComponent implements OnInit {
                     .subscribe(
                         data => {
                             this.deptObj = data;
-                            console.log(this.deptObj);
+                            // console.log(this.deptObj);
                             this.departments = this.deptObj['departments'];
                             this.defaultdepartmentservice = [];
                             for (let i = 0; i < this.servicesjson.length; i++) {

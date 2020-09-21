@@ -168,9 +168,9 @@
                                                 <div class="input-section mgn-bt-15 desfont"
                                                     *ngIf="mode.callingMode === 'WhatsApp' || mode.callingMode === 'Phone'">
                                                     <span> <i *ngIf="mode.callingMode === 'WhatsApp'"
-                                                            class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
+                                                            class="fa wtsapaud-icon wtsap-cal"></i>
                                                         <i *ngIf="mode.callingMode === 'Phone'"
-                                                            class="fa fa-mobile fa-lg call-icon" aria-hidden="true"></i>
+                                                            class="fa phon-icon ph-cal" aria-hidden="true"></i>
                                                     </span>
                                                     <span> <input *ngIf="!showInputSection"
                                                             (keypress)="isNumeric($event)"
@@ -524,7 +524,8 @@
                             <button class="cs-btn bt3 width-100" (click)="handleSideScreen('members')">Add / Change
                                 Member</button>
                             <button class="cs-btn bt3 width-100 mgn-up-20"
-                                (click)="handleSideScreen('note')">{{note_cap}}</button>
+                                (click)="handleSideScreen('note')">{{sel_ser_det.consumerNoteTitle}}
+                                <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span></button>
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="imagefile.click()">
                                 <!-- <button type="button" class="cs-btn btn-attach bt_attach"
                                         (click)="imagefile.click()" [matTooltip]="'Attach files'"> -->

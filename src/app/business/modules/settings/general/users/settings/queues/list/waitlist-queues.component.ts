@@ -26,6 +26,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     api_loading = true;
     add_button = Messages.ADD_BUTTON;
     tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
+    tooltipcls = '';
     breadcrumb_moreoptions: any = [];
     isAllServicesSelected = false;
     services_selected: any = [];
@@ -95,7 +96,6 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     domain: any;
     user;
     userId: any;
-    tooltipcls = projectConstants.TOOLTIP_CLS;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,

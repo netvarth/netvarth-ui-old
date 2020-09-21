@@ -645,7 +645,6 @@ export class SharedFunctions {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         ob.handle_searchstatus();
       } else {
         ob.getPublicSearch();
@@ -676,7 +675,6 @@ export class SharedFunctions {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         ob.handle_searchstatus();
       } else {
         ob.getPublicSearch();
@@ -1188,7 +1186,6 @@ export class SharedFunctions {
     const sec = parseInt(timesp[2], 10);
     let ampm = '';
     let retstr = '';
-    console.log(hr);
     if (hr >= 12) {
       hr = hr - 12;
       if (hr === 0) {
@@ -1612,4 +1609,7 @@ export class SharedFunctions {
     return blob;
   }
 
+  getNumberArray(n: number): any[] {
+    return Array(n);
+  }
 }

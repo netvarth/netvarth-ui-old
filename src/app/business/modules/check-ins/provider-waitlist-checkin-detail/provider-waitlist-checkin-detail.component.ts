@@ -78,6 +78,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   pos = false;
   breadcrumbs;
   iconClass: string;
+  spfname: any;
+  splname: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -207,6 +209,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
+          if (this.waitlist_data.provider) {
+             this.spfname = this.waitlist_data.provider.firstName;
+             this.splname = this.waitlist_data.provider.lastName;
+          }
         },
         error => {
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -455,7 +461,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
     const sHours = hours;
     const sMinutes = minutes;
-    // alert(sHours + ':' + sMinutes);
     const mom_date = moment(date);
     mom_date.set('hour', sHours);
     mom_date.set('minute', sMinutes);

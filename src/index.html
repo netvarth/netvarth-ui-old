@@ -3,19 +3,10 @@
 
 <head>
   <meta charset="utf-8">
-<<<<<<< HEAD
   <title>Jaldee</title>
   <base href="./">
   <!-- <base href="/jaldee/"> -->
-  <meta name="description" content="Jaldee">
-=======
-  <!-- <title>Jaldee</title> -->
-  <!-- <base href="/"> -->
-  <base href="/jaldee/">
-
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
   <!-- <meta name="description" content="Jaldee"> -->
->>>>>>> refs/remotes/origin/1.3.0
   <meta name="keywords" content="Jaldee, Avoid waiting">
   <meta name="author" content="Jaldee Soft Private Limited">
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
@@ -47,10 +38,17 @@
   <app-root></app-root>
 </body>
 <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7LQNQ03GPZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-7LQNQ03GPZ');
+</script>
 </html>
 <script>
-  var DEBUG_MODE_ON = false; // hide browser console in production
+  var DEBUG_MODE_ON = true; // hide browser console in production
   if (!DEBUG_MODE_ON) {
     console = console || {};
     console.log = function () { };
@@ -65,7 +63,6 @@
   document.addEventListener("deviceready", onDeviceReady, false);
   function alertDismissed() {
 
-<<<<<<< HEAD
   }
   function onDeviceReady() {
     if (typeof FCMPlugin != 'undefined') {
@@ -135,6 +132,3 @@
   };
 </script>
 <script src="cordova.js"></script>
-=======
-</script>
->>>>>>> refs/remotes/origin/1.3.0

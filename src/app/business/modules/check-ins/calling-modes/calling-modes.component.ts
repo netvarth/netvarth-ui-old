@@ -479,7 +479,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
         // console.log(this.isPrevStep);
     }
     backtoProgresPage() {
-        console.log(this.isPrevStep);
+        // console.log(this.isPrevStep);
         if (this.isPrevStep) {
             this.step = 6;
         } else {
@@ -497,7 +497,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.data = data;
-                    console.log(this.data);
+                    // console.log(this.data);
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
@@ -529,7 +529,7 @@ export class CallingModesComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.data = data;
-                    console.log(this.data);
+                    // console.log(this.data);
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;

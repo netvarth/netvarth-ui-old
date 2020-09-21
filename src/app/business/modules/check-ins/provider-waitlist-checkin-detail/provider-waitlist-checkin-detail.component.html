@@ -94,9 +94,10 @@
                       *ngIf="user.primaryMobileNo && user.primaryMobileNo.length === 10">({{user.primaryMobileNo}})</span>
                   </span>
                 </div>
-                <div class="item"><span class="ttle">{{service_cap}}</span><span> {{waitlist_data.service.name |
+                <div class="item"><span class="ttle">{{service_cap}}</span><span> 
+                  <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]=iconClass></i>
+                  {{waitlist_data.service.name |
                     capitalizeFirst}}
-                    <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]=iconClass></i>
                     <span *ngIf="waitlist_data.service.deptName">
                       ({{waitlist_data.service.deptName}})</span></span></div>
                 <div class="item"><span class="ttle">{{queue_cap}}</span>
@@ -116,7 +117,10 @@
                   </ng-container>
                 </div>
                 <div class="item" *ngIf="waitlist_data.waitlistPhoneNumber"><span class="ttle">Phone
-                    number</span><span>{{waitlist_data.waitlistPhoneNumber}}</span></div>
+                    number</span><span>{{waitlist_data.waitlistPhoneNumber}}</span></div>                    
+                <div class="item" *ngIf="waitlist_data.provider"><span class="ttle">{{provider_label | capitalizeFirst}}</span>
+                  <span>{{spfname | capitalizeFirst}} {{splname}}</span></div>
+
                 <div class="item" *ngIf="userDet['sector'] == 'foodJoints'"><span
                     class="ttle">{{party_size_cap}}</span><span>
                     {{waitlist_data.partySize}}</span></div>

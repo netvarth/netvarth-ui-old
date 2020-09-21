@@ -371,14 +371,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
           step => {
             /*Do something*/
-            console.log('Location', window.location.href, 'Path', window.location.pathname);
-            console.log('Next:', step);
+            // console.log('Location', window.location.href, 'Path', window.location.pathname);
+            // console.log('Next:', step);
           },
           error => {
             /*handle error*/
           },
           () => {
-            //this.routerobj.navigate(['.'], {});
+            // this.routerobj.navigate(['.'], {});
             // this.redirecttoProfile();
             this.routerobj.navigate(['provider', 'settings'], {});
           }
@@ -1057,13 +1057,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
+        console.log(this.bProfile);
         this.bprofileLoaded = true;
         this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
           domainfields => {
             this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
               subdomainfields => {
                 this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields, this.bProfile['serviceSubSector']['subDomain']);
-                console.log(this.reqFields);
                 this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
                 this.additionalInfoDomainFields = this.provider_shared_functions.getAdditionalNonDomainMandatoryFields();
                 this.additionalInfoSubDomainFields = this.provider_shared_functions.getAdditionalNonSubDomainMandatoryFields();
@@ -1074,6 +1074,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
                 }
               });
           });
+        this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
+        if (this.subdomain === 'personalFitness') {
+          this.services_hint = projectConstantsLocal.PersonalFitness[this.subdomain].helphint;
+        }
         if (this.bProfile.baseLocation) {
           this.locationExists = true;
         } else {
@@ -1277,14 +1281,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
           weightageObjectOfDomain.mandatoryDomain = mandatorydomain;
           weightageObjectOfDomain.mandatoryDomainFilledStatus = mandatorydomainFilled;
           weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
-          console.log(this.mandatoryfieldArray);
-          console.log(weightageObjectOfDomain);
-
-
           this.provider_datastorage.setWeightageObjectOfDomain(weightageObjectOfDomain);
-
-
-
         }
       );
   }
@@ -1312,7 +1309,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         } else {
           dom_subdom_list.forEach(function (data_object) {
             if (data_object.name === field) {
-              console.log(field + 'value' + data_object.value);
               if (!data_object['value'] || (data_object.value === undefined || data_object.value == null)) {
                 fullyfilledStatus = false;
                 return;

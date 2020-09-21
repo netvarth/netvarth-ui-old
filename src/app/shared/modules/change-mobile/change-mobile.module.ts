@@ -7,6 +7,7 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { ChangeMobileComponent } from './change-mobile.component';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { OtpFormModule } from '../../../shared/modules/otp-form/otp-form.module';
+import { HeaderModule } from '../header/header.module';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { OtpFormModule } from '../../../shared/modules/otp-form/otp-form.module'
         ReactiveFormsModule,
         FormMessageDisplayModule,
         BreadCrumbModule,
-        OtpFormModule
+        OtpFormModule,
+        HeaderModule
     ],
     declarations: [
         ChangeMobileComponent

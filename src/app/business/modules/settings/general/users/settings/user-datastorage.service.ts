@@ -91,8 +91,8 @@ export class UserDataStorageService {
 
     const mandatoryObject = projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO;
     const additionalObject = projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO;
-    console.log(this.weightageObjectDomain);
-    console.log(this.weightageObjectSubDomain);
+    // console.log(this.weightageObjectDomain);
+    // console.log(this.weightageObjectSubDomain);
     if (!this.checkExistenceInWeightageArray(mandatoryObject)) {
       if ((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus) || (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)) {
         this.user_weightageArray.push(projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);

@@ -8,6 +8,9 @@
     <div class="locate-customer">
         <button type="button" class="cs-btn bt1 small-btn mgn-up-15" (click)="closeDialog()">add your email id</button>
     </div>
+    <div class="pull-right mgn-bt-10">
+       <a class="underline" (click)="skip()"> Skip for now</a>
+    </div>
 </div>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
 </app-field-error-display>

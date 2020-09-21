@@ -33,12 +33,12 @@ export class ProviderNotificationsComponent implements OnInit {
   email = false;
   cheknPushph = false;
   cheknCancelPushph = false;
-  //cheknpush = false;
+  // cheknpush = false;
   smsAppt = false;
   emailAppt = false;
   apptPushph = false;
   apptcancelPushph = false;
-  //apptPush = false;
+  // apptPush = false;
   smsDonate = false;
   pushAppDonate = false;
   smsSystem = false;
@@ -72,13 +72,13 @@ export class ProviderNotificationsComponent implements OnInit {
   notifypushSystemphonenumber = '';
   notifydonateemail = '';
   notifysystememail = '';
-  
+
 
   api_error = null;
   api_success = null;
   ph_arr: any = [];
-  cheknPushph_arr : any = [];
-  cheknCancelPushph_arr : any = [];
+  cheknPushph_arr: any = [];
+  cheknCancelPushph_arr: any = [];
   em_arr: any = [];
   ph1_arr: any = [];
   em1_arr: any = [];
@@ -132,8 +132,8 @@ export class ProviderNotificationsComponent implements OnInit {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.route.queryParams.subscribe(
       params => {
-          this.crumbtitle = params.type;
-        });
+        this.crumbtitle = params.type;
+      });
   }
 
   ngOnInit() {
@@ -144,13 +144,13 @@ export class ProviderNotificationsComponent implements OnInit {
     this.getGlobalSettingsStatus();
     this.getNotificationList();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
-    console.log(this.crumbtitle);
-    if (this.crumbtitle == 'Hospital') {
+    // console.log(this.crumbtitle);
+    if (this.crumbtitle === 'Hospital') {
       this.breadcrmbTitle = 'Hospital';
     } else {
       this.breadcrmbTitle = this.provider_label;
     }
-    console.log(this.breadcrmbTitle);
+    // console.log(this.breadcrmbTitle);
     const breadcrumbs = [];
     this.breadcrumbs_init.map((e) => {
       breadcrumbs.push(e);
@@ -201,7 +201,7 @@ export class ProviderNotificationsComponent implements OnInit {
       for (const notifyList of notificationList) {
         if (notifyList.eventType && notifyList.eventType === 'WAITLISTADD') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
-            console.log(this.SelchkinNotify);
+            // console.log(this.SelchkinNotify);
             this.SelchkinNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -228,7 +228,7 @@ export class ProviderNotificationsComponent implements OnInit {
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
-            console.log(this.SelchkincnclNotify);
+            // console.log(this.SelchkincnclNotify);
             this.SelchkincnclNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -358,9 +358,9 @@ export class ProviderNotificationsComponent implements OnInit {
     }
   }
   selectChekinCanclNotify(event) {
-    console.log(this.SelchkincnclNotify);
+    // console.log(this.SelchkincnclNotify);
     this.SelchkincnclNotify = event.checked;
-    console.log(this.SelchkincnclNotify);
+    // console.log(this.SelchkincnclNotify);
     if (!this.SelchkincnclNotify) {
       this.checkinCancelNotifications('cancelcheckin');
     }
@@ -972,7 +972,7 @@ export class ProviderNotificationsComponent implements OnInit {
       this.em_arr = [];
       this.ph_arr = [];
       this.cheknPushph_arr = [];
-      //this.cheknpush = false;
+      // this.cheknpush = false;
     }
     this.savechekinNotification_json.resourceType = 'CHECKIN';
     this.savechekinNotification_json.eventType = 'WAITLISTADD';
@@ -994,12 +994,12 @@ export class ProviderNotificationsComponent implements OnInit {
         chekincancelMode = 'UPDATE';
       }
     }
-    console.log(this.SelchkincnclNotify);
+    // console.log(this.SelchkincnclNotify);
     if (!this.SelchkincnclNotify) {
       this.em1_arr = [];
       this.ph1_arr = [];
       this.cheknCancelPushph_arr = [];
-      //this.cancelpush = false;
+      // this.cancelpush = false;
     }
     this.savecancelNotification_json.resourceType = 'CHECKIN';
     this.savecancelNotification_json.eventType = 'WAITLISTCANCEL';
@@ -1024,7 +1024,7 @@ export class ProviderNotificationsComponent implements OnInit {
       this.apptem_arr = [];
       this.apptph_arr = [];
       this.apptPushph_arr = [];
-     // this.apptPush = false;
+      // this.apptPush = false;
     }
     this.savechekinNotification_json.resourceType = 'APPOINTMENT';
     this.savechekinNotification_json.eventType = 'APPOINTMENTADD';
@@ -1050,7 +1050,7 @@ export class ProviderNotificationsComponent implements OnInit {
       this.apptem1_arr = [];
       this.apptph1_arr = [];
       this.apptcancelPushph_arr = [];
-      //this.cancelpushAppt = false;
+      // this.cancelpushAppt = false;
     }
     this.savecancelNotification_json.resourceType = 'APPOINTMENT';
     this.savecancelNotification_json.eventType = 'APPOINTMENTCANCEL';
@@ -1075,7 +1075,7 @@ export class ProviderNotificationsComponent implements OnInit {
       this.donateem_arr = [];
       this.donateph_arr = [];
       this.donatepushph_arr = [];
-     // this.donatePush = false;
+      // this.donatePush = false;
     }
     this.savechekinNotification_json.resourceType = 'DONATION';
     this.savechekinNotification_json.eventType = 'DONATIONSERVICE';
@@ -1100,7 +1100,7 @@ export class ProviderNotificationsComponent implements OnInit {
       this.systemem_arr = [];
       this.systemph_arr = [];
       this.pushsystemph_arr = [];
-    //  this.systemPush = false;
+      //  this.systemPush = false;
     }
     this.savechekinNotification_json.resourceType = 'ACCOUNT';
     this.savechekinNotification_json.eventType = 'LICENSE';
@@ -1272,7 +1272,7 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   pushAppDonateAddClicked() {
     if (this.pushAppDonate) {
-      this.pushAppDonate= false;
+      this.pushAppDonate = false;
     } else {
       this.pushAppDonate = true;
     }
@@ -1334,7 +1334,7 @@ export class ProviderNotificationsComponent implements OnInit {
       this.emaildonate = true;
     }
   }
-  emailsystemAddClicked(){
+  emailsystemAddClicked() {
     if (this.emailsystem) {
       this.emailsystem = false;
     } else {

@@ -134,8 +134,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
 
           step => {
             /*Do something*/
-            console.log('Location', window.location.href, 'Path', window.location.pathname);
-            console.log('Next:', step);
+            // console.log('Location', window.location.href, 'Path', window.location.pathname);
+            // console.log('Next:', step);
           },
           error => {
             /*handle error*/
@@ -143,8 +143,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           () => {
             this.router.navigate(['provider', 'settings']);
           }
-        );  
-
+        );
       }
 
     });

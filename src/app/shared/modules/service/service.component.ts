@@ -11,6 +11,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { Router } from '@angular/router';
 import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
     selector: 'app-jaldee-service',
@@ -119,6 +120,24 @@ export class ServiceComponent implements OnInit, OnDestroy {
         'lastName': 'Service'
     };
     include_video = false;
+    preInfoEnabled = false;
+    postInfoEnabled = false;
+    preInfoText = '';
+    postInfoText = '';
+    preInfoTitle = '';
+    postInfoTitle = '';
+    public Editor = DecoupledEditor;
+    consumerNote = 'Add Notes';
+    showConsumerNote = false;
+    showInfo = false;
+    showInfoType;
+    tempPreInfoEnabled = false;
+    tempPostInfoEnabled = false;
+    tempPreInfoText = '';
+    tempPostInfoText = '';
+    tempPreInfoTitle = '';
+    tempPostInfoTitle = '';
+    showEditSection = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -159,6 +178,16 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 if (this.service_data.serviceType === 'virtualService') {
                                     this.is_virtual_serv = true;
                                 }
+                                this.preInfoEnabled = this.service_data.preInfoEnabled;
+                                this.postInfoEnabled = this.service_data.postInfoEnabled;
+                                this.preInfoTitle = this.service_data.preInfoTitle || '';
+                                this.preInfoText = this.service_data.preInfoText || '';
+                                this.postInfoTitle = this.service_data.postInfoTitle || '';
+                                this.postInfoText = this.service_data.postInfoText || '';
+                                if (this.service_data['consumerNoteMandatory']) {
+                                    this.showConsumerNote = true;
+                                    this.consumerNote = this.service_data['consumerNoteTitle'];
+                                }
                                 if (!this.subdomainsettings.serviceBillable) {
                                     if (this.service_data.serviceType === 'donationService') {
                                         this.serviceForm.setValue({
@@ -168,6 +197,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
                                             'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
+                                            'consumerNoteMandatory': this.service_data['consumerNoteMandatory'] || this.serviceForm.get('consumerNoteMandatory').value,
                                             'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
                                             'minDonationAmount': this.service_data['minDonationAmount'] || this.serviceForm.get('minDonationAmount').value || '1',
                                             'maxDonationAmount': this.service_data['maxDonationAmount'] || this.serviceForm.get('maxDonationAmount').value || '1',
@@ -205,6 +235,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
                                             'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
+                                            'consumerNoteMandatory': this.service_data['consumerNoteMandatory'] || this.serviceForm.get('consumerNoteMandatory').value,
                                             'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
                                             'minDonationAmount': this.service_data['minDonationAmount'] || this.serviceForm.get('minDonationAmount').value || '1',
                                             'maxDonationAmount': this.service_data['maxDonationAmount'] || this.serviceForm.get('maxDonationAmount').value || '1',
@@ -224,6 +255,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
                                             'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
+                                            'consumerNoteMandatory': this.service_data['consumerNoteMandatory'] || this.serviceForm.get('consumerNoteMandatory').value,
                                             'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
                                             'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
                                                 this.service_data['minPrePaymentAmount'] !== 0
@@ -361,20 +393,20 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 data => {
                     this.filterDepart = data['filterByDept'];
                     if (this.filterDepart) {
-                    for (let i = 0; i < data['departments'].length; i++) {
-                        if (data['departments'][i].departmentStatus === 'ACTIVE') {
-                            this.departments.push(data['departments'][i]);
+                        for (let i = 0; i < data['departments'].length; i++) {
+                            if (data['departments'][i].departmentStatus === 'ACTIVE') {
+                                this.departments.push(data['departments'][i]);
+                            }
+                            if (data['departments'][i].departmentId === deptid) {
+                                this.departmentName = data['departments'][i].departmentName;
+                            }
                         }
-                        if (data['departments'][i].departmentId === deptid) {
-                            this.departmentName = data['departments'][i].departmentName;
+                        if (this.action === 'add' && this.departments.length > 0) {
+                            this.serviceForm.get('department').setValue(this.departments[0].departmentId);
+                            this.departId = this.departments[0].departmentId;
+                            this.getUsers();
                         }
                     }
-                    if (this.action === 'add' && this.departments.length > 0) {
-                        this.serviceForm.get('department').setValue(this.departments[0].departmentId);
-                        this.departId = this.departments[0].departmentId;
-                        this.getUsers();
-                    }
-                }
                 },
                 error => {
                     this.sharedFunctons.apiErrorAutoHide(this, error);
@@ -383,7 +415,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     onSubmit(form_data) {
         if (form_data.serviceType === 'virtualService') {
-          //  this.tool_id = this.tool_id.trim();
+            //  this.tool_id = this.tool_id.trim();
             this.teleCallingModes = {
                 'callingMode': this.tool_name,
                 'value': this.tool_id,
@@ -413,6 +445,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
             serviceActionModel['service'] = form_data;
             this.servicesService.actionPerformed(serviceActionModel);
         } else {
+            form_data['preInfoEnabled'] = this.preInfoEnabled;
+            form_data['postInfoEnabled'] = this.postInfoEnabled;
+            form_data['preInfoTitle'] = this.preInfoEnabled ? this.preInfoTitle : '';
+            form_data['preInfoText'] = this.preInfoEnabled ? this.preInfoText : '';
+            form_data['postInfoTitle'] = this.postInfoEnabled ? this.postInfoTitle : '';
+            form_data['postInfoText'] = this.postInfoEnabled ? this.postInfoText : '';
+            form_data['consumerNoteTitle'] = form_data['consumerNoteMandatory'] ? this.consumerNote : '';
             if (!this.subdomainsettings.serviceBillable) {
                 form_data.bType = 'Waitlist';
                 form_data['totalAmount'] = 0;
@@ -515,6 +554,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     serviceDuration: [''],
+                    consumerNoteMandatory: [false],
                     totalAmount: [0],
                     minDonationAmount: [1, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     maxDonationAmount: [1, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
@@ -532,6 +572,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     serviceDuration: ['', Validators.compose([Validators.required])],
+                    consumerNoteMandatory: [false],
                     totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
@@ -552,6 +593,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     serviceDuration: [''],
+                    consumerNoteMandatory: [false],
                     totalAmount: [0],
                     minDonationAmount: [1, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     maxDonationAmount: [1, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
@@ -700,5 +742,51 @@ export class ServiceComponent implements OnInit, OnDestroy {
     selectDeptHandler(value) {
         this.departId = value;
         this.getUsers();
+    }
+
+    public onReady(editor) {
+        editor.ui.getEditableElement().parentElement.insertBefore(
+            editor.ui.view.toolbar.element,
+            editor.ui.getEditableElement()
+        );
+        editor.getData();
+
+    }
+    changeConsumerNoteStatus() {
+        this.showConsumerNote = !this.showConsumerNote;
+    }
+    editClicked() {
+        this.showEditSection = !this.showEditSection;
+    }
+    showInfoSection() {
+        if (!this.showInfo) {
+            this.tempPreInfoEnabled = this.preInfoEnabled;
+            this.tempPreInfoText = this.preInfoText;
+            this.tempPreInfoTitle = this.preInfoTitle;
+            this.tempPostInfoEnabled = this.postInfoEnabled;
+            this.tempPostInfoText = this.postInfoText;
+            this.tempPostInfoTitle = this.postInfoTitle;
+            this.showInfo = true;
+            this.sharedFunctons.sendMessage({ 'ttype': 'hide-back' });
+        } else {
+            if (this.preInfoEnabled && this.preInfoTitle === '') {
+                this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
+            } else if (this.preInfoEnabled && this.preInfoTitle === '') {
+                this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
+            } else {
+                this.showInfo = false;
+                this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
+            }
+        }
+    }
+    cancelChanges() {
+        this.preInfoEnabled = this.tempPreInfoEnabled;
+        this.preInfoText = this.tempPreInfoText;
+        this.preInfoTitle = this.tempPreInfoTitle;
+        this.postInfoEnabled = this.tempPostInfoEnabled;
+        this.postInfoText = this.tempPostInfoText;
+        this.postInfoTitle = this.tempPostInfoTitle;
+        this.showInfo = false;
+        this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
     }
 }

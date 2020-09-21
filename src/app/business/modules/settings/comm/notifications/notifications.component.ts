@@ -49,14 +49,13 @@ export class NotificationsComponent implements OnInit {
         private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions
     ) {
-       
     }
     ngOnInit() {
         const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.accountType = user_data.accountType;
         this.domain = user_data.sector || null;
         this.sub_domain = user_data.subSector || null;
-        console.log(this.sub_domain);
+        // console.log(this.sub_domain);
         this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
         this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
         this.getSMSglobalSettings();
@@ -75,7 +74,7 @@ export class NotificationsComponent implements OnInit {
     }
     gotoProvider() {
         let title;
-        if (this.sub_domain == ('hospital' || 'dentalHosp' || 'alternateMedicineHosp' || 'veterinaryhospital' ) && this.accountType == 'BRANCH' && this.isMultilevel) {
+        if (this.sub_domain === ('hospital' || 'dentalHosp' || 'alternateMedicineHosp' || 'veterinaryhospital' ) && this.accountType === 'BRANCH' && this.isMultilevel) {
             title = 'Hospital';
         } else {
             title = 'Provider';
@@ -131,7 +130,7 @@ export class NotificationsComponent implements OnInit {
                     (data: any) => {
                         this.isCorp = data.isCorp;
                         this.isMultilevel = data.isMultilevel;
-                        console.log(this.isMultilevel);
+                        // console.log(this.isMultilevel);
                     },
                     error => {
                         reject(error);

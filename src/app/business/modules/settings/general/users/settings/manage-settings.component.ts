@@ -242,7 +242,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
     this.subscription = this.user_datastorage.getWeightageArray().subscribe(result => {
       this.businessProfile_weightageArray = result;
-      console.log( JSON.stringify(this.businessProfile_weightageArray));
+      // console.log( JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
     });
   }
@@ -251,7 +251,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        }, () => {
+      }, () => {
       });
   }
   ngAfterViewChecked() {
@@ -272,36 +272,35 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
           title: 'Settings'
         });
         this.breadcrumbs = breadcrumbs;
-if (this.domainList && this.domainList.bdata) {
-        for (let i = 0; i < this.domainList.bdata.length; i++) {
-          if (this.domainList.bdata[i].domain === this.domain) {
-            for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
-              if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
-                this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
-                // this.getSpecializations(this.domain, this.subDomain);
-                // this.initSpecializations();
-                // this.bProfile['subDomain'] = this.subDomain;
-                this.getBusinessProfile();
+        if (this.domainList && this.domainList.bdata) {
+          for (let i = 0; i < this.domainList.bdata.length; i++) {
+            if (this.domainList.bdata[i].domain === this.domain) {
+              for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
+                if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
+                  this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
+                  // this.getSpecializations(this.domain, this.subDomain);
+                  // this.initSpecializations();
+                  // this.bProfile['subDomain'] = this.subDomain;
+                  this.getBusinessProfile();
                 }
+              }
             }
           }
-        }
-      } else {
-
-        this.shared_service.bussinessDomains()
-        .subscribe(
-            res => {
+        } else {
+          this.shared_service.bussinessDomains()
+            .subscribe(
+              res => {
                 const today = new Date();
                 const postdata = {
-                    cdate: today,
-                    bdata: res
+                  cdate: today,
+                  bdata: res
                 };
                 this.domainList = postdata;
                 this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
-            }
-        );
-        
-      }
+              }
+            );
+
+        }
       });
   }
   getUserPublicSearch() {
@@ -311,7 +310,7 @@ if (this.domainList && this.domainList.bdata) {
           this.public_search = (data && data.toString() === 'true') ? true : false;
           this.jaldee_online_status_str = (this.public_search === true) ? 'On' : 'Off';
           this.jaldee_online_status = this.public_search;
-         },
+        },
         () => {
         }
       );
@@ -337,18 +336,18 @@ if (this.domainList && this.domainList.bdata) {
                   this.userAdditionalInfoSubDomainFields = this.provider_shared_functions.getUserAdditionalNonSubDomainMandatoryFields();
                   this.getDomainVirtualFields();
                   if (this.subDomain) {
-                  this.getSubDomainVirtualFields();
+                    this.getSubDomainVirtualFields();
                   }
                 });
             });
-        if (this.bProfile.logo) {
+          if (this.bProfile.logo) {
             this.blogo = this.bProfile.logo;
             const cnow = new Date();
             const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
             this.cacheavoider = dd;
             this.user_datastorage.updateProfilePicWeightage(true);
           } else {
-           this.user_datastorage.updateProfilePicWeightage(false);
+            this.user_datastorage.updateProfilePicWeightage(false);
           }
           // if (this.bProfile.status === 'ACTIVE') {
           //   this.normal_profile_active = 3;
@@ -359,7 +358,7 @@ if (this.domainList && this.domainList.bdata) {
           // if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
           //   || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined)) {
           //   // this.getProviderLogo();
-           //   this.normal_basicinfo_show = 3;
+          //   this.normal_basicinfo_show = 3;
           // } else {
           //   this.normal_basicinfo_show = 2;
           // }
@@ -580,7 +579,7 @@ if (this.domainList && this.domainList.bdata) {
       _this.provider_services.getUserBussinessProfile(_this.userId)
         .subscribe(
           data => {
-            console.log(data);
+            // console.log(data);
             resolve(data);
           },
           () => {
@@ -600,9 +599,9 @@ if (this.domainList && this.domainList.bdata) {
         this.profimg_exists = true;
         // const today = new Date();
         //  logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
-         logourl = (this.blogo.url) ? this.blogo.url + '?' + this.cacheavoider : '';
+        logourl = (this.blogo.url) ? this.blogo.url + '?' + this.cacheavoider : '';
       }
-        return this.sharedfunctionObj.showjplimg(logourl);
+      return this.sharedfunctionObj.showjplimg(logourl);
     }
   }
   getBusinessProfileWeightageText() {
@@ -629,7 +628,7 @@ if (this.domainList && this.domainList.bdata) {
       this.progress_bar_four = 0;
       return businessProfileWeightageText;
     } else if
-    (weightage >= 50 && weightage < 75) {
+      (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'info';
@@ -671,7 +670,7 @@ if (this.domainList && this.domainList.bdata) {
   }
   getServiceCount() {
     // this.loading = true;
-    const filter = { 'provider-eq': this.userId , 'serviceType-neq': 'donationService'};
+    const filter = { 'provider-eq': this.userId, 'serviceType-neq': 'donationService' };
     this.provider_services.getServiceCount(filter)
       .subscribe(
         data => {
@@ -705,19 +704,19 @@ if (this.domainList && this.domainList.bdata) {
     this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'schedules']);
   }
   gotoOnlineProfile() {
-      this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
-    }
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
+  }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     if (mod === 'notifications') {
-    this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
+      this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
     } else if (mod === 'settings-services' || mod === 'settings-time_windows') {
       this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->' + mod]);
     } else if (mod === 'schedules') {
       this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->' + mod]);
-    }  else if (mod === 'nonworking') {
+    } else if (mod === 'nonworking') {
       this.routerobj.navigate(['/provider/' + this.domain + '/general->' + mod]);
-    }  else  {
+    } else {
       this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
   }
@@ -733,6 +732,6 @@ if (this.domainList && this.domainList.bdata) {
     // this.loading = false;
   }
   redirecToUsers() {
-    this.routerobj.navigate(['provider',  'settings' , 'general' , 'users']);
-}
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users']);
+  }
 }

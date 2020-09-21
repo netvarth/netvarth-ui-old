@@ -322,7 +322,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.user_datastorage.getWeightageArray().subscribe(result => {
       this.businessProfile_weightageArray = result;
-      console.log(JSON.stringify(this.businessProfile_weightageArray));
+      // console.log(JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
     });
   }
@@ -509,7 +509,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       _this.provider_services.getUserBussinessProfile(_this.userId)
         .subscribe(
           data => {
-            console.log(data);
+            // console.log(data);
             resolve(data);
           },
           () => {
@@ -706,7 +706,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.getVirtualFields(this.domain)
       .then(
         data => {
-          console.log('domain..' + JSON.stringify(data));
+          // console.log('domain..' + JSON.stringify(data));
           let user_mandatorydomain = false;
           let user_mandatorydomainFilled = false;
           let user_additionalInfoFilledStatus = false;
@@ -750,7 +750,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.getVirtualFields(this.domain,
       this.subDomain).then(
         data => {
-          console.log('subdaomin..' + JSON.stringify(data));
+          // console.log('subdaomin..' + JSON.stringify(data));
           let user_mandatorysubdomain = false;
           let user_mandatorySubDomainFilled = false;
           let user_additionalInfoFilledStatus = false;

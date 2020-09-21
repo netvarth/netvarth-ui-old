@@ -57,7 +57,7 @@ export class LiveTrackSettingsComponent implements OnInit {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.livetrack_status = data.livetrack;
-                console.log(this.livetrack_status);
+                // console.log(this.livetrack_status);
                 this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
             });
     }

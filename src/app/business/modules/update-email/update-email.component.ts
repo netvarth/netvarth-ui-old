@@ -53,4 +53,7 @@ export class UpdateEmailComponent implements OnInit {
   resetError() {
     this.api_error = '';
   }
+  skip() {
+    this.dialogRef.close();
+  }
 }

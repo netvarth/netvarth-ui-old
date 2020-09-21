@@ -8,8 +8,44 @@
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
     <div class="container">
         <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
-            <div  *ngIf = "source !== 'business'" class="lgo col-md-3 col-xs-5 pull-left">
+            <div *ngIf="includedfrom =='phome'" class="lgo col-md-3 col-xs-5 pull-left">
+                <a routerLink="/"><img class="busN-logo" src="assets/images/jaldee-businesslogo.png"
+                        alt="Jaldee Logo"></a>
+            </div>
+            <div *ngIf="includedfrom !='phome'" class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
+            </div>
+            <div *ngIf="includedfrom =='phome'" class="pull-right">
+                <span class="visible-xs visible-sm hamburg">
+                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <a class="mob-nav-item" (click)="gotoproducts()"> Jaldee Products</a>
+                        <a class="mob-nav-item" (click)="gotoPricing()">Jaldee Pricing</a>
+                        <a class="mob-nav-item" (click)="gotocontactus()">Contact us</a>
+                    </mat-menu>
+                </span>
+                <ul class="navul" class="hidden-xs hidden-sm">
+                    <li class="navli" (click)="gotoproducts()"> Jaldee Products</li>
+                    <li class="navli" (click)="gotoPricing()">Jaldee Pricing</li>
+                    <li class="navli" (click)="gotosales()">Jaldee Sales</li>
+                    <li class="navli" (click)="gotocontactus()">Contact us</li>
+
+                </ul>
+            </div>
+            <div class="tc1 col-md-3 col-xs-7 no-padding-small ml-auto"
+                *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
+                <div class="topsignouter" [matTooltipClass]="tooltipcls" [matTooltip]="custsignTooltip"><button
+                        class="sgn" (click)="doLogin('consumer')"
+                        *ngIf="!shared_functions.checkLogin()">{{sign_in_cap}}</button> <button class="jn"
+                        (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">{{join_cap}}</button>
+                </div>
+                <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()"><b
+                        style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
+                        (click)="providerLinkClicked()">{{click_here_cap}}</button>
+                </div>
             </div>
             <div class="lg-opt ml-auto" *ngIf="shared_functions.checkLogin() && provider_loggedin">
                 <div class="bnps" *ngIf="headercls=='dashb' || headercls=='itl-steps'">
@@ -34,7 +70,7 @@
                     </div>
                 </div>
                 <div class="lgmem">
-                    <span class="lgin" *ngIf = "source !== 'business'">
+                    <span class="lgin" *ngIf="source !== 'business'">
                         <i *ngIf="qAvailability && qAvailability.availableNow" class="fa fa-circle avail"></i><i
                             *ngIf="qAvailability && !qAvailability.availableNow"
                             class="fa fa-circle notavail"></i>{{userdet.userName | capitalizeFirst}}
@@ -159,23 +195,88 @@
         </div>
     </ng-container>
 </header>
-<div style="background: white" *ngIf="ctype=='provider' && headercls=='dashb'">
-    <div class="col-md-12">
-        <div class="row">
-            <p *ngIf="active_license === 'Gold - FREE Trial 45 days' && license_message != ''"
-                style="color: red; width: 100%; text-align: left;">
-                Your current plan is Gold. 45 days free trial package will expire {{license_message}}.
-                <span style="color: #00aef2" *ngIf="account_type === 'INDEPENDENT_SP'"> <span
-                        (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
-                        </b></span><span style="color: red"> to Upgrade License.</span></span>
-            </p>
-            <p style="width: 100%; text-align: left;"
-                *ngIf="active_license !== 'Gold - FREE Trial 45 days' && active_license !== 'Diamond' && source !== 'business'">
-                Your current license is
-                <i style="color:red">{{active_license}}.</i><span *ngIf="account_type === 'INDEPENDENT_SP'"><span
-                        (click)="upgradeMembership()" style="color: #00aef2" class="pointer-cursor"> <b> Upgrade license
-                            now</b> </span> for more features.</span>
-            </p>
+<header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home' && includedfrom!='phome'">
+    <div class="container no-padding">
+        <div class="col-md-22 col-xs-12 col-sm-12 no-padding">
+            <div class="tp-1">
+                <div class="tp-l" *ngIf="includedfrom!='checkin' && includedfrom!='appt' &&
+                includedfrom!='payment' && includedfrom!='livetrack'  && includedfrom!='pdetails' 
+                && includedfrom!='confirm'">
+                    <a (click)="gotoActiveHome()" class="logo pointer-cursor">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <span class="logo-mini visible-xs"><img src="assets/images/home/logo-icon.png" alt="Jaldee"></span>
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg hidden-xs"><img src="assets/images/jaldee-logo.png" alt="Jaldee"></span>
+                    </a>
+                </div>
+                <div class="tp-r">
+                    <div class="tc1"
+                        [ngClass]="{'pad-rt-10 mgn-up-5': (!shared_functions.checkLogin() && pageSource == 'details')}">
+                        <div class="topsignouter">
+                            <button class="sgn" (click)="doLogin('consumer')"
+                                *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button>
+                            <button class="jn" (click)="doSignup('consumer')"
+                                *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{join_cap}}</button>
+                            <ng-container *ngIf="ctype=='consumer'">
+                                <div class="bnps">
+                                    <div class="inbx" (click)="inboxiconClick()" [matTooltipClass]="tooltipcls"
+                                        [matTooltip]="inboxiconTooltip">
+                                        <div class="ot-bx">
+                                            <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">
+                                                {{inboxUnreadCnt}}</div>
+                                            <i data-icon="H"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="lgmem" *ngIf="ctype=='consumer'">
+                                <span class="lgin cust">
+                                    <span class="hidden-xs">{{userdet.userName}}</span>
+                                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                                        <i class="fa fa-user-circle-o"></i>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="redirectto('dashboard')">
+                                            <i class="icon-dashboard"></i>
+                                            <span>{{dashboard_cap}}</span>
+                                        </button>
+                                        <button mat-menu-item (click)="redirectto('profile')">
+                                            <i class="icon-profile"></i>
+                                            <span>{{user_profile}}</span>
+                                        </button>
+                                        <button mat-menu-item (click)="redirectto('change-password')">
+                                            <i class="icon-password"></i>
+                                            <span>{{change_password}}</span>
+                                        </button>
+                                        <button mat-menu-item (click)="redirectto('change-mobile')">
+                                            <i class="icon-mobile"></i>
+                                            <span>{{change_mobile}}</span>
+                                        </button>
+                                        <button mat-menu-item (click)="redirectto('members')">
+                                            <i class="icon-members"></i>
+                                            <span>{{family_members}}</span>
+                                        </button>
+                                        <button mat-menu-item (click)="help()">
+                                            <i data-icon="B"></i>
+                                            <span>{{help_cap}}</span>
+                                        </button>
+                                        <button mat-menu-item (click)="doLogout()">
+                                            <i class="icon-logout"></i>
+                                            <span>{{logout_cap}}</span>
+                                        </button>
+                                    </mat-menu>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="isprovidertop"
+                            *ngIf="!shared_functions.checkLogin() && source !== 'business' && pageSource!='details'"><b
+                                style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
+                                (click)="providerLinkClicked()">{{click_here_cap}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</header>

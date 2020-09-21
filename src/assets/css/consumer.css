@@ -14,7 +14,7 @@
 }
 
 .consumer-dash .card {
-    margin-bottom: 30px;
+    margin-bottom: 5px;
     -webkit-border-radius: 0;
     border-radius: 0;
     background-clip: padding-box;
@@ -33,7 +33,7 @@
 
 .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
     font-size: 1.2rem;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     font-weight: 700;
     padding: 0px 20px 0px 20px;
@@ -91,7 +91,7 @@
 }
 
 .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-content {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
@@ -1347,12 +1347,12 @@
 
 .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel {
     box-shadow: none;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
 .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     position: relative;
 }
@@ -1401,13 +1401,13 @@
 }
 
 .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
 .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .mat-form-field {
     display: block;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
@@ -1416,7 +1416,7 @@
 }
 
 .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
 }
@@ -1470,7 +1470,7 @@
 }
 
 .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .mat-checkbox {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     display: flex;
@@ -1491,7 +1491,7 @@
 }
 
 .content .c-outer .sidebar .rs-box .bx-block .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .mat-slide-toggle .mat-slide-toggle-content {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
 }
@@ -1620,7 +1620,7 @@
 
 .content .c-outer .c-body .ct2 .ct-r .fltr .search_sort_display .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select, .content .c-outer .c-body .ct2 .ct-r .fltr .search_sort_display .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select {
     padding: 10px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     border: none;
     background: transparent;
@@ -2874,7 +2874,7 @@
 }
 
 .content .c-outer .c-body .srlst.details .middle-sect .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     color: #00aef2;
@@ -3851,7 +3851,7 @@
 }
 
 .more-opt .mo-content .mat-dialog-title {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     font-size: 1.125rem;
     margin-bottom: 20px;
@@ -3956,7 +3956,7 @@
 }
 
 .more-opt .mo-content .mat-dialog-content .more-box .mat-slide-toggle-content {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
     font-size: .875rem;
 }
@@ -3988,7 +3988,7 @@
     width: 100%;
     padding-top: 110px;
     padding-bottom: 70px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
 }
 
@@ -4171,7 +4171,7 @@
     font-size: .875rem;
     padding-left: 40px;
     text-overflow: ellipsis;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     color: #222223;
@@ -4260,7 +4260,7 @@
     border-radius: 0px;
     /*display: flex;
                   align-items: center;*/
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     font-size: .875rem;
@@ -4323,7 +4323,7 @@
 .srch .sa .sa-fld .sa-src {
     width: 100%;
     flex-shrink: 1;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
@@ -4348,7 +4348,7 @@
 .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-infix .mat-input-element, .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-infix .mat-input-element {
     height: 90px;
     padding: 15px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     font-size: 0.875rem;
@@ -4379,7 +4379,7 @@
 .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label, .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper .mat-form-field-label {
     padding-left: 15px;
     padding-top: 10px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
 }
@@ -4987,7 +4987,7 @@
 .ser {
     background: #9adbf5;
     padding: 5em 0;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
 }
 
@@ -5292,7 +5292,7 @@
     display: inline-block;
     margin-bottom: 5em;
     min-width: 200px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: bold;
 }
 
@@ -5328,7 +5328,7 @@
 }
 
 .prv .tfp1 .jn1-1 {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 500;
 }
 

@@ -414,7 +414,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     this.schedule_arr = obj;
   }
   onSubmit(form_data, amenties_FormData) {
-    console.log(amenties_FormData);
+    // console.log(amenties_FormData);
     this.disableButton = true;
     let post_itemdata2;
     // Check whether atleast one schedule is added

@@ -304,7 +304,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   getProviderServices() {
     this.api_loading1 = true;
     let filter;
-    console.log(this.queue_data);
+    // console.log(this.queue_data);
     if (this.queue_data && this.queue_data.provider) {
       filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.queue_data.provider.id };
     } else {
@@ -947,12 +947,12 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   }
   EnableBatch(ev) {
     this.showBatchFields = ev.checked;
-    if (ev.checked) {
-      this.amForm.get('qserveonce').setValue(2);
-    } else {
-      this.amForm.get('qserveonce').setValue(1);
-      this.sbatchStatus = false;
-    }
+    // if (ev.checked) {
+    //   this.amForm.get('qserveonce').setValue(2);
+    // } else {
+    //   this.amForm.get('qserveonce').setValue(1);
+    //   this.sbatchStatus = false;
+    // }
   }
   redirecToSchedules() {
     this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);

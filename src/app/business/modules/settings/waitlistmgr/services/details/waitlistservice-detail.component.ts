@@ -26,12 +26,14 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     breadcrumbs;
     subscription: Subscription; // for gallery
     serviceSubscription: Subscription; // from service module
+    infoSubscription: Subscription;
     servstatus;
     domain;
     can_change_hours = Messages.BPROFILE_CHANGE_SERVICE_WORKING_HOURS_CAP;
     click_here_cap = Messages.CLICK_HERE_CAP;
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
     servicecaption = 'Add Service';
+    hideBack = false;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -39,41 +41,41 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         private activated_route: ActivatedRoute,
         private router: Router,
         private provider_shared_functions: ProviderSharedFuctions) {
-            const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
-            this.domain = user.sector;
-            if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
-                this.breadcrumbs_init = [
-                    {
-                        title: 'Settings',
-                        url: '/provider/settings'
-                    },
-                    {
-                        title: Messages.WAITLIST_MANAGE_CAP,
-                        url: '/provider/settings/q-manager'
-                    },
-                    {
-                        title: Messages.WAITLIST_HEALTHCARE_SERVICES,
-                        url: '/provider/settings/q-manager/services'
-                    }
-                ];
-               this.breadcrumbs = this.breadcrumbs_init;
-              } else {
-                this.breadcrumbs_init = [
-                    {
-                        title: 'Settings',
-                        url: '/provider/settings'
-                    },
-                    {
-                        title: Messages.WAITLIST_MANAGE_CAP,
-                        url: '/provider/settings/q-manager'
-                    },
-                    {
+        const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
+        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
+            this.breadcrumbs_init = [
+                {
+                    title: 'Settings',
+                    url: '/provider/settings'
+                },
+                {
+                    title: Messages.WAITLIST_MANAGE_CAP,
+                    url: '/provider/settings/q-manager'
+                },
+                {
+                    title: Messages.WAITLIST_HEALTHCARE_SERVICES,
+                    url: '/provider/settings/q-manager/services'
+                }
+            ];
+            this.breadcrumbs = this.breadcrumbs_init;
+        } else {
+            this.breadcrumbs_init = [
+                {
+                    title: 'Settings',
+                    url: '/provider/settings'
+                },
+                {
+                    title: Messages.WAITLIST_MANAGE_CAP,
+                    url: '/provider/settings/q-manager'
+                },
+                {
                     title: Messages.WAITLIST_SERVICES_CAP,
                     url: '/provider/settings/q-manager/services'
-                    }
-                ];
-                this.breadcrumbs = this.breadcrumbs_init;
-              }
+                }
+            ];
+            this.breadcrumbs = this.breadcrumbs_init;
+        }
         this.activated_route.params.subscribe(
             (params) => {
                 this.service_id = params.id;
@@ -99,6 +101,9 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+        if (this.infoSubscription) {
+            this.infoSubscription.unsubscribe();
+        }
         if (this.serviceSubscription) {
             this.serviceSubscription.unsubscribe();
         }
@@ -106,6 +111,22 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     ngOnInit() {
         setTimeout(() => this.showGallery = true, 1200);
         this.initServiceParams();
+        this.infoSubscription = this.sharedfunctionObj.getMessage().subscribe(message => {
+            switch (message.ttype) {
+                case 'hide-back':
+                    this.hideBack = true;
+                    this.servicecaption = 'Pre and Post instructions';
+                    break;
+                case 'show-back':
+                    this.hideBack = false;
+                    if (this.service_id) {
+                        this.servicecaption = 'Edit Service';
+                    } else {
+                        this.servicecaption = 'Add Service';
+                    }
+                    break;
+            }
+        });
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             if (input.ttype === 'image-upload') {
                 this.provider_services.uploadServiceGallery(input.sourceId, input.value)

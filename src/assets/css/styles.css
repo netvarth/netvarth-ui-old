@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700|Roboto+Slab:400,700");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 @font-face {
     font-family: "custom-ynw";
     src: url("../fonts/custom/custom-ynw.eot");
@@ -6,38 +6,51 @@
     font-weight: normal;
     font-style: normal;
 }
-
 @font-face {
+    font-family: "Poppins";
+    src: url("../fonts/Poppins/Poppins-Regular.ttf")  format('ttf');
+    /* src: url("../fonts/custom/custom-ynw.eot?#iefix") format("embedded-opentype"), url("../fonts/custom/custom-ynw.woff") format("woff"), url("../fonts/custom/custom-ynw.ttf") format("truetype"), url("../fonts/custom/custom-ynw.svg#custom-ynw") format("svg"); */
+    font-weight: normal;
+    font-style: normal;
+}
+/* @font-face {
+    font-family: 'Lato';
+    src: url('assets/fonts/Thin/Black/Lato-Black.woff2') format('woff2'),
+      url('assets/fonts/Thin/Black/Lato-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+  } */
+/* @font-face {
     font-family: 'Montserrat';
     src: url("../fonts/Montserrat-Medium.eot");
     src: url("../fonts/Montserrat-Medium.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Medium.woff2") format("woff2"), url("../fonts/Montserrat-Medium.woff") format("woff"), url("../fonts/Montserrat-Medium.ttf") format("truetype"), url("../fonts/Montserrat-Medium.svg#Montserrat-Medium") format("svg");
     font-weight: 500;
     font-style: normal;
-}
+} */
 
-@font-face {
+/* @font-face {
     font-family: 'Montserrat';
     src: url("../fonts/Montserrat-Light.eot");
     src: url("../fonts/Montserrat-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Light.woff2") format("woff2"), url("../fonts/Montserrat-Light.woff") format("woff"), url("../fonts/Montserrat-Light.ttf") format("truetype"), url("../fonts/Montserrat-Light.svg#Montserrat-Light") format("svg");
     font-weight: 300;
     font-style: normal;
-}
+} */
 
-@font-face {
+/* @font-face {
     font-family: 'Montserrat';
     src: url("../fonts/Montserrat-Bold.eot");
     src: url("../fonts/Montserrat-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Bold.woff2") format("woff2"), url("../fonts/Montserrat-Bold.woff") format("woff"), url("../fonts/Montserrat-Bold.ttf") format("truetype"), url("../fonts/Montserrat-Bold.svg#Montserrat-Bold") format("svg");
     font-weight: bold;
     font-style: normal;
-}
+} */
 
-@font-face {
+/* @font-face {
     font-family: 'Montserrat';
     src: url("../fonts/Montserrat-Regular.eot");
     src: url("../fonts/Montserrat-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Regular.woff2") format("woff2"), url("../fonts/Montserrat-Regular.woff") format("woff"), url("../fonts/Montserrat-Regular.ttf") format("truetype"), url("../fonts/Montserrat-Regular.svg#Montserrat-Regular") format("svg");
     font-weight: normal;
     font-style: normal;
-}
+} */
 
 [data-icon]:before {
     font-family: "custom-ynw" !important;
@@ -1208,7 +1221,7 @@ body { font-size: 1rem !important}
 }
 
 .content.see-pages .outer-card .card .form-group .mat-radio-group .mat-radio-button {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     margin-right: 10px;
 }
@@ -1463,9 +1476,9 @@ body { font-size: 1rem !important}
 }
 
 @media only screen and (max-width: 575px) {
-    .content.see-pages .outer-card .right-menu {
+    /* .content.see-pages .outer-card .right-menu {
         margin-left: 0;
-    }
+    } */
 }
 
 .content.see-pages .outer-card .right-menu .right-menu-header {

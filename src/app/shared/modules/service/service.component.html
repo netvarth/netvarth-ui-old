@@ -5,13 +5,19 @@
             *ngIf="service_data.status=='ACTIVE'"
             [matTooltip]="(!is_virtual_enable && service.serviceType === 'virtualService') ? 'Please turn on Teleservice in settings' : ''"></span>
         <div class="ot-it">
-            <h4>{{service_data.name | capitalizeFirst}}
-                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
-                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
-                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'Phone'" class="fa phon-icon"></i>
-                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'audioService'" class="fa wtsapaud-icon"></i>
-                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'videoService'" class="fa wtsapvid-icon"></i>
-                <span  *ngIf="service.provider && !userId ">({{service.provider.firstName}})</span>
+            <h4>
+                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                    class="fa meet-icon"></i>
+                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'Zoom'"
+                    class="fa zoom-icon"></i>
+                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'Phone'"
+                    class="fa phon-icon"></i>
+                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'audioService'"
+                    class="fa wtsapaud-icon"></i>
+                <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'videoService'"
+                    class="fa wtsapvid-icon"></i>
+                {{service_data.name | capitalizeFirst}}
+                <span *ngIf="service.provider && !userId ">({{service.provider.firstName}})</span>
             </h4>
             <div class="it-des">
                 {{service_data.description | capitalizeFirst}}
@@ -28,11 +34,12 @@
                 </div>
                 <div class="item" *ngIf="service_data.totalAmount!=0">
                     <span class="ttle">{{price_cap}}</span>
-                    <span class="rupee-font" >{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                    <span class="rupee-font">{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.isPrePayment">
                     <span class="ttle">{{pre_pay_amt}}</span>
-                    <span class="rupee-font">{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                    <span
+                        class="rupee-font">{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.serviceType && !is_donation">
                     <span class="ttle">Service Type</span>
@@ -51,10 +58,14 @@
                     <span>{{service_data.virtualCallingModes[0].callingMode}}</span>
                 </div>
                 <div class="item">
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp Number</span>
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom ID</span>
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'GoogleMeet'" class=" ttle">GoogleMeet ID</span>
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone'" class=" ttle">Phone Number</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp
+                        Number</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom
+                        ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                        class=" ttle">GoogleMeet ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone'" class=" ttle">Phone
+                        Number</span>
                     <span>{{service_data.virtualCallingModes[0].value}}</span>
                 </div>
 
@@ -77,30 +88,31 @@
                 <div class="item" *ngIf="service_data.notificationType && service_data.serviceType === 'donationService' && service_data.notification === true" style="width: 70%;">
                     <span class="ttle"
                         >{{end_cause_notify_cap}}</span> -->
-                        <!-- <span class="noti-it"
+            <!-- <span class="noti-it"
                             *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span> -->
-                        <!-- <span class="noti-it"
+            <!-- <span class="noti-it"
                             >{{end_of_service_notify[service_data.notificationType]}}</span>
                 </div>
             </div> -->
             <!-- <div class="c-ot" *ngIf="!is_donation"> -->
-                <!-- <div class="item" style="margin-right: 10px;" *ngIf="subdomainsettings.serviceBillable">
+            <!-- <div class="item" style="margin-right: 10px;" *ngIf="subdomainsettings.serviceBillable">
                     <span>{{tax_applicable_cap}}:
                         <span class="noti-it" [class.yes]="service_data.taxable==true"
                             [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
                         'Yes' : 'No'}}</span></span>
                 </div> -->
-                <!-- <div class="item" *ngIf="service_data.notificationType && service_data.serviceType !== 'donationService'&& service_data.notification">
+            <!-- <div class="item" *ngIf="service_data.notificationType && service_data.serviceType !== 'donationService'&& service_data.notification">
                     <span class="ttle">{{end_service_notify_cap}}</span> -->
-                        <!-- <span class="noti-it"
+            <!-- <span class="noti-it"
                             *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span> -->
-                        <!-- <span class="noti-it"
+            <!-- <span class="noti-it"
                             >{{end_of_service_notify[service_data.notificationType]}}</span>
                 </div> -->
-                <div class="item" *ngIf="service.serviceType !== 'virtualService' && is_lvtrack_enable && service_data.livetrack">
-                    <span class="ttle">Live tracking </span>
-                    <span>{{(service_data.livetrack ? 'On': 'Off')}}</span>
-                </div>
+            <div class="item"
+                *ngIf="service.serviceType !== 'virtualService' && is_lvtrack_enable && service_data.livetrack">
+                <span class="ttle">Live tracking </span>
+                <span>{{(service_data.livetrack ? 'On': 'Off')}}</span>
+            </div>
             <!-- </div> -->
             <div class="btm-ctrl">
                 <div class="ctrl enable-disable">
@@ -130,7 +142,7 @@
         </ul>
     </div>
     <form [formGroup]="serviceForm" novalidate (ngSubmit)="serviceForm.valid &&
-onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'"
+onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show' && !showInfo"
         class="ynw-common-form-nm wiz-service serviceform">
         <ng-container>
             <div class="form-group">
@@ -165,8 +177,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group" *ngIf="filterDepart && !this.departmentId && !is_donation">
                 <mat-form-field>
-                    <mat-select #deptlist
-                    (selectionChange)="selectDeptHandler(deptlist.value)" formControlName="department" placeholder="Choose Department *">
+                    <mat-select #deptlist (selectionChange)="selectDeptHandler(deptlist.value)"
+                        formControlName="department" placeholder="Choose Department *">
                         <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
                             {{dept.departmentName | capitalizeFirst}}
                         </mat-option>
@@ -205,21 +217,29 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 [ngClass]="{'tel-serv-flex':is_tool, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}"
                 *ngIf="modeselected || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
                 <mat-form-field class="mat-select-virtualsrvcategory">
-                    <mat-label>Select <span *ngIf="serv_mode === 'videoService'">Video</span><span *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
-                    <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name" name="toolname" [ngModelOptions]="{standalone: true}">
+                    <mat-label>Select <span *ngIf="serv_mode === 'videoService'">Video</span><span
+                            *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
+                    <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name"
+                        name="toolname" [ngModelOptions]="{standalone: true}">
                         <mat-option *ngFor="let mode of telemodes" [value]="mode">
-                            <i *ngIf="mode === 'WhatsApp'" [ngClass]="{'fa wtsapaud-icon': (serv_mode === 'audioService' || (service_data && service_data.serviceType==='virtualService' && service_data.virtualServiceType === 'audioService')), 'fa wtsapvid-icon': (serv_mode === 'videoService' || (service_data && service_data.serviceType==='virtualService' && service_data.virtualServiceType === 'videoService'))}"  aria-hidden="true"></i>
+                            <span *ngIf="(mode == 'GoogleMeet'||mode == 'Phone')">&nbsp;</span>
+                            <i *ngIf="mode === 'WhatsApp'"
+                                [ngClass]="{'fa wtsapaud-icon': (serv_mode === 'audioService' || (service_data && service_data.serviceType==='virtualService' && service_data.virtualServiceType === 'audioService')), 'fa wtsapvid-icon': (serv_mode === 'videoService' || (service_data && service_data.serviceType==='virtualService' && service_data.virtualServiceType === 'videoService'))}"
+                                aria-hidden="true"></i>
                             <i *ngIf="mode === 'Zoom'" class="fa zoom-icon"></i>
-                            <i *ngIf="mode === 'GoogleMeet'" class="fa meet-icon" ></i>
+                            <i *ngIf="mode === 'GoogleMeet'" class="fa meet-icon"></i>
                             <i *ngIf="mode === 'Phone'" class="fa phon-icon" aria-hidden="true"></i>
-                           <span class="dash">{{mode}}</span> 
+                            <span *ngIf="(mode == 'GoogleMeet'||mode == 'Phone')">&nbsp;</span>
+                            <span class="dash">{{mode}}</span>
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field
                     *ngIf="is_tool || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)"
                     class="example-full-width mat-select-virtualservice">
-                    <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}" placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}" [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}">
+                    <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}"
+                        placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}"
+                        [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
             </div>
             <div class="form-group"
@@ -231,12 +251,13 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         [ngModelOptions]="{standalone: true}"> </textarea>
                 </mat-form-field>
             </div>
-            <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH'  && !serviceFrom && action === 'add' && !is_donation && users_list.length >= 1">
-                            <mat-checkbox   [(ngModel)]="userspecific" [ngModelOptions]="{standalone: true}" >
-                                User specific
-                            </mat-checkbox>
+            <div class="form-group"
+                *ngIf="bprofile.accountType === 'BRANCH'  && !serviceFrom && action === 'add' && !is_donation && users_list.length >= 1">
+                <mat-checkbox [(ngModel)]="userspecific" [ngModelOptions]="{standalone: true}">
+                    User specific
+                </mat-checkbox>
                 <mat-form-field class="example-full-width" *ngIf="userspecific && users_list.length >= 1">
-                    <mat-select [(value)]="selectedUser"  placeholder="Select user" #userlist
+                    <mat-select [(value)]="selectedUser" placeholder="Select user" #userlist
                         (selectionChange)="selectUserHandler(userlist.value)">
                         <mat-option *ngFor="let usr of users_list" [value]="usr.id">
                             {{usr.firstName}} {{usr.lastName}}
@@ -345,16 +366,16 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
                 </mat-radio-group>
             </div> -->
-            <div class="form-group inline" *ngIf="!is_virtual_serv && is_lvtrack_enable && !is_donation">
+            <!-- <div class="form-group inline" *ngIf="!is_virtual_serv && is_lvtrack_enable && !is_donation">
                 <label class="col-form-label">Enable Live Track</label>
                 <mat-slide-toggle class="example-margin" formControlName="livetrack">
                 </mat-slide-toggle>
-            </div>
+            </div> -->
             <div class="mgn-bt-20">
                 <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
                     style="font-size: 1.1rem;">
                     Payment Info</a>
-                <div class="settings_info" *ngIf="!is_donation"> 
+                <div class="settings_info" *ngIf="!is_donation">
                     Service price, advance amount and more</div>
             </div>
             <div class="row mgn-lt-5 mgn-up-20" *ngIf="showBillingInfo && !is_donation">
@@ -396,7 +417,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                                         formControlName="minPrePaymentAmount" autocomplete="off">
                                 </mat-form-field>
                                 <app-field-error-display
-                                    [displayError]="fed_service.isFieldValid(serviceForm,'minPrePaymentAmount')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'minPrePaymentAmount',
+                                    [displayError]="fed_service.isFieldValid(serviceForm,'minPrePaymentAmount')"
+                                    [errorMsgs]="fed_service.getErrorMessage(serviceForm,'minPrePaymentAmount',
                   {'required' : 'Please enter prepayment amount',
                   'pattern' : 'Enter a valid amount'})">
                                 </app-field-error-display>
@@ -413,14 +435,61 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <!-- </mat-expansion-panel>
 </mat-accordion> -->
             </div>
-            <!-- <div class="mgn-bt-20" *ngIf="!is_virtual_serv && is_lvtrack_enable">
+            <div class="mgn-bt-20">
                 <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
                     style="font-size: 1.1rem;">
                     Additional Info</a>
-                <div class="settings_info" *ngIf="!is_donation"> 
-                    Live tracking and more</div>
-            </div> -->
-            <div class="row mgn-lt-5 mgn-up-20" *ngIf="!is_donation">
+                <!-- <div class="settings_info" *ngIf="!is_donation"> 
+                    Live tracking and more</div> -->
+            </div>
+            <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings && !is_donation">
+                <div class="form-group box-style col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="disp-flex">
+                        <label class="col-form-label">Enable Get Information button &nbsp;&nbsp; </label>
+                        <mat-slide-toggle class="example-margin" formControlName="consumerNoteMandatory"
+                            (change)="changeConsumerNoteStatus($event)">
+                        </mat-slide-toggle>
+                    </div>
+                    <div class="settings_info">
+                        If enabled, {{customer_label}}s will have to click this button and add certain information
+                        before
+                        confirming their service booking</div>
+                    <div class="mgn-up-15" *ngIf="showConsumerNote">
+                        Button label: <span *ngIf="!showEditSection">{{consumerNote}}&nbsp; <i class="fa fa-pencil pointer-cursor"
+                                (click)="editClicked()"></i></span>
+                        <div class="settings_info">
+                            Name this button accordingly so that {{customer_label}} will add the relevant information.
+                            <div> ex. Delivery Address</div>
+                        </div>
+                        <div class="disp-flex" *ngIf="showEditSection">
+                            <mat-form-field class="col-lg-8 col-md-8 col-sm-12 col-xs-12 no-padding">
+                                <input matInput min="0" [(ngModel)]="consumerNote" [ngModelOptions]="{standalone: true}"
+                                    autocomplete="off">
+                            </mat-form-field>
+                            <div class="mgn-up-20 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <span class="cs-btn bt3" (click)="editClicked()">
+                                    ok</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mgn-up-10 mgn-bt-10 box-style col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    To set pre and post instructions
+                    <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
+                        Click here</span>
+                    <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
+                        <i class="fa fa-check"></i><a (click)="showInfoSection()"> Instructions Added</a></div>
+                </div>
+                <div class="form-group mgn-up-20 col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding"
+                    *ngIf="!is_virtual_serv && is_lvtrack_enable">
+                    <div class="disp-flex">
+                        <label class="col-form-label">Enable live track to locate your {{customer_label}}&nbsp;&nbsp;
+                        </label>
+                        <mat-slide-toggle class="example-margin" formControlName="livetrack">
+                        </mat-slide-toggle>
+                    </div>
+                    <div class="settings_info">
+                        Enable live track feature to know the arrival time of your {{customer_label}}</div>
+                </div>
                 <!-- <section class="mgn-bt-30">
                     <label style="margin-bottom: 0 !important" class="col-form-label">Service Price</label>
                     <div class="settings_info">
@@ -458,11 +527,11 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
                     <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
                 </mat-radio-group> -->
-             
+
                 <!-- </mat-expansion-panel>
 </mat-accordion> -->
             </div>
-            <div class="actiondiv" style="margin-top: 10px;">
+            <div class="actiondiv" style="margin-top: 20px;">
                 <div style="margin-bottom:30px;display: inline-flex;">
                     <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;
                     <button type="submit" mat-button [disabled]="!serviceForm.valid || savedisabled"
@@ -489,4 +558,54 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="message-two" (click)="gotoManageQueue()">{{go_to_service_cap}}</div>
         </ng-container>
     </form>
+
+    <div class="ynw-common-form-nm pre-post" *ngIf="showInfo">
+        <div class="mgn-bt-20 mgn-up-20">
+            <div class="form-group preinfo">
+                <label class="col-form-label">Pre instructions&nbsp;&nbsp;</label>
+                <mat-slide-toggle class="example-margin" [(ngModel)]="preInfoEnabled">
+                </mat-slide-toggle>
+            </div>
+            <div class="form-level-settings">These instructions will be seen by your {{customer_label}}s while choosing
+                the service.</div>
+            <div class="form-group pre-post-info" *ngIf="preInfoEnabled">
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Title for instructions *" autocomplete="off" [(ngModel)]="preInfoTitle"
+                        [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+                <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
+                    <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
+                        [ngModelOptions]="{standalone: true}">
+                    </ckeditor>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="mgn-bt-20 mgn-up-20">
+            <div class="form-group postinfo">
+                <label class="col-form-label">Post instructions&nbsp;&nbsp;</label>
+                <mat-slide-toggle class="example-margin" [(ngModel)]="postInfoEnabled">
+                </mat-slide-toggle>
+            </div>
+            <div class="form-level-settings">These instructions will be seen by your {{customer_label}}s after
+                confirmation of the service.</div>
+            <div class="form-group pre-post-info" *ngIf="postInfoEnabled">
+                <mat-form-field>
+                    <input matInput type="text" class="form-control" placeholder="Title for instructions *" autocomplete="off"
+                        [(ngModel)]="postInfoTitle" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+
+                <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
+                    <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="postInfoText"
+                        [ngModelOptions]="{standalone: true}">
+                    </ckeditor>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv no-padding">
+            <button class="cs-btn bt2 savemember" (click)="cancelChanges()">Cancel</button>&nbsp;&nbsp;
+            <button mat-button class="cs-btn bt1 savemember" (click)="showInfoSection()">Save</button>
+        </div>
+    </div>
 </div>

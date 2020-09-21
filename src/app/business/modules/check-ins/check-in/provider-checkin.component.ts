@@ -405,7 +405,6 @@ export class ProviderCheckinComponent implements OnInit {
         this.showCheckin = true;
         this.waitlist_for = [];
         this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
-        console.log(this.customer_data);
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -646,7 +645,9 @@ export class ProviderCheckinComponent implements OnInit {
             taxable: serv.taxable,
             serviceType: serv.serviceType,
             virtualServiceType: serv.virtualServiceType,
-            virtualCallingModes: serv.virtualCallingModes
+            virtualCallingModes: serv.virtualCallingModes,
+            consumerNoteMandatory: serv.consumerNoteMandatory,
+            consumerNoteTitle: serv.consumerNoteTitle
         };
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
@@ -1328,7 +1329,16 @@ export class ProviderCheckinComponent implements OnInit {
                                     }
                                 }
                             }
-                            this.servicesjson = newserviceArray;
+                            if (!this.customer_data.phoneNo) {
+                                this.servicesjson = [];
+                                for (let i = 0; i < newserviceArray.length; i++) {
+                                    if (newserviceArray[i].serviceType !== 'virtualService') {
+                                        this.servicesjson.push(newserviceArray[i]);
+                                    }
+                                }
+                            } else {
+                                this.servicesjson = newserviceArray;
+                            }
                         }
                         if (this.servicesjson.length > 0) {
                             this.sel_ser = this.servicesjson[0].id;
@@ -1412,7 +1422,16 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             }
         }
-        this.servicesjson = newserviceArray;
+        if (!this.customer_data.phoneNo) {
+            this.servicesjson = [];
+            for (let i = 0; i < newserviceArray.length; i++) {
+                if (newserviceArray[i].serviceType !== 'virtualService') {
+                    this.servicesjson.push(newserviceArray[i]);
+                }
+            }
+        } else {
+            this.servicesjson = newserviceArray;
+        }
         if (this.servicesjson.length > 0) {
             this.sel_ser = this.servicesjson[0].id;
             this.setServiceDetails(this.sel_ser);

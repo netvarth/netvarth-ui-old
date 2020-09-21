@@ -106,7 +106,6 @@ export class TeleServiceComponent implements OnInit {
             .subscribe(
                 data => {
                     this.data = data;
-                    console.log(this.data);
                     if (this.data.waitlistStatus === 'started') {
                         this.servStarted = true;
                     } else {
@@ -119,7 +118,6 @@ export class TeleServiceComponent implements OnInit {
                     } else {
                         this.busnes_name = this.data.providerAccount.businessName;
                     }
-                    console.log(this.busnes_name);
                     this.serv_name = this.data.service.name;
                     this.servDetails = this.data.service;
                     if (this.data.waitlistingFor[0].email) {
@@ -141,7 +139,6 @@ export class TeleServiceComponent implements OnInit {
             .subscribe(
                 data => {
                     this.data = data;
-                    console.log(this.data);
                     if (this.data.apptStatus === 'Started') {
                         this.servStarted = true;
                     } else {
@@ -263,7 +260,6 @@ export class TeleServiceComponent implements OnInit {
         if (this.waiting_type === 'checkin') {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
-                    console.log(result);
                     if (result) {
                         if (action === 'DONE') {
                             this.shared_functions.openSnackBar('Meeting has been ended');
@@ -277,7 +273,6 @@ export class TeleServiceComponent implements OnInit {
         } else {
             this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
-                    console.log(result);
                     if (result) {
                         if (action === 'Completed') {
                             this.shared_functions.openSnackBar('Meeting has been ended');
@@ -310,24 +305,25 @@ export class TeleServiceComponent implements OnInit {
             if (result) {
                 if (result === 'completed') {
                     if (this.waiting_type === 'checkin') {
-                        if (this.data.waitlistStatus === 'started') {
+                        // if (this.data.waitlistStatus === 'started') {
                             this.changeWaitlistStatus(this.data, 'DONE');
-                        } else {
-                            this.changeWaitlistStatus(this.data, 'STARTED');
-                            setTimeout(() => {
-                                this.changeWaitlistStatus(this.data, 'DONE');
-                            }, 300);
-                        }
+                        // }
+                        // else {
+                        //     this.changeWaitlistStatus(this.data, 'STARTED');
+                        //     setTimeout(() => {
+                        //         this.changeWaitlistStatus(this.data, 'DONE');
+                        //     }, 300);
+                        // }
                         this.redirecToPreviousPage();
                     } else {
-                        if (this.data.apptStatus === 'Started') {
+                        // if (this.data.apptStatus === 'Started') {
                             this.changeWaitlistStatus(this.data, 'Completed');
-                        } else {
-                            this.changeWaitlistStatus(this.data, 'Started');
-                            setTimeout(() => {
-                                this.changeWaitlistStatus(this.data, 'Completed');
-                            }, 300);
-                        }
+                        // } else {
+                        //     this.changeWaitlistStatus(this.data, 'Started');
+                        //     setTimeout(() => {
+                        //         this.changeWaitlistStatus(this.data, 'Completed');
+                        //     }, 300);
+                        // }
                         this.redirecToPreviousPage();
                     }
                 }

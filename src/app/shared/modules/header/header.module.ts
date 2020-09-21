@@ -19,8 +19,6 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
         MaterialModule,
         LoadingSpinnerModule,
         LazyModule
-        // MatMenuModule,
-        //  MatIconModule
     ],
     declarations: [HeaderComponent],
     exports: [HeaderComponent]

@@ -190,6 +190,21 @@ figure {
   .form-submit:hover {
     background: #4292dc; }
 
+    .form-submit-next {
+      display: inline-block;
+      background: #6dabe4;
+      color: #fff;
+      border-bottom: none;
+      width: auto;
+      padding: 15px 39px;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -o-border-radius: 5px;
+      -ms-border-radius: 5px;
+      margin-top: 25px;
+      cursor: pointer; }
+
     .form-submitback {
       display: inline-block;
       background: #6dabe4;
@@ -1039,3 +1054,6 @@ input[type=checkbox]:not(old):checked + label > span:before {
   .div-grn-outline {
     border: 3px solid green!important;
   }
+  .disableCss {
+    background: darkgray
+}

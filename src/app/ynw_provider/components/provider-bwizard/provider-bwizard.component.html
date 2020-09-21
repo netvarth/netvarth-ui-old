@@ -17,9 +17,140 @@
         </div>
         <div *ngIf="active_step==0 && !loading_active && !expressSignupClicked && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
             class="express-signup step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto no-padding">
-            <h2 style="margin: 0px !important;">Welcome to Jaldee Business</h2>
+            <div></div>
+            <!-- <h2 style="margin: 0px !important;">Welcome to Jaldee Business</h2> -->
             <div class="col-md-12">
-                <h3 class="mgn-up-10 txt-align-center"> Assisted Account Setup </h3>
+
+
+
+
+      <div id="hero-area" class="hero-area-bg">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="contents text-center">
+                <h2 class="head-title wow fadeInUp">WELCOME TO JALDEE BUSINESS</h2>
+                <div class="header-button wow fadeInUp" data-wow-delay="0.3s">
+                  <a class="btn btn-common" (click)="expressSignup()">Take me to assisted account setup</a>
+                </div>
+                <div class="mgn-up-10">
+                    <!-- <a>No Thanks</a> -->
+                    <!-- <span class="no-thanks"> No, thanks </span> -->
+                    <a class="underline" (click)="skipMe()"> I'll explore myself </a>
+                    <!-- <button type="button" class="noThanksBtn">No Thanks</button>
+                    <button type="button" class="exploreBtn" (click)="skipMe()" >I'll explore myself</button> -->
+                   
+                </div>
+              </div>
+              <div class="img-thumb text-center wow fadeInUp" data-wow-delay="0.6s">
+                <img class="img-fluid" src="../../../../assets/images/hero-1.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    <div id="feature">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="text-wrapper">
+              <div>
+                <p class="mb-4">Save your time and just relax. Jaldee team can create your profile and make your account live for free. Jaldee team offers you free Jaldee support and consultation. You just need to do the following:-</p>
+                <a class="btn btn-common" (click)="showSection('why-jaldee')">Why Jaldee business?</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12 col-sm-12 padding-none feature-bg">
+            <div class="feature-thumb">
+              <div class="feature-item wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="icon">
+                  <i class="figure-icon"></i>
+                </div>
+                <div class="feature-content">
+                  <h3>What you have to do</h3>
+                  <p>You fill the form - 5 to 10 minutes of your time.  </p>
+                </div>
+              </div>
+              <div class="feature-item wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
+                <div class="icon">
+                  <i class="company-icon"></i>
+                </div>
+                <div class="feature-content">
+                 <h3>Jaldee team support</h3>
+                  <p>Jaldee team will set up your account. Jaldee team will contact you in 48 hours. </p>
+                </div>
+              </div>
+              <div class="feature-item wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="700ms">
+                <div class="icon">
+                  <i class="group-icon"></i>
+                </div>
+                <div class="feature-content">
+                 <h3>Account Integration</h3>
+                  <p>Jaldee team will share the best practices and how to use Jaldee for your maximum benefit. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+                <!-- <div class="limiter col-lg-12 col-xl-12 col-md-12 no-padding">
+                   
+                    <div>
+                        <div class="available-app-area">
+                            <div class="col-lg-4 col-xl-12 col-md-4 no-padding">
+                                <div>
+                                    <h1 class="welcome_text">Welcome to Jaldee Business</h1>
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-xl-12 col-md-8 no-padding">
+                                <div class="welcome_page_card mgn-bt-30">
+                                    <div class="login"><strong>Assisted Account Setup</strong></div>
+                                    <div>
+                                        <a class="underline pull-right mgn-bt-10" (click)="showSection('why-jaldee')">
+                                            Why Jaldee business?
+                                        </a> </div>
+                                        <div class="col-12 col-sm-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
+                                            <div>
+                                                Save your time and just relax. Jaldee team can create your profile and make your account
+                                            live for free.
+                                            Jaldee team offers you free Jaldee support and consultation.
+                                            You just need to do the following:-
+                                            </div>
+                                            
+                                            <div class="wizard-list mgn-up-10">
+                                                <div class="mgn-bt-5">
+                                                    1. You fill the form - 5 to 10 minutes of your time.
+                                                </div>
+                                                <div class="mgn-bt-5">
+                                                    2. Jaldee team will set up your account. Jaldee team will contact you in 48 hours.
+                                                </div>
+                                                <div class="mgn-bt-5">
+                                                    3. Jaldee team will share the best practices and how to use Jaldee for your maximum
+                                                    benefit.
+                                                </div>
+                                            </div>
+                                            <div class="express-button border-botm mgn-up-50"> <button
+                                                    class="mgn-bt-30 mat-button" (click)="expressSignup()"> Take me to Assisted Account
+                                                    Setup
+                                                </button> </div>
+                                                <div class="mgn-up-10 pull-left">
+                                                    <button type="button" class="noThanksBtn">NO THANKS</button>
+                                                    <button type="button" class="exploreBtn" (click)="skipMe()" >I'll explore myself</button>
+                                                   
+                                                </div>
+                                        </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div> -->
+                <!-- <h3 class="mgn-up-10 txt-align-center"> Assisted Account Setup </h3>
                 <div>
                     <a class="underline pull-right mgn-bt-10" (click)="showSection('why-jaldee')">
                         Why Jaldee business?
@@ -49,7 +180,7 @@
                             <span class="no-thanks"> No, thanks </span>
                             <a class="underline" (click)="skipMe()"> I'll explore myself </a>
                         </div>
-                </div>
+                </div> -->
             </div>
             <div class="clearfix"></div>
         </div>
