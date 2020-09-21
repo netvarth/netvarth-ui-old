@@ -204,7 +204,7 @@
                                         class="lnk pointer-cursor action">See
                                         More</a></div> -->
                                     </div>
-                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
                                             Waiting in Line
                                         </div>
