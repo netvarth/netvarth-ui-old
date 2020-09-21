@@ -265,10 +265,10 @@
                                                 </mat-chip-list>
                                             </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                <div
+                                                <div *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1"
                                                     class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-10 mgn-bt-5 no-padding">
                                                     Appointment Slot</div>
-                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
                                                     <h6 class="card-title serv-time" *ngIf="apptTime">
                                                         <span
                                                             style="display: block;">{{getSingleTime(apptTime.time)}}</span><span>
@@ -277,7 +277,7 @@
                                                 </div>
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
                                                     <div class="checkin-btn-bp pointer-cursor"
-                                                        [class.disableActn]="apptdisable" (click)="handleApptClicked()">
+                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1)" (click)="handleApptClicked()">
                                                         <span *ngIf="!sel_ser_det.isPrePayment">Confirm
                                                             Appointment</span>
                                                         <span *ngIf="sel_ser_det.isPrePayment">Proceed to Payment</span>

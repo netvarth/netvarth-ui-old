@@ -18,8 +18,8 @@
                                 <table class="book-details-sub">
                                     <tbody>
                                         <tr>
-                                            <td width="48%" align="right">Name of the provider</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td> 
                                             <td>{{appointment.providerAccount?.businessName}}</td>
                                         </tr>
                                         <tr *ngIf="appointment.provider">

@@ -10556,7 +10556,7 @@ a {
 }
 
 .wtsapvid-icon {
-  content: url(../images/teleservice/whatsapp_video.svg);
+  content: url(../images/teleservice/whatsapVideo.svg);
   top: 4px;
   position: relative;
   padding-right: 1px;
@@ -11981,4 +11981,7 @@ img.busN-logo {
 }
 .comma-list li:nth-last-child(1)::after {
   content: "" !important;
+}
+.content .c-outer .c-body .srlst .bottom-sect {
+  padding-bottom: 0 !important;
 }

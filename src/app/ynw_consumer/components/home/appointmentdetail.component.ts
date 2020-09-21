@@ -42,6 +42,7 @@ export class ApptDetailComponent implements OnInit {
     ynwUuid: any;
     communication_history: any = [];
     appt;
+    provider_label: any;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -57,6 +58,7 @@ export class ApptDetailComponent implements OnInit {
                 this.providerId = qParams.providerId;
             });
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.provider_label = this.shared_functions.getTerminologyTerm('provider');
         this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
         this.checkin_label = this.shared_functions.getTerminologyTerm('checkin');
         this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);

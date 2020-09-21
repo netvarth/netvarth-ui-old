@@ -36,7 +36,7 @@
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
                                 <h3 *ngIf="businessjson.businessName">{{businessjson.businessName | capitalizeFirst}}
                                 </h3>
-                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding"
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
                                     *ngIf="locationjson && locationjson.length == 1">
                                     <h6 *ngIf="!locationjson[0].isPlaceisSame"><a [href]="locationjson[0].googleMapUrl"
                                             target="_blank" *ngIf="locationjson[0].googleMapUrl!=''"><i
@@ -88,6 +88,14 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 no-padding mgn-up-10">
+                            <div class="verify">
+                                <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
+                                        src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                                <span *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
+                                        src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
+                                <span *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
+                                        src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                            </div>
                             <ul class="bus-actions no-padding" *ngIf="settings_exists && business_exists">
                                 <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
@@ -366,11 +374,11 @@
                                                                 class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                                 <div class="checkin-btn-bp"
                                                                     (click)="checkinClicked(loc, service)"
-                                                                    *ngIf="service.serviceAvailability['calculationMode'] != 'NoCalc'">
+                                                                    *ngIf="!service.serviceAvailability['showToken']">
                                                                     {{getTerminologyTerm('waitlist')}}</div>
                                                                 <div class="checkin-btn-bp"
                                                                     (click)="checkinClicked(loc, service)"
-                                                                    *ngIf="service.serviceAvailability['calculationMode']=='NoCalc'">
+                                                                    *ngIf="service.serviceAvailability['showToken']">
                                                                     {{get_token_btn}}</div>
                                                             </div>
                                                         </div>
@@ -532,11 +540,11 @@
                                                                     class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                                     <div class="checkin-btn-bp"
                                                                         (click)="checkinClicked(loc, service)"
-                                                                        *ngIf="service.serviceAvailability['calculationMode'] != 'NoCalc'">
+                                                                        *ngIf="!service.serviceAvailability['showToken']">
                                                                         {{getTerminologyTerm('waitlist')}}</div>
                                                                     <div class="checkin-btn-bp"
                                                                         (click)="checkinClicked(loc, service)"
-                                                                        *ngIf="service.serviceAvailability['calculationMode']=='NoCalc'">
+                                                                        *ngIf="service.serviceAvailability['showToken']">
                                                                         {{get_token_btn}}</div>
                                                                 </div>
                                                             </div>
@@ -620,11 +628,11 @@
                                                                         class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                                         <div class="checkin-btn-bp"
                                                                             (click)="checkinClicked(loc, service)"
-                                                                            *ngIf="service.serviceAvailability['calculationMode'] != 'NoCalc'">
+                                                                            *ngIf="!service.serviceAvailability['showToken']">
                                                                             {{getTerminologyTerm('waitlist')}}</div>
                                                                         <div class="checkin-btn-bp"
                                                                             (click)="checkinClicked(loc, service)"
-                                                                            *ngIf="service.serviceAvailability['calculationMode']=='NoCalc'">
+                                                                            *ngIf="service.serviceAvailability['showToken']">
                                                                             {{get_token_btn}}</div>
                                                                     </div>
                                                                 </div>
@@ -755,11 +763,11 @@
                                                         class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                         <div class="checkin-btn-bp"
                                                             (click)="checkinClicked(loc, service)"
-                                                            *ngIf="service.serviceAvailability['calculationMode'] != 'NoCalc'">
+                                                            *ngIf="!service.serviceAvailability['showToken']">
                                                             {{getTerminologyTerm('waitlist')}}</div>
                                                         <div class="checkin-btn-bp"
                                                             (click)="checkinClicked(loc, service)"
-                                                            *ngIf="service.serviceAvailability['calculationMode']=='NoCalc'">
+                                                            *ngIf="service.serviceAvailability['showToken']">
                                                             {{get_token_btn}}</div>
                                                     </div>
                                                 </div>

@@ -218,7 +218,7 @@ export class ProviderCheckinComponent implements OnInit {
                 this.calculationMode = qparams.calmode;
             }
             if (qparams.showtoken) {
-                this.showtoken = qparams.showtoken;
+                this.showtoken = JSON.parse(qparams.showtoken);
             }
             if (qparams.deptId) {
                 this.selectDept = JSON.parse(qparams.deptId);
@@ -226,21 +226,20 @@ export class ProviderCheckinComponent implements OnInit {
             if (qparams.userId) {
                 this.selectUser = JSON.parse(qparams.userId);
             }
-            if (this.calculationMode !== 'NoCalc' || (this.calculationMode === 'NoCalc' && !this.showtoken)) {
+            if (this.showtoken) {
                 this.breadcrumbs = [
                     {
-                        title: 'New Check-in',
+                        title: 'New Token',
                         url: 'provider/check-ins'
                     },
                     {
                         title: this.chekin_title
                     }
                 ];
-            }
-            if (this.calculationMode === 'NoCalc' && this.showtoken) {
+            } else {
                 this.breadcrumbs = [
                     {
-                        title: 'New Token',
+                        title: 'New Check-in',
                         url: 'provider/check-ins'
                     },
                     {
