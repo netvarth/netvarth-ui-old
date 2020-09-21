@@ -519,7 +519,7 @@ export class CustomViewComponent implements OnInit {
             for (let i = 0; i < this.selectedServices.length; i++) {
                 for (let j = 0; j < this.schedulestoDisplay.length; j++) {
                     for (let k = 0; k < this.schedulestoDisplay[j].services.length; k++) {
-                        if (this.schedulestoDisplay[j].services[k].id === this.selectedServices[i].id && this.todaysQs.indexOf(this.queuestoDisplay[j]) === -1) {
+                        if (this.schedulestoDisplay[j].services[k].id === this.selectedServices[i].id && this.todaysQs.indexOf(this.schedulestoDisplay[j]) === -1) {
                             this.todaysQs.push(this.schedulestoDisplay[j]);
                         }
                     }
