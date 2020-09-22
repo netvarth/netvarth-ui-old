@@ -79,7 +79,8 @@
                                         <ng-container *ngIf="showmoreSpec  && specializationslist_more.length>0">
                                             <li class="item" *ngFor="let spec of specializationslist_more">{{spec}}</li>
                                         </ng-container>
-                                        <li class="more pointer-cursor" *ngIf="!showmoreSpec && specializationslist_more.length>0"
+                                        <li class="more pointer-cursor"
+                                            *ngIf="!showmoreSpec && specializationslist_more.length>0"
                                             (click)="showSpec()">...more</li>
                                         <!-- <li class="more" *ngIf="showmoreSpec && specializationslist_more.length>0"
                                             (click)="showSpec()">less</li> -->
@@ -108,15 +109,15 @@
                                             {{send_msgs_cap}}
                                         </span>
                                     </a>
-                                </li>                                
+                                </li>
                             </ul>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                             <ul class="bus-actions bus-actions-horiz no-padding">
                                 <li class="centeralign" *ngIf="!showMore"><a class="mgn-lt-3 lnk pointer-cursor"
-                                        (click)="showMoreInfo()" >More Info</a></li>
+                                        (click)="showMoreInfo()">More Info</a></li>
                                 <li class="centeralign" *ngIf="showMore"><a class="mgn-lt-3 lnk pointer-cursor"
-                                    (click)="showMoreInfo()">Less Info</a></li>
+                                        (click)="showMoreInfo()">Less Info</a></li>
                             </ul>
                         </div>
                     </div>
@@ -223,7 +224,7 @@
                         </div>
                     </div>
                 </div>
-            </div>           
+            </div>
         </div>
         <!-- Locations -->
         <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
@@ -293,7 +294,8 @@
                                                                 Next Available Time
                                                             </p>
                                                             <p class="title-style mgn-up-5-m">
-                                                                {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}</p>
+                                                                {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}
+                                                            </p>
                                                         </ng-container>
                                                     </div>
                                                     <div class="card-item-content-action">
@@ -343,25 +345,32 @@
                                                                     *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] > 1">
                                                                     {{service.serviceAvailability['personAhead']}}
                                                                     People</p>
-                                                                <p class="title-style mgn-bt-m-5" *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
+                                                                <p class="title-style mgn-bt-m-5"
+                                                                    *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
                                                                     1 Person</p>
-                                                                <p class="price mgn-bt-5" *ngIf="service.serviceAvailability['personAhead'] > 0">
-                                                                    {{waitinglineCap}}</p> 
-                                                                <p class="title-style mgn-up-5" *ngIf="service.serviceAvailability['personAhead']==0">
+                                                                <p class="price mgn-bt-5"
+                                                                    *ngIf="service.serviceAvailability['personAhead'] > 0">
+                                                                    {{waitinglineCap}}</p>
+                                                                <p class="title-style mgn-up-5"
+                                                                    *ngIf="service.serviceAvailability['personAhead']==0">
                                                                     Be the first in line</p>
                                                             </ng-container>
                                                             <ng-container class="bottom-actions-root"
                                                                 *ngIf="service.serviceAvailability">
-                                                                <ng-container class="checkin-est" *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
+                                                                <ng-container class="checkin-est"
+                                                                    *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
                                                                     <p class="price mgn-bt-0"
                                                                         *ngIf="!service.serviceAvailability['serviceTime']">
                                                                         Est Wait Time</p>
-                                                                    <p class="price mgn-bt-0" *ngIf="service.serviceAvailability['serviceTime']">
+                                                                    <p class="price mgn-bt-0"
+                                                                        *ngIf="service.serviceAvailability['serviceTime']">
                                                                         Next Available Time</p>
-                                                                    <p class="title-style mgn-up-5-m" *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                    <p class="title-style mgn-up-5-m"
+                                                                        *ngIf="!service.serviceAvailability['serviceTime']">
                                                                         {{getTimeToDisplay(service.serviceAvailability['queueWaitingTime'])}}
                                                                     </p>
-                                                                    <p class="title-style mgn-up-5-m" *ngIf="service.serviceAvailability['serviceTime']">
+                                                                    <p class="title-style mgn-up-5-m"
+                                                                        *ngIf="service.serviceAvailability['serviceTime']">
                                                                         {{getAvailibilityForCheckin(service.serviceAvailability['availableDate'], service.serviceAvailability['serviceTime'])}}
                                                                     </p>
                                                                 </ng-container>
@@ -369,7 +378,8 @@
                                                         </ng-container>
                                                     </div>
                                                     <div class="card-item-content-action">
-                                                        <div class="" style="padding-bottom: 10px" *ngIf="service.serviceAvailability">
+                                                        <div class="" style="padding-bottom: 10px"
+                                                            *ngIf="service.serviceAvailability">
                                                             <div
                                                                 class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                                 <div class="checkin-btn-bp"
@@ -452,14 +462,15 @@
 
                                                     </div>
                                                     <div class="card-item-content">
-                                                        <div class="card-item-content-info">                                                            
+                                                        <div class="card-item-content-info">
                                                             <ng-container class="bottom-actions-root"
                                                                 *ngIf="service.serviceAvailability">
                                                                 <p class="price mgn-up-10 mgn-bt-0">
                                                                     Next Available Time
                                                                 </p>
                                                                 <p class="title-style mgn-up-5-m">
-                                                                    {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}</p>
+                                                                    {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}
+                                                                </p>
                                                             </ng-container>
                                                         </div>
                                                         <div class="card-item-content-action">
@@ -509,25 +520,32 @@
                                                                         *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] > 1">
                                                                         {{service.serviceAvailability['personAhead']}}
                                                                         People</p>
-                                                                    <p class="title-style mgn-bt-m-5" *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
+                                                                    <p class="title-style mgn-bt-m-5"
+                                                                        *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
                                                                         1 Person</p>
-                                                                    <p class="price mgn-bt-5" *ngIf="service.serviceAvailability['personAhead'] > 0">
-                                                                        {{waitinglineCap}}</p> 
-                                                                    <p class="title-style mgn-up-5" *ngIf="service.serviceAvailability['personAhead']==0">
+                                                                    <p class="price mgn-bt-5"
+                                                                        *ngIf="service.serviceAvailability['personAhead'] > 0">
+                                                                        {{waitinglineCap}}</p>
+                                                                    <p class="title-style mgn-up-5"
+                                                                        *ngIf="service.serviceAvailability['personAhead']==0">
                                                                         Be the first in line</p>
                                                                 </ng-container>
                                                                 <ng-container class="bottom-actions-root"
                                                                     *ngIf="service.serviceAvailability">
-                                                                    <ng-container class="checkin-est" *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
+                                                                    <ng-container class="checkin-est"
+                                                                        *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
                                                                         <p class="price mgn-bt-0"
                                                                             *ngIf="!service.serviceAvailability['serviceTime']">
                                                                             Est Wait Time</p>
-                                                                        <p class="price mgn-bt-0" *ngIf="service.serviceAvailability['serviceTime']">
+                                                                        <p class="price mgn-bt-0"
+                                                                            *ngIf="service.serviceAvailability['serviceTime']">
                                                                             Next Available Time</p>
-                                                                        <p class="title-style mgn-up-5-m" *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                        <p class="title-style mgn-up-5-m"
+                                                                            *ngIf="!service.serviceAvailability['serviceTime']">
                                                                             {{getTimeToDisplay(service.serviceAvailability['queueWaitingTime'])}}
                                                                         </p>
-                                                                        <p class="title-style mgn-up-5-m" *ngIf="service.serviceAvailability['serviceTime']">
+                                                                        <p class="title-style mgn-up-5-m"
+                                                                            *ngIf="service.serviceAvailability['serviceTime']">
                                                                             {{getAvailibilityForCheckin(service.serviceAvailability['availableDate'], service.serviceAvailability['serviceTime'])}}
                                                                         </p>
                                                                     </ng-container>
@@ -535,7 +553,8 @@
                                                             </ng-container>
                                                         </div>
                                                         <div class="card-item-content-action">
-                                                            <div class="" style="padding-bottom: 10px" *ngIf="service.serviceAvailability">
+                                                            <div class="" style="padding-bottom: 10px"
+                                                                *ngIf="service.serviceAvailability">
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                                     <div class="checkin-btn-bp"
@@ -597,25 +616,32 @@
                                                                             *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] > 1">
                                                                             {{service.serviceAvailability['personAhead']}}
                                                                             People</p>
-                                                                        <p class="title-style mgn-bt-m-5" *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
+                                                                        <p class="title-style mgn-bt-m-5"
+                                                                            *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
                                                                             1 Person</p>
-                                                                        <p class="price mgn-bt-5" *ngIf="service.serviceAvailability['personAhead'] > 0">
-                                                                            {{waitinglineCap}}</p> 
-                                                                        <p class="title-style mgn-up-5" *ngIf="service.serviceAvailability['personAhead']==0">
+                                                                        <p class="price mgn-bt-5"
+                                                                            *ngIf="service.serviceAvailability['personAhead'] > 0">
+                                                                            {{waitinglineCap}}</p>
+                                                                        <p class="title-style mgn-up-5"
+                                                                            *ngIf="service.serviceAvailability['personAhead']==0">
                                                                             Be the first in line</p>
                                                                     </ng-container>
                                                                     <ng-container class="bottom-actions-root"
                                                                         *ngIf="service.serviceAvailability">
-                                                                        <ng-container class="checkin-est" *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
+                                                                        <ng-container class="checkin-est"
+                                                                            *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
                                                                             <p class="price mgn-bt-0"
                                                                                 *ngIf="!service.serviceAvailability['serviceTime']">
                                                                                 Est Wait Time</p>
-                                                                            <p class="price mgn-bt-0" *ngIf="service.serviceAvailability['serviceTime']">
+                                                                            <p class="price mgn-bt-0"
+                                                                                *ngIf="service.serviceAvailability['serviceTime']">
                                                                                 Next Available Time</p>
-                                                                            <p class="title-style mgn-up-5-m" *ngIf="!service.serviceAvailability['serviceTime']">
+                                                                            <p class="title-style mgn-up-5-m"
+                                                                                *ngIf="!service.serviceAvailability['serviceTime']">
                                                                                 {{getTimeToDisplay(service.serviceAvailability['queueWaitingTime'])}}
                                                                             </p>
-                                                                            <p class="title-style mgn-up-5-m" *ngIf="service.serviceAvailability['serviceTime']">
+                                                                            <p class="title-style mgn-up-5-m"
+                                                                                *ngIf="service.serviceAvailability['serviceTime']">
                                                                                 {{getAvailibilityForCheckin(service.serviceAvailability['availableDate'], service.serviceAvailability['serviceTime'])}}
                                                                             </p>
                                                                         </ng-container>
@@ -623,7 +649,8 @@
                                                                 </ng-container>
                                                             </div>
                                                             <div class="card-item-content-action">
-                                                                <div class="" style="padding-bottom: 10px" *ngIf="service.serviceAvailability">
+                                                                <div class="" style="padding-bottom: 10px"
+                                                                    *ngIf="service.serviceAvailability">
                                                                     <div
                                                                         class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                                         <div class="checkin-btn-bp"
@@ -677,13 +704,15 @@
                                             </a>
                                         </div>
                                         <div class="card-item-content">
-                                            <div class="card-item-content-info">                                               
-                                                <ng-container class="bottom-actions-root" *ngIf="service.serviceAvailability">
+                                            <div class="card-item-content-info">
+                                                <ng-container class="bottom-actions-root"
+                                                    *ngIf="service.serviceAvailability">
                                                     <p class="price mgn-up-10 mgn-bt-0">
                                                         Next Available Time
                                                     </p>
                                                     <p class="title-style mgn-up-5-m">
-                                                        {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}</p>
+                                                        {{getAvailabilityforAppt(service.serviceAvailability.nextAvailableDate, service.serviceAvailability.nextAvailable)}}
+                                                    </p>
                                                 </ng-container>
                                             </div>
                                             <div class="card-item-content-action">
@@ -732,25 +761,32 @@
                                                             *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] > 1">
                                                             {{service.serviceAvailability['personAhead']}}
                                                             People</p>
-                                                        <p class="title-style mgn-bt-m-5" *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
+                                                        <p class="title-style mgn-bt-m-5"
+                                                            *ngIf="service.serviceAvailability['personAhead']!=0 && service.serviceAvailability['personAhead'] == 1">
                                                             1 Person</p>
-                                                        <p class="price mgn-bt-5" *ngIf="service.serviceAvailability['personAhead'] > 0">
-                                                            {{waitinglineCap}}</p> 
-                                                        <p class="title-style mgn-up-5" *ngIf="service.serviceAvailability['personAhead']==0">
+                                                        <p class="price mgn-bt-5"
+                                                            *ngIf="service.serviceAvailability['personAhead'] > 0">
+                                                            {{waitinglineCap}}</p>
+                                                        <p class="title-style mgn-up-5"
+                                                            *ngIf="service.serviceAvailability['personAhead']==0">
                                                             Be the first in line</p>
                                                     </ng-container>
                                                     <ng-container class="bottom-actions-root"
                                                         *ngIf="service.serviceAvailability">
-                                                        <ng-container class="checkin-est" *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
+                                                        <ng-container class="checkin-est"
+                                                            *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
                                                             <p class="price mgn-bt-0"
                                                                 *ngIf="!service.serviceAvailability['serviceTime']">
                                                                 Est Wait Time</p>
-                                                            <p class="price mgn-bt-0" *ngIf="service.serviceAvailability['serviceTime']">
+                                                            <p class="price mgn-bt-0"
+                                                                *ngIf="service.serviceAvailability['serviceTime']">
                                                                 Next Available Time</p>
-                                                            <p class="title-style mgn-up-5-m" *ngIf="!service.serviceAvailability['serviceTime']">
+                                                            <p class="title-style mgn-up-5-m"
+                                                                *ngIf="!service.serviceAvailability['serviceTime']">
                                                                 {{getTimeToDisplay(service.serviceAvailability['queueWaitingTime'])}}
                                                             </p>
-                                                            <p class="title-style mgn-up-5-m" *ngIf="service.serviceAvailability['serviceTime']">
+                                                            <p class="title-style mgn-up-5-m"
+                                                                *ngIf="service.serviceAvailability['serviceTime']">
                                                                 {{getAvailibilityForCheckin(service.serviceAvailability['availableDate'], service.serviceAvailability['serviceTime'])}}
                                                             </p>
                                                         </ng-container>
@@ -758,9 +794,9 @@
                                                 </ng-container>
                                             </div>
                                             <div class="card-item-content-action">
-                                                <div class="" style="padding-bottom: 10px" *ngIf="service.serviceAvailability">
-                                                    <div
-                                                        class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                                <div class="" style="padding-bottom: 10px"
+                                                    *ngIf="service.serviceAvailability">
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                         <div class="checkin-btn-bp"
                                                             (click)="checkinClicked(loc, service)"
                                                             *ngIf="!service.serviceAvailability['showToken']">
@@ -819,11 +855,13 @@
                                     <div class="card-item-content-info">
                                         <div class="card-item-content-action">
                                             <div class="" style="padding-bottom: 10px">
-                                                <p class="price mgn-bt-0 mgn-up-10">
+                                                <!-- <p class="price mgn-bt-0 mgn-up-10">
                                                     Upto
-                                                </p>
-                                                <p class="title-style mgn-up-5-m">
+                                                </p> -->
+                                                <p class="title-style mgn-up-5-m mgn-up-10">
                                                     <span
+                                                        class="rupee-font">&#x20b9;</span><span>{{service.minDonationAmount}}</span>
+                                                    - <span
                                                         class="rupee-font">&#x20b9;</span><span>{{service.maxDonationAmount}}</span>
                                                 </p>
                                             </div>
