@@ -571,7 +571,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="form-group pre-post-info" *ngIf="preInfoEnabled">
                 <mat-form-field>
                     <input matInput type="text" placeholder="Title for instructions *" autocomplete="off" [(ngModel)]="preInfoTitle"
-                        [ngModelOptions]="{standalone: true}">
+                        [ngModelOptions]="{standalone: true}" maxlength="20">
                 </mat-form-field>
                 <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
                     <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
@@ -591,8 +591,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 confirmation of the service.</div>
             <div class="form-group pre-post-info" *ngIf="postInfoEnabled">
                 <mat-form-field>
-                    <input matInput type="text" class="form-control" placeholder="Title for instructions *" autocomplete="off"
-                        [(ngModel)]="postInfoTitle" [ngModelOptions]="{standalone: true}">
+                    <input matInput type="text" placeholder="Title for instructions *" autocomplete="off"
+                        [(ngModel)]="postInfoTitle" [ngModelOptions]="{standalone: true}" maxlength="20">
                 </mat-form-field>
 
                 <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">

@@ -145,10 +145,13 @@
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
                                             <label>
-                                                <input type="text" maxlength="10" placeholder="Donor name"
-                                                    class="phonenum" [(ngModel)]="donorName" />
-                                                <button (click)="goBack()" class="btn bt3 btn-default coupon-apply-btn"
+                                                <input type="text" maxlength="10" placeholder="donor name"
+                                                    class="phonenum" [(ngModel)]="donor" />
+                                                <button (click)="addDonor()" class="btn bt3 btn-default coupon-apply-btn"
                                                     type="button">Ok</button>
+                                                    <app-field-error-display [displayError]="true"
+                                                    *ngIf="donorerror != null" errorMsg={{donorerror}}>
+                                                </app-field-error-display>
                                             </label>
                                         </div>
                                     </div>

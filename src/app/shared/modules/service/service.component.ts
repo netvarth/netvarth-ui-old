@@ -447,9 +447,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             form_data['preInfoEnabled'] = this.preInfoEnabled;
             form_data['postInfoEnabled'] = this.postInfoEnabled;
-            form_data['preInfoTitle'] = this.preInfoEnabled ? this.preInfoTitle : '';
+            form_data['preInfoTitle'] = this.preInfoEnabled ? this.preInfoTitle.trim() : '';
             form_data['preInfoText'] = this.preInfoEnabled ? this.preInfoText : '';
-            form_data['postInfoTitle'] = this.postInfoEnabled ? this.postInfoTitle : '';
+            form_data['postInfoTitle'] = this.postInfoEnabled ? this.postInfoTitle.trim() : '';
             form_data['postInfoText'] = this.postInfoEnabled ? this.postInfoText : '';
             form_data['consumerNoteTitle'] = form_data['consumerNoteMandatory'] ? this.consumerNote : '';
             if (!this.subdomainsettings.serviceBillable) {
@@ -769,9 +769,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
             this.showInfo = true;
             this.sharedFunctons.sendMessage({ 'ttype': 'hide-back' });
         } else {
-            if (this.preInfoEnabled && this.preInfoTitle === '') {
+            if (this.preInfoEnabled && this.preInfoTitle.trim() === '') {
                 this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
-            } else if (this.preInfoEnabled && this.preInfoTitle === '') {
+            } else if (this.preInfoEnabled && this.preInfoTitle.trim() === '') {
                 this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
             } else {
                 this.showInfo = false;

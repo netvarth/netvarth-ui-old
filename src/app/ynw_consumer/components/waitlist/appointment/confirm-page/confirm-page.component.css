@@ -1,7 +1,7 @@
 
 .post-info {
   display: flex;
-  min-height: 600px;
+  min-height: 650px;
 }
 .details{
   width: 100%;
@@ -39,6 +39,8 @@
   margin: auto;
   align-items: center;
   margin-top: 10px;
+  max-height: 250px;
+  overflow: auto;
 }
 .ok-btn {
   text-align: center;

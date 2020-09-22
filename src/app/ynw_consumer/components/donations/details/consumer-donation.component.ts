@@ -199,6 +199,8 @@ export class ConsumerDonationComponent implements OnInit {
     checkIn_type: any;
     origin: string;
     pGateway: any;
+    donorerror = null;
+    donor = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -231,7 +233,7 @@ export class ConsumerDonationComponent implements OnInit {
         if (activeUser) {
             this.customer_data = activeUser;
         }
-        this.donorName = this.customer_data.firstName + ' ' + this.customer_data.lastName;
+        this.donorName = this.donor = this.customer_data.firstName + ' ' + this.customer_data.lastName;
         this.main_heading = this.checkinLabel; // 'Check-in';
         this.maxsize = 1;
         this.step = 1;
@@ -329,6 +331,15 @@ export class ConsumerDonationComponent implements OnInit {
                 this.api_loading1 = false;
             });
     }
+    addDonor() {
+        if (this.donor === '') {
+            this.donorerror = 'Please enter the donor name';
+            return;
+        } else {
+            this.donorName = this.donor;
+            this.action = '';
+        }
+    }
     addPhone() {
         this.resetApiErrors();
         this.resetApi();
@@ -338,7 +349,7 @@ export class ConsumerDonationComponent implements OnInit {
         const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
         const result1 = pattern1.test(curphone);
         if (this.selected_phone === '') {
-            this.phoneerror = Messages.BPROFILE_PHONENO;
+            this.phoneerror = 'Please enter the mobile number';
             return;
         } else if (!result) {
             this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
