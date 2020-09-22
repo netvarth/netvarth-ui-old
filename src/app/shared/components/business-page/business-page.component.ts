@@ -1553,7 +1553,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'fav') {
           this.getFavProviders(passParam['mod']);
         } else if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
+          this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else {
@@ -1588,7 +1588,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'fav') {
           this.getFavProviders(passParam['mod']);
         } else if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
+          this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else {
@@ -1878,23 +1878,24 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     this.claimdialogRef.afterClosed().subscribe(result => {
     });
   }
-  payClicked(locid, locname, cdate, chdatereq) {
+  payClicked(locid, locname, cdate, service) {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showDonation(locid, locname, cdate, 'consumer');
+      this.showDonation(locid, cdate, service);
     } else if (this.userType === '') {
       const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, consumer: 'consumer' };
       this.doLogin('consumer', passParam);
     }
   }
-  showDonation(locid, locname, curdate, origin?) {
+  showDonation(locid, curdate, service) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         loc_id: locid,
         sel_date: curdate,
         cur: this.changedate_req,
         unique_id: this.provider_id,
-        account_id: this.provider_bussiness_id
+        account_id: this.provider_bussiness_id,
+        service_id: service.id
       }
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);

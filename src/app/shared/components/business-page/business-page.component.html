@@ -861,7 +861,12 @@
                                                 <p class="title-style mgn-up-5-m mgn-up-10">
                                                     <span
                                                         class="rupee-font">&#x20b9;</span><span>{{service.minDonationAmount}}</span>
-                                                    - <span
+                                                </p>
+                                                <p class="price">
+                                                    to
+                                                </p>
+                                                <p class="title-style mgn-up-5-m">    
+                                                    <span
                                                         class="rupee-font">&#x20b9;</span><span>{{service.maxDonationAmount}}</span>
                                                 </p>
                                             </div>
@@ -871,7 +876,7 @@
                                         <div class="" style="padding-bottom: 10px">
                                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                 <div class="checkin-btn-bp donate-btn-bp "
-                                                    (click)="payClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)">
+                                                (click)="payClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], service)">
                                                     Donate</div>
                                             </div>
                                         </div>

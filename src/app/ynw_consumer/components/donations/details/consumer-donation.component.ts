@@ -16,9 +16,12 @@ import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.m
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
+import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
+import { MatDialog } from '@angular/material';
 @Component({
     selector: 'app-consumer-donation',
-    templateUrl: './consumer-donation.component.html'
+    templateUrl: './consumer-donation.component.html',
+    styleUrls: ['./consumer-donation.component.css']
 })
 export class ConsumerDonationComponent implements OnInit {
     checkinSubscribtion: Subscription;
@@ -185,7 +188,7 @@ export class ConsumerDonationComponent implements OnInit {
     carouselOne;
     notes = false;
     attachments = false;
-    action: any = '';
+    action = '';
     // breadcrumbs;
     // breadcrumb_moreoptions: any = [];
     showEditView = false;
@@ -197,7 +200,7 @@ export class ConsumerDonationComponent implements OnInit {
     origin: string;
     pGateway: any;
     constructor(public fed_service: FormMessageDisplayService,
-        private fb: FormBuilder,
+        private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
@@ -209,28 +212,18 @@ export class ConsumerDonationComponent implements OnInit {
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
-        private location: Location ) {
+        private location: Location) {
         this.route.queryParams.subscribe(
             params => {
                 // tslint:disable-next-line:radix
                 this.sel_loc = parseInt(params.loc_id);
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
-                // this.sel_checkindate = params.sel_date;
-                // this.hold_sel_checkindate = this.sel_checkindate;
-                this.action = params.action;
+                this.sel_ser = JSON.parse(params.service_id);
+                // this.action = params.action;
             });
     }
     ngOnInit() {
-        // this.breadcrumbs = [
-        //     {
-        //         title: 'My Jaldee',
-        //         url: 'consumer'
-        //     },
-        //     {
-        //         title: 'Donations'
-        //     }
-        // ];
         this.getServicebyLocationId(this.sel_loc);
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
@@ -357,12 +350,18 @@ export class ConsumerDonationComponent implements OnInit {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
             this.edit = true;
+            this.action = '';
         }
     }
     editPhone() {
         this.edit = false;
+        this.action = 'phone';
         this.selected_phone = this.userPhone;
     }
+    editDonor() {
+        this.action = 'donor';
+    }
+
     validateEmail(mail) {
         const emailField = mail;
         const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -492,27 +491,27 @@ export class ConsumerDonationComponent implements OnInit {
                 this.sharedFunctionobj.setitemonLocalStorage('acid', this.account_id);
                 this.sharedFunctionobj.setitemonLocalStorage('p_src', 'c_d');
                 this.shared_services.consumerPayment(payInfo)
-                .subscribe((pData: any) => {
-                    this.checkIn_type = 'donations';
-                    this.origin = 'consumer';
-                    this.pGateway = pData.paymentGateway;
-                    if (this.pGateway === 'RAZORPAY') {
-                        this.paywithRazorpay(pData);
-                       } else {
-                    if (pData['response']) {
-                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                            setTimeout(() => {
-                                if (paymentWay === 'DC') {
-                                    this.document.getElementById('payuform').submit();
-                                } else {
-                                    this.document.getElementById('paytmform').submit();
-                                }
-                            }, 2000);
+                    .subscribe((pData: any) => {
+                        this.checkIn_type = 'donations';
+                        this.origin = 'consumer';
+                        this.pGateway = pData.paymentGateway;
+                        if (this.pGateway === 'RAZORPAY') {
+                            this.paywithRazorpay(pData);
                         } else {
-                            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                            if (pData['response']) {
+                                this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                                setTimeout(() => {
+                                    if (paymentWay === 'DC') {
+                                        this.document.getElementById('payuform').submit();
+                                    } else {
+                                        this.document.getElementById('paytmform').submit();
+                                    }
+                                }, 2000);
+                            } else {
+                                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                            }
                         }
-                    }
                     },
                         error => {
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -532,7 +531,7 @@ export class ConsumerDonationComponent implements OnInit {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorpayService.payWithRazor(this.razorModel , this.origin , this.checkIn_type );
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
     }
     addEmail() {
         this.resetApiErrors();
@@ -582,7 +581,11 @@ export class ConsumerDonationComponent implements OnInit {
         }
     }
     goBack() {
-        this.location.back();
+        if (this.action === '') {
+            this.location.back();
+        } else {
+            this.action = '';
+        }
     }
     handleGoBack(cstep) {
         this.resetApi();
@@ -783,7 +786,7 @@ export class ConsumerDonationComponent implements OnInit {
                 this.serviceslist = data;
                 this.sel_ser_det = [];
                 if (this.servicesjson.length > 0) {
-                    this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
+                    // this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
                     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
                 }
                 this.api_loading1 = false;
@@ -896,5 +899,31 @@ export class ConsumerDonationComponent implements OnInit {
     }
     isNumeric(evt) {
         return this.sharedFunctionobj.isNumeric(evt);
+    }
+    showServiceDetail(serv, busname) {
+        let servData;
+        if (serv.serviceType && serv.serviceType === 'donationService') {
+            servData = {
+                bname: busname,
+                serdet: serv,
+                serv_type: 'donation'
+            };
+        } else {
+            servData = {
+                bname: busname,
+                serdet: serv
+            };
+        }
+        const servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+            disableClose: true,
+            data: servData
+        });
+        servicedialogRef.afterClosed().subscribe(() => {
+        });
+    }
+    changeService() {
+        this.action = 'service';
     }
 }
