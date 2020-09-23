@@ -598,7 +598,7 @@
                                                         <div
                                                             *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' ||(search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'])">
                                                             <div
-                                                                *ngIf="search_result.fields['estimatedtime_det']['personAhead']">
+                                                                *ngIf="search_result.fields['estimatedtime_det']['personAhead'] && search_result.fields['estimatedtime_det']['personAhead'] >= 0">
                                                                 <b>{{search_result.fields['estimatedtime_det']['personAhead']}}
                                                                 </b><span class="people-ahead"
                                                                     *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1">{{people_ahead}}</span>
