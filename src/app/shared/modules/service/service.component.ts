@@ -507,6 +507,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             source = 'edit';
         }
+        this.showConsumerNote = false;
         const serviceActionModel = {};
         serviceActionModel['action'] = 'close';
         serviceActionModel['source'] = source;
@@ -752,8 +753,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
         editor.getData();
 
     }
-    changeConsumerNoteStatus() {
-        this.showConsumerNote = !this.showConsumerNote;
+    changeConsumerNoteStatus(ev) {
+        this.showConsumerNote = ev.checked;
     }
     editClicked() {
         this.showEditSection = !this.showEditSection;
