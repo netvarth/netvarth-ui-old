@@ -263,10 +263,10 @@ ul.details li {
   margin: 5px;
   font-weight: 500 !important;
 }
-ul.bus-actions li {
+ul.bus-actions li, .search-action {
   list-style: none !important;
   display: inline-block;
-  margin: 10px;
+  margin: 5px;
   font-weight: 500 !important;
   font-size: 1.2rem;
   border: 1px solid #999;
@@ -279,7 +279,7 @@ ul.bus-actions li a.lnk {
   font-weight: 500 !important;
   font-size: 0.80rem !important;
 }
-ul.bus-actions li a .img {
+ul.bus-actions li a .img, .search-action .img {
   width: 25px;
   height: 25px;
 }
