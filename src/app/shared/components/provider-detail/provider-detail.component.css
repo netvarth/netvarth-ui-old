@@ -75,7 +75,8 @@ ul.details li {
 ul.bus-actions li {
   list-style: none !important;
   display: block;
-  margin: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
   font-weight: 500 !important;
   font-size: 1.2rem;
   /* text-transform: uppercase; */
@@ -905,4 +906,8 @@ ul.details.badges li {
   .verify span{
     float: none;
   }
+}
+.badge-smalldv {
+  position: absolute !important;
+  right: 0 !important;
 }

@@ -15,7 +15,15 @@
                             App store</span></a>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-3 col-xs-12 col-sm-4 col-lg-3">
+                    <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3">
+                        <div class="badge-smalldv  visible-xs">
+                        <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
+                            src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                    <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
+                            src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
+                    <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
+                            src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                        </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                             <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
                                 class="img-circle img-responsive pointer-cursor"
@@ -29,10 +37,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9 col-xs-12 col-sm-8 col-lg-9 no-padding bus-title-content" *ngIf="businessjson">
-                        <div class="col-md-8 col-xs-9 col-sm-9 col-lg-9 no-padding">
+                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 no-padding bus-title-content" *ngIf="businessjson">
+                        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-9 no-padding">
                             <div class="no-padding"
-                                [ngClass]="{'col-md-9':(businessjson.verifyLevel == 'BASIC' ||
+                                [ngClass]="{'col-md-9 col-sm-9':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
                                 <h3 *ngIf="businessjson.businessName">{{businessjson.businessName | capitalizeFirst}}
                                 </h3>
@@ -87,17 +95,25 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 col-xs-3 col-sm-3 col-lg-3 no-padding mgn-up-10">
-                            <div class="verify">
-                                <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
-                                        src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                                <span *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
-                                        src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
-                                <span *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
-                                        src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                            <div class="col-sm-3 visible-sm">
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
+                                    src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
+                                    src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
+                                    src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                             </div>
-                            <ul class="bus-actions no-padding" *ngIf="settings_exists && business_exists">
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 no-padding">
+                            <div class="verify hidden-xs hidden-sm">
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
+                                    src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
+                                    src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
+                                    src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                                </div>
+                            <ul class="bus-actions no-padding mgn-up-10" *ngIf="settings_exists && business_exists">
                                 <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         {{add_to_fav_cap}}
