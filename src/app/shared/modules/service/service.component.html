@@ -73,11 +73,11 @@
             <div class="c-ot" *ngIf="is_donation">
                 <div class="item" *ngIf="service_data.minDonationAmount">
                     <span class="ttle">Min Amount</span>
-                    <span>{{service_data.minDonationAmount}}</span>
+                    <span>{{service_data.minDonationAmount| currency:'&#8377;'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.maxDonationAmount">
                     <span class="ttle">Max Amount</span>
-                    <span>{{service_data.maxDonationAmount}}</span>
+                    <span>{{service_data.maxDonationAmount| currency:'&#8377;'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.multiples">
                     <span class="ttle">Multiples</span>
