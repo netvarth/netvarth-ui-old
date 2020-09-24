@@ -186,7 +186,8 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   }
 
   getDefaultMessages() {
-    this.provider_services.getProviderMessages()
+    if (this.data.appt || this.data.type === 'appt') {
+    this.provider_services.getApptProviderMessages()
       .subscribe(
         (data: any) => {
           this.default_message_arr = data;
@@ -200,6 +201,22 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
         }
       );
+    } else {
+      this.provider_services.getProviderMessages()
+      .subscribe(
+        (data: any) => {
+          this.default_message_arr = data;
+          this.default_message = data.cancel || '';
+          /*this.cur_msg = this.replacedMessage();
+          if (this.amForm.get('reason')) {
+           this.amForm.get('reason').setValue(this.cur_msg);
+          }*/
+        },
+        () => {
+
+        }
+      );
+    }
   }
   replacedMessage() {
     let retmsg = '';

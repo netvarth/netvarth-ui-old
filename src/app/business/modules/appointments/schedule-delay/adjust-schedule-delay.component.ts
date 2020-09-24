@@ -186,7 +186,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.char_count = this.max_char_count - this.amForm.get('message').value.length;
   }
   getDefaultMessages() {
-    this.provider_services.getProviderMessages()
+    this.provider_services.getApptProviderMessages()
       .subscribe(
         () => {
           // this.default_message = data.delay || '';
