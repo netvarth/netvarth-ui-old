@@ -291,7 +291,7 @@
                                                                 </div>
                                                                 <div class="card"
                                                                         *ngIf="sqShowActiveQTodayCount[i] || sqShowActiveQFutureCount[i]">
-                                                                        <h5>Check-ins</h5>
+                                                                        <h5>{{tokencount}}</h5>
                                                                         <div class="c-ot m0">
                                                                                 <!-- <div class="col-md-12" *ngIf="todayQLoading[i]">
                                                                                                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
@@ -326,12 +326,12 @@
                                                                                         class="fa fa-minus"></i>
                                                                                 <i *ngIf=" !sqShowTodayCount[i] && !sqShowActiveQTodayCount[i]"
                                                                                         class="fa fa-plus"></i>
-                                                                                {{todayQcountCaption[i]}}
+                                                                                        {{tokenOrcheckinCount}}
                                                                         </button>
                                                                         <button mat-menu-item
                                                                                 (click)="viewDashboard(queue,i,'todayQ')"
                                                                                 *ngIf="queue.queueState=='ENABLED' && !todayQcountCaption[i] && !queue.provider">
-                                                                                <i class="fa fa-plus"></i>Checkins Count
+                                                                                <i class="fa fa-plus"></i>{{tokenOrcheckinCount}}
                                                                         </button>
                                                                         <button mat-menu-item *ngIf="!queue.provider"
                                                                                 (click)="editInstantQueue(queue)">
@@ -436,7 +436,7 @@
                                                                         </div>
                                                                         <div class="card"
                                                                                 *ngIf="sqShowTodayCount[i] || sqShowFutureCount[i]">
-                                                                                <h5>Check-ins</h5>
+                                                                                <h5>{{tokencount}}</h5>
                                                                                 <div class="c-ot m0">
                                                                                         <!-- <div class="col-md-12" *ngIf="scheduleLoading[i]">
                                                                                                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
@@ -473,14 +473,13 @@
                                                                                                 class="fa fa-minus"></i>
                                                                                         <i *ngIf=" !sqShowFutureCount[i] && !sqShowActiveQFutureCount[i]"
                                                                                                 class="fa fa-plus"></i>
-                                                                                        {{futureQcountCaption[i]}}
+                                                                                                {{tokenOrcheckinCount}}
                                                                                 </button>
                                                                                 <button mat-menu-item
                                                                                         (click)="viewDashboard(queue,i,'scheduleQ')"
                                                                                         *ngIf="queue.queueState=='ENABLED' && !futureQcountCaption[i] && !queue.provider">
                                                                                         <i
-                                                                                                class="fa fa-plus"></i>Checkins
-                                                                                        Count
+                                                                                                class="fa fa-plus"></i>{{tokenOrcheckinCount}}
                                                                                 </button>
                                                                                 <button mat-menu-item
                                                                                         (click)="addEditProviderQueue('editFromList', queue)"

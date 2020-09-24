@@ -92,6 +92,10 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     todayQLoading: any = [];
     scheduleLoading: any = [];
     domain: any;
+    queuedata: any = [];
+    showtoken = false;
+    tokenOrcheckinCount;
+    tokencount;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -275,6 +279,17 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             this.provider_services.getProviderQueues()
                 .subscribe(
                     (data) => {
+                        console.log(data);
+                        this.queuedata = data;
+                        this.showtoken = this.queuedata[0].showToken;
+                        console.log(this.showtoken);
+                        if (this.showtoken) {
+                           this.tokenOrcheckinCount = 'Tokens Count';
+                           this.tokencount = 'Tokens';
+                          } else {
+                            this.tokenOrcheckinCount = 'Checkins Count';
+                            this.tokencount = 'Checkins';
+                          }
                         let allQs: any = [];
                         this.todaysQs = [];
                         this.scheduledQs = [];
@@ -344,6 +359,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             this.provider_services.getServicesList(params)
                 .subscribe(data => {
                     this.services_list = data;
+                   
                     resolve();
                 },
                     (error) => {

@@ -93,4 +93,3 @@ import { JoyrideModule } from 'ngx-joyride';
 })
 
 export class ProviderSettingsModule { }
-

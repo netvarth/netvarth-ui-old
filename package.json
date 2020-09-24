@@ -28,12 +28,19 @@
     "@angular/router": "^8.2.14",
     "@ckeditor/ckeditor5-angular": "^1.2.3",
     "@ckeditor/ckeditor5-build-decoupled-document": "^18.0.0",
+    "@fortawesome/angular-fontawesome": "^0.5.0",
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-brands-svg-icons": "^5.14.0",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@kolkov/angular-editor": "^1.1.2",
     "@ng-bootstrap/ng-bootstrap": "^4.1.1",
     "@nicky-lenaers/ngx-scroll-to": "^3.0.1",
     "@syncfusion/ej2-angular-calendars": "^17.4.50",
     "@types/crypto-js": "^3.1.43",
     "@types/googlemaps": "^3.30.19",
+    "ag-grid-angular": "^23.2.1",
+    "ag-grid-community": "^23.2.1",
     "angular-modal-gallery": "^5.2.1",
     "angular2-multiselect-dropdown": "^2.0.1",
     "bootstrap": "^3.4.1",
@@ -52,6 +59,7 @@
     "ngx-owl-carousel": "^2.0.7",
     "ngx-qrcode2": "0.0.9",
     "ngx-scrollbar": "^2.3.0",
+    "ngx-sharebuttons": "^8.0.1",
     "nl2br-pipe": "^1.2.3",
     "node-sass": "^4.13.1",
     "rxjs": "^6.5.4",
@@ -83,17 +91,5 @@
     "tslint": "^5.16.0",
     "typescript": "^3.5.3",
     "webpack-bundle-analyzer": "^3.3.2"
-  },
-  "cordova": {
-    "plugins": {
-      "cordova-plugin-whitelist": {},
-      "cordova-plugin-device": {},
-      "cordova-plugin-geolocation": {},
-      "cordova-plugin-printer": {}
-    },
-    "platforms": [
-      "android",
-      "ios"
-    ]
   }
 }

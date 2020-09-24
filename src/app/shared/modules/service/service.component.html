@@ -73,11 +73,11 @@
             <div class="c-ot" *ngIf="is_donation">
                 <div class="item" *ngIf="service_data.minDonationAmount">
                     <span class="ttle">Min Amount</span>
-                    <span>{{service_data.minDonationAmount}}</span>
+                    <span>{{service_data.minDonationAmount| currency:'&#8377;'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.maxDonationAmount">
                     <span class="ttle">Max Amount</span>
-                    <span>{{service_data.maxDonationAmount}}</span>
+                    <span>{{service_data.maxDonationAmount| currency:'&#8377;'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.multiples">
                     <span class="ttle">Multiples</span>
@@ -242,7 +242,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
             </div>
-            <div class="form-group"
+            <!-- <div class="form-group"
                 *ngIf="is_tool || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
                 <mat-form-field class="example-full-width">
                     <textarea matInput class="form-control" id="tooldescription"
@@ -250,7 +250,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500" [(ngModel)]="tool_instruct"
                         [ngModelOptions]="{standalone: true}"> </textarea>
                 </mat-form-field>
-            </div>
+            </div> -->
             <div class="form-group"
                 *ngIf="bprofile.accountType === 'BRANCH'  && !serviceFrom && action === 'add' && !is_donation && users_list.length >= 1">
                 <mat-checkbox [(ngModel)]="userspecific" [ngModelOptions]="{standalone: true}">
@@ -571,7 +571,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="form-group pre-post-info" *ngIf="preInfoEnabled">
                 <mat-form-field>
                     <input matInput type="text" placeholder="Title for instructions *" autocomplete="off" [(ngModel)]="preInfoTitle"
-                        [ngModelOptions]="{standalone: true}">
+                        [ngModelOptions]="{standalone: true}" maxlength="20">
                 </mat-form-field>
                 <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
                     <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
@@ -591,8 +591,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 confirmation of the service.</div>
             <div class="form-group pre-post-info" *ngIf="postInfoEnabled">
                 <mat-form-field>
-                    <input matInput type="text" class="form-control" placeholder="Title for instructions *" autocomplete="off"
-                        [(ngModel)]="postInfoTitle" [ngModelOptions]="{standalone: true}">
+                    <input matInput type="text" placeholder="Title for instructions *" autocomplete="off"
+                        [(ngModel)]="postInfoTitle" [ngModelOptions]="{standalone: true}" maxlength="20">
                 </mat-form-field>
 
                 <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">

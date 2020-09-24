@@ -246,6 +246,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   apptStatuses: any = [];
   ageGroups: any = [];
   allModeSelected = false;
+  allLabelSelected: any = [];
   allPayStatusSelected = false;
   allApptStatusSelected = false;
   service_list: any = [];
@@ -258,6 +259,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterService: any = [];
   filterQ: any = [];
   filterLocation: any = [];
+  selectedLabels: any = [];
   consumr_id: any;
   notedialogRef: any;
   locateCustomerdialogRef;
@@ -470,6 +472,40 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { }
       );
   }
+
+  setLabelFilter(label, value, event) {
+    this.resetPaginationData();
+    if (value === 'all') {
+      this.selectedLabels[label.label] = [];
+      this.allLabelSelected[label.label] = false;
+      if (event.checked) {
+        for (const value of label.valueSet) {
+          if (this.selectedLabels[label.label].indexOf(value.value) === -1) {
+            this.selectedLabels[label.label].push(value.value);
+          }
+        }
+        this.allLabelSelected[label.label] = true;
+      }
+    } else {
+      this.allLabelSelected[label.label] = false;
+      if (this.selectedLabels[label.label]) {
+        const indx = this.selectedLabels[label.label].indexOf(value);
+        if (indx === -1) {
+          this.selectedLabels[label.label].push(value);
+        } else {
+          this.selectedLabels[label.label].splice(indx, 1);
+        }
+      } else {
+        this.selectedLabels[label.label] = [];
+        this.selectedLabels[label.label].push(value);
+      }
+      if (this.selectedLabels[label.label].length === label.valueSet.length) {
+        this.allLabelSelected[label.label] = true;
+      }
+    }
+    this.doSearch();
+  }
+
   setFilterDataCheckbox(type, value, event) {
     this.filter[type] = value;
     this.resetPaginationData();
@@ -671,7 +707,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allLocationSelected = true;
       }
     }
-
     this.doSearch();
   }
   getDisplayboardCount() {
@@ -1160,7 +1195,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               this.setCounts(this.appt_list);
               this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-             
+
               this.loading = false;
             },
             () => {
@@ -1289,11 +1324,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       for (let i in this.appointmentsChecked) {
         this.checkin_uuid = this.appointmentsChecked[i];
         if (!this.checkin_uuid.parentUuid) {
-              this.billicon  = true;
-            }
-            else{
-              this.billicon  = false;
-            }     
+          this.billicon = true;
+        }
+        else {
+          this.billicon = false;
+        }
       }
       Object.keys(this.appointmentsChecked).forEach(key => {
         this.activeAppointment = this.appointmentsChecked[key];
@@ -1595,6 +1630,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptStatuses = [];
     this.filterQ = [];
     this.filterLocation = [];
+    this.selectedLabels = [];
     this.paymentStatuses = [];
     this.apptModes = [];
     this.allAgeSlected = false;
@@ -1603,6 +1639,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allApptStatusSelected = false;
     this.allPayStatusSelected = false;
     this.allModeSelected = false;
+    this.allLabelSelected = [];
     this.allQSelected = false;
     this.allLocationSelected = false;
   }
@@ -1679,11 +1716,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       //   api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
       // }
     }
-    if (this.time_type !== 2) {
-      if (this.labelFilterData !== '') {
-        api_filter['label-eq'] = this.labelFilterData;
-      }
-    }
     if (this.time_type === 3) {
       if (this.filterQ.length > 0 && this.filter.queue !== 'all') {
         api_filter['queue-eq'] = this.filterQ.toString();
@@ -1725,6 +1757,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.waitlist_status === 'all') {
       api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
+    if (this.labelFilterData !== '') {
+      api_filter['label-eq'] = this.labelFilterData;
+    }
+    //   if (this.labelFilterData !== '') {
+    //     api_filter['label-eq'] = this.labelFilterData;
+    // }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
@@ -1739,7 +1777,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelMultiCtrl.length > 0 || this.filter.waitlist_status !== 'all') {
+      || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -1835,32 +1873,32 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelFilterData = '';
     this.labelsCount = [];
     let count = 0;
-    Object.keys(this.labelMultiCtrl).forEach(key => {
-      if (this.labelMultiCtrl[key].length > 0) {
+    Object.keys(this.selectedLabels).forEach(key => {
+      if (this.selectedLabels[key].length > 0) {
         count++;
         if (!this.labelFilterData.includes(key)) {
-          const labelvalues = this.labelMultiCtrl[key].join(',');
-          const labelvaluesArray = labelvalues.split(',');
-          for (const value of labelvaluesArray) {
-            const lblFilter = key + '::' + value;
-            const Mfilter = this.setFilterForApi();
-            Mfilter['label-eq'] = lblFilter;
-            const promise = this.getHistoryWLCount(Mfilter);
-            promise.then(
-              result => {
-                if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
-                  this.labelsCount.push(value + ' - ' + result);
-                }
-              });
-          }
+          // const labelvalues = this.selectedLabels[key].join(',');
+          // const labelvaluesArray = labelvalues.split(',');
+          // for (const value of labelvaluesArray) {
+          //   const lblFilter = key + '::' + value;
+          //   const Mfilter = this.setFilterForApi();
+          //   Mfilter['label-eq'] = lblFilter;
+          //   const promise = this.getHistoryWLCount(Mfilter);
+          //   promise.then(
+          //     result => {
+          //       if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
+          //         this.labelsCount.push(value + ' - ' + result);
+          //       }
+          //     });
+          // }
           if (count === 1) {
-            this.labelFilterData = this.labelFilterData + key + '::' + this.labelMultiCtrl[key].join(',');
+            this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
           } else {
-            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.labelMultiCtrl[key].join(',');
+            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.selectedLabels[key].join(',');
           }
         }
       } else {
-        delete this.labelMultiCtrl[key];
+        delete this.selectedLabels[key];
       }
     });
   }
@@ -1935,6 +1973,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+
   changeLabelvalue(labelname, value) {
     this.showLabels = false;
     const _this = this;

@@ -450,4 +450,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['business'], navigationExtras);
   }
+  gotoActiveHome() {
+    this.router.navigate(['/']);
+  }
 }
