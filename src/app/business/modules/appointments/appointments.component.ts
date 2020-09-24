@@ -1652,9 +1652,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selected_location && this.selected_location.id) {
         api_filter['location-eq'] = this.selected_location.id;
       }
-      if (this.labelFilterData !== '') {
-        api_filter['label-eq'] = this.labelFilterData;
-      }
+    }
+    if (this.labelFilterData !== '') {
+      api_filter['label-eq'] = this.labelFilterData;
     }
     return api_filter;
   }

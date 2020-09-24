@@ -1753,12 +1753,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selected_location && this.selected_location.id) {
         api_filter['location-eq'] = this.selected_location.id;
       }
-      if (this.labelFilterData !== '') {
-        api_filter['label-eq'] = this.labelFilterData;
-      }
     }
     if (this.filter.waitlist_status === 'all') {
       api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    }
+    if (this.labelFilterData !== '') {
+      api_filter['label-eq'] = this.labelFilterData;
     }
     //   if (this.labelFilterData !== '') {
     //     api_filter['label-eq'] = this.labelFilterData;
