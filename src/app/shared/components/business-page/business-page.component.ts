@@ -484,9 +484,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.phonelist = this.businessjson.phoneNumbers;
               }
               this.getbusinessprofiledetails_json('gallery', true);
-              if (this.userType === 'consumer') {
-                this.getFavProviders();
-              }
+              // if (this.userType === 'consumer') {
+              //   this.getFavProviders();
+              // }
               const holdbName = this.businessjson.businessDesc || '';
               const maxCnt = 120;
               if (holdbName.length > maxCnt) {
