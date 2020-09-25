@@ -135,6 +135,13 @@
     margin-bottom: 0px;
     color: #00aef2;
 }
+.consumer-dash .card.c-checkins h1 {
+    font-size: 2rem;
+    padding: 40px;
+    border-bottom: 2px solid #f2f2f2;
+    margin-bottom: 0px;
+    color: rgb(24 62 121);
+}
 
 .consumer-dash .card.c-checkins .outer {
     padding: 20px 15px;
@@ -6402,4 +6409,14 @@
         margin-left: 5%;
         margin-right: 5%;
     }
+}
+.consumer-dash .c-checkins .ng-tns-c16-8 .find-sp-btn {
+    border-radius: 20px;
+    background: rgb(24 62 121 / 61%);
+    color: rgb(255 255 255);
+}
+.consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn{
+    border: 1px solid rgb(95 117 188);
+    border-radius: 40px;
+    color: rgb(24 62 121);
 }
