@@ -50,7 +50,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
     removeitemdialogRef;
     isCheckin;
     active_user;
-
+    order = 'status';
     constructor(private provider_servicesobj: ProviderServices,
         public shared_functions: SharedFunctions,
         private router: Router, private dialog: MatDialog,
