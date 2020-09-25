@@ -1,0 +1,90 @@
+<section class="">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <button type="button" class="btn default profile-back" (click)="redirecToReports()">
+        <span class="fa fa-chevron-left">&nbsp;Back</span>
+      </button>&nbsp;&nbsp;&nbsp;Report
+      <button type="button" class="btn default" style="float:right" (click)="printReport()"> Print </button>
+      </h5>
+  </div>
+</section>
+<section class="report">
+
+  <div class="content w-manager">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
+
+      <div class="card p20" id="reportGenerated">
+
+          <h5 style="text-align:center">{{reportHeader.reportName }}</h5>
+
+        <hr width="100%">
+        <!-- Criteria Header-->
+        <div class="col-md-12 clearfix" *ngIf="report.reportContent.data.length > 0">
+          <ng-container  *ngFor="let key of objectKeys(reportCriteriaHeader)">
+          <div class="col-md-4 ">
+
+            <label>{{key}}</label>
+            <span>{{reportCriteriaHeader[key]}}</span>
+            <br>
+          </div>
+        </ng-container>
+    <div class="clearfix">
+
+    </div>
+        <hr width="100%">
+        </div>
+
+
+        <!-- Consolidated Data and Report Generation info-->
+        <div class="row clearfix" >
+          <div class="col col-md-6">
+            <label class=" col-md-10 col-form-label">Report Generated On:&nbsp;{{reportHeader.reportGeneratedOn}}</label>
+            <br>
+            <label class="col-md-10 col-form-label">Report Time Period:&nbsp;{{reportHeader.from}} - {{reportHeader.to}}</label>
+            <br>
+
+            <label class=" col-md-10 col-form-label">Total Records Found:&nbsp;{{reportHeader.count}}</label>
+            <br>
+          </div>
+          <div class="col-md-2 clearfix">
+
+          </div>
+
+          <div class="col col-md-4" *ngIf="report.reportContent.dataHeader">
+            <ng-container *ngFor="let key of objectKeys(reportConsolidatedInfo)">
+              <label class="col-sm-8 col-form-label">{{key}}</label>
+              <label class="col-sm-4 col-form-label">{{reportConsolidatedInfo[key]}}</label>
+              <br>
+
+            </ng-container>
+          </div>
+
+
+        </div>
+
+        <!-- Data-->
+        <div class="box" *ngIf="report.reportContent.data.length > 0">
+
+          <div class="box-body table-container table-responsive mat-elevation-z8">
+            <table mat-table [dataSource]="report_dataSource" matSort>
+
+              <ng-container *ngFor="let column of table_header" matColumnDef="{{column.order}}">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column.name}}</th>
+                <td mat-cell *matCellDef="let element" > {{element[column.order]}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </div>
+
+          <div  *ngIf="report.reportContent.data.length===0" style="text-align:center">
+            No Records found
+          </div>
+
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</section>

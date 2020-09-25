@@ -43,6 +43,7 @@ const routes: Routes = [
       { path: 'retailStores', loadChildren: () => import('./modules/learnmore/retailstores/retailstores.module').then(m => m.RetailStoresModule) },
       { path: 'otherMiscellaneous', loadChildren: () => import('./modules/learnmore/otherMiscellaneous/otherMiscellaneous.module').then(m => m.OtherMiscellaneousModule) },
       { path: 'license', loadChildren: () => import('../business/modules/license/license.module').then(m => m.LicenseModule) },
+        {path: 'reports', loadChildren: () => import('../business/modules/reports/reports.module').then(m => m.ReportsModule) },
       { path: 'auditlog', component: ProviderSystemAuditLogComponent },
       { path: 'alerts', component: ProviderSystemAlertComponent },
       { path: 'check-ins', loadChildren: () => import('../business/modules/check-ins/check-ins.module').then(m => m.CheckinsModule) },
