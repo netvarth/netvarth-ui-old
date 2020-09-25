@@ -83,7 +83,7 @@
                             <input placeholder="Email" [(ngModel)]="email"><span class="email-btn"
                                 (click)="updateEmail()">Ok</span>
                         </div> -->
-                                <div class="notes" *ngIf="appointment.service && appointment.service.postInfoEnabled">
+                                <div class="notes" *ngIf="appointment.service && appointment.service.postInfoEnabled && appointment.service.postInfoTitle">
                                     <div class="preinfo-title">{{appointment.service.postInfoTitle}} </div>
                                     <div [innerHTML]="appointment.service.postInfoText">
                                     </div>

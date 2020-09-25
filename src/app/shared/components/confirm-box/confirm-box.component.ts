@@ -11,8 +11,9 @@ import { Messages } from '../../constants/project-messages';
 
 export class ConfirmBoxComponent implements OnInit {
 
-  ok_btn_cap = Messages.OK_BTN;
-  cancel_btn_cap = Messages.CANCEL_BTN;
+  
+  ok_btn_cap = Messages.YES_BTN;
+  cancel_btn_cap = Messages.NO_BTN;
   deptName;
   showError = false;
   constructor(public dialogRef: MatDialogRef<ConfirmBoxComponent>,

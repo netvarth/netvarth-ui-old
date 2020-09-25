@@ -45,6 +45,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             url: '/provider/settings/q-manager'
         },
     ];
+    order = 'status';
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,

@@ -700,6 +700,23 @@
                                       {{mode.value}}</mat-checkbox>
                                   </li>
                                 </div>
+                                <div *ngIf="time_type !== 3">
+                                  <div *ngFor="let lbl of providerLabels">
+                                    <label class="filterHeaders">{{lbl.displayName}}</label>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                      <mat-checkbox [checked]="allLabelSelected[lbl.label]"
+                                        (change)="setLabelFilter(lbl, 'all', $event)">
+                                        All</mat-checkbox>
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                      *ngFor="let valueset of lbl?.valueSet">
+                                      <mat-checkbox
+                                        [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(valueset.value) !== -1"
+                                        (change)="setLabelFilter(lbl, valueset.value , $event)">
+                                        {{valueset.shortValue}}</mat-checkbox>
+                                    </li>
+                                  </div>
+                                </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli filterDatepicker">
                                     <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday"

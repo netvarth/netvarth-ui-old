@@ -11,7 +11,15 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-3 col-xs-12 col-sm-4 col-lg-3">
+                    <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3">
+                                            <div class="badge-smalldv  visible-xs">
+                        <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
+                            src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                    <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
+                            src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
+                    <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
+                            src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                        </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                             <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
                                 class="img-circle img-responsive pointer-cursor"
@@ -25,10 +33,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9 col-xs-12 col-sm-8 col-lg-9 no-padding bus-title-content" *ngIf="businessjson">
+                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 no-padding bus-title-content" *ngIf="businessjson">
                         <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 no-padding">
                             <div class="no-padding"
-                                [ngClass]="{'col-md-9':(businessjson.verifyLevel == 'BASIC' ||
+                                [ngClass]="{'col-md-9 col-sm-9':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
                                 <h3 class="bus-title" *ngIf="businessjson.businessName">
                                     {{businessjson.businessName | capitalizeFirst}}
@@ -84,17 +92,25 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-10">
-                            <div class="verify">
-                                <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
-                                        src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                                <span *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
-                                        src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
-                                <span *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
-                                        src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                            <div class="col-sm-3 visible-sm">
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
+                                    src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
+                                    src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
+                                    src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                             </div>
-                            <ul class="bus-actions no-padding" *ngIf="settings_exists && business_exists">
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 no-padding">
+                            <div class="verify hidden-xs hidden-sm">
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
+                                    src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
+                                    src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
+                                    src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                                </div>
+                            <ul class="bus-actions mgn-up-10 no-padding" *ngIf="settings_exists && business_exists">
                                 <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         {{add_to_fav_cap}}
@@ -305,7 +321,7 @@
                                                             <i class="fa wtsapvid-icon"
                                                                 *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                         </span>
-                                                        <b>{{service.name | capitalizeFirst | limitTo: [45, '...']}}</b>
+                                                        <b>{{service.name | capitalizeFirst | limitTo: [35, '...']}}</b>
                                                     </a>
                                                 </div>
                                                 <div class="card-item-content">
@@ -352,7 +368,7 @@
                                                             <i class="fa wtsapvid-icon"
                                                                 *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                         </span>
-                                                        <b>{{service.name | capitalizeFirst | limitTo: [45, '...']}}</b>
+                                                        <b>{{service.name | capitalizeFirst | limitTo: [35, '...']}}</b>
                                                     </a>
                                                 </div>
                                                 <div class="card-item-content">
@@ -473,7 +489,7 @@
                                                                 <i class="fa wtsapvid-icon"
                                                                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                             </span>
-                                                            <b>{{service.name | capitalizeFirst | limitTo: [45, '...']}}</b>
+                                                            <b>{{service.name | capitalizeFirst | limitTo: [35, '...']}}</b>
                                                         </a>
                                                     </div>
                                                     <div class="card-item-content">
@@ -521,7 +537,7 @@
                                                                 <i class="fa wtsapvid-icon"
                                                                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                             </span>
-                                                            <b>{{service.name | capitalizeFirst | limitTo: [45, '...']}}</b>
+                                                            <b>{{service.name | capitalizeFirst | limitTo: [35, '...']}}</b>
                                                         </a>
                                                     </div>
                                                     <div class="card-item-content">
@@ -615,7 +631,7 @@
                                                                     <i class="fa wtsapvid-icon"
                                                                         *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                                 </span>
-                                                                <b>{{service.name | capitalizeFirst | limitTo: [45, '...']}}</b>
+                                                                <b>{{service.name | capitalizeFirst | limitTo: [35, '...']}}</b>
                                                             </a>
                                                         </div>
                                                         <div class="card-item-content">
@@ -713,7 +729,7 @@
                                                         *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <b>
-                                                    {{service.name | capitalizeFirst | limitTo: [45, '...']}}
+                                                    {{service.name | capitalizeFirst | limitTo: [35, '...']}}
                                                 </b>
                                             </a>
                                         </div>
@@ -763,7 +779,7 @@
                                                         *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <b>
-                                                    {{service.name | capitalizeFirst | limitTo: [45, '...']}}
+                                                    {{service.name | capitalizeFirst | limitTo: [35, '...']}}
                                                 </b>
                                             </a>
                                         </div>
@@ -861,7 +877,7 @@
                                 <div class="card-item-title">
                                     <a class="pointer-cursor"
                                         (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')"><b>
-                                            {{service.name | capitalizeFirst | limitTo: [45, '...']}}
+                                            {{service.name | capitalizeFirst | limitTo: [35, '...']}}
                                         </b> </a>
 
                                 </div>
@@ -869,12 +885,19 @@
                                     <div class="card-item-content-info">
                                         <div class="card-item-content-action">
                                             <div class="" style="padding-bottom: 10px">
-                                                <p class="price mgn-bt-0 mgn-up-10">
+                                                <!-- <p class="price mgn-bt-0 mgn-up-10">
                                                     Upto
-                                                </p>
-                                                <p class="title-style mgn-up-5-m">
+                                                </p> -->
+                                                <p class="title-style mgn-bt-5 mgn-up-5">
                                                     <span
-                                                        class="rupee-font">&#x20b9;</span><span>{{service.maxDonationAmount}}</span>
+                                                        class="rupee-font">{{service.minDonationAmount| currency:'&#8377;'}}</span>
+                                                </p>
+                                                <p class="price mgn-up-5-m mgn-bt-5">
+                                                    to
+                                                </p>
+                                                <p class="title-style mgn-up-5-m mgn-bt-5">    
+                                                    <span
+                                                        class="rupee-font">{{service.maxDonationAmount| currency:'&#8377;'}}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -883,7 +906,7 @@
                                         <div class="" style="padding-bottom: 10px">
                                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                                 <div class="checkin-btn-bp donate-btn-bp"
-                                                    (click)="payClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)">
+                                                    (click)="payClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], service)">
                                                     Donate</div>
                                             </div>
                                         </div>

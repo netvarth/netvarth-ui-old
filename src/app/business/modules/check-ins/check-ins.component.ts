@@ -248,6 +248,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   apptStatuses: any = [];
   ageGroups: any = [];
   allModeSelected = false;
+  allLabelSelected: any = [];
   allPayStatusSelected = false;
   allApptStatusSelected = false;
   service_list: any = [];
@@ -260,6 +261,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterService: any = [];
   filterQ: any = [];
   filterLocation: any = [];
+  selectedLabels: any = [];
   consumr_id: any;
   notedialogRef: any;
   locateCustomerdialogRef;
@@ -471,6 +473,38 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         () => { }
       );
+  }
+  setLabelFilter(label, value, event) {
+    this.resetPaginationData();
+    if (value === 'all') {
+      this.selectedLabels[label.label] = [];
+      this.allLabelSelected[label.label] = false;
+      if (event.checked) {
+        for (const value of label.valueSet) {
+          if (this.selectedLabels[label.label].indexOf(value.value) === -1) {
+            this.selectedLabels[label.label].push(value.value);
+          }
+        }
+        this.allLabelSelected[label.label] = true;
+      }
+    } else {
+      this.allLabelSelected[label.label] = false;
+      if (this.selectedLabels[label.label]) {
+        const indx = this.selectedLabels[label.label].indexOf(value);
+        if (indx === -1) {
+          this.selectedLabels[label.label].push(value);
+        } else {
+          this.selectedLabels[label.label].splice(indx, 1);
+        }
+      } else {
+        this.selectedLabels[label.label] = [];
+        this.selectedLabels[label.label].push(value);
+      }
+      if (this.selectedLabels[label.label].length === label.valueSet.length) {
+        this.allLabelSelected[label.label] = true;
+      }
+    }
+    this.doSearch();
   }
   setFilterDataCheckbox(type, value, event) {
     this.filter[type] = value;
@@ -1596,6 +1630,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptStatuses = [];
     this.filterQ = [];
     this.filterLocation = [];
+    this.selectedLabels = [];
     this.paymentStatuses = [];
     this.apptModes = [];
     this.allAgeSlected = false;
@@ -1604,6 +1639,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allApptStatusSelected = false;
     this.allPayStatusSelected = false;
     this.allModeSelected = false;
+    this.allLabelSelected = [];
     this.allQSelected = false;
     this.allLocationSelected = false;
   }
@@ -1680,11 +1716,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       //   api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
       // }
     }
-    if (this.time_type !== 2) {
-      if (this.labelFilterData !== '') {
-        api_filter['label-eq'] = this.labelFilterData;
-      }
-    }
     if (this.time_type === 3) {
       if (this.filterQ.length > 0 && this.filter.queue !== 'all') {
         api_filter['queue-eq'] = this.filterQ.toString();
@@ -1726,6 +1757,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.waitlist_status === 'all') {
       api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
+    if (this.labelFilterData !== '') {
+      api_filter['label-eq'] = this.labelFilterData;
+    }
+    //   if (this.labelFilterData !== '') {
+    //     api_filter['label-eq'] = this.labelFilterData;
+    // }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
@@ -1836,32 +1873,32 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelFilterData = '';
     this.labelsCount = [];
     let count = 0;
-    Object.keys(this.labelMultiCtrl).forEach(key => {
-      if (this.labelMultiCtrl[key].length > 0) {
+    Object.keys(this.selectedLabels).forEach(key => {
+      if (this.selectedLabels[key].length > 0) {
         count++;
         if (!this.labelFilterData.includes(key)) {
-          const labelvalues = this.labelMultiCtrl[key].join(',');
-          const labelvaluesArray = labelvalues.split(',');
-          for (const value of labelvaluesArray) {
-            const lblFilter = key + '::' + value;
-            const Mfilter = this.setFilterForApi();
-            Mfilter['label-eq'] = lblFilter;
-            const promise = this.getHistoryWLCount(Mfilter);
-            promise.then(
-              result => {
-                if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
-                  this.labelsCount.push(value + ' - ' + result);
-                }
-              });
-          }
+          // const labelvalues = this.selectedLabels[key].join(',');
+          // const labelvaluesArray = labelvalues.split(',');
+          // for (const value of labelvaluesArray) {
+          //   const lblFilter = key + '::' + value;
+          //   const Mfilter = this.setFilterForApi();
+          //   Mfilter['label-eq'] = lblFilter;
+          //   const promise = this.getHistoryWLCount(Mfilter);
+          //   promise.then(
+          //     result => {
+          //       if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
+          //         this.labelsCount.push(value + ' - ' + result);
+          //       }
+          //     });
+          // }
           if (count === 1) {
-            this.labelFilterData = this.labelFilterData + key + '::' + this.labelMultiCtrl[key].join(',');
+            this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
           } else {
-            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.labelMultiCtrl[key].join(',');
+            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.selectedLabels[key].join(',');
           }
         }
       } else {
-        delete this.labelMultiCtrl[key];
+        delete this.selectedLabels[key];
       }
     });
   }

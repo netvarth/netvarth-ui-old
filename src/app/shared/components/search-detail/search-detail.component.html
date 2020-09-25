@@ -444,43 +444,37 @@
                                                         [matTooltipClass]="tooltipcls"
                                                         [matTooltip]="'Jaldee verified-advanced'"><img
                                                             src="./assets/images/premium.png" alt="Advanced"></span>
-                                                </div>
-                                                <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs">
+                                                    <span class="pull-right hidden-xs">
+                                                        <a class="search-action"
+                                                            (click)="communicateHandler(search_result)">
+                                                            <img class="img" src="./assets/images/enquiry.jpeg"
+                                                                alt="Enquiry" [matTooltip]="'Enquiry'"/>
+                                                            <!-- <span style="display:block">{{send_messages}}</span> -->
+                                                        </a>
+                                                    </span>
+                                                    <span class="pull-right hidden-xs" *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer" >
+                                                        <a class="search-action"
+                                                        (click)="!btn_clicked && openCoupons(search_result,true)">
+                                                            <img class="img" src="./assets/images/first_coupon.png"
+                                                            alt="First Time Coupons" [matTooltip]="'First Time Coupons'"/>
+                                                            <!-- <span style="display:block">{{first_time_coupon}}</span> -->
+                                                        </a>
+                                                    </span>
+                                                    <span class="pull-right hidden-xs" *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0">
+                                                        <a class="search-action"
+                                                        (click)="!btn_clicked && openCoupons(search_result,true)">
+                                                        <img class="img" src="./assets/images/jcoupon.png"
+                                                        alt="Jaldee Coupon" [matTooltip]="'Jaldee Coupons'"/>
+                                                            <!-- <span style="display:block">{{jaldee_coupon}}</span> -->
+                                                        </a>
+                                                    </span>
+                                                </div>                                               
+                                                <!-- <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs">
                                                     <ul class="bus-actions no-padding">
-                                                        <li>
-                                                            <a class="like-btn"
-                                                                (click)="communicateHandler(search_result)">
-                                                                <img class="img" src="./assets/images/enquiry.jpeg"
-                                                                    alt="Enquiry" />
-                                                                <span style="display:block">{{send_messages}}</span>
-                                                            </a>
-                                                        </li>
+                                                        
                                                     </ul>
-                                                </div>
-                                                <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs" *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer">
-                                                    <ul class="bus-actions no-padding">
-                                                        <li>
-                                                            <a class="like-btn"
-                                                            (click)="!btn_clicked && openCoupons(search_result,true)">
-                                                                <img class="img" src="./assets/images/first_coupon.png"
-                                                                alt="First Time Coupons" />
-                                                                <span style="display:block">{{first_time_coupon}}</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs" *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0">
-                                                    <ul class="bus-actions no-padding">
-                                                        <li>
-                                                            <a class="like-btn"
-                                                            (click)="!btn_clicked && openCoupons(search_result,true)">
-                                                            <img class="img" src="./assets/images/jcoupon.png"
-                                                            alt="Jaldee Coupon" />
-                                                                <span style="display:block">{{jaldee_coupon}}</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                </div> -->
+                                                
                                                 <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs" *ngIf="search_result.fields.claimable==1">
                                                     <ul class="bus-actions no-padding">
                                                         <li>
@@ -604,7 +598,7 @@
                                                         <div
                                                             *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' ||(search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'])">
                                                             <div
-                                                                *ngIf="search_result.fields['estimatedtime_det']['personAhead']">
+                                                                *ngIf="search_result.fields['estimatedtime_det']['personAhead'] && search_result.fields['estimatedtime_det']['personAhead'] >= 0">
                                                                 <b>{{search_result.fields['estimatedtime_det']['personAhead']}}
                                                                 </b><span class="people-ahead"
                                                                     *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1">{{people_ahead}}</span>

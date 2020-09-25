@@ -435,6 +435,10 @@ export class ProviderServices {
       const url = 'provider/ynwConf/messages';
       return this.servicemeta.httpGet(url);
    }
+   getApptProviderMessages() {
+      const url = 'provider/ynwConf/appointment/messages';
+      return this.servicemeta.httpGet(url);
+   }
    getCustomer(data) {
       const url = 'provider/customers';
       return this.servicemeta.httpGet(url, null, data);

@@ -107,8 +107,8 @@ export class CheckinDetailComponent implements OnInit {
         const pass_ob = {};
         pass_ob['source'] = 'consumer-waitlist';
         pass_ob['uuid'] = this.ynwUuid;
-        pass_ob['user_id'] = this.ProviderId;
-        pass_ob['name'] = waitlist.providerAccount.businessName;
+        pass_ob['user_id'] = this.providerId;
+        pass_ob['name'] = this.waitlist.providerAccount.businessName;
         pass_ob['typeOfMsg'] = 'single';
         this.addNote(pass_ob);
     }

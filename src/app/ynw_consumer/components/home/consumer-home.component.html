@@ -538,8 +538,9 @@
                         <mat-expansion-panel>
                             <mat-expansion-panel-header>
                                 <mat-panel-title [matTooltipClass]="tooltipcls" [matTooltip]="favTooltip">
-                                    {{my_fav_cap}}
+                                    {{my_fav_cap}}&nbsp;<span *ngIf="fav_providers && fav_providers.length>0">({{fav_providers.length}})</span>
                                 </mat-panel-title>
+                                
                             </mat-expansion-panel-header>
                             <div class="outer">
                                 <div class="list" [class.active]="open_fav_div == i"

@@ -105,7 +105,7 @@
                                                                     </span>
                                                                     <span> <input *ngIf="!showInputSection"
                                                                             (keypress)="isNumeric($event)"
-                                                                            class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
+                                                                            class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" style="width:150px!important ;"
                                                                             placeholder="" [(ngModel)]="callingModes"
                                                                             autocomplete="off" maxlength="10"></span>
                                                                     <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
@@ -136,7 +136,7 @@
                                                         <div class="preinfo-text mgn-up-5">
                                                             <span [innerHTML]="sel_ser_det.preInfoText"></span>
                                                         </div>
-                                                        <a (click)="showPreInfo()" class="pointer-cursor mgn-up-5">
+                                                        <a *ngIf="sel_ser_det.preInfoText" (click)="showPreInfo()" class="pointer-cursor mgn-up-5">
                                                             <i class="fa fa-eye"></i>&nbsp;View
                                                         </a>
                                                     </div>

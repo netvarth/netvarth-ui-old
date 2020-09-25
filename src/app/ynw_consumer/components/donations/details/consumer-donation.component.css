@@ -1,0 +1,201 @@
+
+.bus-item-medium .card.card-item-n {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+    transition: 0.3s;
+    border-radius: 5px;
+    margin: auto;
+  height: 150px !important;
+    width:150px !important;
+    padding: 0px !important;
+    border: 1px solid #106e76 !important;
+  }
+  .bus-item-medium-dpt .card.card-item-n {
+    height: 100px !important;
+  }
+  
+  .bus-item-medium .card.card-item-n {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+  }
+  
+  .bus-item-medium .card-item-content {
+    margin-top: 0px !important;
+    text-align: center;
+  }
+  .bus-item-medium .card-item-content .title-style.mgn-bt-m-5 {
+    margin-bottom: -5px !important;
+  }
+  
+  .bus-item-medium p.price.mgn-bt-20 {
+    margin-bottom: 20px !important;
+  }
+  
+  .bus-item-medium .card.card-item-n .card-item-title {
+    border-radius: 5px 5px 0 0;
+    width: 100% !important;
+    height: auto;
+    border: 1 px solid #ddd;
+    color: #106e76 !important;
+  }
+  
+  .bus-item-medium .card.card-item-n img, .bus-item-medium .card.card-item-n .card-item-title a {
+    color: #106e76 !important;
+  }
+  
+  .bus-item-medium .title-style {
+    display: table-header-group;
+    font-size: 0.85rem !important;
+    color: #000;
+    font-weight: 600 !important;
+  }
+  
+  .bus-item-medium .card.card-item-n img, .bus-item-medium .card.card-item-n .card-item-title {
+    border-radius: 5px 5px 0 0;
+    height: 100px;
+    font-size: 0.8rem !important;
+    border-bottom: 1px solid #106e76 !important;
+    text-align: center;
+    display: table;
+    padding: 5px !important;
+  }
+  .bus-item-medium-dpt .card.card-item-n img, .bus-item-medium-dpt .card.card-item-n .card-item-title {
+    border-bottom: none !important;
+  }
+  .bus-item-medium .card.card-item-n .card-item-title a {
+    display: table-cell !important;
+    vertical-align: middle !important;
+  }
+
+  @media (min-width: 320px) and (max-width: 500px) {
+    .bus-item-medium .card.card-item-n {
+      width: 95% !important;
+      margin: auto !important;
+      margin-bottom: 10px !important;
+      float: left;
+    }
+  
+  }
+  
+  .bus-item-medium {
+    width: 16.66% !important;
+    float: left;
+    margin: auto !important;
+    margin-bottom: 10px !important;
+    margin-top: 5px !important;
+  }
+  
+  @media (min-width: 600px) and (max-width: 992px) {
+    .bus-item-medium {
+      width: 33.3% !important;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .bus-item-medium {
+      width: 50% !important;
+    }
+  }
+  
+  @media (min-width: 992px) and (max-width: 1200px) {
+    .bus-item-medium {
+      width: 20% !important;
+    }
+  }
+  
+  @media (min-width: 320px) and (max-width: 374px) {
+    .bus-item-medium {
+      width: 100% !important;
+    }
+  }
+  
+  @media (max-width: 320px) {
+    .bus-item-medium {
+      width: 100% !important;
+    }
+    .bus-item-medium .card.card-item-n {
+      width: 100% !important;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .bus-item-medium .card.card-item-n h6 {
+      font-size: 1rem!important;
+    }
+  }
+  
+  .bus-item-medium.div-selected-outline  .card.card-item-n{
+    border: 5px solid #106e76 !important;
+  }
+  
+.checkin-btn-bp1 {
+    height: 25px;
+    max-width: 75%;
+    margin:auto;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    color: white;
+    font-size: 0.75rem !important;
+    transition: all .3s ease;
+    cursor: pointer;
+    padding: 3px !important;
+    background: #106e76 !important;
+  }
+
+  .checkin-btn-bp1.disabled {
+    background: lightgray;
+    height: 28px;
+    overflow: hidden;
+    max-width: 75%;
+    margin:auto;
+    display: flex;
+    justify-content: center;
+    font-size: 0.75rem !important;
+    align-items: center;
+    box-sizing: border-box;
+    color: white;
+    transition: all .3s ease;
+    cursor: not-allowed;
+    padding: 7px !important;
+  }
+  .c-checkin-new .lnk {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+  }
+  .checkin-btn-bp {
+    text-align: center;
+    height: 40px;
+    color: white;
+    cursor: pointer;
+    padding: 10px !important;
+    background: #334b99 !important;
+  }
+  .c-checkin-new .lnk a {
+    color: #1572a8 !important;
+  }
+  .coupon-apply-btn {
+    margin-left: 10px!important;
+    padding: 6px 15px 8px!important;
+    height: auto!important;
+    background-color: #3c8dbc!important;
+    color: #fff!important;
+  }
+  .c-checkin-new .card-title.service {
+    font-size: 1.5rem !important;
+    color: #7a7a7a !important;
+    line-height:normal !important;
+  }
+  .cons-donate .content.loc-list .card .copy.locd{
+    display: block !important;
+  }
+  .amount {
+    font-size: 1rem !important;
+    font-weight: 700;
+  }
+  .donate-by {
+    color: black;
+    font-size: 1rem !important;
+    display: block;
+    padding-right: 5px;
+  }

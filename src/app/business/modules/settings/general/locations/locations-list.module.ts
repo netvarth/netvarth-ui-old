@@ -10,6 +10,7 @@ import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitaliz
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { AddProviderSchedulesModule } from '../../../../../ynw_provider/components/add-provider-schedule/add-provider-schedule.module';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { AddProviderSchedulesModule } from '../../../../../ynw_provider/componen
         CapitalizeFirstPipeModule,
         ReactiveFormsModule,
         FormMessageDisplayModule,
-        AddProviderSchedulesModule
+        AddProviderSchedulesModule,
+        OrderModule
     ],
     declarations: [
         LocationsListComponent,

@@ -163,7 +163,7 @@
                   Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
                 </span>
               </div>
-              <div class="notes" *ngIf="statusInfo.service && statusInfo.service.postInfoEnabled">
+              <div class="notes" *ngIf="statusInfo.service && statusInfo.service.postInfoEnabled && statusInfo.service.postInfoTitle">
                 <div class="preinfo-title">{{statusInfo.service.postInfoTitle}} </div>
                 <div [innerHTML]="statusInfo.service.postInfoText">
                 </div>
