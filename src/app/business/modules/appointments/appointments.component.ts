@@ -1393,7 +1393,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
-    // const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
+    const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
     let selQs = [];
     if (this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
@@ -1440,6 +1440,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    }
+    if (this.filter.future_appt_date !== null) {
+      Mfilter['date-eq'] = date;
     }
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
