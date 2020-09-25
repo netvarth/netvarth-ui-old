@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                    <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
+                    <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'donation'"></app-header>
                 </div>
             </div>
             <div class="panel-body no-padding">
@@ -32,8 +32,9 @@
                                                 <div class="col-sm-12 col-xs-12 col-md-12">
                                                     <div class="card-body" *ngIf="sel_ser">
                                                         <h6 class="card-title service">
-                                                            {{sel_ser_det.name}}<span class="donate-by"> by </span>
-                                                            {{this.businessjson.businessName}}
+                                                            {{sel_ser_det.name}}
+                                                            <!-- <span class="donate-by"> by </span>
+                                                            {{this.businessjson.businessName}} -->
                                                         </h6>
                                                     </div>
                                                 </div>
