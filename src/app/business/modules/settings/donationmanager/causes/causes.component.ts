@@ -42,7 +42,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     trackStatus: string;
     cause_list: any = [];
     causes_list: any;
-
+    order = 'status';
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,

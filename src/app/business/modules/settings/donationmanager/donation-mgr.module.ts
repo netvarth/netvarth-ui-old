@@ -15,7 +15,7 @@ import { ServicesService } from '../../../../shared/modules/service/services.ser
 import { ServiceModule } from '../../../../shared/modules/service/service.module';
 import { DonationMgrComponent } from './donation-mgr.component';
 import { CauseDetailComponent } from './causes/detail/cause-details.component';
-
+import { OrderModule } from 'ngx-order-pipe';
 @NgModule({
     imports: [
         CommonModule,
@@ -30,7 +30,8 @@ import { CauseDetailComponent } from './causes/detail/cause-details.component';
         ReactiveFormsModule,
         ModalGalleryModule,
         GalleryModule,
-        ServiceModule
+        ServiceModule,
+        OrderModule
     ],
     declarations: [
         DonationCauseListComponent,

@@ -31,7 +31,7 @@
                             </td>
                         </tr>
                     </tbody>
-                    <tbody *ngFor="let service of service_list">
+                    <tbody *ngFor="let service of service_list | orderBy: order">
                         <tr class="grid-pad" [class.grid-disabled]="service.status=='INACTIVE'" *ngIf="!api_loading">
                             <td class="serv-name">
                                 <div class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"

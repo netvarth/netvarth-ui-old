@@ -27,7 +27,7 @@
                  </li>
               </ul>
             </div>
-            <div class="row" *ngFor="let service of service_list">
+            <div class="row" *ngFor="let service of service_list | orderBy: order">
                 <div class="card" *ngIf="api_loading">
                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
