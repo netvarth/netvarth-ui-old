@@ -11,6 +11,7 @@ import { Messages } from '../../constants/project-messages';
 
 export class ConfirmBoxComponent implements OnInit {
 
+  
   ok_btn_cap = Messages.YES_BTN;
   cancel_btn_cap = Messages.NO_BTN;
   deptName;
