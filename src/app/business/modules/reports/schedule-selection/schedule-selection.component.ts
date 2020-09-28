@@ -42,12 +42,12 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
         this.selected_data_id = qparams.data;
 
 
-        if (this.selected_data_id.indexOf(',') > -1) {
-          this.selected_data.push(qparams.data.split(','));
-        } else {
-          this.selected_data.push(qparams.data);
 
-        }
+      const scheduleData: any[] = qparams.data.split(',');
+      for (let i = 0; i < scheduleData.length; i++) {
+        this.selected_data.push(scheduleData[i]);
+      }
+
 
         const _this = this;
         this.getSchedules().then(result => {

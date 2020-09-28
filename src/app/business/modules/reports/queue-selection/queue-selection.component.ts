@@ -52,12 +52,11 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
       this.selected_data_id = qparams.data;
 
 
-      if (this.selected_data_id.indexOf(',') > -1) {
-        this.selected_data.push(qparams.data.split(','));
-      } else {
-        this.selected_data.push(qparams.data);
-
+      const queueData: any[] = qparams.data.split(',');
+      for (let i = 0; i < queueData.length; i++) {
+        this.selected_data.push(queueData[i]);
       }
+
 
       const _this = this;
       this.getAllQs().then(result => {

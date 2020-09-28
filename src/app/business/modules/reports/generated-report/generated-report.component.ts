@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
 import { MatTableDataSource } from '@angular/material';
 import { ReportDataService } from '../reports-data.service';
 import { Router } from '@angular/router';
+import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
+
 
 @Component({
   selector: 'app-generated-report',
@@ -32,6 +33,8 @@ export class GeneratedReportComponent implements OnInit {
 
     private report_data_service: ReportDataService,
     private router: Router,
+    public dateformat: DateFormatPipe,
+
   ) {
     this.report = this.report_data_service.getReport();
     console.log(JSON.stringify(this.report));
@@ -60,7 +63,9 @@ export class GeneratedReportComponent implements OnInit {
     console.log(this.report_dataSource);
 
   }
-
+  getDateFormat(date) {
+    return this.dateformat.transformToMonthlyDate(date);
+  }
 
   redirecToReports() {
     this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.report_type } });

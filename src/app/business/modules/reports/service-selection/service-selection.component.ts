@@ -15,7 +15,7 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
 })
 export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
-  selected_data_id: any;
+  selected_data_id: number;
   serviceCount: any;
   all_queue_sel: boolean;
   all_schedule_sel: boolean;
@@ -47,29 +47,35 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     private report_data_service: ReportDataService) {
+    const _this = this;
+    _this.activated_route.queryParams.subscribe(qparams => {
 
-    this.activated_route.queryParams.subscribe(qparams => {
+      _this.reportType = qparams.report_type;
+      _this.selected_data_id = qparams.data;
 
-      this.reportType = qparams.report_type;
-      this.selected_data_id = qparams.data;
 
-      console.log(this.selected_data_id);
+      if (_this.selected_data_id === 0) {
+        console.log('hai');
 
-      if (this.selected_data_id.indexOf(',') > -1) {
-        this.selected_data.push(qparams.data.split(','));
       } else {
-        this.selected_data.push(qparams.data);
 
+
+        const serviceData: any[] = qparams.data.split(',');
+        for (let i = 0; i < serviceData.length; i++) {
+          _this.selected_data.push(serviceData[i]);
+        }
       }
 
-      const _this = this;
-      this.loadAllServices().then(result => {
+
+
+      _this.loadAllServices().then(result => {
         if (_this.selected_data.length > 0) {
           _this.service_dataSource.data.forEach(function (row) {
             if (_this.selected_data && _this.selected_data.length > 0) {
               _this.selected_data.forEach(data => {
                 // tslint:disable-next-line:radix
                 if (parseInt(data) === row.id) {
+                  console.log('equals');
                   _this.selection.select(row);
                 }
               });
@@ -81,6 +87,8 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
     });
   }
+
+
   applyFilter(filterValue: string) {
 
     this.selection.clear();

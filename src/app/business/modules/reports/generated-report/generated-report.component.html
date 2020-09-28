@@ -37,28 +37,30 @@
 
         <!-- Consolidated Data and Report Generation info-->
         <div class="row clearfix" >
-          <div class="col col-md-6">
-            <label class=" col-md-10 col-form-label">Report Generated On:&nbsp;{{reportHeader.reportGeneratedOn}}</label>
+          <div class="col col-md-6 col-sm-6 col-lg-6  col-xs-12 clearfix">
+              <label class="col-md-10 col-form-label" *ngIf="reportHeader.from">Report Time Period:&nbsp;{{ getDateFormat(reportHeader.from) }} to {{ getDateFormat(reportHeader.to) }} </label>
+              <br>
+              <label class="col-md-10 col-form-label" *ngIf="reportHeader.date">Report Time Period:&nbsp;{{getDateFormat(reportHeader.date) }} </label>
+              <br>
+            <label class=" col-lg-10 col-md-10 col-sm-9 col-form-label">Report Generated On:&nbsp;{{reportHeader.reportGeneratedOn | date:'medium'}}</label>
             <br>
-            <label class="col-md-10 col-form-label">Report Time Period:&nbsp;{{reportHeader.from}} - {{reportHeader.to}}</label>
-            <br>
-
             <label class=" col-md-10 col-form-label">Total Records Found:&nbsp;{{reportHeader.count}}</label>
             <br>
           </div>
-          <div class="col-md-2 clearfix">
 
-          </div>
 
-          <div class="col col-md-4" *ngIf="report.reportContent.dataHeader">
+          <div class="col col-md-5 col-sm-6 col-lg-5  col-xs-12 clearfix" *ngIf="report.reportContent.dataHeader">
             <ng-container *ngFor="let key of objectKeys(reportConsolidatedInfo)">
-              <label class="col-sm-8 col-form-label">{{key}}</label>
-              <label class="col-sm-4 col-form-label">{{reportConsolidatedInfo[key]}}</label>
+              <label class="col-lg-8 col-sm-8 col-md-8 col-xs-8 col-form-label">{{key}}</label>
+              <label class="col-lg-4 col-md-4 col-sm-4  col-xs-4 col-form-label">{{reportConsolidatedInfo[key]}}</label>
               <br>
 
             </ng-container>
           </div>
+          <div class="clearfix">
 
+          </div>
+          <hr width="100%">
 
         </div>
 
@@ -80,7 +82,7 @@
         </div>
 
           <div  *ngIf="report.reportContent.data.length===0" style="text-align:center">
-            No Records found
+           <b> No Records found</b>
           </div>
 
       </div>
