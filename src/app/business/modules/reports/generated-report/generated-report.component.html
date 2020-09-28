@@ -19,6 +19,7 @@
 
         <hr width="100%">
         <!-- Criteria Header-->
+        <ng-container *ngIf="showReport">
         <div class="col-md-12 clearfix" >
           <ng-container  *ngFor="let key of objectKeys(reportCriteriaHeader)">
           <div class="col-md-4 ">
@@ -80,6 +81,7 @@
             </table>
           </div>
         </div>
+      </ng-container>
 
           <div  *ngIf="report.reportContent.data.length===0" style="text-align:center">
            <b> No Records found</b>

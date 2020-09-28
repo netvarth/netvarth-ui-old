@@ -13,7 +13,8 @@ import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format
 export class GeneratedReportComponent implements OnInit {
 
 
-  report_type: any;
+  showReport: boolean;
+    report_type: any;
   reportConsolidatedInfo: any;
   objectKeys: (o: {}) => string[];
   reportCriteriaHeader: any;
@@ -60,7 +61,11 @@ export class GeneratedReportComponent implements OnInit {
 
     // console.log(this.table_header);
     this.report_dataSource = this.report.reportContent.data;
-    console.log(this.report_dataSource);
+    if (this.report.reportContent.data.length === 0) {
+      this.showReport = false;
+    } else {
+     this.showReport = true;
+    }
 
   }
   getDateFormat(date) {
