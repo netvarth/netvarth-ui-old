@@ -158,6 +158,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   api_error: any;
   api_loading = false;
   futureAllowed = true;
+  usr_details: any;
+  future_appointments: ArrayBuffer;
+  future_waitlists: ArrayBuffer;
+  todayDate = new Date();
+  tDate: any;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -180,6 +185,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   public carouselAppointments;
 
   ngOnInit() {
+    this.usr_details = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    console.log(this.usr_details);
     this.breadcrumbs = [
       {
         title: 'My Jaldee'
@@ -236,9 +243,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
-    this.getWaitlist();
-    this.getApptlist();
-    // this.getAppointmentToday();
+    // this.getWaitlist();
+    // this.getApptlist();
+     this.getAppointmentToday();
+     this.getAppointmentFuture();
+     this.getWaitlist();
+     this.getWaitlistFuture();
     this.getDonations();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
@@ -356,13 +366,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getWaitlist() {
     this.pollingSet = [];
     this.loadcomplete.waitlist = false;
+    this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
     const params = {
-      'waitlistStatus-neq': 'failed,prepaymentPending'
+      'waitlistStatus-neq': 'failed,prepaymentPending', 'date-eq': this.tDate
     };
     this.consumer_services.getWaitlist(params)
       .subscribe(
         data => {
           this.waitlists = data;
+          console.log(this.waitlists);
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           let i = 0;
@@ -1550,6 +1562,36 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
+  getAppointmentFuture() {
+    this.consumer_services.getAppointmentFuture()
+      .subscribe(
+        data => {
+          this.future_appointments = data;
+        },
+        error => {
+        }
+      );
+  }
+  getWaitlistToday() {
+    this.consumer_services.getWaitlistToday()
+      .subscribe(
+        data => {
+          this.waitlists = data;
+        },
+        error => {
+        }
+      );
+  }
+  getWaitlistFuture() {
+    this.consumer_services.getWaitlistFuture()
+      .subscribe(
+        data => {
+          this.future_waitlists = data;
+        },
+        error => {
+        }
+      );
+  }
   gotoLivetrack(uid, accountid, stat) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -1578,7 +1620,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const passData = {
       'type': source,
       'details': details
-    }
+    };
     this.addnotedialogRef = this.dialog.open(MeetingDetailsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],

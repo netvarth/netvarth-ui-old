@@ -133,7 +133,7 @@
     padding: 20px;
     border-bottom: 2px solid #f2f2f2;
     margin-bottom: 0px;
-    color: #00aef2;
+    color: rgb(113 137 173);
 }
 .consumer-dash .card.c-checkins h1 {
     font-size: 2rem;
@@ -6415,8 +6415,31 @@
     background: rgb(24 62 121 / 61%);
     color: rgb(255 255 255);
 }
-.consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn{
+.consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn, table .flat-btn{
     border: 1px solid rgb(95 117 188);
     border-radius: 40px;
     color: rgb(24 62 121);
+}
+.consumer-dash .c-checkins .table-outer tbody {
+    border-top: none;
+}
+.consumer-dash .c-checkins .table-outer td:before {
+    content: none;
+}
+.consumer-dash .c-checkins .table-outer {
+    padding:unset !important;
+}
+.consumer-dash .c-checkins .table-outer  tbody tr:hover {
+    -webkit-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+  }
+.consumer-dash .c-checkins .table-outer table tbody tr:nth-of-type(odd) {
+    background: none;
+}
+.tdisplay-block {
+    display: block!important;
+}
+.consumer-dash .card.c-checkins table h4 {
+    color: rgb(24 62 121 / 85%);
 }

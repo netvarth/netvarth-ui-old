@@ -141,8 +141,20 @@ export class ConsumerServices {
     return this.servicemeta.httpPut(path);
   }
 
+  getWaitlistToday() {
+    const path = 'consumer/waitlist/today';
+    return this.servicemeta.httpGet(path);
+  }
+  getWaitlistFuture() {
+    const path = 'consumer/waitlist/future';
+    return this.servicemeta.httpGet(path);
+  }
   getAppointmentToday() {
     const path = 'consumer/appointment/today';
+    return this.servicemeta.httpGet(path);
+  }
+  getAppointmentFuture() {
+    const path = 'consumer/appointment/future';
     return this.servicemeta.httpGet(path);
   }
   getAppointmentHistory() {
