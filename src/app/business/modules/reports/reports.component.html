@@ -1,0 +1,99 @@
+<section class="">
+  <div class="card title-gb">
+      <h5 class="mgn-up-10">
+
+          Reports
+
+      </h5>
+  </div>
+</section>
+<section>
+  <div class="content w-manager settings comn-cls">
+      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+
+
+        <!--Appointments-->
+          <div class="row">
+              <div class="card p0">
+                <mat-accordion class="report">
+                  <mat-expansion-panel  [expanded]="true">
+                      <mat-expansion-panel-header>
+                          <mat-panel-title>
+                             Appointment
+                          </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <ng-container *ngIf="appointmentReports.length===0">
+                        <div>
+                          <p class="font-italic col-md-6">No Reports found.  </p>
+                          <button type="button" class="btn btn-primary pull-left col-md-3" (click)="newReport('appointment');">New Report</button>
+                        </div>
+                    </ng-container>
+                  </mat-expansion-panel>
+              </mat-accordion>
+              </div>
+          </div>
+          <!---Payments-->
+          <div class="row">
+            <div class="card p0">
+              <mat-accordion class="report">
+                <mat-expansion-panel  [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                           Payments
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ng-container *ngIf="paymentReports.length===0">
+                      <div>
+                        <p class="font-italic col-md-6">No Reports found.  </p>
+                        <button type="button" class="btn btn-primary pull-left col-md-3" (click)="newReport('payment');">New Report</button>
+                      </div>
+                  </ng-container>
+                </mat-expansion-panel>
+            </mat-accordion>
+            </div>
+        </div>
+        <!--Tokens/Check-ins-->
+        <div class="row">
+          <div class="card p0">
+            <mat-accordion class="report">
+              <mat-expansion-panel [expanded]="true">
+                  <mat-expansion-panel-header>
+                      <mat-panel-title>
+                         Tokens/Check-ins
+                      </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ng-container *ngIf="checkinReports.length===0">
+                    <div>
+                        <p class="font-italic col-md-6">No Reports found.  </p>
+                        <button type="button" class="btn btn-primary pull-left col-md-3" (click)="newReport('token');">New Report</button>
+
+                    </div>
+                </ng-container>
+              </mat-expansion-panel>
+          </mat-accordion>
+          </div>
+      </div>
+        <!-- Donations -->
+        <div class="row">
+          <div class="card p0">
+            <mat-accordion class="report">
+              <mat-expansion-panel  [expanded]="true">
+                  <mat-expansion-panel-header>
+                      <mat-panel-title>
+                         Donations
+                      </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ng-container *ngIf="donationReports.length===0">
+                    <div>
+                      <p class="font-italic col-md-6">No Reports found.  </p>
+                      <button type="button" class="btn btn-primary pull-left col-md-3" (click)="newReport('donation');">New Report</button>
+                    </div>
+                </ng-container>
+              </mat-expansion-panel>
+          </mat-accordion>
+          </div>
+      </div>
+      </div>
+      <div class="clearfix"></div>
+  </div>
+</section>

@@ -1130,6 +1130,7 @@ export class ProviderCheckinComponent implements OnInit {
         } else {
             // this.api_error = derror;
             this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            this.disable = false;
         }
     }
     handleNote() {
