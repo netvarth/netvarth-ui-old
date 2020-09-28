@@ -3,7 +3,7 @@
     <h5 class="mgn-up-10">
       <button type="button" class="btn default profile-back" (click)="redirecToReports()">
         <span class="fa fa-chevron-left">&nbsp;Back</span>
-      </button>&nbsp;&nbsp;&nbsp; New  {{reportTitle | capitalizeFirst}}  Report
+      </button>&nbsp;&nbsp;&nbsp; New {{reportTitle | capitalizeFirst}} Report
 
     </h5>
   </div>
@@ -26,19 +26,19 @@
                 </div>
               </div>
               <div class="form-group-row col-md-6 col-sm-6">
-                  <label for="paymentStatus" class="col-sm-5 col-md-5 col-form-label">Payment Purpose</label>
-                  <div class="col-sm-7 col-md-7 mb-3">
-  
-                    <mat-select class="form-control" (change)="changePaymentPurpose($event.value)" [(ngModel)]="payment_paymentPurpose">
-                      <mat-option [value]="0">All</mat-option>
-                      <mat-option *ngFor="let purpose of payment_purpose" [value]="purpose.value">{{ purpose.displayName }}</mat-option>
-                    </mat-select>
-                  </div>
+                <label for="paymentStatus" class="col-sm-5 col-md-5 col-form-label">Payment Purpose</label>
+                <div class="col-sm-7 col-md-7 mb-3">
+
+                  <mat-select class="form-control" (change)="changePaymentPurpose($event.value)" [(ngModel)]="payment_paymentPurpose">
+                    <mat-option [value]="0">All</mat-option>
+                    <mat-option *ngFor="let purpose of payment_purpose" [value]="purpose.value">{{ purpose.displayName }}</mat-option>
+                  </mat-select>
                 </div>
-             
+              </div>
+
             </div>
             <div class="col-md-12">
-                <div class="form-group-row col-md-6 col-sm-6">
+              <!-- <div class="form-group-row col-md-6 col-sm-6">
                     <label for="paymentStatus" class="col-sm-5 col-md-5 col-form-label">Payment Status</label>
                     <div class="col-sm-7 col-md-7 mb-3">
 
@@ -47,78 +47,79 @@
                         <mat-option *ngFor="let status of payment_status" [value]="status.value">{{ status.displayName }}</mat-option>
                       </mat-select>
                     </div>
-                  </div>
-                  <div class="form-group-row col-md-6 col-sm-6">
-                      <label for="paymentStatus" class="col-sm-5 col-md-5 col-form-label">Booking Type</label>
-                      <div class="col-sm-7 col-md-7 mb-3">
-    
-                        <mat-select class="form-control" [(ngModel)]="payment_transactionType">
-                          <mat-option [value]="0">All</mat-option>
-                          <mat-option *ngFor="let type of transactionType" [value]="type.value">{{ type.displayName }}</mat-option>
-                        </mat-select>
-                      </div>
-                    </div>
-             
-            </div>
-            <div class="col-md-12">
-                <div class="form-group-row col-md-6 col-sm-6">
-                    <label for="timePeriod" class="col-sm-5 col-md-5 col-form-label">Time Period</label>
-                    <div class="col-sm-7 col-md-7 ">
-                      <mat-select class="form-control" (selectionChange)="changeTimePeriod($event)" [(ngModel)]="payment_timePeriod">
-                        <mat-option *ngFor="let period of time_period" [value]="period.value">{{ period.displayName }}</mat-option>
-                      </mat-select>
-                    </div>
-                  </div>
-                  <div class="col-md-12" [hidden]="hide_dateRange">
-                      <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline">
-                        <div class="col-md-6 col-sm-6">
-                          <mat-form-field>
-                            <mat-label>Start Date</mat-label>
-                            <input matInput [matDatepicker]="start" [(ngModel)]="payment_startDate">
-                            <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                            <mat-datepicker #start></mat-datepicker>
-                          </mat-form-field>
-    
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                          <mat-form-field>
-                            <mat-label>End Date</mat-label>
-                            <input matInput [matDatepicker]="end"  [(ngModel)]="payment_endDate">
-                            <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                            <mat-datepicker #end></mat-datepicker>
-                          </mat-form-field>
-    
-                        </div>
-    
-                      </div>
-                    </div>
-                  <div class="form-group col-md-6 col-sm-6">
-                      <label for="timePeriod" class="col-sm-5 col-md-5 col-form-label">Amount</label>
-                      <div class="col-sm-7 col-md-7 ">
-                        <input type="text" class="form-control" [(ngModel)]="payment_amount">
-  
-                      </div>
-                    </div>
-                
-               
+                  </div> -->
+              <div class="form-group-row col-md-6 col-sm-6">
+                <label for="paymentStatus" class="col-sm-5 col-md-5 col-form-label">Booking Type</label>
+                <div class="col-sm-7 col-md-7 mb-3">
 
+                  <mat-select class="form-control" [(ngModel)]="payment_transactionType">
+                    <mat-option [value]="0">All</mat-option>
+                    <mat-option *ngFor="let type of transactionType" [value]="type.value">{{ type.displayName }}</mat-option>
+                  </mat-select>
+                </div>
               </div>
-             
-              <hr>
-              <div class="col-md-12">
-                  
- <div class="form-group-row col-md-6 col-sm-6 col-xs-12 m-xs-5">
-                  <div class="input-group mb-3 ">
-                    <label for="payment_schedule" class="col-sm-5 col-md-5 col-form-label">Schedule</label>
-                    <input type="text" class="form-control" readonly [(ngModel)]="payment_schedule">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button" (click)="goToSelectionPage('schedule',payment_schedule_id)">Change</button>
-                    </div>
-                  </div>
-
+              <div class="form-group col-md-6 col-sm-6">
+                <label for="amount" class="col-sm-5 col-md-5 col-form-label">Amount</label>
+                <div class="col-sm-7 col-md-7 ">
+                  <input type="text" class="form-control" [(ngModel)]="payment_amount">
 
                 </div>
-                 <div class="form-group-row col-md-6 col-sm-6">
+              </div>
+
+
+            </div>
+            <div class="col-md-12">
+              <div class="form-group-row col-md-6 col-sm-6">
+                <label for="timePeriod" class="col-sm-5 col-md-5 col-form-label">Time Period</label>
+                <div class="col-sm-7 col-md-7 ">
+                  <mat-select class="form-control" (selectionChange)="changeTimePeriod($event)" [(ngModel)]="payment_timePeriod">
+                    <mat-option *ngFor="let period of time_period" [value]="period.value">{{ period.displayName }}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="col-md-12" [hidden]="hide_dateRange">
+                <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline">
+                  <div class="col-md-6 col-sm-6">
+                    <mat-form-field>
+                      <mat-label>Start Date</mat-label>
+                      <input matInput [matDatepicker]="start" [(ngModel)]="payment_startDate">
+                      <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                      <mat-datepicker #start></mat-datepicker>
+                    </mat-form-field>
+
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <mat-form-field>
+                      <mat-label>End Date</mat-label>
+                      <input matInput [matDatepicker]="end" [(ngModel)]="payment_endDate">
+                      <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                      <mat-datepicker #end></mat-datepicker>
+                    </mat-form-field>
+
+                  </div>
+
+                </div>
+              </div>
+
+
+
+            </div>
+
+            <hr>
+            <div class="col-md-12">
+
+              <div class="form-group-row col-md-6 col-sm-6 col-xs-12 m-xs-5">
+                <div class="input-group mb-3 ">
+                  <label for="payment_schedule" class="col-sm-5 col-md-5 col-form-label">Schedule</label>
+                  <input type="text" class="form-control" readonly [(ngModel)]="payment_schedule">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="goToSelectionPage('schedule',payment_schedule_id)">Change</button>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="form-group-row col-md-6 col-sm-6">
                 <div class="input-group mb-3 ">
                   <label for="Customer" class="col-sm-5 col-md-5 col-form-label">Customer</label>
                   <input type="text" class="form-control" readonly [(ngModel)]="payment_customer">
@@ -130,32 +131,32 @@
 
               </div>
 
-                  
-                </div>
+
+            </div>
             <div class="col-md-12">
 
-                <div class="form-group-row col-md-6 col-sm-6">
-                    <div class="input-group mb-3 ">
-                      <label for="Services" class="col-sm-5 col-md-5 col-form-label">Services</label>
-                      <input type="text" class="form-control" readonly [(ngModel)]="payment_service">
-                      <div class="input-group-append">
-                        <button class="btn btn-primary" type="button" (click)="goToSelectionPage('service',payment_service_id)">Change</button>
-                      </div>
-                    </div>
-
-
+              <div class="form-group-row col-md-6 col-sm-6">
+                <div class="input-group mb-3 ">
+                  <label for="Services" class="col-sm-5 col-md-5 col-form-label">Services</label>
+                  <input type="text" class="form-control" readonly [(ngModel)]="payment_service">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="goToSelectionPage('service',payment_service_id)">Change</button>
                   </div>
-                  <div class="form-group-row col-md-6 col-sm-6">
-                      <div class="input-group mb-3 ">
-                        <label for="payment_queue" class="col-sm-5 col-md-5 col-form-label">Queue</label>
-                        <input type="text" class="form-control" readonly [(ngModel)]="payment_queue">
-                        <div class="input-group-append">
-                          <button class="btn btn-primary" type="button" (click)="goToSelectionPage('queue',payment_queue_id)">Change</button>
-                        </div>
-                      </div>
+                </div>
 
 
-                    </div>
+              </div>
+              <div class="form-group-row col-md-6 col-sm-6">
+                <div class="input-group mb-3 ">
+                  <label for="payment_queue" class="col-sm-5 col-md-5 col-form-label">Queue</label>
+                  <input type="text" class="form-control" readonly [(ngModel)]="payment_queue">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="goToSelectionPage('queue',payment_queue_id)">Change</button>
+                  </div>
+                </div>
+
+
+              </div>
 
             </div>
 
@@ -183,85 +184,85 @@
                 </div>
               </div>
               <div class="form-group row col-md-6 col-sm-6">
-                  <label for="appointmentStatus" class="col-sm-5 col-md-5 col-form-label">Appointment Status</label>
-                  <div class="col-sm-7 col-md-7 mb-3">
+                <label for="appointmentStatus" class="col-sm-5 col-md-5 col-form-label">Appointment Status</label>
+                <div class="col-sm-7 col-md-7 mb-3">
 
-                    <mat-select class="form-control" [(ngModel)]="appointment_status">
-                      <mat-option [value]="0">Any</mat-option>
-                      <mat-option *ngFor="let status of appointment_status_list" [value]="status.value">{{ status.displayName }}</mat-option>
-                    </mat-select>
-                  </div>
+                  <mat-select class="form-control" [(ngModel)]="appointment_status">
+                    <mat-option [value]="0">Any</mat-option>
+                    <mat-option *ngFor="let status of appointment_status_list" [value]="status.value">{{ status.displayName }}</mat-option>
+                  </mat-select>
                 </div>
-             
+              </div>
+
 
             </div>
             <div class="col-md-12 col-sm-12">
-
+              <!--
                 <div class="form-group row col-md-6 col-sm-6">
                     <label for="paymentStatus" class="col-sm-5 col-md-5 col-form-label">Payment Status</label>
                     <div class="col-sm-7 col-md-7 ">
-    
+
                       <mat-select class="form-control" [(ngModel)]="appointment_paymentStatus">
                         <mat-option [value]="0">Any</mat-option>
                         <mat-option *ngFor="let status of payment_status" [value]="status.value">{{ status.displayName }}</mat-option>
                       </mat-select>
                     </div>
+                  </div> -->
+
+
+              <div class="form-group row col-md-6  col-sm-6">
+                <label for="timePeriod" class="col-sm-5 col-md-5 col-form-label">Time Period</label>
+                <div class="col-sm-7 col-md-7">
+
+                  <mat-select class="form-control" [(ngModel)]="appointment_timePeriod" (selectionChange)="changeTimePeriod($event)">
+                    <!-- <mat-option [value]="0">Any</mat-option> -->
+                    <mat-option *ngFor="let period of time_period" [value]="period.value">{{ period.displayName }}</mat-option>
+                  </mat-select>
+
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
+                <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline">
+                  <div class="col-md-6">
+                    <mat-form-field>
+                      <mat-label>Start Date</mat-label>
+                      <input matInput [matDatepicker]="start" [(ngModel)]="appointment_startDate">
+                      <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                      <mat-datepicker #start></mat-datepicker>
+                    </mat-form-field>
+
                   </div>
-                 
+                  <div class="col-md-6 col-sm-6">
+                    <mat-form-field>
+                      <mat-label>End Date</mat-label>
+                      <input matInput [matDatepicker]="end" [(ngModel)]="appointment_endDate">
+                      <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                      <mat-datepicker #end></mat-datepicker>
+                    </mat-form-field>
 
-                      <div class="form-group row col-md-6  col-sm-6">
-                        <label for="timePeriod" class="col-sm-5 col-md-5 col-form-label">Time Period</label>
-                        <div class="col-sm-7 col-md-7">
-        
-                          <mat-select class="form-control" [(ngModel)]="appointment_timePeriod" (selectionChange)="changeTimePeriod($event)" >
-                            <mat-option [value]="0">Any</mat-option>
-                            <mat-option *ngFor="let period of time_period" [value]="period.value">{{ period.displayName }}</mat-option>
-                          </mat-select>
-        
-                        </div>
-                      </div>
-                      <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
-                          <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline">
-                            <div class="col-md-6">
-                              <mat-form-field>
-                                <mat-label>Start Date</mat-label>
-                                <input matInput [matDatepicker]="start" [(ngModel)]="appointment_startDate">
-                                <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                                <mat-datepicker #start></mat-datepicker>
-                              </mat-form-field>
-        
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                              <mat-form-field>
-                                <mat-label>End Date</mat-label>
-                                <input matInput [matDatepicker]="end"  [(ngModel)]="appointment_endDate">
-                                <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                                <mat-datepicker #end></mat-datepicker>
-                              </mat-form-field>
-        
-                            </div>
-                    </div>
-                    </div>
-                   
+                  </div>
+                </div>
+              </div>
 
-             
+
+
 
 
             </div>
             <hr>
             <div class="col-md-12 col-sm-12">
-               <div class="form-group-row col-md-6 col-sm-6">
-                  <div class="input-group mb-3 ">
-                    <label for="payment_schedule" class="col-sm-5 col-md-5 col-form-label">Schedule</label>
-                    <input type="text" class="form-control" readonly [(ngModel)]="appointment_schedule">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button" (click)="goToSelectionPage('schedule',appointment_schedule_id)">Change</button>
-                    </div>
+              <div class="form-group-row col-md-6 col-sm-6">
+                <div class="input-group mb-3 ">
+                  <label for="payment_schedule" class="col-sm-5 col-md-5 col-form-label">Schedule</label>
+                  <input type="text" class="form-control" readonly [(ngModel)]="appointment_schedule">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="goToSelectionPage('schedule',appointment_schedule_id)">Change</button>
                   </div>
-
-
                 </div>
-             
+
+
+              </div>
+
               <div class="form-group-row col-md-6 col-sm-6">
                 <div class="input-group mb-3 ">
                   <label for="Customer" class="col-sm-5 col-md-5 col-form-label">Customer</label>
@@ -275,241 +276,258 @@
               </div>
             </div>
             <div class="col-md-12 col-sm-12">
-                 <div class="form-group-row col-md-6 col-sm-6">
-                  <div class="input-group mb-3 ">
-                    <label for="Services" class="col-sm-5 col-md-5 col-form-label">Services</label>
-                    <input type="text" class="form-control" readonly [(ngModel)]="appointment_service">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button" (click)="goToSelectionPage('service',appointment_service_id)">Change</button>
-                    </div>
+              <div class="form-group-row col-md-6 col-sm-6">
+                <div class="input-group mb-3 ">
+                  <label for="Services" class="col-sm-5 col-md-5 col-form-label">Services</label>
+                  <input type="text" class="form-control" readonly [(ngModel)]="appointment_service">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="goToSelectionPage('service',appointment_service_id)">Change</button>
                   </div>
-
-
                 </div>
-             </div>
-            
-           
+
+
+              </div>
+            </div>
+
+
 
 
 
 
             <div class="text-center">
-                <button type="button"  class="btn btn-primary btn-lg" (click)="generateReport('appointment');"> Generate Report </button>
-              </div>
+              <button type="button" class="btn btn-primary btn-lg" (click)="generateReport('appointment');"> Generate Report </button>
+            </div>
 
 
 
 
           </div>
           <div class="card p20" *ngIf="report_type=='token'">
-              <div class="col-md-12">
-                  <div class="form-group row col-md-6 col-sm-6">
-                    <label for="appointmentMode" class="col-md-5 col-sm-5 col-form-label">Waitlist mode</label>
-                    <div class="col-sm-7 col-md-7 mb-3">
-                      <mat-select class="form-control" [(ngModel)]="waitlist_mode" >
-                        <mat-option [value]="0">Any</mat-option>
-                        <mat-option *ngFor="let mode of waitlist_mode_list" [value]="mode.value">{{ mode.displayName}}</mat-option>
-                      </mat-select>
-                    </div>
+            <div class="col-md-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="appointmentMode" class="col-lg-5 col-md-5 col-sm-5 col-xs-6 col-form-label">Waitlist mode</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="waitlist_mode">
+                    <mat-option [value]="0">Any</mat-option>
+                    <mat-option *ngFor="let mode of waitlist_mode_list" [value]="mode.value">{{ mode.displayName}}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Waitlist Status</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
+
+                  <mat-select class="form-control" [(ngModel)]="waitlist_status">
+                    <mat-option [value]="0">Any</mat-option>
+                    <mat-option *ngFor="let status of waitlist_status_list" [value]="status.value">{{ status.displayName }}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="paymentStatus"  class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label"> Bill Payment Status</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
+
+                  <mat-select class="form-control" [(ngModel)]="waitlist_billpaymentstatus">
+                    <mat-option [value]="0">Any</mat-option>
+                    <mat-option *ngFor="let status of bill_payment_status" [value]="status.value">{{ status.displayName }}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod"  class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Time Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
+
+                  <mat-select class="form-control" [(ngModel)]="waitlist_timePeriod" (selectionChange)="changeTimePeriod($event)">
+                    <!-- <mat-option [value]="0">Any</mat-option> -->
+                    <mat-option *ngFor="let period of time_period" [value]="period.value">{{ period.displayName }}</mat-option>
+                  </mat-select>
+
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
+                <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline">
+                  <div class="col-md-6 col-sm-6">
+                    <mat-form-field>
+                      <mat-label>Start Date</mat-label>
+                      <input matInput [matDatepicker]="start" [(ngModel)]="waitlist_startDate">
+                      <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                      <mat-datepicker #start></mat-datepicker>
+                    </mat-form-field>
+
                   </div>
-                  
-                  <div class="form-group row col-md-6 col-sm-6">
-                    <label for="waitlistStatus" class="col-sm-5 col-md-5 col-form-label">Waitlist Status</label>
-                    <div class="col-sm-7 col-md-7 mb-3">
-    
-                      <mat-select class="form-control" [(ngModel)]="waitlist_status" >
-                        <mat-option [value]="0">Any</mat-option>
-                        <mat-option *ngFor="let status of waitlist_status_list" [value]="status.value">{{ status.displayName }}</mat-option>
-                      </mat-select>
-                    </div>
+                  <div class="col-md-6 col-sm-6">
+                    <mat-form-field>
+                      <mat-label>End Date</mat-label>
+                      <input matInput [matDatepicker]="end" [(ngModel)]="waitlist_endDate">
+                      <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                      <mat-datepicker #end></mat-datepicker>
+                    </mat-form-field>
+
                   </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="form-group row col-md-6 col-sm-6">
-                      <label for="paymentStatus" class="col-sm-5 col-md-5 col-form-label"> Bill Payment Status</label>
-                      <div class="col-sm-7 col-md-7">
-      
-                        <mat-select class="form-control"[(ngModel)]="waitlist_billpaymentstatus">
-                          <mat-option [value]="0">Any</mat-option>
-                          <mat-option *ngFor="let status of bill_payment_status" [value]="status.value">{{ status.displayName }}</mat-option>
-                        </mat-select>
-                      </div>
-                    </div>
-                    <div class="form-group row col-md-6 col-sm-6">
-                        <label for="timePeriod" class="col-sm-4 col-md-4 col-form-label">Time Period</label>
-                        <div class="col-sm-8 col-md-8 form-group">
-        
-                          <mat-select class="form-control"[(ngModel)]="waitlist_timePeriod" (selectionChange)="changeTimePeriod($event)"  >
-                            <mat-option [value]="0">Any</mat-option>
-                            <mat-option *ngFor="let period of time_period" [value]="period.value">{{ period.displayName }}</mat-option>
-                          </mat-select>
-        
-                        </div>
-                      </div>
-                      <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
-                          <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline">
-                            <div class="col-md-6 col-sm-6">
-                              <mat-form-field>
-                                <mat-label>Start Date</mat-label>
-                                <input matInput [matDatepicker]="start" [(ngModel)]="waitlist_startDate">
-                                <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                                <mat-datepicker #start></mat-datepicker>
-                              </mat-form-field>
-        
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                              <mat-form-field>
-                                <mat-label>End Date</mat-label>
-                                <input matInput [matDatepicker]="end"  [(ngModel)]="waitlist_endDate">
-                                <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                                <mat-datepicker #end></mat-datepicker>
-                              </mat-form-field>
-        
-                            </div>
-                    </div>
-                    </div>
-                    
-                  </div>
-                  <hr>
+              </div>
+
+            </div>
+            <hr>
 
             <div class="col-md-12  ">
-                <div class="form-group-row col-md-6 col-sm-6">
-                    <div class="input-group mb-3 ">
-                      <label for="Services" class="col-sm-4 col-md-4 col-form-label">Queue</label>
-                      <input type="text" class="form-control" readonly [(ngModel)]="token_queue">
-                      <div class="input-group-append">
-                        <button class="btn btn-primary" type="button" (click)="goToSelectionPage('queue',token_queue_id)">Change</button>
-                      </div>
-                    </div>
-
-
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="Queue" class="col-lg-3 col-sm-5 col-md-3 col-xs-3 col-form-label">Queues</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="token_queue">
+                  <div class="input-group-append col-lg-2 col-sm-2 col-md-2 col-xs-2">
+                    <button class="btn btn-primary" type="button" (click)="goToSelectionPage('queue',token_queue_id)">Change</button>
                   </div>
-              <div class="form-group-row col-md-6 col-sm-6">
-                  <div class="input-group mb-3 ">
-                    <label for="Services" class="col-sm-4 col-md-4 col-form-label">Services</label>
-                    <input type="text" class="form-control" readonly [(ngModel)]="token_service">
-                    <div class="input-group-append">
+                </div>
+
+
+              </div>
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                    <label for="Services" class="col-lg-3 col-sm-5 col-md-3 col-xs-3 col-form-label">Services</label>
+                    <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="token_service">
+                    <div class="input-group-append col-lg-2 col-sm-2 col-md-2 col-xs-2">
                       <button class="btn btn-primary" type="button" (click)="goToSelectionPage('service',token_service_id)">Change</button>
                     </div>
                   </div>
 
 
                 </div>
+              <!-- <div class="form-group-row col-md-6 col-sm-6">
+                <div class="input-group mb-3 ">
+                  <label for="Services" class="col-sm-4 col-md-4 col-form-label">Services</label>
+                  <input type="text" class="form-control" readonly [(ngModel)]="token_service">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="goToSelectionPage('service',token_service_id)">Change</button>
+                  </div>
+                </div>
+
+
+              </div> -->
 
 
             </div>
 
-            
-           
+
+
             <div class="col-md-12 col-sm-12">
-<div class="form-group-row col-md-6 col-sm-6">
-                        <div class="input-group mb-3 ">
-                          <label for="Customer" class="col-sm-4 col-md-4 col-form-label">Customer</label>
-                          <input type="text" class="form-control" readonly [(ngModel)]="waitlist_customer">
-                          <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" (click)="goToSelectionPage('customer',waitlist_customerId)">Change</button>
-                          </div>
-                        </div>
-      
-      
+                <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                      <label for="Customers" class="col-lg-3 col-sm-5 col-md-3 col-xs-3 col-form-label">Customers</label>
+                      <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="waitlist_customer">
+                      <div class="input-group-append col-lg-2 col-sm-2 col-md-2 col-xs-2">
+                        <button class="btn btn-primary" type="button"  (click)="goToSelectionPage('customer',waitlist_customerId)">Change</button>
                       </div>
-            
+                    </div>
+
+
+                  </div>
+              <!-- <div class="form-group-row col-md-6 col-sm-6">
+                <div class="input-group mb-3 ">
+                  <label for="Customer" class="col-sm-4 col-md-4 col-form-label">Customer</label>
+                  <input type="text" class="form-control" readonly [(ngModel)]="waitlist_customer">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="goToSelectionPage('customer',waitlist_customerId)">Change</button>
+                  </div>
+                </div>
+
+
+              </div> -->
+
             </div>
 
 
 
             <div class="text-center">
-                <button type="button"  class="btn btn-primary btn-lg"  (click)="generateReport('token');"> Generate Report </button>
-              </div>
+              <button type="button" class="btn btn-primary btn-lg" (click)="generateReport('token');"> Generate Report </button>
+            </div>
 
 
 
 
           </div>
           <div class="card p20" *ngIf="report_type=='donation'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group col-md-6 col-sm-6 col-xs-12 clearfix">
+                <label for="timePeriod" class="col-lg-4 col-sm-4 col-md-4 col-xs-6 col-form-label p0 "> Amount</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 form-group p0">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
 
-              <div class="col-md-12 col-sm-12">
+              <div class="form-group col-md-6 col-sm-6 col-xs-12 clearfix">
+                <label for="timePeriod" class="col-lg-4 col-sm-4 col-md-4  col-xs-5 col-form-label p0">Time Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 form-group p0">
 
+                  <mat-select class="form-control" [(ngModel)]="donation_timePeriod" (selectionChange)="changeTimePeriod($event)">
+                    <!-- <mat-option [value]="0">Any</mat-option> -->
+                    <mat-option *ngFor="let period of time_period" [value]="period.value">{{ period.displayName }}</mat-option>
+                  </mat-select>
 
-                  <div class="form-group col-md-6 col-sm-6">
-                    <label for="timePeriod" class="col-sm-4 col-md-4 col-form-label"> Donation Amount</label>
-                    <div class="col-sm-8 col-md-8 form-group">
-    
-                      <input type="number" class="form-control" value=0>
-    
-                    </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
+                <div class="form-group col-md-6 col-sm-6 pull-right no-padding picker-form-inline">
+                  <div class="col-md-6 col-sm-6">
+                    <mat-form-field>
+                      <mat-label>Start Date</mat-label>
+                      <input matInput [matDatepicker]="start" [(ngModel)]="donation_startDate" style="border-bottom:none;">
+                      <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                      <mat-datepicker #start></mat-datepicker>
+                    </mat-form-field>
+
                   </div>
-    
-                  <div class="form-group col-md-6 col-sm-6">
-                      <label for="timePeriod" class="col-sm-4 col-md-4 col-form-label">Time Period</label>
-                      <div class="col-sm-8 col-md-8 form-group">
-    
-                        <mat-select class="form-control" [(ngModel)]="donation_timePeriod" (selectionChange)="changeTimePeriod($event)" >
-                          <mat-option [value]="0">Any</mat-option>
-                          <mat-option *ngFor="let period of time_period" [value]="period.value">{{ period.displayName }}</mat-option>
-                        </mat-select>
-    
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
-                        <div class="form-group col-md-6 col-sm-6 pull-right no-padding picker-form-inline">
-                          <div class="col-md-6 col-sm-6">
-                            <mat-form-field>
-                              <mat-label>Start Date</mat-label>
-                              <input matInput [matDatepicker]="start" [(ngModel)]="donation_startDate">
-                              <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                              <mat-datepicker #start></mat-datepicker>
-                            </mat-form-field>
-    
-                          </div>
-                          <div class="col-md-6 col-sm-6">
-                            <mat-form-field>
-                              <mat-label>End Date</mat-label>
-                              <input matInput [matDatepicker]="end"  [(ngModel)]="donation_endDate">
-                              <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                              <mat-datepicker #end></mat-datepicker>
-                            </mat-form-field>
-    
-                          </div>
-                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <mat-form-field>
+                      <mat-label>End Date</mat-label>
+                      <input matInput [matDatepicker]="end" [(ngModel)]="donation_endDate" style="border-bottom:none;">
+                      <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                      <mat-datepicker #end></mat-datepicker>
+                    </mat-form-field>
+
                   </div>
                 </div>
-    
-    <hr>
+              </div>
+            </div>
+
+
 
             <div class="col-md-12 col-sm-12">
-                <div class="form-group-row col-md-6 col-sm-6">
-                    <div class="input-group mb-3 ">
-                      <label for="Services" class="col-sm-4 col-md-4 col-form-label">Services</label>
-                      <input type="text" class="form-control" readonly [(ngModel)]="donation_service">
-                      <div class="input-group-append">
-                        <button class="btn btn-primary" type="button" (click)="goToSelectionPage('service',donation_service_id)">Change</button>
-                      </div>
-                    </div>
-
-
+              <div class="form-group-row col-md-6 col-sm-6">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-xs-12 ">
+                  <label for="Services" class="col-sm-4 col-md-4  col-xs-12 col-form-label">Services</label>
+                  <input type="text" class="form-control col-sm-5 col-md-5 col-xs-6" readonly [(ngModel)]="donation_service">
+                  <div class="input-group-append  col-md-2 col-sm-2 col-xs-2 p0">
+                    <button class="btn btn-primary" type="button" (click)="goToSelectionPage('service',donation_service_id)">Change</button>
                   </div>
-                <div class="form-group-row col-md-6 col-sm-6">
-                    <div class="input-group mb-3 ">
-                      <label for="Customer" class="col-sm-4 col-md-4 col-form-label">Customer</label>
-                      <input type="text" class="form-control" readonly [(ngModel)]="donation_customer">
-                      <div class="input-group-append">
-                        <button class="btn btn-primary" type="button" (click)="goToSelectionPage('customer',donation_customerId)">Change</button>
-                      </div>
-                    </div>
+                </div>
 
 
+              </div>
+              <div class="form-group-row col-md-6 col-sm-6">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-xs-12  ">
+                  <label for="Customer" class="col-sm-4 col-md-4  col-xs-12 col-form-label">Customers</label>
+                  <input type="text" class="form-control col-sm-5 col-md-5 col-xs-6" readonly [(ngModel)]="donation_customer">
+                  <div class="input-group-append col-md-2 col-sm-2 col-xs-2 p0 ">
+                    <button class="btn btn-primary" type="button" (click)="goToSelectionPage('customer',donation_customerId)">Change</button>
                   </div>
+                </div>
+
+
+              </div>
 
 
             </div>
 
 
 
-          
+
             <div class="text-center">
-                <button type="button"  class="btn btn-primary btn-lg" (click)="generateReport('donation');"> Generate Report </button>
-              </div>
+              <button type="button" class="btn btn-primary btn-lg" (click)="generateReport('donation');"> Generate Report </button>
+            </div>
 
 
 
