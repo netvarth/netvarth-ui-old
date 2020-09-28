@@ -32,7 +32,7 @@
                         <mat-option [value]="'Waitlist'">
                           Check-in/Token
                         </mat-option>
-                        <mat-option [value]="'Appointment'">
+                        <mat-option *ngIf="appointment_status == true" [value]="'Appointment'">
                           Appointment
                         </mat-option>
                       </mat-select>
