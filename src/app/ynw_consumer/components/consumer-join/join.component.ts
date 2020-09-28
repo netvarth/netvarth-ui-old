@@ -61,9 +61,9 @@ export class ConsumerJoinComponent implements OnInit {
     private router: Router,
     @Inject(DOCUMENT) public document
   ) {
-    if (this.shared_functions.checkLogin()) {
-      this.shared_functions.logout();
-    }
+    // if (this.shared_functions.checkLogin()) {
+    //   this.shared_functions.logout();
+    // }
     this.test_provider = data.test_account;
   }
   ngOnInit() {
@@ -160,6 +160,7 @@ export class ConsumerJoinComponent implements OnInit {
             () => {
               const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
               this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+              this.shared_functions.setitemonLocalStorage('qrp', data.password);
               this.dialogRef.close('success');
             },
             error => {
@@ -298,6 +299,7 @@ export class ConsumerJoinComponent implements OnInit {
                     this.shared_functions.sendMessage(pdata);
                     const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
                     this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+                    this.shared_functions.setitemonLocalStorage('qrp', post_data.password);
                     this.dialogRef.close('success');
                   },
                   error => {

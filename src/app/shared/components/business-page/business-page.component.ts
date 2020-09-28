@@ -1316,13 +1316,49 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
     return str;
   }
+
+
+  goThroughLogin() {
+    return new Promise((resolve) => {
+      const qrpw = this.sharedFunctionobj.getitemfromLocalStorage('qrp');
+      const qrusr = this.sharedFunctionobj.getitemfromLocalStorage('ynw-credentials');
+      if (qrusr && qrpw) {
+        const data = {
+          'countryCode': '+91',
+          'loginId': qrusr.loginId,
+          'password': qrpw,
+          'mUniqueId': null
+        };
+        this.shared_services.ConsumerLogin(data).subscribe(
+          (loginInfo: any) => {
+            this.sharedFunctionobj.setitemonLocalStorage('qrp', data.password);
+            console.log(loginInfo);
+            resolve(true);
+          },
+          (error) => {
+            if (error.status === 401 && error.error === 'Session already exists.') {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          }
+        );
+      } else {
+        resolve(false);
+      }
+    });
+  }
   redirectToHistory() {
-    if (this.sharedFunctionobj.checkLogin()) {
-      this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
-    } else { // show consumer login
-      const passParam = { callback: 'history' };
-      this.doLogin('consumer', passParam);
-    }
+    const _this = this;
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
+        } else {
+          const passParam = { callback: 'history' };
+          this.doLogin('consumer', passParam);
+        }
+      });
   }
   getInboxUnreadCnt() {
     const usertype = 'consumer';
@@ -1335,14 +1371,18 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         });
   }
   communicateHandler() {
+    const _this = this;
     const providforCommunicate = this.provider_bussiness_id;
-    // check whether logged in as consumer
-    if (this.sharedFunctionobj.checkLogin()) {
-      this.showCommunicate(providforCommunicate);
-    } else { // show consumer login
-      const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
-      this.doLogin('consumer', passParam);
-    }
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          _this.showCommunicate(providforCommunicate);
+        } else {
+          const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
+          this.doLogin('consumer', passParam);
+        }
+      }
+    );
   }
   openJdn() {
     this.jdndialogRef = this.dialog.open(JdnComponent, {
@@ -1396,29 +1436,34 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
   }
   handle_Fav(mod) {
-    if (this.sharedFunctionobj.checkLogin()) {
-      const accountid = this.provider_bussiness_id;
-      if (mod === 'add' && !this.isInFav) {
-        this.shared_services.addProvidertoFavourite(accountid)
-          .subscribe(() => {
-            this.isInFav = true;
-          },
-            error => {
-              this.sharedFunctionobj.apiErrorAutoHide(this, error);
-            });
-      } else if (mod === 'remove') {
-        this.shared_services.removeProviderfromFavourite(accountid)
-          .subscribe(() => {
-            this.isInFav = false;
-          },
-            error => {
-              this.sharedFunctionobj.apiErrorAutoHide(this, error);
-            });
+    const _this = this;
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          const accountid = _this.provider_bussiness_id;
+          if (mod === 'add' && !_this.isInFav) {
+            _this.shared_services.addProvidertoFavourite(accountid)
+              .subscribe(() => {
+                _this.isInFav = true;
+              },
+                error => {
+                  _this.sharedFunctionobj.apiErrorAutoHide(_this, error);
+                });
+          } else if (mod === 'remove') {
+            _this.shared_services.removeProviderfromFavourite(accountid)
+              .subscribe(() => {
+                _this.isInFav = false;
+              },
+                error => {
+                  _this.sharedFunctionobj.apiErrorAutoHide(_this, error);
+                });
+          }
+        } else {
+          const passParam = { callback: 'fav' };
+          _this.doLogin('consumer', passParam);
+        }
       }
-    } else {
-      const passParam = { callback: 'fav' };
-      this.doLogin('consumer', passParam);
-    }
+    );
   }
   doRemoveFav() {
     this.remdialogRef = this.dialog.open(ConfirmBoxComponent, {
@@ -1519,51 +1564,78 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
   }
   doLogin(origin?, passParam?) {
-    // this.shared_functions.openSnackBar('You need to login to check in');
+    const _this = this;
     const current_provider = passParam['current_provider'];
-    // let is_test_account = null;
+    // this.shared_functions.openSnackBar('You need to login to check in');
+ // let is_test_account = null;
     // if (current_provider) {
     //   if (current_provider.test_account === '1') {
-    const is_test_account = true;
-    //   } else {
-    //     is_test_account = false;
-    //   }
-    // }
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'communicate') {
-          this.getFavProviders();
-          this.showCommunicate(passParam['providerId']);
-        } else if (passParam['callback'] === 'history') {
-          this.redirectToHistory();
-        } else if (passParam['callback'] === 'fav') {
-          this.getFavProviders(passParam['mod']);
-        } else if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+      const is_test_account = true;
+      //   } else {
+      //     is_test_account = false;
+      //   }
+      // }
+
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          const pdata = { 'ttype': 'updateuserdetails' };
+          this.sharedFunctionobj.sendMessage(pdata);
+          this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+          if (passParam['callback'] === 'communicate') {
+            this.getFavProviders();
+            this.showCommunicate(passParam['providerId']);
+          } else if (passParam['callback'] === 'history') {
+            this.redirectToHistory();
+          } else if (passParam['callback'] === 'fav') {
+            this.getFavProviders(passParam['mod']);
+          } else if (passParam['callback'] === 'donation') {
+            this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
+          } else if (passParam['callback'] === 'appointment') {
+            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+          } else {
+            this.getFavProviders();
+            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+          }
         } else {
-          this.getFavProviders();
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+          const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+            width: '40%',
+            panelClass: ['loginmainclass', 'popup-class'],
+            disableClose: true,
+            data: {
+              type: origin,
+              is_provider: false,
+              test_account: is_test_account,
+              moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+            }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result === 'success') {
+              const pdata = { 'ttype': 'updateuserdetails' };
+              this.sharedFunctionobj.sendMessage(pdata);
+              this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+              if (passParam['callback'] === 'communicate') {
+                this.getFavProviders();
+                this.showCommunicate(passParam['providerId']);
+              } else if (passParam['callback'] === 'history') {
+                this.redirectToHistory();
+              } else if (passParam['callback'] === 'fav') {
+                this.getFavProviders(passParam['mod']);
+              } else if (passParam['callback'] === 'donation') {
+                this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
+              } else if (passParam['callback'] === 'appointment') {
+                this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+              } else {
+                this.getFavProviders();
+                this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+              }
+            } else if (result === 'showsignup') {
+              this.doSignup(passParam);
+            }
+          });
         }
-      } else if (result === 'showsignup') {
-        this.doSignup(passParam);
-      }
-    });
+      });
+
   }
   doSignup(passParam?) {
     const current_provider = passParam['current_provider'];
@@ -1592,7 +1664,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else {
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'] , 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       }
     });
@@ -1965,10 +2037,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         });
     }
   }
-  getTimeToDisplay (min) {
+  getTimeToDisplay(min) {
     return this.sharedFunctionobj.convertMinutesToHourMinute(min);
   }
-  getAvailibilityForCheckin (date, serviceTime) {
+  getAvailibilityForCheckin(date, serviceTime) {
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1994,7 +2066,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         + serviceTime);
     }
   }
-  getAvailabilityforAppt (date, time) {
+  getAvailabilityforAppt(date, time) {
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
