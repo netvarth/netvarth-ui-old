@@ -78,11 +78,11 @@
                 </div>
               </div>
               <div class="col-md-12" [hidden]="hide_dateRange">
-                <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline">
+                <!-- <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline"> -->
                   <div class="col-md-6 col-sm-6">
                     <mat-form-field>
                       <mat-label>Start Date</mat-label>
-                      <input matInput [matDatepicker]="start" [(ngModel)]="payment_startDate">
+                      <input matInput [matDatepicker]="start" [(ngModel)]="payment_startDate" class="sc-t">
                       <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                       <mat-datepicker #start></mat-datepicker>
                     </mat-form-field>
@@ -91,14 +91,14 @@
                   <div class="col-md-6 col-sm-6">
                     <mat-form-field>
                       <mat-label>End Date</mat-label>
-                      <input matInput [matDatepicker]="end" [(ngModel)]="payment_endDate">
+                      <input matInput [matDatepicker]="end" [(ngModel)]="payment_endDate" class="sc-t">
                       <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                       <mat-datepicker #end></mat-datepicker>
                     </mat-form-field>
 
                   </div>
 
-                </div>
+                <!-- </div> -->
               </div>
 
 
@@ -222,11 +222,11 @@
                 </div>
               </div>
               <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
-                <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline">
+                <!-- <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline"> -->
                   <div class="col-md-6">
                     <mat-form-field>
                       <mat-label>Start Date</mat-label>
-                      <input matInput [matDatepicker]="start" [(ngModel)]="appointment_startDate">
+                      <input matInput [matDatepicker]="start" [(ngModel)]="appointment_startDate" class="sc-t">
                       <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                       <mat-datepicker #start></mat-datepicker>
                     </mat-form-field>
@@ -235,13 +235,13 @@
                   <div class="col-md-6 col-sm-6">
                     <mat-form-field>
                       <mat-label>End Date</mat-label>
-                      <input matInput [matDatepicker]="end" [(ngModel)]="appointment_endDate">
+                      <input matInput [matDatepicker]="end" [(ngModel)]="appointment_endDate" class="sc-t">
                       <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                       <mat-datepicker #end></mat-datepicker>
                     </mat-form-field>
 
                   </div>
-                </div>
+                <!-- </div> -->
               </div>
 
 
@@ -259,8 +259,6 @@
                     <button class="btn btn-primary" type="button" (click)="goToSelectionPage('schedule',appointment_schedule_id)">Change</button>
                   </div>
                 </div>
-
-
               </div>
 
               <div class="form-group-row col-md-6 col-sm-6">
@@ -271,7 +269,6 @@
                     <button class="btn btn-primary" type="button" (click)="goToSelectionPage('customer',appointment_customerId)">Change</button>
                   </div>
                 </div>
-
 
               </div>
             </div>
@@ -284,15 +281,8 @@
                     <button class="btn btn-primary" type="button" (click)="goToSelectionPage('service',appointment_service_id)">Change</button>
                   </div>
                 </div>
-
-
               </div>
             </div>
-
-
-
-
-
 
             <div class="text-center">
               <button type="button" class="btn btn-primary btn-lg" (click)="generateReport('appointment');"> Generate Report </button>
@@ -348,11 +338,11 @@
                 </div>
               </div>
               <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
-                <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline">
+                <!-- <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline"> -->
                   <div class="col-md-6 col-sm-6">
                     <mat-form-field>
                       <mat-label>Start Date</mat-label>
-                      <input matInput [matDatepicker]="start" [(ngModel)]="waitlist_startDate">
+                      <input matInput [matDatepicker]="start" [(ngModel)]="waitlist_startDate" class="sc-t">
                       <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                       <mat-datepicker #start></mat-datepicker>
                     </mat-form-field>
@@ -361,13 +351,13 @@
                   <div class="col-md-6 col-sm-6">
                     <mat-form-field>
                       <mat-label>End Date</mat-label>
-                      <input matInput [matDatepicker]="end" [(ngModel)]="waitlist_endDate">
+                      <input matInput [matDatepicker]="end" [(ngModel)]="waitlist_endDate" class="sc-t">
                       <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                       <mat-datepicker #end></mat-datepicker>
                     </mat-form-field>
 
                   </div>
-                </div>
+                <!-- </div> -->
               </div>
 
             </div>
@@ -413,7 +403,7 @@
 
 
 
-            <div class="col-md-12 col-sm-12">
+            <div class="col-md-12 ">
                 <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
                       <label for="Customers" class="col-lg-3 col-sm-5 col-md-3 col-xs-3 col-form-label">Customers</label>
@@ -470,11 +460,11 @@
                 </div>
               </div>
               <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
-                <div class="form-group col-md-6 col-sm-6 pull-right no-padding picker-form-inline">
+                <!-- <div class="form-group col-md-6 col-sm-6 pull-right no-padding picker-form-inline"> -->
                   <div class="col-md-6 col-sm-6">
                     <mat-form-field>
                       <mat-label>Start Date</mat-label>
-                      <input matInput [matDatepicker]="start" [(ngModel)]="donation_startDate" style="border-bottom:none;">
+                      <input matInput [matDatepicker]="start" [(ngModel)]="donation_startDate" class="sc-t">
                       <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                       <mat-datepicker #start></mat-datepicker>
                     </mat-form-field>
@@ -483,13 +473,13 @@
                   <div class="col-md-6 col-sm-6">
                     <mat-form-field>
                       <mat-label>End Date</mat-label>
-                      <input matInput [matDatepicker]="end" [(ngModel)]="donation_endDate" style="border-bottom:none;">
+                      <input matInput [matDatepicker]="end" [(ngModel)]="donation_endDate" class="sc-t">
                       <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                       <mat-datepicker #end></mat-datepicker>
                     </mat-form-field>
 
                   </div>
-                </div>
+                <!-- </div> -->
               </div>
             </div>
 
