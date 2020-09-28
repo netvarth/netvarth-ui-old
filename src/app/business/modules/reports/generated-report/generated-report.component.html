@@ -1,0 +1,94 @@
+<section class="">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <button type="button" class="btn default profile-back" (click)="redirecToReports()">
+        <span class="fa fa-chevron-left">&nbsp;Back</span>
+      </button>&nbsp;&nbsp;&nbsp;Report
+      <button type="button" class="btn default" style="float:right" (click)="printReport()"> Print </button>
+      </h5>
+  </div>
+</section>
+<section class="report">
+
+  <div class="content w-manager">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
+
+      <div class="card p20" id="reportGenerated">
+
+          <h5 style="text-align:center">{{reportHeader.reportName }}</h5>
+
+        <hr width="100%">
+        <!-- Criteria Header-->
+        <ng-container *ngIf="showReport">
+        <div class="col-md-12 clearfix" >
+          <ng-container  *ngFor="let key of objectKeys(reportCriteriaHeader)">
+          <div class="col-md-4 ">
+
+            <label>{{key}} :&nbsp;</label>
+            <span>{{reportCriteriaHeader[key]}}</span>
+            <br>
+          </div>
+        </ng-container>
+    <div class="clearfix">
+
+    </div>
+        <hr width="100%">
+        </div>
+
+
+        <!-- Consolidated Data and Report Generation info-->
+        <div class="row clearfix" >
+          <div class="col col-md-6 col-sm-6 col-lg-6  col-xs-12 clearfix">
+              <label class="col-md-10 col-form-label" *ngIf="reportHeader.from">Report Time Period:<span>{{ getDateFormat(reportHeader.from) }} to {{ getDateFormat(reportHeader.to) }}</span><br></label>
+
+              <label class="col-md-10 col-form-label" *ngIf="reportHeader.date">Report Time Period:<span>{{getDateFormat(reportHeader.date) }}    </span>  <br></label>
+
+            <label class=" col-lg-10 col-md-10 col-sm-9 col-form-label">Report Generated On:<span>{{reportHeader.reportGeneratedOn | date:'medium'}}</span><br></label>
+
+            <label class=" col-md-10 col-form-label">Total Records Found:<span>{{reportHeader.count}}</span> <br></label>
+
+          </div>
+
+
+          <div class="col col-md-5 col-sm-6 col-lg-5  col-xs-12 clearfix" *ngIf="report.reportContent.dataHeader">
+            <ng-container *ngFor="let key of objectKeys(reportConsolidatedInfo)">
+              <label class="col-lg-8 col-sm-8 col-md-8 col-xs-8 col-form-label">{{key}}</label>
+              <label class="col-lg-4 col-md-4 col-sm-4  col-xs-4 col-form-label">{{reportConsolidatedInfo[key]}}</label>
+              <br>
+
+            </ng-container>
+          </div>
+          <div class="clearfix">
+
+          </div>
+          <hr width="100%">
+
+        </div>
+
+        <!-- Data-->
+        <div class="box" *ngIf="report.reportContent.data.length > 0">
+
+          <div class="box-body table-container table-responsive mat-elevation-z8">
+            <table mat-table [dataSource]="report_dataSource" matSort>
+
+              <ng-container *ngFor="let column of table_header" matColumnDef="{{column.order}}">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column.name}}</th>
+                <td mat-cell *matCellDef="let element" > {{element[column.order]}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </div>
+      </ng-container>
+
+          <div  *ngIf="report.reportContent.data.length===0" style="text-align:center">
+           <b> No Records found</b>
+          </div>
+
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</section>
