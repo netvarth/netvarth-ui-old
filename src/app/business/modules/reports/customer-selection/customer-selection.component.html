@@ -12,19 +12,13 @@
     <div class="content w-manager settings comn-cls lic-page">
       <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 ">
 
-      <div class="box" >
-
-             <div class="col-md-12 mb-4">
-              <label class="form-control">Enter Customer id seperated by comma:</label>
-
-              <textarea  placeholder="Ex. 1,2,3" [(ngModel)]="customerList"></textarea>
+      <div class="box " style="height: 150px;">
+             <div class="col-md-12 mgn-up-10 ">
+              <textarea class="form-control" placeholder="Enter Customer id seperated by comma(Ex. 1,2,3):" [(ngModel)]="customerList"></textarea>
             </div>
-
-
-
-          <div class="text-center mb-5">
-              <button type="button" class="btn btn-lg default profile-back" (click)="passCustomersToReports();"> Update Customers</button>
-            </div>
+            <div class="text-center  mgn-up-20 ">
+                <button type="button" class="btn btn-lg default profile-back" (click)="passCustomersToReports();"> Update Customers</button>
+              </div>
         </div>
 
         </div>

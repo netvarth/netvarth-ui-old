@@ -332,7 +332,7 @@ export class NewReportComponent implements OnInit {
       case 'payment': {
         if (res === '' || res === undefined || res === 'All') {
           this.payment_customer = 'All';
-          this.payment_customerId = 0;
+         // this.payment_customerId = 0;
         } else {
           this.payment_customer = res.split(',').length + ' customer(s) selected';
           this.payment_customerId = res.replace(/,\s*$/, '');
@@ -343,7 +343,7 @@ export class NewReportComponent implements OnInit {
       case 'donation': {
         if (res === '' || res === undefined || res === 'All') {
           this.donation_customer = 'All';
-          this.donation_customerId = 0;
+         // this.donation_customerId = 0;
         } else {
           this.donation_customer = res.split(',').length + ' customer(s) selected';
           this.donation_customerId = res.replace(/,\s*$/, '');
@@ -354,7 +354,7 @@ export class NewReportComponent implements OnInit {
       case 'appointment': {
         if (res === '' || res === undefined || res === 'All') {
           this.appointment_customer = 'All';
-          this.appointment_customerId = 0;
+         // this.appointment_customerId = 0;
         } else {
           console.log(res);
           this.appointment_customer = res.split(',').length + ' customer(s) selected';
@@ -367,7 +367,7 @@ export class NewReportComponent implements OnInit {
       case 'token': {
         if (res === '' || res === undefined || res === 'All') {
           this.waitlist_customer = 'All';
-          this.waitlist_customerId = 0;
+          //this.waitlist_customerId = 0;
         } else {
           this.waitlist_customer = res.split(',').length  + ' customer(s) selected';
           this.waitlist_customerId = res.replace(/,\s*$/, '');
