@@ -334,7 +334,7 @@ export class NewReportComponent implements OnInit {
           this.payment_customer = 'All';
           this.payment_customerId = 0;
         } else {
-          this.payment_customer = res.split(',').length - 1 + ' customer(s) selected';
+          this.payment_customer = res.split(',').length + ' customer(s) selected';
           this.payment_customerId = res.replace(/,\s*$/, '');
 
         }
@@ -345,7 +345,7 @@ export class NewReportComponent implements OnInit {
           this.donation_customer = 'All';
           this.donation_customerId = 0;
         } else {
-          this.donation_customer = res.split(',').length - 1 + ' customer(s) selected';
+          this.donation_customer = res.split(',').length + ' customer(s) selected';
           this.donation_customerId = res.replace(/,\s*$/, '');
 
         }
@@ -356,7 +356,9 @@ export class NewReportComponent implements OnInit {
           this.appointment_customer = 'All';
           this.appointment_customerId = 0;
         } else {
-          this.appointment_customer = res.split(',').length - 1 + ' customer(s) selected';
+          console.log(res);
+          this.appointment_customer = res.split(',').length + ' customer(s) selected';
+          console.log(this.appointment_customer);
           this.appointment_customerId = res.replace(/,\s*$/, '');
 
         }
@@ -367,7 +369,7 @@ export class NewReportComponent implements OnInit {
           this.waitlist_customer = 'All';
           this.waitlist_customerId = 0;
         } else {
-          this.waitlist_customer = res.split(',').length - 1 + ' customer(s) selected';
+          this.waitlist_customer = res.split(',').length  + ' customer(s) selected';
           this.waitlist_customerId = res.replace(/,\s*$/, '');
 
         }
