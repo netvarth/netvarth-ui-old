@@ -362,7 +362,7 @@
                 <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Time Period</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
                   <mat-select class="form-control" [(ngModel)]="donation_timePeriod" (selectionChange)="changeTimePeriod($event)">
-                    <mat-option *ngFor="let period of time_period" [value]="period.value">{{ period.displayName }}</mat-option>
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{ period.displayName }}</mat-option>
                   </mat-select>
                 </div>
               </div>

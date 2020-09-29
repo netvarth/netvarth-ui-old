@@ -740,6 +740,13 @@ export const projectConstantsLocal = {
     {value: 'DATE_RANGE', displayName: 'Custom Date'},
 
   ],
+  DONATION_TIMEPERIOD: [
+    {value: 'LAST_WEEK', displayName: 'Last 7 days'},
+    {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
+    {value: 'TODAY', displayName: 'Today'},
+    {value: 'DATE_RANGE', displayName: 'Custom Date'},
+
+  ],
 
   BUSINESS_PROFILE_WEIGHTAGE: {
     BUSINESS_NAME: { 'name': 'BUSINESS_NAME', 'value': 10 },

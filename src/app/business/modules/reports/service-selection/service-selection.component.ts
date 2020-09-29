@@ -38,7 +38,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
   service_loading$ = true;
 
-  service_displayedColumns = ['select', 'serviceName', 'userName','status'];
+  service_displayedColumns = ['select', 'serviceName', 'userName', 'status'];
   selection = new SelectionModel(true, []);
 
 
@@ -62,10 +62,10 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
 
 
-        const serviceData: any[] = qparams.data.split(',');
-        for (let i = 0; i < serviceData.length; i++) {
-          _this.selected_data.push(serviceData[i]);
-        }
+      const serviceData: any[] = qparams.data.split(',');
+      for (let i = 0; i < serviceData.length; i++) {
+        _this.selected_data.push(serviceData[i]);
+      }
 
 
 
@@ -134,18 +134,27 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
         userName = serviceObj.provider.firstName + '' + serviceObj.provider.lastName;
       }
       service_list.push(
-        { 'id': serviceObj.id,
-         'name': serviceObj.name,
-         'user': userName,
-         'status': serviceObj.status
-         });
+        {
+          'id': serviceObj.id,
+          'name': serviceObj.name,
+          'user': userName,
+          'status': serviceObj.status
+        });
 
     });
     return service_list;
 
   }
   loadAllServices() {
-    const filter1 = '';
+    let filter1 = {};
+    if (this.reportType === 'payment') {
+      filter1 = {};
+    } else if (this.reportType === 'donation') {
+      filter1 = { 'serviceType-eq': 'donationService' };
+    } else {
+      filter1 = { 'serviceType-neq': 'donationService' };
+    }
+
     return new Promise((resolve) => {
       this.provider_services.getServicesList(filter1)
         .subscribe(
