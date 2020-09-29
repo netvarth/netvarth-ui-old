@@ -14,7 +14,8 @@
                                 <!-- <span class="selected-date">Date: {{sel_day}}
                                 {{todaydate | date: dateFormat}}
                             </span> -->
-                                <a class="pull-right back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+                                <a class="back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+                                <span class=" mgn-lt-10 amount">{{businessjson.businessName}}</span>
                             </h5>
                         </div>
                         <div class="col-md-12 no-padding">
@@ -27,7 +28,7 @@
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding c-checkin-new">
 
                                                 <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
-                                                    Donate For
+                                                    Donation
                                                 </div>
                                                 <div class="col-sm-12 col-xs-12 col-md-12">
                                                     <div class="card-body" *ngIf="sel_ser">
@@ -46,7 +47,7 @@
                                                     class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding c-checkin-new">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">
                                                         Donor name <a
-                                                            class="lnk pointer-cursor action mgn-lt-5 mgn-rt-20 pull-right "
+                                                            class="lnk pointer-cursor action mgn-lt-5 mgn-rt-20"
                                                             (click)="editDonor()">Change
                                                         </a>
                                                     </div>
@@ -67,6 +68,12 @@
                                                                         class="fa fa-pencil"
                                                                         (click)="editPhone()"></i></a>
                                                             </div>
+                                                            <!-- <div class="" *ngIf="userData && userData.userProfile && userData.userProfile.email">
+                                                                <i class="fa fa-envelope-o "></i>
+                                                                <span class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
+                                                                <a class="mgn-lt-5 lnk pointer-cursor"><i class="fa fa-pencil"
+                                                                (click)="handleEmail()"></i></a>
+                                                            </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -80,7 +87,7 @@
                                                 <div class="mgn-up-5 input-group mobile-error c-checkin-new">
                                                     <div
                                                         class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10 amount">
-                                                        Amount (<span class="rupee-font">{{rupee_symbol}}</span>)
+                                                        Amount
                                                     </div>
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                         <label>
@@ -94,15 +101,8 @@
                                             <div class="prepay-amt mgn-bt-20">
                                                 <div
                                                     class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
-                                                    <p class="form-level-settings applybill"> <i
-                                                            class="icon-bell"></i>&nbsp;Amount must be
-                                                        in range between <span class="bold"><span
-                                                                class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.minDonationAmount}}</span>
-                                                        and <span class="bold"><span
-                                                                class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.maxDonationAmount}}</span>
-                                                        <span *ngIf="sel_ser_det.multiples"> (multiples
-                                                            of <span class="bold"><span
-                                                                    class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.multiples}}</span>)</span>
+                                                    <p class="form-level-settings applybill">Minimum <span class="bold">{{sel_ser_det.minDonationAmount}}</span>
+                                                        Maximum <span class="bold">{{sel_ser_det.maxDonationAmount}}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -111,13 +111,10 @@
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                     <div class="mainouter checkin-page c-checkin-new">
-                                                        <div class="lnk">Payment Options
+                                                        <div class="lnk">Make payment
                                                         </div>
                                                         <div class="mgn-bt-10">
-                                                            <p class="settings_info" style="display: inline;">Choose
-                                                                your
-                                                                payment
-                                                                options from here</p>
+                                                            
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding"
@@ -125,12 +122,10 @@
                                                         <div class="checkin-btn-bp pointer-cursor col-md-6 mgn-rt-10"
                                                             (click)="payuPayment()">
                                                             CC/DC/Net Banking/UPI
-                                                            <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                         </div>
                                                         <div class="checkin-btn-bp pointer-cursor col-md-4"
                                                             (click)="paytmPayment()">
                                                             Paytm
-                                                            <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                         </div>
                                                     </div>
                                                 </div>
