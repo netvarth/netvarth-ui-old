@@ -6478,3 +6478,9 @@
 .consumer-dash .card.c-checkins .bg-yelow {
     background: rgb(242 186 36 / 56%);
 }
+/* .consumer-dash .card.c-checkins table h4:hover {
+    color: rgb(187 144 30);
+} */
+.consumer-dash .font-smalr {
+    font-size: smaller;
+}

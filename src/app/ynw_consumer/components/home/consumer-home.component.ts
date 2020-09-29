@@ -163,6 +163,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   future_waitlists: ArrayBuffer;
   todayDate = new Date();
   tDate: any;
+  path = projectConstants.PATH;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,

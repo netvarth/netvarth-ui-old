@@ -44,12 +44,12 @@
                         <table class="table">
                             <!-- Today Appointments -->
                             <tbody *ngIf="appointments.length != 0">
-                                <tr *ngFor="let appointment of appointments; let i=index" class="custId-cursor">
+                                <tr *ngFor="let appointment of appointments; let i=index" class="custId-cursor" (click)="showApptdetails(appointment)">
                                     <td><h4>{{getSingleTime(appointment.appmtTime)}}</h4>
                                         <span>TODAY</span>
                                     </td>
                                     <td class="tdisplay-block">
-                                        <h4>{{appointment.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                        <h4 (click)="providerDetail(appointment.providerAccount)">{{appointment.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                         <span>
                                             <i class="fa phon-icon"
                                                 *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes.length > 0  && appointment.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -65,6 +65,9 @@
                                         {{appointment.service.name | capitalizeFirst}}</td>
                                     <td>
                                         <h6 [ngClass]="{'colr-confrm':(appointment.apptStatus == 'Confirmed'),'colr-arrived':(appointment.apptStatus == 'Arrived'),'colr-started':(appointment.apptStatus == 'Started'),'colr-canceld':(appointment.apptStatus == 'Cancelled'),'colr-completed':(appointment.apptStatus == 'Completed')}">{{appointment.apptStatus}}</h6>
+                                        <span *ngIf="appointment.apptStatus == 'Confirmed'">
+                                        <a href="{{path}}status/{{appointment.appointmentEncId}}" target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
+                                        <!-- <span *ngIf="appointment.apptStatus == 'Completed'" class="rate-service" [class.rated]="isRated(appointment)" (click)="rateService(appointment,'appointment')">{{rate_visit}}</span> -->
                                     </td>
                                     <td>
                                         <span
@@ -86,14 +89,14 @@
 
                             <!-- Today Waitlists -->
                             <tbody *ngIf="loadcomplete.waitlist && waitlists && waitlists.length != 0">
-                                <tr *ngFor="let waitlist of waitlists; let i=index" class="custId-cursor">
+                                <tr *ngFor="let waitlist of waitlists; let i=index" class="custId-cursor" (click)="showcheckindetails(waitlist)">
                                     <td>
                                         <h4 *ngIf="!waitlist.token">{{waitlist.serviceTime}}</h4>
                                         <h4 *ngIf="waitlist.token">Token No.{{waitlist.token}}</h4>
                                         <span>TODAY</span>
                                     </td>
                                     <td class="tdisplay-block">
-                                        <h4>{{waitlist.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                        <h4 (click)="providerDetail(waitlist.providerAccount)">{{waitlist.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                         <span>
                                             <i class="fa phon-icon"
                                                 *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes.length > 0 && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -112,6 +115,8 @@
                                             <span *ngIf="waitlist.waitlistStatus=='done'">Completed</span>
                                             <span *ngIf="waitlist.waitlistStatus!=='done'">{{waitlist.waitlistStatus | capitalizeFirst}}</span>
                                            </h6>
+                                           <span *ngIf="waitlist.waitlistStatus == 'Confirmed'">
+                                            <a href="{{path}}status/{{waitlist.checkinEncId}}" target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
                                         </td>
                                     <td>
                                         <span
@@ -137,14 +142,14 @@
 
                              <!-- Future Appointments -->
                              <tbody *ngIf="future_appointments.length != 0">
-                                <tr *ngFor="let appointment of future_appointments; let i=index" class="custId-cursor">
+                                <tr *ngFor="let appointment of future_appointments; let i=index" class="custId-cursor" (click)="showApptdetails(appointment)">
                                     <td>
                                         <span class="upcoming">UPCOMING</span>
                                         <h4>{{getSingleTime(appointment.appmtTime)}}</h4>
                                         <span>{{appointment.appmtDate}}</span>
                                     </td>
                                     <td class="tdisplay-block">
-                                        <h4>{{appointment.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                        <h4 (click)="providerDetail(appointment.providerAccount)">{{appointment.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                         <span>
                                             <i class="fa phon-icon"
                                                 *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes.length > 0  && appointment.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -160,6 +165,8 @@
                                         {{appointment.service.name | capitalizeFirst}}</td>
                                     <td>
                                         <h6 [ngClass]="{'colr-confrm':(appointment.apptStatus == 'Confirmed'),'colr-arrived':(appointment.apptStatus == 'Arrived'),'colr-started':(appointment.apptStatus == 'Started'),'colr-canceld':(appointment.apptStatus == 'Cancelled'),'colr-completed':(appointment.apptStatus == 'Completed')}">{{appointment.apptStatus}}</h6>
+                                        <span *ngIf="appointment.apptStatus == 'Confirmed'"><a href="{{path}}status/{{appointment.appointmentEncId}}" target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
+                                        <!-- <span *ngIf="appointment.apptStatus == 'Completed'" class="rate-service" [class.rated]="isRated(appointment)" (click)="rateService(appointment,'appointment')">{{rate_visit}}</span> -->
                                     </td>
                                     <td>
                                         <span
@@ -181,7 +188,7 @@
 
                             <!-- Future Waitlists -->
                             <tbody *ngIf="future_waitlists && future_waitlists.length != 0">
-                                <tr *ngFor="let waitlist of future_waitlists; let i=index" class="custId-cursor">
+                                <tr *ngFor="let waitlist of future_waitlists; let i=index" class="custId-cursor" (click)="showcheckindetails(waitlist)">
                                     <td>
                                         <span class="upcoming">UPCOMING</span>
                                         <h4 *ngIf="!waitlist.token">{{waitlist.serviceTime}}</h4>
@@ -189,7 +196,7 @@
                                         <span>{{waitlist.date}}</span>
                                     </td>
                                     <td class="tdisplay-block">
-                                        <h4>{{waitlist.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                        <h4 (click)="providerDetail(waitlist.providerAccount)">{{waitlist.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                         <span>
                                             <i class="fa phon-icon"
                                                 *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes.length > 0 && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -208,6 +215,8 @@
                                             <span *ngIf="waitlist.waitlistStatus=='done'">Completed</span>
                                             <span *ngIf="waitlist.waitlistStatus!=='done'">{{waitlist.waitlistStatus | capitalizeFirst}}</span>
                                            </h6>
+                                           <span *ngIf="waitlist.waitlistStatus == 'Confirmed'">
+                                            <a href="{{path}}status/{{waitlist.checkinEncId}}" target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
                                         </td>
                                     <td>
                                         <span
@@ -234,7 +243,7 @@
 
                             <!-- Donation section -->
                             <tbody *ngIf="loadcomplete.donations && donations && donations.length != 0">
-                                <tr *ngFor="let donation of donations; let i=index">
+                                <tr *ngFor="let donation of donations; let i=index" (click)="gotoDonations()" class="custId-cursor">
                                     <td><h4>{{donation.date}}</h4></td>
                                     <td class="tdisplay-block">
                                       <h4>{{donation.providerAccount.businessName || '' | capitalizeFirst}}</h4>
@@ -243,7 +252,9 @@
                                     <td>
                                         <h6 class="colr-completed">{{donation.donationStatus | capitalizeFirst}}</h6>
                                         </td>
-                                    <td colspan=2><h6>{{donation.donationAmount}}</h6></td>
+                                    <td colspan=2><h6>
+                                        <i class="fa fa-inr"></i>
+                                        {{donation.donationAmount}}</h6></td>
                                 </tr>
                             </tbody>
                         </table>
