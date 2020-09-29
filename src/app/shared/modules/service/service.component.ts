@@ -333,6 +333,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     selectServiceTypeHandler(event) {
+        this.tool_name = '';
         this.serv_mode = event;
         this.modeselected = true;
         this.is_tool = false;
@@ -669,42 +670,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 this.telemodes = [];
                 this.vcallmodes = data.virtualCallingModes;
                 if (this.serv_mode && this.serv_mode === 'audioService') {
-                    // for (let i = 0; i < this.vcallmodes.length; i++) {
-                    //     if (this.vcallmodes[i].status === 'ACTIVE' && (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp')) {
-                    //         this.telemodes.push(this.vcallmodes[i]);
-                    //     }
-                    // }
-                    this.telemodes = ['WhatsApp', 'Phone'];
+                    this.telemodes = ['Phone', 'WhatsApp'];
 
                 } else if (this.serv_mode && this.serv_mode === 'videoService') {
-                    // for (let i = 0; i < this.vcallmodes.length; i++) {
-                    //     if (this.vcallmodes[i].status === 'ACTIVE' && this.vcallmodes[i].callingMode !== 'Phone') {
-                    //         this.telemodes.push(this.vcallmodes[i]);
-                    //     }
-                    // }
-                    this.telemodes = ['WhatsApp', 'Zoom', 'GoogleMeet'];
+                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp'];
                 } else {
-                    this.telemodes = ['WhatsApp', 'Zoom', 'GoogleMeet', 'Phone'];
+                    this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp'];
                 }
-                // else {
-                //     this.include_audio = false;
-                //     this.include_video = false;
-                //     for (let i = 0; i < this.vcallmodes.length; i++) {
-                //         if (this.vcallmodes[i].status === 'ACTIVE') {
-                //             this.telemodes.push(this.vcallmodes[i]);
-                //             if (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp') {
-                //                 this.include_audio = true;
-                //             }
-                //             if (this.vcallmodes[i].callingMode !== 'Phone') {
-                //                 this.include_video = true;
-                //             }
-                //         }
-                //     }
-                // }
-
-                // if (this.telemodes.length === 0) {
-                //     this.is_virtual_enable = false;
-                // }
                 for (let i = 0; i < this.vcallmodes.length; i++) {
                     if (this.selctd_tool === this.vcallmodes[i].callingMode) {
                         this.tool_id = this.vcallmodes[i].value;
