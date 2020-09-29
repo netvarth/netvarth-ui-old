@@ -215,7 +215,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group"
                 [ngClass]="{'tel-serv-flex':is_tool, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}"
-                *ngIf="modeselected || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
+                *ngIf="modeselected || (service_data && service_data.serviceType==='virtualService' && is_physical ===0 )">
                 <mat-form-field class="mat-select-virtualsrvcategory">
                     <mat-label>Select <span *ngIf="serv_mode === 'videoService'">Video</span><span
                             *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
@@ -235,7 +235,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field
-                    *ngIf="is_tool || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)"
+                    *ngIf="is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')"
                     class="example-full-width mat-select-virtualservice">
                     <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}"
                         placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}"
