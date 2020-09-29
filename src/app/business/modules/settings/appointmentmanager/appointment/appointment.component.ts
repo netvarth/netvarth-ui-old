@@ -210,6 +210,8 @@ export class AppointmentComponent implements OnInit {
     showOther = false;
     otherThirdParty = '';
     thirdparty_error = null;
+    jld;
+    customidFormat: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -403,10 +405,17 @@ export class AppointmentComponent implements OnInit {
                 }
             );
     }
+    getGlobalSettings() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.customidFormat = data.jaldeeIdFormat;
+            });
+    }
     initAppointment(thirdParty?) {
-        // if (thirdParty) {
-        //     this.thirdParty = thirdParty;
-        // }
+        if (thirdParty) {
+            //     this.thirdParty = thirdParty;
+            this.getGlobalSettings();
+        }
         this.thirdParty = thirdParty ? thirdParty : '';
         this.api_loading1 = false;
         this.showCheckin = true;
@@ -820,7 +829,11 @@ export class AppointmentComponent implements OnInit {
             }
             if (error === '') {
                 if (this.waitlist_for.length === 0) {
-                    this.createCustomer();
+                    if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+                        this.getCustomerCount();
+                    } else {
+                        this.createCustomer();
+                    }
                 } else {
                     this.saveCheckin();
                 }
@@ -835,15 +848,14 @@ export class AppointmentComponent implements OnInit {
             'firstName': this.thirdParty,
             'lastName': 'user'
         };
-        // if (form_data.customer_id) {
-        post_data['jaldeeId'] = this.getCustomerCount();
-        // }
+        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+            post_data['jaldeeId'] = this.jld;
+        }
         this.provider_services.createProviderCustomer(post_data)
             .subscribe(
                 data => {
                     this.getCustomerbyId(data);
                 });
-
     }
     getCustomerbyId(id) {
         const filter = { 'id-eq': id };
@@ -1629,10 +1641,10 @@ export class AppointmentComponent implements OnInit {
     }
     getCustomerCount() {
         this.provider_services.getProviderCustomersCount()
-        .subscribe(
-            data => {
-              const jld = 'JLD' + this.thirdParty + data;
-              return jld;
-            });
+            .subscribe(
+                data => {
+                    this.jld = 'JLD' + this.thirdParty + data;
+                    this.createCustomer();
+                });
     }
 }

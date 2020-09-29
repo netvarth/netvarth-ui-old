@@ -204,7 +204,6 @@ getCustomerCount() {
     this.provider_services.getProviderCustomersCount()
     .subscribe(
         data => {
-          console.log(data);
           this.customerCount = data;
           this.jld = 'JLD' + this.thirdParty + this.customerCount;
           this.amForm.get('customer_id').setValue(this.jld);

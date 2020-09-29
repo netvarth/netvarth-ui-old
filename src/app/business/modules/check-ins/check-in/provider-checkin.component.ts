@@ -206,6 +206,8 @@ export class ProviderCheckinComponent implements OnInit {
     showOther = false;
     otherThirdParty = '';
     thirdparty_error = null;
+    jld;
+    customidFormat: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -414,13 +416,16 @@ export class ProviderCheckinComponent implements OnInit {
             );
     }
     initCheckIn(thirdParty?) {
+        if (thirdParty) {
+            this.getGlobalSettings();
+        }
         this.thirdParty = thirdParty ? thirdParty : '';
         this.api_loading1 = false;
         const _this = this;
         this.showCheckin = true;
         this.waitlist_for = [];
         if (this.thirdParty === '') {
-        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         }
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
@@ -573,30 +578,30 @@ export class ProviderCheckinComponent implements OnInit {
     }
     getFamilyMembers() {
         if (this.thirdParty === '') {
-        this.api_loading1 = true;
-        let fn;
-        let self_obj;
-        fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
-        self_obj = {
-            'userProfile': {
-                'id': this.customer_data.id,
-                'firstName': this.customer_data.firstName,
-                'lastName': this.customer_data.lastName
-            }
-        };
-        fn.subscribe(data => {
-            this.familymembers = [];
-            this.familymembers.push(self_obj);
-            for (const mem of data) {
-                if (mem.userProfile.id !== self_obj.userProfile.id) {
-                    this.familymembers.push(mem);
+            this.api_loading1 = true;
+            let fn;
+            let self_obj;
+            fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
+            self_obj = {
+                'userProfile': {
+                    'id': this.customer_data.id,
+                    'firstName': this.customer_data.firstName,
+                    'lastName': this.customer_data.lastName
                 }
-            }
-            this.api_loading1 = false;
-        },
-            () => {
+            };
+            fn.subscribe(data => {
+                this.familymembers = [];
+                this.familymembers.push(self_obj);
+                for (const mem of data) {
+                    if (mem.userProfile.id !== self_obj.userProfile.id) {
+                        this.familymembers.push(mem);
+                    }
+                }
                 this.api_loading1 = false;
-            });
+            },
+                () => {
+                    this.api_loading1 = false;
+                });
         } else {
             this.api_loading1 = false;
         }
@@ -848,7 +853,11 @@ export class ProviderCheckinComponent implements OnInit {
             }
             if (error === '') {
                 if (this.waitlist_for.length === 0) {
-                    this.createCustomer();
+                    if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+                        this.getCustomerCount();
+                    } else {
+                        this.createCustomer();
+                    }
                 } else {
                     this.saveCheckin();
                 }
@@ -858,20 +867,25 @@ export class ProviderCheckinComponent implements OnInit {
             }
         }
     }
+    getGlobalSettings() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.customidFormat = data.jaldeeIdFormat;
+            });
+    }
     createCustomer() {
         const post_data = {
             'firstName': this.thirdParty,
             'lastName': 'user'
         };
-        // if (form_data.customer_id) {
-        post_data['jaldeeId'] = this.getCustomerCount();
-        // }
+        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+            post_data['jaldeeId'] = this.jld;
+        }
         this.provider_services.createProviderCustomer(post_data)
             .subscribe(
                 data => {
                     this.getCustomerbyId(data);
                 });
-
     }
     getCustomerbyId(id) {
         const filter = { 'id-eq': id };
@@ -1675,10 +1689,10 @@ export class ProviderCheckinComponent implements OnInit {
     }
     getCustomerCount() {
         this.provider_services.getProviderCustomersCount()
-        .subscribe(
-            data => {
-              const jld = 'JLD' + this.thirdParty + data;
-              return jld;
-            });
+            .subscribe(
+                data => {
+                    this.jld = 'JLD' + this.thirdParty + data;
+                    this.createCustomer();
+                });
     }
 }
