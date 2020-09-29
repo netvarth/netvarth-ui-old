@@ -61,9 +61,9 @@
                     </mat-select>
                   </div>
                 </div>
-                <div class="col-md-12" [hidden]="hide_dateRange">
+                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
                   <!-- <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline"> -->
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                       <mat-form-field>
                         <mat-label>Start Date</mat-label>
                         <input matInput [matDatepicker]="start" [(ngModel)]="payment_startDate" class="sc-t">
@@ -72,7 +72,7 @@
                       </mat-form-field>
 
                     </div>
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                       <mat-form-field>
                         <mat-label>End Date</mat-label>
                         <input matInput [matDatepicker]="end" [(ngModel)]="payment_endDate" class="sc-t">
@@ -94,7 +94,7 @@
                     <label for="payment_schedule" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Schedule</label>
                     <input type="text" class="form-control col-lg-7 col-sm-5 col-md-5 col-xs-5" readonly [(ngModel)]="payment_schedule">
                     <div class="input-group-append">
-                      <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('schedule',payment_schedule_id)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('schedule',payment_schedule_id)">Change</button>
                     </div>
                   </div>
 
@@ -105,7 +105,7 @@
                     <label for="Customer" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">{{customer_label |capitalizeFirst}}s </label>
                     <input type="text" class="form-control col-lg-7 col-sm-5 col-md-5 col-xs-5" readonly [(ngModel)]="payment_customer">
                     <div class="input-group-append">
-                      <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('customer',payment_customerId)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('customer',payment_customerId)">Change</button>
                     </div>
                   </div>
 
@@ -118,7 +118,7 @@
                     <label for="Services" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Services</label>
                     <input type="text"class="form-control col-lg-7 col-sm-5 col-md-5 col-xs-5" readonly [(ngModel)]="payment_service">
                     <div class="input-group-append">
-                      <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('service',payment_service_id)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('service',payment_service_id)">Change</button>
                     </div>
                   </div>
 
@@ -129,7 +129,7 @@
                     <label for="payment_queue" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Queue</label>
                     <input type="text" class="form-control col-lg-7 col-sm-5 col-md-5 col-xs-5"  readonly [(ngModel)]="payment_queue">
                     <div class="input-group-append">
-                      <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('queue',payment_queue_id)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('queue',payment_queue_id)">Change</button>
                     </div>
                   </div>
                 </div>
@@ -176,9 +176,9 @@
                     </mat-select>
                   </div>
                 </div>
-                <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
+                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
                   <!-- <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline"> -->
-                    <div class="col-md-6">
+                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                       <mat-form-field>
                         <mat-label>Start Date</mat-label>
                         <input matInput [matDatepicker]="start" [(ngModel)]="appointment_startDate" class="sc-t">
@@ -187,7 +187,7 @@
                       </mat-form-field>
 
                     </div>
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                       <mat-form-field>
                         <mat-label>End Date</mat-label>
                         <input matInput [matDatepicker]="end" [(ngModel)]="appointment_endDate" class="sc-t">
@@ -207,7 +207,7 @@
                     <label for="payment_schedule" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Schedule</label>
                     <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="appointment_schedule">
                     <div class="input-group-append">
-                      <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('schedule',appointment_schedule_id)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('schedule',appointment_schedule_id)">Change</button>
                     </div>
                   </div>
                 </div>
@@ -217,7 +217,7 @@
                     <label for="Customer"  class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">{{customer_label |capitalizeFirst}}s</label>
                     <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="appointment_customer">
                     <div class="input-group-append">
-                      <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('customer',appointment_customerId)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('customer',appointment_customerId)">Change</button>
                     </div>
                   </div>
 
@@ -229,7 +229,7 @@
                     <label for="Services" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Services</label>
                     <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7"readonly [(ngModel)]="appointment_service">
                     <div class="input-group-append">
-                      <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('service',appointment_service_id)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('service',appointment_service_id)">Change</button>
                     </div>
                   </div>
                 </div>
@@ -284,9 +284,9 @@
 
                   </div>
                 </div>
-                <div class="col-md-12 col-sm-12" [hidden]="hide_dateRange">
+                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
                   <!-- <div class="form-group col-md-6 col-sm-6  no-padding picker-form-inline"> -->
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                       <mat-form-field>
                         <mat-label>Start Date</mat-label>
                         <input matInput [matDatepicker]="start" [(ngModel)]="waitlist_startDate" class="sc-t">
@@ -295,7 +295,7 @@
                       </mat-form-field>
 
                     </div>
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                       <mat-form-field>
                         <mat-label>End Date</mat-label>
                         <input matInput [matDatepicker]="end" [(ngModel)]="waitlist_endDate" class="sc-t">
@@ -315,7 +315,7 @@
                     <label for="Queue" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Queues</label>
                     <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="token_queue">
                     <div class="input-group-append ">
-                      <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('queue',token_queue_id)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('queue',token_queue_id)">Change</button>
                     </div>
                   </div>
                 </div>
@@ -324,7 +324,7 @@
                       <label for="Services" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Services</label>
                       <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="token_service">
                       <div class="input-group-append ">
-                        <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('service',token_service_id)">Change</button>
+                        <button class="btn btn-primary " type="button" (click)="goToSelectionPage('service',token_service_id)">Change</button>
                       </div>
                     </div>
                   </div>
@@ -337,7 +337,7 @@
                         <label for="Customers" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">{{customer_label |capitalizeFirst}}s</label>
                         <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="waitlist_customer">
                         <div class="input-group-append ">
-                          <button class="btn btn-primary changeInsmall" type="button"  (click)="goToSelectionPage('customer',waitlist_customerId)">Change</button>
+                          <button class="btn btn-primary " type="button"  (click)="goToSelectionPage('customer',waitlist_customerId)">Change</button>
                         </div>
                       </div>
                     </div>
@@ -410,7 +410,7 @@
                     <label for="Services"class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Services</label>
                     <input type="text" class="form-control col-lg-7 col-sm-10 col-md-10 col-xs-10" readonly [(ngModel)]="donation_service">
                     <div class="input-group-append col-lg-2 col-md-2 col-sm-2 col-xs-2 p0 ">
-                      <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('service',donation_service_id)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('service',donation_service_id)">Change</button>
                     </div>
                   </div>
 
@@ -420,7 +420,7 @@
                     <label for="Customer" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">{{customer_label |capitalizeFirst}}s</label>
                     <input type="text" class="form-control col-lg-7 col-sm-10 col-md-10 col-xs-10" readonly [(ngModel)]="donation_customer">
                     <div class="input-group-append col-lg-2 col-md-2 col-sm-2 col-xs-2 p0 ">
-                      <button class="btn btn-primary changeInsmall" type="button" (click)="goToSelectionPage('customer',donation_customerId)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('customer',donation_customerId)">Change</button>
                     </div>
                   </div>
 
