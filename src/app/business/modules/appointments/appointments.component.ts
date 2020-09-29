@@ -1704,6 +1704,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       let deptId;
       let userId;
+      console.log(this.selUser);
       if (this.selUser && this.selUser.id && this.selUser.id !== 'all') {
         const filteredDept = this.users.filter(user => user.id === this.selUser.id);
         if (filteredDept[0] && filteredDept[0].deptId) {
@@ -1711,6 +1712,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         userId = this.selUser.id;
       }
+      console.log(userId);
       this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId } });
     }
   }

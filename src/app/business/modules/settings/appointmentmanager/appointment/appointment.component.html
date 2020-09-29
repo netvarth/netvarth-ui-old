@@ -1,6 +1,15 @@
-<section>
+<!-- <section>
     <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
         [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section> -->
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <button type="button" class="btn default profile-back" (click)="goBack()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+            {{heading}}
+        </h5>
+    </div>
 </section>
 <section>
     <div class="content loc-list p-checkin ynw-common-form-nm">
@@ -50,7 +59,8 @@
                             </div> -->
                             <div class="create_new mgn-bt-20">
                                 <div>Or</div>
-                                <a class="underline" (click)="createNew()"> Create new {{customer_label}} and proceed. </a>
+                                <a class="underline" (click)="createNew()"> Create new {{customer_label}} and proceed.
+                                </a>
                             </div>
                             <div class="create_new mgn-bt-20">
                                 <div>Or</div>
@@ -64,9 +74,10 @@
                                         dial</button>
                                     <button class="create_new_button cs-btn bt3 mgn-rt-10"
                                         (click)="initAppointment('google')">Google</button>
-                                    <button class="create_new_button cs-btn bt3 mgn-rt-10" *ngIf="domain === 'healthCare'"
+                                    <button class="create_new_button cs-btn bt3 mgn-rt-10"
+                                        *ngIf="domain === 'healthCare'"
                                         (click)="initAppointment('mfine')">MFine</button>
-                                    <button class="create_new_button cs-btn bt3" [class.btn-selected] = "showOther"
+                                    <button class="create_new_button cs-btn bt3" [class.btn-selected]="showOther"
                                         (click)="showOtherSection()">Other</button>
                                 </div>
                                 <div class="disp-flex" *ngIf="showOther">

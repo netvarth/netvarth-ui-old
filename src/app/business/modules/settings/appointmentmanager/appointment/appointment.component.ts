@@ -212,6 +212,7 @@ export class AppointmentComponent implements OnInit {
     thirdparty_error = null;
     jld;
     customidFormat: any;
+    heading = 'Create an Appointment';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -419,6 +420,7 @@ export class AppointmentComponent implements OnInit {
         this.thirdParty = thirdParty ? thirdParty : '';
         this.api_loading1 = false;
         this.showCheckin = true;
+        this.heading = 'New Appointment';
         this.waitlist_for = [];
         if (this.thirdParty === '') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
@@ -1334,8 +1336,9 @@ export class AppointmentComponent implements OnInit {
                                 this.selected_user = this.users[0];
                             }
                         } else {
-                            this.selected_user = this.users[0];
+                            this.selected_user = this.userN;
                         }
+                        console.log(this.selected_user);
                         this.handleUserSelection(this.selected_user);
                     } else {
                         this.selected_user = null;
@@ -1393,8 +1396,10 @@ export class AppointmentComponent implements OnInit {
                     const userDetails = this.users.filter(user => user.id === this.selectUser);
                     this.selected_user = userDetails[0];
                     this.handleUserSelection(this.selected_user);
+                    console.log(this.selected_user);
                 } else if (this.users.length !== 0) {
                     this.selected_user = this.users[0];
+                    console.log(this.selected_user);
                     this.handleUserSelection(this.selected_user);
                 } else {
                     this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
@@ -1646,5 +1651,13 @@ export class AppointmentComponent implements OnInit {
                     this.jld = 'JLD' + this.thirdParty + data;
                     this.createCustomer();
                 });
+    }
+    goBack() {
+        if (this.showCheckin) {
+            this.showCheckin = false;
+            this.heading = 'Create an Appointment';
+        } else {
+            this.router.navigate(['provider', 'appointments']);
+        }
     }
 }

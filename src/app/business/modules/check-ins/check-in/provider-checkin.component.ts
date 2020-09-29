@@ -208,6 +208,7 @@ export class ProviderCheckinComponent implements OnInit {
     thirdparty_error = null;
     jld;
     customidFormat: any;
+    heading = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -251,6 +252,7 @@ export class ProviderCheckinComponent implements OnInit {
                         title: this.chekin_title
                     }
                 ];
+                this.heading = 'Create a Token';
             } else {
                 this.breadcrumbs = [
                     {
@@ -261,6 +263,7 @@ export class ProviderCheckinComponent implements OnInit {
                         title: this.chekin_title
                     }
                 ];
+                this.heading = 'Create a Check-in';
             }
             if (qparams.ph || qparams.haveMobile) {
                 const filter = {};
@@ -421,6 +424,11 @@ export class ProviderCheckinComponent implements OnInit {
         }
         this.thirdParty = thirdParty ? thirdParty : '';
         this.api_loading1 = false;
+        if (this.showtoken) {
+            this.heading = 'New Token';
+        } else {
+            this.heading = 'New Check-in';
+        }
         const _this = this;
         this.showCheckin = true;
         this.waitlist_for = [];
@@ -1694,5 +1702,17 @@ export class ProviderCheckinComponent implements OnInit {
                     this.jld = 'JLD' + this.thirdParty + data;
                     this.createCustomer();
                 });
+    }
+    goBack() {
+        if (this.showCheckin) {
+            this.showCheckin = false;
+            if (this.showtoken) {
+                this.heading = 'Create a Token';
+            } else {
+                this.heading = 'Create a Check-in';
+            }
+        } else {
+            this.router.navigate(['provider', 'check-ins']);
+        }
     }
 }
