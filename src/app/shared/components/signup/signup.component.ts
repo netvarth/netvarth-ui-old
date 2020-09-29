@@ -537,6 +537,7 @@ export class SignUpComponent implements OnInit {
                 () => {
                   const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
                   this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+                  this.shared_functions.setitemonLocalStorage('qrp', post_data.password);
                   this.dialogRef.close('success');
                 },
                 error => {

@@ -166,6 +166,7 @@ export class LoginComponent implements OnInit {
             () => {
               const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
               this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+              this.shared_functions.setitemonLocalStorage('qrp', data.password);
               this.dialogRef.close('success');
             },
             error => {

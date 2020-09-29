@@ -579,7 +579,8 @@ export class ConsumerDonationComponent implements OnInit {
                     .subscribe(
                         () => {
                             this.getProfile();
-                            this.hideFilterSidebar();
+                            // this.hideFilterSidebar();
+                            this.action = '';
                         },
                         error => {
                             this.api_error = error.error;
@@ -778,12 +779,20 @@ export class ConsumerDonationComponent implements OnInit {
             this.dispCustomernote = true;
         }
     }
+    // handleEmail() {
+    //     if (this.dispCustomerEmail) {
+    //         this.dispCustomerEmail = false;
+    //     } else {
+    //         this.dispCustomerEmail = true;
+    //     }
+    // }
     handleEmail() {
-        if (this.dispCustomerEmail) {
-            this.dispCustomerEmail = false;
-        } else {
-            this.dispCustomerEmail = true;
-        }
+        this.action = 'email';
+        // if (this.dispCustomerEmail) {
+        //     this.dispCustomerEmail = false;
+        // } else {
+        //     this.dispCustomerEmail = true;
+        // }
     }
     clearerrorParty() {
         this.partyapi_error = '';
@@ -826,6 +835,7 @@ export class ConsumerDonationComponent implements OnInit {
             .then(
                 data => {
                     this.userData = data;
+                    console.log(this.userData)
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';

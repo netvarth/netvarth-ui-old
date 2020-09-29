@@ -11985,3 +11985,10 @@ img.busN-logo {
 .content .c-outer .c-body .srlst .bottom-sect {
   padding-bottom: 0 !important;
 }
+.btn-selected {
+  background: #00aef2;
+  color: white;
+}
+.avail-slot:hover {
+  color: #006cab;
+}

@@ -1379,7 +1379,7 @@ export const Messages = {
   'FRM_LEVEL_LOC_MSG': 'Manage your business location details here.',
   'FRM_LEVEL_LOC_AMENITIES_MSG': 'Manage the location benefits that are offered to your [customer]s.',
   'FRM_LEVEL_WORKING_MSG': 'Details of your business hours are shown here.',
-  'FRM_LEVEL_PRIVACY_MSG': 'Manage your contact related information here. Option to keep your information restricted is available.',
+  'FRM_LEVEL_PRIVACY_MSG': 'Provide your contact information here and manage its visibility.',
   'FRM_LEVEL_SPEC_MSG': 'Mention your specializations here.',
   'FRM_LEVEL_LANG_MSG': 'To widen your [customer] base, add different languages known to you here.',
   'FRM_LEVEL_ADDITIONAL_MSG': 'Add other details of you or your business so that [customer]s can understand you more.',

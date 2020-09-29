@@ -647,6 +647,109 @@ export const projectConstantsLocal = {
     BOTIM: 'Botim',
     IMO: 'Imo'
   },
+  PAYMENT_MODES: [
+
+    {value: 'Cash', displayName: 'Cash'},
+    {value: 'DC', displayName: 'Debit card'},
+    {value: 'CC', displayName: 'Credit card'},
+    {value: 'NB', displayName: 'Net banking'},
+    {value: 'PPI', displayName: 'Wallet'},
+    {value: 'UPI', displayName: 'UPI'},
+
+  ],
+  PAYMENT_STATUS: [
+
+    {value: 'SUCCESS', displayName: 'Success'},
+    {value: 'FAILED', displayName: 'Failed'},
+    {value: 'INCOMPLETE', displayName: 'In Complete'}
+
+
+  ],
+  PAYMENT_PURPOSE: [
+
+    {value: 'prePayment', displayName: 'Pre Payment'},
+    {value: 'billPayment', displayName: 'Bill Payment'},
+    {value: 'donation', displayName: 'Donation'}
+
+
+  ],
+  APPOINTMENT_MODE : [
+    {displayName: 'Walk-in ', value: 'WALK_IN_APPOINTMENT'},
+    {displayName: 'Online', value: 'ONLINE_APPOINTMENT'},
+    {displayName: 'Phone-in', value: 'PHONE_IN_APPOINTMENT'},
+
+  ],
+  APPOINTMENT_STATUS : [
+    // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
+    {displayName: 'Confirmed', value: 'Confirmed'},
+    {displayName: 'Arrived', value: 'Arrived'},
+    {displayName: 'Started', value: 'Started'},
+    {displayName: 'Cancelled', value: 'Cancelled'},
+    {displayName: 'Rejected', value: 'Rejected'},
+    // {displayName: 'Failed', value: 'failed'},
+    // {displayName: 'Calling', value: 'calling'},
+    {displayName: 'Completed', value: 'Completed'},
+
+  ],
+  WAITLIST_MODE : [
+    {displayName: 'Walk-in ', value: 'WALK_IN_CHECKIN'},
+    {displayName: 'Online', value: 'ONLINE_CHECKIN'},
+    {displayName: 'Phone-in', value: 'PHONE_CHECKIN'},
+
+  ],
+  WAITLIST_STATUS : [
+    // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
+    {displayName: 'Checked In ', value: 'CheckedIn'},
+    {displayName: 'Arrived', value: 'arrived'},
+    // {displayName: 'Unrevertable', value: 'unrevertable'},
+    {displayName: 'Started', value: 'Started'},
+    {displayName: 'Cancelled', value: 'Cancelled'},
+    {displayName: 'Done', value: 'done'},
+    // {displayName: 'Failed', value: 'failed'},
+
+  ],
+  BILL_PAYMENT_STATUS : [
+    {value: 'NotPaid', displayName: 'Not Paid'},
+    {value: 'PartiallyPaid', displayName: 'Partially Paid'},
+    {value: 'FullyPaid', displayName: 'Fully Paid'},
+    {value: 'Refund', displayName: 'Refund'}
+  ],
+
+  REPORT_TYPE: [
+    {displayName: 'Token', value: 'TOKEN'},
+    {displayName: 'Appointment', value: 'APPOINTMENT'},
+    {displayName: 'Donation', value: 'DONATION'},
+    {displayName: 'Payment', value: 'PAYMENT'},
+
+  ],
+
+  REPORT_TRANSACTION_TYPE: [
+    {displayName: 'Waitlist', value: 'Waitlist'},
+    {displayName: 'Appointment', value: 'Appointment'},
+    {displayName: 'Donation', value: 'Donation'},
+    {displayName: 'Order', value: 'Order'},
+    {displayName: 'License', value: 'License'},
+
+  ],
+  REPORT_TIMEPERIOD: [
+    {value: 'LAST_WEEK', displayName: 'Last 7 days'},
+    {value: 'NEXT_WEEK', displayName: 'Next 7 days'},
+    {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
+    {value: 'NEXT_THIRTY_DAYS', displayName: 'Next 30 days'},
+    {value: 'TODAY', displayName: 'Today'},
+    {value: 'DATE_RANGE', displayName: 'Custom Date'},
+
+  ],
+
+  DONATION_TIMEPERIOD: [
+    {value: 'LAST_WEEK', displayName: 'Last 7 days'},
+    {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
+    {value: 'TODAY', displayName: 'Today'},
+    {value: 'DATE_RANGE', displayName: 'Custom Date'},
+
+  ],
+
+
   BUSINESS_PROFILE_WEIGHTAGE: {
     BUSINESS_NAME: { 'name': 'BUSINESS_NAME', 'value': 10 },
     BUSINESS_DESCRIPTION: { 'name': 'BUSINESS_DESCRIPTION', 'value': 5 },

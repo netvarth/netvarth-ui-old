@@ -10,34 +10,82 @@
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
                             <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
-                                <div class="form-group col-md-12 mgn-up-10 sc-frm">
-                                    <div class="col-md-9 col-xs-10 col-sm-10 no-padding">
-                                        <div class="col-md-10 col-sm-10 col-xs-10">
-                                            <mat-form-field>
-                                                <input matInput placeholder="Enter Phone Number/Id/email" type="text"
-                                                    class="form-control" formControlName="search_input"
-                                                    (keypress)="findCustomer(searchForm.value, $event)">
-                                            </mat-form-field>
+                                <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 sc-frm">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding mgn-bt-50"
+                                            *ngIf="slotTime">
+                                            <div class="col-md-6 col-lg-6 col-xs-5 col-sm-6 no-padding">
+                                                Date: {{sel_checkindate | date: dateFormat}} </div>
+                                            <div class="col-md-6 col-lg-6 col-xs-7 col-sm-6 no-padding"> Appointment
+                                                slot: {{getSingleTime(slotTime)}}</div>
                                         </div>
-                                        <div class="col-md-2 col-xs-2 col-sm-2">
-                                            <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
-                                        searchCustomer(searchForm.value,selectedMode)"></i>
+                                        <div class="mgn-up-10"> Find an existing {{customer_label}} and create
+                                            appointment</div>
+                                        <div class="disp-flex">
+                                            <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
+                                                <mat-form-field>
+                                                    <input matInput
+                                                        placeholder="{{customer_label | capitalizeFirst}} Phone# or ID or Email"
+                                                        type="text" class="form-control" formControlName="search_input"
+                                                        (keypress)="findCustomer(searchForm.value, $event)">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
+                                                <!-- <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
+                                        searchCustomer(searchForm.value,selectedMode)"></i> -->
+                                                <button class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
+                                        searchCustomer(searchForm.value,selectedMode)">Find</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-                            <div class="col-md-12 no-padding" *ngIf="create_new">
+                            <!-- <div class="col-md-12 no-padding" *ngIf="create_new">
                                 <hr class="wide-separator-line" />
-                            </div>
+                            </div> -->
                             <div class="clearfix"></div>
-                            <div class="mgn-bt-20 col-md-12 no-padding-small">
+                            <!-- <div class="mgn-bt-20 col-md-12 no-padding-small">
                                 Don't have a mobile number? <a class="more_less" (click)="createNew('new')"> Click
                                     here.</a>
+                            </div> -->
+                            <div class="create_new mgn-bt-20">
+                                <div>Or</div>
+                                <a class="underline" (click)="createNew()"> Create new {{customer_label}} and proceed. </a>
                             </div>
-                            <div class="create_new mgn-bt-20" *ngIf="create_new">
-                                <span>Sorry, We were not able to find the record in our {{customer_label}}s list.</span>
-                                <button class="create_new_button cs-btn bt3" (click)="createNew()">{{create_cap}}
-                                    {{customer_label}}</button>
+                            <div class="create_new mgn-bt-20">
+                                <div>Or</div>
+                                <span> {{customer_label | capitalizeFirst}} from third party listing site </span>
+                                <div class="mgn-up-10">
+                                    <button *ngIf="domain === 'healthCare'"
+                                        class="create_new_button cs-btn bt3 mgn-rt-10"
+                                        (click)="initAppointment('practo')">Practo</button>
+                                    <button class="create_new_button cs-btn bt3 mgn-rt-10"
+                                        (click)="initAppointment('justdial')">Just
+                                        dial</button>
+                                    <button class="create_new_button cs-btn bt3 mgn-rt-10"
+                                        (click)="initAppointment('google')">Google</button>
+                                    <button class="create_new_button cs-btn bt3 mgn-rt-10" *ngIf="domain === 'healthCare'"
+                                        (click)="initAppointment('mfine')">MFine</button>
+                                    <button class="create_new_button cs-btn bt3" [class.btn-selected] = "showOther"
+                                        (click)="showOtherSection()">Other</button>
+                                </div>
+                                <div class="disp-flex" *ngIf="showOther">
+                                    <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Enter your third party listing site *"
+                                                [(ngModel)]="otherThirdParty" type="text" class="form-control"
+                                                (keypress)="resetError()">
+                                        </mat-form-field>
+                                        <app-field-error-display style="color: #f24949 !important;"
+                                            [displayError]="true" *ngIf="thirdparty_error"
+                                            errorMsg="{{thirdparty_error}}">
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
+                                        <button class="create_new_button cs-btn bt3"
+                                            (click)="showOtherSection(true)">Ok</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="lbr col-sm-12 col-md-4 col-lg-4">
@@ -51,7 +99,7 @@
                         <div class="mainouter checkin-page ">
                             <ng-container *ngIf="!api_loading1">
                                 <div class="servicefor-outer btborder">
-                                    <ul class="availer-ul">
+                                    <ul class="availer-ul" *ngIf="thirdParty === ''">
                                         <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                                             <li>
                                                 {{waitfor.firstName | capitalizeFirst}}
@@ -65,6 +113,12 @@
                                             {{customer_label | capitalizeFirst}} id:
                                             {{customer_data.jaldeeId | capitalizeFirst}}</li>
                                     </ul>
+                                    <div *ngIf="thirdParty !== ''">
+                                        {{customer_label | capitalizeFirst}} from {{thirdPartyList[thirdParty]}}
+                                        <a class="underline pull-right" (click)="createNew()">Fill the
+                                            {{customer_label}}
+                                            details </a>
+                                    </div>
                                     <div class="date-outer" *ngIf="partySizeRequired">
                                         <div class="form-group party-size">
                                             <label class="col-form-label">{{enter_party_size_cap}}</label>
@@ -120,16 +174,20 @@
                                                 placeholder="Service" value="{{serv.name | capitalizeFirst}}">
                                         </mat-form-field> -->
                                         <span *ngIf="servicesjson.length == 1">
-                                          <ng-container *ngFor="let serv of servicesjson">
-                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'audioService'" class="fa wtsapaud-icon"></i>
-                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'videoService'" class="fa wtsapvid-icon"></i>
-                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
-                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
-                                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'" class="fa phon-icon"
-                                              aria-hidden="true"></i>
-                                              <span class="dash">{{serv.name | capitalizeFirst}}</span>
-                                            <!-- <input matInput [readonly]="true" placeholder="Service" value="{{serv.name | capitalizeFirst}}"> -->
-                                          </ng-container>
+                                            <ng-container *ngFor="let serv of servicesjson">
+                                                <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'audioService'"
+                                                    class="fa wtsapaud-icon"></i>
+                                                <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'videoService'"
+                                                    class="fa wtsapvid-icon"></i>
+                                                <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                    class="fa zoom-icon"></i>
+                                                <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                    class="fa meet-icon"></i>
+                                                <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'"
+                                                    class="fa phon-icon" aria-hidden="true"></i>
+                                                <span class="dash">{{serv.name | capitalizeFirst}}</span>
+                                                <!-- <input matInput [readonly]="true" placeholder="Service" value="{{serv.name | capitalizeFirst}}"> -->
+                                            </ng-container>
 
                                         </span>
                                         <mat-form-field *ngIf="servicesjson.length > 1">
@@ -138,7 +196,7 @@
                                                 <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
                                                     <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'audioService'"
                                                         class="fa wtsapaud-icon"></i>
-                                                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'videoService'"
+                                                    <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'videoService'"
                                                         class="fa wtsapvid-icon"></i>
                                                     <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
                                                         class="fa zoom-icon"></i>
@@ -200,12 +258,13 @@
                                 <div class="date-outer">
                                     <div class="date-head">Appointment {{date_cap}}</div>
                                     <div class="date-body">
-                                        <span class="selected-date"> <span class="icon-minus"
-                                                [class.disable]="disableMinus()"
+                                        <span class="selected-date">
+                                            <span class="icon-minus" *ngIf="!slotTime" [class.disable]="disableMinus()"
                                                 (click)="calculateDate(-1)"></span>{{sel_day}}
                                             {{sel_checkindate | date: dateFormat}}
-                                            <span class="icon-add" (click)="calculateDate(1)"></span></span>
-                                        <div class="form-group dt">
+                                            <span *ngIf="!slotTime" class="icon-add"
+                                                (click)="calculateDate(1)"></span></span>
+                                        <div class="form-group dt" *ngIf="!slotTime">
                                             <div class="pickerouter">
                                                 <mat-datepicker-toggle matSuffix [for]="picker">
                                                 </mat-datepicker-toggle>
@@ -305,7 +364,7 @@
                                             <div *ngIf="showApptTime && !api_loading">
                                                 <div class="ttle mgn-bt-10">Appointment Time</div>
                                                 <span class="label-bold">{{getSingleTime(apptTime)}} </span>
-                                                <span style="margin-left: 30px" class="editbt"
+                                                <span style="margin-left: 30px" class="editbt" *ngIf="!slotTime"
                                                     (click)="editClicked()"></span>
                                             </div>
                                             <div *ngIf="!showApptTime && !api_loading">TimeSlots are not available
@@ -318,8 +377,8 @@
                                         </app-common-innerloading-spinner>
                                     </ng-container>
                                     <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
-                                        <span class='no-queue-available'
-                                           >Appointment{{not_accepted_for_this_date}}</span>
+                                        <span
+                                            class='no-queue-available'>Appointment{{not_accepted_for_this_date}}</span>
                                     </ng-container>
                                     <ng-container *ngIf="queuejson.length > 0 && servicesjson.length == 0">
                                         <span class='no-queue-available'>{{no_services_avail_cap}}</span>
@@ -521,7 +580,8 @@
                             </aside>
                         </div>
                         <div class="col-md-12  mgn-up-20 " *ngIf="!showAction">
-                            <button class="cs-btn bt3 width-100" (click)="handleSideScreen('members')">Add / Change
+                            <button *ngIf="thirdParty === ''" class="cs-btn bt3 width-100"
+                                (click)="handleSideScreen('members')">Add / Change
                                 Member</button>
                             <button class="cs-btn bt3 width-100 mgn-up-20"
                                 (click)="handleSideScreen('note')">{{sel_ser_det.consumerNoteTitle}}

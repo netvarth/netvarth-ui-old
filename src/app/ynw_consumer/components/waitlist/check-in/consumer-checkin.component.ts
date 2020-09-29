@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -13,12 +13,13 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Location } from '@angular/common';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatCalendarCellCssClasses } from '@angular/material';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
-    styleUrls: ['./consumer-checkin.component.css']
+    styleUrls: ['./consumer-checkin.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ConsumerCheckinComponent implements OnInit {
     checkinSubscribtion: Subscription;
@@ -219,6 +220,7 @@ export class ConsumerCheckinComponent implements OnInit {
     selectedService: any;
     note_cap = 'Add Note';
     servicedialogRef: any;
+    availableDates: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -255,6 +257,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     // tslint:disable-next-line:radix
                     this.selectedService = parseInt(params.service_id);
                 }
+                // this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
             });
 
     }
@@ -543,6 +546,20 @@ export class ConsumerCheckinComponent implements OnInit {
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
+    getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
+        const _this = this;
+        _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
+            .subscribe((data: any) => {
+                const availables = data.filter(obj => obj.isAvailable);
+                const availDates = availables.map(function (a) { return a.date; });
+                _this.availableDates = availDates.filter(function(elem, index, self) {
+                    return index === self.indexOf(elem);
+                });
+            });
+    }
+    dateClass(date: Date): MatCalendarCellCssClasses {
+        return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+      }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
         this.queueQryExecuted = false;
         if (locid && servid) {
@@ -619,6 +636,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.sel_queue_personaahead = 0;
         this.sel_queue_name = '';
         this.resetApi();
+        // this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         this.action = '';
     }
@@ -1763,8 +1781,8 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     getPic(user) {
         if (user.profilePicture) {
-          // alert(JSON.parse(user.profilePicture)['url']);
-          return JSON.parse(user.profilePicture)['url'];
+            // alert(JSON.parse(user.profilePicture)['url']);
+            return JSON.parse(user.profilePicture)['url'];
         }
         return 'assets/images/img-null.svg';
     }

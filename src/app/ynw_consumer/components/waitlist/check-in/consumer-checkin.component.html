@@ -174,10 +174,10 @@
                                         </div>
                                         <div class="pickerouter caldiv pull-left"
                                             *ngIf="settingsjson.futureDateWaitlist">
-
+                                            <!-- && availableDates && availableDates.length > 0" -->
                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                             </mat-datepicker-toggle>
-                                            <mat-datepicker #picker></mat-datepicker>
+                                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
                                             <input class="" style="visibility: hidden; width:1px" type="text"
                                                 [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
                                                 (dateChange)="handleFutureDateChange($event)">

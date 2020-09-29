@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material';
 export class ExtendHttpInterceptor implements HttpInterceptor {
   no_redirect_path = [
     base_url + 'consumer/login',
+    base_url + 'superadmin/login',
     base_url + 'provider/login',
     base_url + 'consumer/login/reset/\d{10,12}'
   ];
@@ -200,6 +201,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return throwError(error);
             } else if (error.status === 401) {
               this.shared_functions.logout();
+              return EMPTY;
               // return throwError(error);
             } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {

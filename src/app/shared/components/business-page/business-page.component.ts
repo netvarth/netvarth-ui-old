@@ -11,7 +11,7 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
-import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
+// import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
@@ -1316,13 +1316,49 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
     return str;
   }
+
+
+  goThroughLogin() {
+    return new Promise((resolve) => {
+      const qrpw = this.sharedFunctionobj.getitemfromLocalStorage('qrp');
+      const qrusr = this.sharedFunctionobj.getitemfromLocalStorage('ynw-credentials');
+      if (qrusr && qrpw) {
+        const data = {
+          'countryCode': '+91',
+          'loginId': qrusr.loginId,
+          'password': qrpw,
+          'mUniqueId': null
+        };
+        this.shared_services.ConsumerLogin(data).subscribe(
+          (loginInfo: any) => {
+            this.sharedFunctionobj.setitemonLocalStorage('qrp', data.password);
+            console.log(loginInfo);
+            resolve(true);
+          },
+          (error) => {
+            if (error.status === 401 && error.error === 'Session already exists.') {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          }
+        );
+      } else {
+        resolve(false);
+      }
+    });
+  }
   redirectToHistory() {
-    if (this.sharedFunctionobj.checkLogin()) {
-      this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
-    } else { // show consumer login
-      const passParam = { callback: 'history' };
-      this.doLogin('consumer', passParam);
-    }
+    const _this = this;
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
+        } else {
+          const passParam = { callback: 'history' };
+          this.doLogin('consumer', passParam);
+        }
+      });
   }
   getInboxUnreadCnt() {
     const usertype = 'consumer';
@@ -1335,14 +1371,18 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         });
   }
   communicateHandler() {
+    const _this = this;
     const providforCommunicate = this.provider_bussiness_id;
-    // check whether logged in as consumer
-    if (this.sharedFunctionobj.checkLogin()) {
-      this.showCommunicate(providforCommunicate);
-    } else { // show consumer login
-      const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
-      this.doLogin('consumer', passParam);
-    }
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          _this.showCommunicate(providforCommunicate);
+        } else {
+          const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
+          this.doLogin('consumer', passParam);
+        }
+      }
+    );
   }
   openJdn() {
     this.jdndialogRef = this.dialog.open(JdnComponent, {
@@ -1374,50 +1414,55 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     });
   }
   getFavProviders(mod?) {
-    if (mod) {
-      this.handle_Fav(mod);
-    } else {
-      this.shared_services.getFavProvider()
-        .subscribe(data => {
-          this.favprovs = data;
-          if (this.favprovs.length === 0) {
-            this.handle_Fav('add');
+    const _this = this;
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          if (mod) {
+            this.handle_Fav(mod);
           } else {
-            const provider = this.favprovs.filter(fav => fav.id === this.provider_bussiness_id);
-            if (provider.length === 0) {
-              this.handle_Fav('add');
-            } else {
-              this.isInFav = true;
-            }
+            this.shared_services.getFavProvider()
+              .subscribe(data => {
+                this.favprovs = data;
+                if (this.favprovs.length === 0) {
+                  this.handle_Fav('add');
+                } else {
+                  const provider = this.favprovs.filter(fav => fav.id === this.provider_bussiness_id);
+                  if (provider.length === 0) {
+                    this.handle_Fav('add');
+                  } else {
+                    this.isInFav = true;
+                  }
+                }
+              }, error => {
+                this.sharedFunctionobj.apiErrorAutoHide(this, error);
+              });
           }
-        }, error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
-        });
-    }
+        } else {
+          const passParam = { callback: 'fav' };
+          _this.doLogin('consumer', passParam);
+        }
+      });
   }
   handle_Fav(mod) {
-    if (this.sharedFunctionobj.checkLogin()) {
-      const accountid = this.provider_bussiness_id;
-      if (mod === 'add' && !this.isInFav) {
-        this.shared_services.addProvidertoFavourite(accountid)
-          .subscribe(() => {
-            this.isInFav = true;
-          },
-            error => {
-              this.sharedFunctionobj.apiErrorAutoHide(this, error);
-            });
-      } else if (mod === 'remove') {
-        this.shared_services.removeProviderfromFavourite(accountid)
-          .subscribe(() => {
-            this.isInFav = false;
-          },
-            error => {
-              this.sharedFunctionobj.apiErrorAutoHide(this, error);
-            });
-      }
-    } else {
-      const passParam = { callback: 'fav' };
-      this.doLogin('consumer', passParam);
+    const _this = this;
+    const accountid = _this.provider_bussiness_id;
+    if (mod === 'add' && !_this.isInFav) {
+      _this.shared_services.addProvidertoFavourite(accountid)
+        .subscribe(() => {
+          _this.isInFav = true;
+        },
+          error => {
+            _this.sharedFunctionobj.apiErrorAutoHide(_this, error);
+          });
+    } else if (mod === 'remove') {
+      _this.shared_services.removeProviderfromFavourite(accountid)
+        .subscribe(() => {
+          _this.isInFav = false;
+        },
+          error => {
+            _this.sharedFunctionobj.apiErrorAutoHide(_this, error);
+          });
     }
   }
   doRemoveFav() {
@@ -1466,16 +1511,22 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     } else {
       this.changedate_req = true;
     }
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    if (this.userType === 'consumer') {
-      this.showCheckin(location.id, location.place, service.serviceAvailability.availableDate, service, 'consumer');
-    } else if (this.userType === '') {
-      const passParam = { callback: '', current_provider: current_provider };
-      this.doLogin('consumer', passParam);
-    }
+    const _this = this;
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
+          if (_this.userType === 'consumer') {
+            this.showCheckin(location.id, location.place, service.serviceAvailability.availableDate, service, 'consumer');
+          }
+        } else {
+          const passParam = { callback: '', current_provider: current_provider };
+          this.doLogin('consumer', passParam);
+        }
+      });
   }
   appointmentClicked(location, service: any) {
-    console.log(location);
+    const _this = this;
     this.futureAllowed = true;
     const current_provider = {
       'id': location.id,
@@ -1510,14 +1561,21 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     if (!location.futureAppt) {
       this.futureAllowed = false;
     }
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    if (this.userType === 'consumer') {
-      this.showAppointment(location.id, location.place, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-    } else if (this.userType === '') {
-      const passParam = { callback: 'appointment', current_provider: current_provider };
-      this.doLogin('consumer', passParam);
-    }
+
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
+          if (_this.userType === 'consumer') {
+            this.showAppointment(location.id, location.place, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+          }
+        } else {
+          const passParam = { callback: 'appointment', current_provider: current_provider };
+          _this.doLogin('consumer', passParam);
+        }
+      });
   }
+
   doLogin(origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
@@ -1592,7 +1650,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else {
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'] , 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       }
     });
@@ -1756,25 +1814,25 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
   onButtonAfterHook() { }
   // Edited//
-  showExistingCheckin(locId, locName, index) {
-    this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        locId: locId,
-        locName: locName,
-        terminologies: this.terminologiesjson,
-        settings: this.settingsjson
-      }
-    });
+  // showExistingCheckin(locId, locName, index) {
+  //   this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       locId: locId,
+  //       locName: locName,
+  //       terminologies: this.terminologiesjson,
+  //       settings: this.settingsjson
+  //     }
+  //   });
 
-    this.extChecindialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.getExistingCheckinsByLocation(locId, index);
-      }
-    });
-  }
+  //   this.extChecindialogRef.afterClosed().subscribe(result => {
+  //     if (result === true) {
+  //       this.getExistingCheckinsByLocation(locId, index);
+  //     }
+  //   });
+  // }
 
   showServiceDetail(serv, busname) {
     let servData;
@@ -1879,13 +1937,19 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     });
   }
   payClicked(locid, locname, cdate, service) {
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    if (this.userType === 'consumer') {
-      this.showDonation(locid, cdate, service);
-    } else if (this.userType === '') {
-      const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, consumer: 'consumer' };
-      this.doLogin('consumer', passParam);
-    }
+    const _this = this;
+    _this.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
+          if (_this.userType === 'consumer') {
+            this.showDonation(locid, cdate, service);
+          }
+        } else {
+          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, consumer: 'consumer' };
+          this.doLogin('consumer', passParam);
+        }
+      });
   }
   showDonation(locid, curdate, service) {
     const navigationExtras: NavigationExtras = {
@@ -1965,10 +2029,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         });
     }
   }
-  getTimeToDisplay (min) {
+  getTimeToDisplay(min) {
     return this.sharedFunctionobj.convertMinutesToHourMinute(min);
   }
-  getAvailibilityForCheckin (date, serviceTime) {
+  getAvailibilityForCheckin(date, serviceTime) {
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1994,7 +2058,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         + serviceTime);
     }
   }
-  getAvailabilityforAppt (date, time) {
+  getAvailabilityforAppt(date, time) {
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
