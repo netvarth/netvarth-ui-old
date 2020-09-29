@@ -579,7 +579,8 @@ export class ConsumerDonationComponent implements OnInit {
                     .subscribe(
                         () => {
                             this.getProfile();
-                            this.hideFilterSidebar();
+                            // this.hideFilterSidebar();
+                            this.action = '';
                         },
                         error => {
                             this.api_error = error.error;

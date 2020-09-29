@@ -68,12 +68,12 @@
                                                                         class="fa fa-pencil"
                                                                         (click)="editPhone()"></i></a>
                                                             </div>
-                                                            <!-- <div class="" *ngIf="userData && userData.userProfile && userData.userProfile.email">
+                                                            <div class="" *ngIf="userData && userData.userProfile && userData.userProfile.email">
                                                                 <i class="fa fa-envelope-o "></i>
                                                                 <span class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
                                                                 <a class="mgn-lt-5 lnk pointer-cursor"><i class="fa fa-pencil"
                                                                 (click)="handleEmail()"></i></a>
-                                                            </div> -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -172,6 +172,46 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                            *ngIf="action=='email'">
+                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">Please
+                                enter your
+                                email for payment</div>
+                            <div class="col-md-7 col-sm-12 col-xs-12 mgn-bt-20">
+                                <ng-container>
+                                    <div class="form-group">
+                                        <input style="border-bottom: 1px solid" class="form-control emailPrepay"
+                                            id="email" placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
+                                            autocomplete="off" (keyup)="showConfrmEmail($event)" onpaste="return false;"
+                                            oncopy="return false" oncut="return false" ondrag="return false"
+                                            ondrop="return false">
+                                        <app-field-error-display [displayError]="true" *ngIf="emailerror != null"
+                                            errorMsg={{emailerror}}>
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="form-group" *ngIf="confrmshow">
+                                        <!-- <mat-form-field> -->
+                                        <input style="border-bottom: 1px solid" class="form-control emailPrepay"
+                                            id="email1" placeholder="Re-enter Email(user@xyz.com)"
+                                            [(ngModel)]="payEmail1" autocomplete="off" onpaste="return false;"
+                                            oncopy="return false" oncut="return false" ondrag="return false"
+                                            ondrop="return false">
+                                        <!-- </mat-form-field> -->
+                                        <app-field-error-display [displayError]="true" *ngIf="email1error != null"
+                                            errorMsg={{email1error}}>
+                                        </app-field-error-display>
+                                    </div>
+                                    <!-- <span class="input-group-btn" *ngIf="confrmshow"> -->
+                                    <span class="input-group-btn">
+                                        <button class="btn bt3 btnCancel" type="button" (click)="goBack()">
+                                            Cancel
+                                        </button>
+                                        <button class="btn bt3 btn-default" (click)="addEmail()"
+                                            type="button">Add</button>
+                                    </span>
+                                </ng-container>
+                            </div>
+                        </div>
                                 <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding c-checkin-new"
                                     *ngIf="action=='service'">
                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
