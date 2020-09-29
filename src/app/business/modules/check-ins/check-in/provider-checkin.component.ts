@@ -847,7 +847,11 @@ export class ProviderCheckinComponent implements OnInit {
                 error = this.validatorPartysize(this.enterd_partySize);
             }
             if (error === '') {
-                this.saveCheckin();
+                if (this.waitlist_for.length === 0) {
+                    this.createCustomer();
+                } else {
+                    this.saveCheckin();
+                }
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 // this.api_error = error;

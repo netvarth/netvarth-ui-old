@@ -46,7 +46,7 @@
                   <button class="create_new_button cs-btn bt3 mgn-rt-10" (click)="initCheckIn('justdial')">Just
                     dial</button>
                   <button class="create_new_button cs-btn bt3 mgn-rt-10" (click)="initCheckIn('google')">Google</button>
-                  <button class="create_new_button cs-btn bt3 mgn-rt-10" (click)="initCheckIn('mfine')">MFine</button>
+                  <button class="create_new_button cs-btn bt3 mgn-rt-10" *ngIf="domain === 'healthCare'" (click)="initCheckIn('mfine')">MFine</button>
                   <button class="create_new_button cs-btn bt3" [class.btn-selected] = "showOther"
                    (click)="showOtherSection()">Other</button>
                 </div>
