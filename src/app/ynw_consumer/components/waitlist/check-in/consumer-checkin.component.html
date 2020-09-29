@@ -227,7 +227,7 @@
                                                     </span>
                                                 </span>
                                                 <span
-                                                    *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                                                    *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
                                                     <!-- {{today_cap}} {{estimateCaption}}:
                                             <span>{{sel_queue_waitingmins}}</span> -->
 
@@ -244,7 +244,7 @@
                                         </span> -->
 
                                                 <span
-                                                    *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                                                    *ngIf="sel_queue_servicetime!='' && calc_mode!='NoCalc'">
 
                                                     <ng-container *ngIf="isFuturedate">
                                                         <!-- <span>{{nextavailableCaption}} -->
