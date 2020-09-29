@@ -23,6 +23,7 @@ export class ReportsComponent implements OnInit {
     this.report_dataService.updatedQueueDataSelection('All');
     this.report_dataService.updatedScheduleDataSelection('All');
     this.report_dataService.updatedServiceDataSelection('All');
+    this.report_dataService.storeSelectedValues({});
     this.router.navigate(['provider', 'reports', 'new-report'], {queryParams: {report_type: report_type}});
 
 

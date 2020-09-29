@@ -34,7 +34,6 @@ export class ReportDataService {
 
   }
   storeSelectedValues(data) {
-    console.log('data' + JSON.stringify(data));
     this.reportData.next(data);
   }
 
