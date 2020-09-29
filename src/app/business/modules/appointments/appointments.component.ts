@@ -3259,3 +3259,4 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
 }
+
