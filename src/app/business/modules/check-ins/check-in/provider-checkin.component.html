@@ -30,6 +30,11 @@
                             type="text" class="form-control" formControlName="search_input"
                             (keypress)="findCustomer(searchForm.value, $event)">
                         </mat-form-field>
+                        <app-field-error-display style="color: #f24949 !important;" [displayError]="true"
+                          *ngIf="create_new"
+                          errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
+                                                Please create {{customer_label}} to take {{(showtoken) ? 'token' : 'checkin'}}">
+                        </app-field-error-display>
                       </div>
                       <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
                         <button class="create_new_button cs-btn bt3" (click)="searchForm.valid &&

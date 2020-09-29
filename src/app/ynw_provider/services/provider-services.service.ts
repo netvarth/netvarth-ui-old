@@ -1513,5 +1513,8 @@ export class ProviderServices {
     const url = 'provider/report';
     return this.servicemeta.httpPut(url, data);
   }
-
+  getJaldeeCustomer(data) {
+   const url = 'consumer';
+   return this.servicemeta.httpGet(url, null, data);
+}
 }

@@ -392,6 +392,30 @@ export class AppointmentComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     if (data.length === 0) {
+                        if (mode === 'phone') {
+                            const filter = { 'primaryMobileNo-eq': form_data.search_input };
+                            this.getJaldeeCustomer(filter);
+                        } else {
+                            this.form_data = data;
+                            this.create_new = true;
+                        }
+                    } else {
+                        this.customer_data = data[0];
+                        this.consumerPhoneNo = this.customer_data.phoneNo;
+                        this.getFamilyMembers();
+                        this.initAppointment();
+                    }
+                },
+                error => {
+                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                }
+            );
+    }
+    getJaldeeCustomer(post_data) {
+        this.provider_services.getJaldeeCustomer(post_data)
+            .subscribe(
+                (data: any) => {
+                    if (data.length === 0) {
                         this.form_data = data;
                         this.create_new = true;
                     } else {
