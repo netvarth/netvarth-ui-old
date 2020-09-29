@@ -196,6 +196,16 @@ export class ProviderCheckinComponent implements OnInit {
     settings: any = [];
     showTokenId;
     note_cap = 'Add Note';
+    thirdParty = '';
+    thirdPartyList = {
+        'practo': 'Practo',
+        'google': 'Google',
+        'justdial': 'Justdial',
+        'mfine': 'MFine'
+    };
+    showOther = false;
+    otherThirdParty = '';
+    thirdparty_error = null;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -225,6 +235,9 @@ export class ProviderCheckinComponent implements OnInit {
             }
             if (qparams.userId) {
                 this.selectUser = JSON.parse(qparams.userId);
+            }
+            if (qparams.thirdParty) {
+                this.thirdParty = qparams.thirdParty;
             }
             if (this.showtoken) {
                 this.breadcrumbs = [
@@ -328,6 +341,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
         this.qParams['checkinType'] = this.checkinType;
         this.qParams['source'] = 'checkin';
+        this.qParams['thirdParty'] = this.thirdParty;
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
@@ -399,11 +413,15 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             );
     }
-    initCheckIn() {
+    initCheckIn(thirdParty?) {
+        this.thirdParty = thirdParty ? thirdParty : '';
+        this.api_loading1 = false;
         const _this = this;
         this.showCheckin = true;
         this.waitlist_for = [];
+        if (this.thirdParty === '') {
         this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+        }
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -554,6 +572,7 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     getFamilyMembers() {
+        if (this.thirdParty === '') {
         this.api_loading1 = true;
         let fn;
         let self_obj;
@@ -578,6 +597,9 @@ export class ProviderCheckinComponent implements OnInit {
             () => {
                 this.api_loading1 = false;
             });
+        } else {
+            this.api_loading1 = false;
+        }
     }
     addPhone() {
         this.resetApiErrors();
@@ -831,6 +853,31 @@ export class ProviderCheckinComponent implements OnInit {
                 // this.api_error = error;
             }
         }
+    }
+    createCustomer() {
+        const post_data = {
+            'firstName': this.thirdParty,
+            'lastName': 'user'
+        };
+        // if (form_data.customer_id) {
+        post_data['jaldeeId'] = this.thirdParty + '64';
+        // }
+        this.provider_services.createProviderCustomer(post_data)
+            .subscribe(
+                data => {
+                    this.getCustomerbyId(data);
+                });
+
+    }
+    getCustomerbyId(id) {
+        const filter = { 'id-eq': id };
+        this.provider_services.getCustomer(filter)
+            .subscribe(
+                (data: any) => {
+                    this.customer_data = data[0];
+                    this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
+                    this.saveCheckin();
+                });
     }
     saveCheckin() {
         // const waitlistarr = [];
@@ -1605,5 +1652,21 @@ export class ProviderCheckinComponent implements OnInit {
     // }
     editCallingmodes(index) {
         this.showInputSection = false;
+    }
+    showOtherSection(value) {
+        if (value) {
+            if (this.otherThirdParty === '') {
+                this.thirdparty_error = 'Third party listing site required';
+            } else {
+                this.thirdParty = this.otherThirdParty;
+                this.showOther = false;
+                this.initCheckIn(this.thirdParty);
+            }
+        } else {
+            this.showOther = true;
+        }
+    }
+    resetError() {
+        this.thirdparty_error = null;
     }
 }
