@@ -67,6 +67,9 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
 
       const _this = this;
       this.getAllQs().then(result => {
+        if (parseInt(qparams.data, 0) === 0) {
+          this.masterToggle();
+          }
         if (_this.selected_data.length > 0) {
           _this.queue_dataSource.data.forEach(function (row) {
             if (_this.selected_data && _this.selected_data.length > 0) {
@@ -84,7 +87,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
 
     });
   }
-  
+
 
   applyFilter(filterValue: string) {
 
