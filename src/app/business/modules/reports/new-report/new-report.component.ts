@@ -115,7 +115,6 @@ export class NewReportComponent implements OnInit {
 
       }
     });
-
   }
 
   ngOnInit() {
