@@ -84,6 +84,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
 
     });
   }
+  
 
   applyFilter(filterValue: string) {
 

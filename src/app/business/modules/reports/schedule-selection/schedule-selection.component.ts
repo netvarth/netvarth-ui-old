@@ -52,6 +52,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
         this.masterToggle();
       }
 
+
       const scheduleData: any[] = qparams.data.split(',');
       for (let i = 0; i < scheduleData.length; i++) {
         this.selected_data.push(scheduleData[i]);

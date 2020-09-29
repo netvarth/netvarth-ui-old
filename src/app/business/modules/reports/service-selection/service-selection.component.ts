@@ -60,17 +60,13 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
       _this.selected_data_id = qparams.data;
 
 
-      if (_this.selected_data_id === 0) {
-        console.log('hai');
-
-      } else {
 
 
         const serviceData: any[] = qparams.data.split(',');
         for (let i = 0; i < serviceData.length; i++) {
           _this.selected_data.push(serviceData[i]);
         }
-      }
+
 
 
 
