@@ -17,9 +17,9 @@
                         <span class="ng-tns-c16-8">
                             Hello {{usr_details.userName}} !
                         </span> <br>
-                        <button class="mgn-up-20 find-sp-btn" mat-raised-button>Find Service Provider</button>
+                        <button class="mgn-up-20 find-sp-btn" mat-raised-button>Find Service Provider &nbsp; <i class="fa fa-search"></i></button>
                     </h1>
-                    <h2 class="ng-tns-c16-8">
+                    <h2 class="ng-tns-c16-8 bg-yelow">
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
                             <div class="col-sm-4 col-md-6 col-lg-6 col-xs-4 mgn-up-10">MY BOOKINGS</div>
                             <div class="col-sm-8 col-md-6 col-lg-6 col-xs-8">
@@ -44,8 +44,8 @@
                         <table class="table">
                             <!-- Today Appointments -->
                             <tbody *ngIf="appointments.length != 0">
-                                <tr *ngFor="let appointment of appointments; let i=index">
-                                    <td><h4>{{appointment.appmtTime}}</h4>
+                                <tr *ngFor="let appointment of appointments; let i=index" class="custId-cursor">
+                                    <td><h4>{{getSingleTime(appointment.appmtTime)}}</h4>
                                         <span>TODAY</span>
                                     </td>
                                     <td class="tdisplay-block">
@@ -64,28 +64,21 @@
                                         </span>
                                         {{appointment.service.name | capitalizeFirst}}</td>
                                     <td>
-                                        <h6>{{appointment.apptStatus}}</h6>
+                                        <h6 [ngClass]="{'colr-confrm':(appointment.apptStatus == 'Confirmed'),'colr-arrived':(appointment.apptStatus == 'Arrived'),'colr-started':(appointment.apptStatus == 'Started'),'colr-canceld':(appointment.apptStatus == 'Cancelled'),'colr-completed':(appointment.apptStatus == 'Completed')}">{{appointment.apptStatus}}</h6>
                                     </td>
                                     <td>
                                         <span
                                             *ngIf="appointment.amountDue>0 && (appointment.billViewStatus=='Show') && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'">
 
-                                            <button class="flat-btn" mat-raised-button
-                                                (click)="viewBill(appointment,'appointment')">Pay
+                                            <button class="bt3 cust-btn" (click)="viewBill(appointment,'appointment')">Pay
                                                 &#8377;{{appointment.amountDue}}</button>
                                         </span>
                                     </td>
                                     <td>
                                         <span *ngIf="appointment.billViewStatus == 'Show'">
-                                            <button mat-flat-button class="flat-btn"
-                                                *ngIf="!(appointment.amountDue>0) && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'"
-                                                (click)="viewBill(appointment,'appointment')">View Receipt</button>
-                                            <button mat-flat-button class="flat-btn"
-                                                *ngIf="(appointment.apptStatus === 'Cancelled' || appointment.apptStatus === 'Rejected') && appointment.paymentStatus !== 'NotPaid'"
-                                                (click)="viewBill(appointment,'appointment')">View Receipt</button>
-                                            <button mat-raised-button class="flat-btn"
-                                                *ngIf="appointment.amountDue>0 && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'"
-                                                (click)="viewBill(appointment,'appointment')">View Bill</button>
+                                            <button class="bt3 cust-btn" *ngIf="!(appointment.amountDue>0) && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'" (click)="viewBill(appointment,'appointment')">View Receipt</button>
+                                            <button class="bt3 cust-btn" *ngIf="(appointment.apptStatus === 'Cancelled' || appointment.apptStatus === 'Rejected') && appointment.paymentStatus !== 'NotPaid'" (click)="viewBill(appointment,'appointment')">View Receipt</button>
+                                            <button class="bt3 cust-btn" *ngIf="appointment.amountDue>0 && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'" (click)="viewBill(appointment,'appointment')">View Bill</button>
                                         </span>
                                     </td>
                                 </tr>
@@ -93,9 +86,10 @@
 
                             <!-- Today Waitlists -->
                             <tbody *ngIf="loadcomplete.waitlist && waitlists && waitlists.length != 0">
-                                <tr *ngFor="let waitlist of waitlists; let i=index">
+                                <tr *ngFor="let waitlist of waitlists; let i=index" class="custId-cursor">
                                     <td>
-                                        <h4>{{waitlist.checkInTime}}</h4>
+                                        <h4 *ngIf="!waitlist.token">{{waitlist.serviceTime}}</h4>
+                                        <h4 *ngIf="waitlist.token">Token No.{{waitlist.token}}</h4>
                                         <span>TODAY</span>
                                     </td>
                                     <td class="tdisplay-block">
@@ -114,24 +108,26 @@
                                         </span>
                                         {{waitlist.service.name | capitalizeFirst}}</td>
                                     <td>
-                                        <h6>{{waitlist.waitlistStatus | capitalizeFirst}}</h6>
+                                        <h6 [ngClass]="{'colr-confrm':(waitlist.waitlistStatus == 'Confirmed'),'colr-arrived':(waitlist.waitlistStatus == 'arrived'),'colr-started':(waitlist.waitlistStatus == 'started'),'colr-canceld':(waitlist.waitlistStatus == 'cancelled'),'colr-completed':(waitlist.waitlistStatus == 'done')}">
+                                            <span *ngIf="waitlist.waitlistStatus=='done'">Completed</span>
+                                            <span *ngIf="waitlist.waitlistStatus!=='done'">{{waitlist.waitlistStatus | capitalizeFirst}}</span>
+                                           </h6>
                                         </td>
                                     <td>
                                         <span
                                             *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show') && waitlist.waitlistStatus != 'cancelled'">
-                                            <button class="flat-btn" (click)="viewBill(waitlist,'checkin')"
-                                                mat-raised-button>Pay &#8377;{{waitlist.amountDue}}</button>
+                                            <button class="bt3 cust-btn" (click)="viewBill(waitlist,'checkin')">Pay &#8377;{{waitlist.amountDue}}</button>
                                         </span>
                                     </td>
                                     <td>
                                         <span *ngIf="waitlist.billViewStatus == 'Show'">
-                                            <button mat-flat-button class="flat-btn"
+                                            <button class="bt3 cust-btn"
                                                 *ngIf="!(waitlist.amountDue>0) && waitlist.waitlistStatus != 'cancelled'"
                                                 (click)="viewBill(waitlist,'checkin')">View Receipt</button>
-                                            <button mat-flat-button class="flat-btn"
+                                            <button class="bt3 cust-btn"
                                                 *ngIf="waitlist.waitlistStatus === 'cancelled' && waitlist.paymentStatus !== 'NotPaid'"
                                                 (click)="viewBill(waitlist,'checkin')">View Receipt</button>
-                                            <button mat-flat-button class="flat-btn"
+                                            <button class="bt3 cust-btn"
                                                 *ngIf="waitlist.amountDue>0 && waitlist.waitlistStatus != 'cancelled'"
                                                 (click)="viewBill(waitlist,'checkin')">View Bill</button>
                                         </span>
@@ -141,9 +137,11 @@
 
                              <!-- Future Appointments -->
                              <tbody *ngIf="future_appointments.length != 0">
-                                <tr *ngFor="let appointment of future_appointments; let i=index">
-                                    <td><h4>{{appointment.appmtTime}}</h4>
-                                        <span>UPCOMING</span>
+                                <tr *ngFor="let appointment of future_appointments; let i=index" class="custId-cursor">
+                                    <td>
+                                        <span class="upcoming">UPCOMING</span>
+                                        <h4>{{getSingleTime(appointment.appmtTime)}}</h4>
+                                        <span>{{appointment.appmtDate}}</span>
                                     </td>
                                     <td class="tdisplay-block">
                                         <h4>{{appointment.providerAccount.businessName || '' | capitalizeFirst}}</h4>
@@ -161,28 +159,21 @@
                                         </span>
                                         {{appointment.service.name | capitalizeFirst}}</td>
                                     <td>
-                                        <h6>{{appointment.apptStatus}}</h6>
+                                        <h6 [ngClass]="{'colr-confrm':(appointment.apptStatus == 'Confirmed'),'colr-arrived':(appointment.apptStatus == 'Arrived'),'colr-started':(appointment.apptStatus == 'Started'),'colr-canceld':(appointment.apptStatus == 'Cancelled'),'colr-completed':(appointment.apptStatus == 'Completed')}">{{appointment.apptStatus}}</h6>
                                     </td>
                                     <td>
                                         <span
                                             *ngIf="appointment.amountDue>0 && (appointment.billViewStatus=='Show') && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'">
 
-                                            <button class="flat-btn" mat-raised-button
-                                                (click)="viewBill(appointment,'appointment')">Pay
+                                            <button class="bt3 cust-btn" (click)="viewBill(appointment,'appointment')">Pay
                                                 &#8377;{{appointment.amountDue}}</button>
                                         </span>
                                     </td>
                                     <td>
                                         <span *ngIf="appointment.billViewStatus == 'Show'">
-                                            <button mat-flat-button class="flat-btn"
-                                                *ngIf="!(appointment.amountDue>0) && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'"
-                                                (click)="viewBill(appointment,'appointment')">View Receipt</button>
-                                            <button mat-flat-button class="flat-btn"
-                                                *ngIf="(appointment.apptStatus === 'Cancelled' || appointment.apptStatus === 'Rejected') && appointment.paymentStatus !== 'NotPaid'"
-                                                (click)="viewBill(appointment,'appointment')">View Receipt</button>
-                                            <button mat-raised-button class="flat-btn"
-                                                *ngIf="appointment.amountDue>0 && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'"
-                                                (click)="viewBill(appointment,'appointment')">View Bill</button>
+                                            <button class="bt3 cust-btn" *ngIf="!(appointment.amountDue>0) && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'" (click)="viewBill(appointment,'appointment')">View Receipt</button>
+                                            <button class="bt3 cust-btn" *ngIf="(appointment.apptStatus === 'Cancelled' || appointment.apptStatus === 'Rejected') && appointment.paymentStatus !== 'NotPaid'" (click)="viewBill(appointment,'appointment')">View Receipt</button>
+                                            <button class="bt3 cust-btn" *ngIf="appointment.amountDue>0 && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'" (click)="viewBill(appointment,'appointment')">View Bill</button>
                                         </span>
                                     </td>
                                 </tr>
@@ -190,10 +181,12 @@
 
                             <!-- Future Waitlists -->
                             <tbody *ngIf="future_waitlists && future_waitlists.length != 0">
-                                <tr *ngFor="let waitlist of future_waitlists; let i=index">
+                                <tr *ngFor="let waitlist of future_waitlists; let i=index" class="custId-cursor">
                                     <td>
-                                        <h4>{{waitlist.checkInTime}}</h4>
-                                        <span>UPCOMING</span>
+                                        <span class="upcoming">UPCOMING</span>
+                                        <h4 *ngIf="!waitlist.token">{{waitlist.serviceTime}}</h4>
+                                        <h4 *ngIf="waitlist.token">Token No.{{waitlist.token}}</h4>
+                                        <span>{{waitlist.date}}</span>
                                     </td>
                                     <td class="tdisplay-block">
                                         <h4>{{waitlist.providerAccount.businessName || '' | capitalizeFirst}}</h4>
@@ -211,24 +204,26 @@
                                         </span>
                                         {{waitlist.service.name | capitalizeFirst}}</td>
                                     <td>
-                                        <h6>{{waitlist.waitlistStatus | capitalizeFirst}}</h6>
+                                        <h6 [ngClass]="{'colr-confrm':(waitlist.waitlistStatus == 'Confirmed'),'colr-arrived':(waitlist.waitlistStatus == 'arrived'),'colr-started':(waitlist.waitlistStatus == 'started'),'colr-canceld':(waitlist.waitlistStatus == 'cancelled'),'colr-completed':(waitlist.waitlistStatus == 'done')}">
+                                            <span *ngIf="waitlist.waitlistStatus=='done'">Completed</span>
+                                            <span *ngIf="waitlist.waitlistStatus!=='done'">{{waitlist.waitlistStatus | capitalizeFirst}}</span>
+                                           </h6>
                                         </td>
                                     <td>
                                         <span
                                             *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show') && waitlist.waitlistStatus != 'cancelled'">
-                                            <button class="flat-btn" (click)="viewBill(waitlist,'checkin')"
-                                                mat-raised-button>Pay &#8377;{{waitlist.amountDue}}</button>
+                                            <button class="bt3 cust-btn" (click)="viewBill(waitlist,'checkin')">Pay &#8377;{{waitlist.amountDue}}</button>
                                         </span>
                                     </td>
                                     <td>
                                         <span *ngIf="waitlist.billViewStatus == 'Show'">
-                                            <button mat-flat-button class="flat-btn"
+                                            <button class="bt3 cust-btn"
                                                 *ngIf="!(waitlist.amountDue>0) && waitlist.waitlistStatus != 'cancelled'"
                                                 (click)="viewBill(waitlist,'checkin')">View Receipt</button>
-                                            <button mat-flat-button class="flat-btn"
+                                            <button class="bt3 cust-btn"
                                                 *ngIf="waitlist.waitlistStatus === 'cancelled' && waitlist.paymentStatus !== 'NotPaid'"
                                                 (click)="viewBill(waitlist,'checkin')">View Receipt</button>
-                                            <button mat-flat-button class="flat-btn"
+                                            <button class="bt3 cust-btn"
                                                 *ngIf="waitlist.amountDue>0 && waitlist.waitlistStatus != 'cancelled'"
                                                 (click)="viewBill(waitlist,'checkin')">View Bill</button>
                                         </span>
@@ -240,13 +235,15 @@
                             <!-- Donation section -->
                             <tbody *ngIf="loadcomplete.donations && donations && donations.length != 0">
                                 <tr *ngFor="let donation of donations; let i=index">
-                                    <td>{{donation.date}}</td>
+                                    <td><h4>{{donation.date}}</h4></td>
                                     <td class="tdisplay-block">
-                                        {{donation.providerAccount.businessName || '' | capitalizeFirst}}<br>
+                                      <h4>{{donation.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                         {{donation.service.name | capitalizeFirst}}
                                     </td>
-                                    <td>{{donation.donationStatus | capitalizeFirst}}</td>
-                                    <td>{{donation.donationAmount}}</td>
+                                    <td>
+                                        <h6 class="colr-completed">{{donation.donationStatus | capitalizeFirst}}</h6>
+                                        </td>
+                                    <td colspan=2><h6>{{donation.donationAmount}}</h6></td>
                                 </tr>
                             </tbody>
                         </table>

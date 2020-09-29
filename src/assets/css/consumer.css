@@ -133,7 +133,7 @@
     padding: 20px;
     border-bottom: 2px solid #f2f2f2;
     margin-bottom: 0px;
-    color: rgb(113 137 173);
+    color: rgb(24 62 121);
 }
 .consumer-dash .card.c-checkins h1 {
     font-size: 2rem;
@@ -6412,13 +6412,15 @@
 }
 .consumer-dash .c-checkins .ng-tns-c16-8 .find-sp-btn {
     border-radius: 20px;
-    background: rgb(24 62 121 / 61%);
+    background: rgb(24 62 121);
     color: rgb(255 255 255);
+    padding-left: 30px;
+    padding-right: 30px;
 }
 .consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn, table .flat-btn{
-    border: 1px solid rgb(95 117 188);
-    border-radius: 40px;
-    color: rgb(24 62 121);
+    border: 1px solid rgb(4 62 121);
+    border-radius: 30px;
+    color: rgb(4 62 121);
 }
 .consumer-dash .c-checkins .table-outer tbody {
     border-top: none;
@@ -6433,6 +6435,7 @@
     -webkit-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    background: rgb(248 216 132 / 27%) !important;
   }
 .consumer-dash .c-checkins .table-outer table tbody tr:nth-of-type(odd) {
     background: none;
@@ -6442,4 +6445,36 @@
 }
 .consumer-dash .card.c-checkins table h4 {
     color: rgb(24 62 121 / 85%);
+}
+.consumer-dash .card.c-checkins .table .upcoming {
+    font-size: .6rem;
+    font-weight: 600;
+    color: rgb(40 28 224);
+}
+.consumer-dash .card.c-checkins .table .colr-confrm {
+    color: rgb(24 62 121);
+}
+.consumer-dash .card.c-checkins .table .colr-arrived {
+    color: rgb(230 174 20);
+}
+.consumer-dash .card.c-checkins .table .colr-started {
+    color: rgb(0 149 255);
+}
+.consumer-dash .card.c-checkins .table .colr-canceld {
+    color: rgb(255 47 32);
+}
+.consumer-dash .card.c-checkins .table .colr-completed {
+    color: rgb(22 179 55);
+}
+.consumer-dash .card.c-checkins .table .bt3 {
+    font-family: sans-serif !important;
+    border: 1px solid rgb(113 137 173) !important;
+    color: rgb(24 62 121) !important;
+}
+.consumer-dash .card.c-checkins .table .bt3:hover {
+    background: rgb(113 137 173);
+    color: rgb(255 255 255) !important;
+}
+.consumer-dash .card.c-checkins .bg-yelow {
+    background: rgb(242 186 36 / 56%);
 }
