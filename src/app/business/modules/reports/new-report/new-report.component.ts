@@ -742,6 +742,9 @@ export class NewReportComponent implements OnInit {
     this.report_data_service.storeSelectedValues(res);
     localStorage.setItem('report', JSON.stringify(report));
     this.router.navigate(['provider', 'reports', 'generated-report']);
+    },
+    error => {
+      this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
     });
 
   }

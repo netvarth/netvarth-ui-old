@@ -3,7 +3,7 @@
       <h5 class="mgn-up-10">
         <button type="button" class="btn default profile-back" (click)="redirecToReports()">
           <span class="fa fa-chevron-left">&nbsp;Back</span>
-        </button>&nbsp;&nbsp;&nbsp; {{cusotmer_label|capitalizeFirst}}Selection
+        </button>&nbsp;&nbsp;&nbsp; {{customer_label|capitalizeFirst}} Selection
         <!-- <i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true" ></i> -->
       </h5>
     </div>
@@ -17,7 +17,7 @@
               <textarea class="form-control" [placeholder]=placeHolder_msg [(ngModel)]="customerList"></textarea>
             </div>
             <div class="text-center  m20 ">
-                <button type="button" class="btn btn-lg default profile-back" (click)="passCustomersToReports();"> Update Customers</button>
+                <button type="button" class="btn btn-lg default profile-back" (click)="passCustomersToReports();"> Update {{customer_label}}s</button>
               </div>
 
         </div>

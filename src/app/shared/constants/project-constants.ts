@@ -680,7 +680,7 @@ export const projectConstantsLocal = {
 
   ],
   APPOINTMENT_STATUS : [
-    {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
+    // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
     {displayName: 'Confirmed', value: 'Confirmed'},
     {displayName: 'Arrived', value: 'Arrived'},
     {displayName: 'Started', value: 'Started'},
@@ -698,14 +698,14 @@ export const projectConstantsLocal = {
 
   ],
   WAITLIST_STATUS : [
-    {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
-    {displayName: 'CheckedIn ', value: 'CheckedIn'},
+    // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
+    {displayName: 'Checked In ', value: 'CheckedIn'},
     {displayName: 'Arrived', value: 'arrived'},
-    {displayName: 'Unrevertable', value: 'unrevertable'},
+    // {displayName: 'Unrevertable', value: 'unrevertable'},
     {displayName: 'Started', value: 'Started'},
     {displayName: 'Cancelled', value: 'Cancelled'},
     {displayName: 'Done', value: 'done'},
-    {displayName: 'Failed', value: 'failed'},
+    // {displayName: 'Failed', value: 'failed'},
 
   ],
   BILL_PAYMENT_STATUS : [
