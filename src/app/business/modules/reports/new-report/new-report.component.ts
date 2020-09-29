@@ -142,6 +142,7 @@ export class NewReportComponent implements OnInit {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
 
 
+
     this.report_data_service._service_data.subscribe((res: any) => {
       this.setServiceData(res);
     });

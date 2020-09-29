@@ -155,6 +155,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
       filter1 = { 'serviceType-neq': 'donationService' };
     }
 
+
     return new Promise((resolve) => {
       this.provider_services.getServicesList(filter1)
         .subscribe(
