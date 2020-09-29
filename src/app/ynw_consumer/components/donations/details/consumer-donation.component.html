@@ -25,12 +25,12 @@
                                         *ngIf="action==''">
                                         <div
                                             class="col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
-                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding c-checkin-new">
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
 
-                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
+                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 donation_label">
                                                     Donation
                                                 </div>
-                                                <div class="col-sm-12 col-xs-12 col-md-12">
+                                                <div class="col-sm-12 col-xs-12 col-md-12 c-checkin-new">
                                                     <div class="card-body" *ngIf="sel_ser">
                                                         <h6 class="card-title service">
                                                             {{sel_ser_det.name}}
@@ -83,10 +83,10 @@
 
                                     <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding" *ngIf="action==''">
                                         <div class="col-md-6 col-xs-12 col-sm-12">
-                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10">
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding ">
                                                 <div class="mgn-up-5 input-group mobile-error c-checkin-new">
                                                     <div
-                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10 amount">
+                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding amount">
                                                         Amount
                                                     </div>
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -101,8 +101,10 @@
                                             <div class="prepay-amt mgn-bt-20">
                                                 <div
                                                     class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
-                                                    <p class="form-level-settings applybill">Minimum <span class="bold">{{sel_ser_det.minDonationAmount}}</span>
-                                                        Maximum <span class="bold">{{sel_ser_det.maxDonationAmount}}</span>
+                                                    <p class="form-level-settings applybill">Minimum <span class="bold"><span
+                                                        class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.minDonationAmount}}</span>
+                                                        Maximum <span class="bold"><span
+                                                            class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.maxDonationAmount}}</span>
                                                     </p>
                                                 </div>
                                             </div>
