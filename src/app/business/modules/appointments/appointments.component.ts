@@ -2695,7 +2695,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (apptlist.batchId) {
         checkin_html += 'Batch <span style="font-weight:bold">' + apptlist.batchId + '</span>';
       } else {
-        checkin_html += 'Appointment Time <span style="font-weight:bold">' + apptlist.appmtTime + '</span>';
+        checkin_html += 'Appointment Time <span style="font-weight:bold">' +  this.getSingleTime(apptlist.appmtTime) + '</span>';
       }
       checkin_html += '</td></tr>';
       checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.bname.charAt(0).toUpperCase() + this.bname.substring(1) + '</td></tr>';
