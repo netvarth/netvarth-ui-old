@@ -60,6 +60,12 @@
               <!-- <span class="mobile-label">User Name</span> -->
               {{service.user}}</mat-cell>
           </ng-container>
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+            <mat-cell *matCellDef="let service">
+              <!-- <span class="mobile-label">User Name</span> -->
+              {{service.status}}</mat-cell>
+          </ng-container>
           <!-- <ng-container matColumnDef="department">
               <mat-header-cell *matHeaderCellDef>Department</mat-header-cell>
               <mat-cell *matCellDef="let service">

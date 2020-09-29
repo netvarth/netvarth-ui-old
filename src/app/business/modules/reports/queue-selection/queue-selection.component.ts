@@ -21,6 +21,7 @@ import { ReportDataService } from '../reports-data.service';
   styleUrls: ['./queue-selection.component.css']
 })
 export class QueueSelectionComponent implements OnInit, AfterViewInit {
+  accountType: string;
   selected_data: any = [];
   selected_data_id: any;
   queues: any;
@@ -38,7 +39,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
   selection = new SelectionModel(true, []);
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  displayedColumns = ['select', 'name', 'queue', 'status'];
+  displayedColumns = ['select', 'name', 'queue', 'status', 'userName'];
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
@@ -47,6 +48,12 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
   ) {
 
     this.activated_route.queryParams.subscribe(qparams => {
+
+      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      this.accountType = user.accountType;
+      if (this.accountType !== 'BRANCH') {
+        this.displayedColumns = ['select', 'name', 'queue', 'status'];
+      }
 
       this.reportType = qparams.report_type;
       this.selected_data_id = qparams.data;

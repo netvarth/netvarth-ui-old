@@ -14,6 +14,7 @@ import { ReportDataService } from '../reports-data.service';
 })
 export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
 
+  accountType: any;
   selected_data: any = [];
   selected_data_id: any;
   schedule_list_for_grid: any[];
@@ -29,19 +30,27 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
   public schedule_dataSource = new MatTableDataSource<any>([]);
   selection = new SelectionModel(true, []);
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  displayedColumns = ['select', 'name', 'schedule', 'status'];
+  displayedColumns = ['select', 'name', 'schedule', 'status', 'userName'];
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     private report_service: ReportDataService) {
 
-      this.activated_route.queryParams.subscribe(qparams => {
+    this.activated_route.queryParams.subscribe(qparams => {
 
-        this.reportType = qparams.report_type;
-        this.selected_data_id = qparams.data;
+      this.reportType = qparams.report_type;
+      this.selected_data_id = qparams.data;
 
-
+      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      this.accountType = user.accountType;
+      if (this.accountType !== 'BRANCH') {
+        this.displayedColumns = ['select', 'name', 'schedule', 'status'];
+      }
+      if (parseInt(qparams.data, 0) === 0) {
+        console.log(this.isAllSelected());
+        this.masterToggle();
+      }
 
       const scheduleData: any[] = qparams.data.split(',');
       for (let i = 0; i < scheduleData.length; i++) {
@@ -49,28 +58,28 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
       }
 
 
-        const _this = this;
-        this.getSchedules().then(result => {
-          console.log(_this.selected_data);
-          if (_this.selected_data.length > 0) {
-            _this.schedule_dataSource.data.forEach(function (row) {
-              if (_this.selected_data && _this.selected_data.length > 0) {
-                _this.selected_data.forEach(data => {
-                  // tslint:disable-next-line:radix
-                  if (parseInt(data) === row.id) {
-                    _this.selection.select(row);
-                  }
-                });
-              }
-            });
-          }
-
-        });
+      const _this = this;
+      this.getSchedules().then(result => {
+        console.log(_this.selected_data);
+        if (_this.selected_data.length > 0) {
+          _this.schedule_dataSource.data.forEach(function (row) {
+            if (_this.selected_data && _this.selected_data.length > 0) {
+              _this.selected_data.forEach(data => {
+                // tslint:disable-next-line:radix
+                if (parseInt(data) === row.id) {
+                  _this.selection.select(row);
+                }
+              });
+            }
+          });
+        }
 
       });
+
+    });
   }
 
-  applyFilter( filterValue: string) {
+  applyFilter(filterValue: string) {
 
     this.selection.clear();
     filterValue = filterValue.trim(); // Remove whitespace
@@ -112,6 +121,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
+
     this.isAllSelected() ?
       this.selection.clear() :
       this.schedule_dataSource.data.forEach(row => this.selection.select(row));
@@ -170,7 +180,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
 
 
 
-  redirecToReports(){
+  redirecToReports() {
     this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
   }
 
@@ -179,37 +189,37 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
   passScheduleSelectedToReports() {
     this.schedules_selected = this.selection.selected;
 
-      if (this.selection.selected.length === 0) {
-        this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+    if (this.selection.selected.length === 0) {
+      this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
 
-      } else {
+    } else {
 
 
-        if (this.schedule_dataSource.filteredData.length < this.selection.selected.length) {
-          this.schedules_selected = this.schedule_dataSource.filteredData;
+      if (this.schedule_dataSource.filteredData.length < this.selection.selected.length) {
+        this.schedules_selected = this.schedule_dataSource.filteredData;
 
-        } else if (this.schedule_dataSource.filteredData.length > this.selection.selected.length) {
-          this.schedules_selected = this.selection.selected;
-        }
-        if (this.schedules_selected.length === this.scheduleCount) {
-          this.schedules_selected = 'All';
-        }
-        if (this.schedules_selected !== 'All') {
-          let schedule_id = '';
-          this.schedules_selected.forEach(function (schedule) {
-            schedule_id = schedule_id + schedule.id +  ',';
-          });
+      } else if (this.schedule_dataSource.filteredData.length > this.selection.selected.length) {
+        this.schedules_selected = this.selection.selected;
+      }
+      if (this.schedules_selected.length === this.scheduleCount) {
+        this.schedules_selected = 'All';
+      }
+      if (this.schedules_selected !== 'All') {
+        let schedule_id = '';
+        this.schedules_selected.forEach(function (schedule) {
+          schedule_id = schedule_id + schedule.id + ',';
+        });
 
-         this.schedules_selected = schedule_id;
-        }
+        this.schedules_selected = schedule_id;
+      }
 
-        console.log(this.schedules_selected.length + '=' + this.scheduleCount);
+      console.log(this.schedules_selected.length + '=' + this.scheduleCount);
 
-        this.report_service.updatedScheduleDataSelection(this.schedules_selected);
-        this.router.navigate(['provider', 'reports', 'new-report'], {queryParams: {report_type: this.reportType}});
+      this.report_service.updatedScheduleDataSelection(this.schedules_selected);
+      this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
 
-        //
-        // }
+      //
+      // }
 
 
 

@@ -14,6 +14,7 @@ import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format
   styleUrls: ['./new-report.component.css']
 })
 export class NewReportComponent implements OnInit {
+  customer_label: any;
   filterparams: any = {};
   donation_startDate: any;
   donation_endDate: any;
@@ -137,6 +138,7 @@ export class NewReportComponent implements OnInit {
     this.payment_customer = this.appointment_customer = this.waitlist_customer = this.donation_customer = 'Any';
     this.payment_transactionType = 0;
     this.waitlist_billpaymentstatus = 0;
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
 
 
     this.report_data_service._service_data.subscribe((res: any) => {

@@ -61,6 +61,11 @@
               <mat-cell *matCellDef="let queue">
                 {{queue.queue_state}}</mat-cell>
             </ng-container>
+            <ng-container matColumnDef="userName">
+              <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+              <mat-cell *matCellDef="let queue">
+                {{queue.userName}}</mat-cell>
+            </ng-container>
 
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
