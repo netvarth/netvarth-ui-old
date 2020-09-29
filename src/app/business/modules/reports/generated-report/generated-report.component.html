@@ -36,16 +36,17 @@
         </div>
 
 
+
         <!-- Consolidated Data and Report Generation info-->
         <div class="row clearfix" >
           <div class="col col-md-6 col-sm-6 col-lg-6  col-xs-12 clearfix">
-              <label class="col-md-10 col-form-label" *ngIf="reportHeader.from">Report Time Period:<span>{{ getDateFormat(reportHeader.from) }} to {{ getDateFormat(reportHeader.to) }}</span><br></label>
+              <label class="col-md-10 col-form-label" *ngIf="reportHeader.from">Report Time Period:<span> &nbsp;{{ getDateFormat(reportHeader.from) }} to {{ getDateFormat(reportHeader.to) }}</span><br></label>
 
-              <label class="col-md-10 col-form-label" *ngIf="reportHeader.date">Report Time Period:<span>{{getDateFormat(reportHeader.date) }}    </span>  <br></label>
+              <label class="col-md-10 col-form-label" *ngIf="reportHeader.date">Report Time Period:<span> &nbsp;{{getDateFormat(reportHeader.date) }}    </span>  <br></label>
 
-            <label class=" col-lg-10 col-md-10 col-sm-9 col-form-label">Report Generated On:<span>{{reportHeader.reportGeneratedOn | date:'medium'}}</span><br></label>
+            <label class=" col-lg-10 col-md-10 col-sm-9 col-form-label">Report Generated On:<span>&nbsp; {{reportHeader.reportGeneratedOn | date:'medium'}}</span><br></label>
 
-            <label class=" col-md-10 col-form-label">Total Records Found:<span>{{reportHeader.count}}</span> <br></label>
+            <label class=" col-md-10 col-form-label">Total Records Found:<span> &nbsp;{{reportHeader.count}}</span> <br></label>
 
           </div>
 

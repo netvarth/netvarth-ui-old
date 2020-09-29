@@ -686,8 +686,8 @@ export const projectConstantsLocal = {
     {displayName: 'Started', value: 'Started'},
     {displayName: 'Cancelled', value: 'Cancelled'},
     {displayName: 'Rejected', value: 'Rejected'},
-    {displayName: 'Failed', value: 'failed'},
-    {displayName: 'Calling', value: 'calling'},
+    // {displayName: 'Failed', value: 'failed'},
+    // {displayName: 'Calling', value: 'calling'},
     {displayName: 'Completed', value: 'Completed'},
 
   ],
