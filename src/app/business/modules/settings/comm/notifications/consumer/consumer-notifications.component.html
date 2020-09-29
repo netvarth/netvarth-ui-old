@@ -60,7 +60,7 @@
                   </mat-expansion-panel-header>
                   <div class="form-group col-md-4 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput min="0" max="1000" type="text"
+                      <input matInput min="0" max="1000" type="number"
                         [(ngModel)]="earlyWLNotificatonSettings.personsAhead"
                         placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
                         (keypress)="showSubmit('EARLY_WL');numberOnly($event)" (keyup)="isvalid($event)"><br>
