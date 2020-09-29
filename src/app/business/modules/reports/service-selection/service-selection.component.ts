@@ -15,6 +15,7 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
 })
 export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
+  accountType: any;
   selected_data_id: number;
   serviceCount: any;
   all_queue_sel: boolean;
@@ -37,7 +38,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
   service_loading$ = true;
 
-  service_displayedColumns = ['select', 'serviceName', 'userName'];
+  service_displayedColumns = ['select', 'serviceName', 'userName','status'];
   selection = new SelectionModel(true, []);
 
 
@@ -47,6 +48,11 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     private report_data_service: ReportDataService) {
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
+    if (this.accountType !== 'BRANCH') {
+      this.service_displayedColumns = ['select', 'serviceName', 'status'];
+    }
     const _this = this;
     _this.activated_route.queryParams.subscribe(qparams => {
 
@@ -124,13 +130,19 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
   // service related method-------------------------------------------------------->
   setServiceDataSource(result) {
+    console.log(result);
     const service_list: any = [];
     result.forEach(serviceObj => {
       let userName = '';
       if (serviceObj.provider) {
         userName = serviceObj.provider.firstName + '' + serviceObj.provider.lastName;
       }
-      service_list.push({ 'id': serviceObj.id, 'name': serviceObj.name, 'user': userName });
+      service_list.push(
+        { 'id': serviceObj.id,
+         'name': serviceObj.name,
+         'user': userName,
+         'status': serviceObj.status
+         });
 
     });
     return service_list;
