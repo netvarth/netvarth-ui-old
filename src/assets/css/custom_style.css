@@ -11989,3 +11989,6 @@ img.busN-logo {
   background: #00aef2;
   color: white;
 }
+.avail-slot:hover {
+  color: #006cab;
+}
