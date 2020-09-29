@@ -164,8 +164,13 @@ export class ConsumerJoinComponent implements OnInit {
               this.dialogRef.close('success');
             },
             error => {
-              ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
-              this.api_loading = false;
+              if (error.status === 401 && error.error === 'Session already exists.') {
+                this.shared_functions.setitemonLocalStorage('qrp', data.password);
+                this.dialogRef.close('success');
+              } else {
+                ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                this.api_loading = false;
+              }
             }
           );
       }

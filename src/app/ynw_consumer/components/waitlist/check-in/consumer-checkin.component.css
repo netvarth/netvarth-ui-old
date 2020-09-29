@@ -1161,3 +1161,8 @@ height: 150px !important;
   border: 1px solid;
   margin: 20px;
   }
+
+  .example-custom-date-class {
+    background:rgb(133,233,133);
+    border-radius: 100%;
+   }
