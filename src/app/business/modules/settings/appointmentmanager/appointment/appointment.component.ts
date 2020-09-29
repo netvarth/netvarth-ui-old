@@ -204,7 +204,7 @@ export class AppointmentComponent implements OnInit {
     thirdPartyList = {
         'practo': 'Practo',
         'google': 'Google',
-        'justdial': 'Just dial',
+        'justdial': 'Justdial',
         'mfine': 'MFine'
     };
     showOther = false;
