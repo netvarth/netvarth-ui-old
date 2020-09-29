@@ -836,7 +836,7 @@ export class AppointmentComponent implements OnInit {
             'lastName': 'user'
         };
         // if (form_data.customer_id) {
-        post_data['jaldeeId'] = this.thirdParty + '64';
+        post_data['jaldeeId'] = this.getCustomerCount();
         // }
         this.provider_services.createProviderCustomer(post_data)
             .subscribe(
@@ -1626,5 +1626,13 @@ export class AppointmentComponent implements OnInit {
     }
     resetError() {
         this.thirdparty_error = null;
+    }
+    getCustomerCount() {
+        this.provider_services.getProviderCustomersCount()
+        .subscribe(
+            data => {
+              const jld = 'JLD' + this.thirdParty + data;
+              return jld;
+            });
     }
 }

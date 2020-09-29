@@ -847,7 +847,11 @@ export class ProviderCheckinComponent implements OnInit {
                 error = this.validatorPartysize(this.enterd_partySize);
             }
             if (error === '') {
-                this.saveCheckin();
+                if (this.waitlist_for.length === 0) {
+                    this.createCustomer();
+                } else {
+                    this.saveCheckin();
+                }
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 // this.api_error = error;
@@ -860,7 +864,7 @@ export class ProviderCheckinComponent implements OnInit {
             'lastName': 'user'
         };
         // if (form_data.customer_id) {
-        post_data['jaldeeId'] = this.thirdParty + '64';
+        post_data['jaldeeId'] = this.getCustomerCount();
         // }
         this.provider_services.createProviderCustomer(post_data)
             .subscribe(
@@ -1668,5 +1672,13 @@ export class ProviderCheckinComponent implements OnInit {
     }
     resetError() {
         this.thirdparty_error = null;
+    }
+    getCustomerCount() {
+        this.provider_services.getProviderCustomersCount()
+        .subscribe(
+            data => {
+              const jld = 'JLD' + this.thirdParty + data;
+              return jld;
+            });
     }
 }
