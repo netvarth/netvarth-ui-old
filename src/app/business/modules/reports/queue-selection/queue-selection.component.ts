@@ -109,7 +109,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
     result.forEach(queueObj => {
       let userName = '';
       if (queueObj.provider) {
-        userName = queueObj.provider.firstName + '' + queueObj.provider.lastName;
+        userName = queueObj.provider.firstName + ' ' + queueObj.provider.lastName;
       }
       queue_list.push({ 'id': queueObj.id, 'name': queueObj.name, 'user': userName });
 
