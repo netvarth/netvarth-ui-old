@@ -724,9 +724,9 @@ export const projectConstantsLocal = {
   ],
 
   REPORT_TRANSACTION_TYPE: [
-    {displayName: 'Waitlist', value: 'Waitlist'},
+    {displayName: 'Check-in/Token', value: 'Waitlist'},
     {displayName: 'Appointment', value: 'Appointment'},
-    {displayName: 'Donation', value: 'Donation'},
+    // {displayName: 'Donation', value: 'Donation'},
     // {displayName: 'Order', value: 'Order'}
     // {displayName: 'License', value: 'License'},
 

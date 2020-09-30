@@ -260,7 +260,7 @@
             <div class="card p20" *ngIf="report_type=='token'">
               <div class="col-md-12">
                 <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                  <label for="appointmentMode" class="col-lg-5 col-md-5 col-sm-5 col-xs-6 col-form-label">Waitlist mode</label>
+                  <label for="appointmentMode" class="col-lg-5 col-md-5 col-sm-5 col-xs-6 col-form-label">Mode</label>
                   <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
                     <mat-select class="form-control" [(ngModel)]="waitlist_mode">
                       <mat-option [value]="0">Any</mat-option>
@@ -270,7 +270,7 @@
                 </div>
 
                 <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                  <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Waitlist Status</label>
+                  <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Status</label>
                   <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
                     <mat-select class="form-control" [(ngModel)]="waitlist_status">
                       <mat-option [value]="0">Any</mat-option>
