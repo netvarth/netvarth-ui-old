@@ -14,6 +14,7 @@ import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format
   styleUrls: ['./new-report.component.css']
 })
 export class NewReportComponent implements OnInit {
+  mxDate: Date;
   donation_timeperiod_list: { value: string; displayName: string; }[];
   customer_label: any;
   filterparams: any = {};
@@ -116,6 +117,7 @@ export class NewReportComponent implements OnInit {
 
       }
     });
+    this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
   }
 
   ngOnInit() {
@@ -336,7 +338,7 @@ export class NewReportComponent implements OnInit {
       case 'payment': {
         if (res === '' || res === undefined || res === 'All') {
           this.payment_customer = 'All';
-         // this.payment_customerId = 0;
+          // this.payment_customerId = 0;
         } else {
           this.payment_customer = res.split(',').length + ' customer(s) selected';
           this.payment_customerId = res.replace(/,\s*$/, '');
@@ -347,7 +349,7 @@ export class NewReportComponent implements OnInit {
       case 'donation': {
         if (res === '' || res === undefined || res === 'All') {
           this.donation_customer = 'All';
-         // this.donation_customerId = 0;
+          // this.donation_customerId = 0;
         } else {
           this.donation_customer = res.split(',').length + ' customer(s) selected';
           this.donation_customerId = res.replace(/,\s*$/, '');
@@ -358,7 +360,7 @@ export class NewReportComponent implements OnInit {
       case 'appointment': {
         if (res === '' || res === undefined || res === 'All') {
           this.appointment_customer = 'All';
-         // this.appointment_customerId = 0;
+          // this.appointment_customerId = 0;
         } else {
           console.log(res);
           this.appointment_customer = res.split(',').length + ' customer(s) selected';
@@ -373,7 +375,7 @@ export class NewReportComponent implements OnInit {
           this.waitlist_customer = 'All';
           //this.waitlist_customerId = 0;
         } else {
-          this.waitlist_customer = res.split(',').length  + ' customer(s) selected';
+          this.waitlist_customer = res.split(',').length + ' customer(s) selected';
           this.waitlist_customerId = res.replace(/,\s*$/, '');
 
         }
@@ -742,13 +744,13 @@ export class NewReportComponent implements OnInit {
   }
   generatedReport(report) {
     this.setSelectedData().then(res => {
-    this.report_data_service.storeSelectedValues(res);
-    localStorage.setItem('report', JSON.stringify(report));
-    this.router.navigate(['provider', 'reports', 'generated-report']);
+      this.report_data_service.storeSelectedValues(res);
+      localStorage.setItem('report', JSON.stringify(report));
+      this.router.navigate(['provider', 'reports', 'generated-report']);
     },
-    error => {
-      this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-    });
+      error => {
+        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+      });
 
   }
 }
