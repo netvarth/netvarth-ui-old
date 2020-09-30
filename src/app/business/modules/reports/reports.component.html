@@ -19,13 +19,13 @@
                   <mat-expansion-panel  [expanded]="true">
                       <mat-expansion-panel-header>
                           <mat-panel-title>
-                             Appointment
+                             Appointments
                           </mat-panel-title>
                       </mat-expansion-panel-header>
                       <ng-container *ngIf="appointmentReports.length===0">
                         <div>
-                          <p class="font-italic col-md-6">No Reports found.  </p>
-                          <button type="button" class="btn btn-primary pull-left col-md-3" (click)="newReport('appointment');">New Report</button>
+                          <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">No Reports Found.  </p>
+                          <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('appointment');">New Report</button>
                         </div>
                     </ng-container>
                   </mat-expansion-panel>
@@ -44,8 +44,8 @@
                     </mat-expansion-panel-header>
                     <ng-container *ngIf="paymentReports.length===0">
                       <div>
-                        <p class="font-italic col-md-6">No Reports found.  </p>
-                        <button type="button" class="btn btn-primary pull-left col-md-3" (click)="newReport('payment');">New Report</button>
+                        <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">No Reports Found.  </p>
+                        <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('payment');">New Report</button>
                       </div>
                   </ng-container>
                 </mat-expansion-panel>
@@ -64,8 +64,8 @@
                   </mat-expansion-panel-header>
                   <ng-container *ngIf="checkinReports.length===0">
                     <div>
-                        <p class="font-italic col-md-6">No Reports found.  </p>
-                        <button type="button" class="btn btn-primary pull-left col-md-3" (click)="newReport('token');">New Report</button>
+                      <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">No Reports Found.  </p>
+                        <button type="button"  class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('token');">New Report</button>
 
                     </div>
                 </ng-container>
@@ -85,8 +85,8 @@
                   </mat-expansion-panel-header>
                   <ng-container *ngIf="donationReports.length===0">
                     <div>
-                      <p class="font-italic col-md-6">No Reports found.  </p>
-                      <button type="button" class="btn btn-primary pull-left col-md-3" (click)="newReport('donation');">New Report</button>
+                      <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">No Reports Found.  </p>
+                      <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('donation');">New Report</button>
                     </div>
                 </ng-container>
               </mat-expansion-panel>

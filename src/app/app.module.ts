@@ -83,6 +83,7 @@ import { VoicecallDetailsSendComponent } from './business/modules/appointments/v
 import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
 import { LiveChatClientComponent } from './shared/components/twilio/twilio-live-client.component';
 import { TruncateModule } from './shared/pipes/limitTo.module';
+import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -115,7 +116,8 @@ export function init_app(globalService: GlobalService) {
     JdnComponent,
     UpdateProfilePopupComponent,
     LiveChatComponent,
-    LiveChatClientComponent
+    LiveChatClientComponent,
+    JaldeeBlogComponent
     // PhomeComponent,
   ],
   entryComponents: [

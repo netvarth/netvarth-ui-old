@@ -27,13 +27,13 @@
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                             <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
                                 class="img-circle img-responsive pointer-cursor"
-                                (click)="openImageModalRow(image_list_popup[0])">
+                                (click)="galleryExists && openImageModalRow(image_list_popup[0])">
                         </div>
-                        <div class="gal col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                        <div class="gal col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="galleryenabledArr.length > 0">
                             <div class="gallery-bullet centeralign pointer-cursor"
                                 (click)="openImageModalRow(image_list_popup[0])">
                                 <i class="fa fa-circle" *ngFor="let enable of galleryenabledArr"></i>
-                                <i class="fa fa-circle-o" *ngFor="let i of gallerydisabledArr"></i>
+                                <!-- <i class="fa fa-circle-o" *ngFor="let i of gallerydisabledArr"></i> -->
                             </div>
                         </div>
                     </div>

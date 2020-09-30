@@ -1,6 +1,11 @@
-<section>
-    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
-        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <button type="button" class="btn default profile-back" (click)="goBack()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+            {{heading}}
+        </h5>
+    </div>
 </section>
 <section>
     <div class="content loc-list p-checkin ynw-common-form-nm">
@@ -29,6 +34,10 @@
                                                         type="text" class="form-control" formControlName="search_input"
                                                         (keypress)="findCustomer(searchForm.value, $event)">
                                                 </mat-form-field>
+                                                <app-field-error-display style="color: #f24949 !important;"
+                                                    [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
+                                                Please create {{customer_label}} to take appointment">
+                                                </app-field-error-display>
                                             </div>
                                             <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
                                                 <!-- <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
@@ -49,12 +58,17 @@
                                     here.</a>
                             </div> -->
                             <div class="create_new mgn-bt-20">
-                                <div>Or</div>
-                                <a class="underline" (click)="createNew()"> Create new {{customer_label}} and proceed. </a>
+                                <div class="or-style">OR</div>
+                                <a class="underline" (click)="createNew()">
+                                    Create a new {{customer_label}} and appointment
+                                </a>
                             </div>
                             <div class="create_new mgn-bt-20">
-                                <div>Or</div>
-                                <span> {{customer_label | capitalizeFirst}} from third party listing site </span>
+                                <div class="or-style">OR</div>
+                                <span>
+                                    Create an appointment for the {{customer_label}} who booked for your services on a
+                                    third party listing site, choose the listing site/app
+                                </span>
                                 <div class="mgn-up-10">
                                     <button *ngIf="domain === 'healthCare'"
                                         class="create_new_button cs-btn bt3 mgn-rt-10"
@@ -64,9 +78,10 @@
                                         dial</button>
                                     <button class="create_new_button cs-btn bt3 mgn-rt-10"
                                         (click)="initAppointment('google')">Google</button>
-                                    <button class="create_new_button cs-btn bt3 mgn-rt-10" *ngIf="domain === 'healthCare'"
+                                    <button class="create_new_button cs-btn bt3 mgn-rt-10"
+                                        *ngIf="domain === 'healthCare'"
                                         (click)="initAppointment('mfine')">MFine</button>
-                                    <button class="create_new_button cs-btn bt3" [class.btn-selected] = "showOther"
+                                    <button class="create_new_button cs-btn bt3" [class.btn-selected]="showOther"
                                         (click)="showOtherSection()">Other</button>
                                 </div>
                                 <div class="disp-flex" *ngIf="showOther">
@@ -114,8 +129,9 @@
                                             {{customer_data.jaldeeId | capitalizeFirst}}</li>
                                     </ul>
                                     <div *ngIf="thirdParty !== ''">
-                                        {{customer_label | capitalizeFirst}} from {{thirdPartyList[thirdParty]}}
-                                        <a class="underline pull-right" (click)="createNew()">Fill the
+                                        {{customer_label | capitalizeFirst}} from
+                                        {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}
+                                        <a class="underline mgn-lt-20" (click)="createNew()">Fill the
                                             {{customer_label}}
                                             details </a>
                                     </div>

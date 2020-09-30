@@ -15,6 +15,7 @@ import { PaymentLinkComponent } from './shared/components/payment-link/payment-l
 import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
 import { TwilioService } from './shared/services/twilio-service';
 import { LiveChatClientComponent } from './shared/components/twilio/twilio-live-client.component';
+import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -46,12 +47,13 @@ const routes: Routes = [
     {path: 'video',  component: LiveChatComponent},
     { path: 'home/:id', loadChildren: () => import('./shared/modules/about-jaldee/about-jaldee.module').then(m => m.AboutJaldeeModule) },
     { path: 'maintenance', component: MaintenanceComponent },
+    { path: 'blog', component: JaldeeBlogComponent },
     { path: ':id', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', component: CheckYourStatusComponent },
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },
       { path: 'consumer-join', component: ConsumerJoinComponent},
-    { path: 'pay/:id', component: PaymentLinkComponent },
+    { path: 'pay/:id', component: PaymentLinkComponent }
     // { path: '**', redirectTo: 'not-found' }
 ];
 

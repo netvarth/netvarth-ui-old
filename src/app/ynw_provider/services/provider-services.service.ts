@@ -1513,7 +1513,10 @@ export class ProviderServices {
     const url = 'provider/report';
     return this.servicemeta.httpPut(url, data);
   }
-
+  getJaldeeCustomer(data) {
+   const url = 'consumer';
+   return this.servicemeta.httpGet(url, null, data);
+}
    createVoiceCall(data) {
       const url = 'provider/appointment/createJaldeeMeetingrequest';
       return this.servicemeta.httpPost(url, data);

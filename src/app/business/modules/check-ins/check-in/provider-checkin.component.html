@@ -1,6 +1,11 @@
-<section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)"
-    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+<section class="">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <button type="button" class="btn default profile-back" (click)="goBack()">
+        <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+      {{heading}}
+    </h5>
+  </div>
 </section>
 <section>
   <div class="content loc-list p-checkin ynw-common-form-nm">
@@ -32,23 +37,28 @@
               </form>
               <div class="clearfix"></div>
               <div class="create_new mgn-bt-20">
-                <div>Or</div>
-                <a class="underline" (click)="createNew()"> Create new {{customer_label}} and proceed. </a>
+                <div class="or-style">OR</div>
+                <a class="underline" (click)="createNew()"> Create a new {{customer_label}} and
+                  {{(showtoken) ? 'token' : 'checkin'}} </a>
                 <!-- <button class="create_new_button cs-btn bt3" (click)="createNew()">New
                   {{customer_label}}</button> -->
               </div>
               <div class="create_new mgn-bt-20">
-                <div>Or</div>
-                <span> {{customer_label | capitalizeFirst}} from third party listing site </span>
+                <div class="or-style">OR</div>
+                <span>
+                  Create a {{(showtoken) ? 'token' : 'check-in'}} for the {{customer_label}} who booked for your
+                  services on a third party listing site, choose the listing site/app
+                </span>
                 <div class="mgn-up-10">
                   <button *ngIf="domain === 'healthCare'" class="create_new_button cs-btn bt3 mgn-rt-10"
                     (click)="initCheckIn('practo')">Practo</button>
                   <button class="create_new_button cs-btn bt3 mgn-rt-10" (click)="initCheckIn('justdial')">Just
                     dial</button>
                   <button class="create_new_button cs-btn bt3 mgn-rt-10" (click)="initCheckIn('google')">Google</button>
-                  <button class="create_new_button cs-btn bt3 mgn-rt-10" *ngIf="domain === 'healthCare'" (click)="initCheckIn('mfine')">MFine</button>
-                  <button class="create_new_button cs-btn bt3" [class.btn-selected] = "showOther"
-                   (click)="showOtherSection()">Other</button>
+                  <button class="create_new_button cs-btn bt3 mgn-rt-10" *ngIf="domain === 'healthCare'"
+                    (click)="initCheckIn('mfine')">MFine</button>
+                  <button class="create_new_button cs-btn bt3" [class.btn-selected]="showOther"
+                    (click)="showOtherSection()">Other</button>
                 </div>
                 <div class="disp-flex" *ngIf="showOther">
                   <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
@@ -77,7 +87,7 @@
             <div class="mainouter checkin-page ">
               <ng-container *ngIf="!api_loading1">
                 <div class="servicefor-outer btborder">
-                  <ul class="availer-ul"  *ngIf="thirdParty === ''">
+                  <ul class="availer-ul" *ngIf="thirdParty === ''">
                     <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                       <li>
                         {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
@@ -90,11 +100,12 @@
                       {{customer_label | capitalizeFirst}} id: {{customer_data.jaldeeId | capitalizeFirst}}</li>
                   </ul>
                   <div *ngIf="thirdParty !== ''">
-                    {{customer_label | capitalizeFirst}} from {{thirdPartyList[thirdParty]}}
-                    <a class="underline pull-right" (click)="createNew()">Fill the
-                        {{customer_label}}
-                        details </a>
-                </div>
+                    {{customer_label | capitalizeFirst}} from
+                    {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}
+                    <a class="underline mgn-lt-20" (click)="createNew()">Fill the
+                      {{customer_label}}
+                      details </a>
+                  </div>
                   <div class="date-outer" *ngIf="partySizeRequired">
                     <div class="form-group party-size">
                       <label class="col-form-label">{{enter_party_size_cap}}</label>
@@ -518,7 +529,8 @@
               </aside>
             </div>
             <div class="col-md-12  mgn-up-20 " *ngIf="!showAction">
-              <button *ngIf="thirdParty === ''" class="cs-btn bt3 width-100" (click)="handleSideScreen('members')">Add / Change Member
+              <button *ngIf="thirdParty === ''" class="cs-btn bt3 width-100" (click)="handleSideScreen('members')">Add /
+                Change Member
               </button>
               <button class="cs-btn bt3 width-100 mgn-up-20"
                 (click)="handleSideScreen('note')">{{sel_ser_det.consumerNoteTitle}}

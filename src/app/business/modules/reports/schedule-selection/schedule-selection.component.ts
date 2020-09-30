@@ -47,10 +47,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
       if (this.accountType !== 'BRANCH') {
         this.displayedColumns = ['select', 'name', 'schedule', 'status'];
       }
-      if (parseInt(qparams.data, 0) === 0) {
-        console.log(this.isAllSelected());
-        this.masterToggle();
-      }
+
 
 
       const scheduleData: any[] = qparams.data.split(',');
@@ -61,7 +58,9 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
 
       const _this = this;
       this.getSchedules().then(result => {
-        console.log(_this.selected_data);
+        if (parseInt(qparams.data, 0) === 0) {
+        this.masterToggle();
+        }
         if (_this.selected_data.length > 0) {
           _this.schedule_dataSource.data.forEach(function (row) {
             if (_this.selected_data && _this.selected_data.length > 0) {
@@ -100,7 +99,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
     result.forEach(scheduleObj => {
       let userName = '';
       if (scheduleObj.provider) {
-        userName = scheduleObj.provider.firstName + '' + scheduleObj.provider.lastName;
+        userName = scheduleObj.provider.firstName + ' ' + scheduleObj.provider.lastName;
       }
       schedule_list.push({ 'id': scheduleObj.id, 'name': scheduleObj.name, 'user': userName });
 

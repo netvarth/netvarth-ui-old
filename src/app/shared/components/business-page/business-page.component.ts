@@ -98,7 +98,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   socialMedialist: any = [];
   settings_exists = false;
   business_exists = false;
-  gallery_exists = false;
+  galleryExists = false;
   location_exists = false;
   isInFav;
   terminologiesjson: any = null;
@@ -547,34 +547,41 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
           case 'gallery': {
             this.galleryenabledArr = []; // For showing gallery
-
+            this.image_list_popup = [];
             this.tempgalleryjson = res;
             let indx = 0;
-            if (this.bLogo !== '') {
-              this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+            if (this.bLogo !== '../../../assets/images/img-null.svg') {
+              this.galleryjson[0] = { keyName: 'logo', caption: 'Profile Picture', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               indx = 1;
-              this.galleryenabledArr.push(0);
+              // const imgobj = new Image(
+              //   0,
+              //   { // modal
+              //     img: this.bLogo,
+              //     description: 'logo'
+              //   });
+              //   this.image_list_popup.push(imgobj);
+              //   this.galleryenabledArr.push(0);
             }
-
-            for (let i = 0; i < this.galleryjson.length; i++) {
-              this.galleryenabledArr.push(i);
-            }
+            // for (let i = 0; i < this.galleryjson.length; i++) {
+            //   this.galleryenabledArr.push(i);
+            // }
             for (let i = 0; i < this.tempgalleryjson.length; i++) {
               this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
-              if (this.galleryenabledArr.length < 5) {
-                this.galleryenabledArr.push(i + indx);
-              }
+              // if (this.galleryenabledArr.length < 5) {
+              //   this.galleryenabledArr.push(i + indx);
+              // }
             }
 
-            const count = 5 - this.galleryenabledArr.length;
-            if (count > 0) {
-              for (let ind = 0; ind < count; ind++) {
-                this.gallerydisabledArr.push(ind);
-              }
-            }
-            this.gallery_exists = true;
-            this.image_list_popup = [];
+            // const count = 5 - this.galleryenabledArr.length;
+            // if (count > 0) {
+            //   for (let ind = 0; ind < count; ind++) {
+            //     this.gallerydisabledArr.push(ind);
+            //   }
+            // }
+            // this.gallery_exists = true;
+            // this.image_list_popup = [];
             if (this.galleryjson.length > 0) {
+              this.galleryExists = true;
               for (let i = 0; i < this.galleryjson.length; i++) {
                 const imgobj = new Image(
                   i,
@@ -584,6 +591,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                   });
                 this.image_list_popup.push(imgobj);
               }
+            }
+            const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
+            for (let i = 0; i < imgLength; i++) {
+              this.galleryenabledArr.push(i);
             }
             break;
           }
@@ -713,9 +724,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
           if (section === 'gallery') {
             this.galleryjson = [];
-            if (this.bLogo !== '') {
+            if (this.bLogo !== '../../../assets/images/img-null.svg') {
+              this.galleryExists = true;
               this.image_list_popup = [];
-              this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+              this.galleryjson[0] = { keyName: 'logo', caption: 'Profile Picture', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               const imgobj = new Image(0,
                 { // modal
                   img: this.galleryjson[0].url,
@@ -918,24 +930,24 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
                 this.bLogo = this.businessjson.logo.url + '?' + new Date();
-                this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+                // this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               }
             } else {
               // this.bLogo = '';
               this.bLogo = '../../../assets/images/img-null.svg';
             }
-            this.image_list_popup = [];
-            if (this.galleryjson.length > 0) {
-              for (let i = 0; i < this.galleryjson.length; i++) {
-                const imgobj = new Image(
-                  i,
-                  { // modal
-                    img: this.galleryjson[i].url,
-                    description: this.galleryjson[i].caption || ''
-                  });
-                this.image_list_popup.push(imgobj);
-              }
-            }
+            // this.image_list_popup = [];
+            // if (this.galleryjson.length > 0) {
+            //   for (let i = 0; i < this.galleryjson.length; i++) {
+            //     const imgobj = new Image(
+            //       i,
+            //       { // modal
+            //         img: this.galleryjson[i].url,
+            //         description: this.galleryjson[i].caption || ''
+            //       });
+            //     this.image_list_popup.push(imgobj);
+            //   }
+            // }
             if (this.businessjson.specialization) {
               this.specializationslist = this.businessjson.specialization;
             }

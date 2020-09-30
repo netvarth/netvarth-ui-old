@@ -14,6 +14,9 @@ import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format
   styleUrls: ['./new-report.component.css']
 })
 export class NewReportComponent implements OnInit {
+  btn_disabled: boolean;
+  report_loading: boolean;
+  mxDate: Date;
   donation_timeperiod_list: { value: string; displayName: string; }[];
   customer_label: any;
   filterparams: any = {};
@@ -41,6 +44,7 @@ export class NewReportComponent implements OnInit {
   token_service: any;
   token_queue: any;
   waitlist_billpaymentstatus: any;
+  appointment_billpaymentstatus: any;
   appointment_mode: any;
   appointment_status: any;
   appointment_paymentStatus: any;
@@ -116,6 +120,7 @@ export class NewReportComponent implements OnInit {
 
       }
     });
+    this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
   }
 
   ngOnInit() {
@@ -138,7 +143,7 @@ export class NewReportComponent implements OnInit {
     this.appointment_status = this.waitlist_status = 0;
     this.payment_customer = this.appointment_customer = this.waitlist_customer = this.donation_customer = 'Any';
     this.payment_transactionType = 0;
-    this.waitlist_billpaymentstatus = 0;
+    this.waitlist_billpaymentstatus = this.appointment_billpaymentstatus = 0;
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
 
 
@@ -193,7 +198,7 @@ export class NewReportComponent implements OnInit {
           break;
         }
         case 'appointment': {
-          this.appointment_paymentStatus = res.paymentStatus || 0;
+          this.appointment_billpaymentstatus = res.paymentStatus || 0;
           this.appointment_status = res.apptStatus || 0;
           this.appointment_mode = res.appointmentMode || 0;
           this.appointment_timePeriod = res.dateRange;
@@ -336,7 +341,7 @@ export class NewReportComponent implements OnInit {
       case 'payment': {
         if (res === '' || res === undefined || res === 'All') {
           this.payment_customer = 'All';
-         // this.payment_customerId = 0;
+          // this.payment_customerId = 0;
         } else {
           this.payment_customer = res.split(',').length + ' customer(s) selected';
           this.payment_customerId = res.replace(/,\s*$/, '');
@@ -347,7 +352,7 @@ export class NewReportComponent implements OnInit {
       case 'donation': {
         if (res === '' || res === undefined || res === 'All') {
           this.donation_customer = 'All';
-         // this.donation_customerId = 0;
+          // this.donation_customerId = 0;
         } else {
           this.donation_customer = res.split(',').length + ' customer(s) selected';
           this.donation_customerId = res.replace(/,\s*$/, '');
@@ -358,7 +363,7 @@ export class NewReportComponent implements OnInit {
       case 'appointment': {
         if (res === '' || res === undefined || res === 'All') {
           this.appointment_customer = 'All';
-         // this.appointment_customerId = 0;
+          // this.appointment_customerId = 0;
         } else {
           console.log(res);
           this.appointment_customer = res.split(',').length + ' customer(s) selected';
@@ -373,7 +378,7 @@ export class NewReportComponent implements OnInit {
           this.waitlist_customer = 'All';
           //this.waitlist_customerId = 0;
         } else {
-          this.waitlist_customer = res.split(',').length  + ' customer(s) selected';
+          this.waitlist_customer = res.split(',').length + ' customer(s) selected';
           this.waitlist_customerId = res.replace(/,\s*$/, '');
 
         }
@@ -437,6 +442,8 @@ export class NewReportComponent implements OnInit {
     }
   }
   generateReport(reportType) {
+    this.report_loading = true;
+    this.btn_disabled=true;
     if (reportType === 'payment') {
       this.filterparams = {
         'status': this.payment_paymentStatus,
@@ -505,7 +512,7 @@ export class NewReportComponent implements OnInit {
 
     } else if (reportType === 'appointment') {
       this.filterparams = {
-        'paymentStatus': this.appointment_paymentStatus,
+        'paymentStatus': this.appointment_billpaymentstatus,
         'schedule': this.appointment_schedule_id,
         'service': this.appointment_service_id,
         'apptStatus': this.appointment_status,
@@ -516,7 +523,7 @@ export class NewReportComponent implements OnInit {
       if (this.appointment_schedule_id === 0) {
         delete this.filterparams.schedule;
       }
-      if (this.appointment_paymentStatus === 0) {
+      if (this.appointment_billpaymentstatus === 0) {
         delete this.filterparams.paymentStatus;
       }
       if (this.appointment_service_id === 0) {
@@ -742,13 +749,18 @@ export class NewReportComponent implements OnInit {
   }
   generatedReport(report) {
     this.setSelectedData().then(res => {
-    this.report_data_service.storeSelectedValues(res);
-    localStorage.setItem('report', JSON.stringify(report));
-    this.router.navigate(['provider', 'reports', 'generated-report']);
+      this.report_loading = false;
+      this.btn_disabled = false;
+      this.report_data_service.storeSelectedValues(res);
+      localStorage.setItem('report', JSON.stringify(report));
+      this.router.navigate(['provider', 'reports', 'generated-report']);
     },
-    error => {
-      this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-    });
+      error => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        console.log(error.error);
+        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+      });
 
   }
 }

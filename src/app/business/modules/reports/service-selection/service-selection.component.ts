@@ -71,6 +71,9 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
 
       _this.loadAllServices().then(result => {
+        if (parseInt(qparams.data, 0) === 0) {
+          this.masterToggle();
+          }
         if (_this.selected_data.length > 0) {
           _this.service_dataSource.data.forEach(function (row) {
             if (_this.selected_data && _this.selected_data.length > 0) {
@@ -131,7 +134,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
     result.forEach(serviceObj => {
       let userName = '';
       if (serviceObj.provider) {
-        userName = serviceObj.provider.firstName + '' + serviceObj.provider.lastName;
+        userName = serviceObj.provider.firstName + ' ' + serviceObj.provider.lastName;
       }
       service_list.push(
         {
