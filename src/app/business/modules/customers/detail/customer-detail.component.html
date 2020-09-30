@@ -39,7 +39,7 @@
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
                             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                            <div class="mgn-up-20 mgn-bt-20 red" *ngIf="customerErrorMsg !== ''">
+                            <div class="mgn-up-20 mgn-bt-20 red" *ngIf="customerErrorMsg !== '' && !loading">
                                 {{customerErrorMsg}}
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20 mgn-bt-20"
