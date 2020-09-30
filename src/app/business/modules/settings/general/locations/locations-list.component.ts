@@ -51,6 +51,7 @@ export class LocationsListComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     isCheckin;
     domain: any;
+    order = 'status';
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,

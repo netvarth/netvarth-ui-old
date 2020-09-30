@@ -1509,4 +1509,12 @@ export class ProviderServices {
       const url = 'provider/email/notification';
       return this.servicemeta.httpPut(url, data);
    }
+   generateReport(data) {
+    const url = 'provider/report';
+    return this.servicemeta.httpPut(url, data);
+  }
+  getJaldeeCustomer(data) {
+   const url = 'consumer';
+   return this.servicemeta.httpGet(url, null, data);
+}
 }

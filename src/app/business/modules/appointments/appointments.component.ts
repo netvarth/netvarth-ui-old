@@ -1393,7 +1393,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
-    // const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
+    const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
     let selQs = [];
     if (this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
@@ -1440,6 +1440,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    }
+    if (this.filter.future_appt_date !== null) {
+      Mfilter['date-eq'] = date;
     }
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
@@ -1701,6 +1704,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       let deptId;
       let userId;
+      console.log(this.selUser);
       if (this.selUser && this.selUser.id && this.selUser.id !== 'all') {
         const filteredDept = this.users.filter(user => user.id === this.selUser.id);
         if (filteredDept[0] && filteredDept[0].deptId) {
@@ -1708,6 +1712,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         userId = this.selUser.id;
       }
+      console.log(userId);
       this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId } });
     }
   }
@@ -2692,7 +2697,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (apptlist.batchId) {
         checkin_html += 'Batch <span style="font-weight:bold">' + apptlist.batchId + '</span>';
       } else {
-        checkin_html += 'Appointment Time <span style="font-weight:bold">' + apptlist.appmtTime + '</span>';
+        checkin_html += 'Appointment Time <span style="font-weight:bold">' +  this.getSingleTime(apptlist.appmtTime) + '</span>';
       }
       checkin_html += '</td></tr>';
       checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.bname.charAt(0).toUpperCase() + this.bname.substring(1) + '</td></tr>';
@@ -3256,3 +3261,4 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
 }
+

@@ -127,8 +127,8 @@ export class HomeAppComponent implements OnInit, OnDestroy {
       .then(
         () => {
          // this.dialogRef.close();
-         const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-         this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+        //  const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+        //  this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
          setTimeout(() => {
            // this.dialogRef.close();
          }, projectConstants.TIMEOUT_DELAY_SMALL);

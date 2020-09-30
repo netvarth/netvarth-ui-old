@@ -138,7 +138,7 @@
 
                             <!-- End Meeting and relaunch for zoom/gmeet & whtsap/phone(if opened in mob or tab) -->
                             <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10"
-                                *ngIf="servStarted">
+                                *ngIf="servStarted && ((callingModes === 'Zoom'||callingModes === 'GoogleMeet') || ((callingModes === 'Phone'|| callingModes === 'WhatsApp') && !is_web))">
                                 <button type="button" (click)="endmeeting()"
                                     class="cs-btn bt1 btn-red txt-trans-none">End
                                     Meeting</button> &nbsp;&nbsp;&nbsp;

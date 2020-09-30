@@ -9,7 +9,7 @@
             <app-common-innerloading-spinner></app-common-innerloading-spinner>
         </div>
         <div class="col-md-12 no-padding-small" *ngIf="!api_loading">
-            <div class="row" *ngFor="let loc of loc_list">
+            <div class="row" *ngFor="let loc of loc_list | orderBy: order">
                 <div class="card" [class.disabled]="loc.status=='INACTIVE'" [class.bse-lcn]="loc.baseLocation == true">
                     <div class="copy">
                         <span class="mbt" *ngIf="loc.baseLocation != true">

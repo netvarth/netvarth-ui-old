@@ -15,6 +15,7 @@ import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.mod
 import { ServicesService } from '../../../../../shared/modules/service/services.service';
 import { ServiceModule } from '../../../../../shared/modules/service/service.module';
 import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
         ModalGalleryModule,
         GalleryModule,
         ServiceModule,
-        PagerModule
+        PagerModule,
+        OrderModule
     ],
     declarations: [
         WaitlistServicesComponent,

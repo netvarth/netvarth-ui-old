@@ -14,6 +14,7 @@ import { UserDataStorageService } from './settings/user-datastorage.service';
 // import { ManageOnlineProfileComponent } from './settings/bprofile/manageonlineprofile.component';
 import { LinkProfileComponent } from './linkProfile/linkProfile.component';
 import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
+import { OrderModule } from 'ngx-order-pipe';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
         ReactiveFormsModule,
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
-        PagerModule
+        PagerModule,
+        OrderModule
 
     ],
     entryComponents: [LinkProfileComponent],

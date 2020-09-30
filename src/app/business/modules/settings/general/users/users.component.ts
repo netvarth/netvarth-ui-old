@@ -72,6 +72,7 @@ export class BranchUsersComponent implements OnInit {
     provider_label = '';
     assistant_label = '';
     changeUserStatusdialogRef;
+    order = 'status';
     constructor(
         private router: Router,
         private routerobj: Router,

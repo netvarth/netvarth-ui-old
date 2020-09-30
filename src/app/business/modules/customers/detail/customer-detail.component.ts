@@ -74,6 +74,11 @@ export class CustomerDetailComponent implements OnInit {
     customerName;
     timeslot;
     comingSchduleId;
+    date;
+    thirdParty;
+    customerCount;
+    customerPlaceholder = '';
+    jld;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -168,8 +173,14 @@ export class CustomerDetailComponent implements OnInit {
             if (qparams.timeslot) {
                 this.timeslot = qparams.timeslot;
             }
+            if (qparams.date) {
+                this.date = qparams.date;
+            }
             if (qparams.scheduleId) {
                 this.comingSchduleId = qparams.scheduleId;
+            }
+            if (qparams.thirdParty) {
+                this.thirdParty = qparams.thirdParty;
             }
         });
     }
@@ -189,7 +200,15 @@ export class CustomerDetailComponent implements OnInit {
                 );
         });
     }
-
+getCustomerCount() {
+    this.provider_services.getProviderCustomersCount()
+    .subscribe(
+        data => {
+          this.customerCount = data;
+          this.jld = 'JLD' + this.thirdParty + this.customerCount;
+          this.amForm.get('customer_id').setValue(this.jld);
+        });
+}
     ngOnInit() {
         this.loading = true;
         this.getGlobalSettingsStatus();
@@ -239,8 +258,16 @@ export class CustomerDetailComponent implements OnInit {
             }
             this.loading = false;
         }
+        console.log(this.thirdParty);
         if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+         if (this.thirdParty) {
+            this.amForm.addControl('customer_id', new FormControl(''));
+            this.customerPlaceholder = this.customer_label + ' id';
+            this.getCustomerCount();
+         } else {
             this.amForm.addControl('customer_id', new FormControl('', Validators.required));
+            this.customerPlaceholder = this.customer_label + ' id *';
+         }
         }
         if (this.phoneNo) {
             this.amForm.get('mobile_number').setValue(this.phoneNo);
@@ -280,9 +307,14 @@ export class CustomerDetailComponent implements OnInit {
             if (form_data.email_id && form_data.email_id !== '') {
                 post_data['email'] = form_data.email_id;
             }
-            if (form_data.customer_id) {
+            if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+           console.log(form_data.customer_id);
+                if (form_data.customer_id) {
                 post_data['jaldeeId'] = form_data.customer_id;
+            } else {
+                post_data['jaldeeId'] = this.jld;
             }
+        }
             this.provider_services.createProviderCustomer(post_data)
                 .subscribe(
                     data => {
@@ -296,7 +328,8 @@ export class CustomerDetailComponent implements OnInit {
                                     ph: form_data.mobile_number,
                                     checkin_type: this.checkin_type,
                                     haveMobile: this.haveMobile,
-                                    id: data
+                                    id: data,
+                                    thirdParty: this.thirdParty
                                 }
                             };
                             this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
@@ -308,7 +341,9 @@ export class CustomerDetailComponent implements OnInit {
                                     haveMobile: this.haveMobile,
                                     id: data,
                                     timeslot: this.timeslot,
-                                    scheduleId: this.comingSchduleId
+                                    scheduleId: this.comingSchduleId,
+                                    date: this.date,
+                                    thirdParty: this.thirdParty
                                 }
                             };
                             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);

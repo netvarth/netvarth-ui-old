@@ -106,6 +106,7 @@ export class TeleServiceComponent implements OnInit {
             .subscribe(
                 data => {
                     this.data = data;
+                    console.log(this.data);
                     if (this.data.waitlistStatus === 'started') {
                         this.servStarted = true;
                     } else {
@@ -139,6 +140,7 @@ export class TeleServiceComponent implements OnInit {
             .subscribe(
                 data => {
                     this.data = data;
+                    console.log(this.data);
                     if (this.data.apptStatus === 'Started') {
                         this.servStarted = true;
                     } else {
@@ -207,21 +209,22 @@ export class TeleServiceComponent implements OnInit {
         this.startTeledialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (result === 'started') {
-                    this.servStarted = true;
                     if (this.waiting_type === 'checkin') {
                         if (this.data.waitlistStatus !== 'started') {
                             this.changeWaitlistStatus(this.data, 'STARTED');
                         } else if (this.data.waitlistStatus === 'started') {
                             this.shared_functions.openSnackBar('Service already started!');
+                            this.servStarted = true;
                         }
-                        this.chkinTeleserviceJoinLink();
+                       // this.chkinTeleserviceJoinLink();
                     } else {
                         if (this.data.apptStatus !== 'Started') {
                             this.changeWaitlistStatus(this.data, 'Started');
                         } else if (this.data.apptStatus === 'Started') {
                             this.shared_functions.openSnackBar('Service already started!');
+                            this.servStarted = true;
                         }
-                        this.apptTeleserviceJoinLink();
+                      //  this.apptTeleserviceJoinLink();
                     }
                 }
             }
@@ -261,16 +264,22 @@ export class TeleServiceComponent implements OnInit {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
                     if (result) {
+                       // this.servStarted = true;
                         if (action === 'DONE') {
                             this.shared_functions.openSnackBar('Meeting has been ended');
                             this.router.navigate(['provider', 'check-ins']);
                         } else {
+                            console.log(this.starting_url);
+                            this.chkinTeleserviceJoinLink();
+                            const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
+                            window.open(path, '_blank');
                             this.getProviderWaitlstById();
                         }
                     }
-                }
+                },
                 );
         } else {
+            console.log(action);
             this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
                     if (result) {
@@ -278,6 +287,9 @@ export class TeleServiceComponent implements OnInit {
                             this.shared_functions.openSnackBar('Meeting has been ended');
                             this.router.navigate(['provider', 'appointments']);
                         } else {
+                            this.apptTeleserviceJoinLink();
+                            const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
+                            window.open(path, '_blank');
                             this.getProviderApptById();
                         }
                     }
@@ -305,25 +317,10 @@ export class TeleServiceComponent implements OnInit {
             if (result) {
                 if (result === 'completed') {
                     if (this.waiting_type === 'checkin') {
-                        // if (this.data.waitlistStatus === 'started') {
                             this.changeWaitlistStatus(this.data, 'DONE');
-                        // }
-                        // else {
-                        //     this.changeWaitlistStatus(this.data, 'STARTED');
-                        //     setTimeout(() => {
-                        //         this.changeWaitlistStatus(this.data, 'DONE');
-                        //     }, 300);
-                        // }
                         this.redirecToPreviousPage();
                     } else {
-                        // if (this.data.apptStatus === 'Started') {
                             this.changeWaitlistStatus(this.data, 'Completed');
-                        // } else {
-                        //     this.changeWaitlistStatus(this.data, 'Started');
-                        //     setTimeout(() => {
-                        //         this.changeWaitlistStatus(this.data, 'Completed');
-                        //     }, 300);
-                        // }
                         this.redirecToPreviousPage();
                     }
                 }

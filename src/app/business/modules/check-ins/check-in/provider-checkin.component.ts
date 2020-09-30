@@ -196,6 +196,19 @@ export class ProviderCheckinComponent implements OnInit {
     settings: any = [];
     showTokenId;
     note_cap = 'Add Note';
+    thirdParty = '';
+    thirdPartyList = {
+        'practo': 'Practo',
+        'google': 'Google',
+        'justdial': 'Justdial',
+        'mfine': 'MFine'
+    };
+    showOther = false;
+    otherThirdParty = '';
+    thirdparty_error = null;
+    jld;
+    customidFormat: any;
+    heading = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -226,6 +239,9 @@ export class ProviderCheckinComponent implements OnInit {
             if (qparams.userId) {
                 this.selectUser = JSON.parse(qparams.userId);
             }
+            if (qparams.thirdParty) {
+                this.thirdParty = qparams.thirdParty;
+            }
             if (this.showtoken) {
                 this.breadcrumbs = [
                     {
@@ -236,6 +252,7 @@ export class ProviderCheckinComponent implements OnInit {
                         title: this.chekin_title
                     }
                 ];
+                this.heading = 'Create a Token';
             } else {
                 this.breadcrumbs = [
                     {
@@ -246,6 +263,7 @@ export class ProviderCheckinComponent implements OnInit {
                         title: this.chekin_title
                     }
                 ];
+                this.heading = 'Create a Check-in';
             }
             if (qparams.ph || qparams.haveMobile) {
                 const filter = {};
@@ -328,6 +346,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
         this.qParams['checkinType'] = this.checkinType;
         this.qParams['source'] = 'checkin';
+        this.qParams['thirdParty'] = this.thirdParty;
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
@@ -386,6 +405,29 @@ export class ProviderCheckinComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     if (data.length === 0) {
+                        if (mode === 'phone') {
+                            const filter = { 'primaryMobileNo-eq': form_data.search_input };
+                            this.getJaldeeCustomer(filter);
+                        } else {
+                            this.form_data = data;
+                            this.create_new = true;
+                        }
+                    } else {
+                        this.customer_data = data[0];
+                        this.getFamilyMembers();
+                        this.initCheckIn();
+                    }
+                },
+                error => {
+                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                }
+            );
+    }
+    getJaldeeCustomer(post_data) {
+        this.provider_services.getJaldeeCustomer(post_data)
+            .subscribe(
+                (data: any) => {
+                    if (data.length === 0) {
                         this.form_data = data;
                         this.create_new = true;
                     } else {
@@ -399,11 +441,23 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             );
     }
-    initCheckIn() {
+    initCheckIn(thirdParty?) {
+        if (thirdParty) {
+            this.getGlobalSettings();
+        }
+        this.thirdParty = thirdParty ? thirdParty : '';
+        this.api_loading1 = false;
+        if (this.showtoken) {
+            this.heading = 'New Token';
+        } else {
+            this.heading = 'New Check-in';
+        }
         const _this = this;
         this.showCheckin = true;
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+        if (this.thirdParty === '') {
+            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+        }
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -554,30 +608,34 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     getFamilyMembers() {
-        this.api_loading1 = true;
-        let fn;
-        let self_obj;
-        fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
-        self_obj = {
-            'userProfile': {
-                'id': this.customer_data.id,
-                'firstName': this.customer_data.firstName,
-                'lastName': this.customer_data.lastName
-            }
-        };
-        fn.subscribe(data => {
-            this.familymembers = [];
-            this.familymembers.push(self_obj);
-            for (const mem of data) {
-                if (mem.userProfile.id !== self_obj.userProfile.id) {
-                    this.familymembers.push(mem);
+        if (this.thirdParty === '') {
+            this.api_loading1 = true;
+            let fn;
+            let self_obj;
+            fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
+            self_obj = {
+                'userProfile': {
+                    'id': this.customer_data.id,
+                    'firstName': this.customer_data.firstName,
+                    'lastName': this.customer_data.lastName
                 }
-            }
-            this.api_loading1 = false;
-        },
-            () => {
+            };
+            fn.subscribe(data => {
+                this.familymembers = [];
+                this.familymembers.push(self_obj);
+                for (const mem of data) {
+                    if (mem.userProfile.id !== self_obj.userProfile.id) {
+                        this.familymembers.push(mem);
+                    }
+                }
                 this.api_loading1 = false;
-            });
+            },
+                () => {
+                    this.api_loading1 = false;
+                });
+        } else {
+            this.api_loading1 = false;
+        }
     }
     addPhone() {
         this.resetApiErrors();
@@ -825,12 +883,50 @@ export class ProviderCheckinComponent implements OnInit {
                 error = this.validatorPartysize(this.enterd_partySize);
             }
             if (error === '') {
-                this.saveCheckin();
+                if (this.waitlist_for.length === 0) {
+                    if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+                        this.getCustomerCount();
+                    } else {
+                        this.createCustomer();
+                    }
+                } else {
+                    this.saveCheckin();
+                }
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 // this.api_error = error;
             }
         }
+    }
+    getGlobalSettings() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.customidFormat = data.jaldeeIdFormat;
+            });
+    }
+    createCustomer() {
+        const post_data = {
+            'firstName': this.thirdParty,
+            'lastName': 'user'
+        };
+        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+            post_data['jaldeeId'] = this.jld;
+        }
+        this.provider_services.createProviderCustomer(post_data)
+            .subscribe(
+                data => {
+                    this.getCustomerbyId(data);
+                });
+    }
+    getCustomerbyId(id) {
+        const filter = { 'id-eq': id };
+        this.provider_services.getCustomer(filter)
+            .subscribe(
+                (data: any) => {
+                    this.customer_data = data[0];
+                    this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
+                    this.saveCheckin();
+                });
     }
     saveCheckin() {
         // const waitlistarr = [];
@@ -1130,6 +1226,7 @@ export class ProviderCheckinComponent implements OnInit {
         } else {
             // this.api_error = derror;
             this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            this.disable = false;
         }
     }
     handleNote() {
@@ -1604,5 +1701,41 @@ export class ProviderCheckinComponent implements OnInit {
     // }
     editCallingmodes(index) {
         this.showInputSection = false;
+    }
+    showOtherSection(value) {
+        if (value) {
+            if (this.otherThirdParty === '') {
+                this.thirdparty_error = 'Third party listing site required';
+            } else {
+                this.thirdParty = this.otherThirdParty;
+                this.showOther = false;
+                this.initCheckIn(this.thirdParty);
+            }
+        } else {
+            this.showOther = true;
+        }
+    }
+    resetError() {
+        this.thirdparty_error = null;
+    }
+    getCustomerCount() {
+        this.provider_services.getProviderCustomersCount()
+            .subscribe(
+                data => {
+                    this.jld = 'JLD' + this.thirdParty + data;
+                    this.createCustomer();
+                });
+    }
+    goBack() {
+        if (this.showCheckin) {
+            this.showCheckin = false;
+            if (this.showtoken) {
+                this.heading = 'Create a Token';
+            } else {
+                this.heading = 'Create a Check-in';
+            }
+        } else {
+            this.router.navigate(['provider', 'check-ins']);
+        }
     }
 }

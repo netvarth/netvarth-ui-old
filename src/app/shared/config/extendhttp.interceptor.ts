@@ -239,4 +239,3 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     return check;
   }
 }
-
