@@ -136,7 +136,10 @@
               </div>
 
               <div class="text-center">
-                <button type="button" class="btn btn-primary btn-lg" (click)="generateReport('payment');"> Generate Report </button>
+                <button type="button" class="btn btn-primary btn-lg"  [disabled]="btn_disabled" (click)="generateReport('payment');"> Generate Report </button>
+                <ng-container  *ngIf="report_loading">
+                    <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                </ng-container>
               </div>
 
 
@@ -167,6 +170,15 @@
 
               </div>
               <div class="col-md-12 col-sm-12">
+                  <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                      <label for="paymentStatus"  class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label"> Bill Payment Status</label>
+                      <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
+                        <mat-select class="form-control" [(ngModel)]="appointment_billpaymentstatus">
+                          <mat-option [value]="0">Any</mat-option>
+                          <mat-option *ngFor="let status of bill_payment_status" [value]="status.value">{{ status.displayName }}</mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
                 <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                   <label for="timePeriod" class="col-lg-5 col-md-5 col-sm-5 col-xs-6 col-form-label">Time Period</label>
                   <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
@@ -236,7 +248,10 @@
               </div>
 
               <div class="text-center">
-                <button type="button" class="btn btn-primary btn-lg" (click)="generateReport('appointment');"> Generate Report </button>
+                <button type="button" class="btn btn-primary btn-lg"  [disabled]="btn_disabled" (click)="generateReport('appointment');"> Generate Report </button>
+                <ng-container  *ngIf="report_loading">
+                    <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                </ng-container>
               </div>
             </div>
 
@@ -345,7 +360,10 @@
               </div>
 
               <div class="text-center">
-                <button type="button" class="btn btn-primary btn-lg" (click)="generateReport('token');"> Generate Report </button>
+                <button type="button" class="btn btn-primary btn-lg"  [disabled]="btn_disabled" (click)="generateReport('token');"> Generate Report </button>
+                <ng-container  *ngIf="report_loading">
+                    <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                </ng-container>
               </div>
             </div>
 
@@ -424,7 +442,10 @@
               </div>
 
               <div class="text-center">
-                <button type="button" class="btn btn-primary btn-lg" (click)="generateReport('donation');"> Generate Report </button>
+                <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"(click)="generateReport('donation');"> Generate Report </button>
+                <ng-container  *ngIf="report_loading">
+                    <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                </ng-container>
               </div>
 
             </div>
