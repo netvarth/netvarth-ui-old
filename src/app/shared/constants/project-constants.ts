@@ -699,10 +699,10 @@ export const projectConstantsLocal = {
   ],
   WAITLIST_STATUS : [
     // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
-    {displayName: 'Checked In ', value: 'CheckedIn'},
+    {displayName: 'Checked In ', value: 'checkedIn'},
     {displayName: 'Arrived', value: 'arrived'},
     // {displayName: 'Unrevertable', value: 'unrevertable'},
-    {displayName: 'Started', value: 'Started'},
+    {displayName: 'Started', value: 'started'},
     {displayName: 'Cancelled', value: 'Cancelled'},
     {displayName: 'Done', value: 'done'},
     // {displayName: 'Failed', value: 'failed'},
@@ -724,13 +724,14 @@ export const projectConstantsLocal = {
   ],
 
   REPORT_TRANSACTION_TYPE: [
-    {displayName: 'Waitlist', value: 'Waitlist'},
+    {displayName: 'Check-in/Token', value: 'Waitlist'},
     {displayName: 'Appointment', value: 'Appointment'},
-    {displayName: 'Donation', value: 'Donation'},
+    // {displayName: 'Donation', value: 'Donation'},
     // {displayName: 'Order', value: 'Order'}
     // {displayName: 'License', value: 'License'},
 
   ],
+
   REPORT_TIMEPERIOD: [
     {value: 'LAST_WEEK', displayName: 'Last 7 days'},
     {value: 'NEXT_WEEK', displayName: 'Next 7 days'},

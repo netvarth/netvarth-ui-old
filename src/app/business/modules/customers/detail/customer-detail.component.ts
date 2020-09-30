@@ -79,7 +79,8 @@ export class CustomerDetailComponent implements OnInit {
     customerCount;
     customerPlaceholder = '';
     jld;
-    customerErrorMsg = '';
+    customerErrorMsg1 = '';
+    customerErrorMsg2 = '';
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -167,7 +168,8 @@ export class CustomerDetailComponent implements OnInit {
                 }
             } else {
                 if (qparams.type && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment')) {
-                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + 'details to create ' + this.source;
+                    this.customerErrorMsg1 = 'This record is not found in your ' + this.customer_label + 's list.';
+                    this.customerErrorMsg2 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
                     this.save_btn = 'Proceed';
                 }
             }
@@ -222,9 +224,11 @@ export class CustomerDetailComponent implements OnInit {
                         this.amForm.get('email_id').setValue(data[0].userProfile.email);
                         this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
                         this.amForm.get('address').setValue(data[0].userProfile.address);
-                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Do you want to add the ' + this.customer_label + ' to create ' + this.source;
+                        this.customerErrorMsg1 = 'This record is not found in your ' + this.customer_label + 's list.';
+                        this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + ' to create ' + this.source;
                     } else {
-                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + ' details to create ' + this.source;
+                        this.customerErrorMsg1 = 'This record is not found in your ' + this.customer_label + 's list.';
+                        this.customerErrorMsg2 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
                     }
                 },
                 error => {
@@ -238,7 +242,8 @@ export class CustomerDetailComponent implements OnInit {
                 if (data.walkinConsumerBecomesJdCons) {
                     this.getJaldeeCustomer();
                 } else {
-                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + 'details to create ' + this.source;
+                    this.customerErrorMsg1 = 'This record is not found in your ' + this.customer_label + 's list.';
+                    this.customerErrorMsg2 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
                 }
             }
         );

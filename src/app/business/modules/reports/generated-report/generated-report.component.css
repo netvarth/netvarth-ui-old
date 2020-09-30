@@ -5,7 +5,7 @@ table{
  td {
   word-wrap: break-word;
   margin:auto;
-  text-align:justify;
+  text-align:right;
   font-size: 10px;
   word-break: break-word;
   white-space: pre-line;
@@ -17,4 +17,22 @@ table{
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+}
+@media print {
+  .page {
+      margin: 0;
+      border: initial;
+      border-radius: initial;
+      width: initial;
+      min-height: initial;
+      box-shadow: initial;
+      background: initial;
+      page-break-after: always;
+  }
+
+table th {
+    display: table-header-group;
+    border:none;
+  }
+
 }
