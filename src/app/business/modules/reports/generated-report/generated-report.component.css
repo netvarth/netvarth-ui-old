@@ -30,8 +30,9 @@ table{
       page-break-after: always;
   }
 
-thead {
-    display: table-row-group;
+table th {
+    display: table-header-group;
+    border:none;
   }
 
 }

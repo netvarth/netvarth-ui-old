@@ -699,10 +699,10 @@ export const projectConstantsLocal = {
   ],
   WAITLIST_STATUS : [
     // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
-    {displayName: 'Checked In ', value: 'CheckedIn'},
+    {displayName: 'Checked In ', value: 'checkedIn'},
     {displayName: 'Arrived', value: 'arrived'},
     // {displayName: 'Unrevertable', value: 'unrevertable'},
-    {displayName: 'Started', value: 'Started'},
+    {displayName: 'Started', value: 'started'},
     {displayName: 'Cancelled', value: 'Cancelled'},
     {displayName: 'Done', value: 'done'},
     // {displayName: 'Failed', value: 'failed'},
