@@ -157,9 +157,10 @@ export class ConsumerServices {
     const path = 'consumer/appointment/future';
     return this.servicemeta.httpGet(path);
   }
-  getAppointmentHistory() {
-    const path = 'consumer/appointment/history' ;
-    return this.servicemeta.httpGet(path);
+  getAppointmentHistory(params) {
+   // const path = 'consumer/appointment/history',null, params ;
+    return this.servicemeta.httpGet('consumer/appointment/history', null, params);
+    //return this.servicemeta.httpGet(path);
   }
   getAppointmentHistoryCount() {
     return this.servicemeta.httpGet('consumer/appointment/history/count');

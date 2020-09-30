@@ -20,6 +20,7 @@ import { CouponsComponent } from '../../../shared/components/coupons/coupons.com
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MeetingDetailsComponent } from '../meeting-details/meeting-details.component';
+
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -164,6 +165,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   todayDate = new Date();
   tDate: any;
   path = projectConstants.PATH;
+  locationholder: any;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -187,6 +189,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.usr_details = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.locationholder =  this.shared_functions.getitemfromLocalStorage('ynw-locdet');
     console.log(this.usr_details);
     this.breadcrumbs = [
       {
@@ -1631,4 +1634,21 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.addnotedialogRef.afterClosed().subscribe(result => {
     });
   }
+
+  getmyfavourites() {
+    this.router.navigate(['consumer', 'myfav']);
+  }
+
+  do_search() {
+    const passparam = {
+      do: 'All',
+      la: this.locationholder.lat || '',
+      lo: this.locationholder.lon || '',
+      lon: this.locationholder.name || '',
+      lontyp: this.locationholder.typ || '',
+      lonauto: this.locationholder.autoname || ''
+    };
+    this.router.navigate(['/searchdetail', passparam]);
+}
+
 }

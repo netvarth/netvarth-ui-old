@@ -48,6 +48,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   rate_your_visit = Messages.RATE_YOU_VISIT;
   no_prev_checkins_avail_cap = Messages.NO_PREV_CHECKINS_AVAIL_CAP;
   loading = true;
+  apmt_history: ArrayBuffer;
 
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router,
@@ -61,8 +62,10 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.getHistoryCount();
+    this.getAppointmentHistoryCount();
   }
 
+  // Getting Checking History
   getHistroy() {
     this.loadcomplete.history = false;
     const params = this.setPaginationFilter();
@@ -80,6 +83,23 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
       );
   }
 
+  // Getting Appointment History
+  getAppointmentHistory() {
+    const params = this.setPaginationFilter();
+    this.consumer_services.getAppointmentHistory(params)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.apmt_history = data;
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+        }
+      );
+  }
+
+  // Get checkin history count
   getHistoryCount() {
     this.consumer_services.getHistoryWaitlistCount()
       .subscribe(
@@ -88,9 +108,21 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
           this.getHistroy();
         });
   }
+  // Get Appointment history count
+  getAppointmentHistoryCount() {
+    console.log('this');
+    this.consumer_services.getAppointmentHistoryCount()
+      .subscribe(
+        data => {
+          this.pagination.totalCnt += data;
+          console.log(this.pagination.totalCnt);
+          this.getAppointmentHistory();
+        });
+  }
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.getHistroy();
+    this.getAppointmentHistory();
   }
 
   setPaginationFilter(params = {}) {

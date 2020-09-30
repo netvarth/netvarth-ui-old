@@ -232,16 +232,16 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
     }
   }
   getAppointmentHistory() {
-    this.consumer_services.getAppointmentHistory()
-      .subscribe(
-        data => {
-          this.history = data;
-          this.loading = false;
-        },
-        error => {
-          this.loading = false;
-        }
-      );
+    // this.consumer_services.getAppointmentHistory()
+    //   .subscribe(
+    //     data => {
+    //       this.history = data;
+    //       this.loading = false;
+    //     },
+    //     error => {
+    //       this.loading = false;
+    //     }
+    //   );
   }
   providerDetail(provider) {
     this.router.navigate(['searchdetail', provider.uniqueId]);
