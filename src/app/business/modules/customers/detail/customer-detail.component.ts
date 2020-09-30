@@ -80,7 +80,6 @@ export class CustomerDetailComponent implements OnInit {
     customerPlaceholder = '';
     jld;
     customerErrorMsg = '';
-    foundJCustomer = false;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -160,16 +159,16 @@ export class CustomerDetailComponent implements OnInit {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
             this.source = qparams.source;
-            console.log(qparams);
             if (qparams.phone) {
                 this.phoneNo = qparams.phone;
                 if (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
                     this.getJaldeeIntegrationSettings();
+                    this.save_btn = 'Proceed';
                 }
             } else {
                 if (qparams.type && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment')) {
-                    this.customerErrorMsg = 'Sorry, We were not able to find the record in our ' +
-                        this.customer_label + 's list. Please create ' + this.customer_label + 'to take ' + this.source;
+                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + 'details to create ' + this.source;
+                    this.save_btn = 'Proceed';
                 }
             }
             if (qparams.email) {
@@ -223,11 +222,9 @@ export class CustomerDetailComponent implements OnInit {
                         this.amForm.get('email_id').setValue(data[0].userProfile.email);
                         this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
                         this.amForm.get('address').setValue(data[0].userProfile.address);
-                        this.customerErrorMsg = 'jaldee consumer';
-                        this.foundJCustomer = true;
+                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Do you want to add the ' + this.customer_label + ' to create ' + this.source;
                     } else {
-                        this.customerErrorMsg = 'Sorry, We were not able to find the record in our ' +
-                            this.customer_label + 's list. Please create ' + this.customer_label + ' to take ' + this.source;
+                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + ' details to create ' + this.source;
                     }
                 },
                 error => {
@@ -241,8 +238,7 @@ export class CustomerDetailComponent implements OnInit {
                 if (data.walkinConsumerBecomesJdCons) {
                     this.getJaldeeCustomer();
                 } else {
-                    this.customerErrorMsg = 'Sorry, We were not able to find the record in our ' +
-                        this.customer_label + 's list. Please create ' + this.customer_label + 'to take ' + this.source;
+                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + 'details to create ' + this.source;
                 }
             }
         );
@@ -306,7 +302,6 @@ export class CustomerDetailComponent implements OnInit {
             }
             this.loading = false;
         }
-        console.log(this.thirdParty);
         if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
             if (this.thirdParty) {
                 this.amForm.addControl('customer_id', new FormControl(''));

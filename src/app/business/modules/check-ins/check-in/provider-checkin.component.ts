@@ -349,9 +349,8 @@ export class ProviderCheckinComponent implements OnInit {
         }
         this.qParams['checkinType'] = this.checkinType;
         this.qParams['source'] = (this.showtoken) ? 'token' : 'checkin';
-        console.log(this.thirdParty);
         this.qParams['thirdParty'] = this.thirdParty;
-         this.qParams['type'] = type;
+        this.qParams['type'] = type;
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
@@ -434,7 +433,6 @@ export class ProviderCheckinComponent implements OnInit {
         if (thirdParty) {
             this.getGlobalSettings();
         }
-        console.log(thirdParty);
         this.thirdParty = thirdParty ? thirdParty : '';
         this.api_loading1 = false;
         if (this.showtoken) {
@@ -1700,7 +1698,6 @@ export class ProviderCheckinComponent implements OnInit {
             } else {
                 this.thirdParty = this.otherThirdParty.trim();
                 this.showOther = false;
-                console.log(this.thirdParty);
                 this.initCheckIn(this.thirdParty);
             }
         } else {

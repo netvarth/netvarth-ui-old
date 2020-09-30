@@ -1,7 +1,3 @@
-<!-- <section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)"
-    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
 <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
@@ -30,11 +26,6 @@
                             type="text" class="form-control" formControlName="search_input"
                             (keypress)="findCustomer(searchForm.value, $event)">
                         </mat-form-field>
-                        <!-- <app-field-error-display style="color: #f24949 !important;" [displayError]="true"
-                          *ngIf="create_new"
-                          errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
-                                                Please create {{customer_label}} to take {{(showtoken) ? 'token' : 'checkin'}}">
-                        </app-field-error-display> -->
                       </div>
                       <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
                         <button class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
@@ -47,15 +38,18 @@
               <div class="clearfix"></div>
               <div class="create_new mgn-bt-20">
                 <div class="or-style">OR</div>
-                <a class="underline" (click)="createNew()">  Create a new {{customer_label}} and {{(showtoken) ? 'token' : 'checkin'}} </a>
+                <a class="underline" (click)="createNew()"> Create a new {{customer_label}} and
+                  {{(showtoken) ? 'token' : 'checkin'}} </a>
                 <!-- <button class="create_new_button cs-btn bt3" (click)="createNew()">New
                   {{customer_label}}</button> -->
               </div>
               <div class="create_new mgn-bt-20">
                 <div class="or-style">OR</div>
-                <span> 
-                Create a {{(showtoken) ? 'token' : 'check-in'}} for the {{customer_label}} who booked for your services on a third party listing site, choose the listing site/app
-             </span>   <div class="mgn-up-10">
+                <span>
+                  Create a {{(showtoken) ? 'token' : 'check-in'}} for the {{customer_label}} who booked for your
+                  services on a third party listing site, choose the listing site/app
+                </span>
+                <div class="mgn-up-10">
                   <button *ngIf="domain === 'healthCare'" class="create_new_button cs-btn bt3 mgn-rt-10"
                     (click)="initCheckIn('practo')">Practo</button>
                   <button class="create_new_button cs-btn bt3 mgn-rt-10" (click)="initCheckIn('justdial')">Just
@@ -106,8 +100,9 @@
                       {{customer_label | capitalizeFirst}} id: {{customer_data.jaldeeId | capitalizeFirst}}</li>
                   </ul>
                   <div *ngIf="thirdParty !== ''">
-                    {{customer_label | capitalizeFirst}} from {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}
-                    <a class="underline pull-right" (click)="createNew()">Fill the
+                    {{customer_label | capitalizeFirst}} from
+                    {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}
+                    <a class="underline mgn-lt-20" (click)="createNew()">Fill the
                       {{customer_label}}
                       details </a>
                   </div>
