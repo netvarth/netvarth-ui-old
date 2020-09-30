@@ -24,7 +24,7 @@
                         <mat-form-field>
                           <input matInput placeholder="{{customer_label | capitalizeFirst}} Phone# or ID or Email"
                             type="text" class="form-control" formControlName="search_input"
-                            (keypress)="findCustomer(searchForm.value, $event)">
+                            (keypress)="findCustomer(searchForm.value, $event)" autocomplete="off">
                         </mat-form-field>
                       </div>
                       <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
