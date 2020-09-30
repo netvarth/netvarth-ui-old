@@ -731,6 +731,7 @@ export const projectConstantsLocal = {
     // {displayName: 'License', value: 'License'},
 
   ],
+
   REPORT_TIMEPERIOD: [
     {value: 'LAST_WEEK', displayName: 'Last 7 days'},
     {value: 'NEXT_WEEK', displayName: 'Next 7 days'},
