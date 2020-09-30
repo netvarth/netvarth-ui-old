@@ -11996,3 +11996,13 @@ img.busN-logo {
   font-weight: 600;
   margin-bottom: 5px;
 }
+.font-9 {
+  font-size: .9rem;
+}
+.pro-action {
+  font-weight: 600 !important;
+  font-size: .75rem!important;
+  background-color: #fff!important;
+  border: 1px solid #ccc!important;
+  border-radius: 20px!important;
+}
