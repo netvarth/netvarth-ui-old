@@ -1,5 +1,14 @@
-<section>
+<section *ngIf="source !=='token' && source !=='checkin' && source !=='appointment'">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section class="" *ngIf="source ==='token' || source ==='checkin' || source ==='appointment'">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <button type="button" class="btn default profile-back" (click)="goBack()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+            Create {{customer_label}}
+        </h5>
+    </div>
 </section>
 <section>
     <div class="content loc-list p-checkin ynw-common-form-nm">
@@ -7,7 +16,7 @@
             <div class="row">
                 <div class="card p0">
 
-                    <div class="col-md-12 no-padding" *ngIf="source !=='checkin' && source !=='appointment'">
+                    <div class="col-md-12 no-padding" *ngIf="source !=='token' && source !=='checkin' && source !=='appointment'">
                         <ul class="nav cust-dash jd-custom-nav">
 
                             <li class="dropdown notifications-menu">
@@ -31,7 +40,10 @@
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
                             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-
+                            <div class="mgn-up-20 mgn-bt-20" [class.red]="!foundJCustomer"
+                                *ngIf="customerErrorMsg !== ''">
+                                {{customerErrorMsg}}
+                            </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20 mgn-bt-20"
                                 *ngIf="viewCustomer">
                                 <div *ngIf="customer[0].firstName" class="col-md-6 col-xs-12 col-sm-6"

@@ -62,14 +62,16 @@
                                     here.</a>
                             </div> -->
                             <div class="create_new mgn-bt-20">
-                                <div>Or</div>
-                                <a class="underline" (click)="createNew()"> Create new {{customer_label}} and proceed.
+                                <div class="or-style">OR</div>
+                                <a class="underline" (click)="createNew()">
+                                    Create a new {{customer_label}} and appointment
                                 </a>
                             </div>
                             <div class="create_new mgn-bt-20">
-                                <div>Or</div>
-                                <span> {{customer_label | capitalizeFirst}} from third party listing site </span>
-                                <div class="mgn-up-10">
+                                <div class="or-style">OR</div>
+                                <span> 
+                                Create an appointment for the {{customer_label}} who booked for your services on a third party listing site, choose the listing site/app
+                            </span>  <div class="mgn-up-10">
                                     <button *ngIf="domain === 'healthCare'"
                                         class="create_new_button cs-btn bt3 mgn-rt-10"
                                         (click)="initAppointment('practo')">Practo</button>
@@ -129,7 +131,7 @@
                                             {{customer_data.jaldeeId | capitalizeFirst}}</li>
                                     </ul>
                                     <div *ngIf="thirdParty !== ''">
-                                        {{customer_label | capitalizeFirst}} from {{thirdPartyList[thirdParty]}}
+                                        {{customer_label | capitalizeFirst}} from {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}
                                         <a class="underline pull-right" (click)="createNew()">Fill the
                                             {{customer_label}}
                                             details </a>

@@ -341,12 +341,17 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     createNew(type?) {
+        if (!type) {
+            this.qParams = {};
+        }
         if (type === 'new') {
             this.qParams['noMobile'] = false;
         }
         this.qParams['checkinType'] = this.checkinType;
-        this.qParams['source'] = 'checkin';
+        this.qParams['source'] = (this.showtoken) ? 'token' : 'checkin';
+        console.log(this.thirdParty);
         this.qParams['thirdParty'] = this.thirdParty;
+         this.qParams['type'] = type;
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
@@ -405,13 +410,14 @@ export class ProviderCheckinComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     if (data.length === 0) {
-                        if (mode === 'phone') {
-                            const filter = { 'primaryMobileNo-eq': form_data.search_input };
-                            this.getJaldeeCustomer(filter);
-                        } else {
-                            this.form_data = data;
-                            this.create_new = true;
-                        }
+                        // if (mode === 'phone') {
+                        //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
+                        //     this.getJaldeeCustomer(filter);
+                        // } else {
+                        //     this.form_data = data;
+                        //     this.create_new = true;
+                        // }
+                        this.createNew('create');
                     } else {
                         this.customer_data = data[0];
                         this.getFamilyMembers();
@@ -423,28 +429,12 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             );
     }
-    getJaldeeCustomer(post_data) {
-        this.provider_services.getJaldeeCustomer(post_data)
-            .subscribe(
-                (data: any) => {
-                    if (data.length === 0) {
-                        this.form_data = data;
-                        this.create_new = true;
-                    } else {
-                        this.customer_data = data[0];
-                        this.getFamilyMembers();
-                        this.initCheckIn();
-                    }
-                },
-                error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
-                }
-            );
-    }
+
     initCheckIn(thirdParty?) {
         if (thirdParty) {
             this.getGlobalSettings();
         }
+        console.log(thirdParty);
         this.thirdParty = thirdParty ? thirdParty : '';
         this.api_loading1 = false;
         if (this.showtoken) {
@@ -454,6 +444,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
         const _this = this;
         this.showCheckin = true;
+        this.otherThirdParty = '';
         this.waitlist_for = [];
         if (this.thirdParty === '') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
@@ -1704,11 +1695,12 @@ export class ProviderCheckinComponent implements OnInit {
     }
     showOtherSection(value) {
         if (value) {
-            if (this.otherThirdParty === '') {
+            if (this.otherThirdParty.trim() === '') {
                 this.thirdparty_error = 'Third party listing site required';
             } else {
-                this.thirdParty = this.otherThirdParty;
+                this.thirdParty = this.otherThirdParty.trim();
                 this.showOther = false;
+                console.log(this.thirdParty);
                 this.initCheckIn(this.thirdParty);
             }
         } else {
@@ -1729,6 +1721,7 @@ export class ProviderCheckinComponent implements OnInit {
     goBack() {
         if (this.showCheckin) {
             this.showCheckin = false;
+            this.otherThirdParty = '';
             if (this.showtoken) {
                 this.heading = 'Create a Token';
             } else {

@@ -79,6 +79,8 @@ export class CustomerDetailComponent implements OnInit {
     customerCount;
     customerPlaceholder = '';
     jld;
+    customerErrorMsg = '';
+    foundJCustomer = false;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -158,8 +160,17 @@ export class CustomerDetailComponent implements OnInit {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
             this.source = qparams.source;
+            console.log(qparams);
             if (qparams.phone) {
                 this.phoneNo = qparams.phone;
+                if (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
+                    this.getJaldeeIntegrationSettings();
+                }
+            } else {
+                if (qparams.type && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment')) {
+                    this.customerErrorMsg = 'Sorry, We were not able to find the record in our ' +
+                        this.customer_label + 's list. Please create ' + this.customer_label + 'to take ' + this.source;
+                }
             }
             if (qparams.email) {
                 this.email = qparams.email;
@@ -200,15 +211,52 @@ export class CustomerDetailComponent implements OnInit {
                 );
         });
     }
-getCustomerCount() {
-    this.provider_services.getProviderCustomersCount()
-    .subscribe(
-        data => {
-          this.customerCount = data;
-          this.jld = 'JLD' + this.thirdParty + this.customerCount;
-          this.amForm.get('customer_id').setValue(this.jld);
-        });
-}
+
+    getJaldeeCustomer() {
+        const filter = { 'primaryMobileNo-eq': this.phoneNo };
+        this.provider_services.getJaldeeCustomer(filter)
+            .subscribe(
+                (data: any) => {
+                    if (data.length > 0) {
+                        this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
+                        this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
+                        this.amForm.get('email_id').setValue(data[0].userProfile.email);
+                        this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
+                        this.amForm.get('address').setValue(data[0].userProfile.address);
+                        this.customerErrorMsg = 'jaldee consumer';
+                        this.foundJCustomer = true;
+                    } else {
+                        this.customerErrorMsg = 'Sorry, We were not able to find the record in our ' +
+                            this.customer_label + 's list. Please create ' + this.customer_label + ' to take ' + this.source;
+                    }
+                },
+                error => {
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                }
+            );
+    }
+    getJaldeeIntegrationSettings() {
+        this.provider_services.getJaldeeIntegrationSettings().subscribe(
+            (data: any) => {
+                if (data.walkinConsumerBecomesJdCons) {
+                    this.getJaldeeCustomer();
+                } else {
+                    this.customerErrorMsg = 'Sorry, We were not able to find the record in our ' +
+                        this.customer_label + 's list. Please create ' + this.customer_label + 'to take ' + this.source;
+                }
+            }
+        );
+    }
+
+    getCustomerCount() {
+        this.provider_services.getProviderCustomersCount()
+            .subscribe(
+                data => {
+                    this.customerCount = data;
+                    this.jld = 'JLD' + this.thirdParty + this.customerCount;
+                    this.amForm.get('customer_id').setValue(this.jld);
+                });
+    }
     ngOnInit() {
         this.loading = true;
         this.getGlobalSettingsStatus();
@@ -260,14 +308,14 @@ getCustomerCount() {
         }
         console.log(this.thirdParty);
         if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-         if (this.thirdParty) {
-            this.amForm.addControl('customer_id', new FormControl(''));
-            this.customerPlaceholder = this.customer_label + ' id';
-            this.getCustomerCount();
-         } else {
-            this.amForm.addControl('customer_id', new FormControl('', Validators.required));
-            this.customerPlaceholder = this.customer_label + ' id *';
-         }
+            if (this.thirdParty) {
+                this.amForm.addControl('customer_id', new FormControl(''));
+                this.customerPlaceholder = this.customer_label + ' id';
+                this.getCustomerCount();
+            } else {
+                this.amForm.addControl('customer_id', new FormControl('', Validators.required));
+                this.customerPlaceholder = this.customer_label + ' id *';
+            }
         }
         if (this.phoneNo) {
             this.amForm.get('mobile_number').setValue(this.phoneNo);
@@ -308,13 +356,12 @@ getCustomerCount() {
                 post_data['email'] = form_data.email_id;
             }
             if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-           console.log(form_data.customer_id);
                 if (form_data.customer_id) {
-                post_data['jaldeeId'] = form_data.customer_id;
-            } else {
-                post_data['jaldeeId'] = this.jld;
+                    post_data['jaldeeId'] = form_data.customer_id;
+                } else {
+                    post_data['jaldeeId'] = this.jld;
+                }
             }
-        }
             this.provider_services.createProviderCustomer(post_data)
                 .subscribe(
                     data => {
@@ -322,7 +369,7 @@ getCustomerCount() {
                         this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
                         const qParams = {};
                         qParams['pid'] = data;
-                        if (this.source === 'checkin') {
+                        if (this.source === 'checkin' || this.source === 'token') {
                             const navigationExtras: NavigationExtras = {
                                 queryParams: {
                                     ph: form_data.mobile_number,
@@ -388,7 +435,7 @@ getCustomerCount() {
                         this.shared_functions.openSnackBar('Updated Successfully');
                         const qParams = {};
                         qParams['pid'] = data;
-                        if (this.source === 'checkin') {
+                        if (this.source === 'checkin' || this.source === 'token') {
                             const navigationExtras: NavigationExtras = {
                                 queryParams: {
                                     ph: form_data.mobile_number,
@@ -522,5 +569,12 @@ getCustomerCount() {
             queryParams: { action: 'edit' }
         };
         this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
+    }
+    goBack() {
+        if (this.source === 'checkin' || this.source === 'token') {
+            this.router.navigate(['/provider/check-ins/add']);
+        } else if (this.source === 'appointment') {
+            this.router.navigate(['/provider/appointmentmanager/appointments']);
+        }
     }
 }

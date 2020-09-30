@@ -324,6 +324,9 @@ export class AppointmentComponent implements OnInit {
         });
     }
     createNew(type?) {
+        if (!type) {
+            this.qParams = {};
+        }
         if (type === 'new') {
             this.qParams['noMobile'] = false;
         }
@@ -333,6 +336,7 @@ export class AppointmentComponent implements OnInit {
         this.qParams['scheduleId'] = this.comingSchduleId;
         this.qParams['date'] = this.sel_checkindate;
         this.qParams['thirdParty'] = this.thirdParty;
+        this.qParams['type'] = type;
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
 
@@ -392,13 +396,14 @@ export class AppointmentComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     if (data.length === 0) {
-                        if (mode === 'phone') {
-                            const filter = { 'primaryMobileNo-eq': form_data.search_input };
-                            this.getJaldeeCustomer(filter);
-                        } else {
-                            this.form_data = data;
-                            this.create_new = true;
-                        }
+                        // if (mode === 'phone') {
+                        //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
+                        //     this.getJaldeeCustomer(filter);
+                        // } else {
+                        //     this.form_data = data;
+                        //     this.create_new = true;
+                        // }
+                        this.createNew('create');
                     } else {
                         this.customer_data = data[0];
                         this.consumerPhoneNo = this.customer_data.phoneNo;
@@ -411,25 +416,7 @@ export class AppointmentComponent implements OnInit {
                 }
             );
     }
-    getJaldeeCustomer(post_data) {
-        this.provider_services.getJaldeeCustomer(post_data)
-            .subscribe(
-                (data: any) => {
-                    if (data.length === 0) {
-                        this.form_data = data;
-                        this.create_new = true;
-                    } else {
-                        this.customer_data = data[0];
-                        this.consumerPhoneNo = this.customer_data.phoneNo;
-                        this.getFamilyMembers();
-                        this.initAppointment();
-                    }
-                },
-                error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
-                }
-            );
-    }
+
     getGlobalSettings() {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
@@ -444,6 +431,7 @@ export class AppointmentComponent implements OnInit {
         this.thirdParty = thirdParty ? thirdParty : '';
         this.api_loading1 = false;
         this.showCheckin = true;
+        this.otherThirdParty = '';
         this.heading = 'New Appointment';
         this.waitlist_for = [];
         if (this.thirdParty === '') {
@@ -1654,10 +1642,10 @@ export class AppointmentComponent implements OnInit {
     }
     showOtherSection(value) {
         if (value) {
-            if (this.otherThirdParty === '') {
+            if (this.otherThirdParty.trim() === '') {
                 this.thirdparty_error = 'Third party listing site required';
             } else {
-                this.thirdParty = this.otherThirdParty;
+                this.thirdParty = this.otherThirdParty.trim();
                 this.showOther = false;
                 this.initAppointment(this.thirdParty);
             }
@@ -1679,6 +1667,7 @@ export class AppointmentComponent implements OnInit {
     goBack() {
         if (this.showCheckin) {
             this.showCheckin = false;
+            this.otherThirdParty = '';
             this.heading = 'Create an Appointment';
         } else {
             this.router.navigate(['provider', 'appointments']);
