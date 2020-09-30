@@ -12,6 +12,7 @@ import { ManageProviderComponent } from './shared/components/manage-provider/man
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
+import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -41,12 +42,13 @@ const routes: Routes = [
     },
     { path: 'home/:id', loadChildren: () => import('./shared/modules/about-jaldee/about-jaldee.module').then(m => m.AboutJaldeeModule) },
     { path: 'maintenance', component: MaintenanceComponent },
+    { path: 'blog', component: JaldeeBlogComponent },
     { path: ':id', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', component: CheckYourStatusComponent },
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },
       { path: 'consumer-join', component: ConsumerJoinComponent},
-    { path: 'pay/:id', component: PaymentLinkComponent },
+    { path: 'pay/:id', component: PaymentLinkComponent }
     // { path: '**', redirectTo: 'not-found' }
 ];
 
