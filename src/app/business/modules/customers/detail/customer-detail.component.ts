@@ -576,7 +576,7 @@ export class CustomerDetailComponent implements OnInit {
         if (this.source === 'checkin' || this.source === 'token') {
             this.router.navigate(['/provider/check-ins/add']);
         } else if (this.source === 'appointment') {
-            this.router.navigate(['/provider/appointmentmanager/appointments']);
+            this.router.navigate(['/provider/settings/appointmentmanager/appointments']);
         }
     }
 }

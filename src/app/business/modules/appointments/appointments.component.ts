@@ -1706,7 +1706,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       let userId;
       const qfilter = this.activeSchedules.filter(q => q.id === this.selQId);
       if (qfilter && qfilter[0].provider) {
-        userId = qfilter.provider.id;
+        console.log(qfilter);
+        userId = qfilter[0].provider.id;
         const filteredDept = this.users.filter(user => user.id === userId);
         if (filteredDept[0] && filteredDept[0].deptId) {
           deptId = filteredDept[0].deptId;
