@@ -1,3 +1,24 @@
 table{
   width: 100%;
  }
+ td {
+  max-width:15%;
+  word-wrap: break-word;
+  margin:auto;
+  text-align:justify;
+  word-break: break-word;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  -ms-word-break: break-word;
+  word-break: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+.table-container {
+  flex-grow: 1;
+  flex-basis: 90vh;
+  overflow: auto;
+}
