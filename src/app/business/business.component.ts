@@ -194,8 +194,10 @@ export class BusinessComponent implements OnInit {
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header
             const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
+            // this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
+            //   || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
             this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
-              || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
+            || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '', '');
             this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.shared_functions.sendMessage(pdata);

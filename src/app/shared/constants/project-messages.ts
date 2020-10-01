@@ -1097,10 +1097,10 @@ export const Messages = {
   'QUEUE_MAX_CAPACITY_CAP': 'Max. Capacity',
 
   // App-ynw_provider-components-provider-waitlist-service-detail
-  'SERVICE_DURATION_CAP': 'Service Duration',
+  'SERVICE_DURATION_CAP': 'Estimated Duration',
   'SERVICE_STATUS_CAP': 'Service Status',
   'SERVICE_PHOTO_CAP': 'photos',
-
+  'SERVICE_DURATIONS_CAP': 'Service Duration',
   // App-ynw_provider-components-request-for
   'REQUEST_CONFIRM_CAP': 'Confirm your request for payment',
 

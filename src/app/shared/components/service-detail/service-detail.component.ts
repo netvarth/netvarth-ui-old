@@ -22,7 +22,7 @@ export class ServiceDetailComponent implements OnInit {
   close_btn_cap = Messages.CLOSE_BTN;
   servc_detils = Messages.SERVCE_DETAILS;
   donation_dtls = Messages.DONATION_DETAILS;
-  service_duration = Messages.SERVICE_DURATION_CAP;
+  service_duration = Messages.SERVICE_DURATIONS_CAP;
   api_error = null;
   api_success = null;
   is_donation_serv = false;
