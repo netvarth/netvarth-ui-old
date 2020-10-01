@@ -144,7 +144,7 @@
                   <span> {{schedule.name}}<br />
                     <input style="margin:0px;" [checked]="isQueueSelected(schedule.id)" type="checkbox"
                       class="ckbx pull-left" />&nbsp;
-                    {{schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' + schedule.apptSchedule.timeSlots[0]['eTime']}}</span>
+                  <span *ngIf="schedule.apptSchedule.timeSlots && schedule.apptSchedule.timeSlots[0]"> {{schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' + schedule.apptSchedule.timeSlots[0]['eTime']}}</span></span>
                 </button>
               </owl-carousel>
               <div class="owl-theme">

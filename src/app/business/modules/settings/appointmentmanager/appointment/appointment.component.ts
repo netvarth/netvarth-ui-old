@@ -255,7 +255,6 @@ export class AppointmentComponent implements OnInit {
             }
             if (qparams.timeslot) {
                 this.slotTime = qparams.timeslot;
-                console.log(this.slotTime);
                 this.comingSchduleId = JSON.parse(qparams.scheduleId);
             }
             if (qparams.deptId) {
@@ -705,8 +704,10 @@ export class AppointmentComponent implements OnInit {
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
                         for (let i = 0; i < this.queuejson.length; i++) {
-                            if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
-                                selindx = i;
+                            if (this.comingSchduleId !== '') {
+                                if (this.queuejson[i].id === this.comingSchduleId) {
+                                    selindx = i;
+                                }
                             }
                         }
                         this.sel_queue_id = this.queuejson[selindx].id;
@@ -1349,7 +1350,6 @@ export class AppointmentComponent implements OnInit {
                         } else {
                             this.selected_user = this.userN;
                         }
-                        console.log(this.selected_user);
                         this.handleUserSelection(this.selected_user);
                     } else {
                         this.selected_user = null;
@@ -1407,10 +1407,8 @@ export class AppointmentComponent implements OnInit {
                     const userDetails = this.users.filter(user => user.id === this.selectUser);
                     this.selected_user = userDetails[0];
                     this.handleUserSelection(this.selected_user);
-                    console.log(this.selected_user);
                 } else if (this.users.length !== 0) {
                     this.selected_user = this.users[0];
-                    console.log(this.selected_user);
                     this.handleUserSelection(this.selected_user);
                 } else {
                     this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
@@ -1553,8 +1551,6 @@ export class AppointmentComponent implements OnInit {
                         // this.showSubq = 0;
                         this.showApptTime = true;
                         this.api_loading = false;
-                        console.log(this.comingSchduleId);
-                        console.log(this.slotTime);
                         if (this.comingSchduleId === '') {
                             this.apptTime = this.freeSlots[0].time;
                             for (const list of this.waitlist_for) {
@@ -1574,7 +1570,6 @@ export class AppointmentComponent implements OnInit {
                             }
                             this.comingSchduleId = '';
                         }
-                        console.log(this.apptTime);
                     } else if (this.freeSlots.length === 0 && this.queuejson.length > 0) {
                         this.showApptTime = true;
                         this.api_loading = false;
