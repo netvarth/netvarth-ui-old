@@ -512,7 +512,15 @@ export class NewReportComponent implements OnInit {
       request_payload.filter = filter;
       request_payload.responseType = 'INLINE';
       this.generateReportByCriteria(request_payload).then(res => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        this.report_data_service.storeSelectedValues(res);
         this.generatedReport(res);
+      },
+      (error) => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
       });
 
     } else if (reportType === 'appointment') {
@@ -561,7 +569,15 @@ export class NewReportComponent implements OnInit {
       request_payload.filter = filter;
       request_payload.responseType = 'INLINE';
       this.generateReportByCriteria(request_payload).then(res => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        this.report_data_service.storeSelectedValues(res);
         this.generatedReport(res);
+      },
+      (error) => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
       });
 
     } else if (reportType === 'token') {
@@ -612,14 +628,16 @@ export class NewReportComponent implements OnInit {
       request_payload.filter = filter;
       request_payload.responseType = 'INLINE';
       this.generateReportByCriteria(request_payload).then(res => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        this.report_data_service.storeSelectedValues(res);
         this.generatedReport(res);
       },
-        (error) => {
-          this.report_loading = false;
-          this.btn_disabled = false;
-          console.log('error' + error.error);
-          this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-        });
+      (error) => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+      });
 
     } else if (reportType === 'donation') {
       this.filterparams = {
@@ -658,7 +676,12 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.storeSelectedValues(res);
         this.generatedReport(res);
       },
-      );
+      (error) => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+      });
+
     }
   }
   changeTimePeriod(event) {
@@ -678,6 +701,7 @@ export class NewReportComponent implements OnInit {
           },
           error => {
             reject(error);
+            this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
           }
         );
     });
