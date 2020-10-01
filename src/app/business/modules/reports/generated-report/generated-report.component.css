@@ -5,7 +5,7 @@ table{
  td {
   word-wrap: break-word;
   margin:auto;
-  text-align:right;
+  text-align:justify;
   font-size: 10px;
   word-break: break-word;
   white-space: pre-line;
