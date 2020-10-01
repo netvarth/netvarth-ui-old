@@ -1403,7 +1403,7 @@ export class AppointmentComponent implements OnInit {
                 this.users = [];
                 this.users = filteredUser;
                 this.users.push(this.userN);
-                if (this.selectUser) {
+                if (this.selectUser !== undefined) {
                     const userDetails = this.users.filter(user => user.id === this.selectUser);
                     this.selected_user = userDetails[0];
                     this.handleUserSelection(this.selected_user);
