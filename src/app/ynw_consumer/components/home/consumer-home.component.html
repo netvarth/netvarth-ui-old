@@ -24,21 +24,21 @@
                             <div class="col-sm-4 col-md-6 col-lg-6 col-xs-6 mgn-up-10">MY BOOKINGS</div>
                             <div class="col-sm-8 col-md-6 col-lg-6 col-xs-7">
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button class="flat-btn" mat-raised-button (click)="getmyfavourites()">My Favourites</button>
-                                    <button class="flat-icon-btn" mat-raised-button (click)="getmyfavourites()">
+                                    <button class="flat-btn" mat-flat-button (click)="getmyfavourites()">My Favourites</button>
+                                    <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()">
                                         <i class="fa fa-heart"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button class="flat-btn" mat-raised-button (click)="gotoHistory()">Past History</button>
-                                    <button class="flat-icon-btn" mat-raised-button (click)="gotoHistory()">
+                                    <button class="flat-btn" mat-flat-button (click)="gotoHistory()">Past History</button>
+                                    <button class="flat-icon-btn" mat-flat-button (click)="gotoHistory()">
                                         <i class="fa fa-history"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button (click)="paymentsClicked()" class="flat-btn" mat-raised-button>My
+                                    <button (click)="paymentsClicked()" class="flat-btn" mat-flat-button>My
                                         Payments</button>
-                                        <button class="flat-icon-btn" mat-raised-button (click)="paymentsClicked()">
+                                        <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()">
                                             <i class="fa fa-credit-card"></i>
                                         </button>
                                 </div>
@@ -76,7 +76,9 @@
                                         <span class="servName">{{appointment.service.name | capitalizeFirst}}</span>
                                         </td>
                                     <td>
-                                        <h6 [ngClass]="{'colr-confrm':(appointment.apptStatus == 'Confirmed'),'colr-arrived':(appointment.apptStatus == 'Arrived'),'colr-started':(appointment.apptStatus == 'Started'),'colr-canceld':(appointment.apptStatus == 'Cancelled'),'colr-completed':(appointment.apptStatus == 'Completed')}">{{appointment.apptStatus}}</h6>
+                                        <h6 [ngClass]="{'colr-confrm':(appointment.apptStatus == 'Confirmed'),'colr-arrived':(appointment.apptStatus == 'Arrived'),'colr-started':(appointment.apptStatus == 'Started'),'colr-canceld':(appointment.apptStatus == 'Cancelled'),'colr-completed':(appointment.apptStatus == 'Completed')}">{{appointment.apptStatus}}
+                                            &nbsp;<i *ngIf="appointment.apptStatus == 'Confirmed' || appointment.apptStatus == 'Arrived' || appointment.apptStatus=='prepaymentPending'" class="fa fa-times-circle-o fa-lg red" (click)="doCancelWaitlist(appointment,'appointment')" matTooltip="Cancel Appointment"></i>
+                                        </h6>
                                         <span *ngIf="appointment.apptStatus == 'Confirmed'">
                                         <a href="{{path}}status/{{appointment.appointmentEncId}}" target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
                                         <!-- <span *ngIf="appointment.apptStatus == 'Completed'" class="rate-service" [class.rated]="isRated(appointment)" (click)="rateService(appointment,'appointment')">{{rate_visit}}</span> -->
@@ -103,7 +105,9 @@
                             <tbody *ngIf="loadcomplete.waitlist && waitlists && waitlists.length != 0">
                                 <tr *ngFor="let waitlist of waitlists; let i=index" class="custId-cursor" (click)="showcheckindetails(waitlist)">
                                     <td>
-                                        <h4 *ngIf="!waitlist.token">{{waitlist.serviceTime}}</h4>
+                                        <h4 *ngIf="!waitlist.token && (waitlist.appxWaitingTime == 0 && waitlist.waitlistStatus != 'cancelled')" class="now">Now</h4>
+                                        <h4 *ngIf="!waitlist.token && (waitlist.appxWaitingTime > 0 && waitlist.waitlistStatus != 'cancelled')">{{waitlist.appxWaitingTime}}</h4>
+                                        <span *ngIf="!waitlist.token && (waitlist.appxWaitingTime >= 0 && waitlist.waitlistStatus == 'cancelled')">{{waitlist.date}}</span>
                                         <h4 *ngIf="waitlist.token">Token No.{{waitlist.token}}</h4>
                                     </td>
                                     <td class="tdisplay-block">
@@ -125,6 +129,7 @@
                                         <h6 [ngClass]="{'colr-confrm':(waitlist.waitlistStatus == 'Confirmed'),'colr-arrived':(waitlist.waitlistStatus == 'arrived'),'colr-started':(waitlist.waitlistStatus == 'started'),'colr-canceld':(waitlist.waitlistStatus == 'cancelled'),'colr-completed':(waitlist.waitlistStatus == 'done')}">
                                             <span *ngIf="waitlist.waitlistStatus=='done'">Completed</span>
                                             <span *ngIf="waitlist.waitlistStatus!=='done'">{{waitlist.waitlistStatus | capitalizeFirst}}</span>
+                                            &nbsp;<i *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived' || waitlist.waitlistStatus=='prepaymentPending'" class="fa fa-times-circle-o fa-lg red" (click)="doCancelWaitlist(waitlist,'checkin')" matTooltip="Cancel Check-in"></i>
                                            </h6>
                                            <span *ngIf="waitlist.waitlistStatus == 'Confirmed'">
                                             <a href="{{path}}status/{{waitlist.checkinEncId}}" target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
@@ -195,7 +200,9 @@
                                         </span>
                                         <span class="servName">{{appointment.service.name | capitalizeFirst}}</span></td>
                                     <td>
-                                        <h6 [ngClass]="{'colr-confrm':(appointment.apptStatus == 'Confirmed'),'colr-arrived':(appointment.apptStatus == 'Arrived'),'colr-started':(appointment.apptStatus == 'Started'),'colr-canceld':(appointment.apptStatus == 'Cancelled'),'colr-completed':(appointment.apptStatus == 'Completed')}">{{appointment.apptStatus}}</h6>
+                                        <h6 [ngClass]="{'colr-confrm':(appointment.apptStatus == 'Confirmed'),'colr-arrived':(appointment.apptStatus == 'Arrived'),'colr-started':(appointment.apptStatus == 'Started'),'colr-canceld':(appointment.apptStatus == 'Cancelled'),'colr-completed':(appointment.apptStatus == 'Completed')}">{{appointment.apptStatus}}
+                                            &nbsp;<i *ngIf="appointment.apptStatus == 'Confirmed' || appointment.apptStatus == 'Arrived' || appointment.apptStatus=='prepaymentPending'" class="fa fa-times-circle-o fa-lg red" (click)="doCancelWaitlist(appointment,'appointment')" matTooltip="Cancel Appointment"></i>
+                                        </h6>
                                         <span *ngIf="appointment.apptStatus == 'Confirmed'"><a href="{{path}}status/{{appointment.appointmentEncId}}" target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
                                         <!-- <span *ngIf="appointment.apptStatus == 'Completed'" class="rate-service" [class.rated]="isRated(appointment)" (click)="rateService(appointment,'appointment')">{{rate_visit}}</span> -->
                                     </td>
@@ -244,6 +251,7 @@
                                         <h6 [ngClass]="{'colr-confrm':(waitlist.waitlistStatus == 'Confirmed'),'colr-arrived':(waitlist.waitlistStatus == 'arrived'),'colr-started':(waitlist.waitlistStatus == 'started'),'colr-canceld':(waitlist.waitlistStatus == 'cancelled'),'colr-completed':(waitlist.waitlistStatus == 'done')}">
                                             <span *ngIf="waitlist.waitlistStatus=='done'">Completed</span>
                                             <span *ngIf="waitlist.waitlistStatus!=='done'">{{waitlist.waitlistStatus | capitalizeFirst}}</span>
+                                            &nbsp;<i *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived' || waitlist.waitlistStatus=='prepaymentPending'" class="fa fa-times-circle-o fa-lg red" (click)="doCancelWaitlist(waitlist,'checkin')" matTooltip="Cancel Check-in"></i>
                                            </h6>
                                            <span *ngIf="waitlist.waitlistStatus == 'Confirmed'">
                                             <a href="{{path}}status/{{waitlist.checkinEncId}}" target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>

@@ -59,9 +59,9 @@ export class MyfavouritesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.setSystemDate();
     this.getFavouriteProvider();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    this.setSystemDate();
   }
 
   // Get system date
@@ -369,5 +369,17 @@ export class MyfavouritesComponent implements OnInit {
         this.fav_providers[i]['revealPhoneNumber'] = result.data.revealPhoneNumber;
       }
     });
+  }
+  getTerminologyTerm(term) {
+    if (this.terminologiesJson) {
+      const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
+      if (this.terminologiesJson) {
+        return this.shared_functions.firstToUpper((this.terminologiesJson[term_only]) ? this.terminologiesJson[term_only] : ((term === term_only) ? term_only : term));
+      } else {
+        return this.shared_functions.firstToUpper((term === term_only) ? term_only : term);
+      }
+    } else {
+      return term;
+    }
   }
 }

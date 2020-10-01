@@ -104,6 +104,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     this.consumer_services.getHistoryWaitlistCount()
       .subscribe(
         data => {
+          console.log(data);
           this.pagination.totalCnt = data;
           this.getHistroy();
         });
@@ -114,6 +115,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     this.consumer_services.getAppointmentHistoryCount()
       .subscribe(
         data => {
+          console.log(data);
           this.pagination.totalCnt += data;
           console.log(this.pagination.totalCnt);
           this.getAppointmentHistory();

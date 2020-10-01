@@ -828,6 +828,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // if (!waitlist.ynwUuid || !waitlist.providerAccount.id || !waitlist.uid) {
     //   return false;
     // }
+    console.log('inside');
     this.shared_functions.doCancelWaitlist(waitlist, type, this)
       .then(
         data => {

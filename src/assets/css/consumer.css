@@ -6439,7 +6439,7 @@
 }
 .consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn, table .flat-btn{
     border: 1px solid rgb(4 62 121);
-    border-radius: 10px;
+    border-radius: 20px;
     color: rgb(255 255 255);
     background: rgb(24 62 121);
 }
@@ -6502,6 +6502,9 @@
 /* .consumer-dash .card.c-checkins table h4:hover {
     color: rgb(187 144 30);
 } */
+.consumer-dash .card.c-checkins table h6 {
+    display: flex !important;
+}
 .consumer-dash .font-smalr {
     font-size: smaller;
 }
@@ -6532,4 +6535,7 @@
     padding: 20px;
     background: rgb(245 200 77 / 36%);
     color: rgb(24 62 121);
+}
+.consumer-dash .now {
+    color: #00cc96 !important;
 }
