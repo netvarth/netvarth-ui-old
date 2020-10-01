@@ -167,7 +167,6 @@ export class NewReportComponent implements OnInit {
 
     });
     this.report_data_service._reports.subscribe(res => {
-      console.log(res);
       this.setReportData(res);
     });
 
@@ -286,14 +285,14 @@ export class NewReportComponent implements OnInit {
   }
 
   setScheduleData(res) {
-    console.log(res + this.report_type);
+
     switch (this.report_type) {
       case 'payment': {
         if (res === 'All') {
           this.payment_schedule = 'All';
           this.payment_schedule_id = 0;
         } else {
-          console.log(res);
+
           this.payment_schedule = res.split(',').length - 1 + ' schedule(s) selected';
           this.payment_schedule_id = res.replace(/,\s*$/, '');
 
@@ -370,9 +369,9 @@ export class NewReportComponent implements OnInit {
           this.appointment_customer = 'All';
           // this.appointment_customerId = 0;
         } else {
-          console.log(res);
+
           this.appointment_customer = res.split(',').length + ' ' + this.customer_label + '(s) selected';
-          console.log(this.appointment_customer);
+
           this.appointment_customerId = res.replace(/,\s*$/, '');
 
         }
@@ -503,7 +502,7 @@ export class NewReportComponent implements OnInit {
             filter[key + '-eq'] = this.filterparams[key];
           }
         }
-        console.log(this.payment_timePeriod);
+
 
         if (this.payment_timePeriod === 'DATE_RANGE') {
           filter['paymentOn-ge'] = this.dateformat.transformTofilterDate(this.payment_startDate);
@@ -631,7 +630,7 @@ export class NewReportComponent implements OnInit {
       if (this.donation_timePeriod === 'DATE_RANGE' && (this.donation_startDate === undefined || this.donation_endDate === undefined)) {
         this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
-        console.log('inisdee');
+
         this.filterparams = {
 
           'service': this.donation_service_id,
@@ -668,7 +667,7 @@ export class NewReportComponent implements OnInit {
     }
   }
   changeTimePeriod(event) {
-    console.log(event.value);
+
     if (event.value === 'DATE_RANGE') {
       this.hide_dateRange = false;
     } else {
@@ -789,8 +788,6 @@ export class NewReportComponent implements OnInit {
   }
   generatedReport(report) {
     this.setSelectedData().then(res => {
-      console.log('res' + res);
-
       localStorage.setItem('report', JSON.stringify(report));
       this.router.navigate(['provider', 'reports', 'generated-report']);
     },
