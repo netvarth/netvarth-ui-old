@@ -14,6 +14,7 @@ import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format
   styleUrls: ['./new-report.component.css']
 })
 export class NewReportComponent implements OnInit {
+  minDate: Date;
   btn_disabled: boolean;
   report_loading: boolean;
   mxDate: Date;
@@ -124,6 +125,7 @@ export class NewReportComponent implements OnInit {
       }
     });
     this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
+    this.minDate = new Date(new Date().setDate(new Date().getDate() - 100));
   }
 
   ngOnInit() {
@@ -357,7 +359,7 @@ export class NewReportComponent implements OnInit {
           this.donation_customer = 'All';
           // this.donation_customerId = 0;
         } else {
-          this.donation_customer = res.split(',').length  + ' ' + this.customer_label + '(s) selected';
+          this.donation_customer = res.split(',').length + ' ' + this.customer_label + '(s) selected';
           this.donation_customerId = res.replace(/,\s*$/, '');
 
         }
@@ -369,7 +371,7 @@ export class NewReportComponent implements OnInit {
           // this.appointment_customerId = 0;
         } else {
           console.log(res);
-          this.appointment_customer = res.split(',').length  + ' ' + this.customer_label + '(s) selected';
+          this.appointment_customer = res.split(',').length + ' ' + this.customer_label + '(s) selected';
           console.log(this.appointment_customer);
           this.appointment_customerId = res.replace(/,\s*$/, '');
 
@@ -611,7 +613,13 @@ export class NewReportComponent implements OnInit {
       request_payload.responseType = 'INLINE';
       this.generateReportByCriteria(request_payload).then(res => {
         this.generatedReport(res);
-      });
+      },
+        (error) => {
+          this.report_loading = false;
+          this.btn_disabled = false;
+          console.log('error' + error.error);
+          this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+        });
 
     } else if (reportType === 'donation') {
       this.filterparams = {
@@ -645,8 +653,12 @@ export class NewReportComponent implements OnInit {
       request_payload.filter = filter;
       request_payload.responseType = 'INLINE';
       this.generateReportByCriteria(request_payload).then(res => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        this.report_data_service.storeSelectedValues(res);
         this.generatedReport(res);
-      });
+      },
+      );
     }
   }
   changeTimePeriod(event) {
@@ -664,8 +676,8 @@ export class NewReportComponent implements OnInit {
           data => {
             resolve(data);
           },
-          () => {
-            reject();
+          error => {
+            reject(error);
           }
         );
     });
@@ -752,18 +764,12 @@ export class NewReportComponent implements OnInit {
   }
   generatedReport(report) {
     this.setSelectedData().then(res => {
-      this.report_loading = false;
-      this.btn_disabled = false;
-      this.report_data_service.storeSelectedValues(res);
+      console.log('res' + res);
+
       localStorage.setItem('report', JSON.stringify(report));
       this.router.navigate(['provider', 'reports', 'generated-report']);
     },
-      error => {
-        this.report_loading = false;
-        this.btn_disabled = false;
-        console.log(error.error);
-        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-      });
+    );
 
   }
 }
