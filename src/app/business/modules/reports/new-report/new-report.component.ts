@@ -184,7 +184,7 @@ export class NewReportComponent implements OnInit {
           this.payment_paymentPurpose = res.paymentPurpose || 0;
           this.payment_amount = res.amount;
           this.payment_transactionType = res.transactionType || 0;
-          this.payment_timePeriod = res.dateRange;
+          this.payment_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
           if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.payment_startDate = res.startDate;
@@ -194,7 +194,7 @@ export class NewReportComponent implements OnInit {
         }
         case 'donation': {
           this.donation_amount = res.amount;
-          this.donation_timePeriod = res.dateRange;
+          this.donation_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
           if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.donation_startDate = res.startDate;
@@ -206,7 +206,7 @@ export class NewReportComponent implements OnInit {
           this.appointment_billpaymentstatus = res.paymentStatus || 0;
           this.appointment_status = res.apptStatus || 0;
           this.appointment_mode = res.appointmentMode || 0;
-          this.appointment_timePeriod = res.dateRange;
+          this.appointment_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
           if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.appointment_startDate = res.startDate;
@@ -219,7 +219,7 @@ export class NewReportComponent implements OnInit {
           this.waitlist_billpaymentstatus = res.billPaymentStatus || 0;
           this.waitlist_status = res.waitlistStatus || 0;
           this.waitlist_mode = res.waitlistMode || 0;
-          this.waitlist_timePeriod = res.dateRange;
+          this.waitlist_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
           if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.waitlist_startDate = res.startDate;
@@ -447,240 +447,223 @@ export class NewReportComponent implements OnInit {
     }
   }
   generateReport(reportType) {
-    this.report_loading = true;
-    this.btn_disabled = true;
+
     if (reportType === 'payment') {
-      this.filterparams = {
-        'status': this.payment_paymentStatus,
-        'paymentMode': this.payment_paymentMode,
-        'paymentPurpose': this.payment_paymentPurpose,
-        'amount': this.payment_amount,
-        'transactionType': this.payment_transactionType,
-        'queue': this.payment_queue_id,
-        'service': this.payment_service_id,
-        'schedule': this.payment_schedule_id
+      if (this.payment_timePeriod === 'DATE_RANGE' && (this.payment_startDate === undefined || this.payment_endDate === undefined)) {
+        this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'status': this.payment_paymentStatus,
+          'paymentMode': this.payment_paymentMode,
+          'paymentPurpose': this.payment_paymentPurpose,
+          'amount': this.payment_amount,
+          'transactionType': this.payment_transactionType,
+          'queue': this.payment_queue_id,
+          'service': this.payment_service_id,
+          'schedule': this.payment_schedule_id
 
 
-      };
-      console.log(this.payment_schedule_id);
+        };
 
-      if (this.payment_paymentMode === 0) {
-        delete this.filterparams.paymentMode;
-      }
-      if (this.payment_paymentStatus === 0) {
-        delete this.filterparams.status;
-      }
-      if (this.payment_service_id === 0) {
-        delete this.filterparams.service;
-      }
-      if (this.payment_schedule_id === 0) {
-        delete this.filterparams.schedule;
-      }
-      if (this.payment_queue_id === 0) {
-        delete this.filterparams.queue;
-      }
-      if (this.payment_transactionType === 0) {
-        delete this.filterparams.transactionType;
-        delete this.filterparams.queue;
-        delete this.filterparams.schedule;
-      } else if (this.payment_transactionType === 'appointment') {
-        delete this.filterparams.queue;
-      } else if (this.payment_transactionType === 'waitlist') {
-        delete this.filterparams.schedule;
-      }
-      if (this.payment_paymentPurpose === 0) {
-        delete this.filterparams.paymentPurpose;
-      }
-      if (this.payment_amount === undefined) {
-        delete this.filterparams.amount;
-      }
-      const filter = {};
-      for (const key in this.filterparams) {
-        if (this.filterparams.hasOwnProperty(key)) {
-          // assign property to new object with modified key
-          filter[key + '-eq'] = this.filterparams[key];
+
+        if (this.payment_paymentMode === 0) {
+          delete this.filterparams.paymentMode;
         }
-      }
-      if (this.payment_timePeriod === 'DATE_RANGE') {
-        filter['paymentOn-ge'] = this.dateformat.transformTofilterDate(this.payment_startDate);
-        filter['paymentOn-le'] = this.dateformat.transformTofilterDate(this.payment_endDate);
-      }
+        if (this.payment_paymentStatus === 0) {
+          delete this.filterparams.status;
+        }
+        if (this.payment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.payment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.payment_queue_id === 0) {
+          delete this.filterparams.queue;
+        }
+        if (this.payment_transactionType === 0) {
+          delete this.filterparams.transactionType;
+          delete this.filterparams.queue;
+          delete this.filterparams.schedule;
+        } else if (this.payment_transactionType === 'appointment') {
+          delete this.filterparams.queue;
+        } else if (this.payment_transactionType === 'waitlist') {
+          delete this.filterparams.schedule;
+        }
+        if (this.payment_paymentPurpose === 0) {
+          delete this.filterparams.paymentPurpose;
+        }
+        if (this.payment_amount === undefined) {
+          delete this.filterparams.amount;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        console.log(this.payment_timePeriod);
 
-      const request_payload: any = {};
-      request_payload.reportType = this.report_type.toUpperCase();
-      request_payload.reportDateCategory = this.payment_timePeriod;
-      request_payload.filter = filter;
-      request_payload.responseType = 'INLINE';
-      this.generateReportByCriteria(request_payload).then(res => {
-        this.report_loading = false;
-        this.btn_disabled = false;
-        this.report_data_service.storeSelectedValues(res);
-        this.generatedReport(res);
-      },
-      (error) => {
-        this.report_loading = false;
-        this.btn_disabled = false;
-        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-      });
+        if (this.payment_timePeriod === 'DATE_RANGE') {
+          filter['paymentOn-ge'] = this.dateformat.transformTofilterDate(this.payment_startDate);
+          filter['paymentOn-le'] = this.dateformat.transformTofilterDate(this.payment_endDate);
+        }
+
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type.toUpperCase();
+        request_payload.reportDateCategory = this.payment_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+      }
 
     } else if (reportType === 'appointment') {
-      this.filterparams = {
-        'paymentStatus': this.appointment_billpaymentstatus,
-        'schedule': this.appointment_schedule_id,
-        'service': this.appointment_service_id,
-        'apptStatus': this.appointment_status,
-        'appointmentMode': this.appointment_mode,
-        'providerOwnConsumerId': this.appointment_customerId
 
-      };
-      if (this.appointment_schedule_id === 0) {
-        delete this.filterparams.schedule;
-      }
-      if (this.appointment_billpaymentstatus === 0) {
-        delete this.filterparams.paymentStatus;
-      }
-      if (this.appointment_service_id === 0) {
-        delete this.filterparams.service;
-      }
-      if (this.appointment_status === 0) {
-        delete this.filterparams.apptStatus;
-      }
-      if (this.appointment_mode === 0) {
-        delete this.filterparams.appointmentMode;
-      }
-      if (this.appointment_customerId === 0) {
-        delete this.filterparams.providerOwnConsumerId;
-      }
+      if (this.appointment_timePeriod === 'DATE_RANGE' && (this.appointment_startDate === undefined || this.appointment_endDate === undefined)) {
+        this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'providerOwnConsumerId': this.appointment_customerId
 
-      const filter = {};
-      for (const key in this.filterparams) {
-        if (this.filterparams.hasOwnProperty(key)) {
-          // assign property to new object with modified key
-          filter[key + '-eq'] = this.filterparams[key];
+        };
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
         }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.appointment_status === 0) {
+          delete this.filterparams.apptStatus;
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.appointment_timePeriod === 'DATE_RANGE') {
+          if (this.appointment_startDate === undefined || this.appointment_endDate === undefined) {
+            this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' })
+
+          }
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.appointment_startDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.appointment_endDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type.toUpperCase();
+        request_payload.reportDateCategory = this.appointment_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
       }
-      if (this.appointment_timePeriod === 'DATE_RANGE') {
-        filter['date-ge'] = this.dateformat.transformTofilterDate(this.appointment_startDate);
-        filter['date-le'] = this.dateformat.transformTofilterDate(this.appointment_endDate);
-      }
-      const request_payload: any = {};
-      request_payload.reportType = this.report_type.toUpperCase();
-      request_payload.reportDateCategory = this.appointment_timePeriod;
-      request_payload.filter = filter;
-      request_payload.responseType = 'INLINE';
-      this.generateReportByCriteria(request_payload).then(res => {
-        this.report_loading = false;
-        this.btn_disabled = false;
-        this.report_data_service.storeSelectedValues(res);
-        this.generatedReport(res);
-      },
-      (error) => {
-        this.report_loading = false;
-        this.btn_disabled = false;
-        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-      });
 
     } else if (reportType === 'token') {
-      this.filterparams = {
-        'billPaymentStatus': this.waitlist_billpaymentstatus,
-        'queue': this.token_queue_id,
-        'service': this.token_service_id,
-        'waitlistStatus': this.waitlist_status,
-        'waitlistMode': this.waitlist_mode,
-        'providerOwnConsumerId': this.waitlist_customerId
+      if (this.waitlist_timePeriod === 'DATE_RANGE' && (this.waitlist_startDate === undefined || this.waitlist_endDate === undefined)) {
+        this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'billPaymentStatus': this.waitlist_billpaymentstatus,
+          'queue': this.token_queue_id,
+          'service': this.token_service_id,
+          'waitlistStatus': this.waitlist_status,
+          'waitlistMode': this.waitlist_mode,
+          'providerOwnConsumerId': this.waitlist_customerId
 
-      };
+        };
 
-      if (this.waitlist_billpaymentstatus === 0) {
-        delete this.filterparams.billPaymentStatus;
-      }
-      if (this.token_service_id === 0) {
-        delete this.filterparams.service;
-      }
-      if (this.token_queue_id === 0) {
-        delete this.filterparams.queue;
-      }
-      if (this.waitlist_status === 0) {
-        delete this.filterparams.waitlistStatus;
-      }
-      if (this.waitlist_mode === 0) {
-        delete this.filterparams.waitlistMode;
-      }
-      if (this.waitlist_customerId === 0) {
-        delete this.filterparams.providerOwnConsumerId;
-      }
-
-      const filter = {};
-      for (const key in this.filterparams) {
-        if (this.filterparams.hasOwnProperty(key)) {
-          // assign property to new object with modified key
-          filter[key + '-eq'] = this.filterparams[key];
+        if (this.waitlist_billpaymentstatus === 0) {
+          delete this.filterparams.billPaymentStatus;
         }
-      }
+        if (this.token_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.token_queue_id === 0) {
+          delete this.filterparams.queue;
+        }
+        if (this.waitlist_status === 0) {
+          delete this.filterparams.waitlistStatus;
+        }
+        if (this.waitlist_mode === 0) {
+          delete this.filterparams.waitlistMode;
+        }
+        if (this.waitlist_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
 
-      if (this.waitlist_timePeriod === 'DATE_RANGE') {
-        filter['date-ge'] = this.dateformat.transformTofilterDate(this.waitlist_startDate);
-        filter['date-le'] = this.dateformat.transformTofilterDate(this.waitlist_endDate);
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+
+        if (this.waitlist_timePeriod === 'DATE_RANGE') {
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.waitlist_startDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.waitlist_endDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type.toUpperCase();
+        request_payload.reportDateCategory = this.waitlist_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
       }
-      const request_payload: any = {};
-      request_payload.reportType = this.report_type.toUpperCase();
-      request_payload.reportDateCategory = this.waitlist_timePeriod;
-      request_payload.filter = filter;
-      request_payload.responseType = 'INLINE';
-      this.generateReportByCriteria(request_payload).then(res => {
-        this.report_loading = false;
-        this.btn_disabled = false;
-        this.report_data_service.storeSelectedValues(res);
-        this.generatedReport(res);
-      },
-      (error) => {
-        this.report_loading = false;
-        this.btn_disabled = false;
-        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-      });
 
     } else if (reportType === 'donation') {
-      this.filterparams = {
+      if (this.donation_timePeriod === 'DATE_RANGE' && (this.donation_startDate === undefined || this.donation_endDate === undefined)) {
+        this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        console.log('inisdee');
+        this.filterparams = {
 
-        'service': this.donation_service_id,
-        'donationAmount': this.donation_amount
+          'service': this.donation_service_id,
+          'donationAmount': this.donation_amount
 
 
-      };
-      if (this.donation_service === 'All') {
-        delete this.filterparams.service;
-      }
-      if (this.donation_amount === undefined) {
-        delete this.filterparams.amount;
-      }
-
-      const filter = {};
-      for (const key in this.filterparams) {
-        if (this.filterparams.hasOwnProperty(key)) {
-          // assign property to new object with modified key
-          filter[key + '-eq'] = this.filterparams[key];
+        };
+        if (this.donation_service === 'All') {
+          delete this.filterparams.service;
         }
+        if (this.donation_amount === undefined) {
+          delete this.filterparams.amount;
+        }
+
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.donation_timePeriod === 'DATE_RANGE') {
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.donation_startDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.donation_endDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type.toUpperCase();
+        request_payload.reportDateCategory = this.donation_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
       }
-      if (this.donation_timePeriod === 'DATE_RANGE') {
-        filter['date-ge'] = this.dateformat.transformTofilterDate(this.donation_startDate);
-        filter['date-le'] = this.dateformat.transformTofilterDate(this.donation_endDate);
-      }
-      const request_payload: any = {};
-      request_payload.reportType = this.report_type.toUpperCase();
-      request_payload.reportDateCategory = this.donation_timePeriod;
-      request_payload.filter = filter;
-      request_payload.responseType = 'INLINE';
-      this.generateReportByCriteria(request_payload).then(res => {
-        this.report_loading = false;
-        this.btn_disabled = false;
-        this.report_data_service.storeSelectedValues(res);
-        this.generatedReport(res);
-      },
-      (error) => {
-        this.report_loading = false;
-        this.btn_disabled = false;
-        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-      });
 
     }
   }
@@ -711,6 +694,24 @@ export class NewReportComponent implements OnInit {
   }
 
 
+
+  passPayloadForReportGeneration(payload) {
+    this.btn_disabled = true;
+    this.report_loading = true;
+
+    this.generateReportByCriteria(payload).then(res => {
+      this.report_loading = false;
+      this.btn_disabled = false;
+      this.report_data_service.storeSelectedValues(res);
+      this.generatedReport(res);
+    },
+      (error) => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+      });
+
+  }
   goToSelectionPage(type, selected_id) {
     this.setSelectedData().then(res => {
 
