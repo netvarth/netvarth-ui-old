@@ -726,7 +726,7 @@ export class NewReportComponent implements OnInit {
       }
       if (this.report_type === 'appointment') {
         selectedValues = {
-          'paymentStatus': this.appointment_paymentStatus,
+          'paymentStatus': this.appointment_billpaymentstatus,
           'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'dateRange': this.appointment_timePeriod,
