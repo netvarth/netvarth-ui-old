@@ -79,6 +79,7 @@ export class CustomerDetailComponent implements OnInit {
     customerCount;
     customerPlaceholder = '';
     jld;
+    customerErrorMsg = '';
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -160,6 +161,15 @@ export class CustomerDetailComponent implements OnInit {
             this.source = qparams.source;
             if (qparams.phone) {
                 this.phoneNo = qparams.phone;
+                if (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
+                    this.getJaldeeIntegrationSettings();
+                    this.save_btn = 'Proceed';
+                }
+            } else {
+                if (qparams.type && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment')) {
+                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    this.save_btn = 'Proceed';
+                }
             }
             if (qparams.email) {
                 this.email = qparams.email;
@@ -200,15 +210,49 @@ export class CustomerDetailComponent implements OnInit {
                 );
         });
     }
-getCustomerCount() {
-    this.provider_services.getProviderCustomersCount()
-    .subscribe(
-        data => {
-          this.customerCount = data;
-          this.jld = 'JLD' + this.thirdParty + this.customerCount;
-          this.amForm.get('customer_id').setValue(this.jld);
-        });
-}
+
+    getJaldeeCustomer() {
+        const filter = { 'primaryMobileNo-eq': this.phoneNo };
+        this.provider_services.getJaldeeCustomer(filter)
+            .subscribe(
+                (data: any) => {
+                    if (data.length > 0) {
+                        this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
+                        this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
+                        this.amForm.get('email_id').setValue(data[0].userProfile.email);
+                        this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
+                        this.amForm.get('address').setValue(data[0].userProfile.address);
+                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Do you want to add the ' + this.customer_label + ' to create ' + this.source;
+                    } else {
+                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    }
+                },
+                error => {
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                }
+            );
+    }
+    getJaldeeIntegrationSettings() {
+        this.provider_services.getJaldeeIntegrationSettings().subscribe(
+            (data: any) => {
+                if (data.walkinConsumerBecomesJdCons) {
+                    this.getJaldeeCustomer();
+                } else {
+                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + ' details to create ' + this.source;
+                }
+            }
+        );
+    }
+
+    getCustomerCount() {
+        this.provider_services.getProviderCustomersCount()
+            .subscribe(
+                data => {
+                    this.customerCount = data;
+                    this.jld = 'JLD' + this.thirdParty + this.customerCount;
+                    this.amForm.get('customer_id').setValue(this.jld);
+                });
+    }
     ngOnInit() {
         this.loading = true;
         this.getGlobalSettingsStatus();
@@ -258,16 +302,15 @@ getCustomerCount() {
             }
             this.loading = false;
         }
-        console.log(this.thirdParty);
         if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-         if (this.thirdParty) {
-            this.amForm.addControl('customer_id', new FormControl(''));
-            this.customerPlaceholder = this.customer_label + ' id';
-            this.getCustomerCount();
-         } else {
-            this.amForm.addControl('customer_id', new FormControl('', Validators.required));
-            this.customerPlaceholder = this.customer_label + ' id *';
-         }
+            if (this.thirdParty) {
+                this.amForm.addControl('customer_id', new FormControl(''));
+                this.customerPlaceholder = this.customer_label + ' id';
+                this.getCustomerCount();
+            } else {
+                this.amForm.addControl('customer_id', new FormControl('', Validators.required));
+                this.customerPlaceholder = this.customer_label + ' id *';
+            }
         }
         if (this.phoneNo) {
             this.amForm.get('mobile_number').setValue(this.phoneNo);
@@ -308,13 +351,12 @@ getCustomerCount() {
                 post_data['email'] = form_data.email_id;
             }
             if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-           console.log(form_data.customer_id);
                 if (form_data.customer_id) {
-                post_data['jaldeeId'] = form_data.customer_id;
-            } else {
-                post_data['jaldeeId'] = this.jld;
+                    post_data['jaldeeId'] = form_data.customer_id;
+                } else {
+                    post_data['jaldeeId'] = this.jld;
+                }
             }
-        }
             this.provider_services.createProviderCustomer(post_data)
                 .subscribe(
                     data => {
@@ -322,7 +364,7 @@ getCustomerCount() {
                         this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
                         const qParams = {};
                         qParams['pid'] = data;
-                        if (this.source === 'checkin') {
+                        if (this.source === 'checkin' || this.source === 'token') {
                             const navigationExtras: NavigationExtras = {
                                 queryParams: {
                                     ph: form_data.mobile_number,
@@ -388,7 +430,7 @@ getCustomerCount() {
                         this.shared_functions.openSnackBar('Updated Successfully');
                         const qParams = {};
                         qParams['pid'] = data;
-                        if (this.source === 'checkin') {
+                        if (this.source === 'checkin' || this.source === 'token') {
                             const navigationExtras: NavigationExtras = {
                                 queryParams: {
                                     ph: form_data.mobile_number,
@@ -522,5 +564,12 @@ getCustomerCount() {
             queryParams: { action: 'edit' }
         };
         this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
+    }
+    goBack() {
+        if (this.source === 'checkin' || this.source === 'token') {
+            this.router.navigate(['/provider/check-ins/add']);
+        } else if (this.source === 'appointment') {
+            this.router.navigate(['/provider/appointmentmanager/appointments']);
+        }
     }
 }

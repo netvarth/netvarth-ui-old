@@ -99,7 +99,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
     result.forEach(scheduleObj => {
       let userName = '';
       if (scheduleObj.provider) {
-        userName = scheduleObj.provider.firstName + '' + scheduleObj.provider.lastName;
+        userName = scheduleObj.provider.firstName + ' ' + scheduleObj.provider.lastName;
       }
       schedule_list.push({ 'id': scheduleObj.id, 'name': scheduleObj.name, 'user': userName });
 

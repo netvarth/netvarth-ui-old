@@ -1,7 +1,3 @@
-<!-- <section>
-    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
-        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
@@ -33,7 +29,7 @@
                                         <div class="disp-flex">
                                             <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
                                                 <mat-form-field>
-                                                    <input matInput
+                                                    <input matInput autocomplete="off"
                                                         placeholder="{{customer_label | capitalizeFirst}} Phone# or ID or Email"
                                                         type="text" class="form-control" formControlName="search_input"
                                                         (keypress)="findCustomer(searchForm.value, $event)">
@@ -61,28 +57,32 @@
                                 Don't have a mobile number? <a class="more_less" (click)="createNew('new')"> Click
                                     here.</a>
                             </div> -->
-                            <div class="create_new mgn-bt-20">
-                                <div>Or</div>
-                                <a class="underline" (click)="createNew()"> Create new {{customer_label}} and proceed.
+                            <div class="create_new mgn-bt-20 font-9">
+                                <div class="or-style">OR</div>
+                                <a class="underline" (click)="createNew()">
+                                    Create a new {{customer_label}} and appointment
                                 </a>
                             </div>
-                            <div class="create_new mgn-bt-20">
-                                <div>Or</div>
-                                <span> {{customer_label | capitalizeFirst}} from third party listing site </span>
+                            <div class="create_new mgn-bt-20 font-9">
+                                <div class="or-style">OR</div>
+                                <span>
+                                    Create an appointment for the {{customer_label}} who booked for your services on a
+                                    third party listing site, choose the listing site/app
+                                </span>
                                 <div class="mgn-up-10">
                                     <button *ngIf="domain === 'healthCare'"
-                                        class="create_new_button cs-btn bt3 mgn-rt-10"
+                                        class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
                                         (click)="initAppointment('practo')">Practo</button>
-                                    <button class="create_new_button cs-btn bt3 mgn-rt-10"
+                                    <button class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
                                         (click)="initAppointment('justdial')">Just
                                         dial</button>
-                                    <button class="create_new_button cs-btn bt3 mgn-rt-10"
+                                    <button class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
                                         (click)="initAppointment('google')">Google</button>
-                                    <button class="create_new_button cs-btn bt3 mgn-rt-10"
+                                    <button class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
                                         *ngIf="domain === 'healthCare'"
                                         (click)="initAppointment('mfine')">MFine</button>
-                                    <button class="create_new_button cs-btn bt3" [class.btn-selected]="showOther"
-                                        (click)="showOtherSection()">Other</button>
+                                    <button class="create_new_button cs-btn bt3 mgn-bt-10"
+                                        [class.btn-selected]="showOther" (click)="showOtherSection()">Other</button>
                                 </div>
                                 <div class="disp-flex" *ngIf="showOther">
                                     <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
@@ -129,8 +129,9 @@
                                             {{customer_data.jaldeeId | capitalizeFirst}}</li>
                                     </ul>
                                     <div *ngIf="thirdParty !== ''">
-                                        {{customer_label | capitalizeFirst}} from {{thirdPartyList[thirdParty]}}
-                                        <a class="underline pull-right" (click)="createNew()">Fill the
+                                        {{customer_label | capitalizeFirst}} from
+                                        {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}
+                                        <a class="underline mgn-lt-20" (click)="createNew()">Fill the
                                             {{customer_label}}
                                             details </a>
                                     </div>
@@ -594,22 +595,35 @@
 
                             </aside>
                         </div>
-                        <div class="col-md-12  mgn-up-20 " *ngIf="!showAction">
-                            <button *ngIf="thirdParty === ''" class="cs-btn bt3 width-100"
+                        <div class="col-md-12 mgn-up-20 " *ngIf="!showAction">
+                            <mat-chip-list class="btns">
+                                <mat-chip *ngIf="thirdParty === ''" class="pro-action"
+                                    (click)="handleSideScreen('members')"><a>Add / Change
+                                        Member </a>
+                                </mat-chip>
+                                <mat-chip class="pro-action" (click)="handleSideScreen('note')">
+                                    <a>{{sel_ser_det.consumerNoteTitle}}
+                                        <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
+                                </mat-chip>
+                                <mat-chip class="pro-action" (click)="imagefile.click()"><a>
+                                        <input #imagefile type="file" accept="/*;capture=camera" style="display:none;"
+                                            multiple (change)="filesSelected($event)">
+                                        <span> Attach
+                                            File</span> </a>
+                                </mat-chip>
+                            </mat-chip-list>
+                            <!-- <button *ngIf="thirdParty === ''" class="cs-btn bt3 width-100"
                                 (click)="handleSideScreen('members')">Add / Change
                                 Member</button>
                             <button class="cs-btn bt3 width-100 mgn-up-20"
                                 (click)="handleSideScreen('note')">{{sel_ser_det.consumerNoteTitle}}
                                 <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span></button>
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="imagefile.click()">
-                                <!-- <button type="button" class="cs-btn btn-attach bt_attach"
-                                        (click)="imagefile.click()" [matTooltip]="'Attach files'"> -->
                                 <input #imagefile type="file" accept="/*;capture=camera" style="display:none;" multiple
                                     (change)="filesSelected($event)">
                                 <span> Attach
                                     File</span>
-                                <!-- </button> -->
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                 </div>
