@@ -131,7 +131,7 @@
                                     <div *ngIf="thirdParty !== ''">
                                         {{customer_label | capitalizeFirst}} from
                                         {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}
-                                        <a class="underline mgn-lt-20" (click)="createNew()">Fill the
+                                        <a class="underline mgn-lt-20" (click)="createNew('fill')">Fill the
                                             {{customer_label}}
                                             details </a>
                                     </div>

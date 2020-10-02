@@ -4,7 +4,7 @@
 <section class="" *ngIf="source ==='token' || source ==='checkin' || source ==='appointment'">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-            <button type="button" class="btn default profile-back" (click)="goBack()">
+            <button type="button" class="btn default profile-back" (click)="onCancel()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
             Create {{customer_label}}
         </h5>
@@ -231,7 +231,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     </mat-form-field>
                                 </div>
                                 <div class="mgn-up-20 mgn-bt-20" *ngIf="customerErrorMsg2 !== '' && !loading">
-                                   {{customerErrorMsg2}}
+                                    {{customerErrorMsg2}}
                                 </div>
                                 <div class="actiondiv" style="margin-top: 10px;">
                                     <div style="margin-bottom:30px;display: inline-flex;">
