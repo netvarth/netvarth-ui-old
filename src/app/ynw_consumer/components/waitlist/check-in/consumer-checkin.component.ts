@@ -553,14 +553,14 @@ export class ConsumerCheckinComponent implements OnInit {
             .subscribe((data: any) => {
                 const availables = data.filter(obj => obj.isAvailable);
                 const availDates = availables.map(function (a) { return a.date; });
-                _this.availableDates = availDates.filter(function(elem, index, self) {
+                _this.availableDates = availDates.filter(function (elem, index, self) {
                     return index === self.indexOf(elem);
                 });
             });
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
-      }
+    }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
         this.queueQryExecuted = false;
         if (locid && servid) {
@@ -1585,7 +1585,6 @@ export class ConsumerCheckinComponent implements OnInit {
                     this.s3url = res;
                     this.getbusinessprofiledetails_json('businessProfile', true);
                     this.getbusinessprofiledetails_json('settings', true);
-                    this.getbusinessprofiledetails_json('departmentProviders', true);
                     this.getbusinessprofiledetails_json('coupon', true);
                     if (!this.terminologiesjson) {
                         this.getbusinessprofiledetails_json('terminologies', true);
@@ -1631,6 +1630,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         this.businessjson = res;
                         this.accountType = this.businessjson.accountType;
                         if (this.accountType === 'BRANCH') {
+                            this.getbusinessprofiledetails_json('departmentProviders', true);
                             this.getProviderDepart(this.businessjson.id);
                         }
                         this.domain = this.businessjson.serviceSector.domain;

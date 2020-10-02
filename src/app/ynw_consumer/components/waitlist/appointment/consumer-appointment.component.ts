@@ -1379,7 +1379,6 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.s3url = res;
                     this.getbusinessprofiledetails_json('businessProfile', true);
                     this.getbusinessprofiledetails_json('settings', true);
-                    this.getbusinessprofiledetails_json('departmentProviders', true);
                     this.getbusinessprofiledetails_json('coupon', true);
                     if (!this.terminologiesjson) {
                         this.getbusinessprofiledetails_json('terminologies', true);
@@ -1425,6 +1424,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                         this.businessjson = res;
                         this.accountType = this.businessjson.accountType;
                         if (this.accountType === 'BRANCH') {
+                            this.getbusinessprofiledetails_json('departmentProviders', true);
                             this.getProviderDepart(this.businessjson.id);
                         }
                         this.domain = this.businessjson.serviceSector.domain;
@@ -1587,8 +1587,8 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     getPic(user) {
         if (user.profilePicture) {
-          // alert(JSON.parse(user.profilePicture)['url']);
-          return JSON.parse(user.profilePicture)['url'];
+            // alert(JSON.parse(user.profilePicture)['url']);
+            return JSON.parse(user.profilePicture)['url'];
         }
         return 'assets/images/img-null.svg';
     }

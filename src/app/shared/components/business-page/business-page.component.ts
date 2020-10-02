@@ -423,7 +423,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.getbusinessprofiledetails_json('services', true);
             this.getbusinessprofiledetails_json('apptServices', true);
             this.getbusinessprofiledetails_json('donationServices', true);
-            this.getbusinessprofiledetails_json('departmentProviders', true);
           }
         },
         error => {
@@ -451,6 +450,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.businessjson = res;
               this.branch_id = this.businessjson.branchId;
               this.account_Type = this.businessjson.accountType;
+              if (this.account_Type === 'BRANCH') {
+                this.getbusinessprofiledetails_json('departmentProviders', true);
+              }
               this.business_exists = true;
               this.provider_bussiness_id = this.businessjson.id;
               if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
