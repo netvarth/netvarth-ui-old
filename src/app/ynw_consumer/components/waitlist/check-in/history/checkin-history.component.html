@@ -142,11 +142,11 @@
                             </div>
 
                         </div>
-                        <div class="search_paging" *ngIf="pagination.totalCnt >= pagination.perPage">
+                        <!-- <div class="search_paging" *ngIf="pagination.totalCnt >= pagination.perPage">
                             <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                                 (pagerclick)="handle_pageclick($event)" *ngIf="pagination.totalCnt != 0"
                                 [curpage]="pagination.startpageval"></app-pager>
-                        </div>
+                        </div> -->
                         <div *ngIf="entire_history && entire_history.length == 0" class="noprevhist">
                             <p>No previous history available</p>
                         </div>

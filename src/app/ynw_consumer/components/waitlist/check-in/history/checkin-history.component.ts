@@ -73,8 +73,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   // Getting Checking History
   getHistroy() {
     this.loadcomplete.history = false;
-    const params = this.setPaginationFilter();
-    this.consumer_services.getWaitlistHistory(params)
+    // const params = this.setPaginationFilter();
+    this.consumer_services.getWaitlistHistory()
       .subscribe(
         data => {
           this.history = data;
@@ -91,8 +91,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
 
   // Getting Appointment History
   getAppointmentHistory() {
-    const params = this.setPaginationFilter();
-    this.consumer_services.getAppointmentHistory(params)
+  //  const params = this.setPaginationFilter();
+    this.consumer_services.getAppointmentHistory()
       .subscribe(
         data => {
           console.log(data);

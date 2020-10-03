@@ -457,6 +457,19 @@
                                                     (click)="viewBill(appointment,'appointment')">View Bill</button>
                                             </span>
                                         </td>
+                                        <td>
+                                            <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #appMenu="matMenu">
+                                                <button mat-menu-item
+                                                    *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
+                                                    (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
+                                                <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
+                                                    {{send_msg_cap}}
+                                                </button>
+                                            </mat-menu>
+                                        </td>
                                     </ng-container>
                                     <ng-container *ngIf="booking.waitlistStatus">
                                         <td>
@@ -592,6 +605,20 @@
                                                         (click)="viewBill(appointment,'appointment')">View Bill</button>
                                                 </span>
                                             </td>
+                                            <td>
+                                                <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </button>
+                                                <mat-menu #appMenu="matMenu">
+                                                    <button mat-menu-item
+                                                        *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
+                                                        (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
+                                                    <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
+                                                        {{send_msg_cap}}
+                                                    </button>
+                                                </mat-menu>
+                                            </td>
+
                                         </ng-container>
                                         <ng-container *ngIf="booking.waitlistStatus">
                                             <td>
