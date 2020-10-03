@@ -257,7 +257,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     // tslint:disable-next-line:radix
                     this.selectedService = parseInt(params.service_id);
                 }
-                // this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
+                this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
             });
 
     }
@@ -637,7 +637,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.sel_queue_personaahead = 0;
         this.sel_queue_name = '';
         this.resetApi();
-        // this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+        this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         this.action = '';
     }

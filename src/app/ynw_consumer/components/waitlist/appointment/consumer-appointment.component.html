@@ -174,7 +174,10 @@
                                             <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
                                                 *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
                                                 No slots available.
-                                            </div>
+                                                <span><a class="lnk pointer-cursor action mgn-lt-10"
+                                                    (click)="changeSlot()">Change Slot
+                                                </a></span>
+                                            </div> 
                                         <!-- <div class="pull-left brd-round brd-light">
                                             
                                             <div class="icon-minus pull-left" [class.disable]="disableMinus()"
@@ -355,10 +358,7 @@
                                         {{slot.displayTime}}
                                     </mat-chip>
                                 </mat-chip-list>
-                                <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
-                                    *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
-                                    No slots available.
-                                </div>
+                               
                                 <!-- <span class="input-group-btn mgn-up-15">
                                     <button class="btn bt3 btnCancel" type="button" (click)="goBack()">
                                         Cancel
@@ -367,6 +367,10 @@
                                         type="button">Ok</button>
                                 </span> -->
                             </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10"
+                            *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
+                            No slots available.
+                        </div>
                             </div>
 
                             <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"

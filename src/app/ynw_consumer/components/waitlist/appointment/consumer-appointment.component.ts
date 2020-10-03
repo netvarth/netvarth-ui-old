@@ -332,7 +332,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         this.showfuturediv = false;
         this.revealphonenumber = true;
-        // this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
+        this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
     }
     createForm() {
         this.searchForm = this.fb.group({
@@ -586,7 +586,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         // this.sel_queue_personaahead = 0;
         // this.sel_queue_name = '';
         this.resetApi();
-        // this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
+        this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
         this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         this.action = '';
     }
