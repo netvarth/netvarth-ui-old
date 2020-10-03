@@ -13,7 +13,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatCalendarCellCssClasses } from '@angular/material';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -212,6 +212,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     note_cap = '';
     servicedialogRef: any;
     apptdisable = false;
+    availableDates: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -331,6 +332,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         this.showfuturediv = false;
         this.revealphonenumber = true;
+        // this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
     }
     createForm() {
         this.searchForm = this.fb.group({
@@ -510,6 +512,21 @@ export class ConsumerAppointmentComponent implements OnInit {
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
+    getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
+        const _this = this;
+        _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
+            .subscribe((data: any) => {
+                console.log(data);
+                const availables = data.filter(obj => obj.availableSlots);
+                const availDates = availables.map(function (a) { return a.date; });
+                _this.availableDates = availDates.filter(function(elem, index, self) {
+                    return index === self.indexOf(elem);
+                });
+            });
+    }
+    dateClass(date: Date): MatCalendarCellCssClasses {
+        return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+    }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid) {
         this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
@@ -569,6 +586,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         // this.sel_queue_personaahead = 0;
         // this.sel_queue_name = '';
         this.resetApi();
+        // this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
         this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         this.action = '';
     }

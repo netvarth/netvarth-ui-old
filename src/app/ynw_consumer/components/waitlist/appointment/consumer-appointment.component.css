@@ -1164,3 +1164,7 @@ height: 150px !important;
   .mat-chip-list-wrapper .mat-standard-chip, .mat-chip-list-wrapper input.mat-input-element {
     margin: 8px !important;
 }
+.example-custom-date-class {
+  background:rgb(133,233,133);
+  border-radius: 100%;
+ }
