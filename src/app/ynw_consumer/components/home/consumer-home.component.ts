@@ -175,6 +175,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   futureBookings_more: any = [];
   more_futrbookingsShow = false;
   appointmentslist: any = [];
+  tdyDate: string;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -868,9 +869,33 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .then(
         data => {
           if (data === 'reloadlist' && type === 'checkin') {
+            this.today_totalbookings = [];
+            this.future_totalbookings = [];
+            this.todayBookings = [];
+            this.todayBookings_more = [];
+            this.futureBookings = [];
+            this.futureBookings_more = [];
+            this.appointmentslist = [];
+            this.getDonations();
+            this.getAppointmentToday();
+            this.getAppointmentFuture();
             this.getWaitlist();
+            this.getWaitlistFuture();
+            // this.getWaitlist();
           } else if (data === 'reloadlist' && type === 'appointment') {
-            this.getApptlist();
+          //  this.getApptlist();
+          this.today_totalbookings = [];
+          this.future_totalbookings = [];
+          this.todayBookings = [];
+          this.todayBookings_more = [];
+          this.futureBookings = [];
+          this.futureBookings_more = [];
+          this.appointmentslist = [];
+          this.getDonations();
+          this.getAppointmentToday();
+          this.getAppointmentFuture();
+          this.getWaitlist();
+          this.getWaitlistFuture();
           }
         },
         error => {
@@ -987,7 +1012,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return api_filter;
   }
 
-  providerDetail(provider) {
+  providerDetail(provider, event) {
+    event.stopPropagation();
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 
@@ -1710,6 +1736,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   showlessFutrBookings() {
     this.more_futrbookingsShow = false;
+  }
+  stopprop(event) {
+    event.stopPropagation();
   }
 
 }

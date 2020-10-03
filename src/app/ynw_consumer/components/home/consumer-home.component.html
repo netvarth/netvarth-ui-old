@@ -67,7 +67,7 @@
                                             <h4>{{getSingleTime(booking.appmtTime)}}</h4>
                                         </td>
                                         <td class="tdisplay-block">
-                                            <h4 (click)="providerDetail(booking.providerAccount)">
+                                            <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                             <span>
                                                 <i class="fa phon-icon"
@@ -89,7 +89,7 @@
                                                 {{booking.apptStatus}}
                                             </h6>
                                             <span *ngIf="booking.apptStatus == 'Confirmed'">
-                                                <a href="{{path}}status/{{booking.appointmentEncId}}" target="blank"><u
+                                                <a href="{{path}}status/{{booking.appointmentEncId}}" (click)="stopprop($event)" target="blank"><u
                                                         class="font-smalr">VIEW STATUS</u></a></span>
                                         </td>
                                         <td>
@@ -115,14 +115,14 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                            <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                     *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
                                                     (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
-                                                <button (click)="addWaitlistMessage(booking,'appt')">
+                                                <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
                                                     {{send_msg_cap}}
                                                 </button>
                                             </mat-menu>
@@ -188,14 +188,14 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                            <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                 *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                     (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
-                                                <button (click)="addWaitlistMessage(booking)">
+                                                <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                     {{send_msg_cap}}
                                                 </button>
                                             </mat-menu>
@@ -282,14 +282,14 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
-                                                    <button (click)="addWaitlistMessage(booking,'appt')">
+                                                    <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
                                                         {{send_msg_cap}}
                                                     </button>
                                                 </mat-menu>
@@ -357,14 +357,14 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                     *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
-                                                    <button (click)="addWaitlistMessage(booking)">
+                                                    <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                         {{send_msg_cap}}
                                                     </button>
                                                 </mat-menu>
@@ -513,14 +513,14 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                            <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                 *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                     (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
-                                                <button (click)="addWaitlistMessage(booking)">
+                                                <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                     {{send_msg_cap}}
                                                 </button>
                                             </mat-menu>
@@ -650,14 +650,14 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                     *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
-                                                    <button (click)="addWaitlistMessage(booking)">
+                                                    <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                         {{send_msg_cap}}
                                                     </button>
                                                 </mat-menu>
