@@ -27,13 +27,13 @@
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                             <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
                                 class="img-circle img-responsive pointer-cursor"
-                                (click)="openImageModalRow(image_list_popup[0])">
+                                (click)="galleryExists && openImageModalRow(image_list_popup[0])">
                         </div>
-                        <div class="gal col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                        <div class="gal col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="galleryenabledArr.length > 0">
                             <div class="gallery-bullet centeralign pointer-cursor"
                                 (click)="openImageModalRow(image_list_popup[0])">
                                 <i class="fa fa-circle" *ngFor="let enable of galleryenabledArr"></i>
-                                <i class="fa fa-circle-o" *ngFor="let i of gallerydisabledArr"></i>
+                                <!-- <i class="fa fa-circle-o" *ngFor="let i of gallerydisabledArr"></i> -->
                             </div>
                         </div>
                     </div>
@@ -114,11 +114,11 @@
                                     src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                                 </div>
                             <ul class="bus-actions no-padding mgn-up-10" *ngIf="settings_exists && business_exists">
-                                <li *ngIf="!isInFav && !userId">
+                                <!-- <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         {{add_to_fav_cap}}
                                     </a>
-                                </li>
+                                </li> -->
                                 <li>
                                     <a class="like-btn" (click)="communicateHandler()">
                                         <span *ngIf="provider_bussiness_id">
@@ -744,7 +744,8 @@
                         </ng-container>
                         <ng-container
                             *ngIf="loc['estimatedtime_det'] && !loc['estimatedtime_det']['message']  && loc['waitlist']">
-                            <ng-container *ngFor="let service of loc['wlservices']">
+                            <ng-container *ngFor="let service of loc['wlservices']">              
+                              <div *ngIf="service.serviceAvailability">
                                 <div class="bus-item"
                                     *ngIf="(!service.provider && !userId) || (service.provider && userId && service.provider.id==userId)">
                                     <div class="card card-item-n no-padding">
@@ -827,6 +828,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             </ng-container>
                         </ng-container>
                         <ng-container *ngFor="let user of deptUsers">
@@ -874,16 +876,16 @@
                                                 <!-- <p class="price mgn-bt-0 mgn-up-10">
                                                     Upto
                                                 </p> -->
-                                                <p class="title-style mgn-up-5-m mgn-up-10">
+                                                <p class="title-style mgn-bt-5 mgn-up-5">
                                                     <span
-                                                        class="rupee-font"></span><span>{{service.minDonationAmount| currency:'&#8377;'}}</span>
+                                                        class="rupee-font">{{service.minDonationAmount| currency:'&#8377;'}}</span>
                                                 </p>
-                                                <p class="price">
+                                                <p class="price mgn-up-5-m mgn-bt-5">
                                                     to
                                                 </p>
-                                                <p class="title-style mgn-up-5-m">    
+                                                <p class="title-style mgn-up-5-m mgn-bt-5">    
                                                     <span
-                                                        class="rupee-font"></span><span>{{service.maxDonationAmount| currency:'&#8377;'}}</span>
+                                                        class="rupee-font">{{service.maxDonationAmount| currency:'&#8377;'}}</span>
                                                 </p>
                                             </div>
                                         </div>

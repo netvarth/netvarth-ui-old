@@ -962,6 +962,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         });
   }
   getDisplayboardCountWaitlist() {
+
     this.provider_services.getDisplayboardsWaitlist()
       .subscribe(
         (data: any) => {
@@ -977,7 +978,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         });
   }
   getServiceCount() {
-    const filter = { 'serviceType-neq': 'donationService' };
+    const filter = { 'serviceType-neq': 'donationService', 'status-eq': 'ACTIVE' };
     this.provider_services.getServiceCount(filter)
       .subscribe(
         data => {
@@ -985,11 +986,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         });
   }
   getQueuesCount() {
-    // const filter = { 'scope-eq': 'account' };
-    this.provider_services.getQueuesCount()
+    const filter = { 'state-eq': 'ENABLED' };
+    this.provider_services.getQueuesCount(filter)
       .subscribe(
         data => {
-          this.queues_count = data;
+        this.queues_count = data;
         });
   }
   getDiscounts() {
@@ -1234,7 +1235,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   }
   getSchedulesCount() {
     // const filter = { 'scope-eq': 'account' };
-    this.provider_services.getSchedulesCount()
+    const filter = { 'state-eq': 'ENABLED' };
+    this.provider_services.getSchedulesCount(filter)
       .subscribe(
         data => {
           this.schedules_count = data;

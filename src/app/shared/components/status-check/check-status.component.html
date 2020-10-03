@@ -21,7 +21,7 @@
               <div class="book-details" *ngIf="type=='wl' && statusInfo.showToken"> Token details </div>
               <div class="book-details" *ngIf="type=='wl' && !statusInfo.showToken"> Check-in details </div>
               <div class="book-details" *ngIf="type=='appt'"> Appointment details </div>
-              <table class="book-details-sub">
+              <table class="book-details-sub chkntoknappt-details">
                 <tbody>
                   <tr>
                     <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
@@ -113,7 +113,7 @@
                     <td *ngIf="type=='wl'"> {{statusInfo.checkinEncId}}</td>
                     <td *ngIf="type=='appt'"> {{statusInfo.appointmentEncId}}</td>
                   </tr>
-                  <tr *ngIf="statusInfo.service?.minPrePaymentAmount">
+                  <tr *ngIf="statusInfo.service?.minPrePaymentAmount && statusInfo.waitlistMode !== 'WALK_IN_CHECKIN'">
                     <td width="48%" align="right">Pre Payment amount</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td> {{statusInfo.service.minPrePaymentAmount}}</td>
@@ -125,7 +125,7 @@
               </div>
               <table class="status-table">
                 <tbody>
-                  <tr *ngIf="type=='wl'">
+                  <tr *ngIf="type=='wl' && (statusInfo.waitlistStatus === 'arrived' || statusInfo.waitlistStatus === 'checkedIn')">
                     <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;Persons ahead </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.personsAhead}}</td>
@@ -169,9 +169,11 @@
                 </div>
             </div>
               <div class="ok-btn">
-                <span class="pointer-cursor" (click)="okClick()">
-                  Ok</span></div>
+                <span class="pointer-cursor" style="font-size: medium;"  (click)="okClick()">
+                  OK</span></div>
             </div>
+            <!-- <div  class="txt-align-center" style="color: red;"  *ngIf="!foundDetails">"{{founderrormsg}}"<br>
+            </div> -->
             <div class="txt-align-center" *ngIf="source=='new' && (type=='wl' || type=='appt')">
               <a class="status-check" (click)="showStatusInput()"> Check another status</a>
             </div>

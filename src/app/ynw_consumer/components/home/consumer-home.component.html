@@ -2,716 +2,659 @@
     <div class="panel panel-default">
         <div class="panel-heading top-row ">
             <app-header [headerTitle]=""></app-header>
+            <div class="mgn-up-20">
+                <app-search-form></app-search-form>
+            </div>
         </div>
         <div class="panel-body no-padding">
             <div class="content consumer-dash mgn-bt-10" *ngIf="api_loading">
-                <app-common-innerloading-spinner>
+                <app-common-innerloading-spinner >
                 </app-common-innerloading-spinner>
             </div>
             <div class="content consumer-dash" *ngIf="!api_loading">
                 <div class="card c-checkins">
-                    <h1 class="ng-tns-c16-8 txt-align">
-                        <span class="ng-tns-c16-8">
-                            Hello {{usr_details.userName}} !
-                        </span> <br>
-                        <button class="mgn-up-20 find-sp-btn" mat-raised-button (click)="do_search()">Find Service
-                            Provider &nbsp; <i class="fa fa-search"></i></button>
-                    </h1>
-                    <h2 class="ng-tns-c16-8 bg-yelow">
-                        <div class="jld-option">
-                            <div class="col-sm-4 col-md-6 col-lg-6 col-xs-6 mgn-up-10">MY BOOKINGS</div>
-                            <div class="col-sm-8 col-md-6 col-lg-6 col-xs-7">
-                                <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button class="flat-btn" mat-flat-button (click)="getmyfavourites()">My
-                                        Favourites</button>
-                                    <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()">
-                                        <i class="fa fa-heart"></i>
-                                    </button>
+                    <h2><span>Active Appointments
+                            <ng-container *ngIf="appointments && appointments.length>0">({{appointments.length}})
+                            </ng-container>
+                        </span>
+                    </h2>
+                    <div *ngIf="appointments.length == 0" class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
+                        <p>No current Appointments available</p>
+                    </div>
+                    <div class="outer banner" *ngIf="appointments.length != 0">
+                        <owl-carousel id="apptCarousel" [options]="carouselAppointments"
+                            [carouselClasses]="['owl-theme']" [items]="appointments">
+                            <div class="item apptlist" *ngFor="let appointment of appointments; let i=index">
+                                <div class="header">
+                                    <div class="lt width20">
+                                        <div class="title" (click)="providerDetail(appointment.providerAccount)">
+                                            <h3>{{appointment.providerAccount.businessName || '' | capitalizeFirst}}
+                                            </h3>
+                                        </div>
+                                        <div class="location consumr" *ngIf="appointment.location">
+                                            {{appointment.location.place || '' | capitalizeFirst}}
+                                            <span class="consumr-loc-icon"><a *ngIf="appointment.location.googleMapUrl"
+                                                    rel="noopener" [href]="appointment.location.googleMapUrl"
+                                                    target="_blank" class="icon-location"
+                                                    matTooltip="Click to navigate">
+                                                </a></span>
+                                        </div>
+                                        <div class="status-outer">
+                                            <div class="started-label" *ngIf="appointment.apptStatus == 'Started'">
+                                                {{status_started_cap}}
+                                            </div>
+                                            <div class="done-label" *ngIf="appointment.apptStatus == 'Completed'">
+                                                {{status_done_cap}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="rt">
+                                        <div class="favourite" *ngIf="checkIfFav(appointment.providerAccount.id)">
+                                            <span class="icon-favourite-filled"
+                                                (click)="doDeleteFavProvider(appointment.providerAccount)"
+                                                matTooltip="{{remove_fav_cap}}"></span>
+                                        </div>
+                                        <div class="favourite" *ngIf="!checkIfFav(appointment.providerAccount.id)">
+                                            <span class="icon-favourite" matTooltip="Add to Favourite"
+                                                (click)="addFavProvider(appointment.providerAccount.id)"></span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button class="flat-btn" mat-flat-button (click)="gotoHistory()">Past
-                                        History</button>
-                                    <button class="flat-icon-btn" mat-flat-button (click)="gotoHistory()">
-                                        <i class="fa fa-history"></i>
-                                    </button>
-                                </div>
-                                <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button (click)="paymentsClicked()" class="flat-btn" mat-flat-button>My
-                                        Payments</button>
-                                    <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()">
-                                        <i class="fa fa-credit-card"></i>
-                                    </button>
+                                <div class="details">
+                                    <div class="lt">
+                                        <div class="lt0 pointlist subtitle-db" (click)="showApptdetails(appointment)">
+                                            <span class="service">
+                                                <span>
+                                                    <i class="fa phon-icon"
+                                                        *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes.length > 0  && appointment.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                    <i class="fa meet-icon"
+                                                        *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes.length > 0  && appointment.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                    <i class="fa zoom-icon"
+                                                        *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes.length > 0  && appointment.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                    <i class="fa wtsapaud-icon"
+                                                        *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes.length > 0  && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='audioService'"></i>
+                                                    <i class="fa wtsapvid-icon"
+                                                        *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes.length > 0  && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='videoService'"></i>
+                                                </span>
+                                                {{appointment.service.name | capitalizeFirst}} </span>
+                                            for <span class="forwhom" *ngFor="let user of appointment.appmtFor">
+                                                {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                                            </span>
+                                        </div>
+                                        <span class="lt0" *ngIf="appointment.provider">Provider:
+                                            {{appointment.provider.firstName | capitalizeFirst}}
+                                            {{appointment.provider.lastName | capitalizeFirst}}</span>
+                                        <ng-container
+                                            *ngIf="appointment.appmtTime && (appointment.apptStatus == 'Confirmed'  ||
+                                    appointment.apptStatus == 'Arrived' || appointment.apptStatus == 'Cancelled' || appointment.apptStatus == 'Rejected')">
+                                            <div class="lt0"
+                                                *ngIf="appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'">
+                                                Appointment Time<span style="display: flex">
+                                                    {{getSingleTime(appointment.appmtTime)}}</span>
+                                            </div>
+                                            <div class="lt0"
+                                                *ngIf="appointment.appmtDate!='' && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'">
+                                                {{appointment.estimated_caption}} <span class="time now">
+                                                    <span *ngIf="appointment.estimated_date_type == 'date'">{{appointment.estimated_date
+                                                | date: dateFormatSp }}</span>
+                                                    <span
+                                                        *ngIf="appointment.estimated_date_type == 'string'">{{appointment.estimated_date}}
+                                                    </span>
+                                                </span>
+                                                <span style="display: flex"> {{appointment.estimated_timeslot}}</span>
+                                            </div>
+                                            <div class="lt0"
+                                                *ngIf="appointment.apptStatus == 'Cancelled' || appointment.apptStatus == 'Rejected'">
+                                                <div class="lt0">
+                                                    {{appointment.estimated_caption}} <span class="time">{{appointment.estimated_date
+                                                | date: dateFormatSp }},
+                                                        <span style="display: flex">
+                                                            {{getSingleTime(appointment.estimated_time)}}</span></span>
+                                                </div>
+                                                <div class="red">
+                                                    {{appointment.cancelled_caption}}
+                                                    <span class="time">
+                                                        {{appointment.cancelled_date | date: dateFormatSp}}
+                                                        {{appointment.cancelled_time}}</span>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <div class="lt0" *ngIf="appointment.partySize && appointment.partySize > 1">
+                                            {{party_size}} <span class="persons">{{appointment.partySize}}</span>
+                                        </div>
+                                        <div class="lt0" *ngIf="appointment.batchId" style="font-size: 0.9rem;">
+                                            Batch <span class="token">{{appointment.batchId}} </span>
+                                        </div>
+                                        <div class="lt0 underline" *ngIf="appointment.service.serviceType === 'virtualService' && appointment.apptStatus !== 'Completed'
+                                         && appointment.apptStatus !== 'Cancelled'">
+                                            <a (click)="getMeetingDetails(appointment,'appt')"> Meeting details </a>
+                                        </div>
+                                        <div class="lt0 payment"
+                                            *ngIf="appointment.amountDue>0 && (appointment.billViewStatus=='Show') && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'">
+                                            <span class="paytext"><span>Amount Due : <span class="rupee-font">&#8377;
+                                                    </span>{{appointment.amountDue}}
+                                                </span><a class="bt3 cust-btn pointer-cursor"
+                                                    (click)="viewBill(appointment,'appointment')">Pay</a></span>
+                                        </div>
+                                        <div *ngIf="appointment.apptStatus=='Confirmed'|| 'prepaymentPending'">
+                                            <div class="lt0"
+                                                *ngIf="appointment.jaldeeApptDistanceTime && appointment.service.livetrack && appointment.apptStatus === 'Confirmed' && !appointment.future">
+                                                <div>
+                                                    <div class="mb5"> You are sharing your arrival time with
+                                                        {{appointment.providerAccount.businessName}}<span><i
+                                                                class="fa fa-check fl-right"
+                                                                aria-hidden="true"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="lt0"
+                                                *ngIf="!appointment.jaldeeApptDistanceTime && appointment.service.livetrack && appointment.apptStatus === 'Confirmed' && !appointment.future">
+                                                <div>
+                                                    <div class="mb5"> Oops you are NOT sharing your arrival time with
+                                                        {{appointment.providerAccount.businessName}}<span><i
+                                                                class="fa fa-times fl-right"
+                                                                aria-hidden="true"></i></span>
+                                                    </div>
+                                                    <div class="pointlist"
+                                                        (click)="gotoLivetrack(appointment.uid,appointment.providerAccount.id,'false')">
+                                                        Jaldee recommends you <a>share your arrival time</a> with provider
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="rt">
+                                        <ul class="controls">
+                                            <li *ngIf="appointment.billViewStatus == 'Show'">
+                                                <span class="view-bill"
+                                                    *ngIf="!(appointment.amountDue>0) && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'"
+                                                    (click)="viewBill(appointment,'appointment')">Receipt</span>
+                                                <span class="view-bill"
+                                                    *ngIf="(appointment.apptStatus === 'Cancelled' || appointment.apptStatus === 'Rejected') && appointment.paymentStatus !== 'NotPaid'"
+                                                    (click)="viewBill(appointment,'appointment')">Receipt</span>
+                                                <span class="view-bill"
+                                                    *ngIf="appointment.amountDue>0 && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'"
+                                                    (click)="viewBill(appointment,'appointment')">Bill</span>
+                                            </li>
+                                            <li (click)="makeApptFailedPayment(appointment)"
+                                                *ngIf="!appointment.parentUuid && appointment.apptStatus=='prepaymentPending'">
+                                                <span class="payment">{{make_pay_cap}}</span>
+                                            </li>
+                                            <li (click)="addWaitlistMessage(appointment,'appt')">
+                                                <span class="message">{{send_msg_cap}}</span>
+                                            </li>
+                                            <li class="cancelCheckinBtn"
+                                                *ngIf="appointment.apptStatus == 'Confirmed' || appointment.apptStatus == 'Arrived' || appointment.apptStatus=='prepaymentPending'">
+                                                <span class="cancel" style="display: table;"
+                                                    (click)="doCancelWaitlist(appointment,'appointment')">Cancel
+                                                    Appointment</span>
+                                            </li>
+                                            <li *ngIf="appointment.apptStatus == 'Completed'">
+                                                <span class="rate-service" [class.rated]="isRated(appointment)"
+                                                    (click)="rateService(appointment,'appointment')">{{rate_visit}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
+                        </owl-carousel>
+                        <div class="owl-theme">
+                            <div class="owl-controls">
+                                <div class="custom-appt-nav owl-nav"></div>
+                            </div>
                         </div>
-                    </h2>
-                    <div *ngIf="(appointments.length == 0 && (loadcomplete.waitlist && waitlists && waitlists.length == 0) && (loadcomplete.donations && donations && donations.length == 0))"
-                        class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
-                        <p class="locate-customer">No current Bookings available</p>
                     </div>
-                    <div class="table-outer1 ng-tns-c16-57">
-                        <table class="table">
-
-                            <!-- TODAY BOOKINGS  -->
-                            <thead *ngIf="(today_totalbookings.length != 0)">
-                                <th colspan="6">TODAY</th>
-                            </thead>
-                            <tbody *ngIf="today_totalbookings.length != 0">
-                                <tr [ngClass]="{'custId-cursor': !booking.donationStatus}"
-                                    *ngFor="let booking of todayBookings;"
-                                    (click)="booking.donationStatus ?'':showBookingDetails(booking)">
-                                    <ng-container *ngIf="booking.apptStatus">
-                                        <td>
-                                            <h4>{{getSingleTime(booking.appmtTime)}}</h4>
-                                        </td>
-                                        <td class="tdisplay-block">
-                                            <h4 (click)="providerDetail(booking.providerAccount,$event)">
-                                                {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
-                                            <span>
-                                                <i class="fa phon-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                <i class="fa meet-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                <i class="fa zoom-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                <i class="fa wtsapaud-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                <i class="fa wtsapvid-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                            </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                        </td>
-                                        <td>
-                                            <h6
-                                                [ngClass]="{'colr-confrm':(booking.apptStatus == 'Confirmed'),'colr-arrived':(booking.apptStatus == 'Arrived'),'colr-started':(booking.apptStatus == 'Started'),'colr-canceld':(booking.apptStatus == 'Cancelled'),'colr-completed':(booking.apptStatus == 'Completed')}">
-                                                {{booking.apptStatus}}
-                                            </h6>
-                                            <span *ngIf="booking.apptStatus == 'Confirmed'">
-                                                <a href="{{path}}status/{{booking.appointmentEncId}}"
-                                                    (click)="stopprop($event)" target="blank"><u class="font-smalr">VIEW
-                                                        STATUS</u></a></span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
-
-                                                <button class="bt3 cust-btn"
-                                                    (click)="viewBill(booking,'appointment')">Pay
-                                                    &#8377;{{booking.amountDue}}</button>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span *ngIf="booking.billViewStatus == 'Show'">
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(booking,'appointment')">View Bill</button>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                                                (click)="stopprop($event)">
-                                                <mat-icon>more_vert</mat-icon>
-                                            </button>
-                                            <mat-menu #appMenu="matMenu">
-                                                <button mat-menu-item
-                                                    *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
-                                                <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
-                                                    {{send_msg_cap}}
-                                                </button>
-                                            </mat-menu>
-                                        </td>
-                                    </ng-container>
-                                    <ng-container *ngIf="booking.waitlistStatus">
-                                        <td>
-                                            <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled')"
-                                                class="now">Now</h4>
-                                            <h4
-                                                *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                {{booking.appxWaitingTime}}</h4>
-                                            <span
-                                                *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">{{booking.date}}</span>
-                                            <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
-                                        </td>
-                                        <td class="tdisplay-block">
-                                            <h4 (click)="providerDetail(booking.providerAccount)">
-                                                {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
-                                            <span>
-                                                <i class="fa phon-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                <i class="fa meet-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                <i class="fa zoom-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                <i class="fa wtsapaud-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                <i class="fa wtsapvid-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                            </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                        </td>
-                                        <td>
-                                            <h6
-                                                [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
-                                                <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
-                                                <span
-                                                    *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
-                                            </h6>
-                                            <span *ngIf="booking.waitlistStatus == 'Confirmed'">
-                                                <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"><u
-                                                        class="font-smalr">VIEW STATUS</u></a></span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
-                                                <button class="bt3 cust-btn" (click)="viewBill(booking,'checkin')">Pay
-                                                    &#8377;{{booking.amountDue}}</button>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span *ngIf="booking.billViewStatus == 'Show'">
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(booking,'checkin')">View Bill</button>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                                                (click)="stopprop($event)">
-                                                <mat-icon>more_vert</mat-icon>
-                                            </button>
-                                            <mat-menu #appMenu="matMenu">
-                                                <button mat-menu-item
-                                                    *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
-                                                <button mat-menu-item (click)="addWaitlistMessage(booking)">
-                                                    {{send_msg_cap}}
-                                                </button>
-                                            </mat-menu>
-                                        </td>
-                                    </ng-container>
-                                    <ng-container *ngIf="booking.donationStatus">
-                                        <td>
-                                            <h4>{{booking.date}}</h4>
-                                        </td>
-                                        <td class="tdisplay-block">
-                                            <h4>{{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                        </td>
-                                        <td>
-                                            <h6 class="colr-completed">{{booking.donationStatus | capitalizeFirst}}</h6>
-                                        </td>
-                                        <td colspan=3>
-                                            <h6>
-                                                <i class="fa fa-inr"></i>
-                                                {{booking.donationAmount}}</h6>
-                                        </td>
-                                    </ng-container>
-                                </tr>
-                                <tr *ngIf="!more_tdybookingsShow && today_totalbookings.length > 3"
-                                    (click)="showMoreTdyBookings()">
-                                    <td colspan="6"><a>Show more...</a></td>
-                                </tr>
-                                <ng-container *ngIf="more_tdybookingsShow">
-                                    <tr *ngFor="let booking of todayBookings_more;"
-                                        [ngClass]="{'custId-cursor': !booking.donationStatus}"
-                                        (click)="booking.donationStatus ?'':showBookingDetails(booking)">
-                                        <ng-container *ngIf="booking.apptStatus">
-                                            <td>
-                                                <h4>{{getSingleTime(booking.appmtTime)}}</h4>
-                                            </td>
-                                            <td class="tdisplay-block">
-                                                <h4 (click)="providerDetail(booking.providerAccount)">
-                                                    {{booking.providerAccount.businessName || '' | capitalizeFirst}}
-                                                </h4>
-                                                <span>
-                                                    <i class="fa phon-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                    <i class="fa meet-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                    <i class="fa zoom-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                    <i class="fa wtsapaud-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                    <i class="fa wtsapvid-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                            </td>
-                                            <td>
-                                                <h6
-                                                    [ngClass]="{'colr-confrm':(booking.apptStatus == 'Confirmed'),'colr-arrived':(booking.apptStatus == 'Arrived'),'colr-started':(booking.apptStatus == 'Started'),'colr-canceld':(booking.apptStatus == 'Cancelled'),'colr-completed':(booking.apptStatus == 'Completed')}">
-                                                    {{booking.apptStatus}}
-                                                </h6>
-                                                <span *ngIf="booking.apptStatus == 'Confirmed'">
-                                                    <a href="{{path}}status/{{booking.appointmentEncId}}"
-                                                        target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
-                                            </td>
-                                            <td>
-                                                <span
-                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
-
-                                                    <button class="bt3 cust-btn"
-                                                        (click)="viewBill(booking,'appointment')">Pay
-                                                        &#8377;{{booking.amountDue}}</button>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span *ngIf="booking.billViewStatus == 'Show'">
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(booking,'appointment')">View
-                                                        Receipt</button>
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(booking,'appointment')">View
-                                                        Receipt</button>
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(booking,'appointment')">View Bill</button>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                                                    (click)="stopprop($event)">
-                                                    <mat-icon>more_vert</mat-icon>
-                                                </button>
-                                                <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item
-                                                        *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
-                                                    <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
-                                                        {{send_msg_cap}}
-                                                    </button>
-                                                </mat-menu>
-                                            </td>
-                                        </ng-container>
-                                        <ng-container *ngIf="booking.waitlistStatus">
-                                            <td>
-                                                <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled')"
-                                                    class="now">Now</h4>
-                                                <h4
-                                                    *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                    {{booking.appxWaitingTime}}</h4>
-                                                <span
-                                                    *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">{{booking.date}}</span>
-                                                <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
-                                            </td>
-                                            <td class="tdisplay-block">
-                                                <h4 (click)="providerDetail(booking.providerAccount)">
-                                                    {{booking.providerAccount.businessName || '' | capitalizeFirst}}
-                                                </h4>
-                                                <span>
-                                                    <i class="fa phon-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                    <i class="fa meet-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                    <i class="fa zoom-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                    <i class="fa wtsapaud-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                    <i class="fa wtsapvid-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                            </td>
-                                            <td>
-                                                <h6
-                                                    [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
-                                                    <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
-                                                    <span
-                                                        *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
-                                                </h6>
-                                                <span *ngIf="booking.waitlistStatus == 'Confirmed'">
-                                                    <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"><u
-                                                            class="font-smalr">VIEW STATUS</u></a></span>
-                                            </td>
-                                            <td>
-                                                <span
-                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
-                                                    <button class="bt3 cust-btn"
-                                                        (click)="viewBill(booking,'checkin')">Pay
-                                                        &#8377;{{booking.amountDue}}</button>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span *ngIf="booking.billViewStatus == 'Show'">
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(booking,'checkin')">View Bill</button>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                                                    (click)="stopprop($event)">
-                                                    <mat-icon>more_vert</mat-icon>
-                                                </button>
-                                                <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item
-                                                        *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
-                                                    <button mat-menu-item (click)="addWaitlistMessage(booking)">
-                                                        {{send_msg_cap}}
-                                                    </button>
-                                                </mat-menu>
-                                            </td>
-                                        </ng-container>
-                                        <ng-container *ngIf="booking.donationStatus">
-                                            <td>
-                                                <h4>{{booking.date}}</h4>
-                                            </td>
-                                            <td class="tdisplay-block">
-                                                <h4>{{booking.providerAccount.businessName || '' | capitalizeFirst}}
-                                                </h4>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                            </td>
-                                            <td>
-                                                <h6 class="colr-completed">{{booking.donationStatus | capitalizeFirst}}
-                                                </h6>
-                                            </td>
-                                            <td colspan=3>
-                                                <h6>
-                                                    <i class="fa fa-inr"></i>
-                                                    {{booking.donationAmount}}</h6>
-                                            </td>
-                                        </ng-container>
-                                    </tr>
-                                    <tr *ngIf="more_tdybookingsShow" (click)="showlessTdyBookings()">
-                                        <td colspan="6"><a>Show less...</a></td>
-                                    </tr>
-                                </ng-container>
-                            </tbody>
-
-
-                            <!-- FUTURE BOOKINGS -->
-                            <thead *ngIf="(future_totalbookings.length != 0)">
-                                <th colspan="6">UPCOMING</th>
-                            </thead>
-                            <tbody *ngIf="future_totalbookings.length != 0">
-                                <tr *ngFor="let booking of futureBookings;" class="custId-cursor"
-                                    (click)="showBookingDetails(booking)">
-                                    <ng-container *ngIf="booking.apptStatus">
-                                        <td>
-                                            <h4>{{getSingleTime(booking.appmtTime)}}</h4>
-                                            <span>{{booking.appmtDate}}</span>
-                                        </td>
-                                        <td class="tdisplay-block">
-                                            <h4 (click)="providerDetail(booking.providerAccount)">
-                                                {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
-                                            <span>
-                                                <i class="fa phon-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                <i class="fa meet-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                <i class="fa zoom-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                <i class="fa wtsapaud-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                <i class="fa wtsapvid-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                            </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                        </td>
-                                        <td>
-                                            <h6
-                                                [ngClass]="{'colr-confrm':(booking.apptStatus == 'Confirmed'),'colr-arrived':(booking.apptStatus == 'Arrived'),'colr-started':(booking.apptStatus == 'Started'),'colr-canceld':(booking.apptStatus == 'Cancelled'),'colr-completed':(booking.apptStatus == 'Completed')}">
-                                                {{booking.apptStatus}}
-                                            </h6>
-                                            <span *ngIf="booking.apptStatus == 'Confirmed'"><a
-                                                    href="{{path}}status/{{booking.appointmentEncId}}" target="blank"><u
-                                                        class="font-smalr">VIEW STATUS</u></a></span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
-
-                                                <button class="bt3 cust-btn"
-                                                    (click)="viewBill(booking,'appointment')">Pay
-                                                    &#8377;{{booking.amountDue}}</button>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span *ngIf="booking.billViewStatus == 'Show'">
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(booking,'appointment')">View Bill</button>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                                                (click)="stopprop($event)">
-                                                <mat-icon>more_vert</mat-icon>
-                                            </button>
-                                            <mat-menu #appMenu="matMenu">
-                                                <button mat-menu-item
-                                                    *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
-                                                <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
-                                                    {{send_msg_cap}}
-                                                </button>
-                                            </mat-menu>
-                                        </td>
-                                    </ng-container>
-                                    <ng-container *ngIf="booking.waitlistStatus">
-                                        <td>
-                                            <h4 *ngIf="!booking.token">{{booking.serviceTime}}</h4>
-                                            <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
-                                            <span>{{booking.date}}</span>
-                                        </td>
-                                        <td class="tdisplay-block">
-                                            <h4 (click)="providerDetail(booking.providerAccount)">
-                                                {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
-                                            <span>
-                                                <i class="fa phon-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                <i class="fa meet-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                <i class="fa zoom-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                <i class="fa wtsapaud-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                <i class="fa wtsapvid-icon"
-                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                            </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                        </td>
-                                        <td>
-                                            <h6
-                                                [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
-                                                <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
-                                                <span
-                                                    *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
-                                            </h6>
-                                            <span *ngIf="booking.waitlistStatus == 'Confirmed'">
-                                                <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"><u
-                                                        class="font-smalr">VIEW STATUS</u></a></span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
-                                                <button class="bt3 cust-btn" (click)="viewBill(booking,'checkin')">Pay
-                                                    &#8377;{{booking.amountDue}}</button>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span *ngIf="booking.billViewStatus == 'Show'">
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
-                                                <button class="bt3 cust-btn"
-                                                    *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(booking,'checkin')">View Bill</button>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                                                (click)="stopprop($event)">
-                                                <mat-icon>more_vert</mat-icon>
-                                            </button>
-                                            <mat-menu #appMenu="matMenu">
-                                                <button mat-menu-item
-                                                    *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
-                                                <button mat-menu-item (click)="addWaitlistMessage(booking)">
-                                                    {{send_msg_cap}}
-                                                </button>
-                                            </mat-menu>
-                                        </td>
-                                    </ng-container>
-                                </tr>
-                                <tr *ngIf="!more_futrbookingsShow && future_totalbookings.length > 3"
-                                    (click)="showMoreFutrBookings()">
-                                    <td colspan="6">
-                                        <a>Show more...</a>
-                                    </td>
-                                </tr>
-                                <ng-container *ngIf="more_futrbookingsShow">
-                                    <tr *ngFor="let booking of futureBookings_more;" class="custId-cursor"
-                                        (click)="showBookingDetails(booking)">
-                                        <ng-container *ngIf="booking.apptStatus">
-                                            <td>
-                                                <h4>{{getSingleTime(booking.appmtTime)}}</h4>
-                                                <span>{{booking.appmtDate}}</span>
-                                            </td>
-                                            <td class="tdisplay-block">
-                                                <h4 (click)="providerDetail(booking.providerAccount)">
-                                                    {{booking.providerAccount.businessName || '' | capitalizeFirst}}
-                                                </h4>
-                                                <span>
-                                                    <i class="fa phon-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                    <i class="fa meet-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                    <i class="fa zoom-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                    <i class="fa wtsapaud-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                    <i class="fa wtsapvid-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                            </td>
-                                            <td>
-                                                <h6
-                                                    [ngClass]="{'colr-confrm':(booking.apptStatus == 'Confirmed'),'colr-arrived':(booking.apptStatus == 'Arrived'),'colr-started':(booking.apptStatus == 'Started'),'colr-canceld':(booking.apptStatus == 'Cancelled'),'colr-completed':(booking.apptStatus == 'Completed')}">
-                                                    {{booking.apptStatus}}
-                                                </h6>
-                                                <span *ngIf="booking.apptStatus == 'Confirmed'"><a
-                                                        href="{{path}}status/{{booking.appointmentEncId}}"
-                                                        target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
-                                            </td>
-                                            <td>
-                                                <span
-                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
-
-                                                    <button class="bt3 cust-btn"
-                                                        (click)="viewBill(booking,'appointment')">Pay
-                                                        &#8377;{{booking.amountDue}}</button>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span *ngIf="booking.billViewStatus == 'Show'">
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(booking,'appointment')">View
-                                                        Receipt</button>
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(booking,'appointment')">View
-                                                        Receipt</button>
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(booking,'appointment')">View Bill</button>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                                                    (click)="stopprop($event)">
-                                                    <mat-icon>more_vert</mat-icon>
-                                                </button>
-                                                <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item
-                                                        *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
-                                                    <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
-                                                        {{send_msg_cap}}
-                                                    </button>
-                                                </mat-menu>
-                                            </td>
-
-                                        </ng-container>
-                                        <ng-container *ngIf="booking.waitlistStatus">
-                                            <td>
-                                                <h4 *ngIf="!booking.token">{{booking.serviceTime}}</h4>
-                                                <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
-                                                <span>{{booking.date}}</span>
-                                            </td>
-                                            <td class="tdisplay-block">
-                                                <h4 (click)="providerDetail(booking.providerAccount)">
-                                                    {{booking.providerAccount.businessName || '' | capitalizeFirst}}
-                                                </h4>
-                                                <span>
-                                                    <i class="fa phon-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                    <i class="fa meet-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                    <i class="fa zoom-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                    <i class="fa wtsapaud-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                    <i class="fa wtsapvid-icon"
-                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                            </td>
-                                            <td>
-                                                <h6
-                                                    [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
-                                                    <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
-                                                    <span
-                                                        *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
-                                                </h6>
-                                                <span *ngIf="booking.waitlistStatus == 'Confirmed'">
-                                                    <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"><u
-                                                            class="font-smalr">VIEW STATUS</u></a></span>
-                                            </td>
-                                            <td>
-                                                <span
-                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
-                                                    <button class="bt3 cust-btn"
-                                                        (click)="viewBill(booking,'checkin')">Pay
-                                                        &#8377;{{booking.amountDue}}</button>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span *ngIf="booking.billViewStatus == 'Show'">
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
-                                                    <button class="bt3 cust-btn"
-                                                        *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(booking,'checkin')">View Bill</button>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                                                    (click)="stopprop($event)">
-                                                    <mat-icon>more_vert</mat-icon>
-                                                </button>
-                                                <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item
-                                                        *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
-                                                    <button mat-menu-item (click)="addWaitlistMessage(booking)">
-                                                        {{send_msg_cap}}
-                                                    </button>
-                                                </mat-menu>
-                                            </td>
-                                        </ng-container>
-                                    </tr>
-                                    <tr *ngIf="more_futrbookingsShow" (click)="showlessFutrBookings()">
-                                        <td colspan="6">
-                                            <a>Show less...</a>
-                                        </td>
-                                    </tr>
-                                </ng-container>
-                            </tbody>
-
-
-                        </table>
-                    </div>
+                    <div class="brd-bt">&nbsp;</div>
+                    <div class="col-md-12 mgn-up-10 mgn-bt-10"><a class="pointer-cursor underline"
+                            (click)="gotoApptmentHistory()">Go to History</a></div>
                 </div>
-            </div>
+
+                <div class="card c-checkins">
+                    <mat-accordion>
+                        <mat-expansion-panel class="no-padding">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Checkins &nbsp;<span
+                                        *ngIf="waitlists && waitlists.length>0">({{waitlists.length}})</span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngIf="loadcomplete.waitlist && waitlists && waitlists.length == 0"
+                                class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
+                                <p>{{no_checkins_cap}}</p>
+                            </div>
+                            <div class="outer banner no-padding"
+                                *ngIf="loadcomplete.waitlist && waitlists && waitlists.length != 0">
+                                <owl-carousel id="wlCarousel" [options]="carouselOne" [carouselClasses]="['owl-theme']"
+                                    [items]="waitlists">
+                                    <div class="item checklist" *ngFor="let waitlist of waitlists; let i=index">
+                                        <div class="header">
+                                            <div class="lt width20">
+                                                <div class="title" (click)="providerDetail(waitlist.providerAccount)">
+                                                    <h3>{{waitlist.providerAccount.businessName || '' | capitalizeFirst}}
+                                                    </h3>
+                                                </div>
+                                                <div class="location consumr" *ngIf="waitlist.queue.location">
+                                                    {{waitlist.queue.location.place || '' | capitalizeFirst}}
+                                                    <span class="consumr-loc-icon"><a
+                                                            *ngIf="waitlist.queue.location.googleMapUrl" rel="noopener"
+                                                            [href]="waitlist.queue.location.googleMapUrl"
+                                                            target="_blank" class="icon-location"
+                                                            matTooltip="Click to navigate">
+                                                        </a></span>
+                                                </div>
+                                                <div class="status-outer">
+                                                    <div class="started-label"
+                                                        *ngIf="waitlist.waitlistStatus == 'started'">
+                                                        {{status_started_cap}}
+                                                    </div>
+                                                    <div class="done-label" *ngIf="waitlist.waitlistStatus == 'done'">
+                                                        {{status_done_cap}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="rt">
+                                                <div class="favourite" *ngIf="checkIfFav(waitlist.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(waitlist.providerAccount)"
+                                                        matTooltip="{{remove_fav_cap}}"></span>
+                                                </div>
+                                                <div class="favourite" *ngIf="!checkIfFav(waitlist.providerAccount.id)">
+                                                    <span class="icon-favourite" matTooltip="Add to Favourite"
+                                                        (click)="addFavProvider(waitlist.providerAccount.id)"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="details">
+                                            <div class="lt">
+                                                <div class="lt0 pointlist subtitle-db" (click)="showcheckindetails(waitlist)">
+                                                    <span class="service">
+                                                        <span>
+                                                            <i class="fa phon-icon"
+                                                                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes.length > 0 && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                            <i class="fa meet-icon"
+                                                                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes.length > 0  && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                            <i class="fa zoom-icon"
+                                                                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes.length > 0  && waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                            <i class="fa wtsapaud-icon"
+                                                                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes.length > 0  && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='audioService'"></i>
+                                                            <i class="fa wtsapvid-icon"
+                                                                *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes.length > 0  && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='videoService'"></i>
+                                                        </span>
+                                                        {{waitlist.service.name | capitalizeFirst}}</span> for <span
+                                                        class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
+                                                        {{user.firstName | capitalizeFirst}}
+                                                        {{user.lastName | capitalizeFirst}}</span>
+                                                </div>
+                                                <span class="lt0" *ngIf="waitlist.provider">Provider:
+                                                    {{waitlist.provider.firstName | capitalizeFirst}}
+                                                    {{waitlist.provider.lastName | capitalizeFirst}}</span>
+                                                <ng-container
+                                                    *ngIf="waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
+                                        waitlist.waitlistStatus == 'arrived' || waitlist.waitlistStatus == 'cancelled')">
+                                                    <div class="lt0"
+                                                        *ngIf="waitlist.estimated_date=='' && waitlist.waitlistStatus != 'cancelled'">
+                                                        {{waitlist.estimated_caption}} <span class="time now">
+                                                            {{waitlist.estimated_timenow}}</span><span
+                                                            style="display: flex">
+                                                            {{waitlist.estimated_time}}</span>
+                                                    </div>
+                                                    <div class="lt0"
+                                                        *ngIf="waitlist.estimated_date!='' && waitlist.waitlistStatus != 'cancelled'">
+                                                        {{waitlist.estimated_caption}} <span class="time now">
+                                                            <span *ngIf="waitlist.estimated_date_type == 'date'">{{waitlist.estimated_date
+                                                | date: dateFormatSp }}</span>
+                                                            <span
+                                                                *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}}
+                                                            </span>
+                                                            <span
+                                                                *ngIf="waitlist.calculationMode != 'NoCalc'">,{{waitlist.estimated_time}}</span></span>
+                                                        <span style="display: flex">
+                                                            {{waitlist.estimated_timeslot}}</span>
+                                                    </div>
+                                                    <div class="lt0" *ngIf="waitlist.waitlistStatus == 'cancelled'">
+                                                        <div class="lt0">
+                                                            {{waitlist.estimated_caption}} <span class="time">{{waitlist.estimated_date
+                                                | date: dateFormatSp }},
+                                                                <span style="display: flex">
+                                                                    {{waitlist.estimated_time}}</span></span>
+                                                        </div>
+                                                        <div class="red">
+                                                            {{waitlist.cancelled_caption}}
+                                                            <span class="time">
+                                                                {{waitlist.cancelled_date | date: dateFormatSp}}
+                                                                {{waitlist.cancelled_time}}</span>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <div class="lt0" *ngIf="waitlist.waitlistStatus != 'cancelled'">
+                                                    <span *ngIf="waitlist.personsAhead === 0"> {{first_person}}</span>
+                                                    <span *ngIf="waitlist.personsAhead === 1"> <span
+                                                            class="forwhom">{{waitlist.personsAhead}}</span>{{one_person_ahead}}
+                                                    </span>
+                                                    <span *ngIf="waitlist.personsAhead > 1"> <span
+                                                            class="forwhom">{{waitlist.personsAhead}}</span>{{people_ahead}}
+                                                    </span>
+                                                </div>
+                                                <!-- <div class="lt0" *ngIf="waitlist.token">
+                                    {{token_no}} <span class="token">{{waitlist.token}} </span>
+                                </div> -->
+                                                <div class="lt0" *ngIf="!waitlist.batchName && waitlist.token">
+                                                    {{token_no}} <span class="token">{{waitlist.token}} </span>
+                                                </div>
+                                                <div class="lt0" *ngIf="waitlist.batchName" style="font-size: 0.9rem;">
+                                                    Batch <span class="token">{{waitlist.batchName}} </span>
+                                                </div>
+                                                <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
+                                                    {{party_size}} <span class="persons">{{waitlist.partySize}}</span>
+                                                </div>
+                                                <div class="lt0 underline" *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.waitlistStatus !== 'done'
+                                         && waitlist.waitlistStatus !== 'cancelled'">
+                                                    <a (click)="getMeetingDetails(waitlist,'waitlist')"> Meeting details
+                                                    </a>
+                                                </div>
+                                                <!-- <div class="lt0 payment"
+                                    *ngIf="!waitlist.parentUuid && waitlist.waitlistStatus=='prepaymentPending'">
+                                    <span class="paytext">{{checkindisablemsg}} {{waitlist.counter}}
+                                        {{checkindisablemsg1}}</span>
+                                </div> -->
+                                                <div class="lt0 payment"
+                                                    *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show') && waitlist.waitlistStatus != 'cancelled'">
+                                                    <span class="paytext"><span>Amount Due : <span
+                                                                class="rupee-font">&#8377;
+                                                            </span>{{waitlist.amountDue}}
+                                                        </span><a class="bt3 cust-btn pointer-cursor"
+                                                            (click)="viewBill(waitlist,'checkin')">Pay</a></span>
+                                                </div>
+                                                <div *ngIf="waitlist.waitlistStatus=='checkedIn'|| 'prepaymentPending'">
+                                                    <div class="lt0"
+                                                        *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.service.livetrack && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
+                                                        <div>
+                                                            <!-- <div class="mb5">You are {{waitlist.differofDistanc}} km away from
+                                                        {{waitlist.providerAccount.businessName}}<span><i
+                                                                class="fa fa-refresh fl-right"
+                                                                (click)="gotoLivetrackchekin(waitlist.ynwUuid,waitlist.providerAccount.id,'true')"
+                                                                aria-hidden="true"></i></span></div> -->
+                                                            <div class="mb5"> You are sharing your arrival time with
+                                                                {{waitlist.providerAccount.businessName}}<span><i
+                                                                        class="fa fa-check fl-right"
+                                                                        aria-hidden="true"></i></span>
+                                                            </div>                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="lt0"
+                                                        *ngIf="!waitlist.jaldeeWaitlistDistanceTime && waitlist.service.livetrack && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
+                                                        <div>                                                            
+                                                            <div class="mb5"> Oops you are NOT sharing your arrival time
+                                                                with
+                                                                {{waitlist.providerAccount.businessName}}<span><i
+                                                                        class="fa fa-times fl-right"
+                                                                        aria-hidden="true"></i></span>
+                                                            </div>
+                                                            <span class="pointlist"
+                                                                (click)="gotoLivetrackchekin(waitlist.ynwUuid,waitlist.providerAccount.id,'false')">
+                                                                Jaldee recommends you <a>share your arrival time</a> with
+                                                                provider</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="rt">
+                                                <ul class="controls">
+                                                    <li *ngIf="waitlist.billViewStatus == 'Show'">
+                                                        <span class="view-bill"
+                                                            *ngIf="!(waitlist.amountDue>0) && waitlist.waitlistStatus != 'cancelled'"
+                                                            (click)="viewBill(waitlist,'checkin')">Receipt</span>
+                                                        <span class="view-bill"
+                                                            *ngIf="waitlist.waitlistStatus === 'cancelled' && waitlist.paymentStatus !== 'NotPaid'"
+                                                            (click)="viewBill(waitlist,'checkin')">Receipt</span>
+                                                        <span class="view-bill"
+                                                            *ngIf="waitlist.amountDue>0 && waitlist.waitlistStatus != 'cancelled'"
+                                                            (click)="viewBill(waitlist,'checkin')">Bill</span>
+                                                    </li>
+                                                    <li (click)="makeFailedPayment(waitlist)"
+                                                        *ngIf="!waitlist.parentUuid && waitlist.waitlistStatus=='prepaymentPending'">
+                                                        <span class="payment">{{make_pay_cap}}</span>
+                                                    </li>
+                                                    <li (click)="addWaitlistMessage(waitlist)">
+                                                        <span class="message">{{send_msg_cap}}</span>
+                                                    </li>
+                                                    <li class="cancelCheckinBtn"
+                                                        *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived' || waitlist.waitlistStatus=='prepaymentPending'">
+                                                        <span class="cancel"
+                                                            (click)="doCancelWaitlist(waitlist,'checkin')">{{cancel_checkin_cap}}</span>
+                                                    </li>
+                                                    <li *ngIf="waitlist.waitlistStatus == 'done'">
+                                                        <span class="rate-service" [class.rated]="isRated(waitlist)"
+                                                            (click)="rateService(waitlist,'checkin')">{{rate_visit}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </owl-carousel>
+                                <div class="owl-theme">
+                                    <div class="owl-controls">
+                                        <div class="custom-nav owl-nav"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="brd-bt">&nbsp;</div>
+                            <div class="col-md-12 mgn-up-10 mgn-bt-10"><a class="pointer-cursor underline"
+                                    (click)="gotoHistory()">Go to
+                                    History</a></div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+                <div class="card c-checkins favourites">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Donations<ng-container *ngIf="donations && donations.length>0">
+                                        ({{donations.length}})
+                                    </ng-container>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngIf="loadcomplete.donations && donations && donations.length == 0"
+                                class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
+                                <p>No Donations Today</p>
+                            </div>
+                            <div class="outer banner donation no-padding"
+                                *ngIf="loadcomplete.donations && donations && donations.length != 0">
+                                <owl-carousel id="donCarousel" [options]="carouselDonations"
+                                    [carouselClasses]="['owl-theme']" [items]="dontations">
+                                    <div class="item" *ngFor="let donation of donations; let i=index">
+                                        <div class="header">
+                                            <div class="lt">
+                                                <div class="title" *ngIf="donation.providerAccount"
+                                                    (click)="providerDetail(donation.providerAccount)">
+                                                    <h3>{{donation.providerAccount.businessName || '' | capitalizeFirst}}
+                                                    </h3>
+                                                </div>
+                                                <div class="location consumr" *ngIf="donation.location.place">
+                                                    {{donation.location.place || '' | capitalizeFirst}}
+                                                    <span class="consumr-loc-icon"><a
+                                                            *ngIf="donation.location.lattitude && donation.location.longitude"
+                                                            rel="noopener"
+                                                            [href]="getMapUrl(donation.location.lattitude, donation.location.longitude)"
+                                                            target="_blank" class="icon-location"
+                                                            matTooltip="Click to navigate">
+                                                        </a></span>
+                                                </div>
+                                            </div>
+                                            <div class="rt">
+                                                <div class="favourite"
+                                                    *ngIf="donation.providerAccount && checkIfFav(donation.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(donation.providerAccount)"
+                                                        matTooltip="{{remove_fav_cap}}"></span>
+                                                </div>
+                                                <div class="favourite"
+                                                    *ngIf="donation.providerAccount && !checkIfFav(donation.providerAccount.id)">
+                                                    <span class="icon-favourite" matTooltip="Add to Favourite"
+                                                        (click)="addFavProvider(donation.providerAccount.id)"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="details">
+                                            <div class="lt">
+                                                <div class="lt0">
+                                                    <span class="">{{donation.service.name | capitalizeFirst}}</span>
+                                                    <div class="">
+                                                        <span class="">Amount: 
+                                                            <span class="rupee-font">{{rupee_symbol}}</span>
+                                                            <span>{{donation.donationAmount}}</span>
+                                                        </span>
+                                                        <div><span *ngIf="donation.donor">Donor:
+                                                                {{donation.donor.firstName}}
+                                                            </span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="rt">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </owl-carousel>
+                                <div class="owl-theme">
+                                    <div class="owl-controls">
+                                        <div class="custom-don-nav owl-nav"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="brd-bt">&nbsp;</div>
+                            <div class="col-md-12 mgn-up-10 mgn-bt-10"><a class="pointer-cursor underline"
+                                    (click)="gotoDonations()">Go to Donations</a></div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+
+                <div class="card c-checkins">
+                    <h2><span class="pointer-cursor" (click)="paymentsClicked()">Payments</span></h2>
+                </div>
+
+                <div class="card favourites">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title [matTooltipClass]="tooltipcls" [matTooltip]="favTooltip">
+                                    {{my_fav_cap}}&nbsp;<span *ngIf="fav_providers && fav_providers.length>0">({{fav_providers.length}})</span>
+                                </mat-panel-title>
+                                
+                            </mat-expansion-panel-header>
+                            <div class="outer">
+                                <div class="list" [class.active]="open_fav_div == i"
+                                    *ngFor="let provider of fav_providers; index as i">
+                                    <div class="header">
+                                        <div class="lt" (click)="toogleDetail(provider, i)">
+                                            <h3 class="pointer-cursor">
+                                                <a
+                                                    (click)="providerDetail(provider)">{{provider.businessName | capitalizeFirst}}</a>
+                                            </h3>
+                                        </div>
+                                        <div class="rt">
+                                            <ul class="controls">
+                                                <li (click)="addCommonMessage(provider)"><span
+                                                        class="message">{{send_msg_cap}}</span></li>
+                                                <li>
+                                                    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <mat-menu #appMenu="matMenu">
+                                                <button mat-menu-item
+                                                    (click)="providerDetail(provider)">{{view_cap}}</button>
+                                                <button mat-menu-item (click)="doDeleteFavProvider(provider)">
+                                                    <span class="add-fav favourited">
+                                                        {{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item (click)="providerManagePrivacy(provider,i)">
+                                                    {{manage_privacy_cap}}
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+                                    </div>
+                                    <div class="detail" [@hideShowAnimator]="hideShowAnimator"
+                                        *ngIf="open_fav_div == i">
+                                        <div class="location" *ngFor="let loc of provider.locations">
+                                            <div class="locationname">
+                                                <span class="icon-location"></span> {{loc.place | capitalizeFirst}}
+                                            </div>
+                                            <div class="bt-l" *ngIf="loc['waitlist'] && provider.onlinePresence">
+                                                <div style="display: block;" class="wt-tme"
+                                                    *ngIf="loc['estimatedtime_det']">
+                                                    <div class="timing"
+                                                        *ngIf="loc['calculationMode']!='NoCalc' && loc['estimatedtime_det']['caption']">
+                                                        <span
+                                                            class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
+                                                        <span class="time-data">{{loc['estimatedtime_det']['time']}}
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <div *ngIf="loc['personAhead']">
+                                                            <div class="timing" style="margin-bottom: 5px"
+                                                                *ngIf="!loc.opennow && loc['calculationMode']=='NoCalc' && loc['showToken']">
+                                                                <span class="est-time"> Next Available Time:</span>
+                                                                <span class="time-data">
+                                                                    {{loc['estimatedtime_det']['nextAvailDate']}}
+                                                                </span>
+                                                            </div>
+                                                            <b>{{loc['personAhead']}}</b> <span
+                                                                *ngIf="loc['personAhead'] > 1" class="people-ahead">
+                                                                {{people_ahead}}</span><span
+                                                                *ngIf="loc['personAhead'] == 1" class="people-ahead">
+                                                                {{one_person_ahead}}</span>
+                                                        </div>
+                                                        <div style="font-weight: 600" *ngIf="loc['personAhead'] === 0">
+                                                            <div class="timing" style="margin-bottom: 5px"
+                                                                *ngIf="!loc.opennow && loc['calculationMode']=='NoCalc' && loc['showToken']">
+                                                                <span class="est-time"> Next Available Time:</span>
+                                                                <span class="time-data">
+                                                                    {{loc['estimatedtime_det']['nextAvailDate']}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="time-data">
+                                                                {{loc['personAhead']}} {{people_ahead}} </div>Be the
+                                                            first in
+                                                            line
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wt-tme notallowed" *ngIf="loc['estimatedtime_det']">
+                                                    <ng-container *ngIf="loc['estimatedtime_det']['message']">
+                                                        {{loc['estimatedtime_det']['message']}}</ng-container>
+                                                </div>
+                                            </div>
+                                            <div class="bt-r"
+                                                *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || provider.settings && provider.settings.futureDateWaitlist)">
+                                                <span class="cs-btn chk-btn" (click)="providerDetail(provider)"
+                                                    *ngIf="loc['waitlist'] && provider.onlinePresence && ((loc['onlineCheckIn'] && loc['isAvailableToday'] && loc['availableToday']) || (provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate'])) && !loc['showToken']">
+                                                    {{getTerminologyTerm('waitlist')}}</span>
+                                                <span class="cs-btn chk-btn" (click)="providerDetail(provider)"
+                                                    *ngIf="loc['waitlist'] && provider.onlinePresence && ((loc['onlineCheckIn'] && loc['isAvailableToday'] && loc['availableToday']) || (provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate'])) && loc['showToken']">{{get_token_btn}}</span>
+                                                <span class="cs-btn chk-btn disabled"
+                                                    *ngIf="loc['waitlist'] && provider.onlinePresence && !loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (provider.settings && !provider.settings.futureDateWaitlist || !loc['estimatedtime_det']['cdate'])">
+                                                    {{getTerminologyTerm('waitlist')}}</span>
+                                                <span class="cs-btn chk-btn disabled"
+                                                    *ngIf="loc['waitlist'] && provider.onlinePresence && loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (provider.settings && !provider.settings.futureDateWaitlist || !loc['estimatedtime_det']['cdate'])">{{get_token_btn}}</span>
+                                                <br>
+                                                <span class="cs-btn chk-btn"
+                                                    *ngIf="loc['apptAllowed'] && provider.onlinePresence"
+                                                    (click)="providerDetail(provider)">
+                                                    Appointment</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="loadcomplete.fav_provider && fav_providers && fav_providers.length == 0">
+                                    <p>{{you_hav_added_caption}}</p>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>            
         </div>
     </div>
 </section>

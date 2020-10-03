@@ -16,7 +16,7 @@
                     <span class="icon-inbox-in" *ngIf="user_id != message.owner.id"></span>
                     <span class="icon-inbox-out" *ngIf="user_id == message.owner.id"></span>
                 </div>
-                <div class="td td0">
+                <div class="td td0" *ngIf="message.attachements && message.attachements.length > 0">
                     <span class="result" *ngIf="message.attachements && message.attachements.length > 0" [matTooltipClass]="tooltipcls"
                         [matTooltip]="fileTooltip"><i class="fa fa-file-text-o" aria-hidden="true"></i>
                     </span>
@@ -42,7 +42,7 @@
                 <div class="td td4" [class.inbox-unreadmsg]="!message.read && user_id != message.owner.id">
                     <!-- <div class="label">{{message_cap}}</div> -->
                     <div class="result">
-                        {{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:30)+'.....':shared_functions.firstToUpper(message.msg) }}
+                        {{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:40)+'.....':shared_functions.firstToUpper(message.msg) }}
                     </div>
                 </div>
                 <div class="td td1" [class.inbox-unreadmsg]="!message.read && user_id != message.owner.id">

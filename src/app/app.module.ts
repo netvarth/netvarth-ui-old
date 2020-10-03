@@ -80,6 +80,7 @@ import { ShareService } from 'ngx-sharebuttons';
 import { ConsumerFooterModule } from './ynw_consumer/components/footer/footer.module';
 import { HeaderModule } from './shared/modules/header/header.module';
 import { TruncateModule } from './shared/pipes/limitTo.module';
+import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -110,7 +111,8 @@ export function init_app(globalService: GlobalService) {
     CheckYourStatusComponent,
     PaymentLinkComponent,
     JdnComponent,
-    UpdateProfilePopupComponent
+    UpdateProfilePopupComponent,
+    JaldeeBlogComponent
     // PhomeComponent,
   ],
   entryComponents: [

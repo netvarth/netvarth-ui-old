@@ -23,13 +23,13 @@
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                             <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
                                 class="img-circle img-responsive pointer-cursor"
-                                (click)="openImageModalRow(image_list_popup[0])">
+                                (click)="galleryExists && openImageModalRow(image_list_popup[0])">
                         </div>
-                        <div class="gal col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                        <div class="gal col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="galleryenabledArr.length > 0">
                             <div class="gallery-bullet centeralign pointer-cursor"
                                 (click)="openImageModalRow(image_list_popup[0])">
-                                <i class="fa fa-circle" *ngFor="let enable of galleryenabledArr"></i>
-                                <i class="fa fa-circle-o" *ngFor="let i of gallerydisabledArr"></i>
+                                <i class="fa fa-circle" *ngFor="let enable of galleryenabledArr"></i>100265
+                                <!-- <i class="fa fa-circle-o" *ngFor="let i of gallerydisabledArr"></i> -->
                             </div>
                         </div>
                     </div>
@@ -655,8 +655,7 @@
                                                                     <ng-container class="bottom-actions-root"
                                                                         *ngIf="service.serviceAvailability">
                                                                         <ng-container class="checkin-est"
-                                                                            *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
-                                                                            vccvv
+                                                                            *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">                                                                            
                                                                             <p class="price mgn-bt-0"
                                                                                 *ngIf="!service.serviceAvailability['serviceTime']">
                                                                                 Est Wait Time</p>
@@ -888,11 +887,16 @@
                                                 <!-- <p class="price mgn-bt-0 mgn-up-10">
                                                     Upto
                                                 </p> -->
-                                                <p class="title-style mgn-up-5-m mgn-up-10">
+                                                <p class="title-style mgn-bt-5 mgn-up-5">
                                                     <span
-                                                        class="rupee-font"></span><span>{{service.minDonationAmount| currency:'&#8377;'}}</span>
-                                                    - <span
-                                                        class="rupee-font"></span><span>{{service.maxDonationAmount| currency:'&#8377;'}}</span>
+                                                        class="rupee-font">{{service.minDonationAmount| currency:'&#8377;'}}</span>
+                                                </p>
+                                                <p class="price mgn-up-5-m mgn-bt-5">
+                                                    to
+                                                </p>
+                                                <p class="title-style mgn-up-5-m mgn-bt-5">    
+                                                    <span
+                                                        class="rupee-font">{{service.maxDonationAmount| currency:'&#8377;'}}</span>
                                                 </p>
                                             </div>
                                         </div>

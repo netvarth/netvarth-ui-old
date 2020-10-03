@@ -467,6 +467,7 @@ ul.details.badges li {
   display: table;
   /* text-transform: uppercase; */
   padding: 5px !important;
+  word-break: break-all;
 }
 
 .bus-item .card.card-item-n img {
@@ -560,10 +561,10 @@ ul.details.badges li {
   align-items: center;
   box-sizing: border-box;
   color: white;
-  font-size: 0.75rem !important;
+  font-size: 0.95rem !important;
   transition: all .3s ease;
   cursor: pointer;
-  padding: 3px !important;
+  padding: 1px !important;
   background: #106e76 !important;
 }
 
@@ -838,7 +839,7 @@ ul.details.badges li {
   width: 35px !important;
 }
 .service-icon .wtsapaud-icon, .service-icon .wtsapvid-icon {
-  width: 40px !important;
+  width: 36px !important;
 }
 
 .bus-item .card-item-content .title-style.mgn-bt-m-5 {

@@ -11985,3 +11985,32 @@ img.busN-logo {
 .content .c-outer .c-body .srlst .bottom-sect {
   padding-bottom: 0 !important;
 }
+.btn-selected {
+  background: #00aef2;
+  color: white;
+}
+.avail-slot {
+  color: #006cab !important;
+}
+.or-style {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.font-9 {
+  font-size: .9rem;
+}
+.pro-action {
+  font-weight: 600 !important;
+  font-size: .75rem!important;
+  background-color: #fff!important;
+  border: 1px solid #ccc!important;
+  border-radius: 20px!important;
+}
+.chkntoknappt-details{
+  font-weight: bold;
+  font-size: medium ;
+}
+.example-custom-date-class {
+  background:rgb(133,233,133);
+  border-radius: 100%;
+ }

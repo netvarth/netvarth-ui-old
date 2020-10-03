@@ -9,6 +9,7 @@ import { MaterialModule } from '../../../../../shared/modules/common/material.mo
 import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.module';
 import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { FormMessageDisplayModule } from '../../../../../shared/modules/form-mes
         GalleryModule,
         LoadingSpinnerModule,
         FormMessageDisplayModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        OrderModule
     ],
     exports: [ItemsComponent]
 })

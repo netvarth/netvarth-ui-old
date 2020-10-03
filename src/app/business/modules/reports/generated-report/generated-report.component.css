@@ -1,0 +1,38 @@
+
+table{
+  width: 100%;
+ }
+ td {
+  word-wrap: break-word;
+  margin:auto;
+  text-align:justify;
+  font-size: 10px;
+  word-break: break-word;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  -ms-word-break: break-word;
+  word-break: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+@media print {
+  .page {
+      margin: 0;
+      border: initial;
+      border-radius: initial;
+      width: initial;
+      min-height: initial;
+      box-shadow: initial;
+      background: initial;
+      page-break-after: always;
+  }
+
+table th {
+    display: table-header-group;
+    border:none;
+  }
+
+}

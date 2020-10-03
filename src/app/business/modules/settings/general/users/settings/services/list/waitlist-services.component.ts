@@ -49,6 +49,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         totalCnt: 0,
         perPage: this.page_count
     };
+    order = 'status';
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         private activated_route: ActivatedRoute,

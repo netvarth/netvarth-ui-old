@@ -1,5 +1,14 @@
-<section>
+<section *ngIf="source !=='token' && source !=='checkin' && source !=='appointment'">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section class="" *ngIf="source ==='token' || source ==='checkin' || source ==='appointment'">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <button type="button" class="btn default profile-back" (click)="onCancel()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+            Create {{customer_label}}
+        </h5>
+    </div>
 </section>
 <section>
     <div class="content loc-list p-checkin ynw-common-form-nm">
@@ -7,49 +16,59 @@
             <div class="row">
                 <div class="card p0">
 
-                    <div class="col-md-12 no-padding">
+                    <div class="col-md-12 no-padding"
+                        *ngIf="source !=='token' && source !=='checkin' && source !=='appointment'">
                         <ul class="nav cust-dash jd-custom-nav">
-                           
-                          <li class="dropdown notifications-menu">
-                            <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                              data-toggle="dropdown" (click)="findCustomer()">
-                              <i class="fa fa-search pointer-cursor"></i> Find {{customer_label | capitalizeFirst}}
-                            </a>
-                          </li>
-                          <li  *ngIf="viewCustomer" class="dropdown notifications-menu">
-                            <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                              data-toggle="dropdown" (click)="editCustomer()">
-                              <i class="fa fa-pencil"></i> Edit 
-                            </a>
-                          </li>
+
+                            <li class="dropdown notifications-menu">
+                                <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown"
+                                    (click)="findCustomer()">
+                                    <i class="fa fa-search pointer-cursor"></i> Find
+                                    {{customer_label | capitalizeFirst}}
+                                </a>
+                            </li>
+                            <li *ngIf="viewCustomer" class="dropdown notifications-menu">
+                                <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown"
+                                    (click)="editCustomer()">
+                                    <i class="fa fa-pencil"></i> Edit
+                                </a>
+                            </li>
                         </ul>
-                      </div>
-
-
+                    </div>
 
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
                             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-
+                            <div class="mgn-up-20 mgn-bt-10 red" *ngIf="customerErrorMsg !== '' && !loading">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i> {{customerErrorMsg}}
+                            </div>
+                            <div class="mgn-bt-20" *ngIf="customerErrorMsg1 !== '' && !loading">
+                                {{customerErrorMsg1}}
+                            </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20 mgn-bt-20"
                                 *ngIf="viewCustomer">
-                                <div *ngIf="customer[0].firstName" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div *ngIf="customer[0].firstName" class="col-md-6 col-xs-12 col-sm-6"
+                                    class="createcheckin">
                                     <div><b>Name:</b></div>
                                     <div>{{customer[0].firstName}} {{customer[0].lastName}}</div>
                                 </div>
-                                <div *ngIf="customer[0].jaldeeId" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div *ngIf="customer[0].jaldeeId" class="col-md-6 col-xs-12 col-sm-6"
+                                    class="createcheckin">
                                     <div><b>{{customer_label | capitalizeFirst}} Id:</b></div>
                                     <div>{{customer[0].jaldeeId}}</div>
                                 </div>
-                                <div *ngIf="customer[0].email" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div *ngIf="customer[0].email" class="col-md-6 col-xs-12 col-sm-6"
+                                    class="createcheckin">
                                     <div><b>Email:</b></div>
                                     <div>{{customer[0].email}}</div>
                                 </div>
-                                <div *ngIf="customer[0].phoneNo" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div *ngIf="customer[0].phoneNo" class="col-md-6 col-xs-12 col-sm-6"
+                                    class="createcheckin">
                                     <div><b>PhoneNo:</b></div>
                                     <div>{{customer[0].phoneNo}}</div>
                                 </div>
-                                <div *ngIf="customer[0].gender" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div *ngIf="customer[0].gender" class="col-md-6 col-xs-12 col-sm-6"
+                                    class="createcheckin">
                                     <div><b>Gender:</b></div>
                                     <div>{{customer[0].gender | capitalizeFirst}}</div>
                                 </div>
@@ -57,12 +76,13 @@
                                     <div><b>DOB</b></div>
                                     <div>{{customer[0].dob | date:dateFormat}}</div>
                                 </div>
-                                <div *ngIf="customer[0].address" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div *ngIf="customer[0].address" class="col-md-6 col-xs-12 col-sm-6"
+                                    class="createcheckin">
                                     <div><b>Address:</b></div>
                                     <div>{{customer[0].address}}</div>
                                 </div>
                             </div>
-                            
+
                             <form *ngIf="!loading && !viewCustomer" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 <div class="form-group mobile-field" *ngIf="haveMobile">
@@ -72,12 +92,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                 <span class="input-group-text" style="padding: 15px 10px 0 5px!important;
                                                 font-size: .875rem!important;">{{mob_prefix_cap}}</span>
                                             </div>
-                                            <input  type="text" matInput class="form-control"
+                                            <input type="text" matInput class="form-control"
                                                 (keypress)="isNumeric($event)" id="mobile_number"
                                                 placeholder="{{mobile_cap}} " formControlName="mobile_number"
                                                 autocomplete="off" maxlength=10>
 
-                                            </div>
+                                        </div>
                                     </mat-form-field>
 
                                     <app-field-error-display
@@ -97,38 +117,39 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20"
-                                *ngIf="searchClicked && foundCustomer">
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
-                                    <div><b>Name:</b></div>
-                                    <div>{{customer_data.firstName}} {{customer_data.lastName}}</div>
-                                </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
-                                    <div><b>Email:</b></div>
-                                    <div>{{customer_data.email}}</div>
-                                </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
-                                    <div><b>PhoneNo:</b></div>
-                                    <div>{{customer_data.phoneNo}}</div>
-                                </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
-                                    <div><b>DOB</b></div>
-                                    <div>{{customer_data.dob}}</div>
-                                </div>
-                                <hr class="wide-separator-line" />
-                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
-                                    Do You want take Check-In For this
+                                    *ngIf="searchClicked && foundCustomer">
+                                    <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                        <div><b>Name:</b></div>
+                                        <div>{{customer_data.firstName}} {{customer_data.lastName}}</div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                        <div><b>Email:</b></div>
+                                        <div>{{customer_data.email}}</div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                        <div><b>PhoneNo:</b></div>
+                                        <div>{{customer_data.phoneNo}}</div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                        <div><b>DOB</b></div>
+                                        <div>{{customer_data.dob}}</div>
+                                    </div>
+                                    <hr class="wide-separator-line" />
+                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
+                                        Do You want take Check-In For this
                                         {{customer_label}} &nbsp;
-                                    <i class="fa fa- pointer-cursor" (click)="checkinClicked()"><u
-                                            class="createcheckinstyle">Click here</u></i>
+                                        <i class="fa fa- pointer-cursor" (click)="checkinClicked()"><u
+                                                class="createcheckinstyle">Click here</u></i>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            
+
+
                                 <div class="form-group"
                                     *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" matInput id="customer_id"
-                                            placeholder="{{customer_label | capitalizeFirst}} id *" formControlName="customer_id" autocomplete="off"
+                                            placeholder="{{customerPlaceholder | capitalizeFirst}}"
+                                            formControlName="customer_id" autocomplete="off"
                                             (blur)="onFieldBlur('customer_id')">
                                     </mat-form-field>
                                     <app-field-error-display
@@ -208,6 +229,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         <textarea class="form-control" matInput id="address" placeholder="Address"
                                             formControlName="address"></textarea>
                                     </mat-form-field>
+                                </div>
+                                <div class="mgn-up-20 mgn-bt-20" *ngIf="customerErrorMsg2 !== '' && !loading">
+                                    {{customerErrorMsg2}}
                                 </div>
                                 <div class="actiondiv" style="margin-top: 10px;">
                                     <div style="margin-bottom:30px;display: inline-flex;">

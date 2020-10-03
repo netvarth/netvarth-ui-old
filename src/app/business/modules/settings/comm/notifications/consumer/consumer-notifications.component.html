@@ -60,7 +60,7 @@
                   </mat-expansion-panel-header>
                   <div class="form-group col-md-4 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput min="0" max="1000" type="text"
+                      <input matInput min="0" max="1000" type="number"
                         [(ngModel)]="earlyWLNotificatonSettings.personsAhead"
                         placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
                         (keypress)="showSubmit('EARLY_WL');numberOnly($event)" (keyup)="isvalid($event)"><br>
@@ -214,7 +214,8 @@
           <mat-expansion-panel [expanded]="false">
             <mat-expansion-panel-header class="mgn-bt-10">
               <mat-panel-title class="block-level">Appointment Notifications<br>
-                <span class="form-level-settings">Specify how and when your {{customer_label}}s need to be notified about their appointment</span>
+                <span class="form-level-settings">Specify how and when your {{customer_label}}s need to be notified
+                  about their appointment</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
@@ -344,7 +345,8 @@
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
                     <mat-panel-title class="block-level"> Appointment Confirmation Notifications
-                      <br> <span class="form-level-settings">Notify {{customer_label}} when appointment is confirmed.</span>
+                      <br> <span class="form-level-settings">Notify {{customer_label}} when appointment is
+                        confirmed.</span>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <ul class="notifications">
@@ -381,197 +383,210 @@
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
                     <mat-panel-title class="block-level">Appointment Reminder Notifications<br>
-                      <span class="form-level-settings">Setup upto 4 reminder notifications to be sent to your {{customer_label}} prior to his/her appointment.</span>
+                      <span class="form-level-settings">Setup upto 4 reminder notifications to be sent to your
+                        {{customer_label}} prior to his/her appointment.</span>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
-              <mat-accordion class="acc-btn">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level">First Reminder<br>
-                      <span class="form-level-settings">This will be sent 24 hours prior to the appointment.</span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
-                    <mat-form-field >
-                      <input matInput min="0"  type="text"
-                        [(ngModel)]="firstAPPTNotificationSettings.time"
-                        placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('FIRST_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                      <div class="mgn-up-5" *ngIf="firstApptTime && !firstAPPTNotificationSettings.time"
-                        style="color: red;"> Time is required</div>
-                     
-                    </mat-form-field>
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
+                    <mat-accordion class="acc-btn">
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'"
+                          class="acc-header">
+                          <mat-panel-title class="block-level">First Reminder<br>
+                            <span class="form-level-settings">This will be sent 24 hours prior to the
+                              appointment.</span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="form-group col-md-4 col-xs-7 col-sm-4">
+                          <mat-form-field>
+                            <input matInput min="0" type="text" [(ngModel)]="firstAPPTNotificationSettings.time"
+                              placeholder="Time(min)*" autocomplete="off"
+                              (keypress)="showSubmit('FIRST_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                            <div class="mgn-up-5" *ngIf="firstApptTime && !firstAPPTNotificationSettings.time"
+                              style="color: red;"> Time is required</div>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small
+                            style="color:#29b6f6;font-size:80%">{{timeinHrMin(firstAPPTNotificationSettings.time)}}</small>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <ul class="notifications">
+                          <li class="mgn-lt-10">
+                            <span class="notification"> via SMS </span>
+                            <mat-slide-toggle class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.sms"
+                              (change)="showSubmit('FIRST_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                          <li class="mgn-lt-10">
+                            <span class="notification"> via Email</span>
+                            <mat-slide-toggle class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.email"
+                              (change)="showSubmit('FIRST_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                          <li class="mgn-lt-10">
+                            <span class="notification">App notification</span>
+                            <mat-slide-toggle class="example-margin"
+                              [(ngModel)]="firstAPPTNotificationSettings.pushNotification"
+                              (change)="showSubmit('FIRST_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                        </ul>
+                        <button *ngIf="showButton['FIRST_APPT'] && firstAPPTNotificationSettings.time"
+                          (click)="changeNotificationSettings('FIRST_APPT')" type="button" mat-button
+                          class="cs-btn bt1 notifyOk">OK</button>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                    <div class="clearfix"></div>
+                    <mat-accordion class="acc-btn">
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'"
+                          class="acc-header">
+                          <mat-panel-title class="block-level"> Second Reminder<br>
+                            <span class="form-level-settings">This will be sent 8 hours prior to the appointment.
+                            </span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="form-group col-md-4 col-xs-7 col-sm-4">
+                          <mat-form-field class="example-full-width">
+                            <input matInput min="0" type="text" [(ngModel)]="secondAPPTNotificationSettings.time"
+                              placeholder="Time(min)*" autocomplete="off"
+                              (keypress)="showSubmit('SECOND_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                            <div class="mgn-up-5" *ngIf="secondApptTime && !secondAPPTNotificationSettings.time"
+                              style="color: red;">Time is required</div>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small
+                            style="color:#29b6f6;font-size:80%">{{timeinHrMin(secondAPPTNotificationSettings.time)}}</small>
+                        </div>
+                        <div class="clearfix"></div>
+                        <ul class="notifications">
+                          <li class="mgn-lt-10">
+                            <span class="notification"> via SMS </span>
+                            <mat-slide-toggle class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.sms"
+                              (change)="showSubmit('SECOND_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                          <li class="mgn-lt-10">
+                            <span class="notification"> via Email</span>
+                            <mat-slide-toggle class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.email"
+                              (change)="showSubmit('SECOND_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                          <li class="mgn-lt-10">
+                            <span class="notification">App notification</span>
+                            <mat-slide-toggle class="example-margin"
+                              [(ngModel)]="secondAPPTNotificationSettings.pushNotification"
+                              (change)="showSubmit('SECOND_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                        </ul>
+                        <button *ngIf="showButton['SECOND_APPT'] && secondAPPTNotificationSettings.time"
+                          (click)="changeNotificationSettings('SECOND_APPT')" type="button" mat-button
+                          class="cs-btn bt1 notifyOk">OK</button>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                    <div class="clearfix"></div>
+
+                    <mat-accordion class="acc-btn">
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'"
+                          class="acc-header">
+                          <mat-panel-title class="block-level"> Third Reminder<br>
+                            <span class="form-level-settings">This will be sent 4 hours prior to the appointment.
+                            </span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="form-group col-md-4 col-xs-7 col-sm-4">
+                          <mat-form-field class="example-full-width">
+                            <input matInput min="0" type="text" [(ngModel)]="thirdAPPTNotificationSettings.time"
+                              placeholder="Time(min)*" autocomplete="off"
+                              (keypress)="showSubmit('THIRD_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                            <div class="mgn-up-5" *ngIf="thirdApptTime && !thirdAPPTNotificationSettings.time"
+                              style="color: red;">Time is required</div>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small
+                            style="color:#29b6f6;font-size:80%">{{timeinHrMin(thirdAPPTNotificationSettings.time)}}</small>
+                        </div>
+                        <div class="clearfix"></div>
+                        <ul class="notifications">
+                          <li class="mgn-lt-10">
+                            <span class="notification"> via SMS </span>
+                            <mat-slide-toggle class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.sms"
+                              (change)="showSubmit('THIRD_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                          <li class="mgn-lt-10">
+                            <span class="notification"> via Email</span>
+                            <mat-slide-toggle class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.email"
+                              (change)="showSubmit('THIRD_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                          <li class="mgn-lt-10">
+                            <span class="notification">App notification</span>
+                            <mat-slide-toggle class="example-margin"
+                              [(ngModel)]="thirdAPPTNotificationSettings.pushNotification"
+                              (change)="showSubmit('THIRD_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                        </ul>
+                        <button *ngIf="showButton['THIRD_APPT'] && thirdAPPTNotificationSettings.time"
+                          (click)="changeNotificationSettings('THIRD_APPT')" type="button" mat-button
+                          class="cs-btn bt1 notifyOk">OK</button>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                    <div class="clearfix"></div>
+                    <mat-accordion class="acc-btn">
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'"
+                          class="acc-header">
+                          <mat-panel-title class="block-level"> Fourth Reminder<br>
+                            <span class="form-level-settings">This will be sent 1 hour prior to the appointment.</span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="form-group col-md-4 col-xs-7 col-sm-4">
+                          <mat-form-field class="example-full-width">
+                            <input matInput min="0" type="text" [(ngModel)]="fourthAPPTNotificationSettings.time"
+                              placeholder="Time(min)*" autocomplete="off"
+                              (keypress)="showSubmit('FOURTH_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                            <div class="mgn-up-5" *ngIf="fourthApptTime && !fourthAPPTNotificationSettings.time"
+                              style="color: red;">Time is required</div>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small
+                            style="color:#29b6f6;font-size:80%">{{timeinHrMin(fourthAPPTNotificationSettings.time)}}</small>
+                        </div>
+                        <div class="clearfix"></div>
+                        <ul class="notifications">
+                          <li class="mgn-lt-10">
+                            <span class="notification"> via SMS </span>
+                            <mat-slide-toggle class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.sms"
+                              (change)="showSubmit('FOURTH_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                          <li class="mgn-lt-10">
+                            <span class="notification"> via Email</span>
+                            <mat-slide-toggle class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.email"
+                              (change)="showSubmit('FOURTH_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                          <li class="mgn-lt-10">
+                            <span class="notification">App notification</span>
+                            <mat-slide-toggle class="example-margin"
+                              [(ngModel)]="fourthAPPTNotificationSettings.pushNotification"
+                              (change)="showSubmit('FOURTH_APPT')">
+                            </mat-slide-toggle>
+                          </li>
+                        </ul>
+                        <button *ngIf="showButton['FOURTH_APPT'] && fourthAPPTNotificationSettings.time"
+                          (click)="changeNotificationSettings('FOURTH_APPT')" type="button" mat-button
+                          class="cs-btn bt1 notifyOk">OK</button>
+                      </mat-expansion-panel>
+                    </mat-accordion>
                   </div>
-                  <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(firstAPPTNotificationSettings.time)}}</small></div> -->
-                  <div class="clearfix"></div>
-                  <ul class="notifications">
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.sms"
-                        (change)="showSubmit('FIRST_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.email"
-                        (change)="showSubmit('FIRST_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.pushNotification"
-                        (change)="showSubmit('FIRST_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                  </ul>
-                  <button *ngIf="showButton['FIRST_APPT'] && firstAPPTNotificationSettings.time"
-                    (click)="changeNotificationSettings('FIRST_APPT')" type="button" mat-button
-                    class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
-              <div class="clearfix"></div>
-              <mat-accordion class="acc-btn">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Second Reminder<br>
-                      <span class="form-level-settings">This will be sent 8 hours prior to the appointment. </span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput min="0"  type="text"
-                        [(ngModel)]="secondAPPTNotificationSettings.time"
-                        placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('SECOND_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                      <div class="mgn-up-5" *ngIf="secondApptTime && !secondAPPTNotificationSettings.time"
-                        style="color: red;">Time is required</div>
-                     
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(secondAPPTNotificationSettings.time)}}</small></div> -->
-                  <div class="clearfix"></div>
-                  <ul class="notifications">
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.sms"
-                        (change)="showSubmit('SECOND_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.email"
-                        (change)="showSubmit('SECOND_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.pushNotification"
-                        (change)="showSubmit('SECOND_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                  </ul>
-                  <button *ngIf="showButton['SECOND_APPT'] && secondAPPTNotificationSettings.time"
-                    (click)="changeNotificationSettings('SECOND_APPT')" type="button" mat-button
-                    class="cs-btn bt1 notifyOk">OK</button>
-                </mat-expansion-panel>
-              </mat-accordion>
-              <div class="clearfix"></div>
-              
-              <mat-accordion class="acc-btn">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Third Reminder<br>
-                      <span class="form-level-settings">This will be sent 4 hours prior to the appointment. </span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4"> 
-                    <mat-form-field class="example-full-width">
-                      <input matInput min="0"  type="text"
-                        [(ngModel)]="thirdAPPTNotificationSettings.time"
-                        placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('THIRD_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                      <div class="mgn-up-5" *ngIf="thirdApptTime && !thirdAPPTNotificationSettings.time"
-                        style="color: red;">Time is required</div>
-                      
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(thirdAPPTNotificationSettings.time)}}</small></div> -->
-                  <div class="clearfix"></div>
-                  <ul class="notifications">
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.sms"
-                        (change)="showSubmit('THIRD_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.email"
-                        (change)="showSubmit('THIRD_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.pushNotification"
-                        (change)="showSubmit('THIRD_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                  </ul>
-                  <button *ngIf="showButton['THIRD_APPT'] && thirdAPPTNotificationSettings.time"
-                    (click)="changeNotificationSettings('THIRD_APPT')" type="button" mat-button
-                    class="cs-btn bt1 notifyOk">OK</button>
-                </mat-expansion-panel>
-              </mat-accordion>
-              <div class="clearfix"></div>
-              <mat-accordion class="acc-btn">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Fourth Reminder<br>
-                      <span class="form-level-settings">This will be sent 1 hour prior to the appointment.</span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput min="0"  type="text"
-                        [(ngModel)]="fourthAPPTNotificationSettings.time"
-                        placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('FOURTH_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                      <div class="mgn-up-5" *ngIf="fourthApptTime && !fourthAPPTNotificationSettings.time"
-                        style="color: red;">Time is required</div>
-                     
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(fourthAPPTNotificationSettings.time)}}</small></div> -->
-                  <div class="clearfix"></div>
-                  <ul class="notifications">
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.sms"
-                        (change)="showSubmit('FOURTH_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.email"
-                        (change)="showSubmit('FOURTH_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.pushNotification"
-                        (change)="showSubmit('FOURTH_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                  </ul>
-                  <button *ngIf="showButton['FOURTH_APPT'] && fourthAPPTNotificationSettings.time"
-                    (click)="changeNotificationSettings('FOURTH_APPT')" type="button" mat-button
-                    class="cs-btn bt1 notifyOk">OK</button>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
-            </mat-expansion-panel>
-          </mat-accordion>
 
             </div>
           </mat-expansion-panel>
@@ -741,7 +756,6 @@
                     class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
-
             </div>
           </mat-expansion-panel>
         </mat-accordion>

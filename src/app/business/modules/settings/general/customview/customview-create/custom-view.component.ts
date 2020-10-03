@@ -14,6 +14,7 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 export class CustomViewComponent implements OnInit {
     customViewName;
     customViewFor = 'Waitlist';
+    appointment_status: any;
     departments: any = [];
     users_list: any = [];
     service_list: any = [];
@@ -118,6 +119,7 @@ export class CustomViewComponent implements OnInit {
                 this.loading = false;
             }
         }, 1000);
+        this.getOnlinePresence();
     }
     getProviderServices() {
         return new Promise((resolve) => {
@@ -731,6 +733,13 @@ export class CustomViewComponent implements OnInit {
                 }
             );
         }
+    }
+    getOnlinePresence() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.appointment_status = data.appointment;
+                console.log(this.appointment_status)
+            });
     }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'general', 'customview']);

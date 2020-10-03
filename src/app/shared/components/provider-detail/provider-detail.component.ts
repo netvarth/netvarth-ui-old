@@ -98,7 +98,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   socialMedialist: any = [];
   settings_exists = false;
   business_exists = false;
-  gallery_exists = false;
+  galleryExists = false;
   location_exists = false;
   isInFav;
   terminologiesjson: any = null;
@@ -221,7 +221,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   showType = 'more';
   futureAllowed = true;
   galleryenabledArr = [];
-  gallerydisabledArr = [];
+  // gallerydisabledArr = [];
   onlinePresence = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -422,7 +422,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.getbusinessprofiledetails_json('services', true);
             this.getbusinessprofiledetails_json('apptServices', true);
             this.getbusinessprofiledetails_json('donationServices', true);
-            this.getbusinessprofiledetails_json('departmentProviders', true);
           }
         },
         error => {
@@ -449,6 +448,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.businessjson = res;
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
+            if (this.account_Type === 'BRANCH') {
+              this.getbusinessprofiledetails_json('departmentProviders', true);
+                }
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
@@ -544,34 +546,32 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'gallery': {
             this.galleryenabledArr = []; // For showing gallery
-
+            this.image_list_popup = [];
             this.tempgalleryjson = res;
             let indx = 0;
-            if (this.bLogo !== '') {
-              this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+            if (this.bLogo !== '../../../assets/images/img-null.svg') {
+              this.galleryjson[0] = { keyName: 'logo', caption: 'Profile Picture', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               indx = 1;
-              this.galleryenabledArr.push(0);
+              // this.galleryenabledArr.push(0);
             }
-
-            for (let i = 0; i < this.galleryjson.length; i++) {
-              this.galleryenabledArr.push(i);
-            }
+            // for (let i = 0; i < this.galleryjson.length; i++) {
+            //   this.galleryenabledArr.push(i);
+            // }
             for (let i = 0; i < this.tempgalleryjson.length; i++) {
               this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
-              if (this.galleryenabledArr.length < 5) {
-                this.galleryenabledArr.push(i + indx);
-              }
+              // if (this.galleryenabledArr.length < 5) {
+              //   this.galleryenabledArr.push(i + indx);
+              // }
             }
-
-            const count = 5 - this.galleryenabledArr.length;
-            if (count > 0) {
-              for (let ind = 0; ind < count; ind++) {
-                this.gallerydisabledArr.push(ind);
-              }
-            }
-            this.gallery_exists = true;
-            this.image_list_popup = [];
+            // const count = 5 - this.galleryenabledArr.length;
+            // if (count > 0) {
+            //   for (let ind = 0; ind < count; ind++) {
+            //     this.gallerydisabledArr.push(ind);
+            //   }
+            // }
+            // this.gallery_exists = true;
             if (this.galleryjson.length > 0) {
+              this.galleryExists = true;
               for (let i = 0; i < this.galleryjson.length; i++) {
                 const imgobj = new Image(
                   i,
@@ -581,6 +581,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                   });
                 this.image_list_popup.push(imgobj);
               }
+            }
+            const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
+            for (let i = 0; i < imgLength; i++) {
+              this.galleryenabledArr.push(i);
             }
             break;
           }
@@ -710,13 +714,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           if (section === 'gallery') {
             this.galleryjson = [];
-            if (this.bLogo !== '') {
+            if (this.bLogo !== '../../../assets/images/img-null.svg') {
+              this.galleryExists = true;
               this.image_list_popup = [];
               this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               const imgobj = new Image(0,
                 { // modal
                   img: this.galleryjson[0].url,
-                  description: this.galleryjson[0].caption || ''
+                  description: this.galleryjson[0].caption || 'Profile Picture'
                 });
               this.image_list_popup.push(imgobj);
             } else {
@@ -2120,7 +2125,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   getPic(user) {
     if (user.profilePicture) {
-      // alert(JSON.parse(user.profilePicture)['url']);
       return JSON.parse(user.profilePicture)['url'];
     }
     return 'assets/images/img-null.svg';

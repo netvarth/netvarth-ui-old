@@ -221,7 +221,8 @@ export class AppointmentmanagerComponent implements OnInit {
     }
     getSchedulesCount() {
         // const filter = { 'scope-eq': 'account' };
-        this.provider_services.getSchedulesCount()
+        const filter = { 'state-eq': 'ENABLED' };
+        this.provider_services.getSchedulesCount(filter)
             .subscribe(
                 data => {
                     this.schedules_count = data;

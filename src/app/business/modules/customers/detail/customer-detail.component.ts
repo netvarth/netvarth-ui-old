@@ -74,6 +74,18 @@ export class CustomerDetailComponent implements OnInit {
     customerName;
     timeslot;
     comingSchduleId;
+    date;
+    thirdParty;
+    customerCount;
+    customerPlaceholder = '';
+    jld;
+    customerErrorMsg = '';
+    customerErrorMsg1 = '';
+    customerErrorMsg2 = '';
+    serviceIdParam;
+    userId;
+    deptId;
+    type;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -153,8 +165,21 @@ export class CustomerDetailComponent implements OnInit {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
             this.source = qparams.source;
+            if (qparams.type) {
+                this.type = qparams.type;
+            }
             if (qparams.phone) {
                 this.phoneNo = qparams.phone;
+                if (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
+                    this.getJaldeeIntegrationSettings();
+                    this.save_btn = 'Proceed';
+                }
+            } else {
+                if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment')) {
+                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
+                    this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    this.save_btn = 'Proceed';
+                }
             }
             if (qparams.email) {
                 this.email = qparams.email;
@@ -165,11 +190,26 @@ export class CustomerDetailComponent implements OnInit {
             if (qparams.noMobile) {
                 this.haveMobile = false;
             }
+            if (qparams.serviceId) {
+                this.serviceIdParam = qparams.serviceId;
+            }
+            if (qparams.userId) {
+                this.userId = qparams.userId;
+            }
+            if (qparams.deptId) {
+                this.deptId = qparams.deptId;
+            }
             if (qparams.timeslot) {
                 this.timeslot = qparams.timeslot;
             }
+            if (qparams.date) {
+                this.date = qparams.date;
+            }
             if (qparams.scheduleId) {
                 this.comingSchduleId = qparams.scheduleId;
+            }
+            if (qparams.thirdParty) {
+                this.thirdParty = qparams.thirdParty;
             }
         });
     }
@@ -190,6 +230,52 @@ export class CustomerDetailComponent implements OnInit {
         });
     }
 
+    getJaldeeCustomer() {
+        const filter = { 'primaryMobileNo-eq': this.phoneNo };
+        this.provider_services.getJaldeeCustomer(filter)
+            .subscribe(
+                (data: any) => {
+                    if (data.length > 0) {
+                        this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
+                        this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
+                        this.amForm.get('email_id').setValue(data[0].userProfile.email);
+                        this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
+                        this.amForm.get('address').setValue(data[0].userProfile.address);
+                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
+                        this.customerErrorMsg1 = 'The system found the record details in Jaldee.com';
+                        this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + ' to create ' + this.source + '?';
+                    } else {
+                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
+                        this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    }
+                },
+                error => {
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                }
+            );
+    }
+    getJaldeeIntegrationSettings() {
+        this.provider_services.getJaldeeIntegrationSettings().subscribe(
+            (data: any) => {
+                if (data.walkinConsumerBecomesJdCons) {
+                    this.getJaldeeCustomer();
+                } else {
+                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
+                    this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                }
+            }
+        );
+    }
+
+    getCustomerCount() {
+        this.provider_services.getProviderCustomersCount()
+            .subscribe(
+                data => {
+                    this.customerCount = data;
+                    this.jld = 'JLD' + this.thirdParty + this.customerCount;
+                    this.amForm.get('customer_id').setValue(this.jld);
+                });
+    }
     ngOnInit() {
         this.loading = true;
         this.getGlobalSettingsStatus();
@@ -240,7 +326,14 @@ export class CustomerDetailComponent implements OnInit {
             this.loading = false;
         }
         if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-            this.amForm.addControl('customer_id', new FormControl('', Validators.required));
+            if (this.thirdParty) {
+                this.amForm.addControl('customer_id', new FormControl(''));
+                this.customerPlaceholder = this.customer_label + ' id';
+                this.getCustomerCount();
+            } else {
+                this.amForm.addControl('customer_id', new FormControl('', Validators.required));
+                this.customerPlaceholder = this.customer_label + ' id *';
+            }
         }
         if (this.phoneNo) {
             this.amForm.get('mobile_number').setValue(this.phoneNo);
@@ -280,8 +373,12 @@ export class CustomerDetailComponent implements OnInit {
             if (form_data.email_id && form_data.email_id !== '') {
                 post_data['email'] = form_data.email_id;
             }
-            if (form_data.customer_id) {
-                post_data['jaldeeId'] = form_data.customer_id;
+            if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+                if (form_data.customer_id) {
+                    post_data['jaldeeId'] = form_data.customer_id;
+                } else {
+                    post_data['jaldeeId'] = this.jld;
+                }
             }
             this.provider_services.createProviderCustomer(post_data)
                 .subscribe(
@@ -290,13 +387,14 @@ export class CustomerDetailComponent implements OnInit {
                         this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
                         const qParams = {};
                         qParams['pid'] = data;
-                        if (this.source === 'checkin') {
+                        if (this.source === 'checkin' || this.source === 'token') {
                             const navigationExtras: NavigationExtras = {
                                 queryParams: {
                                     ph: form_data.mobile_number,
                                     checkin_type: this.checkin_type,
                                     haveMobile: this.haveMobile,
-                                    id: data
+                                    id: data,
+                                    thirdParty: this.thirdParty
                                 }
                             };
                             this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
@@ -308,7 +406,13 @@ export class CustomerDetailComponent implements OnInit {
                                     haveMobile: this.haveMobile,
                                     id: data,
                                     timeslot: this.timeslot,
-                                    scheduleId: this.comingSchduleId
+                                    scheduleId: this.comingSchduleId,
+                                    date: this.date,
+                                    thirdParty: this.thirdParty,
+                                    serviceId: this.serviceIdParam,
+                                    userId: this.userId,
+                                    deptId: this.deptId,
+                                    type: this.type
                                 }
                             };
                             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
@@ -353,7 +457,7 @@ export class CustomerDetailComponent implements OnInit {
                         this.shared_functions.openSnackBar('Updated Successfully');
                         const qParams = {};
                         qParams['pid'] = data;
-                        if (this.source === 'checkin') {
+                        if (this.source === 'checkin' || this.source === 'token') {
                             const navigationExtras: NavigationExtras = {
                                 queryParams: {
                                     ph: form_data.mobile_number,
@@ -387,7 +491,34 @@ export class CustomerDetailComponent implements OnInit {
 
     }
     onCancel() {
-        this._location.back();
+        if (this.source === 'checkin' || this.source === 'token') {
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                    checkin_type: this.checkin_type,
+                    haveMobile: this.haveMobile,
+                    thirdParty: this.thirdParty
+                }
+            };
+            this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+        } else if (this.source === 'appointment') {
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                    checkinType: this.checkin_type,
+                    haveMobile: this.haveMobile,
+                    timeslot: this.timeslot,
+                    scheduleId: this.comingSchduleId,
+                    date: this.date,
+                    thirdParty: this.thirdParty,
+                    serviceId: this.serviceIdParam,
+                    userId: this.userId,
+                    deptId: this.deptId,
+                    type: this.type
+                }
+            };
+            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+        } else {
+            this._location.back();
+        }
     }
     resetApiErrors() {
         this.api_error = null;

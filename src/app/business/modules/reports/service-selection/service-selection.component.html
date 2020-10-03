@@ -1,0 +1,97 @@
+<section class="">
+    <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        <button type="button" class="btn default profile-back" (click)="redirecToReports()">
+          <span class="fa fa-chevron-left">&nbsp;Back</span>
+        </button>&nbsp;&nbsp;&nbsp; Service Selection
+        <!-- <i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true" ></i> -->
+      </h5>
+    </div>
+  </section>
+  <section class="report">
+    <div class="content w-manager settings comn-cls lic-page">
+      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+
+
+
+        <div class="box" >
+
+    <div class="box-body table-container table-responsive mat-elevation-z8'">
+        Choose services from this grid
+        <div class="spinner-container" *ngIf="service_loading$ ">
+
+          <mat-spinner></mat-spinner>
+
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Filter" style="border-bottom:none;">
+          </mat-form-field>
+        </div>
+
+        <mat-table [dataSource]="service_dataSource">
+          <!-- Checkbox Column -->
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+              </mat-cell>
+            </ng-container>
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>Service ID</mat-header-cell>
+            <mat-cell *matCellDef="let service">
+              <span class="mobile-label">Service ID:</span>
+              {{service.id}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="serviceName">
+            <mat-header-cell *matHeaderCellDef>Service Name</mat-header-cell>
+            <mat-cell *matCellDef="let service">
+              <!-- <span class="mobile-label">Service Name:</span> -->
+              {{service.name}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="userName">
+            <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+            <mat-cell *matCellDef="let service">
+              <!-- <span class="mobile-label">User Name</span> -->
+              {{service.user}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+            <mat-cell *matCellDef="let service">
+              <!-- <span class="mobile-label">User Name</span> -->
+              {{service.status}}</mat-cell>
+          </ng-container>
+          <!-- <ng-container matColumnDef="department">
+              <mat-header-cell *matHeaderCellDef>Department</mat-header-cell>
+              <mat-cell *matCellDef="let service">
+                  <span class="mobile-label">Department</span>
+                {{service.department}}</mat-cell>
+            </ng-container> -->
+
+          <mat-header-row *matHeaderRowDef="service_displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row;columns:service_displayedColumns"></mat-row>
+
+        </mat-table>
+        <mat-paginator #paginator [pageSize]="100" [length]="serviceCount"></mat-paginator>
+        <div class="text-center">
+          <button type="button" class="btn btn-lg default profile-back" (click)="passServiceToReports();">Update Service Selected </button>
+        </div>
+
+      </div>
+
+
+        </div>
+
+
+
+
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>

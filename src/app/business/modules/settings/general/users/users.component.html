@@ -119,7 +119,7 @@
                             </td>
                         </tr>
                     </tbody>
-                    <tbody *ngFor="let user of users_list">
+                    <tbody *ngFor="let user of users_list | orderBy: order">
                         <tr class="grid-pad" [class.grid-disabled]="user.status=='INACTIVE'" *ngIf="!api_loading">
                             <td>
                                     <div *ngIf="user.userType === 'ASSISTANT' || user.userType === 'ADMIN'" class="bold pull-left mgn-lt-5 teli-wtsap-a"

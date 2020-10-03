@@ -14,15 +14,26 @@
               <div class="limiter col-lg-12 col-xl-12 col-md-12 no-padding">
                 <!-- <div class="banner-right"> -->
                 <div class="ynw-common-form-nm no-padding pull-right">
-                  <div class="wrap-login100 mgn-bt-30">
+                  <div class="wrap-login100 mgn-bt-30" >
                     <div class="login"><strong>Service Provider Login</strong></div>
                     <div class="wrap-input100 validate-input">
                       <div class="form-group">
-                        <mat-form-field>
-
-                          <input type="text" matInput class="form-control" id="emailId" placeholder="Mobile/Email"
+                          <!-- <div class="form-group mob-prefx mobile-field ">
+                              <div style="display: flex;">
+                                      <div class="input-group-prepend mob-prefix"  style="margin-bottom:6px;" >
+                                          <span class="input-group-text" style="margin-top:auto;" id="">+91</span>
+                                        </div>
+                                     <mat-form-field >
+                           <input type="text"   matInput class="form-control" id="emailId" placeholder="Mobile/Email"
                             formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
-                        </mat-form-field>
+                           </mat-form-field>
+                              </div>
+                          </div> -->
+                          <mat-form-field >
+                            <input type="text"   matInput class="form-control" id="emailId" placeholder="Mobile/Email"
+                             formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
+                            </mat-form-field>
+
                         <app-field-error-display
                           [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                           errorMsg="please enter your Mobile/Email">
@@ -210,7 +221,7 @@
               <ul style="list-style-type:disc;">
                 <li>Monthly subscription plans: Pay as you use (Starting with free version) </li>
                 <li>No separate hardware required. Works even from your smartphone </li>
-                <!-- <li>No license contracts, 
+                <!-- <li>No license contracts,
               no long term commitments.</li> -->
               </ul>
             </div>
@@ -328,9 +339,9 @@
               <h2><strong>Jaldee AppointmentManager</strong></h2>
               <p class="text-left text-capitalize">Appointment Manager does more than simply give clients a list of available time slots when they can come in for a consultation or service.
                 <br>
-                <br> 
+                <br>
                  In Jaldee your clients can reschedule appointments without having to contact you. It prevents double booking and overbooking.
-                Option to collect prepayment avoids no-show ups. It blocks off times when certain services may be unavailable. Say one of your service specialists took an off. You can mark his days off so that your clients won't be able to take an appointment for that service. 
+                Option to collect prepayment avoids no-show ups. It blocks off times when certain services may be unavailable. Say one of your service specialists took an off. You can mark his days off so that your clients won't be able to take an appointment for that service.
                 <br>
                 <br>
                 Or if the staff is ready to show up for a few hours on her off day you can make the appointment slots available for that time. 

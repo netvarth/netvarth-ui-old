@@ -17,6 +17,7 @@ export class SharedServices {
   }
   adminLogin(body) {
     return this.servicemeta.httpPost('superadmin/login', body);
+    // set no_redirect_path in interceptor to avoid redirect on 401
   }
   ConsumerLogin(body) {
     return this.servicemeta.httpPost('consumer/login', body);
@@ -662,6 +663,10 @@ export class SharedServices {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
+  getAvailableDatessByLocationService(locid, servid, accountid?) {
+    const url = 'consumer/appointment/availability/location/' + locid + '/service/' + servid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
 
   getTodaysAvailableTimeSlots(date, sheduleid, accountid?) {
     const url = 'consumer/appointment/schedule/' + sheduleid + '/' + date + '?account=' + accountid;
@@ -799,6 +804,10 @@ export class SharedServices {
   }
   getConsumerApptMeetingDetails(uuid, mode, accountId) {
     const url = 'consumer/appointment/' + uuid + '/meetingDetails/' + mode + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  getQueuesbyLocationandServiceIdAvailableDates(locid, servid , accountid) {
+    const url = 'consumer/waitlist/queues/available/' + locid + '/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
 }

@@ -120,7 +120,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.instalZoom = '\n(If you do not have Zoom installed you will be prompted to install Zoom)';
     this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
     this.videocall_msg = 'Follow these instructions to join the video call:\n1. You will recieve an alert that the ' + this.data.app + ' call has started.\nOpen the following link- ' + this.meetingLink;
-    this.waitFor = '\n3. Wait for the video call to begin';
+    this.waitFor = '\n2. Wait for the video call to begin';
     this.providr_msg = 'How to start the video call -\n1. Open the following link - ' + this.meetingLink;
     this.aloJoin = '\n2. Allow ' + this.customer_label + ' to join the call when you are prompted';
 
