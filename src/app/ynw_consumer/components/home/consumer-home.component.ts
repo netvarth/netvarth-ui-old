@@ -160,12 +160,21 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   api_loading = false;
   futureAllowed = true;
   usr_details: any;
-  future_appointments: ArrayBuffer;
-  future_waitlists: ArrayBuffer;
+  future_appointments: any = [];
+  future_waitlists: any = [];
   todayDate = new Date();
   tDate: any;
   path = projectConstants.PATH;
   locationholder: any;
+  today_totalbookings: any = [];
+  future_totalbookings: any = [];
+  todayBookings: any = [];
+  todayBookings_more: any = [];
+  more_tdybookingsShow = false;
+  futureBookings: any = [];
+  futureBookings_more: any = [];
+  more_futrbookingsShow = false;
+  appointmentslist: any = [];
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -189,8 +198,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.usr_details = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    this.locationholder =  this.shared_functions.getitemfromLocalStorage('ynw-locdet');
-    console.log(this.usr_details);
+    this.locationholder = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
     this.breadcrumbs = [
       {
         title: 'My Jaldee'
@@ -249,11 +257,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.gets3curl();
     // this.getWaitlist();
     // this.getApptlist();
-     this.getAppointmentToday();
-     this.getAppointmentFuture();
-     this.getWaitlist();
-     this.getWaitlistFuture();
     this.getDonations();
+    this.getAppointmentToday();
+    this.getAppointmentFuture();
+    this.getWaitlist();
+    this.getWaitlistFuture();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
@@ -296,6 +304,25 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     };
     this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
+  }
+  showBookingDetails(booking) {
+    if (booking.apptStatus) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          uuid: booking.uid,
+          providerId: booking.providerAccount.id
+        }
+      };
+      this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
+    } else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          uuid: booking.ynwUuid,
+          providerId: booking.providerAccount.id
+        }
+      };
+      this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
+    }
   }
 
   closeCounters() {
@@ -378,7 +405,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.waitlists = data;
-          console.log(this.waitlists);
+          this.today_totalbookings = this.appointments.concat(this.waitlists);
+          // more case
+          for (let i = 0; i < this.today_totalbookings.length; i++) {
+            if (i <= 2) {
+              this.todayBookings.push(this.today_totalbookings[i]);
+            } else {
+              this.todayBookings_more.push(this.today_totalbookings[i]);
+            }
+          }
+
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           let i = 0;
@@ -828,7 +864,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // if (!waitlist.ynwUuid || !waitlist.providerAccount.id || !waitlist.uid) {
     //   return false;
     // }
-    console.log('inside');
     this.shared_functions.doCancelWaitlist(waitlist, type, this)
       .then(
         data => {
@@ -1557,11 +1592,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoApptmentHistory() {
     this.router.navigate(['consumer', 'appointment', 'history']);
   }
+
   getAppointmentToday() {
     this.consumer_services.getAppointmentToday()
       .subscribe(
         data => {
-          this.appointments = data;
+          this.appointmentslist = data;
+          this.appointments = this.appointmentslist.concat(this.donations);
         },
         error => {
         }
@@ -1577,26 +1614,37 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-  getWaitlistToday() {
-    this.consumer_services.getWaitlistToday()
-      .subscribe(
-        data => {
-          this.waitlists = data;
-        },
-        error => {
-        }
-      );
-  }
+
+  // getWaitlistToday() {
+  //   this.consumer_services.getWaitlistToday()
+  //     .subscribe(
+  //       data => {
+  //         this.waitlists = data;
+  //       },
+  //       error => {
+  //       }
+  //     );
+  // }
+
   getWaitlistFuture() {
     this.consumer_services.getWaitlistFuture()
       .subscribe(
         data => {
           this.future_waitlists = data;
+          this.future_totalbookings = this.future_waitlists.concat(this.future_appointments);
+          for (let i = 0; i < this.future_totalbookings.length; i++) {
+            if (i <= 2) {
+              this.futureBookings.push(this.future_totalbookings[i]);
+            } else {
+              this.futureBookings_more.push(this.future_totalbookings[i]);
+            }
+          }
         },
         error => {
         }
       );
   }
+
   gotoLivetrack(uid, accountid, stat) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -1650,6 +1698,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       lonauto: this.locationholder.autoname || ''
     };
     this.router.navigate(['/searchdetail', passparam]);
-}
+  }
+  showMoreTdyBookings() {
+    this.more_tdybookingsShow = true;
+  }
+  showlessTdyBookings() {
+    this.more_tdybookingsShow = false;
+  }
+  showMoreFutrBookings() {
+    this.more_futrbookingsShow = true;
+  }
+  showlessFutrBookings() {
+    this.more_futrbookingsShow = false;
+  }
 
 }
