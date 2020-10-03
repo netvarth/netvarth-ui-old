@@ -2,9 +2,6 @@
     <div class="panel panel-default">
         <div class="panel-heading top-row ">
             <app-header [headerTitle]=""></app-header>
-            <!-- <div class="mgn-up-20">
-                <app-search-form></app-search-form>
-            </div> -->
         </div>
         <div class="panel-body no-padding">
             <div class="content consumer-dash mgn-bt-10" *ngIf="api_loading">
@@ -60,8 +57,9 @@
                                 <th colspan="6">TODAY</th>
                             </thead>
                             <tbody *ngIf="today_totalbookings.length != 0">
-                                <tr *ngFor="let booking of todayBookings;" class="custId-cursor"
-                                    (click)="showBookingDetails(booking)">
+                                <tr [ngClass]="{'custId-cursor': !booking.donationStatus}"
+                                    *ngFor="let booking of todayBookings;"
+                                    (click)="booking.donationStatus ?'':showBookingDetails(booking)">
                                     <ng-container *ngIf="booking.apptStatus">
                                         <td>
                                             <h4>{{getSingleTime(booking.appmtTime)}}</h4>
@@ -89,15 +87,16 @@
                                                 {{booking.apptStatus}}
                                             </h6>
                                             <span *ngIf="booking.apptStatus == 'Confirmed'">
-                                                <a href="{{path}}status/{{booking.appointmentEncId}}" (click)="stopprop($event)" target="blank"><u
-                                                        class="font-smalr">VIEW STATUS</u></a></span>
+                                                <a href="{{path}}status/{{booking.appointmentEncId}}"
+                                                    (click)="stopprop($event)" target="blank"><u class="font-smalr">VIEW
+                                                        STATUS</u></a></span>
                                         </td>
                                         <td>
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
                                                 <button class="bt3 cust-btn"
-                                                    (click)="viewBill(appointment,'appointment')">Pay
+                                                    (click)="viewBill(booking,'appointment')">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
@@ -105,17 +104,18 @@
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(appointment,'appointment')">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(appointment,'appointment')">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(appointment,'appointment')">View Bill</button>
+                                                    (click)="viewBill(booking,'appointment')">View Bill</button>
                                             </span>
                                         </td>
                                         <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                                (click)="stopprop($event)">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
@@ -170,7 +170,7 @@
                                         <td>
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
-                                                <button class="bt3 cust-btn" (click)="viewBill(waitlist,'checkin')">Pay
+                                                <button class="bt3 cust-btn" (click)="viewBill(booking,'checkin')">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
@@ -178,22 +178,23 @@
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(waitlist,'checkin')">View Receipt</button>
+                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(waitlist,'checkin')">View Receipt</button>
+                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(waitlist,'checkin')">View Bill</button>
+                                                    (click)="viewBill(booking,'checkin')">View Bill</button>
                                             </span>
                                         </td>
                                         <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                                (click)="stopprop($event)">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
-                                                *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
+                                                    *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                     (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                     {{send_msg_cap}}
@@ -224,8 +225,9 @@
                                     <td colspan="6"><a>Show more...</a></td>
                                 </tr>
                                 <ng-container *ngIf="more_tdybookingsShow">
-                                    <tr *ngFor="let booking of todayBookings_more;" class="custId-cursor"
-                                        (click)="showBookingDetails(booking)">
+                                    <tr *ngFor="let booking of todayBookings_more;"
+                                        [ngClass]="{'custId-cursor': !booking.donationStatus}"
+                                        (click)="booking.donationStatus ?'':showBookingDetails(booking)">
                                         <ng-container *ngIf="booking.apptStatus">
                                             <td>
                                                 <h4>{{getSingleTime(booking.appmtTime)}}</h4>
@@ -262,7 +264,7 @@
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
                                                     <button class="bt3 cust-btn"
-                                                        (click)="viewBill(appointment,'appointment')">Pay
+                                                        (click)="viewBill(booking,'appointment')">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
@@ -270,19 +272,20 @@
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(appointment,'appointment')">View
+                                                        (click)="viewBill(booking,'appointment')">View
                                                         Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(appointment,'appointment')">View
+                                                        (click)="viewBill(booking,'appointment')">View
                                                         Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(appointment,'appointment')">View Bill</button>
+                                                        (click)="viewBill(booking,'appointment')">View Bill</button>
                                                 </span>
                                             </td>
                                             <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                                                <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                                    (click)="stopprop($event)">
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
@@ -339,7 +342,7 @@
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                     <button class="bt3 cust-btn"
-                                                        (click)="viewBill(waitlist,'checkin')">Pay
+                                                        (click)="viewBill(booking,'checkin')">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
@@ -347,22 +350,23 @@
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(waitlist,'checkin')">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(waitlist,'checkin')">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(waitlist,'checkin')">View Bill</button>
+                                                        (click)="viewBill(booking,'checkin')">View Bill</button>
                                                 </span>
                                             </td>
                                             <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                                                <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                                    (click)="stopprop($event)">
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
-                                                    *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
+                                                        *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                         {{send_msg_cap}}
@@ -440,7 +444,7 @@
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
                                                 <button class="bt3 cust-btn"
-                                                    (click)="viewBill(appointment,'appointment')">Pay
+                                                    (click)="viewBill(booking,'appointment')">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
@@ -448,17 +452,18 @@
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(appointment,'appointment')">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(appointment,'appointment')">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(appointment,'appointment')">View Bill</button>
+                                                    (click)="viewBill(booking,'appointment')">View Bill</button>
                                             </span>
                                         </td>
                                         <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                                (click)="stopprop($event)">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
@@ -508,7 +513,7 @@
                                         <td>
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
-                                                <button class="bt3 cust-btn" (click)="viewBill(waitlist,'checkin')">Pay
+                                                <button class="bt3 cust-btn" (click)="viewBill(booking,'checkin')">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
@@ -516,22 +521,23 @@
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(waitlist,'checkin')">View Receipt</button>
+                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(waitlist,'checkin')">View Receipt</button>
+                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(waitlist,'checkin')">View Bill</button>
+                                                    (click)="viewBill(booking,'checkin')">View Bill</button>
                                             </span>
                                         </td>
                                         <td>
-                                            <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                                (click)="stopprop($event)">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
-                                                *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
+                                                    *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                     (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                     {{send_msg_cap}}
@@ -586,7 +592,7 @@
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
                                                     <button class="bt3 cust-btn"
-                                                        (click)="viewBill(appointment,'appointment')">Pay
+                                                        (click)="viewBill(booking,'appointment')">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
@@ -594,19 +600,20 @@
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(appointment,'appointment')">View
+                                                        (click)="viewBill(booking,'appointment')">View
                                                         Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(appointment,'appointment')">View
+                                                        (click)="viewBill(booking,'appointment')">View
                                                         Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(appointment,'appointment')">View Bill</button>
+                                                        (click)="viewBill(booking,'appointment')">View Bill</button>
                                                 </span>
                                             </td>
                                             <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                                                <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                                    (click)="stopprop($event)">
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
@@ -659,7 +666,7 @@
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                     <button class="bt3 cust-btn"
-                                                        (click)="viewBill(waitlist,'checkin')">Pay
+                                                        (click)="viewBill(booking,'checkin')">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
@@ -667,22 +674,23 @@
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(waitlist,'checkin')">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(waitlist,'checkin')">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(waitlist,'checkin')">View Bill</button>
+                                                        (click)="viewBill(booking,'checkin')">View Bill</button>
                                                 </span>
                                             </td>
                                             <td>
-                                                <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                                                <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                                    (click)="stopprop($event)">
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
-                                                    *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
+                                                        *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                         {{send_msg_cap}}
