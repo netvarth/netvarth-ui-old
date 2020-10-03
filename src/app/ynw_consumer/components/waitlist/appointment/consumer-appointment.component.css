@@ -847,9 +847,9 @@ ul.bus-actions li a.lnk {
   min-width: 80px !important;
 }
 .c-checkin-new .slotdiv {
-  max-height: 175px !important;
+  /* max-height: 175px !important; */
   overflow: auto;
-  margin-top: 0px !important;
+  margin-top: 20px !important;
 
 }
 .c-checkin-new .slotdiv mat-chip.mat-chip-selected {
@@ -1161,7 +1161,6 @@ height: 150px !important;
   border: 1px solid;
   margin: 20px;
   }
-  .example-custom-date-class {
-    background:rgb(133,233,133);
-    border-radius: 100%;
-   }
+  .mat-chip-list-wrapper .mat-standard-chip, .mat-chip-list-wrapper input.mat-input-element {
+    margin: 8px !important;
+}
