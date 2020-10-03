@@ -48,7 +48,11 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   rate_your_visit = Messages.RATE_YOU_VISIT;
   no_prev_checkins_avail_cap = Messages.NO_PREV_CHECKINS_AVAIL_CAP;
   loading = true;
-  apmt_history: ArrayBuffer;
+  apmt_history: any = [];
+  entire_history: any = [];
+  wtlist_count: any = [];
+  appt_count: any = [];
+  entire_count: any = [];
 
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router,
@@ -62,7 +66,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.getHistoryCount();
-    this.getAppointmentHistoryCount();
+    this.getHistroy();
+    // this.getAppointmentHistoryCount();
   }
 
   // Getting Checking History
@@ -75,6 +80,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
           this.history = data;
           this.loadcomplete.history = true;
           this.loading = false;
+          this.getAppointmentHistory();
         },
         error => {
           this.loading = false;
@@ -91,6 +97,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
         data => {
           console.log(data);
           this.apmt_history = data;
+          this.entire_history = this.apmt_history.concat(this.history);
+          console.log(this.entire_history);
           this.loading = false;
         },
         error => {
@@ -105,20 +113,19 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.pagination.totalCnt = data;
-          this.getHistroy();
+          this.wtlist_count = data;
+         // this.getHistroy();
+         this.getAppointmentHistoryCount();
         });
   }
   // Get Appointment history count
   getAppointmentHistoryCount() {
-    console.log('this');
     this.consumer_services.getAppointmentHistoryCount()
       .subscribe(
         data => {
-          console.log(data);
-          this.pagination.totalCnt += data;
-          console.log(this.pagination.totalCnt);
-          this.getAppointmentHistory();
+          this.appt_count = data;
+          this.entire_count = this.wtlist_count.concat(this.appt_count);
+          console.log(this.entire_count);
         });
   }
   handle_pageclick(pg) {
