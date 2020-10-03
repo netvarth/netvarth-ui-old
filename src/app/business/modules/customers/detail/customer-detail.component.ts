@@ -80,6 +80,12 @@ export class CustomerDetailComponent implements OnInit {
     customerPlaceholder = '';
     jld;
     customerErrorMsg = '';
+    customerErrorMsg1 = '';
+    customerErrorMsg2 = '';
+    serviceIdParam;
+    userId;
+    deptId;
+    type;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -159,6 +165,9 @@ export class CustomerDetailComponent implements OnInit {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
             this.source = qparams.source;
+            if (qparams.type) {
+                this.type = qparams.type;
+            }
             if (qparams.phone) {
                 this.phoneNo = qparams.phone;
                 if (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
@@ -166,8 +175,9 @@ export class CustomerDetailComponent implements OnInit {
                     this.save_btn = 'Proceed';
                 }
             } else {
-                if (qparams.type && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment')) {
-                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + ' details to create ' + this.source;
+                if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment')) {
+                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
+                    this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
                     this.save_btn = 'Proceed';
                 }
             }
@@ -179,6 +189,15 @@ export class CustomerDetailComponent implements OnInit {
             }
             if (qparams.noMobile) {
                 this.haveMobile = false;
+            }
+            if (qparams.serviceId) {
+                this.serviceIdParam = qparams.serviceId;
+            }
+            if (qparams.userId) {
+                this.userId = qparams.userId;
+            }
+            if (qparams.deptId) {
+                this.deptId = qparams.deptId;
             }
             if (qparams.timeslot) {
                 this.timeslot = qparams.timeslot;
@@ -222,9 +241,12 @@ export class CustomerDetailComponent implements OnInit {
                         this.amForm.get('email_id').setValue(data[0].userProfile.email);
                         this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
                         this.amForm.get('address').setValue(data[0].userProfile.address);
-                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Do you want to add the ' + this.customer_label + ' to create ' + this.source;
+                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
+                        this.customerErrorMsg1 = 'The system found the record details in Jaldee.com';
+                        this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + ' to create ' + this.source + '?';
                     } else {
-                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + ' details to create ' + this.source;
+                        this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
+                        this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
                     }
                 },
                 error => {
@@ -238,7 +260,8 @@ export class CustomerDetailComponent implements OnInit {
                 if (data.walkinConsumerBecomesJdCons) {
                     this.getJaldeeCustomer();
                 } else {
-                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list. Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
+                    this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
                 }
             }
         );
@@ -385,7 +408,11 @@ export class CustomerDetailComponent implements OnInit {
                                     timeslot: this.timeslot,
                                     scheduleId: this.comingSchduleId,
                                     date: this.date,
-                                    thirdParty: this.thirdParty
+                                    thirdParty: this.thirdParty,
+                                    serviceId: this.serviceIdParam,
+                                    userId: this.userId,
+                                    deptId: this.deptId,
+                                    type: this.type
                                 }
                             };
                             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
@@ -464,7 +491,34 @@ export class CustomerDetailComponent implements OnInit {
 
     }
     onCancel() {
-        this._location.back();
+        if (this.source === 'checkin' || this.source === 'token') {
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                    checkin_type: this.checkin_type,
+                    haveMobile: this.haveMobile,
+                    thirdParty: this.thirdParty
+                }
+            };
+            this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+        } else if (this.source === 'appointment') {
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                    checkinType: this.checkin_type,
+                    haveMobile: this.haveMobile,
+                    timeslot: this.timeslot,
+                    scheduleId: this.comingSchduleId,
+                    date: this.date,
+                    thirdParty: this.thirdParty,
+                    serviceId: this.serviceIdParam,
+                    userId: this.userId,
+                    deptId: this.deptId,
+                    type: this.type
+                }
+            };
+            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+        } else {
+            this._location.back();
+        }
     }
     resetApiErrors() {
         this.api_error = null;
@@ -564,12 +618,5 @@ export class CustomerDetailComponent implements OnInit {
             queryParams: { action: 'edit' }
         };
         this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
-    }
-    goBack() {
-        if (this.source === 'checkin' || this.source === 'token') {
-            this.router.navigate(['/provider/check-ins/add']);
-        } else if (this.source === 'appointment') {
-            this.router.navigate(['/provider/appointmentmanager/appointments']);
-        }
     }
 }

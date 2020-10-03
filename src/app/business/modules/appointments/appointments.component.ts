@@ -1704,16 +1704,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       let deptId;
       let userId;
-      console.log(this.selUser);
-      if (this.selUser && this.selUser.id && this.selUser.id !== 'all') {
-        const filteredDept = this.users.filter(user => user.id === this.selUser.id);
+      let serviceId;
+      const qfilter = this.activeSchedules.filter(q => q.id === this.selQId);
+      if (qfilter && qfilter[0].services && qfilter[0].services.length > 0) {
+        serviceId = qfilter[0].services[0].id;
+      }
+      if (qfilter && qfilter[0].provider) {
+        userId = qfilter[0].provider.id;
+        const filteredDept = this.users.filter(user => user.id === userId);
         if (filteredDept[0] && filteredDept[0].deptId) {
           deptId = filteredDept[0].deptId;
         }
-        userId = this.selUser.id;
+      } else {
+        userId = '0';
       }
-      console.log(userId);
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId } });
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
+        { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId } });
     }
   }
   searchCustomer(source, appttime) {
@@ -2697,7 +2703,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (apptlist.batchId) {
         checkin_html += 'Batch <span style="font-weight:bold">' + apptlist.batchId + '</span>';
       } else {
-        checkin_html += 'Appointment Time <span style="font-weight:bold">' +  this.getSingleTime(apptlist.appmtTime) + '</span>';
+        checkin_html += 'Appointment Time <span style="font-weight:bold">' + this.getSingleTime(apptlist.appmtTime) + '</span>';
       }
       checkin_html += '</td></tr>';
       checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.bname.charAt(0).toUpperCase() + this.bname.substring(1) + '</td></tr>';
@@ -3261,4 +3267,3 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
 }
-

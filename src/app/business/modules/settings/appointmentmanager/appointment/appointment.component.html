@@ -131,7 +131,7 @@
                                     <div *ngIf="thirdParty !== ''">
                                         {{customer_label | capitalizeFirst}} from
                                         {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}
-                                        <a class="underline mgn-lt-20" (click)="createNew()">Fill the
+                                        <a class="underline mgn-lt-20" (click)="createNew('fill')">Fill the
                                             {{customer_label}}
                                             details </a>
                                     </div>
@@ -380,7 +380,7 @@
                                             <div *ngIf="showApptTime && !api_loading">
                                                 <div class="ttle mgn-bt-10">Appointment Time</div>
                                                 <span class="label-bold">{{getSingleTime(apptTime)}} </span>
-                                                <span style="margin-left: 30px" class="editbt" *ngIf="!slotTime"
+                                                <span style="margin-left: 30px" class="editbt"
                                                     (click)="editClicked()"></span>
                                             </div>
                                             <div *ngIf="!showApptTime && !api_loading">TimeSlots are not available

@@ -703,8 +703,8 @@ export const projectConstantsLocal = {
     {displayName: 'Arrived', value: 'arrived'},
     // {displayName: 'Unrevertable', value: 'unrevertable'},
     {displayName: 'Started', value: 'started'},
-    {displayName: 'Cancelled', value: 'Cancelled'},
-    {displayName: 'Done', value: 'done'},
+    {displayName: 'Cancelled', value: 'cancelled'},
+    {displayName: 'Completed', value: 'done'},
     // {displayName: 'Failed', value: 'failed'},
 
   ],

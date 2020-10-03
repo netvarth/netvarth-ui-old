@@ -2886,7 +2886,11 @@ body { font-size: 1rem !important}
     transition: all 300ms;
     cursor: pointer;
 }
-
+@media only screen and (max-width: 767px) {
+    .content .card .copy .inbox-table li.ttd .outer .td {
+       line-height: 0.5px !important;
+    }
+}
 .content .card .copy .inbox-table li.ttd.new {
     border-bottom: 2px solid #f2f2f2;
     background: #92f6c9;

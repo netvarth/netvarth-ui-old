@@ -279,73 +279,73 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             this.provider_services.getProviderQueues()
                 .subscribe(
                     (data) => {
-                        console.log(data);
                         this.queuedata = data;
-                        this.showtoken = this.queuedata[0].showToken;
-                        console.log(this.showtoken);
-                        if (this.showtoken) {
-                           this.tokenOrcheckinCount = 'Tokens Count';
-                           this.tokencount = 'Tokens';
-                          } else {
-                            this.tokenOrcheckinCount = 'Checkins Count';
-                            this.tokencount = 'Checkins';
-                          }
-                        let allQs: any = [];
-                        this.todaysQs = [];
-                        this.scheduledQs = [];
-                        this.disabledQs = [];
-                        const activeQs = [];
-                        allQs = data;
-                        const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
-                        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-                        const today = new Date(todaydt);
-                        const dd = today.getDate();
-                        const mm = today.getMonth() + 1;
-                        const yyyy = today.getFullYear();
-                        let cmon;
-                        let cdate;
-                        if (mm < 10) {
-                            cmon = '0' + mm;
-                        } else {
-                            cmon = '' + mm;
-                        }
-                        if (dd < 10) {
-                            cdate = '0' + dd;
-                        } else {
-                            cdate = '' + dd;
-                        }
-                        const todayDate = yyyy + '-' + cmon + '-' + cdate;
-                        for (let ii = 0; ii < allQs.length; ii++) {
-                            let schedule_arr = [];
-                            // extracting the schedule intervals
-                            if (allQs[ii].queueSchedule) {
-                                schedule_arr = this.shared_Functionsobj.queueSheduleLoop(allQs[ii].queueSchedule);
-                            }
-                            let display_schedule = [];
-                            display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
-                            allQs[ii]['displayschedule'] = display_schedule;
-                            // replace instancequeue with new flag
-                            if (allQs[ii].isAvailableToday && allQs[ii].queueState === 'ENABLED') {
-                                this.todaysQs.push(allQs[ii]);
-                            }
-                            if (!allQs[ii].instantQueue && allQs[ii].queueState === 'ENABLED') {
-                                this.scheduledQs.push(allQs[ii]);
-                            }
-                            if (allQs[ii].queueState === 'DISABLED') {
-                                this.disabledQs.push(allQs[ii]);
-                            }
-                            if (allQs[ii].queueState === 'ENABLED') {
-                                activeQs.push(allQs[ii]);
-                            }
-                        }
-                        for (let ii = 0; ii < this.disabledQs.length; ii++) {
-                            if (!this.disabledQs[ii].instantQueue || (this.disabledQs[ii].instantQueue && this.disabledQs[ii].queueSchedule.startDate === todayDate)) {
-                                this.disabledQs[ii].showDisableBtn = true;
+                        if (this.queuedata && this.queuedata.length > 0) {
+                            this.showtoken = this.queuedata[0].showToken;
+                            if (this.showtoken) {
+                                this.tokenOrcheckinCount = 'Tokens Count';
+                                this.tokencount = 'Tokens';
                             } else {
-                                this.disabledQs[ii].showDisableBtn = false;
+                                this.tokenOrcheckinCount = 'Checkins Count';
+                                this.tokencount = 'Checkins';
                             }
+                            let allQs: any = [];
+                            this.todaysQs = [];
+                            this.scheduledQs = [];
+                            this.disabledQs = [];
+                            const activeQs = [];
+                            allQs = data;
+                            const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
+                            const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+                            const today = new Date(todaydt);
+                            const dd = today.getDate();
+                            const mm = today.getMonth() + 1;
+                            const yyyy = today.getFullYear();
+                            let cmon;
+                            let cdate;
+                            if (mm < 10) {
+                                cmon = '0' + mm;
+                            } else {
+                                cmon = '' + mm;
+                            }
+                            if (dd < 10) {
+                                cdate = '0' + dd;
+                            } else {
+                                cdate = '' + dd;
+                            }
+                            const todayDate = yyyy + '-' + cmon + '-' + cdate;
+                            for (let ii = 0; ii < allQs.length; ii++) {
+                                let schedule_arr = [];
+                                // extracting the schedule intervals
+                                if (allQs[ii].queueSchedule) {
+                                    schedule_arr = this.shared_Functionsobj.queueSheduleLoop(allQs[ii].queueSchedule);
+                                }
+                                let display_schedule = [];
+                                display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+                                allQs[ii]['displayschedule'] = display_schedule;
+                                // replace instancequeue with new flag
+                                if (allQs[ii].isAvailableToday && allQs[ii].queueState === 'ENABLED') {
+                                    this.todaysQs.push(allQs[ii]);
+                                }
+                                if (!allQs[ii].instantQueue && allQs[ii].queueState === 'ENABLED') {
+                                    this.scheduledQs.push(allQs[ii]);
+                                }
+                                if (allQs[ii].queueState === 'DISABLED') {
+                                    this.disabledQs.push(allQs[ii]);
+                                }
+                                if (allQs[ii].queueState === 'ENABLED') {
+                                    activeQs.push(allQs[ii]);
+                                }
+                            }
+                            for (let ii = 0; ii < this.disabledQs.length; ii++) {
+                                if (!this.disabledQs[ii].instantQueue || (this.disabledQs[ii].instantQueue && this.disabledQs[ii].queueSchedule.startDate === todayDate)) {
+                                    this.disabledQs[ii].showDisableBtn = true;
+                                } else {
+                                    this.disabledQs[ii].showDisableBtn = false;
+                                }
+                            }
+                            this.provider_shared_functions.setActiveQueues(activeQs);
                         }
-                        this.provider_shared_functions.setActiveQueues(activeQs);
                         resolve();
                     },
                     (error) => {
@@ -354,12 +354,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         });
     }
     getServices() {
-        const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService'};
+        const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService' };
         return new Promise((resolve, reject) => {
             this.provider_services.getServicesList(params)
                 .subscribe(data => {
                     this.services_list = data;
-                   
+
                     resolve();
                 },
                     (error) => {
@@ -966,15 +966,15 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         });
     }
     redirecToQmanager() {
-        this.routerobj.navigate(['provider', 'settings' , 'q-manager' ]);
-      }
-      redirecToHelp() {
+        this.routerobj.navigate(['provider', 'settings', 'q-manager']);
+    }
+    redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-time_windows']);
-      }
-      addqueue() {
+    }
+    addqueue() {
         const navigationExtras: NavigationExtras = {
             queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }
         };
         this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add'], navigationExtras);
-      }
+    }
 }
