@@ -726,26 +726,26 @@ export const projectConstantsLocal = {
   REPORT_TRANSACTION_TYPE: [
     {displayName: 'Check-in/Token', value: 'Waitlist'},
     {displayName: 'Appointment', value: 'Appointment'},
-    // {displayName: 'Donation', value: 'Donation'},
+     {displayName: 'Donation', value: 'Donation'},
     // {displayName: 'Order', value: 'Order'}
     // {displayName: 'License', value: 'License'},
 
   ],
 
   REPORT_TIMEPERIOD: [
-    {value: 'LAST_WEEK', displayName: 'Last 7 days'},
-    {value: 'NEXT_WEEK', displayName: 'Next 7 days'},
-    {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
-    {value: 'NEXT_THIRTY_DAYS', displayName: 'Next 30 days'},
     {value: 'TODAY', displayName: 'Today'},
+    {value: 'LAST_WEEK', displayName: 'Last 7 days'},
+    {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
+    {value: 'NEXT_WEEK', displayName: 'Next 7 days'},
+    {value: 'NEXT_THIRTY_DAYS', displayName: 'Next 30 days'},
     {value: 'DATE_RANGE', displayName: 'Date Range'},
 
   ],
 
   DONATION_TIMEPERIOD: [
+    {value: 'TODAY', displayName: 'Today'},
     {value: 'LAST_WEEK', displayName: 'Last 7 days'},
     {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
-    {value: 'TODAY', displayName: 'Today'},
     {value: 'DATE_RANGE', displayName: 'Date Range'},
 
   ],
