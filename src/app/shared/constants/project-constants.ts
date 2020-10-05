@@ -650,8 +650,7 @@ export const projectConstantsLocal = {
   PAYMENT_MODES: [
 
     {value: 'Cash', displayName: 'Cash'},
-    {value: 'DC', displayName: 'Debit card'},
-    {value: 'CC', displayName: 'Credit card'},
+    {value: 'CC,DC', displayName: 'CC/DC'},
     {value: 'NB', displayName: 'Net banking'},
     {value: 'PPI', displayName: 'Wallet'},
     {value: 'UPI', displayName: 'UPI'},
