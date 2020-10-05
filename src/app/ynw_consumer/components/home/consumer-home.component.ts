@@ -176,6 +176,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   more_futrbookingsShow = false;
   appointmentslist: any = [];
   tdyDate: string;
+  loading = true;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -407,7 +408,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.waitlists = data;
           this.today_totalbookings = this.appointments.concat(this.waitlists);
+          this.loading = false;
           // more case
+          this.todayBookings = [];
+          this.todayBookings_more = [];
           for (let i = 0; i < this.today_totalbookings.length; i++) {
             if (i <= 2) {
               this.todayBookings.push(this.today_totalbookings[i]);
@@ -1186,7 +1190,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  viewBill(checkin, type) {
+  viewBill(checkin, type, event) {
     // if (!this.billdialogRef) {
     //   this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
     //     width: '40%',
@@ -1203,6 +1207,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     //     }
     //   });
     // }
+    event.stopPropagation();
     if (type === 'appointment') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -1624,6 +1629,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.appointmentslist = data;
+          this.appointments = [];
           this.appointments = this.appointmentslist.concat(this.donations);
         },
         error => {
@@ -1635,6 +1641,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.future_appointments = data;
+          console.log(this.future_appointments);
         },
         error => {
         }
@@ -1657,7 +1664,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.future_waitlists = data;
+          console.log(this.future_appointments);
           this.future_totalbookings = this.future_waitlists.concat(this.future_appointments);
+          console.log(this.future_totalbookings);
+          this.loading = false;
+          this.futureBookings = [];
+          this.futureBookings_more = [];
           for (let i = 0; i < this.future_totalbookings.length; i++) {
             if (i <= 2) {
               this.futureBookings.push(this.future_totalbookings[i]);

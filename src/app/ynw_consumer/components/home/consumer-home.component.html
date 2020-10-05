@@ -45,11 +45,11 @@
                             </div>
                         </div>
                     </h2>
-                    <div *ngIf="(appointments.length == 0 && (loadcomplete.waitlist && waitlists && waitlists.length == 0) && (loadcomplete.donations && donations && donations.length == 0))"
+                    <div *ngIf="((today_totalbookings.length == 0 && future_totalbookings.length == 0) && !loading)"
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p class="locate-customer">No current Bookings available</p>
                     </div>
-                    <div class="table-outer1 ng-tns-c16-57">
+                    <div class="table-outer1 ng-tns-c16-57" *ngIf="!loading">
                         <table class="table">
 
                             <!-- TODAY BOOKINGS  -->
@@ -96,7 +96,7 @@
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
                                                 <button class="bt3 cust-btn"
-                                                    (click)="viewBill(booking,'appointment')">Pay
+                                                    (click)="viewBill(booking,'appointment',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
@@ -104,13 +104,13 @@
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment',$event)">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment',$event)">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(booking,'appointment')">View Bill</button>
+                                                    (click)="viewBill(booking,'appointment',$event)">View Bill</button>
                                             </span>
                                         </td>
                                         <td>
@@ -140,7 +140,7 @@
                                             <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
                                         </td>
                                         <td class="tdisplay-block">
-                                            <h4 (click)="providerDetail(booking.providerAccount)">
+                                            <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                             <span>
                                                 <i class="fa phon-icon"
@@ -170,7 +170,7 @@
                                         <td>
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
-                                                <button class="bt3 cust-btn" (click)="viewBill(booking,'checkin')">Pay
+                                                <button class="bt3 cust-btn" (click)="viewBill(booking,'checkin',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
@@ -178,13 +178,13 @@
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
+                                                    (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
+                                                    (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(booking,'checkin')">View Bill</button>
+                                                    (click)="viewBill(booking,'checkin',$event)">View Bill</button>
                                             </span>
                                         </td>
                                         <td>
@@ -233,7 +233,7 @@
                                                 <h4>{{getSingleTime(booking.appmtTime)}}</h4>
                                             </td>
                                             <td class="tdisplay-block">
-                                                <h4 (click)="providerDetail(booking.providerAccount)">
+                                                <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
                                                 <span>
@@ -264,7 +264,7 @@
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
                                                     <button class="bt3 cust-btn"
-                                                        (click)="viewBill(booking,'appointment')">Pay
+                                                        (click)="viewBill(booking,'appointment',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
@@ -272,15 +272,15 @@
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(booking,'appointment')">View
+                                                        (click)="viewBill(booking,'appointment',$event)">View
                                                         Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(booking,'appointment')">View
+                                                        (click)="viewBill(booking,'appointment',$event)">View
                                                         Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(booking,'appointment')">View Bill</button>
+                                                        (click)="viewBill(booking,'appointment',$event)">View Bill</button>
                                                 </span>
                                             </td>
                                             <td>
@@ -310,7 +310,7 @@
                                                 <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
                                             </td>
                                             <td class="tdisplay-block">
-                                                <h4 (click)="providerDetail(booking.providerAccount)">
+                                                <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
                                                 <span>
@@ -342,7 +342,7 @@
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                     <button class="bt3 cust-btn"
-                                                        (click)="viewBill(booking,'checkin')">Pay
+                                                        (click)="viewBill(booking,'checkin',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
@@ -350,13 +350,13 @@
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(booking,'checkin')">View Bill</button>
+                                                        (click)="viewBill(booking,'checkin',$event)">View Bill</button>
                                                 </span>
                                             </td>
                                             <td>
@@ -414,7 +414,7 @@
                                             <span>{{booking.appmtDate}}</span>
                                         </td>
                                         <td class="tdisplay-block">
-                                            <h4 (click)="providerDetail(booking.providerAccount)">
+                                            <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                             <span>
                                                 <i class="fa phon-icon"
@@ -444,7 +444,7 @@
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
                                                 <button class="bt3 cust-btn"
-                                                    (click)="viewBill(booking,'appointment')">Pay
+                                                    (click)="viewBill(booking,'appointment',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
@@ -452,13 +452,13 @@
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment',$event)">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(booking,'appointment')">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment',$event)">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(booking,'appointment')">View Bill</button>
+                                                    (click)="viewBill(booking,'appointment',$event)">View Bill</button>
                                             </span>
                                         </td>
                                         <td>
@@ -483,7 +483,7 @@
                                             <span>{{booking.date}}</span>
                                         </td>
                                         <td class="tdisplay-block">
-                                            <h4 (click)="providerDetail(booking.providerAccount)">
+                                            <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                             <span>
                                                 <i class="fa phon-icon"
@@ -513,7 +513,7 @@
                                         <td>
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
-                                                <button class="bt3 cust-btn" (click)="viewBill(booking,'checkin')">Pay
+                                                <button class="bt3 cust-btn" (click)="viewBill(booking,'checkin',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
@@ -521,13 +521,13 @@
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
+                                                    (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(booking,'checkin')">View Receipt</button>
+                                                    (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                    (click)="viewBill(booking,'checkin')">View Bill</button>
+                                                    (click)="viewBill(booking,'checkin',$event)">View Bill</button>
                                             </span>
                                         </td>
                                         <td>
@@ -561,7 +561,7 @@
                                                 <span>{{booking.appmtDate}}</span>
                                             </td>
                                             <td class="tdisplay-block">
-                                                <h4 (click)="providerDetail(booking.providerAccount)">
+                                                <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
                                                 <span>
@@ -592,7 +592,7 @@
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
                                                     <button class="bt3 cust-btn"
-                                                        (click)="viewBill(booking,'appointment')">Pay
+                                                        (click)="viewBill(booking,'appointment',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
@@ -600,15 +600,15 @@
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(booking,'appointment')">View
+                                                        (click)="viewBill(booking,'appointment',$event)">View
                                                         Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(booking,'appointment')">View
+                                                        (click)="viewBill(booking,'appointment',$event)">View
                                                         Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(booking,'appointment')">View Bill</button>
+                                                        (click)="viewBill(booking,'appointment',$event)">View Bill</button>
                                                 </span>
                                             </td>
                                             <td>
@@ -634,7 +634,7 @@
                                                 <span>{{booking.date}}</span>
                                             </td>
                                             <td class="tdisplay-block">
-                                                <h4 (click)="providerDetail(booking.providerAccount)">
+                                                <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
                                                 <span>
@@ -666,7 +666,7 @@
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                     <button class="bt3 cust-btn"
-                                                        (click)="viewBill(booking,'checkin')">Pay
+                                                        (click)="viewBill(booking,'checkin',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
@@ -674,13 +674,13 @@
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(booking,'checkin')">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(booking,'checkin')">View Bill</button>
+                                                        (click)="viewBill(booking,'checkin',$event)">View Bill</button>
                                                 </span>
                                             </td>
                                             <td>
