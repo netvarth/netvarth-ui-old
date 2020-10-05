@@ -56,7 +56,7 @@ export class ConsumerNotificationsComponent implements OnInit {
   earlyDONATNotificatonSettings = { eventType: 'EARLY', resourceType: 'DONATION', sms: false, email: false, pushNotification: false, personsAhead: '' };
   prefinalWLNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   prefinalAPPTNotificationSettings = { eventType: 'PREFINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
-  firstAPPTNotificationSettings = { eventType: 'FIRSTNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '1440'};
+  firstAPPTNotificationSettings = { eventType: 'FIRSTNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '1440' };
   secondAPPTNotificationSettings = { eventType: 'SECONDNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '480' };
   thirdAPPTNotificationSettings = { eventType: 'THIRDNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '240' };
   fourthAPPTNotificationSettings = { eventType: 'FORTHNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '60' };
@@ -85,10 +85,25 @@ export class ConsumerNotificationsComponent implements OnInit {
   settings: any = [];
   showToken = false;
   api_loading = true;
-  firstapptNotificationTime ;
-  secondapptNotificationTime ;
-  thirdapptNotificationTime ;
-  fourthapptNotificationTime ;
+  firstapptNotificationTime;
+  secondapptNotificationTime;
+  thirdapptNotificationTime;
+  fourthapptNotificationTime;
+  appt_remind_hr = [];
+  appt_remind_min = [];
+  f_selected_hr = 0;
+  f_selected_min = 0;
+  s_selected_hr = 0;
+  s_selected_min = 0;
+  t_selected_hr = 0;
+  t_selected_min = 0;
+  ft_selected_hr = 0;
+  ft_selected_min = 0;
+  totaltime;
+  firstapp_time: number[];
+  secndapp_time: number[];
+  thirdapp_time: number[];
+  fourthapp_time: number[];
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -98,6 +113,12 @@ export class ConsumerNotificationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    for (let j = 0; j <= 60; j++) {
+      this.appt_remind_min[j] = j ;
+    }
+    for (let i = 0; i <= 24; i++) {
+      this.appt_remind_hr[i] = i ;
+    }
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
@@ -209,30 +230,35 @@ export class ConsumerNotificationsComponent implements OnInit {
       } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['FINAL_APPT'] = true;
         this.finalAPPTNotificationSettings = notificationObj;
-      } 
-
-      else if (notificationObj['eventType'] === 'FIRSTNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+      } else if (notificationObj['eventType'] === 'FIRSTNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['FIRST_APPT'] = true;
+        this.firstapp_time = this.timeinHrMin(notificationObj.time);
+        this.f_selected_hr = this.firstapp_time[0];
+        this.f_selected_min = this.firstapp_time[1];
         this.firstAPPTNotificationSettings = notificationObj;
         this.firstApptTime = (notificationObj['time']) ? true : false;
-      } 
-      else if (notificationObj['eventType'] === 'SECONDNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+      } else if (notificationObj['eventType'] === 'SECONDNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['SECOND_APPT'] = true;
+        this.secndapp_time = this.timeinHrMin(notificationObj.time);
+        this.s_selected_hr = this.secndapp_time[0];
+        this.s_selected_min = this.secndapp_time[1];
         this.secondAPPTNotificationSettings = notificationObj;
         this.secondApptTime = (notificationObj['time']) ? true : false;
-      } 
-      else if (notificationObj['eventType'] === 'THIRDNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
+      } else if (notificationObj['eventType'] === 'THIRDNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['THIRD_APPT'] = true;
+        this.thirdapp_time = this.timeinHrMin(notificationObj.time);
+        this.t_selected_hr = this.thirdapp_time[0];
+        this.t_selected_min = this.thirdapp_time[1];
         this.thirdAPPTNotificationSettings = notificationObj;
         this.thirdApptTime = (notificationObj['time']) ? true : false;
       } else if (notificationObj['eventType'] === 'FORTHNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['FOURTH_APPT'] = true;
+        this.fourthapp_time = this.timeinHrMin(notificationObj.time);
+        this.ft_selected_hr = this.fourthapp_time[0];
+        this.ft_selected_min = this.fourthapp_time[1];
         this.fourthAPPTNotificationSettings = notificationObj;
         this.fourthApptTime = (notificationObj['time']) ? true : false;
-      } 
-      
-      
-      else if (notificationObj['eventType'] === 'DONATIONSERVICE' && notificationObj['resourceType'] === 'DONATION') {
+      } else if (notificationObj['eventType'] === 'DONATIONSERVICE' && notificationObj['resourceType'] === 'DONATION') {
         this.cSettings['DONATIONSERVICE'] = true;
         this.donatAddNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'DONATION') {
@@ -275,20 +301,27 @@ export class ConsumerNotificationsComponent implements OnInit {
       activeInput = this.prefinalAPPTNotificationSettings;
     } else if (type === 'FINAL_APPT') {
       activeInput = this.finalAPPTNotificationSettings;
-    } 
-    else if (type === 'FIRST_APPT') {
+    } else if (type === 'FIRST_APPT') {
+      this.firstAPPTNotificationSettings.time = '';
+      this.totaltime = this.hourtoMin(this.f_selected_hr) + this.f_selected_min;
+      this.firstAPPTNotificationSettings.time = this.totaltime.toString();
       activeInput = this.firstAPPTNotificationSettings;
-    }
-    else if (type === 'SECOND_APPT') {
+    } else if (type === 'SECOND_APPT') {
+      this.secondAPPTNotificationSettings.time = '';
+      this.totaltime = this.hourtoMin(this.s_selected_hr) + this.s_selected_min;
+      this.secondAPPTNotificationSettings.time = this.totaltime.toString();
       activeInput = this.secondAPPTNotificationSettings;
-    }
-    else if (type === 'THIRD_APPT') {
+    } else if (type === 'THIRD_APPT') {
+      this.thirdAPPTNotificationSettings.time = '';
+      this.totaltime = this.hourtoMin(this.t_selected_hr) + this.t_selected_min;
+      this.thirdAPPTNotificationSettings.time = this.totaltime.toString();
       activeInput = this.thirdAPPTNotificationSettings;
-    }
-    else if (type === 'FOURTH_APPT') {
+    } else if (type === 'FOURTH_APPT') {
+      this.fourthAPPTNotificationSettings.time = '';
+      this.totaltime = this.hourtoMin(this.ft_selected_hr) + this.ft_selected_min;
+      this.fourthAPPTNotificationSettings.time = this.totaltime.toString();
       activeInput = this.fourthAPPTNotificationSettings;
-    }
-    else if (type === 'DONATIONSERVICE') {
+    } else if (type === 'DONATIONSERVICE') {
       activeInput = this.donatAddNotificationSettings;
     } else if (type === 'EARLY_DONAT') {
       activeInput = this.earlyDONATNotificatonSettings;
@@ -321,11 +354,16 @@ export class ConsumerNotificationsComponent implements OnInit {
         }
       );
     }
-  } 
+  }
   timeinHrMin(val) {
     const hours = Math.floor(val / 60);
     const minutes = val % 60;
-  return hours + ' Hr ' + minutes + ' min' ;
+    return [hours, minutes];
+    // return hours + ' Hr ' + minutes + ' min';
+  }
+  hourtoMin(val) {
+    const minutes = val * 60;
+    return minutes;
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
@@ -333,5 +371,21 @@ export class ConsumerNotificationsComponent implements OnInit {
   }
   goBack() {
     this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
+  }
+  handleHrSelction(obj, atempt) {
+     switch (atempt) {
+      case 'first' : this.f_selected_hr = obj; break;
+      case 'second' : this.s_selected_hr = obj; break;
+      case 'third' : this.t_selected_hr = obj; break;
+      case 'fourth' : this.ft_selected_hr = obj; break;
+     }
+  }
+  handleMinSelction(obj, atempt) {
+     switch (atempt) {
+      case 'first' : this.f_selected_min = obj; break;
+      case 'second' : this.s_selected_min = obj; break;
+      case 'third' : this.t_selected_min = obj; break;
+      case 'fourth' : this.ft_selected_min = obj; break;
+     }
   }
 }
