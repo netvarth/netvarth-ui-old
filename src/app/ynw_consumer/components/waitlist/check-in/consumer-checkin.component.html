@@ -160,50 +160,8 @@
                                 <div
                                     class="col-md-4 col-lg-4 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
 
-                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                            Choose
-                                            Date</div>
-                                        <div class="pull-left brd-round brd-light">
-                                            <div class="icon-minus pull-left" [class.disable]="disableMinus()"
-                                                *ngIf="settingsjson.futureDateWaitlist" (click)="calculateDate(-1)">
-                                            </div>
-                                            <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
-                                            <div class="icon-add pull-left" *ngIf="settingsjson.futureDateWaitlist"
-                                                (click)="calculateDate(1)"></div>
-                                        </div>
-                                        <div class="pickerouter caldiv pull-left"
-                                            *ngIf="settingsjson.futureDateWaitlist">
-                                            <!-- && availableDates && availableDates.length > 0" -->
-                                            <mat-datepicker-toggle matSuffix [for]="picker">
-                                            </mat-datepicker-toggle>
-                                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
-                                            <input class="" style="visibility: hidden; width:1px" type="text"
-                                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
-                                                (dateChange)="handleFutureDateChange($event)">
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">Choose
-                                            Timings</div>
-                                        <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding">
-                                            <mat-chip-list class="" *ngIf="queuejson && queuejson.length > 0">
-                                                <mat-chip *ngFor="let queue of queuejson, let i= index"
-                                                    [selected]="queue.id === queuejson[this.sel_queue_indx].id"
-                                                    (click)="handleQueueSelection(queue, i)">
-                                                    {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
-                                                </mat-chip>
-                                            </mat-chip-list>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
-                                                *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
-                                                No timings available.
-                                            </div>
-                                        </div>
-                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding centeralign"><a
-                                        class="lnk pointer-cursor action">See
-                                        More</a></div> -->
-                                    </div>
+                                    
+                                   
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
                                             Waiting in Line
@@ -225,7 +183,16 @@
                                                         <span class="color-grey"> \ </span>
                                                         <span>{{sel_day}} {{sel_checkindate | date: dateFormat}}</span>
                                                     </span>
+                                                    <span class="slotdiv">
+                                                        <mat-chip-list class="" *ngIf="queuejson && queuejson.length > 0">
+                                                            <mat-chip>
+                                                                
+                                                                {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                                            </mat-chip>
+                                                        </mat-chip-list></span>
                                                 </span>
+                                                
+                                                
                                                 <span
                                                     *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
                                                     <!-- {{today_cap}} {{estimateCaption}}:
@@ -251,6 +218,7 @@
                                                         <span><span class="color-grey"> \ </span>{{sel_day}}
                                                             {{sel_checkindate | date: dateFormat}},
                                                             {{sel_queue_servicetime}}</span>
+                                                            
                                                         <!-- </span> -->
                                                     </ng-container>
                                                     <ng-container *ngIf="!isFuturedate">
@@ -259,11 +227,19 @@
                                                         <span><span class="color-grey"> \
                                                             </span>{{sel_queue_servicetime}}</span>
                                                     </ng-container>
-
                                                 </span>
-
+                                                <span><a class="lnk pointer-cursor action mgn-lt-10"
+                                                    (click)="changeTime()">Change Time
+                                                </a></span>
                                             </h6>
                                         </div>
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-up-10"
+                                    *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
+                                    No timings available.
+                                    <span><a class="lnk pointer-cursor action mgn-lt-10"
+                                        (click)="changeTime()">Change Time
+                                    </a></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12 border-tp check-new-group">
@@ -344,6 +320,56 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                                *ngIf="action=='timeChange'">
+                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                                        Choose
+                                        Date</div>
+                                    <div class="pull-left brd-round brd-light mgn-up-20">
+                                        <div class="icon-minus pull-left" [class.disable]="disableMinus()"
+                                            *ngIf="settingsjson.futureDateWaitlist" (click)="calculateDate(-1)">
+                                        </div>
+                                        <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
+                                        <div class="icon-add pull-left" *ngIf="settingsjson.futureDateWaitlist"
+                                            (click)="calculateDate(1)"></div>
+                                    </div>
+                                    <div class="pickerouter caldiv pull-left mgn-up-20"
+                                        *ngIf="settingsjson.futureDateWaitlist">
+                                        <!-- && availableDates && availableDates.length > 0" -->
+                                        <mat-datepicker-toggle matSuffix [for]="picker">
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                                        <input class="" style="visibility: hidden; width:1px" type="text"
+                                            [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
+                                            (dateChange)="handleFutureDateChange($event)">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Choose
+                                        Timings</div>
+                                    <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
+                                        <mat-chip-list class="" *ngIf="queuejson && queuejson.length > 0">
+                                            <mat-chip *ngFor="let queue of queuejson, let i= index"
+                                                [selected]="queue.id === queuejson[this.sel_queue_indx].id"
+                                                (click)="handleQueueSelection(queue, i)">
+                                                {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
+                                            *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
+                                            No timings available.
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding centeralign"><a
+                                    class="lnk pointer-cursor action">See
+                                    More</a></div> -->
+                                </div>
+                            </div>
+
+
                             <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                 *ngIf="action=='phone'">
                                 <div class="mgn-up-5 input-group mobile-error">
