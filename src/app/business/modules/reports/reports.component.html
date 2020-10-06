@@ -25,7 +25,8 @@
                       <ng-container *ngIf="appointmentReports.length===0">
                         <div>
                           <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
-                          <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('appointment');">New Report</button>
+                          <!-- <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('appointment');">New Report</button> -->
+                          <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'appointment'}">Create New Report</a>
                         </div>
                     </ng-container>
                   </mat-expansion-panel>
@@ -46,7 +47,8 @@
                     <ng-container *ngIf="paymentReports.length===0">
                       <div>
                         <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
-                        <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('payment');">New Report</button>
+                        <!-- <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('payment');">New Report</button> -->
+                        <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'payment'}">Create New Report</a>
                       </div>
                   </ng-container>
                 </mat-expansion-panel>
@@ -66,8 +68,8 @@
                   <ng-container *ngIf="checkinReports.length===0">
                     <div>
                       <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
-                        <button type="button"  class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('token');">New Report</button>
-
+                        <!-- <button type="button"  class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('token');">New Report</button> -->
+                        <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'token'}">Create New Report</a>
                     </div>
                 </ng-container>
               </mat-expansion-panel>
@@ -87,7 +89,8 @@
                   <ng-container *ngIf="donationReports.length===0">
                     <div>
                       <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
-                      <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('donation');">New Report</button>
+                      <!-- <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('donation');">New Report</button> -->
+                      <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'donation'}">Create New Report</a>
                     </div>
                 </ng-container>
               </mat-expansion-panel>
