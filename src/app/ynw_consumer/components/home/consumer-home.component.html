@@ -10,19 +10,27 @@
             </div>
             <div class="content consumer-dash" *ngIf="!api_loading">
                 <div class="card c-checkins">
-                    <h1 class="ng-tns-c16-8 txt-align">
-                        <span class="ng-tns-c16-8">
-                            Hello {{usr_details.userName}} !
-                        </span> <br>
-                        <button class="mgn-up-20 find-sp-btn" mat-raised-button (click)="do_search()">Find Service
-                            Provider &nbsp; <i class="fa fa-search"></i></button>
-                    </h1>
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                        <div class="col-sm-8 col-md-8 col-lg-8 col-xs-8">
+                            <h1 class="ng-tns-c16-8 txt-align">
+                                <span class="ng-tns-c16-8">
+                                    Hello {{usr_details.userName}} !
+                                </span> <br>
+                                <button class="mgn-up-20 find-sp-btn" mat-raised-button (click)="do_search()">Find
+                                    Service
+                                    Provider &nbsp; <i class="fa fa-search"></i></button>
+                            </h1>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
+                            <img class="myjaldee-bg" _ngcontent-ywv-c30="" src="assets/images/myjaldee/Group92.png">
+                        </div>
+                    </div>
                     <h2 class="ng-tns-c16-8 bg-yelow">
                         <div class="jld-option">
                             <div class="col-sm-4 col-md-6 col-lg-6 col-xs-6 mgn-up-10">MY BOOKINGS</div>
                             <div class="col-sm-8 col-md-6 col-lg-6 col-xs-7">
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button class="flat-btn" mat-flat-button (click)="getmyfavourites()">My
+                                    <button class="flat-btn full-wdth" mat-flat-button (click)="getmyfavourites()">My
                                         Favourites</button>
                                     <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()"
                                         [matTooltip]="'My Favourites'">
@@ -30,14 +38,15 @@
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button class="flat-btn" mat-flat-button (click)="gotoHistory()" style="width: 100%;">History</button>
+                                    <button class="flat-btn full-wdth" mat-flat-button
+                                        (click)="gotoHistory()">History</button>
                                     <button class="flat-icon-btn" mat-flat-button (click)="gotoHistory()"
                                         [matTooltip]="'History'">
                                         <i class="fa fa-history"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button (click)="paymentsClicked()" class="flat-btn" mat-flat-button>My
+                                    <button (click)="paymentsClicked()" class="flat-btn full-wdth" mat-flat-button>My
                                         Payments</button>
                                     <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()"
                                         [matTooltip]="'My Payments'">
@@ -64,7 +73,14 @@
                                     (click)="booking.donationStatus ?'':showBookingDetails(booking)">
                                     <ng-container *ngIf="booking.apptStatus">
                                         <td>
-                                            <h4>{{getSingleTime(booking.appmtTime)}}</h4>
+                                            <h4 class="disp-flex">
+                                                <div class="circle-tokens">
+                                                    <i class="fa appt-icon"></i>
+                                                </div>
+                                                <span class="mgn-up-10">
+                                                    &nbsp;{{getSingleTime(booking.appmtTime)}}
+                                                </span>
+                                            </h4>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -83,7 +99,7 @@
                                             </span>
                                             <span class="servName">{{booking.service.name | capitalizeFirst}} for
                                                 <span>{{booking.appmtFor[0].userName}}</span>
-                                        </span>
+                                            </span>
                                         </td>
                                         <td>
                                             <h6
@@ -145,19 +161,39 @@
                                     </ng-container>
                                     <ng-container *ngIf="booking.waitlistStatus">
                                         <td>
-                                            <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled')"
-                                                class="now">Now</h4>
-                                            <h4
-                                                *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')" class="disp-grid">
-                                                <span class="est-wait-time">Est Wait Time</span>
+                                            <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')"
+                                                class="now disp-flex">
+                                                <div class="circle-tokens">
+                                                    <i class="fa chckn-icon"></i>
+                                                </div>
                                                 <span class="mgn-up-10">
-                                                    {{booking.appxWaitingTime}} 
-                                                <span class="minutes">minutes</span>
+                                                    &nbsp;Now
+                                                </span>
+                                            </h4>
+                                            <h4 *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')"
+                                                class="disp-grid">
+                                                <span class="est-wait-time">Est Wait Time</span>
+                                                <span class="mgn-up-10 disp-flex">
+                                                    <div class="circle-tokens"><i class="fa chckn-icon"></i></div>
+                                                    <span class="mgn-up-10">
+                                                        &nbsp;{{booking.appxWaitingTime}}
+                                                    <span class="minutes">minutes</span>
+                                                    </span>
                                                 </span>
                                             </h4>
                                             <span
-                                                *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">{{booking.date}}</span>
-                                            <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
+                                                *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">
+                                                <div class="circle-tokens">
+                                                    <i class="fa chckn-icon"></i>
+                                                </div>
+                                                &nbsp;{{booking.date}}</span>
+                                            <h4 *ngIf="booking.token" class="disp-flex">
+                                                <div class="circle-tokens">
+                                                    <i class="fa token-icon"></i>
+                                                </div>
+                                                <span class="mgn-up-10">
+                                                    &nbsp;Token {{booking.token}}
+                                                </span></h4>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -174,8 +210,9 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for 
-                                                <span>{{booking.waitlistingFor[0].firstName}} {{booking.waitlistingFor[0].lastName}}</span>
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for
+                                                <span>{{booking.waitlistingFor[0].firstName}}
+                                                    {{booking.waitlistingFor[0].lastName}}</span>
                                             </span>
                                         </td>
                                         <td>
@@ -263,7 +300,14 @@
                                         (click)="booking.donationStatus ?'':showBookingDetails(booking)">
                                         <ng-container *ngIf="booking.apptStatus">
                                             <td>
-                                                <h4>{{getSingleTime(booking.appmtTime)}}</h4>
+                                                    <h4 class="disp-flex">
+                                                        <div class="circle-tokens">
+                                                            <i class="fa appt-icon"></i>
+                                                        </div>
+                                                        <span class="mgn-up-10">
+                                                            &nbsp;{{getSingleTime(booking.appmtTime)}}
+                                                        </span>
+                                                    </h4>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -281,7 +325,7 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for 
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for
                                                     <span>{{booking.appmtFor[0].userName}}</span>
                                                 </span>
                                             </td>
@@ -346,15 +390,17 @@
                                         </ng-container>
                                         <ng-container *ngIf="booking.waitlistStatus">
                                             <td>
-                                                <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled')"
-                                                    class="now">Now</h4>
-                                                <h4
-                                                    *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')" class="disp-grid">
+                                                <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')"
+                                                    class="now">
+                                                    <i class="fa chckn-icon"></i>
+                                                    Now</h4>
+                                                <h4 *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')"
+                                                    class="disp-grid">
                                                     <span class="est-wait-time">Est Wait Time</span>
-                                                <span class="mgn-up-10">
-                                                    {{booking.appxWaitingTime}} 
-                                                <span class="minutes">minutes</span>
-                                                </span>
+                                                    <span class="mgn-up-10">
+                                                        {{booking.appxWaitingTime}}
+                                                        <span class="minutes">minutes</span>
+                                                    </span>
                                                 </h4>
                                                 <span
                                                     *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">{{booking.date}}</span>
@@ -376,8 +422,9 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for 
-                                                    <span>{{booking.waitlistingFor[0].firstName}} {{booking.waitlistingFor[0].lastName}}</span>
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for
+                                                    <span>{{booking.waitlistingFor[0].firstName}}
+                                                        {{booking.waitlistingFor[0].lastName}}</span>
                                                 </span>
                                             </td>
                                             <td>
@@ -475,8 +522,16 @@
                                     (click)="showBookingDetails(booking)">
                                     <ng-container *ngIf="booking.apptStatus">
                                         <td>
-                                            <h4>{{getSingleTime(booking.appmtTime)}}</h4>
+                                            <h4 class="disp-flex">
+                                                <div class="circle-tokens">
+                                                    <i class="fa appt-icon"></i>
+                                                </div>
+                                                <span class="mgn-up-10">
+                                                    &nbsp;{{getSingleTime(booking.appmtTime)}}
+                                                </span>
+                                            </h4>
                                             <span>{{booking.appmtDate}}</span>
+                                            
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -553,7 +608,9 @@
                                     </ng-container>
                                     <ng-container *ngIf="booking.waitlistStatus">
                                         <td>
-                                            <h4 *ngIf="!booking.token">{{booking.serviceTime}}</h4>
+                                            <h4 *ngIf="!booking.token">
+                                                <i class="fa chckn-icon"></i>
+                                                {{booking.serviceTime}}</h4>
                                             <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
                                             <span>{{booking.date}}</span>
                                         </td>
@@ -572,8 +629,9 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for 
-                                                <span>{{booking.waitlistingFor[0].firstName}} {{booking.waitlistingFor[0].lastName}}</span>
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for
+                                                <span>{{booking.waitlistingFor[0].firstName}}
+                                                    {{booking.waitlistingFor[0].lastName}}</span>
                                             </span>
                                         </td>
                                         <td>
@@ -641,7 +699,14 @@
                                         (click)="showBookingDetails(booking)">
                                         <ng-container *ngIf="booking.apptStatus">
                                             <td>
-                                                <h4>{{getSingleTime(booking.appmtTime)}}</h4>
+                                                <h4 class="disp-flex">
+                                                    <div class="circle-tokens">
+                                                        <i class="fa appt-icon"></i>
+                                                    </div>
+                                                    <span class="mgn-up-10">
+                                                        &nbsp;{{getSingleTime(booking.appmtTime)}}
+                                                    </span>
+                                                </h4>
                                                 <span>{{booking.appmtDate}}</span>
                                             </td>
                                             <td class="tdisplay-block">
@@ -660,7 +725,7 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for 
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for
                                                     <span>{{booking.appmtFor[0].userName}}</span>
                                                 </span>
                                             </td>
@@ -722,7 +787,9 @@
                                         </ng-container>
                                         <ng-container *ngIf="booking.waitlistStatus">
                                             <td>
-                                                <h4 *ngIf="!booking.token">{{booking.serviceTime}}</h4>
+                                                <h4 *ngIf="!booking.token">
+                                                    <i class="fa chckn-icon"></i>
+                                                    {{booking.serviceTime}}</h4>
                                                 <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
                                                 <span>{{booking.date}}</span>
                                             </td>
@@ -742,8 +809,9 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for 
-                                                    <span>{{booking.waitlistingFor[0].firstName}} {{booking.waitlistingFor[0].lastName}}</span>
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for
+                                                    <span>{{booking.waitlistingFor[0].firstName}}
+                                                        {{booking.waitlistingFor[0].lastName}}</span>
                                                 </span>
                                             </td>
                                             <td>

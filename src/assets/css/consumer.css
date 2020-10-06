@@ -6549,9 +6549,48 @@
 .consumer-dash .disp-grid {
     display:  grid !important;
 }
+.consumer-dash .disp-flex {
+    display:  flex !important;
+}
 .consumer-dash .servName {
     font-size: .815rem !important;
 }
 .consumer-dash .phon-icon, .consumer-dash .meet-icon {
     width: 14px !important;
 }
+.consumer-dash .myjaldee-bg {
+    width: 380px;
+}
+.consumer-dash .full-wdth {
+    width: 100% !important;
+}
+.consumer-dash .appt-icon {
+  content: url(../images/myjaldee/Appoinment-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.consumer-dash .chckn-icon {
+    content: url(../images/myjaldee/Checkin-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 29px;
+    margin-top: 5px;
+}
+.consumer-dash .token-icon {
+    content: url(../images/myjaldee/token-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 25px;
+    margin-top: 7px;
+}
+.consumer-dash .circle-tokens {
+    background: rgb(252 235 190);
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    /* border-radius: 50px; */
+    font-size: 15px;
+    /* padding: 10px 0; */
+}  
