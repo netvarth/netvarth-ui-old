@@ -389,6 +389,9 @@
         align-items: flex-start;
         flex-direction: column;
     }
+    .bg-visible {
+        display: none !important;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -502,6 +505,9 @@
         display: inline-flex;
         align-items: center;
     }
+    .consumer-dash .myjaldee-bg {
+        width: 310px !important;
+    }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -527,6 +533,11 @@
     .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme .timing .time-data .icon-question {
         height: 14px;
         margin-left: 5px;
+    }
+    .consumer-dash .card.c-checkins h1 {
+    padding: 0px !important;
+    padding-top: 40pX !important;
+    padding-bottom: 40px !important;
     }
 }
 
@@ -6594,3 +6605,8 @@
     font-size: 15px;
     /* padding: 10px 0; */
 }  
+@media (min-width: 575px) and (max-width: 991px) {
+    .consumer-dash .myjaldee-bg {
+        width: 240px !important;
+    }
+}
