@@ -406,7 +406,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
-    console.log(this.check_in_statuses_filter);
     this.pagination.startpageval = this.shared_functions.getitemFromGroupStorage('paginationStart') || 1;
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.breadcrumb_moreoptions = {
@@ -479,7 +478,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(
         data => {
           this.services = data;
-          console.log(this.services);
           this.getProviderSettings();
         },
         () => { }
@@ -997,14 +995,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 self.locations.push(loc);
               }
             }
-            console.log(self.locations);
             const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
             if (cookie_location_id === '') {
               if (self.locations[0]) {
                 self.locationSelected(self.locations[0]).then(
                   (queues: any) => {
                     self.queues = queues;
-                    console.log(self.queues);
                     self.initViews(queues, 'changeLocation').then(
                       (view) => {
                         self.initView(view, 'changeLocation');
@@ -1092,7 +1088,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.getQs('all').then(
         (queues: any) => {
           _this.queues = queues;
-          console.log(_this.queues);
           resolve(queues);
         },
         () => {
@@ -1200,7 +1195,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (totalAppointmentsSelected > 1) {
       this.apptStartedMultiSelection = true;
     }
-    console.log(this.apptMultiSelection);
   }
   selectAllAppoinments() {
     this.appointmentsChecked = {};
@@ -1252,7 +1246,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             (data: any) => {
               this.appt_list = data;
               this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
-              // console.log(this.todayAppointments);
               if (this.filterapplied === true) {
                 this.noFilter = false;
               } else {
@@ -1260,10 +1253,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               this.setCounts(this.appt_list);
               this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-
               this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
-              // console.log(this.check_in_filtered_list);
-              // console.log(this.startedCheckins);
               this.loading = false;
             },
             () => {
@@ -1418,7 +1408,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (totalAppointmentsSelected > 1) {
       this.apptMultiSelection = true;
     }
-    console.log(this.apptMultiSelection);
   }
   setTimeType(time_type) {
     this.statusMultiCtrl = [];
@@ -2517,10 +2506,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           waitlist = _this.startedAppointmentsChecked[apptIndex];
         });
       } else {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        waitlist = _this.appointmentsChecked[apptIndex];
-      });
-    }
+        Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+          waitlist = _this.appointmentsChecked[apptIndex];
+        });
+      }
     }
     if (action === 'DONE') {
       waitlist.disableDonebtn = true;
@@ -2790,32 +2779,30 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   showCheckinActions(status, checkin?) {
-    console.log(checkin);
-    console.log(this.appointmentsChecked);
     let waitlist = [];
     if (checkin) {
       waitlist = checkin;
     } else {
-     if (status === 'started') {
-      Object.keys(this.startedAppointmentsChecked).forEach(apptIndex => {
-        waitlist.push(this.startedAppointmentsChecked[apptIndex]);
-      });
-     } else {
-      Object.keys(this.appointmentsChecked).forEach(apptIndex => {
-        waitlist.push(this.appointmentsChecked[apptIndex]);
-      });
-     }
+      if (status === 'started') {
+        Object.keys(this.startedAppointmentsChecked).forEach(apptIndex => {
+          waitlist.push(this.startedAppointmentsChecked[apptIndex]);
+        });
+      } else {
+        Object.keys(this.appointmentsChecked).forEach(apptIndex => {
+          waitlist.push(this.appointmentsChecked[apptIndex]);
+        });
+      }
     }
     let multiSelection;
     if (checkin) {
       multiSelection = false;
     } else {
-    if (status === 'started') {
-      multiSelection = this.apptStartedMultiSelection;
-    } else {
-      multiSelection = this.apptMultiSelection;
+      if (status === 'started') {
+        multiSelection = this.apptStartedMultiSelection;
+      } else {
+        multiSelection = this.apptMultiSelection;
+      }
     }
-  }
     const Mfilter = this.setFilterForApi();
     const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
       width: '50%',
@@ -2839,7 +2826,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allSelection = false;
     this.statusAction = status;
     this.resetCheckList();
-    console.log(this.apptMultiSelection);
     if (this.time_type === 1) {
       this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, status);
     } else {
@@ -2848,7 +2834,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   tabChange(event) {
     this.resetCheckList();
-    console.log(this.apptMultiSelection);
+    this.chkSelectAppointments = false;
     this.allStartedSelection = false;
     this.allSelection = false;
     this.loading = true;
