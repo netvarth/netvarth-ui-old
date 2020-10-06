@@ -748,4 +748,10 @@ export class CustomViewComponent implements OnInit {
     redirecToGeneral() {
         this.router.navigate(['provider', 'settings', 'general', 'customview']);
     }
+    gotoAppt() {
+        this.router.navigate(['/provider/settings/appointmentmanager']);
+      }
+      gotoWaitlistMngr() {
+        this.router.navigate(['/provider/settings/q-manager']);
+    }
 }

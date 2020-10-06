@@ -19,7 +19,7 @@
               <div class="col-md-12" *ngIf="waitlist_status == false && appointment_status == false">
                 <div class="row">
                     <div class="no-dta">
-                        <p>Enable Appointment/ Q Manager to create/ manage custom view</p>
+                        <p>Enable <a class="underline" (click)="gotoAppt()">Appointment Manager</a>/ <a class="underline" (click)="gotoWaitlistMngr()">Queue Manager</a> to create/ manage custom view</p>
                         
                     </div>
                 </div>
