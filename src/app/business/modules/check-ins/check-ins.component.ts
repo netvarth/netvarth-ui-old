@@ -2856,3 +2856,4 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setTimeType(event.index + 1);
   }
 }
+
