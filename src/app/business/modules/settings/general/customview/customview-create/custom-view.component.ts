@@ -15,6 +15,7 @@ export class CustomViewComponent implements OnInit {
     customViewName;
     customViewFor = 'Waitlist';
     appointment_status: any;
+    waitlist_status: any;
     departments: any = [];
     users_list: any = [];
     service_list: any = [];
@@ -738,7 +739,7 @@ export class CustomViewComponent implements OnInit {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.appointment_status = data.appointment;
-                console.log(this.appointment_status)
+                this.waitlist_status = data.waitlist;
             });
     }
     onCancel() {
@@ -746,5 +747,11 @@ export class CustomViewComponent implements OnInit {
     }
     redirecToGeneral() {
         this.router.navigate(['provider', 'settings', 'general', 'customview']);
+    }
+    gotoAppt() {
+        this.router.navigate(['/provider/settings/appointmentmanager']);
+      }
+      gotoWaitlistMngr() {
+        this.router.navigate(['/provider/settings/q-manager']);
     }
 }

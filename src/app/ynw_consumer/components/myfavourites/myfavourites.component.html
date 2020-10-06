@@ -1,0 +1,140 @@
+<section class="container consumer-appthistory no-padding-small">
+    <div class="row myfav">
+        <div class="panel panel-default">
+            <div class="panel-heading top-row ">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                    <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                </div>
+            </div>
+            <div class="panel-body no-padding">
+                <div class="c-outer">
+                    <div class="c-body consumer-dash">
+                        <div class="card title-gb">
+                            <h5 class="mgn-up-10">
+                                My Favourites <a class="pull-right back-btn" routerLink="/"><i class="fa fa-arrow-left"></i></a></h5>
+                        </div>
+                        <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
+                        <div class="card history one no-padding">
+                            <!-- Favourite body start here -->
+                            <div class="card favourites">
+                                <div>
+                                    <div>
+                                        <div class="outer">
+                                            <div class="list" [class.active]="open_fav_div == i"
+                                                *ngFor="let provider of fav_providers; index as i">
+                                                <div class="header">
+                                                    <div class="lt" (click)="toogleDetail(provider, i)">
+                                                        <h3 class="pointer-cursor">
+                                                            <a
+                                                                (click)="providerDetail(provider)">{{provider.businessName | capitalizeFirst}}</a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="rt">
+                                                        <ul class="controls">
+                                                            <li (click)="addCommonMessage(provider)"><span
+                                                                    class="message">{{send_msg_cap}}</span></li>
+                                                            <li>
+                                                                <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                                    <mat-icon>more_vert</mat-icon>
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                        <mat-menu #appMenu="matMenu">
+                                                            <button mat-menu-item
+                                                                (click)="providerDetail(provider)">{{view_cap}}</button>
+                                                            <button mat-menu-item (click)="doDeleteFavProvider(provider)">
+                                                                <span class="add-fav favourited">
+                                                                    {{remove_fav_cap}}</span>
+                                                            </button>
+                                                            <button mat-menu-item (click)="providerManagePrivacy(provider,i)">
+                                                                {{manage_privacy_cap}}
+                                                            </button>
+                                                        </mat-menu>
+                                                    </div>
+                                                </div>
+                                                <div class="detail" [@hideShowAnimator]="hideShowAnimator"
+                                                    *ngIf="open_fav_div == i">
+                                                    <div class="location" *ngFor="let loc of provider.locations">
+                                                        <div class="locationname">
+                                                            <span class="icon-location"></span> {{loc.place | capitalizeFirst}}
+                                                        </div>
+                                                        <div class="bt-l" *ngIf="loc['waitlist'] && provider.onlinePresence">
+                                                            <div style="display: block;" class="wt-tme"
+                                                                *ngIf="loc['estimatedtime_det']">
+                                                                <div class="timing"
+                                                                    *ngIf="loc['calculationMode']!='NoCalc' && loc['estimatedtime_det']['caption']">
+                                                                    <span
+                                                                        class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
+                                                                    <span class="time-data">{{loc['estimatedtime_det']['time']}}
+                                                                    </span>
+                                                                </div>
+                                                                <div>
+                                                                    <div *ngIf="loc['personAhead']">
+                                                                        <div class="timing" style="margin-bottom: 5px"
+                                                                            *ngIf="!loc.opennow && loc['calculationMode']=='NoCalc' && loc['showToken']">
+                                                                            <span class="est-time"> Next Available Time:</span>
+                                                                            <span class="time-data">
+                                                                                {{loc['estimatedtime_det']['nextAvailDate']}}
+                                                                            </span>
+                                                                        </div>
+                                                                        <b>{{loc['personAhead']}}</b> <span
+                                                                            *ngIf="loc['personAhead'] > 1" class="people-ahead">
+                                                                            {{people_ahead}}</span><span
+                                                                            *ngIf="loc['personAhead'] == 1" class="people-ahead">
+                                                                            {{one_person_ahead}}</span>
+                                                                    </div>
+                                                                    <div style="font-weight: 600" *ngIf="loc['personAhead'] === 0">
+                                                                        <div class="timing" style="margin-bottom: 5px"
+                                                                            *ngIf="!loc.opennow && loc['calculationMode']=='NoCalc' && loc['showToken']">
+                                                                            <span class="est-time"> Next Available Time:</span>
+                                                                            <span class="time-data">
+                                                                                {{loc['estimatedtime_det']['nextAvailDate']}}
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="time-data">
+                                                                            {{loc['personAhead']}} {{people_ahead}} </div>Be the
+                                                                        first in
+                                                                        line
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="wt-tme notallowed" *ngIf="loc['estimatedtime_det']">
+                                                                <ng-container *ngIf="loc['estimatedtime_det']['message']">
+                                                                    {{loc['estimatedtime_det']['message']}}</ng-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="bt-r"
+                                                            *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || provider.settings && provider.settings.futureDateWaitlist)">
+                                                            <span class="cs-btn chk-btn" (click)="providerDetail(provider)"
+                                                                *ngIf="loc['waitlist'] && provider.onlinePresence && ((loc['onlineCheckIn'] && loc['isAvailableToday'] && loc['availableToday']) || (provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate'])) && !loc['showToken']">
+                                                                {{getTerminologyTerm('waitlist')}}</span>
+                                                            <span class="cs-btn chk-btn" (click)="providerDetail(provider)"
+                                                                *ngIf="loc['waitlist'] && provider.onlinePresence && ((loc['onlineCheckIn'] && loc['isAvailableToday'] && loc['availableToday']) || (provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate'])) && loc['showToken']">{{get_token_btn}}</span>
+                                                            <span class="cs-btn chk-btn disabled"
+                                                                *ngIf="loc['waitlist'] && provider.onlinePresence && !loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (provider.settings && !provider.settings.futureDateWaitlist || !loc['estimatedtime_det']['cdate'])">
+                                                                {{getTerminologyTerm('waitlist')}}</span>
+                                                            <span class="cs-btn chk-btn disabled"
+                                                                *ngIf="loc['waitlist'] && provider.onlinePresence && loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (provider.settings && !provider.settings.futureDateWaitlist || !loc['estimatedtime_det']['cdate'])">{{get_token_btn}}</span>
+                                                            <br>
+                                                            <span class="cs-btn chk-btn"
+                                                                *ngIf="loc['apptAllowed'] && provider.onlinePresence"
+                                                                (click)="providerDetail(provider)">
+                                                                Appointment</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="loadcomplete.fav_provider && fav_providers && fav_providers.length == 0">
+                                                <p>{{you_hav_added_caption}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

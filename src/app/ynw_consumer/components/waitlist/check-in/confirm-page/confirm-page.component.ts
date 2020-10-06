@@ -60,11 +60,14 @@ export class ConfirmPageComponent implements OnInit {
   }
   getWaitTime(waitlist) {
     if (waitlist.calculationMode !== 'NoCalc') {
-      if (waitlist.appxWaitingTime === 0) {
+      if (waitlist.serviceTime) {
+        console.log(waitlist.serviceTime)
+        return this.waitlist.serviceTime;
+      } else if (waitlist.appxWaitingTime === 0) {
         return 'Now';
       } else if (waitlist.appxWaitingTime !== 0) {
         return this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
-      }
+      } 
     }
   }
 }

@@ -20,7 +20,7 @@ export class ConsumerServices {
     return this.servicemeta.httpGet('consumer/appointment', null, params);
     // set no_redirect_path in interceptor to avoid redirect on 401
 }
-  getWaitlistHistory(params) {
+  getWaitlistHistory(params?) {
     return this.servicemeta.httpGet('consumer/waitlist/history', null, params);
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
@@ -141,13 +141,26 @@ export class ConsumerServices {
     return this.servicemeta.httpPut(path);
   }
 
+  getWaitlistToday() {
+    const path = 'consumer/waitlist/today';
+    return this.servicemeta.httpGet(path);
+  }
+  getWaitlistFuture() {
+    const path = 'consumer/waitlist/future';
+    return this.servicemeta.httpGet(path);
+  }
   getAppointmentToday() {
     const path = 'consumer/appointment/today';
     return this.servicemeta.httpGet(path);
   }
-  getAppointmentHistory() {
-    const path = 'consumer/appointment/history' ;
+  getAppointmentFuture() {
+    const path = 'consumer/appointment/future';
     return this.servicemeta.httpGet(path);
+  }
+  getAppointmentHistory(params?) {
+   // const path = 'consumer/appointment/history',null, params ;
+    return this.servicemeta.httpGet('consumer/appointment/history', null, params);
+    // return this.servicemeta.httpGet(path);
   }
   getAppointmentHistoryCount() {
     return this.servicemeta.httpGet('consumer/appointment/history/count');

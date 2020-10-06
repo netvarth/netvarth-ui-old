@@ -1822,6 +1822,8 @@ export class ConsumerCheckinComponent implements OnInit {
             this.action = '';
         } else if (this.action === 'preInfo') {
             this.action = '';
+        } else if (this.action === 'timeChange') {
+            this.action = '';
         }
     }
     applyPromocode() {
@@ -1890,5 +1892,8 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     showPreInfo() {
         this.action = 'preInfo';
+    }
+    changeTime(){
+        this.action = 'timeChange';
     }
 }

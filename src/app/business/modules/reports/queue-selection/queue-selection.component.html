@@ -26,7 +26,7 @@
           </div>
           <div>
             <mat-form-field>
-              <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Filter" style="border-bottom:none;">
+              <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Apply Filter" style="border-bottom:none;">
             </mat-form-field>
           </div>
           <mat-table [dataSource]="queue_dataSource">
@@ -41,7 +41,7 @@
                 </mat-checkbox>
               </mat-cell>
             </ng-container>
-            . 
+            .
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
               <mat-cell *matCellDef="let queue">
@@ -75,9 +75,9 @@
 
           </mat-table>
 
-           <mat-paginator #paginator [pageSize]="100" [length]="queueCount"></mat-paginator>
+           <!-- <mat-paginator #paginator [pageSize]="100" [length]="queueCount"></mat-paginator> -->
           <div class="text-center">
-            <button type="button" class="btn btn-lg default profile-back" (click)="passQueueSelectedToReports();">Update Queue Selected  </button>
+            <button type="button" class="btn btn-lg default profile-back" (click)="passQueueSelectedToReports();">Select </button>
           </div>
 
         </div>

@@ -44,6 +44,7 @@ import { ApptDetailComponent } from './components/home/appointmentdetail.compone
 import { MeetingDetailsComponent } from './components/meeting-details/meeting-details.component';
 import { SearchFormModule } from '../shared/components/search-form/search-form.module';
 import { ConsumerFooterModule } from './components/footer/footer.module';
+import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
 
 @NgModule({
   imports: [
@@ -81,7 +82,8 @@ import { ConsumerFooterModule } from './components/footer/footer.module';
     MembersComponent,
     AddMembersHolderComponent,
     AddManagePrivacyComponent,
-    MeetingDetailsComponent
+    MeetingDetailsComponent,
+    MyfavouritesComponent
   ],
   exports: [ConfirmBoxComponent],
   entryComponents: [
