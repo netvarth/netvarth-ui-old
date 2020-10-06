@@ -6539,3 +6539,19 @@
 .consumer-dash .now {
     color: #00cc96 !important;
 }
+.consumer-dash .est-wait-time {
+    font-size: xx-small;
+    color: rgb(0 0 255);
+}
+.consumer-dash .minutes {
+    font-size: small;
+}
+.consumer-dash .disp-grid {
+    display:  grid !important;
+}
+.consumer-dash .servName {
+    font-size: .815rem !important;
+}
+.consumer-dash .phon-icon, .consumer-dash .meet-icon {
+    width: 14px !important;
+}

@@ -24,21 +24,23 @@
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
                                     <button class="flat-btn" mat-flat-button (click)="getmyfavourites()">My
                                         Favourites</button>
-                                    <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()" [matTooltip]="'My Favourites'">
+                                    <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()"
+                                        [matTooltip]="'My Favourites'">
                                         <i class="fa fa-heart"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button class="flat-btn" mat-flat-button (click)="gotoHistory()">Past
-                                        History</button>
-                                    <button class="flat-icon-btn" mat-flat-button (click)="gotoHistory()" [matTooltip]="'History'">
+                                    <button class="flat-btn" mat-flat-button (click)="gotoHistory()" style="width: 100%;">History</button>
+                                    <button class="flat-icon-btn" mat-flat-button (click)="gotoHistory()"
+                                        [matTooltip]="'History'">
                                         <i class="fa fa-history"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
                                     <button (click)="paymentsClicked()" class="flat-btn" mat-flat-button>My
                                         Payments</button>
-                                    <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()" [matTooltip]="'My Payments'">
+                                    <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()"
+                                        [matTooltip]="'My Payments'">
                                         <i class="fa fa-credit-card"></i>
                                     </button>
                                 </div>
@@ -79,7 +81,9 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for
+                                                <span>{{booking.appmtFor[0].userName}}</span>
+                                        </span>
                                         </td>
                                         <td>
                                             <h6
@@ -104,10 +108,12 @@
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(booking,'appointment',$event)">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment',$event)">View
+                                                    Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(booking,'appointment',$event)">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment',$event)">View
+                                                    Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
                                                     (click)="viewBill(booking,'appointment',$event)">View Bill</button>
@@ -127,7 +133,12 @@
                                                 </button>
                                                 <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
                                                     <span class="rate-service" [class.rated]="isRated(booking)"
-                                                    (click)="rateService(booking,'appointment')">{{rate_visit}}</span>
+                                                        (click)="rateService(booking,'appointment')">{{rate_visit}}</span>
+                                                </button>
+                                                <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
+                                                && booking.apptStatus !== 'Cancelled'"
+                                                    (click)="getMeetingDetails(booking,'appt')">
+                                                    Meeting details
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -137,8 +148,13 @@
                                             <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled')"
                                                 class="now">Now</h4>
                                             <h4
-                                                *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                {{booking.appxWaitingTime}}</h4>
+                                                *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')" class="disp-grid">
+                                                <span class="est-wait-time">Est Wait Time</span>
+                                                <span class="mgn-up-10">
+                                                    {{booking.appxWaitingTime}} 
+                                                <span class="minutes">minutes</span>
+                                                </span>
+                                            </h4>
                                             <span
                                                 *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">{{booking.date}}</span>
                                             <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
@@ -158,7 +174,9 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for 
+                                                <span>{{booking.waitlistingFor[0].firstName}} {{booking.waitlistingFor[0].lastName}}</span>
+                                            </span>
                                         </td>
                                         <td>
                                             <h6
@@ -167,14 +185,16 @@
                                                 <span
                                                     *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                             </h6>
-                                            <span *ngIf="booking.waitlistStatus == 'Confirmed'">
-                                                <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"><u
-                                                        class="font-smalr">VIEW STATUS</u></a></span>
+                                            <span *ngIf="booking.waitlistStatus == 'checkedIn'">
+                                                <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
+                                                    (click)="stopprop($event)"><u class="font-smalr">VIEW
+                                                        STATUS</u></a></span>
                                         </td>
                                         <td>
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
-                                                <button class="bt3 cust-btn" (click)="viewBill(booking,'checkin',$event)">Pay
+                                                <button class="bt3 cust-btn"
+                                                    (click)="viewBill(booking,'checkin',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
@@ -205,7 +225,12 @@
                                                 </button>
                                                 <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
                                                     <span class="rate-service" [class.rated]="isRated(booking)"
-                                                    (click)="rateService(booking,'checkin')">{{rate_visit}}</span>
+                                                        (click)="rateService(booking,'checkin')">{{rate_visit}}</span>
+                                                </button>
+                                                <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
+                                                && booking.waitlistStatus !== 'cancelled'"
+                                                    (click)="getMeetingDetails(booking,'waitlist')">
+                                                    Meeting details
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -256,7 +281,9 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for 
+                                                    <span>{{booking.appmtFor[0].userName}}</span>
+                                                </span>
                                             </td>
                                             <td>
                                                 <h6
@@ -264,8 +291,9 @@
                                                     {{booking.apptStatus}}
                                                 </h6>
                                                 <span *ngIf="booking.apptStatus == 'Confirmed'">
-                                                    <a href="{{path}}status/{{booking.appointmentEncId}}"
-                                                        target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
+                                                    <a href="{{path}}status/{{booking.appointmentEncId}}" target="blank"
+                                                        (click)="stopprop($event)"><u class="font-smalr">VIEW
+                                                            STATUS</u></a></span>
                                             </td>
                                             <td>
                                                 <span
@@ -288,7 +316,8 @@
                                                         Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(booking,'appointment',$event)">View Bill</button>
+                                                        (click)="viewBill(booking,'appointment',$event)">View
+                                                        Bill</button>
                                                 </span>
                                             </td>
                                             <td>
@@ -305,7 +334,12 @@
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
-                                                        (click)="rateService(booking,'appointment')">{{rate_visit}}</span>
+                                                            (click)="rateService(booking,'appointment')">{{rate_visit}}</span>
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
+                                                    && booking.apptStatus !== 'Cancelled'"
+                                                        (click)="getMeetingDetails(booking,'appt')">
+                                                        Meeting details
                                                     </button>
                                                 </mat-menu>
                                             </td>
@@ -315,8 +349,13 @@
                                                 <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled')"
                                                     class="now">Now</h4>
                                                 <h4
-                                                    *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')">
-                                                    {{booking.appxWaitingTime}}</h4>
+                                                    *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')" class="disp-grid">
+                                                    <span class="est-wait-time">Est Wait Time</span>
+                                                <span class="mgn-up-10">
+                                                    {{booking.appxWaitingTime}} 
+                                                <span class="minutes">minutes</span>
+                                                </span>
+                                                </h4>
                                                 <span
                                                     *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">{{booking.date}}</span>
                                                 <h4 *ngIf="booking.token">Token No.{{booking.token}}</h4>
@@ -337,7 +376,9 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for 
+                                                    <span>{{booking.waitlistingFor[0].firstName}} {{booking.waitlistingFor[0].lastName}}</span>
+                                                </span>
                                             </td>
                                             <td>
                                                 <h6
@@ -346,9 +387,10 @@
                                                     <span
                                                         *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                 </h6>
-                                                <span *ngIf="booking.waitlistStatus == 'Confirmed'">
-                                                    <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"><u
-                                                            class="font-smalr">VIEW STATUS</u></a></span>
+                                                <span *ngIf="booking.waitlistStatus == 'checkedIn'">
+                                                    <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
+                                                        (click)="stopprop($event)"><u class="font-smalr">VIEW
+                                                            STATUS</u></a></span>
                                             </td>
                                             <td>
                                                 <span
@@ -362,10 +404,12 @@
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin',$event)">View
+                                                        Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin',$event)">View
+                                                        Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
                                                         (click)="viewBill(booking,'checkin',$event)">View Bill</button>
@@ -385,7 +429,12 @@
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
-                                                        (click)="rateService(booking,'checkin')">{{rate_visit}}</span>
+                                                            (click)="rateService(booking,'checkin')">{{rate_visit}}</span>
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
+                                                && booking.waitlistStatus !== 'cancelled'"
+                                                        (click)="getMeetingDetails(booking,'waitlist')">
+                                                        Meeting details
                                                     </button>
                                                 </mat-menu>
                                             </td>
@@ -444,7 +493,9 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for
+                                                <span>{{booking.appmtFor[0].userName}}</span>
+                                            </span>
                                         </td>
                                         <td>
                                             <h6
@@ -452,8 +503,9 @@
                                                 {{booking.apptStatus}}
                                             </h6>
                                             <span *ngIf="booking.apptStatus == 'Confirmed'"><a
-                                                    href="{{path}}status/{{booking.appointmentEncId}}" target="blank"><u
-                                                        class="font-smalr">VIEW STATUS</u></a></span>
+                                                    href="{{path}}status/{{booking.appointmentEncId}}" target="blank"
+                                                    (click)="stopprop($event)"><u class="font-smalr">VIEW
+                                                        STATUS</u></a></span>
                                         </td>
                                         <td>
                                             <span
@@ -468,10 +520,12 @@
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    (click)="viewBill(booking,'appointment',$event)">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment',$event)">View
+                                                    Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
-                                                    (click)="viewBill(booking,'appointment',$event)">View Receipt</button>
+                                                    (click)="viewBill(booking,'appointment',$event)">View
+                                                    Receipt</button>
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
                                                     (click)="viewBill(booking,'appointment',$event)">View Bill</button>
@@ -488,6 +542,11 @@
                                                     (click)="doCancelWaitlist(booking,'appointment')">Cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
                                                     {{send_msg_cap}}
+                                                </button>
+                                                <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
+                                                && booking.apptStatus !== 'Cancelled'"
+                                                    (click)="getMeetingDetails(booking,'appt')">
+                                                    Meeting details
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -513,7 +572,9 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for 
+                                                <span>{{booking.waitlistingFor[0].firstName}} {{booking.waitlistingFor[0].lastName}}</span>
+                                            </span>
                                         </td>
                                         <td>
                                             <h6
@@ -522,14 +583,16 @@
                                                 <span
                                                     *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                             </h6>
-                                            <span *ngIf="booking.waitlistStatus == 'Confirmed'">
-                                                <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"><u
-                                                        class="font-smalr">VIEW STATUS</u></a></span>
+                                            <span *ngIf="booking.waitlistStatus == 'checkedIn'">
+                                                <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
+                                                    (click)="stopprop($event)"><u class="font-smalr">VIEW
+                                                        STATUS</u></a></span>
                                         </td>
                                         <td>
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
-                                                <button class="bt3 cust-btn" (click)="viewBill(booking,'checkin',$event)">Pay
+                                                <button class="bt3 cust-btn"
+                                                    (click)="viewBill(booking,'checkin',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
@@ -557,6 +620,11 @@
                                                     (click)="doCancelWaitlist(booking,'checkin')">Cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                     {{send_msg_cap}}
+                                                </button>
+                                                <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
+                                                && booking.waitlistStatus !== 'cancelled'"
+                                                    (click)="getMeetingDetails(booking,'waitlist')">
+                                                    Meeting details
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -592,7 +660,9 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for 
+                                                    <span>{{booking.appmtFor[0].userName}}</span>
+                                                </span>
                                             </td>
                                             <td>
                                                 <h6
@@ -601,7 +671,8 @@
                                                 </h6>
                                                 <span *ngIf="booking.apptStatus == 'Confirmed'"><a
                                                         href="{{path}}status/{{booking.appointmentEncId}}"
-                                                        target="blank"><u class="font-smalr">VIEW STATUS</u></a></span>
+                                                        target="blank" (click)="stopprop($event)"><u
+                                                            class="font-smalr">VIEW STATUS</u></a></span>
                                             </td>
                                             <td>
                                                 <span
@@ -624,7 +695,8 @@
                                                         Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        (click)="viewBill(booking,'appointment',$event)">View Bill</button>
+                                                        (click)="viewBill(booking,'appointment',$event)">View
+                                                        Bill</button>
                                                 </span>
                                             </td>
                                             <td>
@@ -638,6 +710,11 @@
                                                         (click)="doCancelWaitlist(booking,'appointment')">Cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
                                                         {{send_msg_cap}}
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
+                                                    && booking.apptStatus !== 'Cancelled'"
+                                                        (click)="getMeetingDetails(booking,'appt')">
+                                                        Meeting details
                                                     </button>
                                                 </mat-menu>
                                             </td>
@@ -665,7 +742,9 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for 
+                                                    <span>{{booking.waitlistingFor[0].firstName}} {{booking.waitlistingFor[0].lastName}}</span>
+                                                </span>
                                             </td>
                                             <td>
                                                 <h6
@@ -674,9 +753,10 @@
                                                     <span
                                                         *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                 </h6>
-                                                <span *ngIf="booking.waitlistStatus == 'Confirmed'">
-                                                    <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"><u
-                                                            class="font-smalr">VIEW STATUS</u></a></span>
+                                                <span *ngIf="booking.waitlistStatus == 'checkedIn'">
+                                                    <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
+                                                        (click)="stopprop($event)"><u class="font-smalr">VIEW
+                                                            STATUS</u></a></span>
                                             </td>
                                             <td>
                                                 <span
@@ -690,10 +770,12 @@
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
-                                                        (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin',$event)">View
+                                                        Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.waitlistStatus === 'cancelled' && booking.paymentStatus !== 'NotPaid'"
-                                                        (click)="viewBill(booking,'checkin',$event)">View Receipt</button>
+                                                        (click)="viewBill(booking,'checkin',$event)">View
+                                                        Receipt</button>
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
                                                         (click)="viewBill(booking,'checkin',$event)">View Bill</button>
@@ -710,6 +792,11 @@
                                                         (click)="doCancelWaitlist(booking,'checkin')">Cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                         {{send_msg_cap}}
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
+                                                && booking.waitlistStatus !== 'cancelled'"
+                                                        (click)="getMeetingDetails(booking,'waitlist')">
+                                                        Meeting details
                                                     </button>
                                                 </mat-menu>
                                             </td>
