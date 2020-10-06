@@ -400,13 +400,13 @@
                                                     <span class="mgn-up-10">&nbsp;Now</span>
                                                 </h4>
                                                 <h4 *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')"
-                                                    class="disp-grid disp-flex">
+                                                    class="disp-grid">
                                                     <span class="est-wait-time">Est Wait Time</span>
                                                     <span class="mgn-up-10 disp-flex">
                                                         <div class="circle-tokens">
                                                             <i class="fa chckn-icon"></i>
                                                         </div>
-                                                        <span>
+                                                        <span class="mgn-up-10">
                                                             &nbsp;{{booking.appxWaitingTime}}
                                                             <span class="minutes">minutes</span>
                                                         </span>

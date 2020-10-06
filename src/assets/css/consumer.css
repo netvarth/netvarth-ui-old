@@ -5110,6 +5110,9 @@
     .ser .tfs1 .tfs1-dg .item {
         width: 46.8%;
     }
+    h6 {
+        font-size: .8rem!important;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -6425,9 +6428,6 @@
         margin-left: 5%;
         margin-right: 5%;
     }
-    .consumer-dash .table h4 {
-    font-size: .9rem!important;
-    }
     .consumer-dash .servName {
         font-size: 0.7rem !important;
     }
@@ -6609,4 +6609,29 @@
     .consumer-dash .myjaldee-bg {
         width: 240px !important;
     }
+}
+@media only screen and (max-width: 1022px) {
+    .consumer-dash .table h4 {
+        font-size: .9rem!important;
+    }
+}
+@media only screen and (max-width: 755px) {
+    .consumer-dash .disp-flex {
+        display:  grid !important;
+    }
+    .consumer-dash .circle-tokens {
+        width: 40px !important;
+        height: 30px !important;
+        border-radius: 50px !important;
+    }
+    .consumer-dash .appt-icon {
+        width: 16px;
+      }
+      .consumer-dash .chckn-icon {
+          width: 20px;
+      }
+      .consumer-dash .token-icon {
+          width: 20px;
+          margin-top: 6px;
+      }
 }
