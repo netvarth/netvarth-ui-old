@@ -1,10 +1,10 @@
 <section class="">
   <div class="card title-gb">
-      <h5 class="mgn-up-10">
+      <h3 class="mgn-up-10">
 
           Reports
 
-      </h5>
+      </h3>
   </div>
 </section>
 <section>
@@ -18,13 +18,13 @@
                 <mat-accordion class="report">
                   <mat-expansion-panel  [expanded]="true">
                       <mat-expansion-panel-header>
-                          <mat-panel-title>
+                          <mat-panel-title class="report_title">
                              Appointments
                           </mat-panel-title>
                       </mat-expansion-panel-header>
                       <ng-container *ngIf="appointmentReports.length===0">
                         <div>
-                          <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">No Reports Found.  </p>
+                          <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
                           <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('appointment');">New Report</button>
                         </div>
                     </ng-container>
@@ -32,19 +32,20 @@
               </mat-accordion>
               </div>
           </div>
+
           <!---Payments-->
           <div class="row">
             <div class="card p0">
               <mat-accordion class="report">
                 <mat-expansion-panel  [expanded]="true">
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title class="report_title">
                            Payments
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <ng-container *ngIf="paymentReports.length===0">
                       <div>
-                        <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">No Reports Found.  </p>
+                        <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
                         <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('payment');">New Report</button>
                       </div>
                   </ng-container>
@@ -58,13 +59,13 @@
             <mat-accordion class="report">
               <mat-expansion-panel [expanded]="true">
                   <mat-expansion-panel-header>
-                      <mat-panel-title>
+                      <mat-panel-title class="report_title">
                          Tokens/Check-ins
                       </mat-panel-title>
                   </mat-expansion-panel-header>
                   <ng-container *ngIf="checkinReports.length===0">
                     <div>
-                      <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">No Reports Found.  </p>
+                      <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
                         <button type="button"  class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('token');">New Report</button>
 
                     </div>
@@ -79,13 +80,13 @@
             <mat-accordion class="report">
               <mat-expansion-panel  [expanded]="true">
                   <mat-expansion-panel-header>
-                      <mat-panel-title>
+                      <mat-panel-title class="report_title">
                          Donations
                       </mat-panel-title>
                   </mat-expansion-panel-header>
                   <ng-container *ngIf="donationReports.length===0">
                     <div>
-                      <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">No Reports Found.  </p>
+                      <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
                       <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('donation');">New Report</button>
                     </div>
                 </ng-container>
