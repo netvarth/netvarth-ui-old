@@ -118,6 +118,16 @@
 
                 <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                    <label for="payment_queue" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Queue</label>
+                    <input type="text" class="form-control col-lg-7 col-sm-5 col-md-5 col-xs-5"  readonly [(ngModel)]="payment_queue">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('queue',payment_queue_id)">Change</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12">
                     <label for="Services" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Services</label>
                     <input type="text"class="form-control col-lg-7 col-sm-5 col-md-5 col-xs-5" readonly [(ngModel)]="payment_service">
                     <div class="input-group-append">
@@ -127,15 +137,7 @@
 
 
                 </div>
-                <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                    <label for="payment_queue" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Queue</label>
-                    <input type="text" class="form-control col-lg-7 col-sm-5 col-md-5 col-xs-5"  readonly [(ngModel)]="payment_queue">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('queue',payment_queue_id)">Change</button>
-                    </div>
-                  </div>
-                </div>
+                
               </div>
 
               <div class="text-center">
