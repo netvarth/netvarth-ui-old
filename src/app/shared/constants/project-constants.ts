@@ -666,7 +666,7 @@ export const projectConstantsLocal = {
   ],
   PAYMENT_PURPOSE: [
 
-    {value: 'prePayment', displayName: 'Pre Payment'},
+    {value: 'prePayment', displayName: 'Advance Payment'},
     {value: 'billPayment', displayName: 'Bill Payment'},
     {value: 'donation', displayName: 'Donation'}
 
