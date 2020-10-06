@@ -2803,7 +2803,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         multiSelection = this.apptMultiSelection;
       }
     }
-    const Mfilter = this.setFilterForApi();
     const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
@@ -2813,18 +2812,21 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         timetype: this.time_type,
         multiSelection: multiSelection,
         status: status,
-        filter: Mfilter,
         labelFilterData: this.labelFilterData,
         labelsCount: this.labelsCount
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
+      this.chkSelectAppointments = false;
+      this.chkStartedSelectAppointments = false;
       this.loadApiSwitch('');
     });
   }
   statusClick(status) {
     this.allSelection = false;
     this.statusAction = status;
+    this.chkSelectAppointments = false;
+    this.chkStartedSelectAppointments = false;
     this.resetCheckList();
     if (this.time_type === 1) {
       this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, status);
@@ -2835,6 +2837,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   tabChange(event) {
     this.resetCheckList();
     this.chkSelectAppointments = false;
+    this.chkStartedSelectAppointments = false;
     this.allStartedSelection = false;
     this.allSelection = false;
     this.loading = true;

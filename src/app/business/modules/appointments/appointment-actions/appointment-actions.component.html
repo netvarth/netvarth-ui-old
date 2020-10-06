@@ -4,63 +4,63 @@
             aria-hidden="true"></i></button></h1>
 <div class="action-section col-md-12" *ngIf="action === ''">
     <div>
-        <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
-            <div class="action-box-sub" *ngIf="checkin.callingStatus">
+        <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingAppt()">
+            <div class="action-box-sub" *ngIf="appt.callingStatus">
                 <span class="fa fa-phone" style="color: red;"></span>
                 <div class="icon-text">Stop
                 </div>
             </div>
-            <div class="action-box-sub" *ngIf="!checkin.callingStatus">
+            <div class="action-box-sub" *ngIf="!appt.callingStatus">
                 <span class="fa fa-phone" style="color: green;"></span>
                 <div class="icon-text">Call</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showStart" (click)="changeWaitlistStatus('STARTED')">
+        <div class="action-box pointer-cursor" *ngIf="showStart" (click)="changeWaitlistStatus('Started')">
             <div class="action-box-sub">
                 <span class="fa fa-play"></span>
                 <div class="icon-text">Start</div>
             </div>
         </div>
         <div class="action-box pointer-cursor teleservice" *ngIf="showTeleserviceStart" [matTooltipClass]="tooltipcls"
-            [matTooltip]="'Teleservice'" (click)="showCallingModes(checkin)">
+            [matTooltip]="'Teleservice'" (click)="showCallingModes(appt)">
             <span
-                *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
             <span class="fa meet-icon"
-                *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
+                *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
             <span class="fa zoom-icon"
-                *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
+                *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
             <span class="fa phon-icon"
-                *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
+                *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
             <span class="fa wtsapaud-icon"
-                *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'audioService'"></span>
+                *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></span>
             <span class="fa wtsapvid-icon"
-                *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></span>
+                *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></span>
             <span
-                *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
             <div class="icon-text">
-                {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Start'}}
+                {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}}
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeWaitlistStatus('CANCEL')">
+        <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeWaitlistStatus('Rejected')">
             <div class="action-box-sub">
                 <span class="cancel-icon"></span>
                 <div class="icon-text">Cancel {{(showToken) ? 'token' : 'check-in'}}</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showArrived" (click)="changeWaitlistStatus('REPORT')">
+        <div class="action-box pointer-cursor" *ngIf="showArrived" (click)="changeWaitlistStatus('Arrived')">
             <div class="action-box-sub">
                 <span class="icon-arrived"></span>
                 <div class="icon-text">Mark as Arrived</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus == 'started'"
-            (click)="changeWaitlistStatus('DONE')">
+        <div class="action-box pointer-cursor" *ngIf="appt.apptStatus == 'Started'"
+            (click)="changeWaitlistStatus('Completed')">
             <div class="action-box-sub">
                 <span class="icon-arrived"></span>
                 <div class="icon-text">Complete</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showUndo" (click)="changeWaitlistStatus('CHECK_IN')">
+        <div class="action-box pointer-cursor" *ngIf="showUndo" (click)="changeWaitlistStatus('Confirmed')">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
                 <div class="icon-text">Status change</div>
@@ -111,7 +111,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && data.timetype !== 3"
-            (click)="printCheckin()">
+            (click)="printAppt()">
             <div class="action-box-sub">
                 <span class="printer-icon"></span>
                 <div class="icon-text">Print</div>
@@ -137,10 +137,6 @@
                     {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
             </div>
         </div>
-        <!-- <div *ngFor="let label of providerLabels;let i = index">
-            <a class="pointer-cursor" style="color: black;font-weight: 700;" (click)="addLabelvalue('newvalue', label)">
-                {{label.displayName}}</a>
-        </div> -->
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
@@ -148,6 +144,3 @@
         <a class="pointer-cursor" (click)="gotoLabel()">Manage label</a>
     </div>
 </div>
-<!-- <div *ngIf="action == 'note'">
-    <app-provider-waitlist-checkin-provider-note ></app-provider-waitlist-checkin-provider-note>
-</div> -->

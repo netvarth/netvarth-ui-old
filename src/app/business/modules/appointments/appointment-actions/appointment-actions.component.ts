@@ -4,20 +4,20 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../app.component';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { CheckinDetailsSendComponent } from '../checkin-details-send/checkin-details-send.component';
-import { LocateCustomerComponent } from '../locate-customer/locate-customer.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { NavigationExtras, Router } from '@angular/router';
-import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
-import { ApplyLabelComponent } from '../apply-label/apply-label.component';
+import { CheckinDetailsSendComponent } from '../../check-ins/checkin-details-send/checkin-details-send.component';
+import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
+import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
+import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-customer.component';
 
 @Component({
-    selector: 'app-checkin-actions',
-    templateUrl: './checkin-actions.component.html',
-    styleUrls: ['./checkin-actions.component.css']
+    selector: 'app-appointment-actions',
+    templateUrl: './appointment-actions.component.html',
+    styleUrls: ['./appointment-actions.component.css']
 })
-export class CheckinActionsComponent implements OnInit {
-    checkin;
+export class AppointmentActionsComponent implements OnInit {
+    appt;
     provider_label = '';
     qr_value;
     path = projectConstants.PATH;
@@ -42,20 +42,24 @@ export class CheckinActionsComponent implements OnInit {
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
         private provider_shared_functions: ProviderSharedFuctions,
-        public dialogRef: MatDialogRef<CheckinActionsComponent>) {
+        public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
     }
     ngOnInit() {
         console.log(this.data);
-        this.checkin = this.data.checkinData;
+        this.appt = this.data.checkinData;
         this.getLabel();
         this.getDisplayboardCount();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
 
-    printCheckin() {
-        this.qrCodegeneration(this.checkin);
-        const bprof = this.shared_functions.getitemFromGroupStorage('ynwbp');
-        const bname = bprof.bn;
+    printAppt() {
+        const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+        let bname = '';
+        if (bdetails) {
+            bname = bdetails.bn || '';
+        }
+        const _this = this;
+        _this.qrCodegeneration(this.appt);
         setTimeout(() => {
             const printContent = document.getElementById('print-section');
             const params = [
@@ -66,33 +70,40 @@ export class CheckinActionsComponent implements OnInit {
             const printWindow = window.open('', '', params);
             let checkin_html = '';
             checkin_html += '<table style="width:100%;"><thead>';
-            checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.checkin.date) + '<br/>';
-            if (this.checkin.token) {
-                checkin_html += 'Token# <span style="font-weight:bold">' + this.checkin.token + '</span>';
+            checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.appt.appmtDate) + '<br/>';
+            if (this.appt.batchId) {
+                checkin_html += 'Batch <span style="font-weight:bold">' + this.appt.batchId + '</span>';
+            } else {
+                checkin_html += 'Appointment Time <span style="font-weight:bold">' + this.getSingleTime(this.appt.appmtTime) + '</span>';
             }
             checkin_html += '</td></tr>';
             checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
-            checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.checkin.queue.location.place + '</td></tr>';
+            checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.appt.location.place + '</td></tr>';
             checkin_html += '</thead><tbody>';
-            checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td></tr>';
-            if (this.checkin.service && this.checkin.service.deptName) {
-                checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.checkin.service.deptName + '</td></tr>';
+            checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + this.appt.appmtFor[0].firstName + ' ' + this.appt.appmtFor[0].lastName + '</td></tr>';
+            if (this.appt.service && this.appt.service.deptName) {
+                checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.appt.service.deptName + '</td></tr>';
             }
-            checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + this.checkin.service.name + '</td></tr>';
-            if (this.checkin.provider && this.checkin.provider.firstName && this.checkin.provider.lastName) {
-                checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + this.checkin.provider.firstName.charAt(0).toUpperCase() + this.checkin.provider.firstName.substring(1) + ' ' + this.checkin.provider.lastName + '</td></tr>';
+            checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + this.appt.service.name + '</td></tr>';
+            if (this.appt.provider && this.appt.provider.firstName && this.appt.provider.lastName) {
+                checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + this.appt.provider.firstName.charAt(0).toUpperCase() + this.appt.provider.firstName.substring(1) + ' ' + this.appt.provider.lastName + '</td></tr>';
             }
-            checkin_html += '<tr><td width="48%" align="right">Queue</td><td>:</td><td>' + this.checkin.queue.name + ' [' + this.checkin.queue.queueStartTime + ' - ' + this.checkin.queue.queueEndTime + ']' + '</td></tr>';
+            checkin_html += '<tr><td width="48%" align="right">schedule</td><td>:</td><td>' + this.appt.schedule.name + ' [' + this.appt.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + this.appt.schedule.apptSchedule.timeSlots[0].eTime + ']' + '</td></tr>';
             checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
             checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
             checkin_html += '</tbody></table>';
             printWindow.document.write('<html><head><title></title>');
-            printWindow.document.write('</head><body>');
+            printWindow.document.write('</head><body >');
             printWindow.document.write(checkin_html);
             printWindow.document.write('</body></html>');
+            _this.showQR = false;
             printWindow.moveTo(0, 0);
             printWindow.print();
         });
+    }
+    getSingleTime(slot) {
+        const slots = slot.split('-');
+        return this.shared_functions.convert24HourtoAmPm(slots[0]);
     }
     qrCodegeneration(valuetogenerate) {
         this.qr_value = this.path + 'status/' + valuetogenerate.checkinEncId;
@@ -101,11 +112,11 @@ export class CheckinActionsComponent implements OnInit {
     addConsumerInboxMessage() {
         let checkin = [];
         if (this.data.multiSelection) {
-            checkin = this.checkin;
+            checkin = this.appt;
         } else {
-            checkin.push(this.checkin);
+            checkin.push(this.appt);
         }
-        this.provider_shared_functions.addConsumerInboxMessage(checkin, this)
+        this.provider_shared_functions.addConsumerInboxMessage(checkin, this, 'appt')
             .then(
                 () => { },
                 () => { }
@@ -117,16 +128,16 @@ export class CheckinActionsComponent implements OnInit {
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
             data: {
-                qdata: this.checkin,
-                uuid: this.checkin.ynwUuid,
-                chekintype: 'Waitlist'
+                qdata: this.appt,
+                uuid: this.appt.uid,
+                chekintype: 'appointment'
             }
         });
         smsdialogRef.afterClosed().subscribe(result => {
         });
     }
     locateCustomer() {
-        this.provider_services.getCustomerTrackStatus(this.checkin.ynwUuid).subscribe(data => {
+        this.provider_services.getCustomerTrackStatus(this.appt.uid).subscribe(data => {
             this.trackDetail = data;
             this.customerMsg = this.locateCustomerMsg(this.trackDetail);
             const locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
@@ -158,14 +169,14 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     goToCheckinDetails() {
-        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid]);
+        this.router.navigate(['provider', 'appointments', this.appt.uid]);
         this.dialogRef.close();
     }
     viewBillPage() {
-        this.provider_services.getWaitlistBill(this.checkin.ynwUuid)
+        this.provider_services.getWaitlistBill(this.appt.uid)
             .subscribe(
                 data => {
-                    this.router.navigate(['provider', 'bill', this.checkin.ynwUuid]);
+                    this.router.navigate(['provider', 'bill', this.appt.uid], { queryParams: { source: 'appt' } });
                     this.dialogRef.close();
                 },
                 error => {
@@ -179,7 +190,8 @@ export class CheckinActionsComponent implements OnInit {
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
             data: {
-                checkin_id: this.checkin.ynwUuid
+                checkin_id: this.appt.uid,
+                source: 'appt'
             }
         });
         addnotedialogRef.afterClosed().subscribe(result => {
@@ -187,21 +199,21 @@ export class CheckinActionsComponent implements OnInit {
         });
     }
     changeWaitlistStatus(action) {
-        this.provider_shared_functions.changeWaitlistStatus(this, this.checkin, action);
+        this.provider_shared_functions.changeWaitlistStatus(this, this.appt, action, 'appt');
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
-        this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+        this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
             .then(
                 result => {
-                    this.getWaitlistDetail();
+                    this.getApptDetail();
                 }
             );
     }
-    getWaitlistDetail() {
-        this.provider_services.getProviderWaitlistDetailById(this.checkin.ynwUuid)
+    getApptDetail() {
+        this.provider_services.getAppointmentById(this.appt.uid)
             .subscribe(
                 data => {
-                    this.checkin = data;
+                    this.appt = data;
                     this.setActions();
                 });
     }
@@ -224,28 +236,28 @@ export class CheckinActionsComponent implements OnInit {
         this.showStart = false;
         this.showTeleserviceStart = false;
         if (!this.data.multiSelection) {
-            if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn') {
+            if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed') {
                 this.showUndo = true;
             }
-            if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && !this.checkin.virtualService) {
+            if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && !this.appt.virtualService) {
                 this.showArrived = true;
             }
-            if (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') {
+            if (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') {
                 this.showCancel = true;
             }
-            if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.jaldeeWaitlistDistanceTime && this.checkin.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.checkin.jaldeeStartTimeType === 'ONEHOUR' || this.checkin.jaldeeStartTimeType === 'AFTERSTART')) {
+            if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeWaitlistDistanceTime && this.appt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
                 this.trackStatus = true;
             }
-            if (!this.data.multiSelection && this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled') {
+            if (!this.data.multiSelection && this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
                 this.showSendDetails = true;
             }
-            if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (!this.checkin.virtualService)) {
+            if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService)) {
                 this.showStart = true;
             }
-            if ((this.data.timetype === 1 || this.data.timetype === 3) && this.checkin.virtualService && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started')) {
+            if ((this.data.timetype === 1 || this.data.timetype === 3) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started')) {
                 this.showTeleserviceStart = true;
             }
-            if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
+            if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived')) {
                 this.showCall = true;
             }
         }
@@ -267,7 +279,7 @@ export class CheckinActionsComponent implements OnInit {
                         this.addLabel();
                     } else {
                         this.providerLabels[i].valueSet[j].selected = false;
-                        this.deleteLabel(labelname, this.checkin.ynwUuid);
+                        this.deleteLabel(labelname, this.appt.uid);
                     }
                 } else {
                     if (this.providerLabels[i].label === labelname) {
@@ -278,7 +290,7 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     deleteLabel(label, checkinId) {
-        this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
+        this.provider_services.deleteLabelfromAppointment(checkinId, label).subscribe(data => {
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -291,7 +303,7 @@ export class CheckinActionsComponent implements OnInit {
             disableClose: true,
             autoFocus: true,
             data: {
-                checkin: this.checkin,
+                checkin: this.appt,
                 source: source,
                 label: label
             }
@@ -317,7 +329,7 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     addLabel() {
-        this.provider_services.addLabeltoCheckin(this.checkin.ynwUuid, this.labelMap).subscribe(data => {
+        this.provider_services.addLabeltoAppointment(this.appt.uid, this.labelMap).subscribe(data => {
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -331,8 +343,8 @@ export class CheckinActionsComponent implements OnInit {
         }
         setTimeout(() => {
             const values = [];
-            if (this.checkin.label) {
-                for (const value of Object.values(this.checkin.label)) {
+            if (this.appt.label) {
+                for (const value of Object.values(this.appt.label)) {
                     values.push(value);
                 }
                 for (let i = 0; i < this.providerLabels.length; i++) {
@@ -357,18 +369,18 @@ export class CheckinActionsComponent implements OnInit {
     goBack() {
         this.action = '';
     }
-    callingWaitlist() {
-        const status = (this.checkin.callingStatus) ? 'Disable' : 'Enable';
-        this.provider_services.setCallStatus(this.checkin.ynwUuid, status).subscribe(
+    callingAppt() {
+        const status = (this.appt.callingStatus) ? 'Disable' : 'Enable';
+        this.provider_services.setApptCallStatus(this.appt.uid, status).subscribe(
             () => {
-                this.getWaitlistDetail();
+                this.getApptDetail();
             });
     }
     showCallingModes(modes) {
         const navigationExtras: NavigationExtras = {
             queryParams: {
-                waiting_id: modes.ynwUuid,
-                type: 'checkin'
+                waiting_id: modes.uid,
+                type: 'appt'
             }
         };
         this.router.navigate(['provider', 'telehealth'], navigationExtras);
