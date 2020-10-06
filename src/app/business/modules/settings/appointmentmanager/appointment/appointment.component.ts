@@ -344,7 +344,9 @@ export class AppointmentComponent implements OnInit {
         this.qParams['thirdParty'] = this.thirdParty;
         this.qParams['type'] = type;
         this.qParams['serviceId'] = this.sel_ser;
-        this.qParams['userId'] = this.selectedUser.id;
+        if (this.selectedUser && this.selectedUser.id) {
+            this.qParams['userId'] = this.selectedUser.id;
+        }
         this.qParams['deptId'] = this.selected_dept;
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
