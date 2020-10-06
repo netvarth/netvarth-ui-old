@@ -20,6 +20,7 @@ import { CouponsComponent } from '../../../shared/components/coupons/coupons.com
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MeetingDetailsComponent } from '../meeting-details/meeting-details.component';
+
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -158,6 +159,24 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   api_error: any;
   api_loading = false;
   futureAllowed = true;
+  usr_details: any;
+  future_appointments: any = [];
+  future_waitlists: any = [];
+  todayDate = new Date();
+  tDate: any;
+  path = projectConstants.PATH;
+  locationholder: any;
+  today_totalbookings: any = [];
+  future_totalbookings: any = [];
+  todayBookings: any = [];
+  todayBookings_more: any = [];
+  more_tdybookingsShow = false;
+  futureBookings: any = [];
+  futureBookings_more: any = [];
+  more_futrbookingsShow = false;
+  appointmentslist: any = [];
+  tdyDate: string;
+  loading = true;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -180,6 +199,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   public carouselAppointments;
 
   ngOnInit() {
+    this.usr_details = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.locationholder = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
     this.breadcrumbs = [
       {
         title: 'My Jaldee'
@@ -236,10 +257,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
-    this.getWaitlist();
-    this.getApptlist();
-    // this.getAppointmentToday();
     this.getDonations();
+   // this.getAppointmentToday();
+    this.getAppointmentFuture();
+   // this.getWaitlist();
+  //  this.getWaitlistFuture();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
@@ -282,6 +304,25 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     };
     this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
+  }
+  showBookingDetails(booking) {
+    if (booking.apptStatus) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          uuid: booking.uid,
+          providerId: booking.providerAccount.id
+        }
+      };
+      this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
+    } else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          uuid: booking.ynwUuid,
+          providerId: booking.providerAccount.id
+        }
+      };
+      this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
+    }
   }
 
   closeCounters() {
@@ -356,13 +397,27 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getWaitlist() {
     this.pollingSet = [];
     this.loadcomplete.waitlist = false;
+    this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
     const params = {
-      'waitlistStatus-neq': 'failed,prepaymentPending'
+      'waitlistStatus-neq': 'failed,prepaymentPending', 'date-eq': this.tDate
     };
     this.consumer_services.getWaitlist(params)
       .subscribe(
         data => {
           this.waitlists = data;
+          this.today_totalbookings = this.appointments.concat(this.waitlists);
+          this.loading = false;
+          // more case
+          this.todayBookings = [];
+          this.todayBookings_more = [];
+          for (let i = 0; i < this.today_totalbookings.length; i++) {
+            if (i <= 2) {
+              this.todayBookings.push(this.today_totalbookings[i]);
+            } else {
+              this.todayBookings_more.push(this.today_totalbookings[i]);
+            }
+          }
+
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           let i = 0;
@@ -816,9 +871,33 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .then(
         data => {
           if (data === 'reloadlist' && type === 'checkin') {
-            this.getWaitlist();
+            this.today_totalbookings = [];
+            this.future_totalbookings = [];
+            this.todayBookings = [];
+            this.todayBookings_more = [];
+            this.futureBookings = [];
+            this.futureBookings_more = [];
+            this.appointmentslist = [];
+            this.getDonations();
+         //   this.getAppointmentToday();
+            this.getAppointmentFuture();
+          //  this.getWaitlist();
+        //    this.getWaitlistFuture();
+            // this.getWaitlist();
           } else if (data === 'reloadlist' && type === 'appointment') {
-            this.getApptlist();
+          //  this.getApptlist();
+          this.today_totalbookings = [];
+          this.future_totalbookings = [];
+          this.todayBookings = [];
+          this.todayBookings_more = [];
+          this.futureBookings = [];
+          this.futureBookings_more = [];
+          this.appointmentslist = [];
+          this.getDonations();
+          // this.getAppointmentToday();
+          this.getAppointmentFuture();
+        //  this.getWaitlist();
+         // this.getWaitlistFuture();
           }
         },
         error => {
@@ -935,7 +1014,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return api_filter;
   }
 
-  providerDetail(provider) {
+  providerDetail(provider, event) {
+    event.stopPropagation();
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 
@@ -1045,6 +1125,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       (donations) => {
         this.donations = donations;
         this.loadcomplete.donations = true;
+        this.getAppointmentToday();
       }
     );
   }
@@ -1108,7 +1189,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  viewBill(checkin, type) {
+  viewBill(checkin, type, event) {
     // if (!this.billdialogRef) {
     //   this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
     //     width: '40%',
@@ -1125,6 +1206,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     //     }
     //   });
     // }
+    event.stopPropagation();
     if (type === 'appointment') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -1540,16 +1622,65 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoApptmentHistory() {
     this.router.navigate(['consumer', 'appointment', 'history']);
   }
+
   getAppointmentToday() {
     this.consumer_services.getAppointmentToday()
       .subscribe(
         data => {
-          this.appointments = data;
+          this.appointmentslist = data;
+          this.appointments = [];
+          this.appointments = this.appointmentslist.concat(this.donations);
+          this.getWaitlist();
         },
         error => {
         }
       );
   }
+  getAppointmentFuture() {
+    this.consumer_services.getAppointmentFuture()
+      .subscribe(
+        data => {
+          this.future_appointments = data;
+          this.getWaitlistFuture();
+        },
+        error => {
+        }
+      );
+  }
+
+  // getWaitlistToday() {
+  //   this.consumer_services.getWaitlistToday()
+  //     .subscribe(
+  //       data => {
+  //         this.waitlists = data;
+  //       },
+  //       error => {
+  //       }
+  //     );
+  // }
+
+  getWaitlistFuture() {
+    this.consumer_services.getWaitlistFuture()
+      .subscribe(
+        data => {
+          this.future_waitlists = data;
+          this.future_totalbookings = this.future_waitlists.concat(this.future_appointments);
+          this.loading = false;
+          this.futureBookings = [];
+          this.futureBookings_more = [];
+          for (let i = 0; i < this.future_totalbookings.length; i++) {
+            if (i <= 2) {
+              this.futureBookings.push(this.future_totalbookings[i]);
+            } else {
+              this.futureBookings_more.push(this.future_totalbookings[i]);
+            }
+          }
+        },
+        error => {
+        }
+      );
+  }
+
   gotoLivetrack(uid, accountid, stat) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -1578,7 +1709,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const passData = {
       'type': source,
       'details': details
-    }
+    };
     this.addnotedialogRef = this.dialog.open(MeetingDetailsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -1588,4 +1719,36 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.addnotedialogRef.afterClosed().subscribe(result => {
     });
   }
+
+  getmyfavourites() {
+    this.router.navigate(['consumer', 'myfav']);
+  }
+
+  do_search() {
+    const passparam = {
+      do: 'All',
+      la: this.locationholder.lat || '',
+      lo: this.locationholder.lon || '',
+      lon: this.locationholder.name || '',
+      lontyp: this.locationholder.typ || '',
+      lonauto: this.locationholder.autoname || ''
+    };
+    this.router.navigate(['/searchdetail', passparam]);
+  }
+  showMoreTdyBookings() {
+    this.more_tdybookingsShow = true;
+  }
+  showlessTdyBookings() {
+    this.more_tdybookingsShow = false;
+  }
+  showMoreFutrBookings() {
+    this.more_futrbookingsShow = true;
+  }
+  showlessFutrBookings() {
+    this.more_futrbookingsShow = false;
+  }
+  stopprop(event) {
+    event.stopPropagation();
+  }
+
 }
