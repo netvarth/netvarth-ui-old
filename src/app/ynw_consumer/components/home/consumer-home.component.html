@@ -24,21 +24,21 @@
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
                                     <button class="flat-btn" mat-flat-button (click)="getmyfavourites()">My
                                         Favourites</button>
-                                    <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()">
+                                    <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()" [matTooltip]="'My Favourites'">
                                         <i class="fa fa-heart"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
                                     <button class="flat-btn" mat-flat-button (click)="gotoHistory()">Past
                                         History</button>
-                                    <button class="flat-icon-btn" mat-flat-button (click)="gotoHistory()">
+                                    <button class="flat-icon-btn" mat-flat-button (click)="gotoHistory()" [matTooltip]="'History'">
                                         <i class="fa fa-history"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
                                     <button (click)="paymentsClicked()" class="flat-btn" mat-flat-button>My
                                         Payments</button>
-                                    <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()">
+                                    <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()" [matTooltip]="'My Payments'">
                                         <i class="fa fa-credit-card"></i>
                                     </button>
                                 </div>
@@ -121,9 +121,13 @@
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                     *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
+                                                    (click)="doCancelWaitlist(booking,'appointment')">Cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
                                                     {{send_msg_cap}}
+                                                </button>
+                                                <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
+                                                    <span class="rate-service" [class.rated]="isRated(booking)"
+                                                    (click)="rateService(booking,'appointment')">{{rate_visit}}</span>
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -195,9 +199,13 @@
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                     *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
+                                                    (click)="doCancelWaitlist(booking,'checkin')">Cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                     {{send_msg_cap}}
+                                                </button>
+                                                <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
+                                                    <span class="rate-service" [class.rated]="isRated(booking)"
+                                                    (click)="rateService(booking,'checkin')">{{rate_visit}}</span>
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -291,9 +299,13 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
+                                                        (click)="doCancelWaitlist(booking,'appointment')">Cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
                                                         {{send_msg_cap}}
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
+                                                        <span class="rate-service" [class.rated]="isRated(booking)"
+                                                        (click)="rateService(booking,'appointment')">{{rate_visit}}</span>
                                                     </button>
                                                 </mat-menu>
                                             </td>
@@ -367,9 +379,13 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
+                                                        (click)="doCancelWaitlist(booking,'checkin')">Cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                         {{send_msg_cap}}
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
+                                                        <span class="rate-service" [class.rated]="isRated(booking)"
+                                                        (click)="rateService(booking,'checkin')">{{rate_visit}}</span>
                                                     </button>
                                                 </mat-menu>
                                             </td>
@@ -469,7 +485,7 @@
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                     *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
+                                                    (click)="doCancelWaitlist(booking,'appointment')">Cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
                                                     {{send_msg_cap}}
                                                 </button>
@@ -538,7 +554,7 @@
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                     *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
+                                                    (click)="doCancelWaitlist(booking,'checkin')">Cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                     {{send_msg_cap}}
                                                 </button>
@@ -619,7 +635,7 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'appointment')">cancel</button>
+                                                        (click)="doCancelWaitlist(booking,'appointment')">Cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
                                                         {{send_msg_cap}}
                                                     </button>
@@ -691,7 +707,7 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'checkin')">cancel</button>
+                                                        (click)="doCancelWaitlist(booking,'checkin')">Cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking)">
                                                         {{send_msg_cap}}
                                                     </button>
