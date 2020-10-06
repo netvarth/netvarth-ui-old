@@ -257,13 +257,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
-    // this.getWaitlist();
-    // this.getApptlist();
     this.getDonations();
-    this.getAppointmentToday();
+   // this.getAppointmentToday();
     this.getAppointmentFuture();
-    this.getWaitlist();
-    this.getWaitlistFuture();
+   // this.getWaitlist();
+  //  this.getWaitlistFuture();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
@@ -881,10 +879,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.futureBookings_more = [];
             this.appointmentslist = [];
             this.getDonations();
-            this.getAppointmentToday();
+         //   this.getAppointmentToday();
             this.getAppointmentFuture();
-            this.getWaitlist();
-            this.getWaitlistFuture();
+          //  this.getWaitlist();
+        //    this.getWaitlistFuture();
             // this.getWaitlist();
           } else if (data === 'reloadlist' && type === 'appointment') {
           //  this.getApptlist();
@@ -896,10 +894,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.futureBookings_more = [];
           this.appointmentslist = [];
           this.getDonations();
-          this.getAppointmentToday();
+          // this.getAppointmentToday();
           this.getAppointmentFuture();
-          this.getWaitlist();
-          this.getWaitlistFuture();
+        //  this.getWaitlist();
+         // this.getWaitlistFuture();
           }
         },
         error => {
@@ -1127,6 +1125,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       (donations) => {
         this.donations = donations;
         this.loadcomplete.donations = true;
+        this.getAppointmentToday();
       }
     );
   }
@@ -1631,6 +1630,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.appointmentslist = data;
           this.appointments = [];
           this.appointments = this.appointmentslist.concat(this.donations);
+          this.getWaitlist();
         },
         error => {
         }
@@ -1641,7 +1641,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.future_appointments = data;
-          console.log(this.future_appointments);
+          this.getWaitlistFuture();
         },
         error => {
         }
@@ -1664,9 +1664,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.future_waitlists = data;
-          console.log(this.future_appointments);
           this.future_totalbookings = this.future_waitlists.concat(this.future_appointments);
-          console.log(this.future_totalbookings);
           this.loading = false;
           this.futureBookings = [];
           this.futureBookings_more = [];
