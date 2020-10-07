@@ -293,7 +293,7 @@
                           </a> -->
                           <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                             (click)="showCheckinActions()" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
-                            <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
+                            <i class="dashaction-icon"></i>
                             <span *ngIf="!small_device_display"> Actions</span>
                           </a>
                           <a *ngIf="!apptSingleSelection && !apptMultiSelection && time_type!=3"
@@ -675,7 +675,7 @@
                                   </a>
                                   <a class="statusText btn-play pointer-cursor" (click)="showCheckinActions(appt)"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
-                                    <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
+                                    <i class="dashaction-icon"></i>
                                     <span *ngIf="!small_device_display"> Actions</span>
                                   </a>
                                 </td>
@@ -795,7 +795,7 @@
                           </a>
                           <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                             (click)="showCheckinActions()" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
-                            <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
+                            <i class="dashaction-icon"></i>
                             <span *ngIf="!small_device_display"> Actions</span>
                           </a>
                         </div>
@@ -1228,7 +1228,7 @@
                       </a> -->
                         <a class="statusText btn-play pointer-cursor" (click)="showCheckinActions(appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
-                          <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
+                          <i class="dashaction-icon"></i>
                           <span *ngIf="!small_device_display"> Actions</span>
                         </a>
                       </td>

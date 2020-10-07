@@ -38,6 +38,8 @@ export class AppointmentActionsComponent implements OnInit {
     labelMap;
     showCall;
     board_count;
+    pos = false;
+    showBill = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -47,8 +49,8 @@ export class AppointmentActionsComponent implements OnInit {
     ngOnInit() {
         console.log(this.data);
         this.appt = this.data.checkinData;
+        this.getPos();
         this.getLabel();
-        this.getDisplayboardCount();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
 
@@ -273,6 +275,9 @@ export class AppointmentActionsComponent implements OnInit {
             if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived')) {
                 this.showCall = true;
             }
+            if (this.pos) {
+                this.showBill = true;
+            }
         }
     }
     getLabel() {
@@ -400,4 +405,10 @@ export class AppointmentActionsComponent implements OnInit {
         this.router.navigate(['provider', 'telehealth'], navigationExtras);
         this.dialogRef.close();
     }
+    getPos() {
+        this.provider_services.getProviderPOSStatus().subscribe(data => {
+          this.pos = data['enablepos'];
+          this.getDisplayboardCount();
+        });
+      }
 }

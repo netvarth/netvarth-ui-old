@@ -38,6 +38,8 @@ export class CheckinActionsComponent implements OnInit {
     labelMap;
     showCall;
     board_count;
+    pos = false;
+    showBill = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -47,8 +49,8 @@ export class CheckinActionsComponent implements OnInit {
     ngOnInit() {
         console.log(this.data);
         this.checkin = this.data.checkinData;
+        this.getPos();
         this.getLabel();
-        this.getDisplayboardCount();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
 
@@ -259,6 +261,9 @@ export class CheckinActionsComponent implements OnInit {
             if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
                 this.showCall = true;
             }
+            if (this.pos && this.checkin.parentUuid) {
+                this.showBill = true;
+            }
         }
     }
     getLabel() {
@@ -386,4 +391,10 @@ export class CheckinActionsComponent implements OnInit {
         this.router.navigate(['provider', 'telehealth'], navigationExtras);
         this.dialogRef.close();
     }
+    getPos() {
+        this.provider_services.getProviderPOSStatus().subscribe(data => {
+          this.pos = data['enablepos'];
+          this.getDisplayboardCount();
+        });
+      }
 }
