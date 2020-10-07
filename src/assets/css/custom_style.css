@@ -12133,3 +12133,31 @@ img.busN-logo {
 .consumer-appthistory .disp-flex {
   display: flex !important;
 }
+.arrived-icon {
+  content: url(../images/dashboard-icons/arrivedaction-01.svg);
+  width: 40px;
+}
+.complete-icon {
+  content: url(../images/dashboard-icons/Complete.svg);
+  width: 40px;
+}
+.waitlistcall-icon {
+  content: url(../images/dashboard-icons/Call.svg);
+  width: 40px;
+}
+.start-icon {
+  content: url(../images/dashboard-icons/startaction-01.svg);
+  width: 40px;
+}
+.dashboardstart-icon {
+  content: url(../images/dashboard-icons/start.svg);
+  width: 15px;
+}
+.dashboardcomplete-icon {
+  content: url(../images/dashboard-icons/Complete2.svg);
+  width: 15px;
+}
+.dashboardarrived-icon {
+  content: url(../images/dashboard-icons/arrivved2.svg);
+  width: 15px;
+}
