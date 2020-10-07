@@ -9,6 +9,8 @@
           class="fa meet-icon"></i>
         <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
         <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'Phone'" class="fa phon-icon"></i>
+        <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'VideoCall' && service_data.virtualServiceType === 'videoService'"
+        class="fa meet-icon"></i>
         <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'audioService'"
           class="fa wtsapaud-icon"></i>
         <i *ngIf="service_data.serviceType === 'virtualService' && service_data.virtualCallingModes[0].callingMode === 'WhatsApp' && service_data.virtualServiceType === 'videoService'"
@@ -53,7 +55,7 @@
           <span class="ttle">Tele Mode</span>
           <span>{{service_data.virtualCallingModes[0].callingMode}}</span>
         </div>
-        <div class="item">
+        <div class="item" *ngIf="service_data.virtualServiceType">
           <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp Number
           </span>
           <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom ID

@@ -673,7 +673,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.telemodes = ['Phone', 'WhatsApp'];
 
                 } else if (this.serv_mode && this.serv_mode === 'videoService') {
-                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp'];
+                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp', 'VideoCall'];
                 } else {
                     this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp'];
                 }
