@@ -191,12 +191,6 @@
                                                     </span>
                                                 </span>
                                             </h4>
-                                            <!-- <span
-                                                *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">
-                                                <div class="circle-tokens">
-                                                    <i class="fa chckn-icon"></i>
-                                                </div>
-                                                &nbsp;{{booking.date}}</span> -->
 
                                             <h4 *ngIf="booking.token" class="disp-flex">
                                                 <div class="circle-tokens">
@@ -206,6 +200,7 @@
                                                     &nbsp;Token {{booking.token}}
                                                 </span>
                                             </h4>
+                                            <span class="est-wait-time" *ngIf="( booking.appxWaitingTime && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -442,8 +437,6 @@
                                                         </span>
                                                     </span>
                                                 </h4>
-                                                <!-- <span
-                                                    *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">{{booking.date}}</span> -->
                                                 <h4 *ngIf="booking.token" class="disp-flex">
                                                     <div class="circle-tokens">
                                                         <i class="fa token-icon"></i>
@@ -452,6 +445,7 @@
                                                         &nbsp;Token {{booking.token}}
                                                     </span>
                                                 </h4>
+                                                <span class="est-wait-time" *ngIf="( booking.appxWaitingTime && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">

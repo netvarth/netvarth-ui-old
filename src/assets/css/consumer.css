@@ -6551,7 +6551,7 @@
     color: #00cc96 !important;
 }
 .consumer-dash .est-wait-time {
-    font-size: xx-small;
+    font-size: 0.7rem;
     color: rgb(0 0 255);
 }
 .consumer-dash .minutes {
