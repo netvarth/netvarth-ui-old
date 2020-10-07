@@ -217,16 +217,19 @@ export class AppointmentActionsComponent implements OnInit {
                     this.setActions();
                 });
     }
+
     getDisplayboardCount() {
         let layout_list: any = [];
-        this.provider_services.getDisplayboardsWaitlist()
-            .subscribe(
-                data => {
-                    layout_list = data;
-                    this.board_count = layout_list.length;
-                    this.setActions();
-                });
-    }
+        let displayboards: any = [];
+        this.provider_services.getDisplayboardsAppointment()
+          .subscribe(
+            data => {
+              displayboards = data;
+              layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
+              this.board_count = layout_list.length;
+              this.setActions();
+            });
+      }
     setActions() {
         this.trackStatus = false;
         this.showArrived = false;

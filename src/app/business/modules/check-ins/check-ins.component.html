@@ -360,12 +360,12 @@
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.hasAttachment"><i
                               style="font-size: 20px;" class="material-icons">attach_file</i></span>
                         </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
+                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                           *ngIf="!checkin.virtualService || (checkin.virtualService && checkin.waitlistStatus !== 'arrived')">
                           <span class="" style="font-size: smaller;">
                             {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}
                           </span>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
                           <span data-title="Payment Status" class="payment">
                             <ng-container *ngIf="checkin.paymentStatus">
