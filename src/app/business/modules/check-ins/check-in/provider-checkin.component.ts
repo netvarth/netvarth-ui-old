@@ -385,7 +385,7 @@ export class ProviderCheckinComponent implements OnInit {
                 mode = 'id';
             }
         }
-        this.qParams['source'] = 'checkin';
+        // this.qParams['source'] = 'checkin';
         switch (mode) {
             case 'phone':
                 post_data = {

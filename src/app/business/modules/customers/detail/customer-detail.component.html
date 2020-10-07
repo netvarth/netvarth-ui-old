@@ -4,7 +4,7 @@
 <section class="" *ngIf="source ==='token' || source ==='checkin' || source ==='appointment'">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-            <button type="button" class="btn default profile-back" (click)="goBack()">
+            <button type="button" class="btn default profile-back" (click)="onCancel()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
             Create {{customer_label}}
         </h5>
@@ -39,8 +39,11 @@
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
                             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                            <div class="mgn-up-20 mgn-bt-20 red" *ngIf="customerErrorMsg !== '' && !loading">
-                                {{customerErrorMsg}}
+                            <div class="mgn-up-20 mgn-bt-10 red" *ngIf="customerErrorMsg !== '' && !loading">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i> {{customerErrorMsg}}
+                            </div>
+                            <div class="mgn-bt-20" *ngIf="customerErrorMsg1 !== '' && !loading">
+                                {{customerErrorMsg1}}
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20 mgn-bt-20"
                                 *ngIf="viewCustomer">
@@ -226,6 +229,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         <textarea class="form-control" matInput id="address" placeholder="Address"
                                             formControlName="address"></textarea>
                                     </mat-form-field>
+                                </div>
+                                <div class="mgn-up-20 mgn-bt-20" *ngIf="customerErrorMsg2 !== '' && !loading">
+                                    {{customerErrorMsg2}}
                                 </div>
                                 <div class="actiondiv" style="margin-top: 10px;">
                                     <div style="margin-bottom:30px;display: inline-flex;">

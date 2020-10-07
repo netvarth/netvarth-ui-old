@@ -135,7 +135,7 @@ export class ProvidersignupComponent implements OnInit {
     professionalConsulting: 'assets/images/home/Proffesional.jpg',
     personalCare: 'assets/images/home/personal-care.jpg',
     healthCare: 'assets/images/home/HealthCare.jpg',
-    retailStores: '',
+    retailStores: 'assets/images/home/supermarket-01.png',
     otherMiscellaneous: '',
     jaldee_qMgr: '',
     jaldee_appDesktop: 'assets/images/home/available-app.png',

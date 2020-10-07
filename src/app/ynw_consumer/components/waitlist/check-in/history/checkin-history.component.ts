@@ -48,6 +48,11 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   rate_your_visit = Messages.RATE_YOU_VISIT;
   no_prev_checkins_avail_cap = Messages.NO_PREV_CHECKINS_AVAIL_CAP;
   loading = true;
+  apmt_history: any = [];
+  entire_history: any = [];
+  wtlist_count: any = [];
+  appt_count: any = [];
+  entire_count: any = [];
 
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router,
@@ -61,17 +66,21 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.getHistoryCount();
+    this.getHistroy();
+    // this.getAppointmentHistoryCount();
   }
 
+  // Getting Checking History
   getHistroy() {
     this.loadcomplete.history = false;
-    const params = this.setPaginationFilter();
-    this.consumer_services.getWaitlistHistory(params)
+    // const params = this.setPaginationFilter();
+    this.consumer_services.getWaitlistHistory()
       .subscribe(
         data => {
           this.history = data;
           this.loadcomplete.history = true;
           this.loading = false;
+          this.getAppointmentHistory();
         },
         error => {
           this.loading = false;
@@ -80,17 +89,49 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
       );
   }
 
+  // Getting Appointment History
+  getAppointmentHistory() {
+  //  const params = this.setPaginationFilter();
+    this.consumer_services.getAppointmentHistory()
+      .subscribe(
+        data => {
+          console.log(data);
+          this.apmt_history = data;
+          this.entire_history = this.apmt_history.concat(this.history);
+          console.log(this.entire_history);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+        }
+      );
+  }
+
+  // Get checkin history count
   getHistoryCount() {
     this.consumer_services.getHistoryWaitlistCount()
       .subscribe(
         data => {
-          this.pagination.totalCnt = data;
-          this.getHistroy();
+          console.log(data);
+          this.wtlist_count = data;
+         // this.getHistroy();
+         this.getAppointmentHistoryCount();
+        });
+  }
+  // Get Appointment history count
+  getAppointmentHistoryCount() {
+    this.consumer_services.getAppointmentHistoryCount()
+      .subscribe(
+        data => {
+          this.appt_count = data;
+          this.entire_count = this.wtlist_count.concat(this.appt_count);
+          console.log(this.entire_count);
         });
   }
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.getHistroy();
+    this.getAppointmentHistory();
   }
 
   setPaginationFilter(params = {}) {

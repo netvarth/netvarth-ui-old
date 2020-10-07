@@ -184,7 +184,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                // return EMPTY;
               // return throwError(error);
             } else if (error.status === 405) {
-              this.router.navigate(['/maintenance']);
+              // this.router.navigate(['/maintenance']);
               return throwError(error);
             } else if (error.status === 0) {
               // Network Error Handling

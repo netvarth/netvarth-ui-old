@@ -11996,3 +11996,108 @@ img.busN-logo {
   font-weight: 600;
   margin-bottom: 5px;
 }
+.font-9 {
+  font-size: .9rem;
+}
+.pro-action {
+  font-weight: 600 !important;
+  font-size: .75rem!important;
+  background-color: #fff!important;
+  border: 1px solid #ccc!important;
+  border-radius: 20px!important;
+}
+.chkntoknappt-details{
+  font-weight: bold;
+  font-size: medium ;
+}
+.example-custom-date-class {
+  background:rgb(133,233,133);
+  border-radius: 100%;
+ }
+ .report_title{
+   font-weight:bold;
+ }
+ .pad-10 {
+  padding: 10px;
+}
+.inpro .inprogress {
+  font-size: 1rem;
+  font-weight: 600;
+  color: green;
+}
+.check-status a {
+  font-size: 1rem;
+}
+.act-icons a {
+  color: black;
+}
+.dash-head {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.selectedStatus {
+  color: orange;
+  font-weight: 600;
+}
+.inpro-box {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+.checkinlist .mat-tab-label .mat-tab-label-content {
+  font-size: 1.1rem;
+}
+.selectall {
+  color: black;
+  margin-left: 5px;
+  margin-top: 5px;
+  font-weight: normal;
+}
+.check-table-head {
+  padding-left: 5px !important;
+}
+.checkfilter {
+  overflow: auto;
+  height: 664px;
+}
+.checkinactionclass {
+  width: 750px !important;
+}
+.bill-icon {
+  content: url(../images/dashboard-icons/Bill-01-01.svg);
+  width: 40px;
+}
+.cancel-icon {
+  content: url(../images/dashboard-icons/Canacel-01.svg);
+  width: 40px;
+}
+.changestatus-icon {
+  content: url(../images/dashboard-icons/Changestatus.svg);
+  width: 40px;
+}
+.label-icon {
+  content: url(../images/dashboard-icons/Label-01.svg);
+  width: 40px;
+}
+.mail-icon {
+  content: url(../images/dashboard-icons/mail-01.svg);
+  width: 40px;
+}
+.message-icon {
+  content: url(../images/dashboard-icons/Message-01.svg);
+  width: 40px;
+}
+.notes-icon {
+  content: url(../images/dashboard-icons/Notes-01.svg);
+  width: 40px;
+}
+.printer-icon {
+  content: url(../images/dashboard-icons/printer-01.svg);
+  width: 40px;
+}
+.viewdetails-icon {
+  content: url(../images/dashboard-icons/viewdetails-01.svg);
+  width: 40px;
+}
+.act-icons .printer-icon {
+  width: 17px !important;
+}

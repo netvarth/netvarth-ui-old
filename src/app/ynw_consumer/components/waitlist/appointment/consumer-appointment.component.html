@@ -104,7 +104,7 @@
                                                                     </span>
                                                                     <span> <input *ngIf="!showInputSection"
                                                                             (keypress)="isNumeric($event)"
-                                                                            class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
+                                                                            class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" style="width:150px!important;"
                                                                             placeholder="" [(ngModel)]="callingModes"
                                                                             autocomplete="off" maxlength="10"></span>
                                                                     <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
@@ -161,9 +161,25 @@
 
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                            Choose
-                                            Date</div>
-                                        <div class="pull-left brd-round brd-light">
+                                            Appointment Time</div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
+                                                <h6 class="card-title serv-time" *ngIf="apptTime">
+                                                    <span style="display: block;">
+                                                        {{sel_checkindate | date: dateFormat}}</span><span>{{getSingleTime(apptTime.time)}}</span>
+                                                        <span><a class="lnk pointer-cursor action mgn-lt-10"
+                                                         (click)="changeSlot()">Change Slot
+                                                     </a></span>
+                                                </h6>
+                                            </div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
+                                                *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
+                                                No slots available.
+                                                <span><a class="lnk pointer-cursor action mgn-lt-10"
+                                                    (click)="changeSlot()">Change Slot
+                                                </a></span>
+                                            </div> 
+                                        <!-- <div class="pull-left brd-round brd-light">
+                                            
                                             <div class="icon-minus pull-left" [class.disable]="disableMinus()"
                                                 *ngIf="settingsjson.futureDateWaitlist" (click)="calculateDate(-1)">
                                             </div>
@@ -181,28 +197,42 @@
                                                 [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
                                                 (dateChange)="handleFutureDateChange($event)">
 
-                                        </div>
+                                        </div> -->
                                     </div>
-                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">Choose Slot
-                                        </div>
+                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding">
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
+                                                <h6 class="card-title serv-time" *ngIf="apptTime">
+                                                    <span>{{getSingleTime(apptTime.time)}}</span>
+                                                       <span><a class="lnk pointer-cursor action mgn-lt-10"
+                                                        (click)="changeSlot()">Change
+                                                    </a></span>
+                                                </h6>
+                                                
+                                            </div>
                                             <mat-chip-list class="" *ngIf="freeSlots && freeSlots.length > 0">
+                                                <mat-chip (click)="timeSelected(freeSlots[0]);">
+                                                    {{freeSlots[0].displayTime}}
+                                                </mat-chip><a class="lnk pointer-cursor action mgn-lt-10"
+                                                (click)="changeSlot()">Change
+                                            </a>
+                                        </mat-chip-list>
+
+                                                
                                                 <mat-chip *ngFor="let slot of freeSlots"
                                                     [selected]="slot.time === apptTime.time"
                                                     (click)="timeSelected(slot);">
                                                     {{slot.displayTime}}
                                                 </mat-chip>
-                                            </mat-chip-list>
                                             <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
                                                 *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
                                                 No slots available.
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding centeralign"><a
                                         class="lnk pointer-cursor action">See
                                         More</a></div> -->
-                                    </div>
+                                    <!-- </div> -->
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12 border-tp check-new-group pad-rt-0">
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -289,6 +319,60 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                                *ngIf="action=='slotChange'">
+                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20">Choose Date
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20">
+
+                                <div class="pull-left brd-round brd-light">
+                                            
+                                    <div class="icon-minus pull-left" [class.disable]="disableMinus()"
+                                        *ngIf="settingsjson.futureDateWaitlist" (click)="calculateDate(-1)">
+                                    </div>
+                                    <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
+                                    <div class="icon-add pull-left" *ngIf="settingsjson.futureDateWaitlist"
+                                        (click)="calculateDate(1)"></div>
+                                </div>
+                                <div class="pickerouter caldiv pull-left "
+                                    *ngIf="settingsjson.futureDateWaitlist">
+
+                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                    </mat-datepicker-toggle>
+                                    <!-- <mat-datepicker #picker></mat-datepicker> -->
+                                    <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                                    <input class="" style="visibility:hidden; width:1px" type="text"
+                                        [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
+                                        (dateChange)="handleFutureDateChange($event)">
+
+                                </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20">Choose Slot
+                                </div>
+                                <div class="col-md-10 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20 slotdiv">
+                                <mat-chip-list class="" *ngIf="freeSlots && freeSlots.length > 0">
+                                    <mat-chip *ngFor="let slot of freeSlots"
+                                        [selected]="slot.time === apptTime.time"
+                                        (click)="timeSelected(slot);">
+                                        {{slot.displayTime}}
+                                    </mat-chip>
+                                </mat-chip-list>
+                               
+                                <!-- <span class="input-group-btn mgn-up-15">
+                                    <button class="btn bt3 btnCancel" type="button" (click)="goBack()">
+                                        Cancel
+                                    </button>
+                                    <button class="btn bt3 btn-default" 
+                                        type="button">Ok</button>
+                                </span> -->
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10"
+                            *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
+                            No slots available.
+                        </div>
+                            </div>
+
                             <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                 *ngIf="action=='phone'">
                                 <div class="mgn-up-5 input-group mobile-error">

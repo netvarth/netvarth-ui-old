@@ -26,7 +26,7 @@
           </div>
           <div>
             <mat-form-field>
-              <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Filter" style="border-bottom:none;">
+              <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Apply Filter" style="border-bottom:none;">
             </mat-form-field>
           </div>
           <mat-table [dataSource]="queue_dataSource">
@@ -37,10 +37,11 @@
                 </mat-checkbox>
               </mat-header-cell>
               <mat-cell *matCellDef="let queue">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(queue) : null" [checked]="selection.isSelected(service)">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(queue) : null" [checked]="selection.isSelected(queue)">
                 </mat-checkbox>
               </mat-cell>
             </ng-container>
+            .
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
               <mat-cell *matCellDef="let queue">
@@ -74,13 +75,14 @@
 
           </mat-table>
 
-           <mat-paginator #paginator [pageSize]="100" [length]="queueCount"></mat-paginator>
+           <!-- <mat-paginator #paginator [pageSize]="100" [length]="queueCount"></mat-paginator> -->
           <div class="text-center">
-            <button type="button" class="btn btn-lg default profile-back" (click)="passQueueSelectedToReports();">Update Queue Selected  </button>
+            <button type="button" class="btn btn-lg default profile-back" (click)="passQueueSelectedToReports();">Select </button>
           </div>
 
         </div>
       </div>
     </div>
   </div>
+  <div class="clearfix"></div>
 </section>

@@ -18,7 +18,7 @@
                                         <span class="icon-inbox-in" *ngIf="isRecievedOrSent(message) === 'receive'"></span>
                                         <span class="icon-inbox-out" *ngIf="isRecievedOrSent(message) === 'sent'"></span>
                                     </div>
-                                    <div class="td td0">
+                                    <div class="td td0" *ngIf="message.attachements && message.attachements.length > 0">
                                         <span class="result" *ngIf="message.attachements && message.attachements.length > 0" [matTooltipClass]="tooltipcls"
                                             [matTooltip]="fileTooltip"><i class="fa fa-file-text-o"
                                                 aria-hidden="true"></i>
@@ -36,7 +36,7 @@
                                     </div>
                                     <div class="td td4" [class.inbox-unreadmsg]="!message.read && isRecievedOrSent(message) === 'receive'">
                                         <div class="result">
-                                            {{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:30)+'.....':shared_functions.firstToUpper(message.msg) }}
+                                            {{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:39)+'.....':shared_functions.firstToUpper(message.msg) }}
                                         </div>
                                     </div>
                                     <div class="td td1" [class.inbox-unreadmsg]="!message.read && isRecievedOrSent(message) === 'receive'">

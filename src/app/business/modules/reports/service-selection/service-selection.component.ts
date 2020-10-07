@@ -53,12 +53,15 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
     if (this.accountType !== 'BRANCH') {
       this.service_displayedColumns = ['select', 'serviceName', 'status'];
     }
+
     const _this = this;
     _this.activated_route.queryParams.subscribe(qparams => {
 
       _this.reportType = qparams.report_type;
       _this.selected_data_id = qparams.data;
-
+      if (_this.reportType === 'donation') {
+        _this.service_displayedColumns = ['select', 'serviceName', 'status'];
+      }
 
 
 
@@ -73,7 +76,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
       _this.loadAllServices().then(result => {
         if (parseInt(qparams.data, 0) === 0) {
           this.masterToggle();
-          }
+        }
         if (_this.selected_data.length > 0) {
           _this.service_dataSource.data.forEach(function (row) {
             if (_this.selected_data && _this.selected_data.length > 0) {

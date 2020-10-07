@@ -663,6 +663,10 @@ export class SharedServices {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
+  getAvailableDatessByLocationService(locid, servid, accountid?) {
+    const url = 'consumer/appointment/availability/location/' + locid + '/service/' + servid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
 
   getTodaysAvailableTimeSlots(date, sheduleid, accountid?) {
     const url = 'consumer/appointment/schedule/' + sheduleid + '/' + date + '?account=' + accountid;
@@ -805,5 +809,9 @@ export class SharedServices {
   getQueuesbyLocationandServiceIdAvailableDates(locid, servid , accountid) {
     const url = 'consumer/waitlist/queues/available/' + locid + '/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
+  }
+  callHealth(message) {
+    const url = 'health/browser';
+    return this.servicemeta.httpPost(url, message);
   }
 }

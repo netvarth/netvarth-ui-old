@@ -22,7 +22,7 @@ export class ServiceDetailComponent implements OnInit {
   close_btn_cap = Messages.CLOSE_BTN;
   servc_detils = Messages.SERVCE_DETAILS;
   donation_dtls = Messages.DONATION_DETAILS;
-  service_duration = Messages.SERVICE_DURATION_CAP;
+  service_duration = Messages.SERVICE_DURATIONS_CAP;
   api_error = null;
   api_success = null;
   is_donation_serv = false;
@@ -58,6 +58,7 @@ export class ServiceDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.data);
     this.service = this.data.serdet;
     this.minutes = this.data.serdet.serviceDuration;
     if (this.minutes) {
@@ -65,17 +66,17 @@ export class ServiceDetailComponent implements OnInit {
       this.hour = (this.minutes - this.min) / 60;
       if (this.hour > 0 && this.min > 0) {
         if (this.hour > 1) {
-          this.HHMM = this.hour + 'Hrs' + ' ' + this.min + 'Mins';
+          this.HHMM = this.hour + ' ' + 'hrs' + ' ' + this.min + ' ' + 'mins';
         } else {
-          this.HHMM = this.hour + 'Hr' + ' ' + this.min + 'Mins';
+          this.HHMM = this.hour + ' ' + 'hr' + ' ' + this.min + ' ' + 'mins';
         }
       } else if (this.hour === 0) {
-        this.HHMM = this.min + 'Mins';
+        this.HHMM = this.min + ' ' + 'mins';
       } else if (this.min === 0) {
         if (this.hour > 1) {
-          this.HHMM = this.hour + 'Hrs';
+          this.HHMM = this.hour + ' ' + 'hrs';
         } else {
-          this.HHMM = this.hour + 'Hr';
+          this.HHMM = this.hour + ' ' + 'hr';
         }
       }
     }

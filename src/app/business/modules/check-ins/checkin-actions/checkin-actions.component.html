@@ -1,0 +1,153 @@
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === ''">
+    Select your actions
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button></h1>
+<div class="action-section col-md-12" *ngIf="action === ''">
+    <div>
+        <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
+            <div class="action-box-sub" *ngIf="checkin.callingStatus">
+                <span class="fa fa-phone" style="color: red;"></span>
+                <div class="icon-text">Stop
+                </div>
+            </div>
+            <div class="action-box-sub" *ngIf="!checkin.callingStatus">
+                <span class="fa fa-phone" style="color: green;"></span>
+                <div class="icon-text">Call</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="showStart" (click)="changeWaitlistStatus('STARTED')">
+            <div class="action-box-sub">
+                <span class="fa fa-play"></span>
+                <div class="icon-text">Start</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor teleservice" *ngIf="showTeleserviceStart" [matTooltipClass]="tooltipcls"
+            [matTooltip]="'Teleservice'" (click)="showCallingModes(checkin)">
+            <span
+                *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+            <span class="fa meet-icon"
+                *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
+            <span class="fa zoom-icon"
+                *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
+            <span class="fa phon-icon"
+                *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
+            <span class="fa wtsapaud-icon"
+                *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'audioService'"></span>
+            <span class="fa wtsapvid-icon"
+                *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></span>
+            <span
+                *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+            <div class="icon-text">
+                {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Start'}}
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeWaitlistStatus('CANCEL')">
+            <div class="action-box-sub">
+                <span class="cancel-icon"></span>
+                <div class="icon-text">Cancel {{(showToken) ? 'token' : 'check-in'}}</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="showArrived" (click)="changeWaitlistStatus('REPORT')">
+            <div class="action-box-sub">
+                <span class="icon-arrived"></span>
+                <div class="icon-text">Mark as Arrived</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus == 'started'"
+            (click)="changeWaitlistStatus('DONE')">
+            <div class="action-box-sub">
+                <span class="icon-arrived"></span>
+                <div class="icon-text">Complete</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="showUndo" (click)="changeWaitlistStatus('CHECK_IN')">
+            <div class="action-box-sub">
+                <span class="changestatus-icon"></span>
+                <div class="icon-text">Status change</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()">
+            <div class="action-box-sub">
+                <span class="message-icon"></span>
+                <div class="icon-text">Send Message</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
+            <div class="action-box-sub">
+                <span class="mail-icon"></span>
+                <div class="icon-text">Send details via SMS/Email</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="trackStatus" (click)="locateCustomer()">
+            <div class="action-box-sub">
+                <span class="fa fa-location-arrow"></span>
+                <div class="icon-text">Where is my
+                    customer</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="viewBillPage()">
+            <div class="action-box-sub">
+                <span class="bill-icon"></span>
+                <div class="icon-text">Bill</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="addProviderNote()">
+            <div class="action-box-sub">
+                <span class="notes-icon"></span>
+                <div class="icon-text">Private Notes</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="goToCheckinDetails()">
+            <div class="action-box-sub">
+                <span class="viewdetails-icon"></span>
+                <div class="icon-text">View Details</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && data.timetype !== 3" (click)="showLabels()">
+            <div class="action-box-sub">
+                <span class="label-icon"></span>
+                <div class="icon-text">Labels</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && data.timetype !== 3"
+            (click)="printCheckin()">
+            <div class="action-box-sub">
+                <span class="printer-icon"></span>
+                <div class="icon-text">Print</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="dashqr" *ngIf="showQR">
+    <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value" style="width: 10px;">
+    </ngx-qrcode>
+</div>
+<div *ngIf="action === 'label'">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
+        <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
+            <a class="label-head pointer-cursor" (click)="addLabelvalue('newvalue', label)">
+                {{label.displayName}}</a>
+            <div *ngFor="let value of label.valueSet">
+                <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
+                    (click)="changeLabelvalue(label.label, value.value)">
+                    {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
+            </div>
+        </div>
+        <!-- <div *ngFor="let label of providerLabels;let i = index">
+            <a class="pointer-cursor" style="color: black;font-weight: 700;" (click)="addLabelvalue('newvalue', label)">
+                {{label.displayName}}</a>
+        </div> -->
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
+        <a class="pointer-cursor mgn-rt-25" (click)="addLabelvalue('newlabel')">Add label</a>
+        <a class="pointer-cursor" (click)="gotoLabel()">Manage label</a>
+    </div>
+</div>
+<!-- <div *ngIf="action == 'note'">
+    <app-provider-waitlist-checkin-provider-note ></app-provider-waitlist-checkin-provider-note>
+</div> -->
