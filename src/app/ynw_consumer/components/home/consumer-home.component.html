@@ -156,6 +156,16 @@
                                                     (click)="getMeetingDetails(booking,'appt')">
                                                     Meeting details
                                                 </button>
+                                                <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                             </mat-menu>
                                         </td>
                                     </ng-container>
@@ -270,6 +280,16 @@
                                                 && booking.waitlistStatus !== 'cancelled'"
                                                     (click)="getMeetingDetails(booking,'waitlist')">
                                                     Meeting details
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -387,6 +407,16 @@
                                                         (click)="getMeetingDetails(booking,'appt')">
                                                         Meeting details
                                                     </button>
+                                                    <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                                 </mat-menu>
                                             </td>
                                         </ng-container>
@@ -500,6 +530,16 @@
                                                         (click)="getMeetingDetails(booking,'waitlist')">
                                                         Meeting details
                                                     </button>
+                                                    <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                                 </mat-menu>
                                             </td>
                                         </ng-container>
@@ -620,6 +660,16 @@
                                                     (click)="getMeetingDetails(booking,'appt')">
                                                     Meeting details
                                                 </button>
+                                                <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                             </mat-menu>
                                         </td>
                                     </ng-container>
@@ -712,6 +762,16 @@
                                                 && booking.waitlistStatus !== 'cancelled'"
                                                     (click)="getMeetingDetails(booking,'waitlist')">
                                                     Meeting details
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -810,6 +870,16 @@
                                                         (click)="getMeetingDetails(booking,'appt')">
                                                         Meeting details
                                                     </button>
+                                                    <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                                 </mat-menu>
                                             </td>
 
@@ -905,6 +975,16 @@
                                                         (click)="getMeetingDetails(booking,'waitlist')">
                                                         Meeting details
                                                     </button>
+                                                    <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                                 </mat-menu>
                                             </td>
                                         </ng-container>
