@@ -297,7 +297,11 @@ export class HomeComponent implements OnInit {
   knowCheckinStatus () {
     this.routerobj.navigate(['status/new']);
   }
+  providerLinkClicked() {
+    this.routerobj.navigate(['/business']);
+  }
   // knowApptStatus () {
   //   this.routerobj.navigate(['appt/status/new']);
   // }
 }
+
