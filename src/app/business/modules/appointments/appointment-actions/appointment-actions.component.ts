@@ -215,32 +215,22 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
             .then(
                 result => {
-                    // this.getApptDetail();
-        this.dialogRef.close();
+                    this.dialogRef.close();
                 }
             );
     }
-    getApptDetail() {
-        this.provider_services.getAppointmentById(this.appt.uid)
-            .subscribe(
-                data => {
-                    this.appt = data;
-                    this.setActions();
-                });
-    }
-
     getDisplayboardCount() {
         let layout_list: any = [];
         let displayboards: any = [];
         this.provider_services.getDisplayboardsAppointment()
-          .subscribe(
-            data => {
-              displayboards = data;
-              layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
-              this.board_count = layout_list.length;
-              this.setActions();
-            });
-      }
+            .subscribe(
+                data => {
+                    displayboards = data;
+                    layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
+                    this.board_count = layout_list.length;
+                    this.setActions();
+                });
+    }
     setActions() {
         this.trackStatus = false;
         this.showArrived = false;
@@ -391,8 +381,7 @@ export class AppointmentActionsComponent implements OnInit {
         const status = (this.appt.callingStatus) ? 'Disable' : 'Enable';
         this.provider_services.setApptCallStatus(this.appt.uid, status).subscribe(
             () => {
-                // this.getApptDetail();
-        this.dialogRef.close();
+                this.dialogRef.close();
             });
     }
     showCallingModes(modes) {
@@ -407,8 +396,8 @@ export class AppointmentActionsComponent implements OnInit {
     }
     getPos() {
         this.provider_services.getProviderPOSStatus().subscribe(data => {
-          this.pos = data['enablepos'];
-          this.getDisplayboardCount();
+            this.pos = data['enablepos'];
+            this.getDisplayboardCount();
         });
-      }
+    }
 }

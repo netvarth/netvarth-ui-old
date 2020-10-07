@@ -204,18 +204,9 @@ export class CheckinActionsComponent implements OnInit {
         this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
             .then(
                 result => {
-                    // this.getWaitlistDetail();
                     this.dialogRef.close();
                 }
             );
-    }
-    getWaitlistDetail() {
-        this.provider_services.getProviderWaitlistDetailById(this.checkin.ynwUuid)
-            .subscribe(
-                data => {
-                    this.checkin = data;
-                    this.setActions();
-                });
     }
     getDisplayboardCount() {
         let layout_list: any = [];
@@ -261,7 +252,7 @@ export class CheckinActionsComponent implements OnInit {
             if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
                 this.showCall = true;
             }
-            if (this.pos && this.checkin.parentUuid) {
+            if (this.pos && !this.checkin.parentUuid) {
                 this.showBill = true;
             }
         }
@@ -377,7 +368,6 @@ export class CheckinActionsComponent implements OnInit {
         const status = (this.checkin.callingStatus) ? 'Disable' : 'Enable';
         this.provider_services.setCallStatus(this.checkin.ynwUuid, status).subscribe(
             () => {
-                // this.getWaitlistDetail();
                 this.dialogRef.close();
             });
     }
@@ -393,8 +383,8 @@ export class CheckinActionsComponent implements OnInit {
     }
     getPos() {
         this.provider_services.getProviderPOSStatus().subscribe(data => {
-          this.pos = data['enablepos'];
-          this.getDisplayboardCount();
+            this.pos = data['enablepos'];
+            this.getDisplayboardCount();
         });
-      }
+    }
 }

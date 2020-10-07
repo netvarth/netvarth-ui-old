@@ -29,10 +29,11 @@
   }
   .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon, 
   .message-icon, .notes-icon, .printer-icon , .viewdetails-icon,
-  .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon {
-    width: 25px;
+  .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon,
+  .meet-icon, .phon-icon {
+    width: 25px !important;
   }
-  .teleservice span {
+  .zoom-icon, .wtsapaud-icon, .wtsapvid-icon {
     width: 50px !important;
   }
 }
@@ -58,6 +59,12 @@
 .footerlinks {
   font-size: 1rem;
 }
-.teleservice span {
+.zoom-icon, .wtsapaud-icon, .wtsapvid-icon {
   width: 70px;
+}
+.meet-icon, .phon-icon {
+  width: 40px;
+}
+.wtsapaud-icon {
+  margin-top: -15px;
 }

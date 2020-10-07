@@ -12133,7 +12133,7 @@ img.busN-logo {
 .consumer-appthistory .disp-flex {
   display: flex !important;
 }
-.arrived-icon {
+.locate-icon {
   content: url(../images/dashboard-icons/arrivedaction-01.svg);
   width: 40px;
 }
@@ -12176,4 +12176,8 @@ img.busN-logo {
 .dashaction-icon {
   content: url(../images/dashboard-icons/gears-set.svg);
   width: 15px;
+}
+.arrived-icon {
+  content: url(../images/dashboard-icons/arrivved2.svg);
+  width: 40px;
 }
