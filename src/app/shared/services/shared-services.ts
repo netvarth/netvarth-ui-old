@@ -810,4 +810,8 @@ export class SharedServices {
     const url = 'consumer/waitlist/queues/available/' + locid + '/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
+  callHealth(message) {
+    const url = 'health/browser';
+    return this.servicemeta.httpPost(url, message);
+  }
 }
