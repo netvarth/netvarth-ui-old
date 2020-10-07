@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstants } from '../../../app.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { MatDialog } from '@angular/material';
@@ -47,6 +47,7 @@ export class ApptDetailComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
         public locationobj: Location,
+        private router: Router,
         public shared_functions: SharedFunctions,
         @Inject(DOCUMENT) public document,
         private consumer_services: ConsumerServices,
@@ -127,4 +128,7 @@ export class ApptDetailComponent implements OnInit {
             }
         });
     }
+    providerDetail(provider) {
+        this.router.navigate(['searchdetail', provider.uniqueId]);
+      }
 }

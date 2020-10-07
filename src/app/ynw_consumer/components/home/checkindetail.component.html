@@ -27,7 +27,7 @@
                                         <h2 *ngIf="!showtoken">{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
                                         <h2 *ngIf="showtoken">Token {{details_cap}}</h2>
                                         <div class="tp" *ngIf="waitlist">
-                                            <div class="item"><span class="ttle">{{provider_label | capitalizeFirst}}</span> <span>
+                                            <div class="item"><span class="ttle">{{provider_label | capitalizeFirst}}</span> <span style="cursor: pointer;" (click)="providerDetail(waitlist.providerAccount)">
                                                     {{waitlist.providerAccount.businessName | capitalizeFirst}}
                                                 </span></div>
                                             <div class="item"><span class="ttle">{{date_cap}}</span> <span>
