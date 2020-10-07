@@ -6635,3 +6635,7 @@
           margin-top: 6px;
       }
 }
+.consumer-dash .datefont {
+    font-size: 0.82rem;
+    color: #183e79;
+}

@@ -291,7 +291,7 @@
                                     </ng-container>
                                     <ng-container *ngIf="booking.donationStatus">
                                         <td>
-                                            <h4>{{booking.date}}</h4>
+                                            <h4>{{booking.date | date: dateFormat}}</h4>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4>{{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
@@ -539,7 +539,7 @@
                                         </ng-container>
                                         <ng-container *ngIf="booking.donationStatus">
                                             <td>
-                                                <h4>{{booking.date}}</h4>
+                                                <h4>{{booking.date | date: dateFormat}}</h4>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4>{{booking.providerAccount.businessName || '' | capitalizeFirst}}
@@ -581,7 +581,7 @@
                                                     &nbsp;{{getSingleTime(booking.appmtTime)}}
                                                 </span>
                                             </h4>
-                                            <span>{{booking.appmtDate}}</span>
+                                            <span class="datefont">{{booking.appmtDate | date: dateFormat}}</span>
 
                                         </td>
                                         <td class="tdisplay-block">
@@ -685,7 +685,7 @@
                                                     &nbsp;Token {{booking.token}}
                                                 </span>
                                             </h4>
-                                            <span>{{booking.date}}</span>
+                                            <span class="datefont">{{booking.date | date: dateFormat}}</span>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -790,7 +790,7 @@
                                                         &nbsp;{{getSingleTime(booking.appmtTime)}}
                                                     </span>
                                                 </h4>
-                                                <span>{{booking.appmtDate}}</span>
+                                                <span class="datefont">{{booking.appmtDate | date: dateFormat}}</span>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -894,7 +894,7 @@
                                                     </div>
                                                     <span class="mgn-up-10">&nbsp;Token {{booking.token}}</span>
                                                 </h4>
-                                                <span>{{booking.date}}</span>
+                                                <span class="datefont">{{booking.date | date: dateFormat}}</span>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
