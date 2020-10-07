@@ -27,7 +27,7 @@
                                         <h2 *ngIf="!showtoken">{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
                                         <h2 *ngIf="showtoken">Token {{details_cap}}</h2>
                                         <div class="tp" *ngIf="waitlist">
-                                            <div class="item"><span class="ttle">{{bname_cap}}</span> <span>
+                                            <div class="item"><span class="ttle">{{provider_label | capitalizeFirst}}</span> <span>
                                                     {{waitlist.providerAccount.businessName | capitalizeFirst}}
                                                 </span></div>
                                             <div class="item"><span class="ttle">{{date_cap}}</span> <span>
@@ -121,7 +121,9 @@
                                     <div class="c-history-outer" *ngIf="waitlist && waitlist.waitlistStatus">
                                         <ul class="c-history">
                                             <li class="{{waitlist.waitlistStatus}}">
-                                                <div class="action">{{waitlist.waitlistStatus}}</div>
+                                                <div class="action" *ngIf="waitlist.waitlistStatus == 'checkedIn'">Checked-in</div>
+                                                <div class="action" *ngIf="waitlist.waitlistStatus == 'done'">Completed</div>
+                                                <div class="action" *ngIf="(waitlist.waitlistStatus !== 'checkedIn' && waitlist.waitlistStatus !== 'done')">{{waitlist.waitlistStatus}}</div>
                                                 <div class="time">
                                                     {{ waitlist.statusUpdatedTime | date: dateTimeFormat}}</div>
                                             </li>

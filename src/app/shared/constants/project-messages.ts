@@ -1281,7 +1281,7 @@ export const Messages = {
   'CHECK_DET_NAME_CAP': 'Name',
   'CHECK_DET_DATE_CAP': 'Date',
   'CHECK_DET_LOCATION_CAP': 'Location',
-  'CHECK_DET_WAITLIST_FOR_CAP': 'Check-In for',
+  'CHECK_DET_WAITLIST_FOR_CAP': 'Check-in for',
   'CHECK_DET_SERVICE_CAP': 'Service',
   'CHECK_DET_QUEUE_CAP': 'Queue',
   'CHECK_DET_PAY_STATUS_CAP': 'Payment Status',
