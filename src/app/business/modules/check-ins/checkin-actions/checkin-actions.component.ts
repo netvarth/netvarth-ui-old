@@ -53,6 +53,7 @@ export class CheckinActionsComponent implements OnInit {
     }
 
     printCheckin() {
+        this.dialogRef.close();
         this.qrCodegeneration(this.checkin);
         const bprof = this.shared_functions.getitemFromGroupStorage('ynwbp');
         const bname = bprof.bn;
@@ -99,6 +100,7 @@ export class CheckinActionsComponent implements OnInit {
         this.showQR = true;
     }
     addConsumerInboxMessage() {
+        this.dialogRef.close();
         let checkin = [];
         if (this.data.multiSelection) {
             checkin = this.checkin;
@@ -112,6 +114,7 @@ export class CheckinActionsComponent implements OnInit {
             );
     }
     smsCheckin() {
+        this.dialogRef.close();
         const smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -129,6 +132,7 @@ export class CheckinActionsComponent implements OnInit {
         this.provider_services.getCustomerTrackStatus(this.checkin.ynwUuid).subscribe(data => {
             this.trackDetail = data;
             this.customerMsg = this.locateCustomerMsg(this.trackDetail);
+            this.dialogRef.close();
             const locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
                 width: '40%',
                 panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
@@ -174,6 +178,7 @@ export class CheckinActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
+        this.dialogRef.close();
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -183,17 +188,22 @@ export class CheckinActionsComponent implements OnInit {
             }
         });
         addnotedialogRef.afterClosed().subscribe(result => {
-            if (result === 'reloadlist') { }
+            if (result === 'reloadlist') {
+            }
         });
     }
     changeWaitlistStatus(action) {
+        if (action === 'CANCEL') {
+            this.dialogRef.close();
+        }
         this.provider_shared_functions.changeWaitlistStatus(this, this.checkin, action);
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
             .then(
                 result => {
-                    this.getWaitlistDetail();
+                    // this.getWaitlistDetail();
+                    this.dialogRef.close();
                 }
             );
     }
@@ -223,6 +233,7 @@ export class CheckinActionsComponent implements OnInit {
         this.showSendDetails = false;
         this.showStart = false;
         this.showTeleserviceStart = false;
+        this.showCall = false;
         if (!this.data.multiSelection) {
             if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn') {
                 this.showUndo = true;
@@ -361,7 +372,8 @@ export class CheckinActionsComponent implements OnInit {
         const status = (this.checkin.callingStatus) ? 'Disable' : 'Enable';
         this.provider_services.setCallStatus(this.checkin.ynwUuid, status).subscribe(
             () => {
-                this.getWaitlistDetail();
+                // this.getWaitlistDetail();
+                this.dialogRef.close();
             });
     }
     showCallingModes(modes) {
