@@ -5,12 +5,12 @@
 <div class="action-section col-md-12" *ngIf="action === ''">
     <div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
-            <!-- <div class="action-box-sub" *ngIf="checkin.callingStatus">
-                <span class="fa fa-phone" style="color: red;"></span>
+            <div class="action-box-sub" *ngIf="checkin.callingStatus">
+                <span class="callstop-icon"></span>
                 <div class="icon-text">Stop
                 </div>
-            </div> -->
-            <div class="action-box-sub">
+            </div>
+            <div class="action-box-sub" *ngIf="!checkin.callingStatus">
                 <span class="waitlistcall-icon"></span>
                 <div class="icon-text">Call</div>
             </div>

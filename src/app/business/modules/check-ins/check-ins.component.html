@@ -279,6 +279,7 @@
                         <a *ngIf="apptStartedMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                           (click)="showCheckinActions('started')" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
+                            <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
                            <span> Actions</span>
                         </a>
                       </th>
@@ -297,8 +298,8 @@
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngFor="let checkin of startedCheckins, let i=index">
-                    <tr>
+                  <tbody>
+                    <tr *ngFor="let checkin of startedCheckins, let i=index">
                       <td class="chkWth">
                         <input type="checkbox" class="ckbx pull-left" [checked]="startedChkAppointments[i]"
                           (change)="chkStartedAptHistoryClicked(i, checkin)" />
@@ -388,6 +389,7 @@
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="showCheckinActions('started', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                          <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
                           <span *ngIf="!small_device_display"> Actions</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" style="padding: 0px 3px 5px 2px;"
@@ -452,6 +454,7 @@
                         <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                           (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
+                          <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
                           <span *ngIf="!small_device_display"> Actions</span>
                         </a>
                       </th>
@@ -558,10 +561,10 @@
                         <a class="statusText btn-play pointer-cursor"
                           *ngIf="!small_device_display && board_count > 0 && time_type == 1 && !checkin.virtualService && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
                           (click)="callingWaitlist(checkin)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
-                          <i class="fa fa-phone" *ngIf="checkin.callingStatus" style="color: red;"></i> <span
+                          <i class="dashboardcallstop-icon" *ngIf="checkin.callingStatus"></i> <span
                             *ngIf="!small_device_display && checkin.callingStatus">&nbsp; Stop
                           </span>
-                          <i class="fa fa-phone" *ngIf="!checkin.callingStatus" style="color: green;"></i>
+                          <i class="dashboardcall-icon" *ngIf="!checkin.callingStatus"></i>
                           <span *ngIf="!small_device_display && !checkin.callingStatus">
                             &nbsp;Call</span>
                         </a>
@@ -574,6 +577,7 @@
                         <a class="statusText btn-play pointer-cursor"
                           (click)="showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
+                          <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
                           <span *ngIf="!small_device_display"> Actions</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" style="padding: 0px 3px 5px 2px;"
@@ -741,6 +745,7 @@
                       <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                         (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
+                        <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
                         <span *ngIf="!small_device_display"> Actions</span>
                       </a>
                     </th>
@@ -851,6 +856,7 @@
                       </a>
                       <a class="statusText btn-play pointer-cursor" (click)="showCheckinActions(statusAction, checkin)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                        <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
                         <span *ngIf="!small_device_display"> Actions</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor" style="padding: 0px 3px 5px 2px;"
@@ -1114,6 +1120,7 @@
                       <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                         (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
+                          <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
                         <span *ngIf="!small_device_display"> Actions</span>
                       </a>
                     </th>
@@ -1223,6 +1230,7 @@
                       </a>
                       <a class="statusText btn-play pointer-cursor" (click)="showCheckinActions(statusAction, checkin)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                        <i class="dashaction-icon" *ngIf="appt.callingStatus"></i>
                        <span *ngIf="!small_device_display"> Actions</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor" style="padding: 0px 3px 5px 2px;"
