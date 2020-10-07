@@ -184,8 +184,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                // return EMPTY;
               // return throwError(error);
             } else if (error.status === 405) {
+              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              return EMPTY;
               // this.router.navigate(['/maintenance']);
-              return throwError(error);
+              // return throwError(error);
             } else if (error.status === 0) {
               // Network Error Handling
               // return next.handle(this.updateHeader(req, url)).pipe(
