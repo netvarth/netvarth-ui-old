@@ -350,11 +350,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.arrived_upper, value: 'arrived' },
       { name: this.done_upper, value: 'complete' }];
 
-    this.activateroute.queryParams.subscribe(params => {
-      if (params.servStatus) {
-        this.statusAction = 'started';
-      }
-    });
+    // this.activateroute.queryParams.subscribe(params => {
+    //   if (params.servStatus) {
+    //     this.statusAction = 'started';
+    //   }
+    // });
   }
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
@@ -2859,4 +2859,3 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 }
-

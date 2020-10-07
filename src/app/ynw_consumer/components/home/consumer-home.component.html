@@ -85,6 +85,10 @@
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                             <span>
                                                 <i class="fa phon-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -156,6 +160,16 @@
                                                     (click)="getMeetingDetails(booking,'appt')">
                                                     Meeting details
                                                 </button>
+                                                <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                             </mat-menu>
                                         </td>
                                     </ng-container>
@@ -181,12 +195,6 @@
                                                     </span>
                                                 </span>
                                             </h4>
-                                            <!-- <span
-                                                *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">
-                                                <div class="circle-tokens">
-                                                    <i class="fa chckn-icon"></i>
-                                                </div>
-                                                &nbsp;{{booking.date}}</span> -->
 
                                             <h4 *ngIf="booking.token" class="disp-flex">
                                                 <div class="circle-tokens">
@@ -196,10 +204,15 @@
                                                     &nbsp;Token {{booking.token}}
                                                 </span>
                                             </h4>
+                                            <span class="est-wait-time" *ngIf="( booking.appxWaitingTime && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                             <span>
                                                 <i class="fa phon-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -221,8 +234,11 @@
                                             <h6
                                                 [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
                                                 <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
+                                                <span *ngIf="booking.waitlistStatus=='checkedIn'">
+                                                    Checked-in
+                                                </span>
                                                 <span
-                                                    *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                    *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                             </h6>
                                             <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                 <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
@@ -271,12 +287,22 @@
                                                     (click)="getMeetingDetails(booking,'waitlist')">
                                                     Meeting details
                                                 </button>
+                                                <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                             </mat-menu>
                                         </td>
                                     </ng-container>
                                     <ng-container *ngIf="booking.donationStatus">
                                         <td>
-                                            <h4>{{booking.date}}</h4>
+                                            <h4>{{booking.date | date: dateFormat}}</h4>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4>{{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
@@ -315,6 +341,10 @@
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                                 <span>
                                                     <i class="fa phon-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -387,6 +417,16 @@
                                                         (click)="getMeetingDetails(booking,'appt')">
                                                         Meeting details
                                                     </button>
+                                                    <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                                 </mat-menu>
                                             </td>
                                         </ng-container>
@@ -412,8 +452,6 @@
                                                         </span>
                                                     </span>
                                                 </h4>
-                                                <!-- <span
-                                                    *ngIf="!booking.token && (booking.appxWaitingTime >= 0 && booking.waitlistStatus == 'cancelled')">{{booking.date}}</span> -->
                                                 <h4 *ngIf="booking.token" class="disp-flex">
                                                     <div class="circle-tokens">
                                                         <i class="fa token-icon"></i>
@@ -422,11 +460,16 @@
                                                         &nbsp;Token {{booking.token}}
                                                     </span>
                                                 </h4>
+                                                <span class="est-wait-time" *ngIf="( booking.appxWaitingTime && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                                 <span>
                                                     <i class="fa phon-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -448,8 +491,11 @@
                                                 <h6
                                                     [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
+                                                    <span *ngIf="booking.waitlistStatus=='checkedIn'">
+                                                        Checked-in
+                                                    </span>
                                                     <span
-                                                        *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                        *ngIf="booking.waitlistStatus!=='done'  && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                 </h6>
                                                 <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                     <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
@@ -500,12 +546,22 @@
                                                         (click)="getMeetingDetails(booking,'waitlist')">
                                                         Meeting details
                                                     </button>
+                                                    <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                                 </mat-menu>
                                             </td>
                                         </ng-container>
                                         <ng-container *ngIf="booking.donationStatus">
                                             <td>
-                                                <h4>{{booking.date}}</h4>
+                                                <h4>{{booking.date | date: dateFormat}}</h4>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4>{{booking.providerAccount.businessName || '' | capitalizeFirst}}
@@ -547,12 +603,16 @@
                                                     &nbsp;{{getSingleTime(booking.appmtTime)}}
                                                 </span>
                                             </h4>
-                                            <span>{{booking.appmtDate}}</span>
+                                            <span class="datefont">{{booking.appmtDate | date: dateFormat}}</span>
 
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                             <span>
                                                 <i class="fa phon-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -620,6 +680,16 @@
                                                     (click)="getMeetingDetails(booking,'appt')">
                                                     Meeting details
                                                 </button>
+                                                <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                             </mat-menu>
                                         </td>
                                     </ng-container>
@@ -641,11 +711,15 @@
                                                     &nbsp;Token {{booking.token}}
                                                 </span>
                                             </h4>
-                                            <span>{{booking.date}}</span>
+                                            <span class="datefont">{{booking.date | date: dateFormat}}</span>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                             <span>
                                                 <i class="fa phon-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -667,8 +741,11 @@
                                             <h6
                                                 [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
                                                 <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
+                                                <span *ngIf="booking.waitlistStatus=='checkedIn'">
+                                                    Checked-in
+                                                </span>
                                                 <span
-                                                    *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                    *ngIf="booking.waitlistStatus!=='done'  && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                             </h6>
                                             <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                 <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
@@ -713,6 +790,16 @@
                                                     (click)="getMeetingDetails(booking,'waitlist')">
                                                     Meeting details
                                                 </button>
+                                                <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                             </mat-menu>
                                         </td>
                                     </ng-container>
@@ -736,12 +823,16 @@
                                                         &nbsp;{{getSingleTime(booking.appmtTime)}}
                                                     </span>
                                                 </h4>
-                                                <span>{{booking.appmtDate}}</span>
+                                                <span class="datefont">{{booking.appmtDate | date: dateFormat}}</span>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                                 <span>
                                                     <i class="fa phon-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -810,6 +901,16 @@
                                                         (click)="getMeetingDetails(booking,'appt')">
                                                         Meeting details
                                                     </button>
+                                                    <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                                 </mat-menu>
                                             </td>
 
@@ -830,12 +931,16 @@
                                                     </div>
                                                     <span class="mgn-up-10">&nbsp;Token {{booking.token}}</span>
                                                 </h4>
-                                                <span>{{booking.date}}</span>
+                                                <span class="datefont">{{booking.date | date: dateFormat}}</span>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                                 <span>
                                                     <i class="fa phon-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -857,8 +962,11 @@
                                                 <h6
                                                     [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
+                                                    <span *ngIf="booking.waitlistStatus=='checkedIn'">
+                                                        Checked-in
+                                                    </span>
                                                     <span
-                                                        *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                        *ngIf="booking.waitlistStatus!=='done'  && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                 </h6>
                                                 <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                     <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
@@ -905,6 +1013,16 @@
                                                         (click)="getMeetingDetails(booking,'waitlist')">
                                                         Meeting details
                                                     </button>
+                                                    <button mat-menu-item
+                                                    *ngIf="checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(booking.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="!checkIfFav(booking.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add to Favourite</span>
+                                                </button>
                                                 </mat-menu>
                                             </td>
                                         </ng-container>

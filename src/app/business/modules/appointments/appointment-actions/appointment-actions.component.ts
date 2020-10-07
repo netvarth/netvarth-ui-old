@@ -38,6 +38,8 @@ export class AppointmentActionsComponent implements OnInit {
     labelMap;
     showCall;
     board_count;
+    pos = false;
+    showBill = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -47,8 +49,8 @@ export class AppointmentActionsComponent implements OnInit {
     ngOnInit() {
         console.log(this.data);
         this.appt = this.data.checkinData;
+        this.getPos();
         this.getLabel();
-        this.getDisplayboardCount();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
 
@@ -213,32 +215,22 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
             .then(
                 result => {
-                    // this.getApptDetail();
-        this.dialogRef.close();
+                    this.dialogRef.close();
                 }
             );
     }
-    getApptDetail() {
-        this.provider_services.getAppointmentById(this.appt.uid)
-            .subscribe(
-                data => {
-                    this.appt = data;
-                    this.setActions();
-                });
-    }
-
     getDisplayboardCount() {
         let layout_list: any = [];
         let displayboards: any = [];
         this.provider_services.getDisplayboardsAppointment()
-          .subscribe(
-            data => {
-              displayboards = data;
-              layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
-              this.board_count = layout_list.length;
-              this.setActions();
-            });
-      }
+            .subscribe(
+                data => {
+                    displayboards = data;
+                    layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
+                    this.board_count = layout_list.length;
+                    this.setActions();
+                });
+    }
     setActions() {
         this.trackStatus = false;
         this.showArrived = false;
@@ -272,6 +264,9 @@ export class AppointmentActionsComponent implements OnInit {
             }
             if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived')) {
                 this.showCall = true;
+            }
+            if (this.pos) {
+                this.showBill = true;
             }
         }
     }
@@ -386,8 +381,7 @@ export class AppointmentActionsComponent implements OnInit {
         const status = (this.appt.callingStatus) ? 'Disable' : 'Enable';
         this.provider_services.setApptCallStatus(this.appt.uid, status).subscribe(
             () => {
-                // this.getApptDetail();
-        this.dialogRef.close();
+                this.dialogRef.close();
             });
     }
     showCallingModes(modes) {
@@ -400,4 +394,11 @@ export class AppointmentActionsComponent implements OnInit {
         this.router.navigate(['provider', 'telehealth'], navigationExtras);
         this.dialogRef.close();
     }
+    getPos() {
+        this.provider_services.getProviderPOSStatus().subscribe(data => {
+            this.pos = data['enablepos'];
+            this.getDisplayboardCount();
+        });
+    }
 }
+

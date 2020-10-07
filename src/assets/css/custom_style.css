@@ -12133,7 +12133,7 @@ img.busN-logo {
 .consumer-appthistory .disp-flex {
   display: flex !important;
 }
-.arrived-icon {
+.locate-icon {
   content: url(../images/dashboard-icons/arrivedaction-01.svg);
   width: 40px;
 }
@@ -12149,6 +12149,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/startaction-01.svg);
   width: 40px;
 }
+.callstop-icon {
+  content: url(../images/dashboard-icons/callcancel.svg);
+  width: 40px;
+}
 .dashboardstart-icon {
   content: url(../images/dashboard-icons/start.svg);
   width: 15px;
@@ -12160,4 +12164,20 @@ img.busN-logo {
 .dashboardarrived-icon {
   content: url(../images/dashboard-icons/arrivved2.svg);
   width: 15px;
+}
+.dashboardcallstop-icon {
+  content: url(../images/dashboard-icons/callcancel.svg);
+  width: 15px;
+}
+.dashboardcall-icon {
+  content: url(../images/dashboard-icons/bell.svg);
+  width: 15px;
+}
+.dashaction-icon {
+  content: url(../images/dashboard-icons/gears-set.svg);
+  width: 15px;
+}
+.arrived-icon {
+  content: url(../images/dashboard-icons/arrivved2.svg);
+  width: 40px;
 }

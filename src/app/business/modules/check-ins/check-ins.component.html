@@ -167,6 +167,94 @@
           <mat-tab label="Today ({{today_waitlist_count}})">
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive" *ngIf="!loading">
+              <div>
+                <aside class="filterSidebar" *ngIf="filter_sidebar">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
+                    <div class="filterClosebtn" [class.pd-btm-30]="filterapplied !== true">
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Close filter window'"></i>
+                      <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+                    </div>
+                    <ul class="sidebar-menu">
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                            class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                            class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                        </li>
+                      </div>
+                      <div *ngIf="services.length > 1">
+                        <label class="filterHeaders">Services</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allServiceSelected"
+                            (change)="setFilterDataCheckbox('service', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox *ngFor="let service of services"
+                            [checked]="filterService.indexOf(service.id) !== -1"
+                            (change)="setFilterDataCheckbox('service', service.id, $event)">
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                              class="fa meet-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                              class="fa zoom-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                              class="fa phon-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                              class="fa wtsapaud-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                              class="fa wtsapvid-icon"></i>&nbsp;
+                            {{service.name}}
+                          </mat-checkbox>
+                        </li>
+                      </div>
+                      <div>
+                        <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
+                        <label *ngIf="showToken" class="filterHeaders">Token booking mode</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allModeSelected"
+                            (change)="setFilterDataCheckbox('waitlistMode', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of waitlistModes">
+                          <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
+                            (change)="setFilterDataCheckbox('waitlistMode', mode.mode, $event)">
+                            {{mode.value}}</mat-checkbox>
+                        </li>
+                      </div>
+                      <div>
+                        <div *ngFor="let lbl of providerLabels">
+                          <label class="filterHeaders">{{lbl.displayName}}</label>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allLabelSelected[lbl.label]"
+                              (change)="setLabelFilter(lbl, 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let valueset of lbl?.valueSet">
+                            <mat-checkbox
+                              [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(valueset.value) !== -1"
+                              (change)="setLabelFilter(lbl, valueset.value , $event)">
+                              {{valueset.shortValue}}</mat-checkbox>
+                          </li>
+                        </div>
+                      </div>
+                    </ul>
+                  </section>
+                </aside>
+              </div>
               <div class="inpro-box mgn-bt-20" *ngIf="startedCheckins.length > 0">
                 <div class="inpro pad-10 pull-left">
                   <div class="inprogress"> In progress ({{started_count}})</div>
@@ -180,94 +268,7 @@
                       [matTooltip]="filtericonTooltip">
                     </i>
                   </a>
-                  <div>
-                    <aside class="filterSidebar" *ngIf="filter_sidebar">
-                      <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
-                        <div class="filterClosebtn" [class.pd-btm-30]="filterapplied !== true">
-                          <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
-                            (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'Close filter window'"></i>
-                          <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
-                        </div>
-                        <ul class="sidebar-menu">
-                          <div class="filterTextinput">
-                            <li class="filterli">
-                              <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
-                            </li>
-                          </div>
-                          <div class="filterTextinput">
-                            <li class="filterli">
-                              <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
-                            </li>
-                          </div>
-                          <div *ngIf="services.length > 1">
-                            <label class="filterHeaders">Services</label>
-                            <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                            </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                              <mat-checkbox [checked]="allServiceSelected"
-                                (change)="setFilterDataCheckbox('service', 'all', $event)">
-                                All</mat-checkbox>
-                            </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                              <mat-checkbox *ngFor="let service of services"
-                                [checked]="filterService.indexOf(service.id) !== -1"
-                                (change)="setFilterDataCheckbox('service', service.id, $event)">
-                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
-                                  class="fa meet-icon"></i>
-                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
-                                  class="fa zoom-icon"></i>
-                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
-                                  class="fa phon-icon"></i>
-                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
-                                  class="fa wtsapaud-icon"></i>
-                                <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                  class="fa wtsapvid-icon"></i>&nbsp;
-                                {{service.name}}
-                              </mat-checkbox>
-                            </li>
-                          </div>
-                          <div>
-                            <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
-                            <label *ngIf="showToken" class="filterHeaders">Token booking mode</label>
-                            <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                            </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                              <mat-checkbox [checked]="allModeSelected"
-                                (change)="setFilterDataCheckbox('waitlistMode', 'all', $event)">
-                                All</mat-checkbox>
-                            </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                              *ngFor="let mode of waitlistModes">
-                              <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
-                                (change)="setFilterDataCheckbox('waitlistMode', mode.mode, $event)">
-                                {{mode.value}}</mat-checkbox>
-                            </li>
-                          </div>
-                          <div>
-                            <div *ngFor="let lbl of providerLabels">
-                              <label class="filterHeaders">{{lbl.displayName}}</label>
-                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox [checked]="allLabelSelected[lbl.label]"
-                                  (change)="setLabelFilter(lbl, 'all', $event)">
-                                  All</mat-checkbox>
-                              </li>
-                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                *ngFor="let valueset of lbl?.valueSet">
-                                <mat-checkbox
-                                  [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(valueset.value) !== -1"
-                                  (change)="setLabelFilter(lbl, valueset.value , $event)">
-                                  {{valueset.shortValue}}</mat-checkbox>
-                              </li>
-                            </div>
-                          </div>
-                        </ul>
-                      </section>
-                    </aside>
-                  </div>
+                  
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar" *ngIf="startedCheckins.length > 1 || apptStartedMultiSelection">
@@ -279,6 +280,7 @@
                         <a *ngIf="apptStartedMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                           (click)="showCheckinActions('started')" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
+                            <i class="dashaction-icon"></i>
                            <span> Actions</span>
                         </a>
                       </th>
@@ -297,8 +299,8 @@
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngFor="let checkin of startedCheckins, let i=index">
-                    <tr>
+                  <tbody>
+                    <tr *ngFor="let checkin of startedCheckins, let i=index">
                       <td class="chkWth">
                         <input type="checkbox" class="ckbx pull-left" [checked]="startedChkAppointments[i]"
                           (change)="chkStartedAptHistoryClicked(i, checkin)" />
@@ -388,6 +390,7 @@
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="showCheckinActions('started', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                          <i class="dashaction-icon"></i>
                           <span *ngIf="!small_device_display"> Actions</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" style="padding: 0px 3px 5px 2px;"
@@ -452,6 +455,7 @@
                         <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                           (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
+                          <i class="dashaction-icon"></i>
                           <span *ngIf="!small_device_display"> Actions</span>
                         </a>
                       </th>
@@ -558,10 +562,10 @@
                         <a class="statusText btn-play pointer-cursor"
                           *ngIf="!small_device_display && board_count > 0 && time_type == 1 && !checkin.virtualService && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
                           (click)="callingWaitlist(checkin)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
-                          <i class="fa fa-phone" *ngIf="checkin.callingStatus" style="color: red;"></i> <span
+                          <i class="dashboardcallstop-icon" *ngIf="checkin.callingStatus"></i> <span
                             *ngIf="!small_device_display && checkin.callingStatus">&nbsp; Stop
                           </span>
-                          <i class="fa fa-phone" *ngIf="!checkin.callingStatus" style="color: green;"></i>
+                          <i class="dashboardcall-icon" *ngIf="!checkin.callingStatus"></i>
                           <span *ngIf="!small_device_display && !checkin.callingStatus">
                             &nbsp;Call</span>
                         </a>
@@ -574,6 +578,7 @@
                         <a class="statusText btn-play pointer-cursor"
                           (click)="showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
+                          <i class="dashaction-icon"></i>
                           <span *ngIf="!small_device_display"> Actions</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" style="padding: 0px 3px 5px 2px;"
@@ -741,6 +746,7 @@
                       <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                         (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
+                        <i class="dashaction-icon"></i>
                         <span *ngIf="!small_device_display"> Actions</span>
                       </a>
                     </th>
@@ -851,6 +857,7 @@
                       </a>
                       <a class="statusText btn-play pointer-cursor" (click)="showCheckinActions(statusAction, checkin)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                        <i class="dashaction-icon"></i>
                         <span *ngIf="!small_device_display"> Actions</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor" style="padding: 0px 3px 5px 2px;"
@@ -1114,6 +1121,7 @@
                       <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                         (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
+                          <i class="dashaction-icon"></i>
                         <span *ngIf="!small_device_display"> Actions</span>
                       </a>
                     </th>
@@ -1223,6 +1231,7 @@
                       </a>
                       <a class="statusText btn-play pointer-cursor" (click)="showCheckinActions(statusAction, checkin)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                        <i class="dashaction-icon"></i>
                        <span *ngIf="!small_device_display"> Actions</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor" style="padding: 0px 3px 5px 2px;"

@@ -144,7 +144,8 @@
                   <span> {{schedule.name}}<br />
                     <input style="margin:0px;" [checked]="isQueueSelected(schedule.id)" type="checkbox"
                       class="ckbx pull-left" />&nbsp;
-                  <span *ngIf="schedule.apptSchedule.timeSlots && schedule.apptSchedule.timeSlots[0]"> {{schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' + schedule.apptSchedule.timeSlots[0]['eTime']}}</span></span>
+                    <span *ngIf="schedule.apptSchedule.timeSlots && schedule.apptSchedule.timeSlots[0]">
+                      {{schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' + schedule.apptSchedule.timeSlots[0]['eTime']}}</span></span>
                 </button>
               </owl-carousel>
               <div class="owl-theme">
@@ -290,13 +291,11 @@
                               </ul>
                             </span>
                           </a> -->
-
                           <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
-                          (click)="showCheckinActions()" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Actions'">
-                          <span *ngIf="!small_device_display"> Actions</span>
-                        </a>
-
+                            (click)="showCheckinActions()" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                            <i class="dashaction-icon"></i>
+                            <span *ngIf="!small_device_display"> Actions</span>
+                          </a>
                           <a *ngIf="!apptSingleSelection && !apptMultiSelection && time_type!=3"
                             class="mgn-lt-20 icon-action pointer-cursor icon-size1 underline avail-slot"
                             [matTooltip]="'Free slots'" (click)="showSlots()">Available slots
@@ -522,7 +521,8 @@
                           *ngIf="statusAction =='started' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0  && timeSlotAppts[slot.time][0].batchId && batchEnabled"
                           (click)="changeApptStatusByBatch('Completed', timeSlotAppts[slot.time][0])"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
-                          <i class="dashboardcomplete-icon" style="color: green;"></i> <span *ngIf="!small_device_display">
+                          <i class="dashboardcomplete-icon" style="color: green;"></i> <span
+                            *ngIf="!small_device_display">
                             Complete</span>
                         </a>
                       </td>
@@ -618,10 +618,10 @@
                                   <a class="statusText btn-play pointer-cursor"
                                     *ngIf="board_count > 0 && !appt.virtualService && time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                                     (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
-                                    <i class="fa fa-phone" *ngIf="appt.callingStatus" style="color: red;"></i> <span
+                                    <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                                       *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop
                                     </span>
-                                    <i class="fa fa-phone" *ngIf="!appt.callingStatus" style="color: green;"></i>
+                                    <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                                     <span *ngIf="!small_device_display && !appt.callingStatus">
                                       &nbsp;Call</span>
                                   </a>
@@ -629,7 +629,8 @@
                                     (click)="changeWaitlistStatus('Started', appt)"
                                     *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && !appt.virtualService"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                                    <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
+                                    <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display">
+                                      Start</span>
                                   </a>
                                   <!-- <a class="statusText btn-play pointer-cursor"
                                     (click)="showCallingModes(appt, 'normalStart')"
@@ -672,13 +673,11 @@
                                     <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                                       *ngIf="!small_device_display"> {{done_cap}} </span>
                                   </a>
-
-                                   <a class="statusText btn-play pointer-cursor"
-                          (click)="showCheckinActions(appt)" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Actions'">
-                          <span *ngIf="!small_device_display"> Actions</span>
-                        </a>
-
+                                  <a class="statusText btn-play pointer-cursor" (click)="showCheckinActions(appt)"
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                                    <i class="dashaction-icon"></i>
+                                    <span *ngIf="!small_device_display"> Actions</span>
+                                  </a>
                                 </td>
                               </tr>
                             </tbody>
@@ -705,7 +704,7 @@
                             [matTooltip]="'Print All'">
                             <i class="fa fa-download" (click)="printHistoryCheckin()"></i>
                           </a>
-                         <!--  <a class="icon-action pointer-cursor icon-size2"
+                          <!--  <a class="icon-action pointer-cursor icon-size2"
                             *ngIf="apptSingleSelection || apptMultiSelection" (click)="addConsumerInboxMessage()"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
                             <i class="fa fa-comments-o "></i>
@@ -794,12 +793,11 @@
                             [matTooltip]="'Free slots'" (click)="showSlots()">Available slots
                             <!-- <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i> -->
                           </a>
-
                           <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
-                          (click)="showCheckinActions()" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Actions'">
-                          <span *ngIf="!small_device_display"> Actions</span>
-                        </a>
+                            (click)="showCheckinActions()" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                            <i class="dashaction-icon"></i>
+                            <span *ngIf="!small_device_display"> Actions</span>
+                          </a>
                         </div>
                         <div class="pull-right">
                           <a *ngIf="time_type!=3" class="icon-action pointer-cursor icon-size2"
@@ -1135,7 +1133,8 @@
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span> -->
-                          <span title="{{arrived_upper}}" class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
+                          <span title="{{arrived_upper}}"
+                            class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                             *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
                           <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
@@ -1168,9 +1167,9 @@
                         <a class="statusText btn-play pointer-cursor"
                           *ngIf="board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                           (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
-                          <i class="fa fa-phone" *ngIf="appt.callingStatus" style="color: red;"></i> <span
+                          <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                             *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop</span>
-                          <i class="fa fa-phone" *ngIf="!appt.callingStatus" style="color: green;"></i>
+                          <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                           <span *ngIf="!small_device_display && !appt.callingStatus">
                             &nbsp;Call</span>
                         </a>
@@ -1216,7 +1215,8 @@
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
-                          <i class="dashboardcomplete-icon" style="color: green;"></i> <span *ngIf="!small_device_display">
+                          <i class="dashboardcomplete-icon" style="color: green;"></i> <span
+                            *ngIf="!small_device_display">
                             {{done_cap}}</span>
                         </a>
                         <!-- <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Confirmed', appt)"
@@ -1226,13 +1226,11 @@
                         <i class="fa fa-undo" style="color: green;"></i> <span *ngIf="!small_device_display">
                           Confirmed</span>
                       </a> -->
-
-                      <a class="statusText btn-play pointer-cursor"
-                      (click)="showCheckinActions(appt)" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="'Actions'">
-                     <span *ngIf="!small_device_display"> Actions</span>
-                    </a>
-
+                        <a class="statusText btn-play pointer-cursor" (click)="showCheckinActions(appt)"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                          <i class="dashaction-icon"></i>
+                          <span *ngIf="!small_device_display"> Actions</span>
+                        </a>
                       </td>
                     </tr>
                   </tbody>
