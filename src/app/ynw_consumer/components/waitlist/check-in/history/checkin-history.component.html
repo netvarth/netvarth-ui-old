@@ -17,7 +17,8 @@
                         </div>
                         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                         <div class="card history one" *ngIf="!loading">
-                            <div class="table-outer history-tbl no-padding" *ngIf="entire_history && entire_history.length > 0">
+                            <div class="table-outer history-tbl no-padding"
+                                *ngIf="entire_history && entire_history.length > 0">
                                 <table class="table" *ngIf="entire_history && entire_history.length > 0">
                                     <thead>
                                         <tr>
@@ -38,8 +39,14 @@
                                                 <td data-title="Service Provider"
                                                     (click)="providerDetail(his_wait.providerAccount)"
                                                     class="td1 provider-name pointer-cursor">
-                                                    <span
+                                                    <div class="disp-flex">
+                                                        <div class="circle-htokens">
+                                                            <i *ngIf="his_wait.token" class="fa token-icon"></i>
+                                                            <i *ngIf="!his_wait.token" class="fa chckn-icon"></i>
+                                                        </div> &nbsp;
+                                                        <span
                                                         class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
+                                                    </div>
                                                 </td>
                                                 <td data-title="Service for">
                                                     {{his_wait.waitlistingFor[0].firstName || '' | capitalizeFirst}}
@@ -68,7 +75,11 @@
                                                 </td>
                                                 <td data-title="Status" class="td4">
                                                     <span
-                                                        class="{{his_wait.waitlistStatus}}">{{getStatusLabel(his_wait.waitlistStatus)}}</span>
+                                                        class="{{his_wait.waitlistStatus}}">
+                                                        <span *ngIf="his_wait.waitlistStatus == 'done'">Completed</span>
+                                                        <span *ngIf="his_wait.waitlistStatus !== 'done'">{{getStatusLabel(his_wait.waitlistStatus)}}</span>
+                                                        <span></span>
+                                                    </span>
                                                 </td>
                                                 <td data-title="" class="td5">
                                                     <ul class="controls">
@@ -87,53 +98,60 @@
                                             </ng-container>
                                             <ng-container *ngIf="his_wait.apptStatus">
                                                 <td data-title="Service Provider"
-                                                (click)="providerDetail(his_wait.providerAccount)"
-                                                class="td1 provider-name pointer-cursor">
-                                                <span
-                                                    class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
-                                            </td>
-                                            <td data-title="Service for">
-                                                {{his_wait.appmtFor[0].firstName || '' | capitalizeFirst}}
-                                                {{his_wait.appmtFor[0].lastName || '' | capitalizeFirst}}</td>
-                                            <td data-title="Service" class="td6">
-                                                <span class="service-icon"
-                                                    *ngIf="his_wait.service.serviceType == 'virtualService'">
-                                                    <i class="fa phon-icon"
-                                                        *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                    <i class="fa meet-icon"
-                                                        *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                    <i class="fa zoom-icon"
-                                                        *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                    <i class="fa wtsapaud-icon"
-                                                        *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'WhatsApp' && his_wait.service.virtualServiceType ==='audioService'"></i>
-                                                    <i class="fa wtsapvid-icon"
-                                                        *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'WhatsApp' && his_wait.service.virtualServiceType ==='videoService'"></i>
-                                                </span>
-                                                <span>{{his_wait.service.name || '' | capitalizeFirst}}</span>
-                                            </td>
-                                            <td data-title="Location" class="td2">
-                                                {{his_wait.location.place || '' | capitalizeFirst}}</td>
-                                            <td data-title="Date" class="td3">
-                                                {{his_wait.appmtDate | date: dateFormat }}
-                                            </td>
-                                            <td data-title="Status" class="td4">
-                                                <span
-                                                    class="{{his_wait.apptStatus}}">{{getStatusLabel(his_wait.apptStatus)}}</span>
-                                            </td>
-                                            <td data-title="" class="td5">
-                                                <ul class="controls">
-                                                    <li><span class="message"
-                                                            (click)="addWaitlistMessage(his_wait)">{{send_message_cap}}</span>
-                                                    </li>
-                                                    <li *ngIf="his_wait.billStatus"><span class="view-bill"
-                                                            (click)="getWaitlistBill(his_wait)">Bill</span>
-                                                    </li>
-                                                    <li *ngIf="his_wait.apptStatus == 'Completed'"><span
-                                                            class="rate-service" [class.rated]="isRated(his_wait)"
-                                                            (click)="rateService(his_wait)">Rate Your Visit</span>
-                                                    </li>
-                                                </ul>
-                                            </td>
+                                                    (click)="providerDetail(his_wait.providerAccount)"
+                                                    class="td1 provider-name pointer-cursor">
+                                                    <div class="disp-flex">
+                                                        <div class="circle-htokens">
+                                                            <i class="fa appt-icon"></i>
+                                                        </div> &nbsp;
+                                                        <span
+                                                            class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
+                                                    </div>
+                                                    
+                                                </td>
+                                                <td data-title="Service for">
+                                                    {{his_wait.appmtFor[0].firstName || '' | capitalizeFirst}}
+                                                    {{his_wait.appmtFor[0].lastName || '' | capitalizeFirst}}</td>
+                                                <td data-title="Service" class="td6">
+                                                    <span class="service-icon"
+                                                        *ngIf="his_wait.service.serviceType == 'virtualService'">
+                                                        <i class="fa phon-icon"
+                                                            *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                        <i class="fa meet-icon"
+                                                            *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                        <i class="fa zoom-icon"
+                                                            *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        <i class="fa wtsapaud-icon"
+                                                            *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'WhatsApp' && his_wait.service.virtualServiceType ==='audioService'"></i>
+                                                        <i class="fa wtsapvid-icon"
+                                                            *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'WhatsApp' && his_wait.service.virtualServiceType ==='videoService'"></i>
+                                                    </span>
+                                                    <span>{{his_wait.service.name || '' | capitalizeFirst}}</span>
+                                                </td>
+                                                <td data-title="Location" class="td2">
+                                                    {{his_wait.location.place || '' | capitalizeFirst}}</td>
+                                                <td data-title="Date" class="td3">
+                                                    {{his_wait.appmtDate | date: dateFormat }}
+                                                </td>
+                                                <td data-title="Status" class="td4">
+                                                    <span
+                                                        class="{{his_wait.apptStatus}}">{{getStatusLabel(his_wait.apptStatus)}}</span>
+                                                </td>
+                                                <td data-title="" class="td5">
+                                                    <ul class="controls">
+                                                        <li><span class="message"
+                                                                (click)="addApptMessage(his_wait)">{{send_message_cap}}</span>
+                                                        </li>
+                                                        <li *ngIf="his_wait.billStatus"><span class="view-bill"
+                                                                (click)="getApptBill(his_wait)">Bill</span>
+                                                        </li>
+                                                        <li *ngIf="his_wait.apptStatus == 'Completed'"><span
+                                                                class="rate-service" [class.rated]="isRated(his_wait)"
+                                                                (click)="rateApptService(his_wait)">Rate Your
+                                                                Visit</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
                                             </ng-container>
                                         </tr>
                                     </tbody>

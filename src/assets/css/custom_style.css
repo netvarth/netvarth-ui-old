@@ -12101,3 +12101,35 @@ img.busN-logo {
 .act-icons .printer-icon {
   width: 17px !important;
 }
+.consumer-appthistory .appt-icon {
+  content: url(../images/myjaldee/Appoinment-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.consumer-appthistory .chckn-icon {
+    content: url(../images/myjaldee/Checkin-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 29px;
+    margin-top: 5px;
+}
+.consumer-appthistory .token-icon {
+    content: url(../images/myjaldee/token-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 25px;
+    margin-top: 7px;
+}
+.consumer-appthistory .circle-htokens {
+  background: #25498121;
+  width: 40px;
+  height: 35px;
+  text-align: center;
+  /* border-radius: 50px; */
+  font-size: 15px;
+}
+.consumer-appthistory .disp-flex {
+  display: flex !important;
+}
