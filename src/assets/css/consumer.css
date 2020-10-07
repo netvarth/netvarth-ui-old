@@ -6643,3 +6643,18 @@
     font-size: 1rem;
     color: #183e79;
 }
+ .chat-icon {
+    content: url(../images/enquiry.jpeg);
+    position: relative;
+    padding-right: 1px;
+    width: 20px;
+}
+ .cross-icon {
+    content: url(../images/error.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 20px;
+}
+.mat-menu-panel .mat-menu-content .mat-menu-item i {
+    margin-right: 10px !important;
+}
