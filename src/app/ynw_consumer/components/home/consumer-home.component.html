@@ -226,8 +226,11 @@
                                             <h6
                                                 [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
                                                 <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
+                                                <span *ngIf="booking.waitlistStatus=='checkedIn'">
+                                                    Checked-in
+                                                </span>
                                                 <span
-                                                    *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                    *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                             </h6>
                                             <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                 <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
@@ -472,8 +475,11 @@
                                                 <h6
                                                     [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
+                                                    <span *ngIf="booking.waitlistStatus=='checkedIn'">
+                                                        Checked-in
+                                                    </span>
                                                     <span
-                                                        *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                        *ngIf="booking.waitlistStatus!=='done'  && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                 </h6>
                                                 <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                     <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
@@ -711,8 +717,11 @@
                                             <h6
                                                 [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
                                                 <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
+                                                <span *ngIf="booking.waitlistStatus=='checkedIn'">
+                                                    Checked-in
+                                                </span>
                                                 <span
-                                                    *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                    *ngIf="booking.waitlistStatus!=='done'  && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                             </h6>
                                             <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                 <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
@@ -921,8 +930,11 @@
                                                 <h6
                                                     [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
+                                                    <span *ngIf="booking.waitlistStatus=='checkedIn'">
+                                                        Checked-in
+                                                    </span>
                                                     <span
-                                                        *ngIf="booking.waitlistStatus!=='done'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                        *ngIf="booking.waitlistStatus!=='done'  && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                 </h6>
                                                 <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                     <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
