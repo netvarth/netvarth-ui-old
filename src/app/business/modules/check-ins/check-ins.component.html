@@ -902,7 +902,7 @@
                 <div class="inprogress"> History</div>
               </div> -->
               <div class="pad-10 act-icons pull-right">
-                <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+                <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar" *ngIf="check_in_filtered_list.length > 0">
                   <i class="printer-icon" (click)="printHistoryCheckin()" [matTooltipClass]="tooltipcls"
                     [matTooltip]="'Print All'">
                   </i>
