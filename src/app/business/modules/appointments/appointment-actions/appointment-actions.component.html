@@ -5,19 +5,20 @@
 <div class="action-section col-md-12" *ngIf="action === ''">
     <div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingAppt()">
-            <div class="action-box-sub" *ngIf="appt.callingStatus">
-                <span class="fa fa-phone" style="color: red;"></span>
+            <!-- <div class="action-box-sub" *ngIf="appt.callingStatus">
+                <span class="call-icon"></span>
                 <div class="icon-text">Stop
                 </div>
-            </div>
-            <div class="action-box-sub" *ngIf="!appt.callingStatus">
-                <span class="fa fa-phone" style="color: green;"></span>
+            </div> -->
+            <!-- <div class="action-box-sub" *ngIf="!appt.callingStatus"> -->
+                <div class="action-box-sub">
+                <span class="waitlistcall-icon"></span>
                 <div class="icon-text">Call</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="showStart" (click)="changeWaitlistStatus('Started')">
             <div class="action-box-sub">
-                <span class="fa fa-play"></span>
+                <span class="start-icon"></span>
                 <div class="icon-text">Start</div>
             </div>
         </div>
@@ -49,14 +50,14 @@
         </div>
         <div class="action-box pointer-cursor" *ngIf="showArrived" (click)="changeWaitlistStatus('Arrived')">
             <div class="action-box-sub">
-                <span class="icon-arrived"></span>
+                <span class="arrived-icon"></span>
                 <div class="icon-text">Mark as Arrived</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus == 'Started'"
             (click)="changeWaitlistStatus('Completed')">
             <div class="action-box-sub">
-                <span class="icon-arrived"></span>
+                <span class="complete-icon"></span>
                 <div class="icon-text">Complete</div>
             </div>
         </div>

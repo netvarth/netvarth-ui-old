@@ -28,7 +28,8 @@
     margin: 10px;
   }
   .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon, 
-  .message-icon, .notes-icon, .printer-icon , .viewdetails-icon {
+  .message-icon, .notes-icon, .printer-icon , .viewdetails-icon,
+  .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon {
     width: 25px;
   }
   .teleservice span {

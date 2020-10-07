@@ -174,6 +174,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.ynwUuid)
       .subscribe(
         data => {
+          console.log(data);
           const bill_data = data;
           this.viewBill(waitlist, bill_data);
         },
@@ -184,30 +185,6 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
 
   viewBill(checkin, bill_data) {
-    // if (!this.billdialogRef) {
-    //   bill_data['passedProvname'] = checkin['providerAccount']['businessName'];
-    //   this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
-    //     width: '50%',
-    //     // panelClass: ['commonpopupmainclass', 'billpopup'],
-    //     panelClass: ['commonpopupmainclass', 'popup-class', 'billpopup'],
-    //     disableClose: true,
-    //     autoFocus: true,
-    //     data: {
-    //       checkin: checkin,
-    //       bill_data: bill_data,
-    //       isFrom: 'checkin'
-    //     }
-    //   });
-
-    //   this.billdialogRef.afterClosed().subscribe(result => {
-    //     if (result === 'makePayment') {
-    //       this.makePayment(checkin, bill_data);
-    //     }
-    //     if (this.billdialogRef) {
-    //       this.billdialogRef = null;
-    //     }
-    //   });
-    // }
     const navigationExtras: NavigationExtras = {
       queryParams: {
         uuid: checkin.ynwUuid,
@@ -274,5 +251,58 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
   providerDetail(provider) {
     this.router.navigate(['searchdetail', provider.uniqueId]);
+  }
+  addApptMessage(waitlist) {
+    const pass_ob = {};
+    pass_ob['source'] = 'consumer-waitlist';
+    pass_ob['uuid'] = waitlist.uid;
+    pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['name'] = waitlist.providerAccount.businessName;
+    pass_ob['appt'] = 'appt';
+    this.addNote(pass_ob);
+
+  }
+  getApptBill(waitlist) {
+    const params = {
+      account: waitlist.providerAccount.id
+    };
+    this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.uid)
+      .subscribe(
+        data => {
+          const bill_data = data;
+          this.viewApptBill(waitlist, bill_data);
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  rateApptService(waitlist) {
+    this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        'detail': waitlist,
+        'isFrom': 'appointment'
+      }
+    });
+
+    this.ratedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        // this.getHistroy();
+      }
+    });
+  }
+  viewApptBill(checkin, bill_data) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        uuid: checkin.uid,
+        accountId: checkin.providerAccount.id,
+        source: 'history'
+      }
+    };
+    this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
   }
 }

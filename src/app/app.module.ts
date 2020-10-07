@@ -67,7 +67,6 @@ import { CheckYourStatusComponent } from './shared/components/status-check/check
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { GlobalService } from './shared/services/global-service';
 import { GlobalFunctions } from './shared/functions/global-functions';
-import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
@@ -84,6 +83,7 @@ import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.c
 import { LiveChatClientComponent } from './shared/components/twilio/twilio-live-client.component';
 import { TruncateModule } from './shared/pipes/limitTo.module';
 import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
+import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -198,8 +198,8 @@ export function init_app(globalService: GlobalService) {
     ProviderDataStorageService,
     ShareService,
     Title,
+    {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
-    {provide: ErrorHandler, useClass: GlobalErrorHandler},
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },

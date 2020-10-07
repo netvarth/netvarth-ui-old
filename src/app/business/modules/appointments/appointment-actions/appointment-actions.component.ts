@@ -53,6 +53,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
 
     printAppt() {
+        this.dialogRef.close();
         const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
         let bname = '';
         if (bdetails) {
@@ -116,6 +117,7 @@ export class AppointmentActionsComponent implements OnInit {
         } else {
             checkin.push(this.appt);
         }
+        this.dialogRef.close();
         this.provider_shared_functions.addConsumerInboxMessage(checkin, this, 'appt')
             .then(
                 () => { },
@@ -123,6 +125,7 @@ export class AppointmentActionsComponent implements OnInit {
             );
     }
     smsCheckin() {
+        this.dialogRef.close();
         const smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -137,6 +140,7 @@ export class AppointmentActionsComponent implements OnInit {
         });
     }
     locateCustomer() {
+        this.dialogRef.close();
         this.provider_services.getCustomerTrackStatus(this.appt.uid).subscribe(data => {
             this.trackDetail = data;
             this.customerMsg = this.locateCustomerMsg(this.trackDetail);
@@ -185,6 +189,7 @@ export class AppointmentActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
+        this.dialogRef.close();
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -199,13 +204,17 @@ export class AppointmentActionsComponent implements OnInit {
         });
     }
     changeWaitlistStatus(action) {
+        if (action === 'Rejected') {
+            this.dialogRef.close();
+        }
         this.provider_shared_functions.changeWaitlistStatus(this, this.appt, action, 'appt');
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
             .then(
                 result => {
-                    this.getApptDetail();
+                    // this.getApptDetail();
+        this.dialogRef.close();
                 }
             );
     }
@@ -238,6 +247,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.showSendDetails = false;
         this.showStart = false;
         this.showTeleserviceStart = false;
+        this.showCall = false;
         if (!this.data.multiSelection) {
             if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed') {
                 this.showUndo = true;
@@ -376,7 +386,8 @@ export class AppointmentActionsComponent implements OnInit {
         const status = (this.appt.callingStatus) ? 'Disable' : 'Enable';
         this.provider_services.setApptCallStatus(this.appt.uid, status).subscribe(
             () => {
-                this.getApptDetail();
+                // this.getApptDetail();
+        this.dialogRef.close();
             });
     }
     showCallingModes(modes) {

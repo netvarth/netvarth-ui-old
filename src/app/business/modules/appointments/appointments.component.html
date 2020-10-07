@@ -294,7 +294,7 @@
                           <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                           (click)="showCheckinActions()" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
-                          <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Actions</span>
+                          <span *ngIf="!small_device_display"> Actions</span>
                         </a>
 
                           <a *ngIf="!apptSingleSelection && !apptMultiSelection && time_type!=3"
@@ -522,7 +522,7 @@
                           *ngIf="statusAction =='started' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0  && timeSlotAppts[slot.time][0].batchId && batchEnabled"
                           (click)="changeApptStatusByBatch('Completed', timeSlotAppts[slot.time][0])"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
-                          <i class="fa fa-check-circle" style="color: green;"></i> <span *ngIf="!small_device_display">
+                          <i class="dashboardcomplete-icon" style="color: green;"></i> <span *ngIf="!small_device_display">
                             Complete</span>
                         </a>
                       </td>
@@ -585,7 +585,7 @@
                                       *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
                                     </span>
                                     <span title="{{arrived_upper}}"
-                                      class="pull-left icon-arrived checkin_status icon-btn1 mgn-rt-10"
+                                      class="pull-left dashboardarrived-icon checkin_status icon-btn1 mgn-rt-10"
                                       *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
                                     <span [matTooltip]="cust_note_tooltip"
                                       class="pull-left cnote icon-btn1  pointer-cursor mgn-rt-10"
@@ -629,7 +629,7 @@
                                     (click)="changeWaitlistStatus('Started', appt)"
                                     *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && !appt.virtualService"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                                    <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
+                                    <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
                                   </a>
                                   <!-- <a class="statusText btn-play pointer-cursor"
                                     (click)="showCallingModes(appt, 'normalStart')"
@@ -669,14 +669,14 @@
                                   <a class="btn-play pointer-cursor " *ngIf="appt.apptStatus === 'Started'"
                                     (click)="changeWaitlistStatus('Completed',appt)" [matTooltipClass]="tooltipcls"
                                     [matTooltip]="'Complete'">
-                                    <i class="fa fa-check-circle" style="color: green;"></i> <span
+                                    <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                                       *ngIf="!small_device_display"> {{done_cap}} </span>
                                   </a>
 
                                    <a class="statusText btn-play pointer-cursor"
                           (click)="showCheckinActions(appt)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
-                          <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Actions</span>
+                          <span *ngIf="!small_device_display"> Actions</span>
                         </a>
 
                                 </td>
@@ -798,7 +798,7 @@
                           <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor mgn-lt-20"
                           (click)="showCheckinActions()" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
-                          <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Actions</span>
+                          <span *ngIf="!small_device_display"> Actions</span>
                         </a>
                         </div>
                         <div class="pull-right">
@@ -1135,7 +1135,7 @@
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span> -->
-                          <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status mgn-rt-10"
+                          <span title="{{arrived_upper}}" class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                             *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
                           <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
@@ -1183,7 +1183,7 @@
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Started', appt)"
                           *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                          <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
+                          <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
                         <!-- <a class="statusText btn-play pointer-cursor" (click)="showCallingModes(appt, 'normalStart')"
                           *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type == 1 && appt.virtualService"
@@ -1216,7 +1216,7 @@
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
-                          <i class="fa fa-check-circle" style="color: green;"></i> <span *ngIf="!small_device_display">
+                          <i class="dashboardcomplete-icon" style="color: green;"></i> <span *ngIf="!small_device_display">
                             {{done_cap}}</span>
                         </a>
                         <!-- <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Confirmed', appt)"
@@ -1230,7 +1230,7 @@
                       <a class="statusText btn-play pointer-cursor"
                       (click)="showCheckinActions(appt)" [matTooltipClass]="tooltipcls"
                       [matTooltip]="'Actions'">
-                      <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Actions</span>
+                     <span *ngIf="!small_device_display"> Actions</span>
                     </a>
 
                       </td>

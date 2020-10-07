@@ -12101,3 +12101,63 @@ img.busN-logo {
 .act-icons .printer-icon {
   width: 17px !important;
 }
+.consumer-appthistory .appt-icon {
+  content: url(../images/myjaldee/Appoinment-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.consumer-appthistory .chckn-icon {
+    content: url(../images/myjaldee/Checkin-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 29px;
+    margin-top: 5px;
+}
+.consumer-appthistory .token-icon {
+    content: url(../images/myjaldee/token-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 25px;
+    margin-top: 7px;
+}
+.consumer-appthistory .circle-htokens {
+  background: #25498121;
+  width: 40px;
+  height: 35px;
+  text-align: center;
+  /* border-radius: 50px; */
+  font-size: 15px;
+}
+.consumer-appthistory .disp-flex {
+  display: flex !important;
+}
+.arrived-icon {
+  content: url(../images/dashboard-icons/arrivedaction-01.svg);
+  width: 40px;
+}
+.complete-icon {
+  content: url(../images/dashboard-icons/Complete.svg);
+  width: 40px;
+}
+.waitlistcall-icon {
+  content: url(../images/dashboard-icons/Call.svg);
+  width: 40px;
+}
+.start-icon {
+  content: url(../images/dashboard-icons/startaction-01.svg);
+  width: 40px;
+}
+.dashboardstart-icon {
+  content: url(../images/dashboard-icons/start.svg);
+  width: 15px;
+}
+.dashboardcomplete-icon {
+  content: url(../images/dashboard-icons/Complete2.svg);
+  width: 15px;
+}
+.dashboardarrived-icon {
+  content: url(../images/dashboard-icons/arrivved2.svg);
+  width: 15px;
+}
