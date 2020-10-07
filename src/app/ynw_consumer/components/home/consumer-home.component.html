@@ -85,6 +85,10 @@
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                             <span>
                                                 <i class="fa phon-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -205,6 +209,10 @@
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                             <span>
                                                 <i class="fa phon-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -333,6 +341,10 @@
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                                 <span>
                                                     <i class="fa phon-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -454,6 +466,10 @@
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                                 <span>
                                                     <i class="fa phon-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -593,6 +609,10 @@
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                             <span>
                                                 <i class="fa phon-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -696,6 +716,10 @@
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                             <span>
                                                 <i class="fa phon-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -805,6 +829,10 @@
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                                 <span>
                                                     <i class="fa phon-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -909,6 +937,10 @@
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
+                                                <span class="doctrnme" *ngIf="booking.provider">
+                                                    Doctor : {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
+                                                </span>
                                                 <span>
                                                     <i class="fa phon-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0 && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
