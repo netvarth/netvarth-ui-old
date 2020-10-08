@@ -12194,7 +12194,10 @@ img.busN-logo {
   border: 1px solid purple;
 }
 .call-btn {
-  border: 1px solid black;
+  border: 1px solid green;
+}
+.stopcall-btn {
+  border: 1px solid red !important;
 }
 .cancel-btn {
   border: 1px solid red;

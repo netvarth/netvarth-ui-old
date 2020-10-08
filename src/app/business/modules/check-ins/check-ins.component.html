@@ -572,7 +572,7 @@
                         </div>
                       </td>
                       <td class="q-actions td-four">
-                        <a class="statusText btn-play pointer-cursor call-btn"
+                        <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="checkin.callingStatus"
                           *ngIf="!small_device_display && board_count > 0 && time_type == 1 && !checkin.virtualService && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
                           (click)="callingWaitlist(checkin)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                           <i class="dashboardcallstop-icon" *ngIf="checkin.callingStatus"></i> <span

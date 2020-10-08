@@ -621,7 +621,7 @@
                                   </div>
                                 </td>
                                 <td class="q-actions td-four">
-                                  <a class="statusText btn-play pointer-cursor call-btn"
+                                  <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                                     *ngIf="board_count > 0 && !appt.virtualService && time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                                     (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                                     <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
@@ -1177,7 +1177,7 @@
                         </div>
                       </td>
                       <td class="q-actions td-four">
-                        <a class="statusText btn-play pointer-cursor call-btn"
+                        <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                           *ngIf="board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                           (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                           <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
