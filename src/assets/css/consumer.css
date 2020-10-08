@@ -6331,6 +6331,9 @@
     .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .details .rt .controls li span {
         padding: 5px;
     }
+    .greeting {
+        font-size : 1.7rem !important;
+    }
 }
 
 .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .details .rt .controls li span:before {
@@ -6564,7 +6567,8 @@
     display:  flex !important;
 }
 .consumer-dash .servName {
-    font-size: .815rem !important;
+    font-size: .89rem !important;
+    font-weight: 600;
 }
 .consumer-dash .phon-icon, .consumer-dash .meet-icon {
     width: 14px !important;
@@ -6597,7 +6601,7 @@
     margin-top: 7px;
 }
 .consumer-dash .circle-tokens {
-    background: rgb(252 235 190);
+    /* background: rgb(252 235 190); */
     width: 50px;
     height: 40px;
     text-align: center;
@@ -6658,3 +6662,7 @@
 .mat-menu-panel .mat-menu-content .mat-menu-item i {
     margin-right: 10px !important;
 }
+.consumer-dash .header th {
+    height: 2px;
+    line-height: 2px;
+ }

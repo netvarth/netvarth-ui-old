@@ -33,12 +33,13 @@
                                             <div class="item"><span class="ttle">Provider</span> <span>
                                                     {{payments.accountName | capitalizeFirst }}
                                                 </span></div>
-                                            <div class="item" *ngIf="payments.acceptPaymentBy"><span
+                                            <!-- <div class="item" *ngIf="payments.acceptPaymentBy"><span
                                                     class="ttle">Mode</span> <span>
                                                     {{payments.acceptPaymentBy | capitalizeFirst }}
-                                                </span></div>
+                                                </span></div> -->
                                             <div class="item" *ngIf="payments.paymentMode"><span class="ttle">Payment
                                                     Mode</span><span>{{payments.paymentMode}}</span></div>
+                                                    
                                             <!-- <div class="item" *ngIf="payments.paymentGateway"><span class="ttle">Payment
                                                     Gateway</span>
                                                 <span class="waitlist_for">

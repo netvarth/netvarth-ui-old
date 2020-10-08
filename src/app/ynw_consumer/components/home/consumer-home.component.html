@@ -13,7 +13,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
                         <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
                             <h1 class="ng-tns-c16-8 txt-align">
-                                <span class="ng-tns-c16-8">
+                                <span class="ng-tns-c16-8 greeting">
                                     Hello {{usr_details.userName}} !
                                 </span> <br>
                                 <button class="mgn-up-20 find-sp-btn" mat-raised-button (click)="do_search()">Find
@@ -30,6 +30,14 @@
                             <div class="col-sm-4 col-md-6 col-lg-6 col-xs-6 mgn-up-10">MY BOOKINGS</div>
                             <div class="col-sm-8 col-md-6 col-lg-6 col-xs-7">
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
+                                    <button (click)="paymentsClicked()" class="flat-btn full-wdth" mat-flat-button>My
+                                        Payments</button>
+                                    <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()"
+                                        [matTooltip]="'My Payments'">
+                                        <i class="fa fa-credit-card"></i>
+                                    </button>
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
                                     <button class="flat-btn full-wdth" mat-flat-button (click)="getmyfavourites()">My
                                         Favourites</button>
                                     <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()"
@@ -45,14 +53,6 @@
                                         <i class="fa fa-history"></i>
                                     </button>
                                 </div>
-                                <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button (click)="paymentsClicked()" class="flat-btn full-wdth" mat-flat-button>My
-                                        Payments</button>
-                                    <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()"
-                                        [matTooltip]="'My Payments'">
-                                        <i class="fa fa-credit-card"></i>
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </h2>
@@ -64,7 +64,7 @@
                         <table class="table">
 
                             <!-- TODAY BOOKINGS  -->
-                            <thead *ngIf="(today_totalbookings.length != 0)">
+                            <thead class="header" *ngIf="(today_totalbookings.length != 0)">
                                 <th colspan="6">TODAY</th>
                             </thead>
                             <tbody *ngIf="today_totalbookings.length != 0">
@@ -101,8 +101,9 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for
-                                                <span>{{booking.appmtFor[0].userName}}</span>
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}} 
+                                                <!-- for
+                                                <span>{{booking.appmtFor[0].userName}}</span> -->
                                             </span>
                                         </td>
                                         <td>
@@ -205,7 +206,7 @@
                                                     <i class="fa token-icon"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
-                                                    &nbsp;Token {{booking.token}}
+                                                    &nbsp;Token #{{booking.token}}
                                                 </span>
                                             </h4>
                                             <span class="est-wait-time" *ngIf="( booking.appxWaitingTime && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
@@ -229,9 +230,10 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}} 
+                                                <!-- for
                                                 <span>{{booking.waitlistingFor[0].firstName}}
-                                                    {{booking.waitlistingFor[0].lastName}}</span>
+                                                    {{booking.waitlistingFor[0].lastName}}</span> -->
                                             </span>
                                         </td>
                                         <td>
@@ -365,8 +367,9 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for
-                                                    <span>{{booking.appmtFor[0].userName}}</span>
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} 
+                                                    <!-- for
+                                                    <span>{{booking.appmtFor[0].userName}}</span> -->
                                                 </span>
                                             </td>
                                             <td>
@@ -469,7 +472,7 @@
                                                         <i class="fa token-icon"></i>
                                                     </div>
                                                     <span class="mgn-up-10">
-                                                        &nbsp;Token {{booking.token}}
+                                                        &nbsp;Token #{{booking.token}}
                                                     </span>
                                                 </h4>
                                                 <span class="est-wait-time" *ngIf="( booking.appxWaitingTime && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
@@ -494,9 +497,10 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} 
+                                                    <!-- for
                                                     <span>{{booking.waitlistingFor[0].firstName}}
-                                                        {{booking.waitlistingFor[0].lastName}}</span>
+                                                        {{booking.waitlistingFor[0].lastName}}</span> -->
                                                 </span>
                                             </td>
                                             <td>
@@ -602,7 +606,7 @@
 
 
                             <!-- FUTURE BOOKINGS -->
-                            <thead *ngIf="(future_totalbookings.length != 0)">
+                            <thead class="header" *ngIf="(future_totalbookings.length != 0)">
                                 <th colspan="6">UPCOMING</th>
                             </thead>
                             <tbody *ngIf="future_totalbookings.length != 0">
@@ -640,8 +644,9 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for
-                                                <span>{{booking.appmtFor[0].userName}}</span>
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}} 
+                                                <!-- for
+                                                <span>{{booking.appmtFor[0].userName}}</span> -->
                                             </span>
                                         </td>
                                         <td>
@@ -726,7 +731,7 @@
                                                     <i class="fa token-icon"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
-                                                    &nbsp;Token {{booking.token}}
+                                                    &nbsp;Token #{{booking.token}}
                                                 </span>
                                             </h4>
                                             <span class="datefont">{{booking.date | date: dateFormat}}</span>
@@ -750,9 +755,10 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}} for
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}} 
+                                                <!-- for
                                                 <span>{{booking.waitlistingFor[0].firstName}}
-                                                    {{booking.waitlistingFor[0].lastName}}</span>
+                                                    {{booking.waitlistingFor[0].lastName}}</span> -->
                                             </span>
                                         </td>
                                         <td>
@@ -865,8 +871,9 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for
-                                                    <span>{{booking.appmtFor[0].userName}}</span>
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} 
+                                                    <!-- for
+                                                    <span>{{booking.appmtFor[0].userName}}</span> -->
                                                 </span>
                                             </td>
                                             <td>
@@ -949,7 +956,7 @@
                                                     <div class="circle-tokens">
                                                         <i class="fa token-icon"></i>
                                                     </div>
-                                                    <span class="mgn-up-10">&nbsp;Token {{booking.token}}</span>
+                                                    <span class="mgn-up-10">&nbsp;Token #{{booking.token}}</span>
                                                 </h4>
                                                 <span class="datefont">{{booking.date | date: dateFormat}}</span>
                                             </td>
@@ -973,9 +980,10 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}} for
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}} 
+                                                    <!-- for
                                                     <span>{{booking.waitlistingFor[0].firstName}}
-                                                        {{booking.waitlistingFor[0].lastName}}</span>
+                                                        {{booking.waitlistingFor[0].lastName}}</span> -->
                                                 </span>
                                             </td>
                                             <td>
