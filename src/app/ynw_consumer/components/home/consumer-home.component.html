@@ -70,7 +70,7 @@
                             <tbody *ngIf="today_totalbookings.length != 0">
                                 <tr [ngClass]="{'custId-cursor': !booking.donationStatus}"
                                     *ngFor="let booking of todayBookings;"
-                                    (click)="booking.donationStatus ?'':showBookingDetails(booking)">
+                                    (click)="showBookingDetails(booking)">
                                     <ng-container *ngIf="booking.apptStatus">
                                         <td>
                                             <h4 class="disp-flex">
@@ -310,23 +310,7 @@
                                             </mat-menu>
                                         </td>
                                     </ng-container>
-                                    <ng-container *ngIf="booking.donationStatus">
-                                        <td>
-                                            <h4>{{booking.date | date: dateFormat}}</h4>
-                                        </td>
-                                        <td class="tdisplay-block">
-                                            <h4>{{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                        </td>
-                                        <td>
-                                            <h6 class="colr-completed">{{booking.donationStatus | capitalizeFirst}}</h6>
-                                        </td>
-                                        <td colspan=3>
-                                            <h6>
-                                                <i class="fa fa-inr"></i>
-                                                {{booking.donationAmount}}</h6>
-                                        </td>
-                                    </ng-container>
+                                    
                                 </tr>
                                 <tr *ngIf="!more_tdybookingsShow && today_totalbookings.length > 3"
                                     (click)="showMoreTdyBookings()">
@@ -335,7 +319,7 @@
                                 <ng-container *ngIf="more_tdybookingsShow">
                                     <tr *ngFor="let booking of todayBookings_more;"
                                         [ngClass]="{'custId-cursor': !booking.donationStatus}"
-                                        (click)="booking.donationStatus ?'':showBookingDetails(booking)">
+                                        (click)="showBookingDetails(booking)">
                                         <ng-container *ngIf="booking.apptStatus">
                                             <td>
                                                 <h4 class="disp-flex">
@@ -578,25 +562,7 @@
                                                 </mat-menu>
                                             </td>
                                         </ng-container>
-                                        <ng-container *ngIf="booking.donationStatus">
-                                            <td>
-                                                <h4>{{booking.date | date: dateFormat}}</h4>
-                                            </td>
-                                            <td class="tdisplay-block">
-                                                <h4>{{booking.providerAccount.businessName || '' | capitalizeFirst}}
-                                                </h4>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}}</span>
-                                            </td>
-                                            <td>
-                                                <h6 class="colr-completed">{{booking.donationStatus | capitalizeFirst}}
-                                                </h6>
-                                            </td>
-                                            <td colspan=3>
-                                                <h6>
-                                                    <i class="fa fa-inr"></i>
-                                                    {{booking.donationAmount}}</h6>
-                                            </td>
-                                        </ng-container>
+                                       
                                     </tr>
                                     <tr *ngIf="more_tdybookingsShow" (click)="showlessTdyBookings()">
                                         <td colspan="6"><a>Show less...</a></td>

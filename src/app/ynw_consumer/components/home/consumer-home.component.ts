@@ -257,8 +257,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
-    this.getDonations();
-   // this.getAppointmentToday();
+     // this.getDonations();
+    this.getAppointmentToday();
     this.getAppointmentFuture();
    // this.getWaitlist();
   //  this.getWaitlistFuture();
@@ -878,8 +878,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.futureBookings = [];
             this.futureBookings_more = [];
             this.appointmentslist = [];
-            this.getDonations();
-         //   this.getAppointmentToday();
+           // this.getDonations();
+           this.getAppointmentToday();
             this.getAppointmentFuture();
           //  this.getWaitlist();
         //    this.getWaitlistFuture();
@@ -893,8 +893,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.futureBookings = [];
           this.futureBookings_more = [];
           this.appointmentslist = [];
-          this.getDonations();
-          // this.getAppointmentToday();
+          // this.getDonations();
+           this.getAppointmentToday();
           this.getAppointmentFuture();
         //  this.getWaitlist();
          // this.getWaitlistFuture();
@@ -1125,7 +1125,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       (donations) => {
         this.donations = donations;
         this.loadcomplete.donations = true;
-        this.getAppointmentToday();
+       // this.getAppointmentToday();
       }
     );
   }
@@ -1629,7 +1629,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.appointmentslist = data;
           this.appointments = [];
-          this.appointments = this.appointmentslist.concat(this.donations);
+          this.appointments = this.appointmentslist;
           this.getWaitlist();
         },
         error => {
