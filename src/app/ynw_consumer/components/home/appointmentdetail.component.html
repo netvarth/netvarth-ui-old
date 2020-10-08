@@ -21,7 +21,7 @@
                                 <div class="card" *ngIf="api_loading">
                                     <div class="c-details">
                                         <div class="tp" *ngIf="appt">
-                                            <div class="item"><span class="ttle">{{bname_cap}}</span> <span>
+                                            <div class="item"><span class="ttle">{{bname_cap}}</span> <span style="cursor: pointer;" (click)="providerDetail(appt.providerAccount)">
                                                     {{appt.providerAccount.businessName | capitalizeFirst}}
                                                 </span></div>
                                             <div class="item"><span class="ttle">{{date_cap}}</span> <span>

@@ -12181,3 +12181,6 @@ img.busN-logo {
   content: url(../images/dashboard-icons/arrivved2.svg);
   width: 40px;
 }
+.pro-dash .mat-tab-body-wrapper {
+  z-index: 0;
+}

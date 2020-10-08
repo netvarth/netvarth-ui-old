@@ -147,8 +147,11 @@
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                     *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'appointment')">Cancel</button>
+                                                    (click)="doCancelWaitlist(booking,'appointment')">
+                                                    <i class="fa cross-icon"></i>
+                                                    Cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
+                                                    <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
                                                 </button>
                                                 <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
@@ -158,6 +161,7 @@
                                                 <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                 && booking.apptStatus !== 'Cancelled'"
                                                     (click)="getMeetingDetails(booking,'appt')">
+                                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
                                                     Meeting details
                                                 </button>
                                                 <button mat-menu-item
@@ -274,8 +278,11 @@
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                     *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'checkin')">Cancel</button>
+                                                    (click)="doCancelWaitlist(booking,'checkin')">
+                                                    <i class="fa cross-icon"></i>
+                                                    Cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking)">
+                                                    <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
                                                 </button>
                                                 <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
@@ -285,6 +292,7 @@
                                                 <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
                                                 && booking.waitlistStatus !== 'cancelled'"
                                                     (click)="getMeetingDetails(booking,'waitlist')">
+                                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
                                                     Meeting details
                                                 </button>
                                                 <button mat-menu-item
@@ -404,8 +412,11 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'appointment')">Cancel</button>
+                                                        (click)="doCancelWaitlist(booking,'appointment')">
+                                                        <i class="fa cross-icon"></i>
+                                                        Cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
+                                                        <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
@@ -415,6 +426,7 @@
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                     && booking.apptStatus !== 'Cancelled'"
                                                         (click)="getMeetingDetails(booking,'appt')">
+                                                        <i class="fa fa-sticky-note-o"></i>
                                                         Meeting details
                                                     </button>
                                                     <button mat-menu-item
@@ -533,8 +545,11 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'checkin')">Cancel</button>
+                                                        (click)="doCancelWaitlist(booking,'checkin')">
+                                                        <i class="fa cross-icon"></i>
+                                                        Cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking)">
+                                                        <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
@@ -544,7 +559,7 @@
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
                                                 && booking.waitlistStatus !== 'cancelled'"
                                                         (click)="getMeetingDetails(booking,'waitlist')">
-                                                        Meeting details
+                                                        <i class="fa fa-sticky-note-o"></i> Meeting details
                                                     </button>
                                                     <button mat-menu-item
                                                     *ngIf="checkIfFav(booking.providerAccount.id)">
@@ -671,13 +686,16 @@
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                     *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'appointment')">Cancel</button>
+                                                    (click)="doCancelWaitlist(booking,'appointment')">
+                                                    <i class="fa cross-icon"></i>Cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
+                                                    <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
                                                 </button>
                                                 <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                 && booking.apptStatus !== 'Cancelled'"
                                                     (click)="getMeetingDetails(booking,'appt')">
+                                                    <i class="fa fa-sticky-note-o"></i>
                                                     Meeting details
                                                 </button>
                                                 <button mat-menu-item
@@ -781,14 +799,16 @@
                                             <mat-menu #appMenu="matMenu">
                                                 <button mat-menu-item
                                                     *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                    (click)="doCancelWaitlist(booking,'checkin')">Cancel</button>
+                                                    (click)="doCancelWaitlist(booking,'checkin')">
+                                                    <i class="fa cross-icon"></i> Cancel</button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(booking)">
+                                                    <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
                                                 </button>
                                                 <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
                                                 && booking.waitlistStatus !== 'cancelled'"
                                                     (click)="getMeetingDetails(booking,'waitlist')">
-                                                    Meeting details
+                                                    <i class="fa fa-sticky-note-o"></i> Meeting details
                                                 </button>
                                                 <button mat-menu-item
                                                     *ngIf="checkIfFav(booking.providerAccount.id)">
@@ -892,14 +912,14 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'appointment')">Cancel</button>
+                                                        (click)="doCancelWaitlist(booking,'appointment')"><i class="fa cross-icon"></i>Cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking,'appt')">
-                                                        {{send_msg_cap}}
+                                                        <i class="fa chat-icon"></i>{{send_msg_cap}}
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                     && booking.apptStatus !== 'Cancelled'"
                                                         (click)="getMeetingDetails(booking,'appt')">
-                                                        Meeting details
+                                                        <i class="fa fa-sticky-note-o"></i>Meeting details
                                                     </button>
                                                     <button mat-menu-item
                                                     *ngIf="checkIfFav(booking.providerAccount.id)">
@@ -1004,14 +1024,14 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
-                                                        (click)="doCancelWaitlist(booking,'checkin')">Cancel</button>
+                                                        (click)="doCancelWaitlist(booking,'checkin')"><i class="fa cross-icon"></i>Cancel</button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(booking)">
-                                                        {{send_msg_cap}}
+                                                        <i class="fa chat-icon"></i>{{send_msg_cap}}
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
                                                 && booking.waitlistStatus !== 'cancelled'"
                                                         (click)="getMeetingDetails(booking,'waitlist')">
-                                                        Meeting details
+                                                        <i class="fa fa-sticky-note-o"></i>Meeting details
                                                     </button>
                                                     <button mat-menu-item
                                                     *ngIf="checkIfFav(booking.providerAccount.id)">
