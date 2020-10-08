@@ -482,13 +482,13 @@ export class NewReportComponent implements OnInit {
         }
         if (this.payment_transactionType === 0) {
           delete this.filterparams.transactionType;
-          delete this.filterparams.queue;
-          delete this.filterparams.schedule;
-        } else if (this.payment_transactionType === 'appointment') {
-          delete this.filterparams.queue;
-        } else if (this.payment_transactionType === 'waitlist') {
-          delete this.filterparams.schedule;
         }
+
+        // } else if (this.payment_transactionType === 'appointment') {
+        //   delete this.filterparams.queue;
+        // } else if (this.payment_transactionType === 'waitlist') {
+        //   delete this.filterparams.schedule;
+        // }
         if (this.payment_paymentPurpose === 0) {
           delete this.filterparams.paymentPurpose;
         }
