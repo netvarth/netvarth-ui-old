@@ -286,6 +286,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     deleteLabel(label, checkinId) {
         this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
+            this.dialogRef.close();
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -325,6 +326,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     addLabel() {
         this.provider_services.addLabeltoCheckin(this.checkin.ynwUuid, this.labelMap).subscribe(data => {
+            this.dialogRef.close();
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

@@ -299,6 +299,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     deleteLabel(label, checkinId) {
         this.provider_services.deleteLabelfromAppointment(checkinId, label).subscribe(data => {
+            this.dialogRef.close();
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -338,6 +339,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     addLabel() {
         this.provider_services.addLabeltoAppointment(this.appt.uid, this.labelMap).subscribe(data => {
+            this.dialogRef.close();
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
