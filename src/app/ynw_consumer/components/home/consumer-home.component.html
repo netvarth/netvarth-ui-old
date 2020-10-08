@@ -191,13 +191,15 @@
                                             </h4>
                                             <h4 *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')"
                                                 class="disp-grid">
-                                                <span class="est-wait-time">Est Wait Time</span>
                                                 <span class="mgn-up-10 disp-flex">
                                                     <div class="circle-tokens"><i class="fa chckn-icon" [matTooltip]="'Check-in'"></i></div>
-                                                    <span class="mgn-up-10">
-                                                        &nbsp;{{booking.appxWaitingTime}}
-                                                        <span class="minutes">minutes</span>
-                                                    </span>
+                                                    <div class="disp-grid">
+                                                        <span class="est-wait-time">Est Wait Time</span>
+                                                        <span>
+                                                            {{booking.appxWaitingTime}}
+                                                            <span class="minutes">minutes</span>
+                                                        </span>
+                                                    </div>
                                                 </span>
                                             </h4>
 
@@ -209,7 +211,7 @@
                                                     &nbsp;Token #{{booking.token}}
                                                 </span>
                                             </h4>
-                                            <span class="est-wait-time" *ngIf="( booking.appxWaitingTime && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
+                                            <span class="est-wait-time" *ngIf="( booking.appxWaitingTime >=0 && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -440,15 +442,17 @@
                                                 </h4>
                                                 <h4 *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')"
                                                     class="disp-grid">
-                                                    <span class="est-wait-time">Est Wait Time</span>
                                                     <span class="mgn-up-10 disp-flex">
                                                         <div class="circle-tokens">
                                                             <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                         </div>
-                                                        <span class="mgn-up-10">
-                                                            &nbsp;{{booking.appxWaitingTime}}
-                                                            <span class="minutes">minutes</span>
-                                                        </span>
+                                                        <div class="disp-grid">
+                                                            <span class="est-wait-time">Est Wait Time</span>
+                                                            <span>
+                                                                {{booking.appxWaitingTime}}
+                                                                <span class="minutes">minutes</span>
+                                                            </span>
+                                                        </div>
                                                     </span>
                                                 </h4>
                                                 <h4 *ngIf="booking.token" class="disp-flex">
@@ -459,7 +463,7 @@
                                                         &nbsp;Token #{{booking.token}}
                                                     </span>
                                                 </h4>
-                                                <span class="est-wait-time" *ngIf="( booking.appxWaitingTime && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
+                                                <span class="est-wait-time" *ngIf="( booking.appxWaitingTime >= 0 && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
