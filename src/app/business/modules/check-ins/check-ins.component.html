@@ -2,7 +2,7 @@
   <!-- <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs_init"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb> -->
   <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
-    <div class="dash-head">{{(showToken) ? 'Token' : 'Check-ins'}} </div>
+    <div class="dash-head">{{(showToken) ? 'Tokens' : 'Check-ins'}} </div>
   </div>
   <div class="pull-right">
     <div class="navbar-custom-menu width100pc">
@@ -327,7 +327,7 @@
                       </td>
                       <td class="title td-two">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                          class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -514,7 +514,7 @@
                       </td>
                       <td class="title td-two">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                          class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -809,7 +809,7 @@
                     </td>
                     <td class="title td-two">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                        class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1190,7 +1190,7 @@
                     </td>
                     <td class="title td-two">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                        class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"

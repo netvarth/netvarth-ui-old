@@ -551,7 +551,7 @@
                                 </td>
                                 <td class="title td-two">
                                   <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                                    class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3"
+                                    class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3 font-bold"
                                     *ngIf="servicesCount>1">
                                     <i class="fa meet-icon"
                                       [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1114,7 +1114,7 @@
                       </td>
                       <td class="title td-two">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                          class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
