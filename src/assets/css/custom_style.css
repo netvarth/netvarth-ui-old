@@ -5883,7 +5883,7 @@ li.separator.setsplit {
   padding: 5px 10px 5px 10px;
   margin-bottom: 1px;
   box-shadow: none;
-  background-color: buttonface;
+  /* background-color: buttonface; */
   border: 1px solid #ddd;
   color: black;
   font-weight: 500;
@@ -12183,4 +12183,19 @@ img.busN-logo {
 }
 .pro-dash .mat-tab-body-wrapper {
   z-index: 0;
+}
+.act-btn {
+  border: 1px solid orange;
+}
+.done-btn {
+  border: 1px solid green;
+}
+.start-btn {
+  border: 1px solid purple;
+}
+.call-btn {
+  border: 1px solid black;
+}
+.cancel-btn {
+  border: 1px solid red;
 }

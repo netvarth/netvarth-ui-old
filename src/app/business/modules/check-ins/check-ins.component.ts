@@ -312,6 +312,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   startedAppointmentsChecked: any = [];
   startedChkAppointments: any = [];
   chkStartedSelectAppointments = false;
+  customerIdTooltip = '';
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -421,6 +422,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
+    this.customerIdTooltip = this.customer_label + ' id';
     this.getDisplayboardCount();
     this.getPos();
     this.getLabel();
