@@ -75,7 +75,7 @@
                                         <td>
                                             <h4 class="disp-flex">
                                                 <div class="circle-tokens">
-                                                    <i class="fa appt-icon"></i>
+                                                    <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
                                                     &nbsp;{{getSingleTime(booking.appmtTime)}}
@@ -183,7 +183,7 @@
                                             <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')"
                                                 class="now disp-flex">
                                                 <div class="circle-tokens">
-                                                    <i class="fa chckn-icon"></i>
+                                                    <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
                                                     &nbsp;Now
@@ -193,7 +193,7 @@
                                                 class="disp-grid">
                                                 <span class="est-wait-time">Est Wait Time</span>
                                                 <span class="mgn-up-10 disp-flex">
-                                                    <div class="circle-tokens"><i class="fa chckn-icon"></i></div>
+                                                    <div class="circle-tokens"><i class="fa chckn-icon" [matTooltip]="'Check-in'"></i></div>
                                                     <span class="mgn-up-10">
                                                         &nbsp;{{booking.appxWaitingTime}}
                                                         <span class="minutes">minutes</span>
@@ -203,7 +203,7 @@
 
                                             <h4 *ngIf="booking.token" class="disp-flex">
                                                 <div class="circle-tokens">
-                                                    <i class="fa token-icon"></i>
+                                                    <i class="fa token-icon" [matTooltip]="'Token'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
                                                     &nbsp;Token #{{booking.token}}
@@ -324,7 +324,7 @@
                                             <td>
                                                 <h4 class="disp-flex">
                                                     <div class="circle-tokens">
-                                                        <i class="fa appt-icon"></i>
+                                                        <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">
                                                         &nbsp;{{getSingleTime(booking.appmtTime)}}
@@ -434,7 +434,7 @@
                                                 <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')"
                                                     class="now disp-flex">
                                                     <div class="circle-tokens">
-                                                        <i class="fa chckn-icon"></i>
+                                                        <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">&nbsp;Now</span>
                                                 </h4>
@@ -443,7 +443,7 @@
                                                     <span class="est-wait-time">Est Wait Time</span>
                                                     <span class="mgn-up-10 disp-flex">
                                                         <div class="circle-tokens">
-                                                            <i class="fa chckn-icon"></i>
+                                                            <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                         </div>
                                                         <span class="mgn-up-10">
                                                             &nbsp;{{booking.appxWaitingTime}}
@@ -453,7 +453,7 @@
                                                 </h4>
                                                 <h4 *ngIf="booking.token" class="disp-flex">
                                                     <div class="circle-tokens">
-                                                        <i class="fa token-icon"></i>
+                                                        <i class="fa token-icon" [matTooltip]="'Token'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">
                                                         &nbsp;Token #{{booking.token}}
@@ -582,7 +582,7 @@
                                         <td>
                                             <h4 class="disp-flex">
                                                 <div class="circle-tokens">
-                                                    <i class="fa appt-icon"></i>
+                                                    <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
                                                     &nbsp;{{getSingleTime(booking.appmtTime)}}
@@ -686,7 +686,7 @@
                                         <td>
                                             <h4 *ngIf="!booking.token" class="disp-flex">
                                                 <div class="circle-tokens">
-                                                    <i class="fa chckn-icon"></i>
+                                                    <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
                                                     &nbsp;{{booking.serviceTime}}
@@ -694,7 +694,7 @@
                                             </h4>
                                             <h4 *ngIf="booking.token" class="disp-flex">
                                                 <div class="circle-tokens">
-                                                    <i class="fa token-icon"></i>
+                                                    <i class="fa token-icon" [matTooltip]="'Token'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
                                                     &nbsp;Token #{{booking.token}}
@@ -809,7 +809,7 @@
                                             <td>
                                                 <h4 class="disp-flex">
                                                     <div class="circle-tokens">
-                                                        <i class="fa appt-icon"></i>
+                                                        <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">
                                                         &nbsp;{{getSingleTime(booking.appmtTime)}}
@@ -912,7 +912,7 @@
                                             <td>
                                                 <h4 *ngIf="!booking.token" class="disp-flex">
                                                     <div class="circle-tokens">
-                                                        <i class="fa chckn-icon"></i>
+                                                        <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">
                                                         &nbsp;{{booking.serviceTime}}
@@ -920,7 +920,7 @@
                                                 </h4>
                                                 <h4 *ngIf="booking.token" class="disp-flex">
                                                     <div class="circle-tokens">
-                                                        <i class="fa token-icon"></i>
+                                                        <i class="fa token-icon" [matTooltip]="'Token'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">&nbsp;Token #{{booking.token}}</span>
                                                 </h4>
