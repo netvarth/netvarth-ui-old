@@ -307,7 +307,7 @@
                                                 </div>
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
                                                     <div class="checkin-btn-bp pointer-cursor"
-                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1)" (click)="handleApptClicked()">
+                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === ''"  (click)="handleApptClicked()">
                                                         <span *ngIf="!sel_ser_det.isPrePayment">Confirm
                                                             Appointment</span>
                                                         <span *ngIf="sel_ser_det.isPrePayment">Proceed to Payment</span>

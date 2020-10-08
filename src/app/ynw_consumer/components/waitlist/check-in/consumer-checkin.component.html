@@ -307,7 +307,7 @@
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
                                                     <div class="checkin-btn-bp pointer-cursor"
-                                                        [class.disableActn]="checkindisable || (queuejson && queuejson.length == 0 && !api_loading1)"
+                                                        [class.disableActn]="checkindisable || (queuejson && queuejson.length == 0 && !api_loading1) || callingModes === ''"
                                                         (click)="handleCheckinClicked()">
                                                         <span *ngIf="!sel_ser_det.isPrePayment">Confirm
                                                             {{showCheckinButtonCaption()}}</span>
