@@ -12181,7 +12181,8 @@ img.busN-logo {
   content: url(../images/dashboard-icons/arrivved2.svg);
   width: 40px;
 }
-.pro-dash .mat-tab-body-wrapper {
+.pro-dash .mat-tab-body-wrapper,
+.pro-dash .mat-tab-group {
   z-index: 0;
 }
 .act-btn {
@@ -12234,4 +12235,11 @@ img.busN-logo {
 }
 .font-bold {
   font-weight: bold;
+}
+.apptdate-slot {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.index-zero {
+  z-index: 0  !important;
 }
