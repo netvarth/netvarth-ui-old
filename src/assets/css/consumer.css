@@ -3917,6 +3917,12 @@
     .more-opt .mo-content .mat-dialog-content .more-box {
         margin-bottom: 15px;
     }
+    .consumer-dash .est-wait-time {
+        font-size: 0.6rem !important;
+    }
+    .consumer-dash .minutes {
+        font-size: 0.7rem !important;
+    }
 }
 
 .more-opt .mo-content .mat-dialog-content .more-box .refine_subheader {

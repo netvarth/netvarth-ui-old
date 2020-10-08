@@ -78,7 +78,7 @@
                                                     <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
-                                                    &nbsp;{{getSingleTime(booking.appmtTime)}}
+                                                    {{getSingleTime(booking.appmtTime)}}
                                                 </span>
                                             </h4>
                                         </td>
@@ -208,10 +208,15 @@
                                                     <i class="fa token-icon" [matTooltip]="'Token'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
-                                                    &nbsp;Token #{{booking.token}}
+                                                    Token #{{booking.token}}
                                                 </span>
                                             </h4>
-                                            <span class="est-wait-time" *ngIf="( booking.appxWaitingTime >=0 && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
+                                            <span class="est-wait-time" *ngIf="( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Est Wait Time : {{booking.appxWaitingTime}} min</span>
+                                            <h4 *ngIf="(booking.waitlistStatus == 'cancelled' || booking.waitlistStatus =='done') && !booking.token">
+                                                <div class="circle-tokens">
+                                                    <i class="fa chckn-icon" [matTooltip]="'Token'"></i>
+                                                </div>
+                                            </h4>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -329,7 +334,7 @@
                                                         <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">
-                                                        &nbsp;{{getSingleTime(booking.appmtTime)}}
+                                                        {{getSingleTime(booking.appmtTime)}}
                                                     </span>
                                                 </h4>
                                             </td>
@@ -460,10 +465,15 @@
                                                         <i class="fa token-icon" [matTooltip]="'Token'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">
-                                                        &nbsp;Token #{{booking.token}}
+                                                        Token #{{booking.token}}
                                                     </span>
                                                 </h4>
-                                                <span class="est-wait-time" *ngIf="( booking.appxWaitingTime >= 0 && booking.token)">Est Wait Time : {{booking.appxWaitingTime}} min</span>
+                                                <span class="est-wait-time" *ngIf="( booking.appxWaitingTime >= 0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Est Wait Time : {{booking.appxWaitingTime}} min</span>
+                                                <h4 *ngIf="(booking.waitlistStatus == 'cancelled' || booking.waitlistStatus =='done') && !booking.token">
+                                                    <div class="circle-tokens">
+                                                        <i class="fa chckn-icon" [matTooltip]="'Token'"></i>
+                                                    </div>
+                                                </h4>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -589,7 +599,7 @@
                                                     <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
-                                                    &nbsp;{{getSingleTime(booking.appmtTime)}}
+                                                    {{getSingleTime(booking.appmtTime)}}
                                                 </span>
                                             </h4>
                                             <span class="datefont">{{booking.appmtDate | date: dateFormat}}</span>
@@ -701,7 +711,7 @@
                                                     <i class="fa token-icon" [matTooltip]="'Token'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
-                                                    &nbsp;Token #{{booking.token}}
+                                                    Token #{{booking.token}}
                                                 </span>
                                             </h4>
                                             <span class="datefont">{{booking.date | date: dateFormat}}</span>
@@ -816,7 +826,7 @@
                                                         <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">
-                                                        &nbsp;{{getSingleTime(booking.appmtTime)}}
+                                                        {{getSingleTime(booking.appmtTime)}}
                                                     </span>
                                                 </h4>
                                                 <span class="datefont">{{booking.appmtDate | date: dateFormat}}</span>
@@ -919,14 +929,14 @@
                                                         <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">
-                                                        &nbsp;{{booking.serviceTime}}
+                                                        {{booking.serviceTime}}
                                                     </span>
                                                 </h4>
                                                 <h4 *ngIf="booking.token" class="disp-flex">
                                                     <div class="circle-tokens">
                                                         <i class="fa token-icon" [matTooltip]="'Token'"></i>
                                                     </div>
-                                                    <span class="mgn-up-10">&nbsp;Token #{{booking.token}}</span>
+                                                    <span class="mgn-up-10">Token #{{booking.token}}</span>
                                                 </h4>
                                                 <span class="datefont">{{booking.date | date: dateFormat}}</span>
                                             </td>
