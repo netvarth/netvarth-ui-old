@@ -15,21 +15,34 @@
         <div class="row">
           <div class="copy addons one  col-xs-12 col-sm-12 card no-padding ">
             <div class="row no-padding">
+
+              <div class="col-md-12" *ngIf="waitlist_status == false && appointment_status == false">
+                <div class="row">
+                    <div class="no-dta">
+                        <p>Enable <a class="underline" (click)="gotoAppt()">Appointment Manager</a>/ <a class="underline" (click)="gotoWaitlistMngr()">Queue Manager</a> to create/ manage custom view</p>
+                        
+                    </div>
+                </div>
+            </div>
+
               <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-              <div class="ynw-common-form-nm" *ngIf="!loading">
+              <div class="ynw-common-form-nm" *ngIf="!loading && waitlist_status == true || appointment_status == true">
+                
                 <div class="form-group col-md-6 mgn-lt-20">
                   <mat-form-field>
                     <input [(ngModel)]="customViewName" matInput type="text" class="form-control"
                       placeholder="Custom view name *" autocomplete="off">
                   </mat-form-field>
                 </div>
+                
                 <div class="form-group col-md-12">
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Custom View For
                   </label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <div>
                     <mat-form-field>
                       <mat-select placeholder="Custom View For" [(ngModel)]="customViewFor">
-                        <mat-option [value]="'Waitlist'">
+                        <mat-option *ngIf="waitlist_status == true" [value]="'Waitlist'">
                           Check-in/Token
                         </mat-option>
                         <mat-option *ngIf="appointment_status == true" [value]="'Appointment'">
@@ -37,6 +50,7 @@
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
+                    </div>
                   </div>
                 </div>
                 <div *ngIf="waitlistMngr.filterByDept" class="form-group col-md-12 col-xs-12 col-sm-12">
@@ -194,6 +208,7 @@
                   <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;&nbsp;&nbsp;
                   <button mat-button type="submit" class="cs-btn bt1" (click)="createCustomView()">Save</button>
                 </div>
+              
               </div>
             </div>
           </div>

@@ -19,6 +19,7 @@ import { CheckinDetailsSendComponent } from '../check-ins/checkin-details-send/c
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
 import { interval as observableInterval, Subscription } from 'rxjs';
+import { AppointmentActionsComponent } from './appointment-actions/appointment-actions.component';
 declare let cordova: any;
 @Component({
   selector: 'app-appointments',
@@ -385,11 +386,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.topHeight = qHeader + tabHeader;
     if (header) {
-      if (window.pageYOffset >= (this.topHeight + 50)) {
-        header.classList.add('sticky');
-      } else {
-        header.classList.remove('sticky');
-      }
+      // if (window.pageYOffset >= (this.topHeight + 50)) {
+      //   header.classList.add('sticky');
+      // } else {
+      //   header.classList.remove('sticky');
+      // }
     }
     if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
       this.windowScrolled = true;
@@ -1719,7 +1720,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         userId = '0';
       }
       this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
-        { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId } });
+        { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: this.filter.future_appt_date } });
     }
   }
   searchCustomer(source, appttime) {
@@ -3266,4 +3267,48 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.doSearch();
   }
+
+  showCheckinActions(checkin?) {
+    console.log(this.appointmentsChecked);
+    console.log(this.apptsChecked);
+    let waitlist = [];
+    if (checkin) {
+      waitlist = checkin;
+    } else {
+      if (!this.isBatch || this.time_type === 3) {
+        Object.keys(this.appointmentsChecked).forEach(apptIndex => {
+          waitlist.push(this.appointmentsChecked[apptIndex]);
+        });
+      } else {
+        Object.keys(this.apptsChecked).forEach(slotIndex => {
+          Object.keys(this.apptsChecked[slotIndex]).forEach(apptIndex => {
+            waitlist.push(this.apptsChecked[slotIndex][apptIndex]);
+          });
+        });
+      }
+    }
+    // let multiSelection;
+    // if (checkin) {
+    //   multiSelection = false;
+    // } else {
+    //     multiSelection = this.apptMultiSelection;
+    // }
+    const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
+        checkinData: waitlist,
+        timetype: this.time_type,
+        multiSelection: this.apptMultiSelection,
+        labelFilterData: this.labelFilterData,
+        labelsCount: this.labelsCount
+      }
+    });
+    actiondialogRef.afterClosed().subscribe(data => {
+      this.chkSelectAppointments = false;
+      this.loadApiSwitch('');
+    });
+  }
+
 }

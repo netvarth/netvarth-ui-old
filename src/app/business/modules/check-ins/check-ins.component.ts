@@ -19,6 +19,7 @@ import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { CheckinDetailsSendComponent } from './checkin-details-send/checkin-details-send.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
 import { interval as observableInterval, Subscription } from 'rxjs';
+import { CheckinActionsComponent } from './checkin-actions/checkin-actions.component';
 declare let cordova: any;
 @Component({
   selector: 'app-checkins',
@@ -302,6 +303,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   refreshTime;
   cronHandle: Subscription;
   checkin_uuid: any;
+  showList = false;
+  startedCheckins: any = [];
+  allStartedSelection = false;
+  allSelection = false;
+  apptStartedMultiSelection = false;
+  apptStartedSingleSelection = false;
+  startedAppointmentsChecked: any = [];
+  startedChkAppointments: any = [];
+  chkStartedSelectAppointments = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -339,11 +349,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.arrived_upper, value: 'arrived' },
       { name: this.done_upper, value: 'complete' }];
 
-      this.activateroute.queryParams.subscribe(params => {
-       if (params.servStatus) {
-        this.statusAction = 'started';
-       }
-    });
+    // this.activateroute.queryParams.subscribe(params => {
+    //   if (params.servStatus) {
+    //     this.statusAction = 'started';
+    //   }
+    // });
   }
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
@@ -382,11 +392,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.topHeight = qHeader + tabHeader;
     if (header) {
-      if (window.pageYOffset > (this.topHeight + 50)) {
-        header.classList.add('sticky');
-      } else {
-        header.classList.remove('sticky');
-      }
+      // if (window.pageYOffset > (this.topHeight + 50)) {
+      //   header.classList.add('sticky');
+      // } else {
+      //   header.classList.remove('sticky');
+      // }
 
     }
     if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
@@ -1098,6 +1108,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.chkAppointments = {};
     this.appointmentsChecked = [];
     this.check_in_filtered_list = [];
+
+    this.startedChkAppointments = {};
+    this.startedAppointmentsChecked = [];
+    this.apptStartedSingleSelection = false;
+    this.apptStartedMultiSelection = false;
   }
   loadApiSwitch(source) {
     // this.resetAll();
@@ -1138,6 +1153,48 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
     return label_status;
   }
+  selectAllStarted() {
+    this.startedAppointmentsChecked = {};
+    this.startedChkAppointments = {};
+    if (this.chkStartedSelectAppointments) {
+      for (let aIndex = 0; aIndex < this.startedCheckins.length; aIndex++) {
+        this.chkStartedAptHistoryClicked(aIndex, this.startedCheckins[aIndex]);
+      }
+    } else {
+      this.apptStartedSingleSelection = false;
+      this.apptStartedMultiSelection = false;
+      this.activeAppointment = null;
+    }
+  }
+  chkStartedAptHistoryClicked(index, appt) {
+    if (!this.startedChkAppointments[index]) {
+      this.startedChkAppointments[index] = true;
+      this.startedAppointmentsChecked[index] = appt;
+    } else {
+      this.startedChkAppointments[index] = false;
+      delete this.startedAppointmentsChecked[index];
+      this.chkStartedSelectAppointments = false;
+    }
+    this.setStartedApptSelections();
+  }
+
+  setStartedApptSelections() {
+    this.apptSingleSelection = false;
+    this.apptStartedMultiSelection = false;
+    this.activeAppointment = null;
+    const totalAppointmentsSelected = Object.keys(this.startedAppointmentsChecked).length;
+    if (totalAppointmentsSelected === this.startedCheckins.length && totalAppointmentsSelected !== 0) {
+      this.chkStartedSelectAppointments = true;
+    }
+    if (totalAppointmentsSelected === 1) {
+      this.apptSingleSelection = true;
+      Object.keys(this.startedAppointmentsChecked).forEach(key => {
+        this.activeAppointment = this.startedAppointmentsChecked[key];
+      });
+    } else if (totalAppointmentsSelected > 1) {
+      this.apptStartedMultiSelection = true;
+    }
+  }
   selectAllAppoinments() {
     this.appointmentsChecked = {};
     this.chkAppointments = {};
@@ -1170,7 +1227,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.selQIds = this.getActiveQIdsFromView(this.selectedView);
     }
-    if (this.selQIds) {
+    if (this.selQIds && this.selQIds.length > 0) {
       Mfilter['queue-eq'] = this.selQIds;
       this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
       // this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
@@ -1195,7 +1252,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               this.setCounts(this.appt_list);
               this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-
+              this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
               this.loading = false;
             },
             () => {
@@ -1767,6 +1824,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   setPaginationFilter(api_filter) {
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    this.shared_functions.setitemToGroupStorage('paginationStart', this.pagination.startpageval);
     api_filter['count'] = this.filter.page_count;
     return api_filter;
   }
@@ -2444,9 +2502,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (wtlst) {
       waitlist = wtlst;
     } else {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        waitlist = _this.appointmentsChecked[apptIndex];
-      });
+      if (status === 'started') {
+        Object.keys(_this.startedAppointmentsChecked).forEach(apptIndex => {
+          waitlist = _this.startedAppointmentsChecked[apptIndex];
+        });
+      } else {
+        Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+          waitlist = _this.appointmentsChecked[apptIndex];
+        });
+      }
     }
     if (action === 'DONE') {
       waitlist.disableDonebtn = true;
@@ -2714,4 +2778,72 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoSettings() {
     this.router.navigate(['/provider/settings']);
   }
+
+  showCheckinActions(status, checkin?) {
+    let waitlist = [];
+    if (checkin) {
+      waitlist = checkin;
+    } else {
+      if (status === 'started') {
+        Object.keys(this.startedAppointmentsChecked).forEach(apptIndex => {
+          waitlist.push(this.startedAppointmentsChecked[apptIndex]);
+        });
+      } else {
+        Object.keys(this.appointmentsChecked).forEach(apptIndex => {
+          waitlist.push(this.appointmentsChecked[apptIndex]);
+        });
+      }
+    }
+    let multiSelection;
+    if (checkin) {
+      multiSelection = false;
+    } else {
+      if (status === 'started') {
+        multiSelection = this.apptStartedMultiSelection;
+      } else {
+        multiSelection = this.apptMultiSelection;
+      }
+    }
+    const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
+        checkinData: waitlist,
+        timetype: this.time_type,
+        multiSelection: multiSelection,
+        status: status,
+        labelFilterData: this.labelFilterData,
+        labelsCount: this.labelsCount
+      }
+    });
+    actiondialogRef.afterClosed().subscribe(data => {
+      this.chkSelectAppointments = false;
+      this.chkStartedSelectAppointments = false;
+      this.loadApiSwitch('');
+    });
+  }
+  statusClick(status) {
+    this.allSelection = false;
+    this.statusAction = status;
+    this.chkSelectAppointments = false;
+    this.chkStartedSelectAppointments = false;
+    this.resetCheckList();
+    if (this.time_type === 1) {
+      this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, status);
+    } else {
+      this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, status);
+    }
+  }
+  tabChange(event) {
+    this.resetCheckList();
+    this.chkSelectAppointments = false;
+    this.chkStartedSelectAppointments = false;
+    this.allStartedSelection = false;
+    this.allSelection = false;
+    this.loading = true;
+    this.hideFilterSidebar();
+    this.setTimeType(event.index + 1);
+  }
 }
+

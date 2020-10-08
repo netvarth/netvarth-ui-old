@@ -237,7 +237,7 @@ export class NewReportComponent implements OnInit {
           this.payment_service = 'All';
           this.payment_service_id = 0;
         } else {
-          this.payment_service = res.split(',').length - 1 + ' service(s) selected';
+          this.payment_service = res.split(',').length - 1 + ' services selected';
           this.payment_service_id = res.replace(/,\s*$/, '');
 
         }
@@ -248,7 +248,7 @@ export class NewReportComponent implements OnInit {
           this.donation_service = 'All';
           this.donation_service_id = 0;
         } else {
-          this.donation_service = res.split(',').length - 1 + ' service(s) selected';
+          this.donation_service = res.split(',').length - 1 + ' services selected';
           this.donation_service_id = res.replace(/,\s*$/, '');
 
 
@@ -260,7 +260,7 @@ export class NewReportComponent implements OnInit {
           this.appointment_service = 'All';
           this.appointment_service_id = 0;
         } else {
-          this.appointment_service = res.split(',').length - 1 + ' service(s) selected';
+          this.appointment_service = res.split(',').length - 1 + ' services selected';
           this.appointment_service_id = res.replace(/,\s*$/, '');
 
 
@@ -272,7 +272,7 @@ export class NewReportComponent implements OnInit {
           this.token_service = 'All';
           this.token_service_id = 0;
         } else {
-          this.token_service = res.split(',').length - 1 + ' service(s) selected';
+          this.token_service = res.split(',').length - 1 + ' services selected';
           this.token_service_id = res.replace(/,\s*$/, '');
 
 
@@ -293,7 +293,7 @@ export class NewReportComponent implements OnInit {
           this.payment_schedule_id = 0;
         } else {
 
-          this.payment_schedule = res.split(',').length - 1 + ' schedule(s) selected';
+          this.payment_schedule = res.split(',').length - 1 + ' schedules selected';
           this.payment_schedule_id = res.replace(/,\s*$/, '');
 
 
@@ -305,7 +305,7 @@ export class NewReportComponent implements OnInit {
           this.donation_schedule = 'All';
           this.donation_schedule_id = 0;
         } else {
-          this.donation_schedule = res.split(',').length - 1 + ' schedule(s) selected';
+          this.donation_schedule = res.split(',').length - 1 + ' schedules selected';
           this.donation_schedule_id = res.replace(/,\s*$/, '');
 
 
@@ -317,7 +317,7 @@ export class NewReportComponent implements OnInit {
           this.appointment_schedule = 'All';
           this.appointment_schedule_id = 0;
         } else {
-          this.appointment_schedule = res.split(',').length - 1 + ' schedule(s) selected';
+          this.appointment_schedule = res.split(',').length - 1 + ' schedules selected';
           this.appointment_schedule_id = res.replace(/,\s*$/, '');
 
 
@@ -329,7 +329,7 @@ export class NewReportComponent implements OnInit {
           this.token_schedule = 'All';
           this.token_schedule_id = 0;
         } else {
-          this.token_schedule = res.split(',').length - 1 + ' schedule(s) selected';
+          this.token_schedule = res.split(',').length - 1 + ' schedules selected';
           this.token_schedule_id = res.replace(/,\s*$/, '');
 
 
@@ -347,7 +347,7 @@ export class NewReportComponent implements OnInit {
           this.payment_customer = 'All';
           // this.payment_customerId = 0;
         } else {
-          this.payment_customer = res.split(',').length + ' ' + this.customer_label + '(s) selected';
+          this.payment_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
           this.payment_customerId = res.replace(/,\s*$/, '');
 
         }
@@ -358,7 +358,7 @@ export class NewReportComponent implements OnInit {
           this.donation_customer = 'All';
           // this.donation_customerId = 0;
         } else {
-          this.donation_customer = res.split(',').length + ' ' + this.customer_label + '(s) selected';
+          this.donation_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
           this.donation_customerId = res.replace(/,\s*$/, '');
 
         }
@@ -370,7 +370,7 @@ export class NewReportComponent implements OnInit {
           // this.appointment_customerId = 0;
         } else {
 
-          this.appointment_customer = res.split(',').length + ' ' + this.customer_label + '(s) selected';
+          this.appointment_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
 
           this.appointment_customerId = res.replace(/,\s*$/, '');
 
@@ -381,7 +381,7 @@ export class NewReportComponent implements OnInit {
         if (res === '' || res === undefined || res === 'All') {
           this.waitlist_customer = 'All';
         } else {
-          this.waitlist_customer = res.split(',').length + ' ' + this.customer_label + '(s) selected';
+          this.waitlist_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
           this.waitlist_customerId = res.replace(/,\s*$/, '');
 
         }
@@ -399,7 +399,7 @@ export class NewReportComponent implements OnInit {
           this.payment_queue = 'All';
           this.payment_queue_id = 0;
         } else {
-          this.payment_queue = res.split(',').length - 1 + ' queue(s) selected';
+          this.payment_queue = res.split(',').length - 1 + ' queues selected';
           this.payment_queue_id = res.replace(/,\s*$/, '');
 
 
@@ -411,7 +411,7 @@ export class NewReportComponent implements OnInit {
           this.donation_queue = 'All';
           this.donation_queue_id = 0;
         } else {
-          this.donation_queue = res.split(',').length - 1 + ' queue(s) selected';
+          this.donation_queue = res.split(',').length - 1 + ' queues selected';
           this.donation_queue_id = res.replace(/,\s*$/, '');
 
 
@@ -423,7 +423,7 @@ export class NewReportComponent implements OnInit {
           this.appointment_queue = 'All';
           this.appointment_queue_id = 0;
         } else {
-          this.appointment_queue = res.split(',').length - 1 + ' queue(s) selected';
+          this.appointment_queue = res.split(',').length - 1 + ' queues selected';
           this.appointment_queue_id = res.replace(/,\s*$/, '');
 
 
@@ -435,7 +435,7 @@ export class NewReportComponent implements OnInit {
           this.token_queue = 'All';
           this.token_queue_id = 0;
         } else {
-          this.token_queue = res.split(',').length - 1 + ' queue(s) selected';
+          this.token_queue = res.split(',').length - 1 + ' queues selected';
           this.token_queue_id = res.replace(/,\s*$/, '');
 
 

@@ -130,10 +130,19 @@
 
 .consumer-dash .card.c-checkins h2 {
     font-size: 1.2rem;
-    padding: 20px;
+    /* padding: 20px; */
     border-bottom: 2px solid #f2f2f2;
     margin-bottom: 0px;
-    color: #00aef2;
+    color: rgb(24 62 121);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.consumer-dash .card.c-checkins h1 {
+    font-size: 2rem;
+    padding: 40px;
+    border-bottom: 2px solid #f2f2f2;
+    margin-bottom: 0px;
+    color: rgb(24 62 121);
 }
 
 .consumer-dash .card.c-checkins .outer {
@@ -228,6 +237,9 @@
         justify-content: flex-start;
         flex-wrap: wrap;
         flex-direction: row;
+    }
+    .consumer-dash .txt-align {
+        text-align: center !important;
     }
 }
 
@@ -377,6 +389,9 @@
         align-items: flex-start;
         flex-direction: column;
     }
+    .bg-visible {
+        display: none !important;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -490,6 +505,9 @@
         display: inline-flex;
         align-items: center;
     }
+    .consumer-dash .myjaldee-bg {
+        width: 310px !important;
+    }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -515,6 +533,11 @@
     .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme .timing .time-data .icon-question {
         height: 14px;
         margin-left: 5px;
+    }
+    .consumer-dash .card.c-checkins h1 {
+    padding: 0px !important;
+    padding-top: 40pX !important;
+    padding-bottom: 40px !important;
     }
 }
 
@@ -5087,6 +5110,9 @@
     .ser .tfs1 .tfs1-dg .item {
         width: 46.8%;
     }
+    h6 {
+        font-size: .8rem!important;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -6402,4 +6428,233 @@
         margin-left: 5%;
         margin-right: 5%;
     }
+    .consumer-dash .servName {
+        font-size: 0.7rem !important;
+    }
+    .consumer-dash .phon-icon, .consumer-dash .meet-icon {
+        width: 11px !important;
+    }
+    .consumer-dash .wtsapvid-icon, .consumer-dash .zoom-icon {
+        width: 18px !important;
+    }
+    .consumer-dash .wtsapaud-icon {
+        width: 20px !important;
+    }
+}
+.consumer-dash .c-checkins .ng-tns-c16-8 .find-sp-btn {
+    border-radius: 20px;
+    background: rgb(24 62 121);
+    color: rgb(255 255 255);
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn, table .flat-btn{
+    border: 1px solid rgb(4 62 121);
+    border-radius: 20px;
+    color: rgb(255 255 255);
+    background: rgb(24 62 121);
+}
+.consumer-dash .c-checkins .table-outer1 tbody {
+    border-top: none;
+}
+.consumer-dash .c-checkins .table-outer1 td:before {
+    content: none;
+}
+.consumer-dash .c-checkins .table-outer1 {
+    padding:unset !important;
+}
+.consumer-dash .c-checkins .table-outer1  tbody tr:hover {
+    -webkit-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    background: rgb(248 216 132 / 27%) !important;
+  }
+.consumer-dash .c-checkins .table-outer1 table tbody tr:nth-of-type(odd) {
+    background: none;
+}
+.tdisplay-block {
+    display: block!important;
+}
+.consumer-dash .card.c-checkins table h4 {
+    color: rgb(24 62 121 / 85%);
+}
+.consumer-dash .card.c-checkins .table .upcoming {
+    font-size: .6rem;
+    font-weight: 600;
+    color: rgb(40 28 224);
+}
+.consumer-dash .card.c-checkins .table .colr-confrm {
+    color: rgb(24 62 121);
+}
+.consumer-dash .card.c-checkins .table .colr-arrived {
+    color: rgb(230 174 20);
+}
+.consumer-dash .card.c-checkins .table .colr-started {
+    color: rgb(0 149 255);
+}
+.consumer-dash .card.c-checkins .table .colr-canceld {
+    color: rgb(255 47 32);
+}
+.consumer-dash .card.c-checkins .table .colr-completed {
+    color: rgb(22 179 55);
+}
+.consumer-dash .card.c-checkins .table .bt3 {
+    font-family: sans-serif !important;
+    border: 1px solid rgb(113 137 173) !important;
+    color: rgb(24 62 121) !important;
+}
+.consumer-dash .card.c-checkins .table .bt3:hover {
+    background: rgb(113 137 173);
+    color: rgb(255 255 255) !important;
+}
+.consumer-dash .card.c-checkins .bg-yelow {
+    background: rgb(242 183 22 / 76%);
+}
+/* .consumer-dash .card.c-checkins table h4:hover {
+    color: rgb(187 144 30);
+} */
+.consumer-dash .card.c-checkins table h6 {
+    display: flex !important;
+}
+.consumer-dash .font-smalr {
+    font-size: smaller;
+}
+.consumer-dash .txt-align {
+    text-align: left;
+}
+.consumer-dash .flat-icon-btn {
+    border: 1px solid rgb(4 62 121);
+    border-radius: 50px;
+    color: rgb(255 255 255);
+    background: rgb(24 62 121);
+    min-width: 0px !important;
+    display: none;
+}
+@media only screen and (max-width: 637px) {
+    .consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn, table .flat-btn{
+        display: none !important;
+    }
+    .consumer-dash .flat-icon-btn {
+        display: inline !important;
+    }
+}
+.table-outer1 table thead th {
+    font-size: .875rem;
+    font-weight: 600;
+    vertical-align: top;
+    border: none;
+    padding: 20px;
+    background: rgb(245 200 77 / 36%);
+    color: rgb(24 62 121);
+}
+.consumer-dash .now {
+    color: #00cc96 !important;
+}
+.consumer-dash .est-wait-time {
+    font-size: 0.7rem;
+    color: rgb(0 0 255);
+}
+.consumer-dash .minutes {
+    font-size: small;
+}
+.consumer-dash .disp-grid {
+    display:  grid !important;
+}
+.consumer-dash .disp-flex {
+    display:  flex !important;
+}
+.consumer-dash .servName {
+    font-size: .815rem !important;
+}
+.consumer-dash .phon-icon, .consumer-dash .meet-icon {
+    width: 14px !important;
+}
+.consumer-dash .myjaldee-bg {
+    width: 380px;
+}
+.consumer-dash .full-wdth {
+    width: 100% !important;
+}
+.consumer-dash .appt-icon {
+  content: url(../images/myjaldee/Appoinment-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.consumer-dash .chckn-icon {
+    content: url(../images/myjaldee/Checkin-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 29px;
+    margin-top: 5px;
+}
+.consumer-dash .token-icon {
+    content: url(../images/myjaldee/token-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 25px;
+    margin-top: 7px;
+}
+.consumer-dash .circle-tokens {
+    background: rgb(252 235 190);
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    /* border-radius: 50px; */
+    font-size: 15px;
+    /* padding: 10px 0; */
+}  
+@media (min-width: 575px) and (max-width: 991px) {
+    .consumer-dash .myjaldee-bg {
+        width: 240px !important;
+    }
+}
+@media only screen and (max-width: 1022px) {
+    .consumer-dash .table h4 {
+        font-size: .9rem!important;
+    }
+}
+@media only screen and (max-width: 755px) {
+    .consumer-dash .disp-flex {
+        display:  grid !important;
+    }
+    .consumer-dash .circle-tokens {
+        width: 40px !important;
+        height: 30px !important;
+        border-radius: 50px !important;
+    }
+    .consumer-dash .appt-icon {
+        width: 16px;
+      }
+      .consumer-dash .chckn-icon {
+          width: 20px;
+      }
+      .consumer-dash .token-icon {
+          width: 20px;
+          margin-top: 6px;
+      }
+}
+.consumer-dash .datefont {
+    font-size: 0.82rem;
+    color: #183e79;
+}
+.consumer-dash .doctrnme {
+    font-size: 1rem;
+    color: #183e79;
+}
+ .chat-icon {
+    content: url(../images/enquiry.jpeg);
+    position: relative;
+    padding-right: 1px;
+    width: 20px;
+}
+ .cross-icon {
+    content: url(../images/error.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 20px;
+}
+.mat-menu-panel .mat-menu-content .mat-menu-item i {
+    margin-right: 10px !important;
 }

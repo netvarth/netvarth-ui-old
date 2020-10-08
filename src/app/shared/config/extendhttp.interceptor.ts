@@ -2,7 +2,7 @@ import { catchError ,  switchMap ,  retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable ,  Subject ,  throwError, EMPTY } from 'rxjs';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Messages } from '../constants/project-messages';
@@ -38,7 +38,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   forceUpdateCalled = false;
   stopThisRequest = false;
 
-  constructor(private router: Router, private shared_functions: SharedFunctions,
+  constructor(private shared_functions: SharedFunctions,
     public shared_services: SharedServices, private dialog: MatDialog) { }
 
 
@@ -170,8 +170,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                 })
               );
             } else if (error.status === 405) {
-              this.router.navigate(['/maintenance']);
-              return throwError(error);
+              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              return EMPTY;
+              // this.router.navigate(['/maintenance']);
+              // return throwError(error);
             } else if (error.status === 0) {
                 retry(2),
                 this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });

@@ -143,7 +143,7 @@ export function init_app(globalService: GlobalService) {
     ShareService,
     Title,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
-    {provide: ErrorHandler, useClass: GlobalErrorHandler},
+    {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },

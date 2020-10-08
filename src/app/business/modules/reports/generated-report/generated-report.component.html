@@ -44,7 +44,7 @@
 
               <label class="col-md-10 col-form-label" *ngIf="reportHeader.date">Report Time Period : <span> &nbsp;{{getDateFormat(reportHeader.date) }}    </span>  <br></label>
 
-            <label class=" col-lg-10 col-md-10 col-sm-9 col-form-label">Report Generated On :<span>&nbsp; {{reportHeader.reportGeneratedOn | date:'medium'}}</span><br></label>
+            <label class=" col-lg-10 col-md-10 col-sm-9 col-form-label">Report Created On :<span>&nbsp; {{reportHeader.reportGeneratedOn | date:'medium'}}</span><br></label>
 
             <label class=" col-md-10 col-form-label">Total Records Found :<span> &nbsp;{{reportHeader.count}}</span> <br></label>
             <label class=" col-md-10 col-form-label"  *ngIf="reportHeader.bank">Bank :<span> &nbsp;{{reportHeader.bank}}</span> <br></label>

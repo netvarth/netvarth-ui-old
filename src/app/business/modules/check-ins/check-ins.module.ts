@@ -26,6 +26,7 @@ import { ProviderWaitlistCheckInConsumerNoteModule } from './provider-waitlist-c
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { CheckinDetailsSendModule } from './checkin-details-send/checkin-details-send.modules';
 import { ModalGalleryModule } from 'angular-modal-gallery';
+import { CheckinActionsComponent } from './checkin-actions/checkin-actions.component';
 // import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
 
 
@@ -59,12 +60,14 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
         ProviderCheckinComponent,
         AdjustQueueDelayComponent,
         AdjustqueueDelayComponent,
-        ProviderWaitlistCheckInDetailComponent
+        ProviderWaitlistCheckInDetailComponent,
+        CheckinActionsComponent
         // DateRangePickerJComponent
 
     ],
     entryComponents: [
-        AdjustQueueDelayComponent
+        AdjustQueueDelayComponent,
+        CheckinActionsComponent
     ],
     exports: [CheckInsComponent]
 })

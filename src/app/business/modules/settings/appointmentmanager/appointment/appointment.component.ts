@@ -235,6 +235,11 @@ export class AppointmentComponent implements OnInit {
             if (qparams.thirdParty) {
                 this.thirdParty = qparams.thirdParty;
             }
+            if (qparams.date) {
+                this.sel_checkindate = moment(qparams.date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+            } else {
+                this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+            }
             if (qparams.ph || qparams.id) {
                 const filter = {};
                 if (qparams.ph) {
@@ -266,11 +271,6 @@ export class AppointmentComponent implements OnInit {
             }
             if (qparams.userId) {
                 this.selectUser = JSON.parse(qparams.userId);
-            }
-            if (qparams.date) {
-                this.sel_checkindate = moment(qparams.date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
-            } else {
-                this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
             }
             if (qparams.type && qparams.type === 'fill') {
                 this.initAppointment(this.thirdParty);
@@ -344,7 +344,9 @@ export class AppointmentComponent implements OnInit {
         this.qParams['thirdParty'] = this.thirdParty;
         this.qParams['type'] = type;
         this.qParams['serviceId'] = this.sel_ser;
-        this.qParams['userId'] = this.selectedUser.id;
+        if (this.selectedUser && this.selectedUser.id) {
+            this.qParams['userId'] = this.selectedUser.id;
+        }
         this.qParams['deptId'] = this.selected_dept;
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams

@@ -650,8 +650,7 @@ export const projectConstantsLocal = {
   PAYMENT_MODES: [
 
     {value: 'Cash', displayName: 'Cash'},
-    {value: 'DC', displayName: 'Debit card'},
-    {value: 'CC', displayName: 'Credit card'},
+    {value: 'CC,DC', displayName: 'CC/DC'},
     {value: 'NB', displayName: 'Net banking'},
     {value: 'PPI', displayName: 'Wallet'},
     {value: 'UPI', displayName: 'UPI'},
@@ -667,7 +666,7 @@ export const projectConstantsLocal = {
   ],
   PAYMENT_PURPOSE: [
 
-    {value: 'prePayment', displayName: 'Pre Payment'},
+    {value: 'prePayment', displayName: 'Advance Payment'},
     {value: 'billPayment', displayName: 'Bill Payment'},
     {value: 'donation', displayName: 'Donation'}
 
@@ -726,26 +725,26 @@ export const projectConstantsLocal = {
   REPORT_TRANSACTION_TYPE: [
     {displayName: 'Check-in/Token', value: 'Waitlist'},
     {displayName: 'Appointment', value: 'Appointment'},
-    // {displayName: 'Donation', value: 'Donation'},
+     {displayName: 'Donation', value: 'Donation'},
     // {displayName: 'Order', value: 'Order'}
     // {displayName: 'License', value: 'License'},
 
   ],
 
   REPORT_TIMEPERIOD: [
-    {value: 'LAST_WEEK', displayName: 'Last 7 days'},
-    {value: 'NEXT_WEEK', displayName: 'Next 7 days'},
-    {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
-    {value: 'NEXT_THIRTY_DAYS', displayName: 'Next 30 days'},
     {value: 'TODAY', displayName: 'Today'},
+    {value: 'LAST_WEEK', displayName: 'Last 7 days'},
+    {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
+    {value: 'NEXT_WEEK', displayName: 'Next 7 days'},
+    {value: 'NEXT_THIRTY_DAYS', displayName: 'Next 30 days'},
     {value: 'DATE_RANGE', displayName: 'Date Range'},
 
   ],
 
   DONATION_TIMEPERIOD: [
+    {value: 'TODAY', displayName: 'Today'},
     {value: 'LAST_WEEK', displayName: 'Last 7 days'},
     {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
-    {value: 'TODAY', displayName: 'Today'},
     {value: 'DATE_RANGE', displayName: 'Date Range'},
 
   ],

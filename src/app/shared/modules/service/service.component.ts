@@ -744,7 +744,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             if (this.preInfoEnabled && this.preInfoTitle.trim() === '') {
                 this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
-            } else if (this.preInfoEnabled && this.preInfoTitle.trim() === '') {
+            } else if (this.postInfoEnabled && this.postInfoTitle.trim() === '') {
                 this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
             } else {
                 this.showInfo = false;

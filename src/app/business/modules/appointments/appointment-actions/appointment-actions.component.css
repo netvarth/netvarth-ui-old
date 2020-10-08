@@ -1,0 +1,70 @@
+.action-section {
+  margin-bottom: 20px;
+}
+.action-box {
+  /* border: 1px solid #ccc; */
+  width: 150px;
+  height: 100px;
+  margin: 15px;
+  text-align: center;
+  float: left;
+  display: table;
+  box-shadow: 10px 10px 15px 0px #cccccc9c;
+}
+@media (max-width: 970px) {
+  .action-box {
+    width: 140px;
+  }
+}
+@media (max-width: 864px) {
+  .action-box {
+    width: 125px;
+    height: 90px;
+  }
+}
+@media (max-width: 520px) {
+  .action-box {
+    width: 100px;
+    margin: 10px;
+  }
+  .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon, 
+  .message-icon, .notes-icon, .printer-icon , .viewdetails-icon,
+  .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon,
+  .meet-icon, .phon-icon {
+    width: 25px !important;
+  }
+  .zoom-icon, .wtsapaud-icon, .wtsapvid-icon {
+    width: 50px !important;
+  }
+}
+@media (max-width: 400px) {
+  .icon-text {
+    font-size: smaller;
+  }
+  .action-box {
+    width: 90px;
+    height: 80px;
+    margin: 5px;
+  }
+}
+.action-box-sub {
+  display: table-cell;
+  vertical-align: middle;
+}
+.label-head {
+  color: black;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.footerlinks {
+  font-size: 1rem;
+}
+.zoom-icon, .wtsapaud-icon, .wtsapvid-icon {
+  width: 70px;
+}
+.meet-icon, .phon-icon {
+  width: 40px;
+}
+.wtsapaud-icon {
+  margin-top: -15px;
+}
