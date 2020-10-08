@@ -12233,7 +12233,7 @@ img.busN-logo {
     width: 25px;
     margin-top: 7px;
 }
-.font-bold {
+.dash-name-bold {
   font-weight: bold;
 }
 .apptdate-slot {
@@ -12242,6 +12242,12 @@ img.busN-logo {
 }
 .index-zero {
   z-index: 0  !important;
+}
+@media only screen and (min-width: 575px) {
+  .dash-name-bold {
+    font-weight: bold;
+    font-size: 1rem !important;
+  }
 }
 @media only screen and (max-width: 400px){
   .divlftrt{

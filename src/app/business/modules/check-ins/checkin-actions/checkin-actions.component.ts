@@ -195,9 +195,9 @@ export class CheckinActionsComponent implements OnInit {
         });
     }
     changeWaitlistStatus(action) {
-        if (action === 'CANCEL') {
-            this.dialogRef.close();
-        }
+        // if (action === 'CANCEL') {
+        //     this.dialogRef.close();
+        // }
         this.provider_shared_functions.changeWaitlistStatus(this, this.checkin, action);
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
@@ -252,7 +252,7 @@ export class CheckinActionsComponent implements OnInit {
             if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
                 this.showCall = true;
             }
-            if (this.pos && !this.checkin.parentUuid) {
+            if (this.pos && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
                 this.showBill = true;
             }
         }
