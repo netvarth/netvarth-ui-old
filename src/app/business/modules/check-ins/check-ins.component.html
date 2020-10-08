@@ -272,7 +272,7 @@
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar" *ngIf="startedCheckins.length > 1 || apptStartedMultiSelection">
                     <tr>
-                      <th class="chkWth check-table-head" *ngIf="startedCheckins.length > 1" colspan="2">
+                      <th class="chkWth check-table-head" *ngIf="startedCheckins.length > 1" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkStartedSelectAppointments"
                           (change)="selectAllStarted()" [(ngModel)]="chkStartedSelectAppointments" />
                         <label class="selectall"> Select all</label>
@@ -283,7 +283,7 @@
                           Actions <i class="fa fa-caret-down"></i>
                         </a>
                       </th>
-                      <th class="childActionBar" colspan="3">
+                      <th class="childActionBar" colspan="2">
                       </th>
                     </tr>
                   </thead>
@@ -458,7 +458,7 @@
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                     <tr>
-                      <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="2">
+                      <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                           (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments" />
                         <label class="selectall"> Select all</label>
@@ -469,7 +469,7 @@
                           Actions <i class="fa fa-caret-down"></i>
                         </a>
                       </th>
-                      <th class="childActionBar" colspan="3">
+                      <th class="childActionBar" colspan="2">
                       </th>
                     </tr>
                   </thead>
@@ -754,7 +754,7 @@
               <table class="table tbl-qboard childDetails singleDash">
                 <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                   <tr>
-                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="2">
+                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                         (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments" />
                       <label class="selectall"> Select all</label>
@@ -765,7 +765,7 @@
                         Actions <i class="fa fa-caret-down"></i>
                       </a>
                     </th>
-                    <th class="childActionBar" colspan="3">
+                    <th class="childActionBar" colspan="2">
                     </th>
                   </tr>
                 </thead>
@@ -1135,7 +1135,7 @@
               <table class="table tbl-qboard childDetails singleDash">
                 <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                   <tr>
-                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="2">
+                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                         (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments" />
                       <label class="selectall"> Select all</label>
@@ -1146,7 +1146,7 @@
                         Actions <i class="fa fa-caret-down"></i>
                       </a>
                     </th>
-                    <th class="childActionBar" colspan="3">
+                    <th class="childActionBar" colspan="2">
                     </th>
                   </tr>
                 </thead>
