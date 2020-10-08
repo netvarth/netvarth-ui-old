@@ -294,7 +294,7 @@
                           <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
                             (click)="showCheckinActions()" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                             <!-- <i class="dashaction-icon"></i> -->
-                            Actions
+                            Actions <i class="fa fa-caret-down"></i>
                           </a>
                           <a *ngIf="!apptSingleSelection && !apptMultiSelection && time_type!=3"
                             class="mgn-lt-20 icon-action pointer-cursor icon-size1 underline avail-slot"
@@ -621,7 +621,8 @@
                                   </div>
                                 </td>
                                 <td class="q-actions td-four">
-                                  <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
+                                  <a class="statusText btn-play pointer-cursor call-btn"
+                                    [class.stopcall-btn]="appt.callingStatus"
                                     *ngIf="board_count > 0 && !appt.virtualService && time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                                     (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                                     <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
@@ -679,11 +680,11 @@
                                     <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                                       *ngIf="!small_device_display"> {{done_cap}} </span>
                                   </a>
-                                  <a class="statusText btn-play pointer-cursor act-btn"
+                                  <a class="statusText btn-play pointer-cursor act-btn single-action"
                                     (click)="showCheckinActions(appt)" [matTooltipClass]="tooltipcls"
                                     [matTooltip]="'Actions'">
                                     <!-- <i class="dashaction-icon"></i> -->
-                                    Actions
+                                    Actions <i class="fa fa-caret-down"></i>
                                   </a>
                                 </td>
                               </tr>
@@ -803,7 +804,7 @@
                           <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
                             (click)="showCheckinActions()" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                             <!-- <i class="dashaction-icon"></i> -->
-                            Actions
+                            Actions <i class="fa fa-caret-down"></i>
                           </a>
                         </div>
                         <div class="pull-right">
@@ -1241,10 +1242,10 @@
                         <i class="fa fa-undo" style="color: green;"></i> <span *ngIf="!small_device_display">
                           Confirmed</span>
                       </a> -->
-                        <a class="statusText btn-play pointer-cursor act-btn" (click)="showCheckinActions(appt)"
+                        <a class="statusText btn-play pointer-cursor act-btn single-action" (click)="showCheckinActions(appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                           <!-- <i class="dashaction-icon"></i> -->
-                          Actions
+                          Actions <i class="fa fa-caret-down"></i>
                         </a>
                       </td>
                     </tr>

@@ -280,7 +280,7 @@
                           (click)="showCheckinActions('started')" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
                           <!-- <i class="dashaction-icon"></i> -->
-                          Actions
+                          Actions <i class="fa fa-caret-down"></i>
                         </a>
                       </th>
                       <th class="childActionBar" colspan="3">
@@ -425,11 +425,11 @@
                             *ngIf="!small_device_display">
                             {{done_cap}}</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor act-btn"
+                        <a class="statusText btn-play pointer-cursor act-btn single-action"
                           (click)="showCheckinActions('started', checkin)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
                           <!-- <i class="dashaction-icon"></i> -->
-                          Actions
+                          Actions <i class="fa fa-caret-down"></i>
                         </a>
                       </td>
                     </tr>
@@ -466,7 +466,7 @@
                           (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
                           <!-- <i class="dashaction-icon"></i> -->
-                          Actions
+                          Actions <i class="fa fa-caret-down"></i>
                         </a>
                       </th>
                       <th class="childActionBar" colspan="3">
@@ -572,7 +572,8 @@
                         </div>
                       </td>
                       <td class="q-actions td-four">
-                        <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="checkin.callingStatus"
+                        <a class="statusText btn-play pointer-cursor call-btn"
+                          [class.stopcall-btn]="checkin.callingStatus"
                           *ngIf="!small_device_display && board_count > 0 && time_type == 1 && !checkin.virtualService && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
                           (click)="callingWaitlist(checkin)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                           <i class="dashboardcallstop-icon" *ngIf="checkin.callingStatus"></i> <span
@@ -617,11 +618,11 @@
                             *ngIf="!small_device_display">
                             {{done_cap}}</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor act-btn"
+                        <a class="statusText btn-play pointer-cursor act-btn single-action"
                           (click)="showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
                           <!-- <i class="dashaction-icon"></i> -->
-                          Actions
+                          Actions <i class="fa fa-caret-down"></i>
                         </a>
                       </td>
                     </tr>
@@ -761,7 +762,7 @@
                         (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
                         <!-- <i class="dashaction-icon"></i> -->
-                        Actions
+                        Actions <i class="fa fa-caret-down"></i>
                       </a>
                     </th>
                     <th class="childActionBar" colspan="3">
@@ -902,11 +903,11 @@
                           *ngIf="!small_device_display">
                           {{done_cap}}</span>
                       </a>
-                      <a class="statusText btn-play pointer-cursor act-btn"
+                      <a class="statusText btn-play pointer-cursor act-btn single-action"
                         (click)="showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
                         <!-- <i class="dashaction-icon"></i> -->
-                        Actions
+                        Actions <i class="fa fa-caret-down"></i>
                       </a>
                     </td>
                   </tr>
@@ -1142,7 +1143,7 @@
                         (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
                         <!-- <i class="dashaction-icon"></i> -->
-                        Actions
+                        Actions <i class="fa fa-caret-down"></i>
                       </a>
                     </th>
                     <th class="childActionBar" colspan="3">
@@ -1287,11 +1288,11 @@
                           *ngIf="!small_device_display">
                           {{done_cap}}</span>
                       </a>
-                      <a class="statusText btn-play pointer-cursor act-btn"
+                      <a class="statusText btn-play pointer-cursor act-btn single-action"
                         (click)="showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
                         <!-- <i class="dashaction-icon"></i> -->
-                        Actions
+                        Actions <i class="fa fa-caret-down"></i>
                       </a>
                     </td>
                   </tr>

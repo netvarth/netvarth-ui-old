@@ -12202,3 +12202,12 @@ img.busN-logo {
 .cancel-btn {
   border: 1px solid red;
 }
+@media (max-width: 490px) {
+  .single-action {
+    display: flex;
+  }
+  .single-action i {
+    padding-top: 3px;
+    padding-left: 2px;
+  }
+}
