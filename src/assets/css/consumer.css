@@ -6672,3 +6672,6 @@
     height: 2px;
     line-height: 2px;
  }
+.cursr-dfult {
+    cursor: default !important;
+} 
