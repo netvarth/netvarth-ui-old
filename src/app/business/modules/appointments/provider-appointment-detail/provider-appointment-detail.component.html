@@ -60,8 +60,8 @@
                 </div>
                 <div class="item" *ngIf="waitlist_data.batchId"><span
                     class="ttle">Batch</span><span>{{waitlist_data.batchId}}</span></div>
-                <div class="item" *ngIf="waitlist_data.appointmentEncId"><span class="ttle">Status
-                    code</span><span>{{waitlist_data.appointmentEncId}}</span></div>
+                <div class="item" *ngIf="waitlist_data.appointmentEncId"><span class="ttle">Confirmation
+                    No</span><span>{{waitlist_data.appointmentEncId}}</span></div>
                 <div class="item"><span class="ttle">{{location_cap}}</span>
                   <span *ngIf="waitlist_data.location">{{waitlist_data.location.place
                       | capitalizeFirst}}</span></div>
