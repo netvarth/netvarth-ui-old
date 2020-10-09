@@ -5,33 +5,35 @@
     <div class="dash-head">{{(showToken) ? 'Tokens' : 'Check-ins'}} </div>
   </div>
   <div class="pull-right">
-    <div class="navbar-custom-menu width100pc">
-      <ul class="nav navbar-nav width100pc">
-        <li class="dropdown messages-menu loc-lst queue-menu pull-right">
-          <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
-          <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-            *ngIf="selected_location" style="padding-top: 12px !important;">
-            <span *ngIf="!small_device_display">
-              {{selected_location.place | capitalizeFirst}}</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <ul class="menu">
-                <li *ngFor="let location of locations;let i = index" [(value)]="i"
-                  [ngClass]="{'active': (location.place == selected_location.place)}">
-                  <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
-                    <h4 *ngIf="location.place.length>='27'">
-                      {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
-                    <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+    <nav class="navbar navbar-static-top" role="navigation" [class.index-zero]="filter_sidebar">
+      <div class="navbar-custom-menu width100pc">
+        <ul class="nav navbar-nav width100pc">
+          <li class="dropdown messages-menu loc-lst queue-menu pull-right">
+            <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
+            <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
+              *ngIf="selected_location" style="padding-top: 12px !important;">
+              <span *ngIf="!small_device_display">
+                {{selected_location.place | capitalizeFirst}}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <ul class="menu">
+                  <li *ngFor="let location of locations;let i = index" [(value)]="i"
+                    [ngClass]="{'active': (location.place == selected_location.place)}">
+                    <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
+                      <h4 *ngIf="location.place.length>='27'">
+                        {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
+                      <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
 </section>
 
@@ -54,7 +56,7 @@
           <nav class="navbar navbar-static-top jd-custom-nav" role="navigation">
             <div class="navbar-custom-menu width100pc">
               <ul class="nav navbar-nav width100pc">
-                <li class="pl5 dropdown messages-menu queue-menu tok-db pull-right">
+                <li class="pl5 dropdown messages-menu queue-menu tok-db pull-right drop-width">
                   <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selectedView" style="padding-top: 12px !important;">
@@ -77,7 +79,8 @@
                     <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
                   </ul>
                 </li>
-                <li class="pl5 dropdown messages-menu queue-menu tok-db pull-right" *ngIf="account_type === 'BRANCH'">
+                <li class="pl5 dropdown messages-menu queue-menu tok-db pull-right drop-width"
+                  *ngIf="account_type === 'BRANCH'">
                   <i class="fa fa-user dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     style="padding-top: 12px !important;">
@@ -179,14 +182,20 @@
                     <ul class="sidebar-menu">
                       <div class="filterTextinput">
                         <li class="filterli">
-                          <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                            class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                          <input type="text" #Ffname (keyup)="keyPressed($event)" class="filterTextbox"
+                            [(ngModel)]="filter.first_name" placeholder="First Name">
                         </li>
                       </div>
                       <div class="filterTextinput">
                         <li class="filterli">
-                          <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                            class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                          <input type="text" #Flname (keyup)="keyPressed($event)" class="filterTextbox"
+                            [(ngModel)]="filter.last_name" placeholder="Last Name">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
+                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
                         </li>
                       </div>
                       <div *ngIf="services.length > 1">
@@ -674,13 +683,6 @@
                         </div>
                         <div class="filterTextinput">
                           <li class="filterli">
-                            <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
-                              (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
-                              maxlength="10" class="filterTextbox" placeholder="Phone Number">
-                          </li>
-                        </div>
-                        <div class="filterTextinput">
-                          <li class="filterli">
                             <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId" (blur)="doSearch()"
                               (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
                           </li>
@@ -961,12 +963,6 @@
                             <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
                               (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
                               maxlength="10" class="filterTextbox" placeholder="Phone Number">
-                          </li>
-                        </div>
-                        <div class="filterTextinput" *ngIf="time_type != 3">
-                          <li class="filterli">
-                            <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId" (blur)="doSearch()"
-                              (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
                           </li>
                         </div>
                         <div *ngIf="locations.length > 0 && time_type === 3">
