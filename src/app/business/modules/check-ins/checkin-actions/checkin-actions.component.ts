@@ -251,6 +251,8 @@ export class CheckinActionsComponent implements OnInit {
             if (this.pos && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
                 this.showBill = true;
             }
+        } else {
+            this.showMsg = true;
         }
     }
     getLabel() {

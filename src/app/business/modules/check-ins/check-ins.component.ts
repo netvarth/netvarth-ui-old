@@ -407,6 +407,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
+    this.pagination.startpageval = this.shared_functions.getitemFromGroupStorage('paginationStart') || 1;
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'appointments',
@@ -1285,7 +1286,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     // this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
-    if (this.selQIds) {
+    if (this.selQIds && this.selQIds.length > 0) {
       Mfilter['queue-eq'] = this.selQIds;
       // this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
       // this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
@@ -2356,7 +2357,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
-                  if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
+                if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];
                   Object.keys(this.historyCheckins[i].label).forEach(key => {
                     labels.push(this.historyCheckins[i].label[key]);
@@ -2500,7 +2501,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.router.navigate(['provider', 'check-ins', checkin.ynwUuid]);
     });
   }
-  changeWaitlistStatus(action, wtlst?) {
+  changeWaitlistStatus(status, action, wtlst?) {
     let waitlist;
     const _this = this;
     if (wtlst) {
@@ -2536,7 +2537,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
 
- showCallingModes(modes, action) {
+  showCallingModes(modes, action) {
     if (!modes.consumer) {
       this.consumr_id = modes.providerConsumer.id;
     } else {

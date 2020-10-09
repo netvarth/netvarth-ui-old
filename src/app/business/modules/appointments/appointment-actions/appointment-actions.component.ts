@@ -264,6 +264,8 @@ export class AppointmentActionsComponent implements OnInit {
             if (this.pos && ((this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') || ((this.appt.apptStatus === 'cancelled' || this.appt.apptStatus === 'Rejected') && this.appt.paymentStatus !== 'NotPaid'))) {
                 this.showBill = true;
             }
+        } else {
+            this.showMsg = true;
         }
     }
     getLabel() {
