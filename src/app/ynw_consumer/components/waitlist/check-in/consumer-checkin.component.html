@@ -37,7 +37,7 @@
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
                                             {{showCheckinButtonCaption()}} For <a
-                                                class="lnk pointer-cursor action mgn-lt-10 pull-right"
+                                                class="changeitem  pointer-cursor mgn-lt-10 pull-right"
                                                 (click)="changeService()">Change
                                                 Service</a></div>
                                         <div class="col-sm-12 col-xs-12 col-md-12">
@@ -59,8 +59,8 @@
                                                     {{sel_ser_det.name}}
                                                 </h6>
                                                 <div class="">
-                                                    <div class="prepay-amt mgn-bt-20" *ngIf="sel_ser_det.isPrePayment">
-                                                        <!-- {{prepayment_amnt_cap}} -->
+
+                                                    <!-- <div class="prepay-amt mgn-bt-20" *ngIf="sel_ser_det.isPrePayment">
                                                         <div
                                                             class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
                                                             <i class="icon-bell"></i><span
@@ -70,14 +70,15 @@
                                                             payment of
                                                             <span class="prepaymin-cls bold"><span
                                                                     class="rupee-font">&#8377;
-                                                                </span>{{prepaymentAmount}}</span>. <span
+                                                                </span>{{prepaymentAmount}}</span> <span
                                                                 *ngIf="userData && userData.userProfile && !userData.userProfile.email">Payment
                                                                 requires your email to send notifications regarding
                                                                 payments. To
                                                                 add your email <a class="lnk"
                                                                     (click)="handleEmail()">Click
                                                                     Here</a></span></div>
-                                                    </div>
+                                                    </div> -->
+
                                                     <div class="clearfix"></div>
                                                     <div class="callingmode mgn-lt-10 mgn-up-10"
                                                         *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
@@ -105,7 +106,8 @@
                                                                     </span>
                                                                     <span> <input *ngIf="!showInputSection"
                                                                             (keypress)="isNumeric($event)"
-                                                                            class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" style="width:150px!important ;"
+                                                                            class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
+                                                                            style="width:150px!important ;"
                                                                             placeholder="" [(ngModel)]="callingModes"
                                                                             autocomplete="off" maxlength="10"></span>
                                                                     <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
@@ -136,7 +138,8 @@
                                                         <div class="preinfo-text mgn-up-5">
                                                             <span [innerHTML]="sel_ser_det.preInfoText"></span>
                                                         </div>
-                                                        <a *ngIf="sel_ser_det.preInfoText" (click)="showPreInfo()" class="pull-right pointer-cursor mgn-up-5">
+                                                        <a *ngIf="sel_ser_det.preInfoText" (click)="showPreInfo()"
+                                                            class="pull-right pointer-cursor mgn-up-5">
                                                             See more
                                                         </a>
                                                     </div>
@@ -160,9 +163,36 @@
                                 <div
                                     class="col-md-4 col-lg-4 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
 
-                                    
-                                   
-                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
+
+
+                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
+                                        *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                            Date
+                                            <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 pull-right "
+                                                    (click)="changeTime()">Change
+                                                </a></span>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                            <h6 class="card-title serv-time">
+                                                <span *ngIf="!isFuturedate">Today, <span>
+                                                        {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                                    </span></span>
+                                                <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
+                                                    <span>
+                                                        {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                                    </span></span>
+
+                                                <!-- <span class="slotdiv">
+                                                    <mat-chip-list class="" *ngIf="queuejson && queuejson.length > 0">
+                                                        <mat-chip>
+                                                            
+                                                            {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                                        </mat-chip>
+                                                    </mat-chip-list></span> -->
+                                            </h6>
+                                        </div>
+
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
                                             Waiting in Line
                                         </div>
@@ -179,7 +209,8 @@
                                                         <!-- <strong>Today
                                                 </strong> -->
                                                     </span>
-                                                    <span *ngIf="isFuturedate">
+
+                                                    <!-- <span *ngIf="isFuturedate">
                                                         <span class="color-grey"> \ </span>
                                                         <span>{{sel_day}} {{sel_checkindate | date: dateFormat}}</span>
                                                     </span>
@@ -189,12 +220,11 @@
                                                                 
                                                                 {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
                                                             </mat-chip>
-                                                        </mat-chip-list></span>
+                                                        </mat-chip-list></span> -->
                                                 </span>
-                                                
-                                                
-                                                <span
-                                                    *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
+
+
+                                                <span *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
                                                     <!-- {{today_cap}} {{estimateCaption}}:
                                             <span>{{sel_queue_waitingmins}}</span> -->
 
@@ -210,15 +240,15 @@
                                             {{persons_ahead_cap}}&nbsp;<span>{{sel_queue_personaahead}}</span>
                                         </span> -->
 
-                                                <span
-                                                    *ngIf="sel_queue_servicetime!='' && calc_mode!='NoCalc'">
+                                                <span *ngIf="sel_queue_servicetime!='' && calc_mode!='NoCalc'">
 
                                                     <ng-container *ngIf="isFuturedate">
                                                         <!-- <span>{{nextavailableCaption}} -->
-                                                        <span><span class="color-grey"> \ </span>{{sel_day}}
+                                                        <!-- <span>
+                                                            <span class="color-grey"> \ </span>{{sel_day}}
                                                             {{sel_checkindate | date: dateFormat}},
-                                                            {{sel_queue_servicetime}}</span>
-                                                            
+                                                            {{sel_queue_servicetime}}</span> -->
+
                                                         <!-- </span> -->
                                                     </ng-container>
                                                     <ng-container *ngIf="!isFuturedate">
@@ -228,18 +258,15 @@
                                                             </span>{{sel_queue_servicetime}}</span>
                                                     </ng-container>
                                                 </span>
-                                            </h6> 
-                                            <span><a class="lnk pointer-cursor action mgn-rt-20 mgn-bt-10 pull-right"
-                                                (click)="changeTime()">Change Time
-                                            </a></span>
+                                            </h6>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-up-10"
-                                    *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
-                                    No timings available.
-                                    <span><a class="lnk pointer-cursor action mgn-lt-10"
-                                        (click)="changeTime()">Change Time
-                                    </a></span>
+                                        *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
+                                        No timings available.
+                                        <span><a class="lnk pointer-cursor action mgn-lt-10"
+                                                (click)="changeTime()">Change Time
+                                            </a></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12 border-tp check-new-group">
@@ -247,7 +274,7 @@
                                         <div
                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">Booking
-                                                For <a class="lnk pointer-cursor action mgn-lt-5 mgn-rt-20 pull-right "
+                                                For <a class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
                                                     (click)="handleSideScreen('members')">Change
                                                     <!-- <i class="fa fa-pencil"></i> -->
                                                 </a>
@@ -306,6 +333,16 @@
                                             </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
+                                                    <div *ngIf="sel_ser_det.isPrePayment" class=" mgn-bt-20">
+                                                        <!-- <span class="bold mgn-lt-5 red">{{sel_ser_det.name}}</span> -->
+                                                        This service
+                                                        requires
+                                                        an advance
+                                                        payment of
+                                                        <span class="prepaymin-cls bold"><span
+                                                                class="rupee-font">&#8377;
+                                                            </span>{{prepaymentAmount}}</span>
+                                                    </div>
                                                     <div class="checkin-btn-bp pointer-cursor"
                                                         [class.disableActn]="checkindisable || (queuejson && queuejson.length == 0 && !api_loading1) || callingModes === ''"
                                                         (click)="handleCheckinClicked()">
@@ -370,7 +407,7 @@
                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-10 mgn-lt-5">
                                     <button (click)="goBack()" class="btn bt3 btn-default coupon-apply-btn"
                                         type="button">Ok</button>
-                            </div>
+                                </div>
                             </div>
 
 
@@ -714,15 +751,15 @@
                                 </ng-container>
                             </div>
                         </div>
-                        <div class="lbl notes preinfoDesc"
-                        *ngIf="action=='preInfo'">
-                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20 mgn-bt-20" style="font-size: 1rem !important">{{sel_ser_det.preInfoTitle}}
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-xs-12 mgn-bt-20">
-                            <div [innerHTML]="sel_ser_det.preInfoText">
+                        <div class="lbl notes preinfoDesc" *ngIf="action=='preInfo'">
+                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20 mgn-bt-20"
+                                style="font-size: 1rem !important">{{sel_ser_det.preInfoTitle}}
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 mgn-bt-20">
+                                <div [innerHTML]="sel_ser_det.preInfoText">
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>

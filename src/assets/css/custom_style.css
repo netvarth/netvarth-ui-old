@@ -10549,7 +10549,7 @@ a {
 
 .wtsapaud-icon {
   content: url(../images/teleservice/whatsapp_audio.svg);
-  top: 4px;
+  top: 4px !important;
   position: relative;
   padding-right: 1px;
   width: 26px;
@@ -12265,4 +12265,8 @@ img.busN-logo {
   .drop-width {
     width: 25px;
   }
+}
+.c-checkin-new .changeitem {
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
 }
