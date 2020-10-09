@@ -64,7 +64,7 @@
                 <div class="icon-text">Status change</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()">
+        <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()" *ngIf="showMsg">
             <div class="action-box-sub">
                 <span class="message-icon"></span>
                 <div class="icon-text">Send Message</div>
@@ -124,8 +124,9 @@
 <div *ngIf="action === 'label'">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+        <div class="label-caption">Label</div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-30">
         <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
             <a class="label-head pointer-cursor" (click)="addLabelvalue('newvalue', label)">
                 {{label.displayName}}</a>

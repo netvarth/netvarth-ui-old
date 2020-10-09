@@ -928,6 +928,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getCounts();
   }
   setTimeType(time_type) {
+    this.showSlotsN = false;
     this.statusMultiCtrl = [];
     this.hideFilterSidebar();
     this.resetCheckList();

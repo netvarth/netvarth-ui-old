@@ -1618,7 +1618,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (appointments['checkedIn']) {
       Array.prototype.push.apply(scheduledList, appointments['checkedIn'].slice());
     }
-    this.sortCheckins(scheduledList);
+    if (this.time_type === 1) {
+      this.sortCheckins(scheduledList);
+    }
     return scheduledList;
   }
   getCancelledAppointment(appointments) {
@@ -2847,4 +2849,3 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setTimeType(event.index + 1);
   }
 }
-

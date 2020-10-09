@@ -44,7 +44,8 @@
                     <td>{{statusInfo.batchId}}</td>
                   </tr>
                   <tr *ngIf="type=='wl'">
-                    <td width="48%" align="right">Token For </td>
+                    <td width="48%" align="right" *ngIf="statusInfo.showToken">Token For </td>
+                    <td width="48%" align="right" *ngIf="!statusInfo.showToken"> Check-in For </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>
                       <span class="forwhom" *ngFor="let user of statusInfo.waitlistingFor">

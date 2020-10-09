@@ -24,19 +24,19 @@
         <div class="action-box pointer-cursor teleservice" *ngIf="showTeleserviceStart" [matTooltipClass]="tooltipcls"
             [matTooltip]="'Teleservice'" (click)="showCallingModes(appt)">
             <div class="action-box-sub">
-            <span class="meet-icon"
-                *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
-            <span class="zoom-icon"
-                *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
-            <span class="phon-icon"
-                *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
-            <span class="wtsapaud-icon"
-                *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></span>
-            <span class="wtsapvid-icon"
-                *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></span>
-            <div class="icon-text">
-                {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}}
-            </div>
+                <span class="meet-icon"
+                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
+                <span class="zoom-icon"
+                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
+                <span class="phon-icon"
+                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
+                <span class="wtsapaud-icon"
+                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></span>
+                <span class="wtsapvid-icon"
+                    *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></span>
+                <div class="icon-text">
+                    {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}}
+                </div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeWaitlistStatus('Rejected')">
@@ -64,7 +64,7 @@
                 <div class="icon-text">Status change</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()">
+        <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()" *ngIf="showMsg">
             <div class="action-box-sub">
                 <span class="message-icon"></span>
                 <div class="icon-text">Send Message</div>
@@ -125,10 +125,11 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-30">
         <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
             <a class="label-head pointer-cursor" (click)="addLabelvalue('newvalue', label)">
                 {{label.displayName}}</a>
+            <div class="label-caption">Label</div>
             <div *ngFor="let value of label.valueSet">
                 <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
                     (click)="changeLabelvalue(label.label, value.value)">

@@ -40,6 +40,7 @@ export class CheckinActionsComponent implements OnInit {
     board_count;
     pos = false;
     showBill = false;
+    showMsg = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -219,14 +220,6 @@ export class CheckinActionsComponent implements OnInit {
                 });
     }
     setActions() {
-        this.trackStatus = false;
-        this.showArrived = false;
-        this.showUndo = false;
-        this.showCancel = false;
-        this.showSendDetails = false;
-        this.showStart = false;
-        this.showTeleserviceStart = false;
-        this.showCall = false;
         if (!this.data.multiSelection) {
             if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn') {
                 this.showUndo = true;
@@ -240,8 +233,11 @@ export class CheckinActionsComponent implements OnInit {
             if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.jaldeeWaitlistDistanceTime && this.checkin.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.checkin.jaldeeStartTimeType === 'ONEHOUR' || this.checkin.jaldeeStartTimeType === 'AFTERSTART')) {
                 this.trackStatus = true;
             }
-            if (!this.data.multiSelection && this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled') {
+            if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled' && ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email)) {
                 this.showSendDetails = true;
+            }
+            if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
+                this.showMsg = true;
             }
             if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (!this.checkin.virtualService)) {
                 this.showStart = true;

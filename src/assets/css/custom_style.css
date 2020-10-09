@@ -12182,7 +12182,8 @@ img.busN-logo {
   width: 40px;
 }
 .pro-dash .mat-tab-body-wrapper,
-.pro-dash .mat-tab-group {
+.pro-dash .mat-tab-group,
+.pro-dash .mat-tab-label-container {
   z-index: 0;
 }
 .act-btn {
@@ -12260,4 +12261,8 @@ img.busN-logo {
   font-size: .7rem;
   }
   }
-  
+  @media (max-width: 350px){
+  .drop-width {
+    width: 25px;
+  }
+}
