@@ -68,7 +68,7 @@
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.service.minPrePaymentAmount}}</td>
                                         </tr>
-                                        <tr >
+                                        <tr *ngIf="appointment.batchId">
                                             <td width="48%" align="right">Batch</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.batchId}}</td>
