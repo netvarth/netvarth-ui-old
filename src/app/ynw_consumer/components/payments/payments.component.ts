@@ -64,4 +64,8 @@ export class ConsumerPaymentsComponent implements OnInit {
     gotoPayment(id) {
         this.router.navigate(['consumer', 'payments', id]);
     }
+    providerDetail(id, event) {
+        event.stopPropagation();
+        this.router.navigate(['searchdetail', id]);
+      }
 }

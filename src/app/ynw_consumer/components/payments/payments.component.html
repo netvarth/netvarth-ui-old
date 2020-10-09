@@ -35,8 +35,10 @@
                                                     <span *ngIf="payment.txnType==='Donation'" [matTooltip]="'Donation'" class="fa donate-icon"></span>
                                                 </div>
                                                 <div class="td one proname" style="flex-basis: 70% !important">
-                                                    <div class="accname">
-                                                        {{payment.accountName}} </div>
+                                                    <div class="accname"
+                                                     (click)="providerDetail(payment.accountEncodedId,$event)"
+                                                     >
+                                                        {{payment.accountName}}</div>
                                                     <div class="mode"> {{payment.acceptPaymentBy}} </div>
                                                 </div>
                                                 <div class="td three"

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -16,6 +16,7 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
     constructor(public shared_functions: SharedFunctions,
         private shared_services: SharedServices,
         public locationobj: Location,
+        private router: Router,
         private activated_route: ActivatedRoute) {
 
         this.activated_route.params.subscribe(
@@ -73,5 +74,9 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
     showRefunds() {
         this.showRefund = !this.showRefund;
     }
+    providerDetail(id, event) {
+        event.stopPropagation();
+        this.router.navigate(['searchdetail', id]);
+      }
 }
 
