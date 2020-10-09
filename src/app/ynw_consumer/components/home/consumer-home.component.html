@@ -218,7 +218,7 @@
                                                 </span>
                                             </h4>
                                             <span class="est-wait-time" *ngIf="( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Est Wait Time : {{booking.appxWaitingTime}} min</span>
-                                            <h4 *ngIf="(booking.waitlistStatus == 'cancelled' || booking.waitlistStatus =='done') && !booking.token">
+                                            <h4 *ngIf="(booking.waitlistStatus == 'cancelled' || booking.waitlistStatus =='done') && !booking.token && booking.appxWaitingTime == 0">
                                                 <div class="circle-tokens">
                                                     <i class="fa chckn-icon" [matTooltip]="'Token'"></i>
                                                 </div>
@@ -487,7 +487,7 @@
                                                     </span>
                                                 </h4>
                                                 <span class="est-wait-time" *ngIf="( booking.appxWaitingTime >= 0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Est Wait Time : {{booking.appxWaitingTime}} min</span>
-                                                <h4 *ngIf="(booking.waitlistStatus == 'cancelled' || booking.waitlistStatus =='done') && !booking.token">
+                                                <h4 *ngIf="(booking.waitlistStatus == 'cancelled' || booking.waitlistStatus =='done') && !booking.token && booking.appxWaitingTime == 0">
                                                     <div class="circle-tokens">
                                                         <i class="fa chckn-icon" [matTooltip]="'Token'"></i>
                                                     </div>
