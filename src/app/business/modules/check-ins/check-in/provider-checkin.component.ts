@@ -1070,11 +1070,12 @@ export class ProviderCheckinComponent implements OnInit {
                 break;
         }
         this.step = cstep;
-        if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-            // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
-            // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
-        }
+        // if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
+        //     // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+        //     // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
+        //     this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+        //     console.log(this.waitlist_for);
+        // }
     }
     showCheckinButtonCaption() {
         let caption = '';
