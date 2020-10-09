@@ -145,17 +145,20 @@ export class ConsumerServices {
     const path = 'consumer/waitlist/today';
     return this.servicemeta.httpGet(path);
   }
-  getWaitlistFuture() {
-    const path = 'consumer/waitlist/future';
-    return this.servicemeta.httpGet(path);
+  getWaitlistFuture(params) {
+    // const path = 'consumer/waitlist/future';
+    // return this.servicemeta.httpGet(path);
+    return this.servicemeta.httpGet('consumer/waitlist/future', null, params);
   }
-  getAppointmentToday() {
-    const path = 'consumer/appointment/today';
-    return this.servicemeta.httpGet(path);
+  getAppointmentToday(params?) {
+   // const path = 'consumer/appointment/today';
+   // return this.servicemeta.httpGet(path);
+    return this.servicemeta.httpGet('consumer/appointment/today', null, params);
   }
-  getAppointmentFuture() {
-    const path = 'consumer/appointment/future';
-    return this.servicemeta.httpGet(path);
+  getAppointmentFuture(params?) {
+    // const path = 'consumer/appointment/future';
+    // return this.servicemeta.httpGet(path);
+    return this.servicemeta.httpGet('consumer/appointment/future', null, params);
   }
   getAppointmentHistory(params?) {
    // const path = 'consumer/appointment/history',null, params ;

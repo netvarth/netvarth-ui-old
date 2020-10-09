@@ -410,6 +410,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           // more case
           this.todayBookings = [];
           this.todayBookings_more = [];
+          // tslint:disable-next-line:no-shadowed-variable
           for (let i = 0; i < this.today_totalbookings.length; i++) {
             if (i <= 2) {
               this.todayBookings.push(this.today_totalbookings[i]);
@@ -1624,7 +1625,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   getAppointmentToday() {
-    this.consumer_services.getAppointmentToday()
+    const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
+    this.consumer_services.getAppointmentToday(params)
       .subscribe(
         data => {
           this.appointmentslist = data;
@@ -1637,7 +1639,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       );
   }
   getAppointmentFuture() {
-    this.consumer_services.getAppointmentFuture()
+    const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
+    this.consumer_services.getAppointmentFuture(params)
       .subscribe(
         data => {
           this.future_appointments = data;
@@ -1660,7 +1663,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   // }
 
   getWaitlistFuture() {
-    this.consumer_services.getWaitlistFuture()
+    const params = {
+      'waitlistStatus-neq': 'failed,prepaymentPending'};
+    this.consumer_services.getWaitlistFuture(params)
       .subscribe(
         data => {
           this.future_waitlists = data;
