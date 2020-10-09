@@ -2,7 +2,6 @@ import { catchError ,  switchMap ,  retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable ,  Subject ,  throwError, EMPTY } from 'rxjs';
-// import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Messages } from '../constants/project-messages';
@@ -77,6 +76,12 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       }
       const phone_number = ynw_user.loginId;
       const password = this.shared_functions.getitemfromLocalStorage('jld');
+      if (!ynw_user.mUniqueId) {
+        if (localStorage.getItem('mUniqueId')) {
+          ynw_user.mUniqueId = localStorage.getItem('mUniqueId');
+          this.shared_functions.setitemonLocalStorage('ynw-credentials', ynw_user);
+        }
+      }
       const post_data = {
         'countryCode': '+91',
         'loginId': phone_number,

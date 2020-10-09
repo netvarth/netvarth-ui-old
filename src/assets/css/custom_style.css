@@ -5883,7 +5883,7 @@ li.separator.setsplit {
   padding: 5px 10px 5px 10px;
   margin-bottom: 1px;
   box-shadow: none;
-  background-color: buttonface;
+  /* background-color: buttonface; */
   border: 1px solid #ddd;
   color: black;
   font-weight: 500;
@@ -12181,6 +12181,88 @@ img.busN-logo {
   content: url(../images/dashboard-icons/arrivved2.svg);
   width: 40px;
 }
-.pro-dash .mat-tab-body-wrapper {
+.pro-dash .mat-tab-body-wrapper,
+.pro-dash .mat-tab-group,
+.pro-dash .mat-tab-label-container {
   z-index: 0;
+}
+.act-btn {
+  border: 1px solid orange;
+}
+.done-btn {
+  border: 1px solid green;
+}
+.start-btn {
+  border: 1px solid purple;
+}
+.call-btn {
+  border: 1px solid green;
+}
+.stopcall-btn {
+  border: 1px solid red !important;
+}
+.cancel-btn {
+  border: 1px solid red;
+}
+@media (max-width: 490px) {
+  .single-action {
+    display: flex;
+  }
+  .single-action i {
+    padding-top: 3px;
+    padding-left: 2px;
+  }
+}
+.cons-payments .appt-icon {
+  content: url(../images/myjaldee/Appoinment-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.cons-payments .chckn-icon {
+    content: url(../images/myjaldee/Checkin-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 29px;
+    margin-top: 5px;
+}
+.cons-payments .donate-icon {
+    content: url(../images/donation.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 25px;
+    margin-top: 7px;
+}
+.dash-name-bold {
+  font-weight: bold;
+}
+.apptdate-slot {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.index-zero {
+  z-index: 0  !important;
+}
+@media only screen and (min-width: 575px) {
+  .dash-name-bold {
+    font-weight: bold;
+    font-size: 1rem !important;
+  }
+}
+@media only screen and (max-width: 400px){
+  .divlftrt{
+  padding-left: 0px!important;
+  padding-right: 0px!important;
+  }
+  }
+  @media only screen and (max-width: 400px){
+  .lablresponssive{
+  font-size: .7rem;
+  }
+  }
+  @media (max-width: 350px){
+  .drop-width {
+    width: 25px;
+  }
 }

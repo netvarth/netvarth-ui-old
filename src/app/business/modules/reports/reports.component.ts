@@ -13,7 +13,13 @@ export class ReportsComponent implements OnInit {
   paymentReports = [];
   checkinReports = [];
 
-  constructor(private router: Router, private report_dataService: ReportDataService) { }
+  constructor(private router: Router, private report_dataService: ReportDataService) {
+    this.report_dataService.updateCustomers('All');
+    this.report_dataService.updatedQueueDataSelection('All');
+    this.report_dataService.updatedScheduleDataSelection('All');
+    this.report_dataService.updatedServiceDataSelection('All');
+    this.report_dataService.storeSelectedValues({});
+   }
 
   ngOnInit() {
   }

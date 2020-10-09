@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material';
 import { ReportDataService } from '../reports-data.service';
 import { Router } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
-
+declare let cordova: any;
 
 @Component({
   selector: 'app-generated-report',
@@ -14,7 +14,7 @@ export class GeneratedReportComponent implements OnInit {
 
 
   showReport: boolean;
-    report_type: any;
+  report_type: any;
   reportConsolidatedInfo: any;
   objectKeys: (o: {}) => string[];
   reportCriteriaHeader: any;
@@ -64,7 +64,7 @@ export class GeneratedReportComponent implements OnInit {
     if (this.report.reportContent.data.length === 0) {
       this.showReport = false;
     } else {
-     this.showReport = true;
+      this.showReport = true;
     }
 
   }
@@ -77,25 +77,12 @@ export class GeneratedReportComponent implements OnInit {
   }
   printReport() {
     const printContent = document.getElementById('reportGenerated');
-    const WindowPrt = window.open('', '', 'left=0,top=0,height=900,toolbar=0,scrollbars=0,status=0');
-    WindowPrt.document.write(printContent.innerHTML);
-    WindowPrt.document.close();
-    WindowPrt.focus();
-    WindowPrt.print();
-    WindowPrt.close();
+    let printsection = '<html><head><title></title>';
+    printsection += '</head><body>';
+    printsection += '<div>';
+    printsection += printContent.innerHTML;
+    printsection += '</div>';
+    printsection += '</body></html>';
+    cordova.plugins.printer.print(printsection);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

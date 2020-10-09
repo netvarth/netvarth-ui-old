@@ -15,8 +15,8 @@
 
 
         <div class="box" >
-
-    <div class="box-body table-container table-responsive mat-elevation-z8'">
+     <div *ngIf="service_dataSource.data.length!=0">
+    <div class="box-body table-container table-responsive mat-elevation-z8'" >
         Choose services from this grid
         <div class="spinner-container" *ngIf="service_loading$ ">
 
@@ -85,7 +85,12 @@
 
       </div>
 
-
+    </div>
+    <div *ngIf="service_dataSource.data.length===0" >
+    <div class="box-body table-container table-responsive mat-elevation-z8'" style="text-align: center;" >
+      No Service Found
+    </div>
+  </div>
         </div>
 
 

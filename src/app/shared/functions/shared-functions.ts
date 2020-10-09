@@ -203,11 +203,15 @@ export class SharedFunctions {
 
   public clearLocalstorage() {
     this.removeitemfromLocalStorage('ynw-credentials');
+    const uniqueId = localStorage.getItem('mUniqueId');
     for (let index = 0; index < localStorage.length; index++) {
       if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
         localStorage.removeItem(localStorage.key(index));
         index = index - 1; // manage index after remove
       }
+    }
+    if (uniqueId) {
+      localStorage.setItem('mUniqueId', uniqueId);
     }
   }
   public clearSessionStorage() {

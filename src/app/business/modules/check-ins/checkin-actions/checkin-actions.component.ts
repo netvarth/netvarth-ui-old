@@ -40,6 +40,7 @@ export class CheckinActionsComponent implements OnInit {
     board_count;
     pos = false;
     showBill = false;
+    showMsg = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -195,9 +196,9 @@ export class CheckinActionsComponent implements OnInit {
         });
     }
     changeWaitlistStatus(action) {
-        if (action === 'CANCEL') {
-            this.dialogRef.close();
-        }
+        // if (action === 'CANCEL') {
+        //     this.dialogRef.close();
+        // }
         this.provider_shared_functions.changeWaitlistStatus(this, this.checkin, action);
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
@@ -219,14 +220,6 @@ export class CheckinActionsComponent implements OnInit {
                 });
     }
     setActions() {
-        this.trackStatus = false;
-        this.showArrived = false;
-        this.showUndo = false;
-        this.showCancel = false;
-        this.showSendDetails = false;
-        this.showStart = false;
-        this.showTeleserviceStart = false;
-        this.showCall = false;
         if (!this.data.multiSelection) {
             if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn') {
                 this.showUndo = true;
@@ -240,8 +233,11 @@ export class CheckinActionsComponent implements OnInit {
             if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.jaldeeWaitlistDistanceTime && this.checkin.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.checkin.jaldeeStartTimeType === 'ONEHOUR' || this.checkin.jaldeeStartTimeType === 'AFTERSTART')) {
                 this.trackStatus = true;
             }
-            if (!this.data.multiSelection && this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled') {
+            if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled' && ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email)) {
                 this.showSendDetails = true;
+            }
+            if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
+                this.showMsg = true;
             }
             if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (!this.checkin.virtualService)) {
                 this.showStart = true;
@@ -252,7 +248,7 @@ export class CheckinActionsComponent implements OnInit {
             if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
                 this.showCall = true;
             }
-            if (this.pos && !this.checkin.parentUuid) {
+            if (this.pos && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
                 this.showBill = true;
             }
         }
@@ -286,6 +282,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     deleteLabel(label, checkinId) {
         this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
+            this.dialogRef.close();
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -325,6 +322,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     addLabel() {
         this.provider_services.addLabeltoCheckin(this.checkin.ynwUuid, this.labelMap).subscribe(data => {
+            this.dialogRef.close();
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

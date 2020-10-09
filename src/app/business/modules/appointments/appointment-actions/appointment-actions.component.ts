@@ -40,6 +40,7 @@ export class AppointmentActionsComponent implements OnInit {
     board_count;
     pos = false;
     showBill = false;
+    showMsg = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -109,7 +110,7 @@ export class AppointmentActionsComponent implements OnInit {
         return this.shared_functions.convert24HourtoAmPm(slots[0]);
     }
     qrCodegeneration(valuetogenerate) {
-        this.qr_value = this.path + 'status/' + valuetogenerate.checkinEncId;
+        this.qr_value = this.path + 'status/' + valuetogenerate.appointmentEncId;
         this.showQR = true;
     }
     addConsumerInboxMessage() {
@@ -206,9 +207,9 @@ export class AppointmentActionsComponent implements OnInit {
         });
     }
     changeWaitlistStatus(action) {
-        if (action === 'Rejected') {
-            this.dialogRef.close();
-        }
+        // if (action === 'Rejected') {
+        //     this.dialogRef.close();
+        // }
         this.provider_shared_functions.changeWaitlistStatus(this, this.appt, action, 'appt');
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
@@ -232,14 +233,6 @@ export class AppointmentActionsComponent implements OnInit {
                 });
     }
     setActions() {
-        this.trackStatus = false;
-        this.showArrived = false;
-        this.showUndo = false;
-        this.showCancel = false;
-        this.showSendDetails = false;
-        this.showStart = false;
-        this.showTeleserviceStart = false;
-        this.showCall = false;
         if (!this.data.multiSelection) {
             if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed') {
                 this.showUndo = true;
@@ -253,8 +246,11 @@ export class AppointmentActionsComponent implements OnInit {
             if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeWaitlistDistanceTime && this.appt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
                 this.trackStatus = true;
             }
-            if (!this.data.multiSelection && this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
+            if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected' && (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo)) {
                 this.showSendDetails = true;
+            }
+            if (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo) {
+                this.showMsg = true;
             }
             if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService)) {
                 this.showStart = true;
@@ -265,7 +261,7 @@ export class AppointmentActionsComponent implements OnInit {
             if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived')) {
                 this.showCall = true;
             }
-            if (this.pos) {
+            if (this.pos && ((this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') || ((this.appt.apptStatus === 'cancelled' || this.appt.apptStatus === 'Rejected') && this.appt.paymentStatus !== 'NotPaid'))) {
                 this.showBill = true;
             }
         }
@@ -299,6 +295,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     deleteLabel(label, checkinId) {
         this.provider_services.deleteLabelfromAppointment(checkinId, label).subscribe(data => {
+            this.dialogRef.close();
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -338,6 +335,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     addLabel() {
         this.provider_services.addLabeltoAppointment(this.appt.uid, this.labelMap).subscribe(data => {
+            this.dialogRef.close();
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -401,4 +399,3 @@ export class AppointmentActionsComponent implements OnInit {
         });
     }
 }
-

@@ -22,13 +22,17 @@
                   <button (click)="closeOnlineQR()">close</button> -->
       </div>
       <div class="jld-link-pad">
-       <div>Jaldee Link - <span class="jld-lnk-font">{{wpath}}{{accuid}}</span></div>
-       <div>
-           Jaldee Provider ID - <span class="jld-lnk-font">{{accuid}}</span>
+       <div>Jaldee Link - <span class="jld-lnk-font custId-cursor" ><a href="{{wpath}}{{accuid}}" target="blank">{{wpath}}{{accuid}}</a></span></div>
+       <br>
+       <div style="padding-right: 20%;">
+           Jaldee Provider ID - <span class="jld-lnk-font" >{{accuid}}</span>
        </div>
-       <div class="mgn-up-20">
-         <label>Share Jaldee Link </label>
-        <share-buttons [theme]="'circles-dark'"
+       <div class="mgn-up-20" >
+        <label>Share Jaldee Link</label>
+        <!-- <div style="display:flex;padding-left: 150px;">
+        <i class="fa fa-copy custId-cursor  font-lrge " style="font-size:40px;"
+        (click)="copyInputMessage(accuid)" [matTooltip]="'Copy link'"></i> -->
+        <share-buttons [theme]="'circles-dark'" 
         [include]="['facebook','whatsapp','email']"
         [url]="shareLink"
         [autoSetMeta]="true"
@@ -36,7 +40,8 @@
         [showIcon]="true"
         [showText]="true"
        ></share-buttons>
+        </div>
        </div>
       </div>
-      </div>
+      <!-- </div> -->
 </mat-dialog-content>
