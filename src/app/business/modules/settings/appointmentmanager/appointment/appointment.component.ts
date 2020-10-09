@@ -1057,11 +1057,11 @@ export class AppointmentComponent implements OnInit {
                 break;
         }
         this.step = cstep;
-        if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-            // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
-            // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
-        }
+        // if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
+        //     // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+        //     // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
+        //     this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+        // }
     }
     showCheckinButtonCaption() {
         let caption = '';
