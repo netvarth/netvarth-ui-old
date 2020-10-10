@@ -166,6 +166,7 @@ export class CustomersListComponent implements OnInit {
                 );
         });
     }
+
     toggleFilter() {
         this.open_filter = !this.open_filter;
     }
@@ -294,6 +295,12 @@ export class CustomersListComponent implements OnInit {
             queryParams: { action: 'view' }
         };
         this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
+    }
+    medicalRecord(customer) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: { cutomerDetails: JSON.stringify(customer) }
+    };
+      this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
     }
     searchCustomer() {
         const navigationExtras: NavigationExtras = {

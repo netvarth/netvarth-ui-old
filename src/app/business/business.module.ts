@@ -54,6 +54,7 @@ import { UpdateEmailComponent } from './modules/update-email/update-email.compon
 import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
 import { CallingModesModule } from './modules/calling-modes/calling-modes.module';
 
+
 @NgModule({
     declarations: [
         MenuComponent,
@@ -80,7 +81,8 @@ import { CallingModesModule } from './modules/calling-modes/calling-modes.module
         ShowMessageComponent,
         ProviderStartTourComponent,
         UpdateEmailComponent,
-        InboxListComponent
+        InboxListComponent,
+
     ],
     imports: [
         BusinessRoutingModule,

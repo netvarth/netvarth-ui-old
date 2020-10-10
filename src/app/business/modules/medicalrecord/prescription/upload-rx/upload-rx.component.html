@@ -1,0 +1,69 @@
+<div class="card  w-dta active" >
+
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 cust-sect no-padding"  *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
+     <h5> By clicking upload prescription you will have choice of uploading a file or taking picture</h5>
+    <div>
+          <button  mat-button  style= "margin-left: 25%; margin-top: 1%;" class="cs-btn bt1" >
+                  <a class="pointer-cursor"
+                  (click)="imagefile.click()"><input #imagefile type="file"
+                      accept="/*;capture=camera" style="display:none;" multiple
+                      (change)="filesSelected($event)">Upload
+                  Rx</a>
+
+          </button>
+
+
+      </div>
+   </div>
+   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 cust-sect no-padding"  *ngIf="selectedMessage.files && selectedMessage.files.length > 0" >
+          <h5> Files uploaded</h5>
+      <table class="table table-bordered" >
+                  <thead>
+                  <tr >
+                    <th>
+                        File name
+                    </th>
+                    <th>
+                        status
+                    </th>
+                    <th>
+                        Image size
+                    </th>
+                    <th>
+
+                    </th>
+
+                  </tr>
+                </thead>
+                  <tbody>
+                    <tr *ngFor="let file of selectedMessage.files; let i = index;" >
+
+                      <td >
+                        {{file.name}}
+                      </td>
+                      <td >
+                        Uploaded
+                      </td>
+                      <td >
+                        unknown
+                      </td>
+                       <td >
+                        <span (click)="deleteTempImage(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span>
+                       </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+<span>If you have multiple prescriptions images, <a class="lnk action pointer-cursor"
+  (click)="imagefile.click()"><input #imagefile type="file"
+      accept="/*;capture=camera" style="display:none;" multiple
+      (change)="filesSelected($event)"><u>Upload
+  another</u></a></span>
+                <div>
+                      <button type="submit" mat-button  style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt1" (click)="saveImages()" >
+
+                          Save</button>
+
+                  </div>
+      </div>
+  </div>
