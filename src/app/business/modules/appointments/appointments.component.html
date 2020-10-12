@@ -1032,7 +1032,7 @@
                                   <li class="filterli filterDatepicker">
                                     <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday"
                                       [max]="maxday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
-                                      (blur)="doSearch()" class="filterTextbox" placeholder="Start Date">
+                                      (blur)="doSearch()" class="filterTextbox" placeholder="Start Date" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
@@ -1042,7 +1042,7 @@
                                   <li class="filterli filterDatepicker">
                                     <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="minday"
                                       [max]="maxday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
-                                      (blur)="doSearch()" class="filterTextbox" placeholder="End Date">
+                                      (blur)="doSearch()" class="filterTextbox" placeholder="End Date" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>

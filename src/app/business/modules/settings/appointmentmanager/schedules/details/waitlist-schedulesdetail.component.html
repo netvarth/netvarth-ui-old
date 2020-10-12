@@ -111,6 +111,17 @@
                                                     *ngIf="queue_data.futureAppt">On</span><span
                                                     *ngIf="!queue_data.futureAppt">Off</span>
                                             </div>
+                                            <div class="item"
+                                            *ngIf="queue_data.batchName && queue_data.batchName.prefix != ''">
+                                                <span class="ttle"> Prefix </span><span
+                                                    class="day">{{queue_data.batchName.prefix}}</span>
+                                            </div>
+                                            <div class="item"
+                                            *ngIf="queue_data.batchName && queue_data.batchName.prefix && queue_data.batchName.suffix != ''">
+                                                <span class="ttle"> Suffix </span><span
+                                                    class="day">{{queue_data.batchName.suffix}}</span>
+                                            </div>
+
                                         </div>
                                         <!-- <div class="c-ot row col-sm-12">
                                             <div class="item" style="display: flex;">
@@ -475,6 +486,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                                         autocomplete="off" [ngModelOptions]="{standalone: true}">
                                                 </mat-form-field>
                                             </div>
+                                            
                                             <!-- <div class="c-ot" *ngIf="!showEditSection">
                                             <div class="item"
                                                 *ngIf="queue_data.batchName && queue_data.batchName.prefix != ''">
