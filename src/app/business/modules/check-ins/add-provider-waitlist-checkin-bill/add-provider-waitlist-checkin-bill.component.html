@@ -998,7 +998,7 @@
 													(click)="printMe()">Print</button>
 
 												<button type="button" mat-button class="cs-btn bt1 accept"
-													*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
+													*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer !== 0"
 													(click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
 												<button type="button" mat-button class="cs-btn bt1 accept"
 													*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
