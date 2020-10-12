@@ -174,14 +174,16 @@
                                                 </a></span>
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                            <h6 class="card-title serv-time">
-                                                <span *ngIf="!isFuturedate">Today, <span>
-                                                        {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
-                                                    </span></span>
+                                            <h6 class="card-title serv-time border-style">
+                                                <span *ngIf="!isFuturedate">Today, </span>
+                                                <span *ngIf="!isFuturedate">
+                                                    {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                                </span>
                                                 <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
-                                                    <span>
+                                                    </span>
+                                                    <span *ngIf="isFuturedate">
                                                         {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
-                                                    </span></span>
+                                                    </span>
 
                                                 <!-- <span class="slotdiv">
                                                     <mat-chip-list class="" *ngIf="queuejson && queuejson.length > 0">
