@@ -12270,3 +12270,6 @@ img.busN-logo {
   font-size: 0.8rem !important;
   font-weight: 700 !important;
 }
+.back-btn i {
+  color: black !important;
+}
