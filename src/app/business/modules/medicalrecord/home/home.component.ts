@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   routeLinks: any[];
   activeLinkIndex = -1;
-  constructor(private router: Router) {
+
+  constructor(private router: Router ) {
     this.routeLinks = [
       {
         label: 'Clinical Notes',
@@ -23,12 +24,9 @@ export class HomeComponent implements OnInit {
     ];
   }
 
-
-
   ngOnInit() {
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
-      // this.getCustomerDetail();
     });
   }
 
