@@ -474,7 +474,7 @@
                             (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
                             {{getSingleTime(slot.time)}}</mat-chip>
                         </mat-chip-list>
-                        <span *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
+                        <span class="black" *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
                       </td>
                     </tr>
                   </thead>
@@ -1067,7 +1067,7 @@
                             [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
                             {{getSingleTime(slot.time)}}</mat-chip>
                         </mat-chip-list>
-                        <span *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
+                        <span class="black" *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
                       </td>
                     </tr>
                   </thead>

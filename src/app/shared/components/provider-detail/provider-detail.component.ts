@@ -450,7 +450,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.account_Type = this.businessjson.accountType;
             if (this.account_Type === 'BRANCH') {
               this.getbusinessprofiledetails_json('departmentProviders', true);
-                }
+            }
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
@@ -1527,12 +1527,16 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   appointmentClicked(location, service: any) {
     this.futureAllowed = true;
+    let serviceDate;
+    if (service.serviceAvailability && service.serviceAvailability.nextAvailableDate) {
+      serviceDate = service.serviceAvailability.nextAvailableDate;
+    }
     const current_provider = {
       'id': location.id,
       'place': location.place,
       'location': location,
-      'cdate': service.serviceAvailability.nextAvailableDate,
-      'service': service
+      'service': service,
+      'cdate': serviceDate
     };
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
@@ -1552,9 +1556,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       cmon = '' + mm;
     }
     const dtoday = yyyy + '-' + cmon + '-' + cday;
-    if (dtoday === service.serviceAvailability.nextAvailableDate) {
-      this.changedate_req = false;
+    if (service.serviceAvailability && service.serviceAvailability.nextAvailableDate) {
+      if (dtoday === serviceDate) {
+        this.changedate_req = false;
+      } else {
+        this.changedate_req = true;
+      }
     } else {
+      serviceDate = dtoday;
       this.changedate_req = true;
     }
     if (!location.futureAppt) {
@@ -1562,7 +1571,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showAppointment(location.id, location.place, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+      this.showAppointment(location.id, location.place, serviceDate, service, 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider };
       this.doLogin('consumer', passParam);

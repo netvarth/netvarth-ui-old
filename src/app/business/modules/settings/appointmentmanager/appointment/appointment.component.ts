@@ -240,6 +240,17 @@ export class AppointmentComponent implements OnInit {
             } else {
                 this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
             }
+            if (qparams.timeslot) {
+                this.slotTime = qparams.timeslot;
+                this.comingSchduleId = JSON.parse(qparams.scheduleId);
+                this.serviceIdParam = JSON.parse(qparams.serviceId);
+            }
+            if (qparams.deptId) {
+                this.selectDept = JSON.parse(qparams.deptId);
+            }
+            if (qparams.userId) {
+                this.selectUser = JSON.parse(qparams.userId);
+            }
             if (qparams.ph || qparams.id) {
                 const filter = {};
                 if (qparams.ph) {
@@ -260,17 +271,6 @@ export class AppointmentComponent implements OnInit {
                         }
                     );
                 }
-            }
-            if (qparams.timeslot) {
-                this.slotTime = qparams.timeslot;
-                this.comingSchduleId = JSON.parse(qparams.scheduleId);
-                this.serviceIdParam = JSON.parse(qparams.serviceId);
-            }
-            if (qparams.deptId) {
-                this.selectDept = JSON.parse(qparams.deptId);
-            }
-            if (qparams.userId) {
-                this.selectUser = JSON.parse(qparams.userId);
             }
             if (qparams.type && qparams.type === 'fill') {
                 this.initAppointment(this.thirdParty);
@@ -346,6 +346,8 @@ export class AppointmentComponent implements OnInit {
         this.qParams['serviceId'] = this.sel_ser;
         if (this.selectedUser && this.selectedUser.id) {
             this.qParams['userId'] = this.selectedUser.id;
+        } else {
+            this.qParams['userId'] = 0;
         }
         this.qParams['deptId'] = this.selected_dept;
         const navigationExtras: NavigationExtras = {

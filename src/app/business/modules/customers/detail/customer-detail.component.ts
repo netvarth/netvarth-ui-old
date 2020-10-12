@@ -236,11 +236,17 @@ export class CustomerDetailComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     if (data.length > 0) {
-                        this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
-                        this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
-                        this.amForm.get('email_id').setValue(data[0].userProfile.email);
-                        this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
-                        this.amForm.get('address').setValue(data[0].userProfile.address);
+                        if (data[0].userProfile) {
+                            this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
+                            this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
+                            if (data[0].userProfile.email) {
+                                this.amForm.get('email_id').setValue(data[0].userProfile.email);
+                            }
+                            this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
+                            if (data[0].userProfile.address) {
+                                this.amForm.get('address').setValue(data[0].userProfile.address);
+                            }
+                        }
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
                         this.customerErrorMsg1 = 'The system found the record details in Jaldee.com';
                         this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + ' to create ' + this.source + '?';

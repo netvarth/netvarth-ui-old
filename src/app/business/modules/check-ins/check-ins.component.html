@@ -183,18 +183,18 @@
                       <div class="filterTextinput">
                         <li class="filterli">
                           <input type="text" #Ffname (keyup)="keyPressed($event)" class="filterTextbox"
-                            [(ngModel)]="filter.first_name" placeholder="First Name">
+                            [(ngModel)]="filter.first_name" placeholder="First Name" (blur)="doSearch()">
                         </li>
                       </div>
                       <div class="filterTextinput">
                         <li class="filterli">
                           <input type="text" #Flname (keyup)="keyPressed($event)" class="filterTextbox"
-                            [(ngModel)]="filter.last_name" placeholder="Last Name">
+                            [(ngModel)]="filter.last_name" placeholder="Last Name" (blur)="doSearch()">
                         </li>
                       </div>
                       <div class="filterTextinput">
                         <li class="filterli">
-                          <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
+                          <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId" (blur)="doSearch()"
                             (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
                         </li>
                       </div>
