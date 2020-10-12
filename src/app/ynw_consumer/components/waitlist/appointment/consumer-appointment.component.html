@@ -162,14 +162,16 @@
 
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                            Appointment Time</div>
+                                            Appointment Time
+                                            <a class="lnk pull-right pointer-cursor action mgn-lt-10 mgn-rt-20"
+                                                (click)="changeSlot()">Change
+                                            </a>
+                                        </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
                                                 <h6 class="card-title serv-time" *ngIf="apptTime">
                                                     <span style="display: block;">
                                                         {{sel_checkindate | date: dateFormat}}</span><span>{{getSingleTime(apptTime.time)}}</span>
-                                                        <span><a class="lnk pointer-cursor action mgn-lt-10"
-                                                         (click)="changeSlot()">Change Slot
-                                                     </a></span>
+                                                        
                                                 </h6>
                                             </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
