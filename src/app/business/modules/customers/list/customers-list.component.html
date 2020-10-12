@@ -68,7 +68,7 @@
                 <li class="filterli filterDatepicker">
                   <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
                     #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
-                    placeholder="Date of birth">
+                    placeholder="Date of birth" readonly>
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>

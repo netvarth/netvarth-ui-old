@@ -3,9 +3,12 @@
 </section> -->
 <section class="">
   <div class="card title-gb">
-      <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToGeneral()">
+      <h5 class="mgn-up-10"> 
+        <!-- <button type="button" class="btn default profile-back" (click)="redirecToGeneral()">
               <span class="fa fa-chevron-left">&nbsp;Back</span>
-          </button>&nbsp;&nbsp;&nbsp; Non Working Day/Hour</h5>
+          </button>&nbsp;&nbsp;&nbsp; -->
+          <span class="fa fa-arrow-left"(click)="redirecToGeneral()"></span>
+           Non Working Day/Hour</h5>
   </div>
 </section>
 <section>
@@ -24,9 +27,9 @@
                               <div class="form-group no-padding nonworking">
                                   <mat-form-field class="selctDte">
                                     <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'add'" formControlName="selectdate"
-                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date" (keypress)="isNumeric($event)">
+                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date" (keypress)="isNumeric($event)" readonly>
                                     <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'edit'" formControlName="selectdate"
-                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date">
+                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date" >
                                     <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="action === 'add'"></mat-datepicker-toggle>
                                     <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                                   </mat-form-field>
