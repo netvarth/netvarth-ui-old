@@ -1406,11 +1406,11 @@ export class AppointmentComponent implements OnInit {
                             this.setServiceDetails(this.sel_ser);
                             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
                         } else {
-                            if (this.filterDepart) {
-                                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
-                            } else {
-                                this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
-                            }
+                            // if (this.filterDepart) {
+                            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+                            // } else {
+                            //     this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
+                            // }
                         }
                     }
                 });
@@ -1483,11 +1483,11 @@ export class AppointmentComponent implements OnInit {
             this.setServiceDetails(this.sel_ser);
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         } else {
-            if (this.filterDepart) {
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
-            } else {
-                this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
-            }
+            // if (this.filterDepart) {
+            //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+            // } else {
+            this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
+            // }
         }
     }
     getServicebyLocationId(locid, pdate) {
