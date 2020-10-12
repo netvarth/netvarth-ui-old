@@ -1268,7 +1268,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-waitlist
   'WAITLIST_ACCEPT_ONLINE_CAP': 'Accept Online',
-  'WAITLIST_LOCATIONS_CAP': 'All Locations',
+  'WAITLIST_LOCATIONS_CAP': 'Locations',
   'WAITLIST_SERVICES_CAP': 'Services Offered',
   'WAITLIST_HEALTHCARE_SERVICES': 'Consultations and Services',
   'CUSTOMERS_NAME': '[customer]s',
