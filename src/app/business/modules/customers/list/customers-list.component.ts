@@ -299,7 +299,7 @@ export class CustomersListComponent implements OnInit {
     medicalRecord(customer) {
       console.log('inisdied calleaa');
 
-      this.router.navigate(['/provider/medicalrecord/overview/home/clinicalnotes']);
+      this.router.navigate(['/provider/medicalrecord']);
     }
     searchCustomer() {
         const navigationExtras: NavigationExtras = {

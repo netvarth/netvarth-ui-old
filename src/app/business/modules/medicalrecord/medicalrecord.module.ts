@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MedicalrecordRoutingModule } from './medicalrecord-routing.module';
+import { MedicalrecordRoutingModule } from './medicalrecord.routing.module';
 import { MedicalrecordComponent } from './medicalrecord.component';
 import { GeneralComponent } from './general/general.component';
 import { HomeComponent } from './home/home.component';
