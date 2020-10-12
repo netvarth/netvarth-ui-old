@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-// import { MedicalrecordService } from './medicalrecord.service';
+import {  ActivatedRoute} from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { LastVisitComponent } from './last-visit/last-visit.component';
+ import { MedicalrecordService } from './medicalrecord.service';
 
 @Component({
   selector: 'app-medicalrecord',
@@ -26,49 +26,37 @@ export class MedicalrecordComponent implements OnInit {
   patientLastName: number;
   PatientDob: any;
   isLoaded = false;
-  constructor(private router: Router,
+  constructor( // private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private dialog: MatDialog,
-    // private medicalService: MedicalrecordService
-  ) {
-    {
+   private medicalService: MedicalrecordService
+) {
       this.activated_route.queryParams.subscribe(
         (qparams) => {
           this.customerDetails = JSON.parse(qparams.customerDetail);
-          // this.patientFirstName = this.customerDetails.firstName ;
-          // this.patientLastName  = this.customerDetails.lastName ;
-          // this.PatiendId = this.customerDetails.id;
-          // if (this.customerDetails.gender) {
-          // this.gender = this.customerDetails.gender;
-          // }
-          //  if (this.customerDetails.dob) {
-          //  this.PatientDob = this.customerDetails.dob;
-          // }
-          // this.medicalService.setPatientDetails(this.customerDetails);
+          this.patientFirstName = this.customerDetails.firstName ;
+          this.patientLastName  = this.customerDetails.lastName ;
+          this.PatiendId = this.customerDetails.id;
+          if (this.customerDetails.gender) {
+          this.gender = this.customerDetails.gender;
+          }
+           if (this.customerDetails.dob) {
+           this.PatientDob = this.customerDetails.dob;
+          }
+           this.medicalService.setPatientDetails(this.customerDetails);
 
         }
 
       );
+
     }
-    this.routeLinks = [
-      {
-        label: 'Clinical Notes',
-        link: './clinicalnotes',
-        index: 0
-      }, {
-        label: 'Prescription',
-        link: './prescription',
-        index: 1
-      }
-    ];
-  }
+
+
   ngOnInit() {
     this.isLoaded = true;
-    this.router.events.subscribe((res) => {
-      this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
-    });
+
     // this.getallMedicalRecordsofthisPatient();
   }
   getallMedicalRecordsofthisPatient() {

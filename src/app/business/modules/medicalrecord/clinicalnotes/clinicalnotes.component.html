@@ -1,1 +1,69 @@
-<p>clinicalnotes works!</p>
+<section>
+  <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
+           <div class="row">
+
+                   <div class="column">
+                        <b>symptoms</b>
+                        <button  *ngIf= "symptoms" style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
+                        <button *ngIf= "!symptoms" style="float: right;">Add</button>
+                      <div class="columnx">
+                        <p>{{this.symptoms}}</p>
+                      </div><p> 2 attachments</p>
+                   </div>
+                   <br><br>
+
+
+                   <div class="column">
+                         <b>Allergies</b>
+                         <button  *ngIf= "allergies"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
+                         <button *ngIf= "!allergies" style="float: right;">Add</button>
+                       <div class="columnx">
+                         <p>{{this.allergies}}</p>
+                       </div><p> 2 attachments</p>
+                   </div>
+
+                   <div> </div>
+                   <div class="column">
+                         <b>Diagnosis</b>
+                         <button  *ngIf= "diagnosis"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
+                         <button *ngIf= "!diagnosis" style="float: right;">Add</button>
+                       <div class="columnx">
+                         <p>{{this.diagnosis}}</p>
+                       </div><p> 2 attachments</p>
+                   </div>
+
+                   <div class="column">
+                         <b>Observations</b>
+                         <button  *ngIf= "observations"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
+                         <button *ngIf= "!observations" style="float: right;">Add</button>
+                        <div class="columnx">
+                          <p>{{this.observations}}</p>
+                         </div><p> 2 attachments</p>
+                   </div>
+
+
+                   <div class="column">
+                         <b>Complaints</b>
+                         <button  *ngIf= "complaints"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
+                         <button *ngIf= "!complaints" style="float: right;">Add</button>
+                       <div class="columnx">
+                          <p>{{this.complaints}}</p>
+                        </div><p> 2 attachments</p>
+                   </div>
+           </div>
+           <div class="clearfix"></div>
+       </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+

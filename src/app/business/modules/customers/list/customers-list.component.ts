@@ -297,11 +297,11 @@ export class CustomersListComponent implements OnInit {
         this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
     }
     medicalRecord(customer) {
-      const navigationExtras: NavigationExtras = {
-        queryParams: { customerDetail: JSON.stringify(customer)}
-      };
+      // const navigationExtras: NavigationExtras = {
+      //   queryParams: { customerDetail: JSON.stringify(customer)}
+      // };
 
-      this.router.navigate(['/provider/medicalrecord'], navigationExtras);
+      this.router.navigate(['/provider/medicalrecord'], {queryParams: { customerDetail: JSON.stringify(customer)}});
     }
     searchCustomer() {
         const navigationExtras: NavigationExtras = {
