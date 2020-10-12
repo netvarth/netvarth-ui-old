@@ -1,2 +1,57 @@
-<p>medicalrecord works!</p>
-<router-outlet></router-outlet>
+<div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+  <section class="">
+    <div class="card title-gb">
+         <h5 class="mgn-up-10">
+               <h2 style="text-align: center;">Medical Record</h2>
+         </h5>
+    </div>
+
+
+     <div class="card title-gb" *ngIf="isLoaded">
+      <div class="mgn-up-10">
+        <div class="column">
+            <!-- <p>Patient Name: {{patientFirstName | capitalizeFirst}} {{patientLastName}}</p>
+            <p>Patient Id: {{PatiendId}}</p>
+            <p *ngIf = "PatientDob">DOB: {{PatientDob}} </p>
+            <p *ngIf = "gender">Gender:{{gender | capitalizeFirst}}</p> -->
+        </div>
+     </div>
+  <!-- <hr> -->
+    <div>
+      <h3>Add or view medical records for a consultation</h3>
+      <p>Patient consultation date
+        <!-- <select name="" id="">09:30AM , 09/10/2020</select> -->
+        <button (click) = "getLastVisitList()"> 9.40 am,Thu,22/05/2020 &nbsp; <i class="arrow down"></i></button>  &nbsp;
+          <!-- <input type="" id=""
+            name="meeting-time" value="2018-06-12T19:30"> &nbsp; -->
+      <span>(Recent visit)</span></p>
+    </div>
+    <hr>
+    <div>
+        <p>MR NO: <span style="float: right;">MR created by:dr.Ravi kumar</span></p>
+        <p>Department: <span style="float: right;">MR creation date:09/10/2020</span></p>
+        <p>Age: 25 <span> <button style="float: right;" >Share MR </button> &nbsp;&nbsp;  <button style="float: right;">Share RX</button></span></p>
+        <p>Service: OP consultation </p>
+    </div>
+    <div class="content w-manager settings comn-cls">
+     <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small"> -->
+        <div class="row">
+          <div class="card p0">
+            <div style="padding: 5px;">
+              <nav mat-tab-nav-bar>
+                <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link" routerLinkActive="mat-tab-link-active"
+                  #rla="routerLinkActive" [active]="activeLinkIndex === i" (click)="activeLinkIndex = i" [routerLinkActiveOptions]="{exact: true}">
+                  {{routeLink.label}}
+                </a>
+              </nav>
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+     </div>
+        </div>
+
+  </section>
+  </div>
+  <div class="clearfix"></div>
+
