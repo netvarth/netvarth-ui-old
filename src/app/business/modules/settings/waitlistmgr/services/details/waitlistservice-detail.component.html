@@ -4,8 +4,9 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10"> 
-         <button *ngIf="!hideBack" type="button" class="btn default profile-back" (click)="redirecToServices()">
-            <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+         <!-- <button *ngIf="!hideBack" type="button" class="btn default profile-back" (click)="redirecToServices()">
+            <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
+            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToServices()" ></span>
             {{servicecaption}}
         </h5>     
     </div>

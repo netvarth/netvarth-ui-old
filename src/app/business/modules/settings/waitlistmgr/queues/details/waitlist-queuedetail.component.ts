@@ -50,6 +50,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
   ];
   breadcrumbs = this.breadcrumbs_init;
   customer_label = '';
+  customer_label_upper = '';
   appointment = false;
   api_loading = false;
   amForm: FormGroup;
@@ -119,6 +120,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
       }
     });
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
+    this.customer_label_upper = this.shared_Functionsobj.firstToUpper(this. customer_label);
   }
   ngOnInit() {
     this.getWaitlistMgr();
@@ -622,7 +624,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         return;
       } else {
         if (JSON.parse(form_data.qserveonce) === 0 || (JSON.parse(form_data.qserveonce) > JSON.parse(form_data.qcapacity))) {
-          const error = this.customer_label + 's served at a time should be greater than 0 and smaller than Maximum ' + this.customer_label + 's served';
+          const error = this.customer_label_upper + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' +  this.customer_label + 's served.';
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           return;
         }
