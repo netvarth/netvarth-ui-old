@@ -48,7 +48,7 @@ export class CheckinActionsComponent implements OnInit {
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
     }
     ngOnInit() {
-        console.log(this.data);
+      console.log(JSON.stringify(this.data));
         this.checkin = this.data.checkinData;
         this.getPos();
         this.getLabel();
@@ -384,6 +384,23 @@ export class CheckinActionsComponent implements OnInit {
             this.pos = data['enablepos'];
             this.getDisplayboardCount();
         });
+    }
+    medicalRecord() {
+      this.dialogRef.close();
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(this.checkin.consumer),
+          'serviceId': this.checkin.service.id,
+          'serviceName': this.checkin.service.name,
+          'booking_type': 'Waitlist',
+          'booking_date': this.checkin.date,
+          'booking_time': this.checkin.token
+          // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
+
+        }
+      };
+
+       this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
     }
 }
 

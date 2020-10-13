@@ -5104,7 +5104,7 @@ i.notavail {
 }
 
 /* .dashboard .chkins:last-child {
- 
+
 } */
 
 .dashboard .chkins .service, .dashboard .chkins .forwhom {
@@ -7337,9 +7337,9 @@ input.jdn_ip {
 } */
 
 .startWaitlist {
-  /* -webkit-animation: startWaitlist 1s infinite; 
-  -moz-animation:    startWaitlist 1s infinite; 
-  -o-animation:      startWaitlist 1s infinite; 
+  /* -webkit-animation: startWaitlist 1s infinite;
+  -moz-animation:    startWaitlist 1s infinite;
+  -o-animation:      startWaitlist 1s infinite;
   animation:         startWaitlist 1s infinite;  */
   background-color: #00cc96 !important;
 }
@@ -7881,7 +7881,7 @@ hr.wide-separator-line {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-/* 
+/*
 @font-face {
   font-family: 'icomoon';
   src: url('../fonts/icomoon.eot?vxnnmm');
@@ -7900,7 +7900,7 @@ hr.wide-separator-line {
   font-variant: normal;
   text-transform: none;
   line-height: 1;
- 
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 } */
@@ -8261,7 +8261,7 @@ owl-carousel .bt3.active {
   top: 1px;
   margin-left: 6px;
 
-  
+
 } */
 
 .navul {
@@ -10876,7 +10876,7 @@ image-cropper img {
   }
 }
 
-/* @media screen and (max-width: 768px){ 
+/* @media screen and (max-width: 768px){
   h4{
   font-size:.7rem!important;
   }
@@ -10916,7 +10916,7 @@ image-cropper img {
   color: #f2cd61 !important
 }
 
-/*   
+/*
   .p0 .locd .lbl .prof-pic {
     width: 180px;
     height: 180px;
@@ -12096,6 +12096,10 @@ img.busN-logo {
 }
 .viewdetails-icon {
   content: url(../images/dashboard-icons/viewdetails-01.svg);
+  width: 40px;
+}
+.medicalrecord-icon {
+  content: url(../images/dashboard-icons/medicalrecord-01.svg);
   width: 40px;
 }
 .act-icons .printer-icon {

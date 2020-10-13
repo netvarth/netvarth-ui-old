@@ -27,10 +27,10 @@
     width: 100px;
     margin: 10px;
   }
-  .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon, 
+  .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon,
   .message-icon, .notes-icon, .printer-icon , .viewdetails-icon,
   .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon,
-  .meet-icon, .phon-icon {
+  .meet-icon, .phon-icon ,medicalrecord-icon{
     width: 25px !important;
   }
   .zoom-icon, .wtsapaud-icon, .wtsapvid-icon {

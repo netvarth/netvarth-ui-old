@@ -14,6 +14,7 @@ import { projectConstants } from '../../../app.component';
 })
 export class MedicalrecordComponent implements OnInit {
 
+  data: any;
   mrId: any;
   routeLinks: any[];
   activeLinkIndex = -1;
@@ -21,7 +22,7 @@ export class MedicalrecordComponent implements OnInit {
   customerDetails: any;
   uuid: any;
   mrdialogRef: any;
-  PatiendId: any;
+  PatientId: any;
   gender: any;
   patientFirstName: any;
   patientLastName: number;
@@ -40,9 +41,10 @@ export class MedicalrecordComponent implements OnInit {
       this.activated_route.queryParams.subscribe(
         (qparams) => {
           this.customerDetails = JSON.parse(qparams.customerDetail);
+          console.log(this.customerDetails);
           this.patientFirstName = this.customerDetails.firstName ;
           this.patientLastName  = this.customerDetails.lastName ;
-          this.PatiendId = this.customerDetails.id;
+          this.PatientId = this.customerDetails.id;
           if (this.customerDetails.gender) {
           this.gender = this.customerDetails.gender;
           }
@@ -61,11 +63,11 @@ export class MedicalrecordComponent implements OnInit {
 
   ngOnInit() {
     this.isLoaded = true;
-    this.getallMedicalRecordsofthisPatient();
+    // this.getallMedicalRecordsofthisPatient();
   }
   getallMedicalRecordsofthisPatient() {
     const filter = {};
-    filter['patientId-eq'] = this.PatiendId;
+    filter['patientId-eq'] = this.PatientId;
 
     this.provider_services.GetMedicalRecordList(filter)
       .subscribe((data) => {

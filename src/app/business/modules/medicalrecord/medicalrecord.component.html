@@ -9,16 +9,22 @@
 
     <div class="card title-gb" *ngIf="isLoaded">
       <div class="mgn-up-10">
-        <div class="column">
-          <p>Patient Name: {{patientFirstName | capitalizeFirst}} {{patientLastName}}</p>
-          <p>Patient Id: {{PatiendId}}</p>
+
+          <p>
+            <b>Patient:</b>
+            <span color="blue"> {{PatientId}} &nbsp;</span>
+            <span>{{patientFirstName | capitalizeFirst}} {{patientLastName}}</span>
+            <span *ngIf="PatientDob|| gender">({{PatientDob}} {{gender | capitalizeFirst}})</span>
+          </p>
+          <!-- <p>Patient Name:{{patientFirstName | capitalizeFirst}} {{patientLastName}} </p>-->
+          <!-- <p>Patient Id: {{PatiendId}}</p>
           <p *ngIf="PatientDob">DOB: {{PatientDob}} </p>
-          <p *ngIf="gender">Gender:{{gender | capitalizeFirst}}</p>
-        </div>
+          <p *ngIf="gender">Gender:{{gender | capitalizeFirst}}</p> -->
+
       </div>
       <hr>
       <div>
-        <h3>Add or view medical records for a consultation</h3>
+        <h5>Add or view medical records for a consultation</h5>
         <p>Patient consultation date
             <button (click) = "getLastVisitList()"> {{mrdate | date:dateFormatSp}}  &nbsp; <i class="arrow down"></i></button>  &nbsp;
             <span>(Recent visit)</span>
@@ -38,7 +44,7 @@
             <button style="float: right;">Share RX</button>
           </span>
         </p>
-        <p>Service: OP consultation </p>
+        <p>Service:</p>
       </div>
       <!-- <div class="content w-manager settings comn-cls">
 
