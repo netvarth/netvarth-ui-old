@@ -63,7 +63,7 @@
                                                                     <label class="filterHeaders"> From</label>
                                                                     <li class="filterli filterDatepicker">
                                                                         <input class="filterTextbox" type="text" [(ngModel)]="alertStartdate" [min]="minday" [max]="maxDate"
-                                                                        [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="Date" readonly>
+                                                                        [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="Start date" readonly>
                                                                         <mat-datepicker-toggle matSuffix [for]="picker">
                                                                         </mat-datepicker-toggle>
                                                                         <mat-datepicker #picker></mat-datepicker> 
@@ -73,7 +73,7 @@
                                                                     <label class="filterHeaders"> To</label>
                                                                     <li class="filterli filterDatepicker">
                                                                         <input class="filterTextbox" type="text" [(ngModel)]="alertEnddate" [min]="endminday" [max]="maxDate"
-                                                                        [matDatepicker]="picker1" #Edate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="Date" readonly>
+                                                                        [matDatepicker]="picker1" #Edate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="End date" readonly>
                                                                         <mat-datepicker-toggle matSuffix [for]="picker1">
                                                                         </mat-datepicker-toggle>
                                                                         <mat-datepicker #picker1></mat-datepicker> 

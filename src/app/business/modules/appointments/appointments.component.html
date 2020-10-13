@@ -592,7 +592,7 @@
                                       [matTooltip]="'Arrived'"
                                       class="pull-left dashboardarrived-icon checkin_status icon-btn1 mgn-rt-10"
                                       *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
-                                    <span [matTooltip]="cust_note_tooltip"
+                                    <span [matTooltip]="cust_note_tooltip | capitalizeFirst"
                                       class="pull-left cnote icon-btn1  pointer-cursor mgn-rt-10"
                                       *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                                       <i class="icon-note"></i>
@@ -1149,7 +1149,7 @@
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                             *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
-                          <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          <span [matTooltip]="cust_note_tooltip | capitalizeFirst" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>
