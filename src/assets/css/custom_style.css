@@ -1369,6 +1369,10 @@ sup {
   margin-left: 30px !important;
 }
 
+.mgn-rt-30 {
+  margin-right: 30px !important;
+}
+
 .mgn-up-10 {
   margin-top: 10px !important;
 }
@@ -1439,6 +1443,10 @@ sup {
 
 .mgn-up-30 {
   margin-top: 30px !important;
+}
+
+.mgn-up-40 {
+  margin-top: 40px !important;
 }
 
 .mgn-up-50 {
@@ -11055,6 +11063,10 @@ image-cropper img {
   .gmedia .linkdisplay {
     display: grid !important;
   }
+  .email-img {
+    width: 90px !important;
+    height: 140px;
+  }
 }
 
 .pt10 .pad-left-20 .left_icn {
@@ -11125,6 +11137,10 @@ image-cropper img {
 
 .pad-20 {
   padding: 20px !important;
+}
+
+.pad-30 {
+  padding: 30px !important;
 }
 
 .pad-top-15 {
@@ -11761,6 +11777,10 @@ img.busN-logo {
   padding-left: 0 !important;
 }
 
+.pad-lt-30 {
+  padding-left: 30px !important;
+}
+
 .lmenu-hlp li {
   list-style: none;
   font-weight: 600;
@@ -12272,4 +12292,18 @@ img.busN-logo {
 }
 .back-btn i {
   color: black !important;
+}
+.email-txt-pad {
+  padding: 10px 30px 10px;
+}
+.bg-whitesmoke {
+  background: whitesmoke;
+}
+.email-smal-btn {
+  font-size: .80rem !important;
+  height: 35px !important;
+}
+.email-img {
+  width: 150px;
+  height: 140px;
 }
