@@ -1542,4 +1542,8 @@ export class ProviderServices {
     const url = 'provider/mr/clinicalNotes/' + mrId;
     return this.servicemeta.httpGet(url, null);
   }
+  getDigitalSign(providerId) {
+    const url = 'provider/user/digitalSign/' + providerId;
+    return this.servicemeta.httpGet(url);
+  }
 }

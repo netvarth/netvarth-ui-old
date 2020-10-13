@@ -31,6 +31,8 @@ showSave = true;
 sharedialogRef;
 addDrugdialogRef;
 drugData: any = [];
+providerId;
+digitalSign = false;
 
 
   constructor( public sharedfunctionObj: SharedFunctions,
@@ -54,7 +56,23 @@ drugData: any = [];
 
   ngOnInit() {
     this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
+    const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+    this.providerId = user.id;
     this.getMrprescription();
+    this.getDigitalSign();
+  }
+  getDigitalSign() {
+    if (this.providerId) {
+      this.provider_services.getDigitalSign(this.providerId)
+            .subscribe((data) => {
+              console.log(data);
+              this.digitalSign = true;
+            },
+                error => {
+                    this.digitalSign = false;
+                   // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
+    }
   }
 
   getMrprescription() {
@@ -148,7 +166,7 @@ drugData: any = [];
   }
 
  
-  shareRximage() {
+  shareManualRx() {
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -170,5 +188,6 @@ drugData: any = [];
     });
 
   }
+  
 
 }

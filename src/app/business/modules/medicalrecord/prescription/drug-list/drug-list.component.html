@@ -44,22 +44,32 @@
                {{drug.instructions}}
               </td>
                <td >
-                <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> <span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
                </td>
 
             </tr>
           </tbody>
         </table>
-        <span (click)="addDrug()"> add more</span>
+        <span (click)="addDrug()" class="lnk action"> Add more</span>
+
+        <div  *ngIf="!digitalSign">
+            <span>You never uploaded digital signature,<u> create or Upload digital signature for sharing Rx</u></span>
+        </div>
 
         <div  *ngIf="drugList.length > 0 && showSave">
 
             <button type="button" mat-button style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>
         </div>
-        <div *ngIf="drugList.length > 0 && !showSave"> 
-                <button type="submit" mat-button  style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt1" (click)="shareRximage()" >
+        <div *ngIf="drugList.length > 0 && !showSave && digitalSign"> 
+                <button type="button" mat-button  style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt1" (click)="shareManualRx()" >
                         
-                    Share Rx</button>
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
+                
+            </div>
+            <div *ngIf="drugList.length > 0 && !showSave && !digitalSign">
+                <button type="button"   style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt2"  >
+                        
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
                 
             </div>
 
