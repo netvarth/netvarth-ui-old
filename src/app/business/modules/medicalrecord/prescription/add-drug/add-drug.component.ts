@@ -50,10 +50,12 @@ export class AddDrugComponent implements OnInit {
   disableButton = false;
   userId;
   drugType;
-  drugDetail;
+  drugDetail: any =  [];
   listOfDrugs;
   today = new Date();
   mrId;
+  fromWhr;
+  drugData;
 
   constructor(
     public dialogRef: MatDialogRef<AddDrugComponent>,
@@ -63,31 +65,33 @@ export class AddDrugComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
+   // private router: Router,
 
 
   ) {
     this.formMode = data.type;
-    this.drugDetail = data.drugDetails;
+    if (this.formMode === 'edit') {
+      console.log(data.drugDetails);
+      this.drugData = data.drugDetails;
+      console.log(this.drugData);
+    }
+    this.fromWhr = data.isFrom;
   }
   taxDetails: any = [];
   ngOnInit() {
     this.api_loading = false;
     this.createForm();
   }
-  // isNumeric(evt) {
-  //   return this.sharedfunctionObj.isNumeric(evt);
-  // }
-  // isvalid(evt) {
-  //   return this.sharedfunctionObj.isValid(evt);
-  // }
+  
 
   createForm() {
 
       this.amForm = this.fb.group({
         medicine_name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        frequency: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-        instructions: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-        duration: ['', Validators.compose([Validators.required])]
+        frequency: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+        instructions: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharslong)])],
+        duration: ['', Validators.compose([Validators.required])],
+        dosage: ['', Validators.compose([Validators.required])]
       });
 
     if (this.formMode === 'edit') {
@@ -107,17 +111,26 @@ export class AddDrugComponent implements OnInit {
   // }
   updateForm() {
     this.amForm.setValue({
-      'medicine_name': this.drugDetail.medicine_name || null,
-      'frequency': this.drugDetail.frequency || null,
-      'instructions': this.drugDetail.instructions || null,
-      'duration': this.drugDetail.duration || null
+      'medicine_name': this.drugData.medicine_name || null,
+      'frequency': this.drugData.frequency || null,
+      'instructions': this.drugData.instructions || null,
+      'duration': this.drugData.duration || null,
+      'dosage': this.drugData.dosage || null
     });
   }
 
   onSubmit(form_data) {
-    this.dialogRef.close(form_data);
+    console.log(form_data);
+    console.log(this.drugDetail);
+    this.drugDetail.push(form_data);
+    console.log(this.drugDetail);
+    this.dialogRef.close(this.drugDetail);
 
-
+  }
+  saveAndAddOther(form_data) {
+    this.drugDetail.push(form_data);
+    console.log(this.drugDetail);
+    this.amForm.reset();
   }
 
 

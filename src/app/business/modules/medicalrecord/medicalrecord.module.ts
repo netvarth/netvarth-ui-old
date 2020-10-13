@@ -34,7 +34,9 @@ import { DrugListComponent } from './prescription/drug-list/drug-list.component'
     MatDatepickerModule
   ],
   entryComponents: [
-  LastVisitComponent
+  LastVisitComponent,
+  AddDrugComponent,
+  ShareRxComponent
   ],
   providers: [
     MedicalrecordService

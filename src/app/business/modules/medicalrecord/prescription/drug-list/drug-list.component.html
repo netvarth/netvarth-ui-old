@@ -1,1 +1,79 @@
-<p>drug-list works!</p>
+
+        
+       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 cust-sect no-padding table-responsive" *ngIf="drugList.length>0">
+        <h5> Create prescription of your own</h5> 
+    <table class="table table-bordered" >
+          <thead>
+          <tr >
+            <th>
+                Drug name
+            </th>
+            <th>
+                Duration(days)
+            </th>
+             <th> 
+                Dosage
+            </th>
+            <th>
+                Frequency
+            </th>
+            <th>
+                Instructions
+            </th>
+           
+            <th>
+               
+            </th>
+          </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let drug of drugList; let i = index;" >
+              <td >
+                {{drug.medicine_name}}
+              </td>
+              <td >
+                {{drug.duration}}
+              </td>
+              <td >
+                    {{drug.dosage}}
+                 </td>
+              <td >
+                     {{drug.frequency}}
+                  </td>
+              <td >
+               {{drug.instructions}}
+              </td>
+               <td >
+                <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> <span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+               </td>
+
+            </tr>
+          </tbody>
+        </table>
+        <span (click)="addDrug()"> add more</span>
+
+        <div  *ngIf="drugList.length > 0 && showSave">
+
+            <button type="button" mat-button style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>
+        </div>
+        <div *ngIf="drugList.length > 0 && !showSave"> 
+                <button type="submit" mat-button  style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt1" (click)="shareRximage()" >
+                        
+                    Share Rx</button>
+                
+            </div>
+
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 cust-sect no-padding table-responsive" *ngIf="drugList.length === 0">
+            <table  class="table table-bordered" *ngIf="drugList.length === 0">
+                    <tr>
+                      <td>
+                        No Medicines Added
+                      </td>
+                      <td >
+                          <span (click)="addDrug()"> <i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+                        </td>
+                    </tr>
+                  </table>
+      </div>
+          

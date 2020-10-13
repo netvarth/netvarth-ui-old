@@ -300,7 +300,7 @@ export class CustomersListComponent implements OnInit {
       // const navigationExtras: NavigationExtras = {
       //   queryParams: { customerDetail: JSON.stringify(customer)}
       // };
-
+      this.shared_functions.removeitemfromLocalStorage('mrId');
       this.router.navigate(['/provider/medicalrecord'], {queryParams: { customerDetail: JSON.stringify(customer)}});
     }
     searchCustomer() {
