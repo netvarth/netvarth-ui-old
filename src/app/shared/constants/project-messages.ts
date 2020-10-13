@@ -218,7 +218,7 @@ export const Messages = {
   'PROVIDER_BILL_PAYMENT_link': 'Link has been sent to the consumer',
   'PROVIDER_BILL_SETTLE_CONFIRM': 'Do you want to settle this bill?',
   'PROVIDER_ALERT_ACK_SUCC': 'Acknowledged Successfully',
-  'CHECKIN_SUCC': 'You have [waitlisted] successfully',
+  'CHECKIN_SUCC': 'You have checked-in successfully',
   'CHECKIN_SUCC_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
   'CHECKIN_CANCELLED': '[waitlist] [cancelled] successfully',
