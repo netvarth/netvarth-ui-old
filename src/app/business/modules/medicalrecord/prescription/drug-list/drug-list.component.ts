@@ -107,7 +107,7 @@ digitalSign = false;
     });
   }
 
-  editDrug(drug,index) {
+  editDrug(drug, index) {
     this.editedIndex = index;
     this.addDrugdialogRef = this.dialog.open(AddDrugComponent, {
       width: '50%',
@@ -133,7 +133,7 @@ digitalSign = false;
     this.drugList.splice(index, 1);
     console.log(this.drugList);
     this.showSave = true;
-    //delete this.drugList[index];
+    // delete this.drugList[index];
   }
   saveRx() {
     if (this.mrId) {
@@ -165,7 +165,7 @@ digitalSign = false;
     this.showSave = true;
   }
 
- 
+
   shareManualRx() {
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '50%',
@@ -180,14 +180,12 @@ digitalSign = false;
     this.sharedialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
-
-        
       }
 
 
     });
 
   }
-  
+
 
 }

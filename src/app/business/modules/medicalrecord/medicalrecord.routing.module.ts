@@ -7,6 +7,7 @@ import { PrescriptionComponent } from './prescription/prescription.component';
 import { HomeComponent } from './home/home.component';
 import { UploadPrescriptionComponent } from './prescription/upload-prescription/upload-prescription.component';
 import { DrugListComponent } from './prescription/drug-list/drug-list.component';
+import { RxHomeComponent } from './prescription/rx-home/rx-home.component';
 
 
 const routes: Routes = [
@@ -17,16 +18,20 @@ const routes: Routes = [
         path: 'home', component: HomeComponent, children: [
           { path: '', redirectTo: 'clinicalnotes', pathMatch: 'full' },
           { path: 'clinicalnotes', component: ClinicalnotesComponent },
-          { path: 'prescription', component: PrescriptionComponent }
-
-
+          {
+            path: 'prescription', component: PrescriptionComponent, children: [
+              { path: '', redirectTo: 'Rx', pathMatch: 'full' },
+              { path: 'Rx', component: RxHomeComponent },
+              { path: 'uploadRx', component: UploadPrescriptionComponent },
+              { path: 'addrxlist', component: DrugListComponent }]
+          }
         ]
-      },
-      { path: 'general', component: GeneralComponent },
-      { path: 'uploadRx', component: UploadPrescriptionComponent },
-      { path: 'addrxlist', component: DrugListComponent}]
-      
+      }
+
+    ]
   },
+  { path: 'general', component: GeneralComponent }
+
 
 ];
 
