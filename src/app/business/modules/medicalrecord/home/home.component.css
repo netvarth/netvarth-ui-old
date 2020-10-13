@@ -1,7 +1,4 @@
-[_nghost-c5] {
-  display: inline-block !important;
-  width: 100%;
-}
+
 .mat-tab-link-active,
 .mat-tab-label-active {
   background-color: #5EADB0;
@@ -15,10 +12,20 @@
   line-height: 30px !important;
   height: 30px !important;
   min-width: 100px !important;
-  border-radius: 2px solid #0000FF;
+  border: 2px solid #0000FF;
 }
 
 .tabContentContainer {
   border: 1px solid #aaaaaa;
   background: #ffffff 50% 50% repeat-x;
 }
+
+.mat-tab-nav-bar {
+    white-space: nowrap;
+    overflow: auto;
+  }
+  /* @media(max-width: 600px) {
+    .mat-tab-link {
+     font-size: 15px !important;
+    }
+  } */

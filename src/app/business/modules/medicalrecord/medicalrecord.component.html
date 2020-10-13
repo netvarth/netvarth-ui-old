@@ -26,25 +26,27 @@
       <div>
         <h5>Add or view medical records for a consultation</h5>
         <p>Patient consultation date
-            <button (click) = "getLastVisitList()"> {{mrdate | date:dateFormatSp}}  &nbsp; <i class="arrow down"></i></button>  &nbsp;
+            <button (click) = "getLastVisitList()"> {{mrDate | date:dateFormatSp}}  &nbsp; <i class="arrow down"></i></button>  &nbsp;
             <span>(Recent visit)</span>
         </p>
       </div>
       <hr>
-      <div>
-        <p>MR NO:
-          <span style="float: right;">MR created by:dr.Ravi kumar</span>
-        </p>
-        <p>Department:
-          <span style="float: right;">MR creation date:09/10/2020</span>
-        </p>
-        <p>Age: 25
+      <div class="col-md-12">
+        <div class="col-md-6 pull-left">
+          <label>Department:</label><span> {{department}}</span><br>
+          <label>Service:</label><span> {{serviceName}}</span>
+        </div>
+        <div class="col-md-6 pull-right">
+            <label>MR NO:</label><span> 12345</span><br>
+          <label>MR created by:</label><span> dr.Ravi kumar:</span><br>
+          <label>MR creation date:</label><span> 09/10/2020</span>
+        </div>
+      </div>
+      <div class="col-md-12">
           <span>
-            <button style="float: right;">Share MR </button> &nbsp;&nbsp;
-            <button style="float: right;">Share RX</button>
-          </span>
-        </p>
-        <p>Service:</p>
+              <button style="float: right;">Share MR </button> &nbsp;&nbsp;
+              <button style="float: right;">Share RX</button>
+            </span>
       </div>
       <!-- <div class="content w-manager settings comn-cls">
 

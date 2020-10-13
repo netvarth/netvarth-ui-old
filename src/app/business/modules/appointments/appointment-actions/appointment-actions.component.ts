@@ -405,6 +405,7 @@ export class AppointmentActionsComponent implements OnInit {
         'customerDetail': JSON.stringify(this.appt.providerConsumer),
         'serviceId': this.appt.service.id,
         'serviceName': this.appt.service.name,
+        'department': this.appt.service.deptName,
         'booking_type': 'Appointment',
         'booking_date': this.appt.appmtDate,
         'booking_time': this.appt.appmtTime

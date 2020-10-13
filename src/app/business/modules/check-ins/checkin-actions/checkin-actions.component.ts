@@ -394,7 +394,8 @@ export class CheckinActionsComponent implements OnInit {
           'serviceName': this.checkin.service.name,
           'booking_type': 'Waitlist',
           'booking_date': this.checkin.date,
-          'booking_time': this.checkin.token
+          'booking_time': this.checkin.token,
+          'department': this.checkin.service.deptName,
           // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
 
         }

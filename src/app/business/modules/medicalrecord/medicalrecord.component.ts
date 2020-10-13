@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
@@ -14,6 +14,9 @@ import { projectConstants } from '../../../app.component';
 })
 export class MedicalrecordComponent implements OnInit {
 
+  mrDate: Date;
+  serviceName: any;
+  department: any;
   data: any;
   mrId: any;
   routeLinks: any[];
@@ -28,7 +31,6 @@ export class MedicalrecordComponent implements OnInit {
   patientLastName: number;
   PatientDob: any;
   isLoaded = false;
-  mrdate: any;
   mrlist;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   constructor( // private router: Router,
@@ -36,33 +38,36 @@ export class MedicalrecordComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private dialog: MatDialog,
-   private medicalService: MedicalrecordService
-) {
-      this.activated_route.queryParams.subscribe(
-        (qparams) => {
-          this.customerDetails = JSON.parse(qparams.customerDetail);
-          console.log(this.customerDetails);
-          this.patientFirstName = this.customerDetails.firstName ;
-          this.patientLastName  = this.customerDetails.lastName ;
-          this.PatientId = this.customerDetails.id;
-          if (this.customerDetails.gender) {
+    private medicalService: MedicalrecordService
+  ) {
+    this.activated_route.queryParams.subscribe(
+      (qparams) => {
+        this.customerDetails = JSON.parse(qparams.customerDetail);
+        console.log(this.customerDetails);
+        this.patientFirstName = this.customerDetails.firstName;
+        this.patientLastName = this.customerDetails.lastName;
+        this.PatientId = this.customerDetails.id;
+        this.department = qparams.department;
+        this.serviceName = qparams.serviceName;
+        if (this.customerDetails.gender) {
           this.gender = this.customerDetails.gender;
-          }
-           if (this.customerDetails.dob) {
-           this.PatientDob = this.customerDetails.dob;
-          }
-          this.mrId = qparams.mrId;
-          this.medicalService.setPatientDetails(this.customerDetails);
-          this.medicalService.setCurrentMRID(qparams.mrId);
         }
+        if (this.customerDetails.dob) {
+          this.PatientDob = this.customerDetails.dob;
+        }
+        this.mrId = qparams.mrId;
+        this.medicalService.setPatientDetails(this.customerDetails);
+        this.medicalService.setCurrentMRID(qparams.mrId);
+      }
 
-      );
+    );
 
-    }
+  }
 
 
   ngOnInit() {
     this.isLoaded = true;
+    this.mrDate = new Date();
     // this.getallMedicalRecordsofthisPatient();
   }
   getallMedicalRecordsofthisPatient() {
@@ -73,8 +78,8 @@ export class MedicalrecordComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.mrlist = data;
-          this.mrdate = this.mrlist[0].mrConsultationDate;
-          }
+          this.mrDate = this.mrlist[0].mrConsultationDate;
+        }
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
