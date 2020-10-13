@@ -12254,9 +12254,6 @@ img.busN-logo {
     width: 25px;
     margin-top: 7px;
 }
-.dash-name-bold {
-  font-weight: bold;
-}
 .apptdate-slot {
   font-weight: bold;
   font-size: 1rem;
@@ -12264,10 +12261,12 @@ img.busN-logo {
 .index-zero {
   z-index: 0  !important;
 }
-@media only screen and (min-width: 575px) {
-  .dash-name-bold {
-    font-weight: bold;
+@media only screen and (min-width: 991px) {
+  .font1 {
     font-size: 1rem !important;
+  }
+  .font11 {
+    font-size: 1.1rem !important;
   }
 }
 @media only screen and (max-width: 400px){
@@ -12306,4 +12305,7 @@ img.busN-logo {
 .email-img {
   width: 150px;
   height: 140px;
+}
+.font-bold {
+  font-weight: 600 !important;
 }

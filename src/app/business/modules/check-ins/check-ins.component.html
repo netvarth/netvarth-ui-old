@@ -321,14 +321,14 @@
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                           {{checkin.date | date: display_dateFormat}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
@@ -336,7 +336,7 @@
                       </td>
                       <td class="title td-two">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -508,14 +508,14 @@
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                           {{checkin.date | date: display_dateFormat}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
@@ -523,7 +523,7 @@
                       </td>
                       <td class="title td-two">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -796,14 +796,14 @@
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                         {{checkin.date | date: display_dateFormat}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                        class="bold pull-left mgn-lt-5 name pointer-cursor"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="goCheckinDetail(checkin)">
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                        class="bold pull-left mgn-lt-5 name pointer-cursor"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="goCheckinDetail(checkin)">
@@ -811,7 +811,7 @@
                     </td>
                     <td class="title td-two">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
+                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1171,14 +1171,14 @@
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                         {{checkin.date | date: display_dateFormat}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                        class="bold pull-left mgn-lt-5 name pointer-cursor"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="goCheckinDetail(checkin)">
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                        class="bold pull-left mgn-lt-5 name pointer-cursor"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="goCheckinDetail(checkin)">
@@ -1186,7 +1186,7 @@
                     </td>
                     <td class="title td-two">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
+                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"

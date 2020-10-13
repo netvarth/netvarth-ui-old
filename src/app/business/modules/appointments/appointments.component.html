@@ -539,19 +539,19 @@
                                     (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
                                 <td class="parent-selection parent-title td-one">
                                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                                    class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)"
+                                    class="bold pull-left pointer-cursor font11" (click)="goCheckinDetail(appt)"
                                     *ngIf="appt.appmtFor[0].firstName">
                                     {{appt.appmtFor[0].firstName}}
                                     {{appt.appmtFor[0].lastName}}</div>
                                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                                    class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)"
+                                    class="bold pull-left pointer-cursor font11" (click)="goCheckinDetail(appt)"
                                     *ngIf="!appt.appmtFor[0].firstName">
                                     {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}
                                   </div>
                                 </td>
                                 <td class="title td-two">
                                   <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                                    class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3 font-bold"
+                                    class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3 font-bold font1"
                                     *ngIf="servicesCount>1">
                                     <i class="fa meet-icon"
                                       [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1103,18 +1103,18 @@
                         <div class="pull-left mgn-lt-5 date greenc bold" *ngIf="time_type!=3">
                           {{getSingleTime(appt.appmtTime)}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="goCheckinDetail(appt)"
                           *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">
                           {{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="goCheckinDetail(appt)"
                           *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
