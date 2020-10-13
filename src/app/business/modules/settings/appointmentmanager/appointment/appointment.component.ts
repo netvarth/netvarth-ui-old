@@ -243,7 +243,9 @@ export class AppointmentComponent implements OnInit {
             if (qparams.timeslot) {
                 this.slotTime = qparams.timeslot;
                 this.comingSchduleId = JSON.parse(qparams.scheduleId);
-                this.serviceIdParam = JSON.parse(qparams.serviceId);
+                if (qparams.serviceId) {
+                    this.serviceIdParam = JSON.parse(qparams.serviceId);
+                }
             }
             if (qparams.deptId) {
                 this.selectDept = JSON.parse(qparams.deptId);
