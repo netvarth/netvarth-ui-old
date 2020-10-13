@@ -11067,6 +11067,11 @@ image-cropper img {
     width: 90px !important;
     height: 140px;
   }
+  .support-num {
+    font-size: 1rem !important;
+    font-weight: 600;
+    color: blue;
+  }
 }
 
 .pt10 .pad-left-20 .left_icn {
