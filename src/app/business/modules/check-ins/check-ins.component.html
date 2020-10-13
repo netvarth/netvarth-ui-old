@@ -784,7 +784,7 @@
                 </tbody>
                 <tbody *ngFor="let checkin of check_in_filtered_list, let i=index">
                   <tr>
-                    <td class="chkWth">
+                    <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </td>
