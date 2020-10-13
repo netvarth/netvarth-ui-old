@@ -5,6 +5,7 @@ import { GeneralComponent } from './general/general.component';
 import { ClinicalnotesComponent } from './clinicalnotes/clinicalnotes.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { HomeComponent } from './home/home.component';
+import { UploadPrescriptionComponent } from './prescription/upload-prescription/upload-prescription.component';
 
 
 const routes: Routes = [
@@ -17,10 +18,13 @@ const routes: Routes = [
           { path: 'clinicalnotes', component: ClinicalnotesComponent },
           { path: 'prescription', component: PrescriptionComponent }
 
+
         ]
-      }]
+      },
+      { path: 'general', component: GeneralComponent },
+      { path: 'uploadRx', component: UploadPrescriptionComponent }]
   },
-  { path: 'general', component: GeneralComponent }
+
 ];
 
 @NgModule({

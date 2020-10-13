@@ -52,7 +52,7 @@ export class PrescriptionComponent implements OnInit {
     this.getMrprescription();
   }
   uploadRx() {
-    this.router.navigate(['/provider/medicalrecords/new-MR/uploadrx']);
+    this.router.navigate(['/provider/medicalrecord/uploadRx']);
 
   }
 
