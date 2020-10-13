@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { UploadPrescriptionComponent } from './prescription/upload-prescription/upload-prescription.component';
 import { DrugListComponent } from './prescription/drug-list/drug-list.component';
 import { RxHomeComponent } from './prescription/rx-home/rx-home.component';
+import { ClinicalViewComponent } from './clinicalnotes/clinical-view/clinical-view.component';
 
 
 const routes: Routes = [
@@ -17,7 +18,13 @@ const routes: Routes = [
       {
         path: 'home', component: HomeComponent, children: [
           { path: '', redirectTo: 'clinicalnotes', pathMatch: 'full' },
-          { path: 'clinicalnotes', component: ClinicalnotesComponent },
+          {
+            path: 'clinicalnotes', component: ClinicalnotesComponent, children: [
+              { path: '', redirectTo: 'view', pathMatch: 'full' },
+              { path: 'view', component: ClinicalViewComponent },
+              { path: 'edit', component: GeneralComponent }
+            ]
+          },
           {
             path: 'prescription', component: PrescriptionComponent, children: [
               { path: '', redirectTo: 'Rx', pathMatch: 'full' },
@@ -30,7 +37,7 @@ const routes: Routes = [
 
     ]
   },
-  { path: 'general', component: GeneralComponent }
+
 
 
 ];

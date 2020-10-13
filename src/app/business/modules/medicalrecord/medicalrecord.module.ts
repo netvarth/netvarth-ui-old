@@ -18,12 +18,13 @@ import { ShareRxComponent } from './prescription/share-rx/share-rx.component';
 import { UploadPrescriptionComponent } from './prescription/upload-prescription/upload-prescription.component';
 import { DrugListComponent } from './prescription/drug-list/drug-list.component';
 import { RxHomeComponent } from './prescription/rx-home/rx-home.component';
+import { ClinicalViewComponent } from './clinicalnotes/clinical-view/clinical-view.component';
 
 
 
 
 @NgModule({
-  declarations: [MedicalrecordComponent, GeneralComponent, ClinicalnotesComponent, PrescriptionComponent, LastVisitComponent, HomeComponent, AddDrugComponent, ShareRxComponent, UploadPrescriptionComponent, DrugListComponent, RxHomeComponent],
+  declarations: [MedicalrecordComponent, GeneralComponent, ClinicalnotesComponent, PrescriptionComponent, LastVisitComponent, HomeComponent, AddDrugComponent, ShareRxComponent, UploadPrescriptionComponent, DrugListComponent, RxHomeComponent, ClinicalViewComponent],
   imports: [
     SharedModule,
     CommonModule,
