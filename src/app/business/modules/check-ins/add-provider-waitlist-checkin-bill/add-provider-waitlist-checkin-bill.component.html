@@ -236,7 +236,7 @@
 																					class="spl col-md-12 col-sm-12 col-lg-12">
 																					<div
 																						class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding">
-																						<div class="item selectbox1 prov-bill-disc"
+																						<div class="item selectbox1 prov-bill-disc" 
 																							*ngIf="discounts.length >0 && showDiscountSection">
 																							<mat-form-field>
 																								<mat-select
@@ -491,7 +491,7 @@
 																			class="spl col-md-12 col-sm-12 col-lg-12 notes">
 																			<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding"
 																				*ngIf="itemdiscounts.length > 0">
-																				<div class="item selectbox1">
+																				<div class="item selectbox1 prov-bill-disc1">
 																					<mat-form-field>
 																						<mat-select
 																							[(ngModel)]="bill_data.service[i].serviceDiscount"
@@ -566,7 +566,7 @@
 																<mat-icon>more_vert</mat-icon>
 															</button>
 															<mat-menu #menu="matMenu">
-																<button mat-menu-item (click)="serviceDiscCoupSec(i)"
+																<button mat-menu-item   (click)="serviceDiscCoupSec(i)"
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>

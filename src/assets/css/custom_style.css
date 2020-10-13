@@ -6195,7 +6195,11 @@ li.separator.setsplit {
     width: 180px !important;
   }
 }
-
+@media (max-width: 784px) {
+  .prov-bill-disc1 {
+    width: 150px !important;
+  }
+}
 .jdn-pg i.editbt {
   margin-left: 20px !important;
 }
