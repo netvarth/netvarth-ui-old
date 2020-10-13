@@ -620,7 +620,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
       if (!this.shared_Functionsobj.checkIsInteger(form_data.qserveonce)) {
         const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
         // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' }); 
         return;
       } else {
         if (JSON.parse(form_data.qserveonce) === 0 || (JSON.parse(form_data.qserveonce) > JSON.parse(form_data.qcapacity))) {
