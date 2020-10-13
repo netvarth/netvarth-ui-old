@@ -3,7 +3,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
  // import { MatDialog } from '@angular/material';
 import { MedicalrecordService } from '../medicalrecord.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-clinicalnotes',
@@ -77,6 +77,13 @@ export class ClinicalnotesComponent implements OnInit {
 
     }
     addOrEditClinicalNotes(type, data) {
-      this.router.navigate(['/provider/medicalrecord/general']);
+      const navigationExtras: NavigationExtras = {
+        queryParams: { type: type,
+                       data: data }
+    };
+    console.log(navigationExtras);
+      console.log(type);
+      console.log(data);
+      this.router.navigate(['/provider/medicalrecord/general'] , navigationExtras);
     }
 }

@@ -4,8 +4,8 @@
 
                    <div class="column">
                         <b>symptoms</b>
-                        <button  *ngIf= "symptoms" style="float: right;" (click)="addOrEditClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
-                        <button *ngIf= "!symptoms" style="float: right;">Add</button>
+                        <button  *ngIf= "symptoms" style="float: right;" (click)="addOrEditClinicalNotes('Symptoms', this.symptoms)">Edit</button>
+                        <button *ngIf= "!symptoms" style="float: right;" (click)="addOrEditClinicalNotes('Symptoms', this.symptoms)">Add</button>
                       <div *ngIf= "symptoms" class="columnx">
                         <p>{{this.symptoms}}</p>
                       </div>
@@ -15,8 +15,8 @@
 
                    <div class="column">
                          <b>Allergies</b>
-                         <button  *ngIf= "allergies"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
-                         <button *ngIf= "!allergies" style="float: right;">Add</button>
+                         <button  *ngIf= "allergies"  style="float: right;" (click)="addOrEditClinicalNotes('allergies',this.allergies)">Edit</button>
+                         <button *ngIf= "!allergies" style="float: right;" (click)="addOrEditClinicalNotes('allergies',this.allergies)">Add</button>
                        <div   *ngIf= "allergies" class="columnx">
                          <p>{{this.allergies}}</p>
                        </div>
@@ -25,8 +25,8 @@
                    <div> </div>
                    <div class="column">
                          <b>Diagnosis</b>
-                         <button  *ngIf= "diagnosis"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
-                         <button *ngIf= "!diagnosis" style="float: right;">Add</button>
+                         <button  *ngIf= "diagnosis"  style="float: right;" (click)="addOrEditClinicalNotes('diagnosis',this.diagnosis)">Edit</button>
+                         <button *ngIf= "!diagnosis" style="float: right;"  (click)="addOrEditClinicalNotes('diagnosis',this.diagnosis)" >Add</button>
                        <div *ngIf= "diagnosis"  class="columnx">
                          <p>{{this.diagnosis}}</p>
                        </div>
@@ -34,8 +34,8 @@
 
                    <div class="column">
                          <b>Observations</b>
-                         <button  *ngIf= "observations"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
-                         <button *ngIf= "!observations" style="float: right;">Add</button>
+                         <button  *ngIf= "observations"  style="float: right;" (click)="addOrEditClinicalNotes('observations',this.observations)">Edit</button>
+                         <button *ngIf= "!observations" style="float: right;" (click)="addOrEditClinicalNotes('observations',this.observations)">Add</button>
                         <div *ngIf= "observations" class="columnx">
                           <p>{{this.observations}}</p>
                          </div>
@@ -44,8 +44,8 @@
 
                    <div class="column">
                          <b>Complaints</b>
-                         <button  *ngIf= "complaints"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
-                         <button *ngIf= "!complaints" style="float: right;">Add</button>
+                         <button  *ngIf= "complaints"  style="float: right;" (click)="addOrEditClinicalNotes('complaints', this.complaints)">Edit</button>
+                         <button *ngIf= "!complaints" style="float: right;" (click)="addOrEditClinicalNotes('complaints', this.complaints)">Add</button>
                        <div  *ngIf= "complaints"  class="columnx">
                           <p>{{this.complaints}}</p>
                         </div>
@@ -55,15 +55,3 @@
        </div>
 
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
