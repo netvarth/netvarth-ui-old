@@ -28,7 +28,7 @@ export class UploadPrescriptionComponent implements OnInit {
 showSave = true;
 sharedialogRef;
 
-
+upload_status='Added to list';
   constructor( public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
@@ -126,6 +126,7 @@ saveImages() {
     this.provider_services.uploadMRprescription(id, submit_data)
               .subscribe((data) => {
                 this.showSave = false;
+                this.upload_status = 'Uploaded';
                 this.sharedfunctionObj.openSnackBar('Prescription uploaded successfully');
               },
                   error => {

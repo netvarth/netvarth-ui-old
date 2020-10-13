@@ -51,7 +51,7 @@ ngOnInit() {
   this.getMrprescription();
 }
 uploadRx() {
-  this.router.navigate(['/provider/medicalrecord/uploadRx']);
+  this.router.navigate(['/provider/medicalrecord/home/prescription/uploadRx']);
 
 }
 
