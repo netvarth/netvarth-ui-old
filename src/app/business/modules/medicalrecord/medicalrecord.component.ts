@@ -4,7 +4,8 @@ import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { LastVisitComponent } from './last-visit/last-visit.component';
- import { MedicalrecordService } from './medicalrecord.service';
+import { MedicalrecordService } from './medicalrecord.service';
+import { projectConstants } from '../../../app.component';
 
 @Component({
   selector: 'app-medicalrecord',
@@ -26,6 +27,9 @@ export class MedicalrecordComponent implements OnInit {
   patientLastName: number;
   PatientDob: any;
   isLoaded = false;
+  mrdate: any;
+  mrlist;
+  dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   constructor( // private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -45,8 +49,9 @@ export class MedicalrecordComponent implements OnInit {
            if (this.customerDetails.dob) {
            this.PatientDob = this.customerDetails.dob;
           }
-           this.medicalService.setPatientDetails(this.customerDetails);
-
+          this.mrId = qparams.mrId;
+          this.medicalService.setPatientDetails(this.customerDetails);
+          this.medicalService.setCurrentMRID(qparams.mrId);
         }
 
       );
@@ -56,16 +61,18 @@ export class MedicalrecordComponent implements OnInit {
 
   ngOnInit() {
     this.isLoaded = true;
-
-    // this.getallMedicalRecordsofthisPatient();
+    this.getallMedicalRecordsofthisPatient();
   }
   getallMedicalRecordsofthisPatient() {
     const filter = {};
     filter['patientId-eq'] = this.PatiendId;
 
-    this.provider_services.GetMedicalRecordListByUUid(filter)
+    this.provider_services.GetMedicalRecordList(filter)
       .subscribe((data) => {
-        console.log(data);
+        if (data) {
+          this.mrlist = data;
+          this.mrdate = this.mrlist[0].mrConsultationDate;
+          }
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

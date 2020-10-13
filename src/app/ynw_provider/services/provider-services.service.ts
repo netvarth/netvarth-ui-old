@@ -1530,7 +1530,7 @@ export class ProviderServices {
     const url = 'provider/mr/prescription/' + id;
     return this.servicemeta.httpGet(url);
   }
-  GetMedicalRecordListByUUid(filter = {}) {
+  GetMedicalRecordList(filter = {}) {
     const url = 'provider/mr';
     return this.servicemeta.httpGet(url, null, filter);
   }

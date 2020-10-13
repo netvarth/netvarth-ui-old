@@ -6,9 +6,9 @@
                         <b>symptoms</b>
                         <button  *ngIf= "symptoms" style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
                         <button *ngIf= "!symptoms" style="float: right;">Add</button>
-                      <div class="columnx">
+                      <div *ngIf= "symptoms" class="columnx">
                         <p>{{this.symptoms}}</p>
-                      </div><p> 2 attachments</p>
+                      </div>
                    </div>
                    <br><br>
 
@@ -17,9 +17,9 @@
                          <b>Allergies</b>
                          <button  *ngIf= "allergies"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
                          <button *ngIf= "!allergies" style="float: right;">Add</button>
-                       <div class="columnx">
+                       <div   *ngIf= "allergies" class="columnx">
                          <p>{{this.allergies}}</p>
-                       </div><p> 2 attachments</p>
+                       </div>
                    </div>
 
                    <div> </div>
@@ -27,18 +27,18 @@
                          <b>Diagnosis</b>
                          <button  *ngIf= "diagnosis"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
                          <button *ngIf= "!diagnosis" style="float: right;">Add</button>
-                       <div class="columnx">
+                       <div *ngIf= "diagnosis"  class="columnx">
                          <p>{{this.diagnosis}}</p>
-                       </div><p> 2 attachments</p>
+                       </div>
                    </div>
 
                    <div class="column">
                          <b>Observations</b>
                          <button  *ngIf= "observations"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
                          <button *ngIf= "!observations" style="float: right;">Add</button>
-                        <div class="columnx">
+                        <div *ngIf= "observations" class="columnx">
                           <p>{{this.observations}}</p>
-                         </div><p> 2 attachments</p>
+                         </div>
                    </div>
 
 
@@ -46,9 +46,9 @@
                          <b>Complaints</b>
                          <button  *ngIf= "complaints"  style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
                          <button *ngIf= "!complaints" style="float: right;">Add</button>
-                       <div class="columnx">
+                       <div  *ngIf= "complaints"  class="columnx">
                           <p>{{this.complaints}}</p>
-                        </div><p> 2 attachments</p>
+                        </div>
                    </div>
            </div>
            <div class="clearfix"></div>

@@ -19,8 +19,10 @@
       <hr>
       <div>
         <h3>Add or view medical records for a consultation</h3>
-        <p>Patient consultation date</p>
-
+        <p>Patient consultation date
+            <button (click) = "getLastVisitList()"> {{mrdate | date:dateFormatSp}}  &nbsp; <i class="arrow down"></i></button>  &nbsp;
+            <span>(Recent visit)</span>
+        </p>
       </div>
       <hr>
       <div>
@@ -59,3 +61,4 @@
 
   </section>
 </div>
+<div class="clearfix"></div>
