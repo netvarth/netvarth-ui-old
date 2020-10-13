@@ -308,7 +308,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         });
   }
   getAlertCount() {
-    this.shared_service.getAlertsTotalCnt('false', '')
+    this.shared_service.getAlertsTotalCnt('false', '', '')
       .subscribe((data: any) => {
         this.alertCnt = data;
         this.shared_functions.sendMessage({ ttype: 'alertCount', alertCnt: this.alertCnt });
@@ -332,7 +332,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     if (count < maxCnt) {
       maxCnt = count;
     }
-    this.shared_service.getAlerts('false', '', 0, maxCnt)
+    this.shared_service.getAlerts('false', '', '', 0, maxCnt)
       .subscribe(data => {
         this.alerts = data;
       },

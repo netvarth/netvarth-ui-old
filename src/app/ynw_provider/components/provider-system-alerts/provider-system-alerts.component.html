@@ -60,16 +60,25 @@
                                                                         </li>
                                                                 </div>
                                                                 <div>
-                                                                    <label class="filterHeaders">Filter By Date</label>
+                                                                    <label class="filterHeaders"> From</label>
                                                                     <li class="filterli filterDatepicker">
-                                                                        <input class="filterTextbox" type="text" [(ngModel)]="alertSeldate" [min]="minday" [max]="maxDate"
+                                                                        <input class="filterTextbox" type="text" [(ngModel)]="alertStartdate" [min]="minday" [max]="maxDate"
                                                                         [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="Date" readonly>
                                                                         <mat-datepicker-toggle matSuffix [for]="picker">
                                                                         </mat-datepicker-toggle>
                                                                         <mat-datepicker #picker></mat-datepicker> 
                                                                     </li>
                                                                 </div>
-                
+                                                                <div>
+                                                                    <label class="filterHeaders"> To</label>
+                                                                    <li class="filterli filterDatepicker">
+                                                                        <input class="filterTextbox" type="text" [(ngModel)]="alertEnddate" [min]="endminday" [max]="maxDate"
+                                                                        [matDatepicker]="picker1" #Edate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="Date" readonly>
+                                                                        <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                                        </mat-datepicker-toggle>
+                                                                        <mat-datepicker #picker1></mat-datepicker> 
+                                                                    </li>
+                                                                </div>
                                                             </li>
                                                         </ul>
                                                     </section>
