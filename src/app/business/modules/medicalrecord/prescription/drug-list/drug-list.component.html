@@ -53,7 +53,37 @@
         <span (click)="addDrug()" class="lnk action"> Add more</span>
 
         <div  *ngIf="!digitalSign">
-            <span>You never uploaded digital signature,<u> create or Upload digital signature for sharing Rx</u></span>
+            <span>You never uploaded digital signature,<a class="lnk action pointer-cursor"
+                (click)="imagefile.click()"><input #imagefile type="file"
+                    accept="/*;capture=camera" style="display:none;" multiple
+                    (change)="filesSelected($event)"> <u> create or Upload digital signature for sharing Rx</u></a>
+               </span>
+
+               <ng-container class="attachment"
+          *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+          <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
+              *ngFor="let item of selectedMessage.files; let i = index">
+              <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
+                  <span class="ln-hgt-40">{{item.name}}</span>
+              </div>
+              <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
+                  <span class="">
+                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                          <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                          <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                              <i class="icon-delete"></i>
+                              <span>delete</span>
+                          </button>
+                      </mat-menu>
+                  </span>
+              </div>
+          </div>
+          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv">
+              <button mat-button class="cs-btn bt1 savemember" (click)="saveDigitalSignImages()">OK</button>
+          </div>
+      </ng-container>
         </div>
 
         <div  *ngIf="drugList.length > 0 && showSave">
