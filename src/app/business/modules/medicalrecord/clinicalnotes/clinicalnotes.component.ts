@@ -3,6 +3,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
  // import { MatDialog } from '@angular/material';
 import { MedicalrecordService } from '../medicalrecord.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clinicalnotes',
@@ -28,7 +29,7 @@ export class ClinicalnotesComponent implements OnInit {
 
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
-   //  private dialog: MatDialog,
+    private router: Router,
     private medicalrecordService: MedicalrecordService) {
     this.medicalrecordService.patient_data.subscribe(res => {
       this.patientDetails = res;
@@ -75,20 +76,7 @@ export class ClinicalnotesComponent implements OnInit {
       // GetMedicalRecord
 
     }
-    editClinicalNotes(type, data) {
-      // this.editclinicaldialogRef = this.dialog.open(EditClinicalNoteComponent, {
-      //   width: '50%',
-      //   panelClass: ['popup-class', 'commonpopupmainclass'],
-      //   disableClose: true,
-      //   data: {
-      //     type: type,
-      //     customer: this.customerDetails,
-      //     data: data
-      //   }
-      // });
-      // this.mrdialogRef.afterClosed().subscribe(result => {
-      //   console.log(result);
-      // });
-
+    addOrEditClinicalNotes(type, data) {
+      this.router.navigate(['/provider/medicalrecord/general']);
     }
 }

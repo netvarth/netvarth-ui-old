@@ -4,7 +4,7 @@
 
                    <div class="column">
                         <b>symptoms</b>
-                        <button  *ngIf= "symptoms" style="float: right;" (click)="editClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
+                        <button  *ngIf= "symptoms" style="float: right;" (click)="addOrEditClinicalNotes('Symptoms','clinicalNotes.symptoms')">Edit</button>
                         <button *ngIf= "!symptoms" style="float: right;">Add</button>
                       <div *ngIf= "symptoms" class="columnx">
                         <p>{{this.symptoms}}</p>
