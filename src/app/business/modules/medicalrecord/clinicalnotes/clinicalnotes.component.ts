@@ -78,12 +78,10 @@ export class ClinicalnotesComponent implements OnInit {
     }
     addOrEditClinicalNotes(type, data) {
       const navigationExtras: NavigationExtras = {
-        queryParams: { type: type,
-                       data: data }
+        queryParams: { 'type': type,
+                       'data': JSON.stringify(data) }
     };
-    console.log(navigationExtras);
-      console.log(type);
-      console.log(data);
+
       this.router.navigate(['/provider/medicalrecord/general'] , navigationExtras);
     }
 }

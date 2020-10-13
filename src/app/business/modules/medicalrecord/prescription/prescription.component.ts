@@ -42,7 +42,7 @@ export class PrescriptionComponent implements OnInit {
         this.patientDetails = data;
         this.userId = this.patientDetails.id;
         console.log(this.userId);
-      
+
       });
 
   }
