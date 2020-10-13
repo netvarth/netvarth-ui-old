@@ -138,6 +138,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tempPreInfoTitle = '';
     tempPostInfoTitle = '';
     showEditSection = false;
+    savedisabled = false;
+    showNoteError = '';
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -415,6 +417,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             );
     }
     onSubmit(form_data) {
+        this.savedisabled = true;
         if (form_data.serviceType === 'virtualService') {
             //  this.tool_id = this.tool_id.trim();
             this.teleCallingModes = {
@@ -623,6 +626,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     resetApiErrors() {
+        this.savedisabled = false;
+        this.showNoteError = '';
     }
     convertTime(time) {
         this.duration.hour = Math.floor(time / 60);
@@ -728,8 +733,17 @@ export class ServiceComponent implements OnInit, OnDestroy {
     changeConsumerNoteStatus(ev) {
         this.showConsumerNote = ev.checked;
     }
-    editClicked() {
-        this.showEditSection = !this.showEditSection;
+    editClicked(type) {
+        this.showNoteError = '';
+        if (type && type === 'save') {
+            if (this.consumerNote === '' || this.consumerNote.trim() === '') {
+                this.showNoteError = 'Button Name required';
+            } else {
+                this.showEditSection = false;
+            }
+        } else {
+            this.showEditSection = true;
+        }
     }
     showInfoSection() {
         if (!this.showInfo) {

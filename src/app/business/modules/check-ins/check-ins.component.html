@@ -320,14 +320,14 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                           {{checkin.date | date: display_dateFormat}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label"
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip"
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
@@ -507,14 +507,14 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                           {{checkin.date | date: display_dateFormat}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label"
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip"
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
@@ -795,14 +795,14 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                         {{checkin.date | date: display_dateFormat}}</div>
-                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label"
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="goCheckinDetail(checkin)">
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}</div>
-                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip"
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
@@ -1100,7 +1100,7 @@
                         <div class="filterTextinput" *ngIf="time_type == 3">
                           <li class="filterli filterDatepicker">
                             <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday" [max]="maxday"
-                              [matDatepicker]="picker" #Fdate (dateChange)="doSearch()" (blur)="doSearch()"
+                              [matDatepicker]="picker" #Fdate (dateChange)="doSearch('start')" (blur)="doSearch()"
                               class="filterTextbox" placeholder="Start Date">
                             <mat-datepicker-toggle matSuffix [for]="picker">
                             </mat-datepicker-toggle>
@@ -1109,7 +1109,7 @@
                         </div>
                         <div class="filterTextinput" *ngIf="time_type == 3">
                           <li class="filterli filterDatepicker">
-                            <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="minday" [max]="maxday"
+                            <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="endminday" [max]="maxday"
                               [matDatepicker]="picker" #Fdate (dateChange)="doSearch()" (blur)="doSearch()"
                               class="filterTextbox" placeholder="End Date">
                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -1170,14 +1170,14 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                         {{checkin.date | date: display_dateFormat}}</div>
-                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label"
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="goCheckinDetail(checkin)">
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}</div>
-                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip"
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
