@@ -1121,21 +1121,19 @@ rescheduleAppointment(){
         this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
     }
     disableMinus() {
-    console.log(this.sel_checkindate);
-    console.log(this.hold_sel_checkindate);
-//         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-//         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
-//         const seldate = new Date(seldate2);
-//         const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
-//         const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-//         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
-//         const strtDt = new Date(strtDt2);
-//         const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
-//         if (startdate >= selecttdate) {
-//             return true;
-//         } else {
-//             return false;
-//         }
+        const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
+        const seldate = new Date(seldate2);
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+        const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
+        const strtDt = new Date(strtDt2);
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+        if (startdate >= selecttdate) {
+            return true;
+        } else {
+            return false;
+        }
     }
     getPartysizeDetails(domain, subdomain) {
         this.shared_services.getPartysizeDetails(domain, subdomain)
