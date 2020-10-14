@@ -1550,4 +1550,8 @@ export class ProviderServices {
     const url = 'provider/user/digitalSign/' + id;
     return this.servicemeta.httpPost(url, data);
   }
+  updateMrClinicalNOtes(data, mrId) {
+    const url = 'provider/mr/clinicalNotes/' + mrId;
+    return this.servicemeta.httpPut(url, data);
+  }
 }

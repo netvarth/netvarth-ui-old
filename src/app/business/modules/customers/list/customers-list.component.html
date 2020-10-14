@@ -170,7 +170,7 @@
                       <i class="icon-edit"></i>
                       Edit
                     </button>
-                    <button mat-menu-item (click)="medicalRecord(customer)">
+                    <button   *ngIf="domain === 'healthCare'" mat-menu-item (click)="medicalRecord(customer)">
                       <i class="icon-edit"></i>
                       MedicalRecord
                     </button>

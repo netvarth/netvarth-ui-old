@@ -24,6 +24,8 @@ export class ClinicalViewComponent implements OnInit {
   complaints: any;
   observations: any;
   misc_notes: any;
+  vaccinationHistory: any;
+  Cdata;
 
   constructor(
 
@@ -57,17 +59,18 @@ export class ClinicalViewComponent implements OnInit {
     // }
 
     getMRClinicalNotes() {
-      this.provider_services.getClinicalRecordOfMRById(11)
+      this.provider_services.getClinicalRecordOfMRById(52)
         .subscribe((data) => {
-          this.ClinicalNotes = data;
-          this.allergies = this.ClinicalNotes.allergies;
-          this.complaints = this.ClinicalNotes.complaints;
-          this.diagnosis = this.ClinicalNotes.diagnosis;
-          this.misc_notes = this.ClinicalNotes.misc_notes;
-          this.observations = this.ClinicalNotes.observations;
-          this.symptoms = this.ClinicalNotes.symptoms;
-          console.log(this.ClinicalNotes);
-          console.log(this.symptoms);
+          this.Cdata = data;
+          this.allergies = this.Cdata.ClinicalNotes.allergies;
+          this.complaints = this.Cdata.ClinicalNotes.complaints;
+          this.diagnosis = this.Cdata.ClinicalNotes.diagnosis;
+          this.misc_notes = this.Cdata.ClinicalNotes.misc_notes;
+          this.observations = this.Cdata.ClinicalNotes.observations;
+          this.symptoms = this.Cdata.ClinicalNotes.symptoms;
+          this.vaccinationHistory = this.Cdata.ClinicalNotes.vaccinationHistory;
+          this.misc_notes = this.Cdata.ClinicalNotes.misc_notes;
+          console.log(this.Cdata);
           console.log(this.allergies);
         },
           error => {
@@ -81,6 +84,8 @@ export class ClinicalViewComponent implements OnInit {
         queryParams: { 'type': type,
                        'data': JSON.stringify(data) }
     };
+    console.log(navigationExtras);
+    console.log(type);
 
       this.router.navigate(['/provider/medicalrecord/home/clinicalnotes/edit'] , navigationExtras);
     }

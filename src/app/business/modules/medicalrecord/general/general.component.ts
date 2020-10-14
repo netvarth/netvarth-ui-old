@@ -15,9 +15,9 @@ export class GeneralComponent implements OnInit {
   patientDetails: any;
   userId: any;
   today = new Date();
-  type: any;
-  data: any;
-
+  type;
+  data;
+  notes = {'complaints': '', 'symptoms': '', 'allergies': '','vaccinationHistory': '', 'observations': '', 'diagnosis': '', 'misc_notes': ''}
 
   constructor(
     private medicalrecord_service: MedicalrecordService,
@@ -27,6 +27,7 @@ export class GeneralComponent implements OnInit {
   ) {
     this.activated_route.queryParams.subscribe(params => {
       this.type = params.type;
+      console.log(this.type);
       this.data = JSON.parse(params.data);
       this.Cnotes = this.data;
     });
@@ -40,28 +41,43 @@ export class GeneralComponent implements OnInit {
   ngOnInit() {
   }
   save(Cnotes) {
+    console.log(this.type);
+    if (this.type === 'Symptoms') {
+      this.notes.symptoms = this.Cnotes;
+    } else if (this.type === 'allergies') {
+      this.notes.allergies = this.Cnotes;
+    } else if (this.type === 'diagnosis') {
+      this.notes.diagnosis = this.Cnotes;
+    } else if (this.type === 'observations') {
+      this.notes.observations = this.Cnotes;
+    } else if (this.type === 'complaints') {
+      this.notes.complaints = this.Cnotes;
+    } else if (this.type === 'vaccinationHistory') {
+      this.notes.vaccinationHistory = this.Cnotes;
+    } else if (this.type === 'misc_notes') {
+      this.notes.misc_notes = this.Cnotes;
+    }
     console.log(Cnotes);
     const post_itemdata = {
       'bookingType': 'NA',
       'consultationMode': 'EMAIL',
-      'clinicalNotes': {
-        'complaints': this.Cnotes || '',
-        'symptoms': this.Cnotes || '',
-        'allergies': this.Cnotes || '',
-        'vaccinationHistory': this.Cnotes || '',
-        'observations': this.Cnotes || '',
-        'diagnosis': this.Cnotes || '',
-        'misc_notes': this.Cnotes || ''
-      },
+      'clinicalNotes': this.notes,
       'mrConsultationDate': this.today
     };
     console.log(post_itemdata, this.userId);
-    this.provider_services.createMedicalRecord(post_itemdata, this.userId)
-      .subscribe((data) => {
-        console.log(data);
-      },
-        error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
+    // this.provider_services.createMedicalRecord(post_itemdata, this.userId)
+    //   .subscribe((data) => {
+    //     console.log(data);
+    //   },
+    //     error => {
+    //       this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    //     });
+    // this.provider_services.updateMrClinicalNOtes(post_itemdata, 52)
+    //   .subscribe((data) => {
+    //     console.log(data);
+    //   },
+    //     error => {
+    //       this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    //     });
   }
 }
