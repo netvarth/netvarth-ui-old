@@ -3309,11 +3309,6 @@ body {
   font-size: smaller !important;
 }
 
-.labelstyle {
-  color: #3f51b5 !important;
-  font-size: smaller !important;
-}
-
 .exstschdlesze {
   font-size: smaller !important;
 }
@@ -12317,4 +12312,22 @@ img.busN-logo {
 }
 .font-bold {
   font-weight: 600 !important;
+}
+
+.labelstyle {
+  font-size: 0.90rem !important;
+  font-weight: normal !important;
+  color: #3f51b5 !important;
+  }
+
+.mat-form-field-label:not(.mat-empty) {
+  font-size: 1.2rem  !important;
+  overflow: visible !important;
+}
+
+@media (max-width: 375px) {
+  .mat-form-field-label:not(.mat-empty) {
+    font-size: 0.95rem  !important;
+    overflow: visible !important;
+  }
 }
