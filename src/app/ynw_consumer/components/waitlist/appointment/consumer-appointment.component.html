@@ -36,11 +36,11 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">Appointment For
-                                            <a class="lnk pointer-cursor action mgn-lt-10 pull-right"
+                                            <a *ngIf="type !== 'reschedule'" class="lnk pointer-cursor action mgn-lt-10 pull-right"
                                                 (click)="changeService()">Change
                                                 Service</a></div>
                                         <div class="col-sm-12 col-xs-12 col-md-12">
-                                            <div class="card-body" *ngIf="sel_ser">
+                                            <div class="card-body" *ngIf="sel_ser || type == 'reschedule'">
                                                 <div class="service-icon pull-left"
                                                     *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
@@ -56,6 +56,9 @@
                                                 </div>
                                                 <h6 class="card-title service">
                                                     {{sel_ser_det.name}}
+                                                </h6>
+                                                <h6 *ngIf="type == 'reschedule'" class="card-title service">
+                                                    {{appointment.service.name}}
                                                 </h6>
                                                 <div class="">
                                                     
@@ -162,11 +165,21 @@
 
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                            Date/Time
-                                            <a class="lnk pull-right pointer-cursor action mgn-lt-10 mgn-rt-20"
+                                            Appointment Time
+                                            <span><a class="lnk pointer-cursor action mgn-lt-10 pull-right mgn-rt-20"
+                                                (click)="changeSlot()">Change Slot
+                                            </a></span>
+                                            <!-- <a *ngIf="type !== 'reschedule'" class="lnk pull-right pointer-cursor action mgn-lt-10 mgn-rt-20"
                                                 (click)="changeSlot()">Change
-                                            </a>
+                                            </a> -->
                                         </div>
+                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="type == 'reschedule'">
+                                            <h6 class="card-title serv-time">
+                                                <span style="display: block;">
+                                                    {{appointment.appmtDate | date: dateFormat}}</span><span>{{appointment.appmtTime}}</span>
+                                                    
+                                            </h6>
+                                        </div> -->
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
                                                 <h6 class="card-title serv-time" *ngIf="apptTime">
                                                     <span style="display: block;">
@@ -175,11 +188,9 @@
                                                 </h6>
                                             </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
-                                                *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
+                                                *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1 && type !== 'reschedule'">
                                                 No slots available.
-                                                <span><a class="lnk pointer-cursor action mgn-lt-10"
-                                                    (click)="changeSlot()">Change Slot
-                                                </a></span>
+                                                
                                             </div> 
                                         <!-- <div class="pull-left brd-round brd-light">
                                             
@@ -242,7 +253,7 @@
                                         <div
                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">Booking
-                                                For <a class="lnk pointer-cursor action mgn-lt-10 pull-right mgn-rt-20"
+                                                For <a *ngIf="type !== 'reschedule'" class="lnk pointer-cursor action mgn-lt-10 pull-right mgn-rt-20"
                                                     (click)="handleSideScreen('members')">Change
                                                     <!-- <i class="fa fa-pencil"></i> -->
                                                 </a>
@@ -260,7 +271,7 @@
                                                             *ngIf="userPhone && !changePhno">{{userPhone}}</span>
                                                         <span class="mgn-lt-10 phonevallabel"
                                                             *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
-                                                            class="mgn-lt-5 lnk pointer-cursor"><i class="fa fa-pencil"
+                                                            class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'reschedule'" class="fa fa-pencil"
                                                                 (click)="editPhone()"></i></a>
                                                     </div>
                                                     <div class=""
@@ -268,7 +279,7 @@
                                                         <i class="fa fa-envelope-o "></i>
                                                         <span
                                                             class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
-                                                        <a class="mgn-lt-5 lnk pointer-cursor"><i class="fa fa-pencil"
+                                                        <a class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'reschedule'" class="fa fa-pencil"
                                                                 (click)="handleEmail()"></i></a>
                                                         <!-- <span class="mgn-lt-5 emailvallabel"
                                                 *ngIf="currentPhone && changePhno">{{currentPhone}}</span>&nbsp;<a class="lnk pointer-cursor"><i
@@ -317,11 +328,18 @@
                                                                     class="rupee-font">&#8377;
                                                                 </span>{{prepaymentAmount}}</span>
                                                     </div>
-                                                    <div class="checkin-btn-bp pointer-cursor"
+                                                    <div class="checkin-btn-bp pointer-cursor" *ngIf="type !== 'reschedule'"
                                                         [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === ''"  (click)="handleApptClicked()">
                                                         <span *ngIf="!sel_ser_det.isPrePayment">Confirm
                                                             Appointment</span>
                                                         <span *ngIf="sel_ser_det.isPrePayment">Proceed to Payment</span>
+                                                        <i class="fa fa-long-arrow-right mgn-lt-5"></i>
+                                                    </div>
+
+                                                    <div class="checkin-btn-bp pointer-cursor" *ngIf="type == 'reschedule'"
+                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === ''"  (click)="rescheduleAppointment()">
+                                                        
+                                                            <span (click)="rescheduleAppointment()">Reschedule</span>
                                                         <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                     </div>
                                                 </div>
@@ -379,7 +397,7 @@
                                 </span> -->
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10"
-                            *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
+                            *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1 || type !== 'reschedule'">
                             No slots available.
                         </div>
                             </div>

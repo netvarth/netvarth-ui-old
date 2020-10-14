@@ -204,6 +204,9 @@ export class ConsumerAppointmentComponent implements OnInit {
     is_wtsap_empty = false;
     selectedDeptParam;
     selectedUserParam;
+    rescheduleUserId;
+    type;
+    appointment: any = [];
     selectedUser;
     accountType;
     futureAppt = false;
@@ -225,6 +228,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         public dialog: MatDialog) {
         this.route.queryParams.subscribe(
             params => {
+                
                 this.sel_loc = params.loc_id;
                 if (params.qid) {
                     this.sel_queue_id = params.qid;
@@ -249,9 +253,17 @@ export class ConsumerAppointmentComponent implements OnInit {
                     // tslint:disable-next-line:radix
                     this.selectedService = parseInt(params.service_id);
                 }
+                if (params.type === 'reschedule'){
+                    this.type = params.type;
+                    this.rescheduleUserId = params.uuid;
+                }
             });
     }
     ngOnInit() {
+            if (this.type === 'reschedule'){
+                this.getRescheduleApptDet();
+
+            }
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.carouselOne = {
             dots: false,
@@ -333,7 +345,21 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.showfuturediv = false;
         this.revealphonenumber = true;
         this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
+        
     }
+getRescheduleApptDet(){
+    this.shared_services.getAppointmentByConsumerUUID( this.rescheduleUserId,this.account_id).subscribe(
+        (appt: any) => {
+          this.appointment = appt;
+          this.sel_loc = this.appointment.location.id;
+          this.selectedService = this.appointment.service.id;
+          this.sel_checkindate = this.appointment.appmtDate;
+          console.log(this.sel_loc,this.selectedService,this.sel_checkindate)
+          this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedService, this.sel_checkindate, this.account_id);
+
+        });
+
+}
     createForm() {
         this.searchForm = this.fb.group({
             mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
@@ -719,6 +745,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
         };
+        
         // if (this.apptTime) {
         // post_Data['appointmentTime'] = this.apptTime['time'];
         // }
@@ -761,6 +788,23 @@ export class ConsumerAppointmentComponent implements OnInit {
             //  this.addCheckInConsumer(post_Data);
         }
     }
+rescheduleAppointment(){
+    const post_Data = {
+        "uid": this.rescheduleUserId,
+        "time": this.apptTime['time'],
+        "date": this.sel_checkindate,
+        "schedule": this.apptTime['scheduleId']
+         };
+    this.shared_services.rescheduleConsumerApptmnt(this.account_id, post_Data)
+        .subscribe(
+              () => {
+                           
+               },
+          error => {
+                    this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+                    this.api_loading = false;
+        });
+}
     addCheckInConsumer(post_Data) {
         this.api_loading = true;
         this.shared_services.addCustomerAppointment(this.account_id, post_Data)
@@ -1521,9 +1565,11 @@ export class ConsumerAppointmentComponent implements OnInit {
         return this.sharedFunctionobj.isNumeric(evt);
     }
     addCallingmode() {
-        if (this.callingModes === '' || this.callingModes.toString().length < 10 || this.callingModes.charAt(0) === '0') {
+        if (this.callingModes === '' || this.callingModes.toString().length < 10 || this.callingModes.charAt(0) === '0'
+) {
             this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
-        } else if (this.callingModes && this.callingModes.toString().length === 10 && this.callingModes.charAt(0) !== '0') {
+        } else if (this.callingModes && this.callingModes.toString().length === 10 || this.callingModes.charAt(0) === '0'
+) {
             this.showInputSection = true;
         }
     }

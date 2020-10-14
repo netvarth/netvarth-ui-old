@@ -10,6 +10,7 @@ import { CheckinDetailsSendComponent } from '../../check-ins/checkin-details-sen
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-customer.component';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -41,20 +42,45 @@ export class AppointmentActionsComponent implements OnInit {
     pos = false;
     showBill = false;
     showMsg = false;
+    selectedTime;
+    sel_checkindate;
+    sel_schedule_id;
+    servId;
+    locId;
+    schedules: any = [];
+    availableSlots: any = [];
+    freeSlots: any = [];
+    hold_sel_checkindate;
+    apptTime;
+    today;
+    minDate;
+    maxDate;
+    server_date;
+    dateDisplayFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
         private provider_shared_functions: ProviderSharedFuctions,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
+        this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
         console.log(this.data);
         this.appt = this.data.checkinData;
         this.getPos();
         this.getLabel();
+        this.setData();
+
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
-
+    setData() {
+        this.selectedTime = this.appt.appmtTime;
+        this.sel_checkindate = this.hold_sel_checkindate = this.appt.appmtDate;
+        this.sel_schedule_id = this.appt.schedule.id;
+        this.servId = this.appt.service.id;
+        this.locId = this.appt.location.id;
+    }
     printAppt() {
         this.dialogRef.close();
         const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
@@ -126,6 +152,17 @@ export class AppointmentActionsComponent implements OnInit {
                 () => { },
                 () => { }
             );
+    }
+    rescheduleActionClicked() {
+        this.action = 'reschedule';
+        this.setMinMaxDate();
+    }
+    changeSlot() {
+        this.action = 'slotChange';
+        this.getAppointmentSlots();
+    }
+    goBacktoApptDtls() {
+        this.action = 'reschedule';
     }
     smsCheckin() {
         this.dialogRef.close();
@@ -399,5 +436,97 @@ export class AppointmentActionsComponent implements OnInit {
             this.pos = data['enablepos'];
             this.getDisplayboardCount();
         });
+    }
+    rescheduleAppointment() {
+        console.log(this.apptTime);
+        const data = {
+            'uid': this.appt.uid,
+            'time': this.apptTime['time'],
+            'date': moment(this.sel_checkindate).format('YYYY-MM-DD'),
+            'schedule': this.apptTime['scheduleId']
+        };
+        console.log(data);
+        this.provider_services.rescheduleProviderAppointment(data)
+            .subscribe(
+                () => {
+                    this.dialogRef.close();
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+    }
+    timeSelected(slot) {
+        console.log(slot);
+        this.apptTime = slot;
+    }
+    getAppointmentSlots() {
+        this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate).subscribe(data => {
+            this.schedules = data;
+            for (const scheduleSlots of this.schedules) {
+                this.availableSlots = scheduleSlots.availableSlots;
+                for (const freslot of this.availableSlots) {
+                    if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
+                        freslot['scheduleId'] = scheduleSlots['scheduleId'];
+                        freslot['displayTime'] = this.getSingleTime(freslot.time);
+                        this.freeSlots.push(freslot);
+                    }
+                }
+                console.log(this.freeSlots)
+            }
+        });
+    }
+    disableMinus() {
+        const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
+        const seldate = new Date(seldate2);
+        const selecttdate = new Date(seldate.getFullYear() + '-' + this.shared_functions.addZero(seldate.getMonth() + 1) + '-' + this.shared_functions.addZero(seldate.getDate()));
+        const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
+        const strtDt = new Date(strtDt2);
+        const startdate = new Date(strtDt.getFullYear() + '-' + this.shared_functions.addZero(strtDt.getMonth() + 1) + '-' + this.shared_functions.addZero(strtDt.getDate()));
+        if (startdate >= selecttdate) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    calculateDate(days) {
+        const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
+        const newdate = new Date(date);
+        newdate.setDate(newdate.getDate() + days);
+        const dd = newdate.getDate();
+        const mm = newdate.getMonth() + 1;
+        const y = newdate.getFullYear();
+        const ndate1 = y + '-' + mm + '-' + dd;
+        const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
+        const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
+        const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
+        const nDt = new Date(ndate);
+        console.log(nDt);
+        console.log(strtDt);
+        // if (nDt.getTime() >= strtDt.getTime()) {
+            this.sel_checkindate = ndate;
+            this.getAppointmentSlots();
+        // }
+    }
+    setMinMaxDate() {
+        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.today = new Date(this.today);
+        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.minDate = new Date(this.minDate);
+        this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+    }
+    handleFutureDateChange(e) {
+        const tdate = e.targetElement.value;
+        const newdate = tdate.split('/').reverse().join('-');
+        const futrDte = new Date(newdate);
+        const obtmonth = (futrDte.getMonth() + 1);
+        let cmonth = '' + obtmonth;
+        if (obtmonth < 10) {
+            cmonth = '0' + obtmonth;
+        }
+        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+        this.sel_checkindate = seldate;
     }
 }

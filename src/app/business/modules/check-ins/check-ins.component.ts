@@ -1242,6 +1242,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.resetPaginationData();
     // this.pagination.startpageval = 1;
     // this.pagination.totalCnt = 0; // no need of pagination in today
+    if (this.activeQs.length > 0) {
     const promise = this.getTodayWLCount(Mfilter);
     promise.then(
       result => {
@@ -1249,6 +1250,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getTodayWaitlist(Mfilter)
           .subscribe(
             (data: any) => {
+              this.appt_list = [];
               this.appt_list = data;
               this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
               if (this.filterapplied === true) {
@@ -1272,6 +1274,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       () => {
         this.loading = false;
       });
+      } else {
+       this.loading = false;
+    }
   }
   getFutureWL() {
     this.resetCheckList();

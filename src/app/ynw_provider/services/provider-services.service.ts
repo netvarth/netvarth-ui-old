@@ -1189,6 +1189,10 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/nextAvailableTime/' + scheduleid;
       return this.servicemeta.httpGet(url);
    }
+   getSlotsByLocationServiceandDate(locid, servid, pdate) {
+      const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid;
+      return this.servicemeta.httpGet(url);
+    }
    getAppointmentSlotsByDate(scheduleid, date) {
       const url = 'provider/appointment/schedule/' + scheduleid + '/' + date;
       return this.servicemeta.httpGet(url);
@@ -1525,4 +1529,8 @@ export class ProviderServices {
       const url = 'provider/waitlist/createJaldeeMeetingrequest';
       return this.servicemeta.httpPost(url, data);
    }
+   rescheduleProviderAppointment(data) {
+   const url = 'provider/appointment/reschedule';
+    return this.servicemeta.httpPut(url, data);
+}
 }
