@@ -13,7 +13,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 export class ClinicalViewComponent implements OnInit {
 
 
-  clinicalNotes: { displayName: string; value: string; id: string; }[];
+  clinicalNotes: any[];
   allergies: any;
   currentMRId: any;
   patientDetails: any;
@@ -37,9 +37,12 @@ export class ClinicalViewComponent implements OnInit {
 
 
     this.medicalrecordService._mrUid.subscribe(mrId => {
+      console.log(mrId);
+
       if (mrId !== 0) {
         this.getMRClinicalNotes(mrId).then((res: any) => {
           this.clinicalNotes = res;
+          console.log(JSON.stringify(this.clinicalNotes));
           this.isLoaded = true;
 
         });
@@ -55,22 +58,32 @@ export class ClinicalViewComponent implements OnInit {
 
 
   getMRClinicalNotes(mrId) {
-    console.log('inideeeeeeeeeeeee');
-    const p_clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
-    return new Promise((resolve) => {
-      this.provider_services.getClinicalRecordOfMRById(mrId)
-        .subscribe(res => {
+    const _this = this;
+    _this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+    console.log(JSON.stringify(_this.clinicalNotes) + 'helooooo');
 
+
+    return new Promise((resolve) => {
+      _this.provider_services.getClinicalRecordOfMRById(mrId)
+        .subscribe(res => {
+          console.log(res);
           Object.entries(res).forEach(
-            function (key, value) {
-              const index = p_clinicalNotes.findIndex(element => element.id === key.toString());
-              p_clinicalNotes[index.toString()].value = value;
+            function ([key, v]) {
+              console.log(v);
+              console.log(_this.clinicalNotes.findIndex(element => element.id === key));
+
+              const index = _this.clinicalNotes.findIndex(element => element.id === key);
+              _this.clinicalNotes[index].value = v;
+              console.log('afterupdating ...' + _this.clinicalNotes[index].value);
+
             });
         },
           error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            _this.sharedfunctionObj.openSnackBar(_this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
-      resolve(p_clinicalNotes);
+      console.log('final..' + JSON.stringify(_this.clinicalNotes));
+
+      resolve(_this.clinicalNotes);
     });
 
   }
