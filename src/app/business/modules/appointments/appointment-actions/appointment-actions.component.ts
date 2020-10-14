@@ -458,6 +458,7 @@ export class AppointmentActionsComponent implements OnInit {
     timeSelected(slot) {
         console.log(slot);
         this.apptTime = slot;
+        this.selectedTime = slot.time;
     }
     getAppointmentSlots() {
         this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate).subscribe(data => {
@@ -505,10 +506,10 @@ export class AppointmentActionsComponent implements OnInit {
         const nDt = new Date(ndate);
         console.log(nDt);
         console.log(strtDt);
-        // if (nDt.getTime() >= strtDt.getTime()) {
+        if (nDt.getTime() >= strtDt.getTime()) {
             this.sel_checkindate = ndate;
             this.getAppointmentSlots();
-        // }
+        }
     }
     setMinMaxDate() {
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });

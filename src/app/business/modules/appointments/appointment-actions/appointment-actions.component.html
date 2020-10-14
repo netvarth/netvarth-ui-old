@@ -164,7 +164,7 @@
                 {{appt.service.name}}
 
             </p>
-            <p>Appointment Date & Time: {{appt.appmtDate | date: dateFormat}} {{getSingleTime(appt.appmtTime)}}
+            <p>Appointment Date & Time: {{appt.appmtDate | date: dateFormat}}, {{getSingleTime(appt.appmtTime)}}
             </p>
             <!-- <p *ngIf = "deptName">Department : {{deptName}}</p> -->
             <p *ngIf="Schedulestime">Schedule : {{appt.schedule.name}} [{{appt.apptSchedule.timeSlots[0].sTime}} -
@@ -180,15 +180,16 @@
 
 </div>
 <div class="p-checkin" *ngIf="action === 'slotChange'">
+    <div class="mainouter">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <a class="pull-left back-btn mgn-up-5" (click)="goBacktoApptDtls()"><i class="fa fa-arrow-left"></i></a>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mainouter">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 ">
         <div class="date-outer">
             <div class="date-head">Appointment Date</div>
         <div class="date-body">
             <span class="selected-date">
-                <span class="icon-minus" (click)="calculateDate(-1)"></span>
+                <span class="icon-minus" (click)="calculateDate(-1)" [class.disable]="disableMinus()"></span>
                 {{sel_checkindate | date: dateDisplayFormat}}
                 <span class="icon-add" (click)="calculateDate(1)"></span></span>
             <div class="form-group dt">
@@ -204,9 +205,10 @@
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">Choose Slot
     </div>
-    <div class="col-md-10 col-xs-12 col-sm-12 mgn-up-20 slotdiv appt-in-chip no-padding" *ngIf="freeSlots.length > 0">
-        <mat-chip-list class="">
-            <mat-chip *ngFor="let slot of freeSlots" (click)="timeSelected(slot)">
+   
+    <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 slotdiv no-padding queue-outer" *ngIf="freeSlots.length > 0">
+        <mat-chip-list class="appt-in-chip">
+            <mat-chip *ngFor="let slot of freeSlots" (click)="timeSelected(slot)" [selected]="slot.time==selectedTime">
                 {{slot.displayTime}}
             </mat-chip>
         </mat-chip-list>
@@ -216,5 +218,6 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks no-padding">
         <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="rescheduleAppointment()">Reschedule</span>
+    </div>
     </div>
 </div>
