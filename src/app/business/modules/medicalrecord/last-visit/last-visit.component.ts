@@ -11,8 +11,8 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 })
 export class LastVisitComponent implements OnInit {
   PatientId: any;
-  public service_dataSource = new MatTableDataSource<any>();
-  service_displayedColumns = ['ConsultationDate', 'serviceName', 'userName', 'MrCreatedDate'];
+  public lastVisit_dataSource = new MatTableDataSource<any>();
+ lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'userName', 'mr_createdDate'];
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     public dialogRef: MatDialogRef<LastVisitComponent>,
@@ -26,8 +26,8 @@ export class LastVisitComponent implements OnInit {
   }
   getPatientVisitList() {
     this.provider_services.getPatientVisitList(this.PatientId)
-      .subscribe((data) => {
-        console.log(data);
+      .subscribe((data: any) => {
+       this.lastVisit_dataSource = data;
       },
       error => {
        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

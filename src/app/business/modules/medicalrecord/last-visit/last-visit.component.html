@@ -1,35 +1,35 @@
-<p>last-visit works!</p>
+
   <section class="report">
     <div class="content w-manager settings comn-cls lic-page">
       <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
         <div class="box" >
-         <mat-table [dataSource]="service_dataSource">
-          <ng-container matColumnDef="ConsultationDate">
+         <mat-table [dataSource]="lastVisit_dataSource">
+          <ng-container matColumnDef="consultationDate">
             <mat-header-cell *matHeaderCellDef>Consultation Date</mat-header-cell>
-            <!-- <mat-cell *matCellDef="let service">
+            <mat-cell *matCellDef="let visit">
               <span class="mobile-label">Service ID:</span>
-              {{service.id}}</mat-cell> -->
+              {{visit.service.id}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="serviceName">
             <mat-header-cell *matHeaderCellDef>Service Name</mat-header-cell>
-            <!-- <mat-cell *matCellDef="let service">
-              {{service.name}}</mat-cell> -->
+            <mat-cell *matCellDef="let visit">
+              {{visit.service.name}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="userName">
             <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
-            <!-- <mat-cell *matCellDef="let service">
-              {{service.user}}</mat-cell> -->
+            <mat-cell *matCellDef="let visit">
+              {{visit.user}}</mat-cell>
           </ng-container>
-          <ng-container matColumnDef="MrCreatedDate">
+          <ng-container matColumnDef="mr_createdDate">
             <mat-header-cell *matHeaderCellDef>MR Created date</mat-header-cell>
-            <!-- <mat-cell *matCellDef="let service">
-              {{service.status}}</mat-cell> -->
+            <mat-cell *matCellDef="let visit">
+              {{visit.date}}</mat-cell>
           </ng-container>
-          <!-- <mat-header-row *matHeaderRowDef="service_displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row;columns:service_displayedColumns"></mat-row> -->
+          <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns"></mat-row>
 
-        </mat-table>  
+        </mat-table>
     </div>
       </div>
     </div>
