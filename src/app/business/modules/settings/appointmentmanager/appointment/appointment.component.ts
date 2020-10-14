@@ -956,6 +956,8 @@ export class AppointmentComponent implements OnInit {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else if (i === 'Phone') {
                     post_Data['virtualService'] = this.virtualServiceArray;
+                } else {
+                    post_Data['virtualService'] = {'VideoCall' : ''};
                 }
                 //  else {
                 //     post_Data['virtualService'] = {};
@@ -1187,7 +1189,7 @@ export class AppointmentComponent implements OnInit {
             fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
             fn.subscribe(() => {
                 this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
-                //this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+                // this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.handleGoBack(3);

@@ -1,10 +1,27 @@
-<div>
-    Manikandan
-    <div id="remote-video" #remoteVideo class="w-100 text-center" ></div>
-    <div id="local-video" class="position-fixed text-right w-100" #localVideo></div>
-    <button title="Mute" *ngIf="twilioService.microphone"  class="pr-2" style="opacity: 1;cursor: pointer;"
-        (click)="mute()">Mute</button>
-    <button *ngIf="!twilioService.microphone" title="Unmute" class="pr-2" style="opacity: 1;cursor: pointer;"
-        (click)="unmute()">Unmute</button>
-    <button title="Disconnect" class="pr-2" style="opacity: 1;cursor: pointer;" (click)="disconnect()">Disconnect</button>
+<div class="video-container" >
+    <div class="remote" id="remote-video" #remoteVideo [ngClass]="{'remote': this.twilioService.participantsCount > 0, 'remove-hide': this.twilioService.participantsCount == 0}">
+    </div>
+    <div id="local-video" #localVideo [ngClass]="{'local': this.twilioService.participantsCount > 0, 'local-zeroPs': this.twilioService.participantsCount == 0}">
+    </div>
+
+    <div class="icons">
+        <i title="Mute" *ngIf="twilioService.microphone" class="fa fa-microphone round mute"
+            style="opacity: 1;cursor: pointer;" (click)="mute()"></i>
+        <i *ngIf="!twilioService.microphone" title="Unmute" class="fa fa-microphone-slash round  mute"
+            style="opacity: 1;cursor: pointer;" (click)="unmute()"></i>
+        <i title="Video" *ngIf="twilioService.video" class="fa fa-video-camera round video"
+            style="opacity: 1;cursor: pointer;" (click)="stopVideo()">
+        </i>
+        <i *ngIf="!twilioService.video" title="No Video" class="round novideo"
+            style="opacity: 1;cursor: pointer;" (click)="startVideo()">
+            <i class="fa fa-stack"><i class="fa fa-video-camera fa-stack-1x"></i>
+            <i class="fa fa-close red fa-stack-1x"></i>
+        </i> 
+        </i>
+        <i title="Disconnect" class="fa fa-phone red round stop" style="opacity: 1;cursor: pointer;"
+            (click)="disconnect()"></i>
+    </div>
+
+    <!-- <div id="remote-video" #remoteVideo class="w-100 text-center" ></div>
+    <div id="local-video" class="position-fixed text-right w-100" #localVideo></div> -->
 </div>

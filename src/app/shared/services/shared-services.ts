@@ -763,6 +763,14 @@ export class SharedServices {
   consumerApptTeleserviceWithId(postdata, uuid) {
     return this.servicemeta.httpPost('provider/appointment/' + uuid + '/createmeetingrequest', postdata);
   }
+  getVideoIdForService(uuid, usertype) {
+    const path = usertype + '/appointment/videoid/link/' + uuid;
+    return this.servicemeta.httpGet(path);
+  }
+  getJaldeeVideoAccessToken(videoId) {
+    const path = 'provider/appointment/video/link/' + videoId;
+    return this.servicemeta.httpGet(path);
+  }
   getWaitlstMeetingDetails(mode, uuid) {
     const path = 'provider/waitlist/' + uuid + '/meetingDetails/' + mode;
     return this.servicemeta.httpGet(path);

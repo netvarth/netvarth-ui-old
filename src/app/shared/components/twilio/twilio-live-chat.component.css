@@ -1,0 +1,48 @@
+.remote {
+  /* background: orange; */
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+}
+.remote-hide {
+  display: none;
+}
+.local {
+  /* background: green; */
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+.local-zeroPs {
+  height: 100vh;
+  width:100%;
+  text-align: center;
+}
+.round {
+  border: 1px solid #ddd;
+  border-radius: 50% !important;
+  background: #fff;
+  margin: 8px;
+}
+.round.mute {
+  padding:15px 20px 15px 18px;
+}
+.round.video {
+  padding:15px 15px 15px 15px;
+}
+.round.novideo {
+  padding:11px 6px 12px 6px;
+}
+
+.round.stop {
+  padding:14px 15px 14px 18px;
+}
+.icons {
+  width: 100%;
+  position: fixed;
+  bottom: 25px;
+  text-align: center;
+  font-size: 1.30rem;
+}

@@ -12184,3 +12184,13 @@ img.busN-logo {
 .pro-dash .mat-tab-body-wrapper {
   z-index: 0;
 }
+@media (max-width: 963px) {
+  .rem-video {
+    height: 100% !important;
+  }
+}
+@media (min-width: 963px) {
+  .rem-video {
+    width: 100% !important;
+  }
+}
