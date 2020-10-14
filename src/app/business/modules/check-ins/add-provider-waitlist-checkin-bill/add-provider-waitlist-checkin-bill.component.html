@@ -947,12 +947,11 @@
 																<span class="number">
 																	<mat-form-field class="example-full-width">
 																		<span matPrefix class="rupee-font" style="font-size: larger;"> ₹ &nbsp;</span>
-																		<mat-form-field>
-																			<input type="text" matInput #payamounttxt
+																		<mat-form-field class="bill-ip">
+																			<input type="number" matInput #payamounttxt
 																				aria-label="Number" matInput value="1"
 																				size="5" max="{{price_limit}}" min="0"
 																				[(ngModel)]="amountpay"
-																				(keypress)="isNumeric($event)"
 																				(keyup)="isvalid($event)"
 																				autocomplete="off">
 																		</mat-form-field>
