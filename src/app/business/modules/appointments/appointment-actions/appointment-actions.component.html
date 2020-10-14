@@ -159,14 +159,9 @@
         <div>
             <div><span style="font-size: x-large;">Appointment Details</span></div><br>
             <p>Appointment for : {{appt.appmtFor[0].userName}} </p>
-            <p>Service :
-
-                {{appt.service.name}}
-
-            </p>
+            <p>Service : {{appt.service.name}} </p>
             <p>Appointment Date & Time: {{appt.appmtDate | date: dateFormat}}, {{getSingleTime(appt.appmtTime)}}
             </p>
-            <!-- <p *ngIf = "deptName">Department : {{deptName}}</p> -->
             <p *ngIf="Schedulestime">Schedule : {{appt.schedule.name}} [{{appt.apptSchedule.timeSlots[0].sTime}} -
                 {{appt.apptSchedule.timeSlots[0].eTime}}]</p>
             <p *ngIf="spfname && splname">Service Provider: {{appt.providerAccount.businessName}} </p>
@@ -175,49 +170,52 @@
         <div class="changelink"><a class="lnk pointer-cursor action" (click)="changeSlot()">Change Date & Time
             </a></div>
         <div class="clearfix"></div>
-
     </div>
-
 </div>
 <div class="p-checkin" *ngIf="action === 'slotChange'">
     <div class="mainouter">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <a class="pull-left back-btn mgn-up-5" (click)="goBacktoApptDtls()"><i class="fa fa-arrow-left"></i></a>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 ">
-        <div class="date-outer">
-            <div class="date-head">Appointment Date</div>
-        <div class="date-body">
-            <span class="selected-date">
-                <span class="icon-minus" (click)="calculateDate(-1)" [class.disable]="disableMinus()"></span>
-                {{sel_checkindate | date: dateDisplayFormat}}
-                <span class="icon-add" (click)="calculateDate(1)"></span></span>
-            <div class="form-group dt">
-                <div class="pickerouter">
-                    <mat-datepicker-toggle matSuffix [for]="picker">
-                    </mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
-                        [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <a class="pull-left back-btn mgn-up-5" (click)="goBacktoApptDtls()"><i class="fa fa-arrow-left"></i></a>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 ">
+            <div class="date-outer" style="border: none;">
+                <div class="date-head">Appointment Date</div>
+                <div class="date-body">
+                    <span class="selected-date">
+                        <span class="icon-minus" (click)="calculateDate(-1, 'pre')"
+                            [class.disable]="disableMinus()"></span>
+                        {{sel_checkindate | date: dateDisplayFormat}}
+                        <span class="icon-add" (click)="calculateDate(1, 'post')"></span></span>
+                    <div class="form-group dt">
+                        <div class="pickerouter">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
+                                [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">Choose Slot
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 slotdiv no-padding queue-outer"
+                *ngIf="freeSlots.length > 0 && !loading">
+                <mat-chip-list class="appt-in-chip">
+                    <mat-chip *ngFor="let slot of freeSlots" (click)="timeSelected(slot)"
+                        [selected]="slot.time==selectedTime && todayDate">
+                        {{slot.displayTime}}
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10" *ngIf="freeSlots.length === 0 && !loading">
+                No slots available.
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
+                <app-common-innerloading-spinner></app-common-innerloading-spinner>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks no-padding">
+                <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="rescheduleAppointment()">Reschedule</span>
             </div>
         </div>
     </div>
-    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">Choose Slot
-    </div>
-   
-    <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 slotdiv no-padding queue-outer" *ngIf="freeSlots.length > 0">
-        <mat-chip-list class="appt-in-chip">
-            <mat-chip *ngFor="let slot of freeSlots" (click)="timeSelected(slot)" [selected]="slot.time==selectedTime">
-                {{slot.displayTime}}
-            </mat-chip>
-        </mat-chip-list>
-    </div>
-    <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10" *ngIf="freeSlots.length === 0">
-        No slots available.
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks no-padding">
-        <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="rescheduleAppointment()">Reschedule</span>
-    </div>
-    </div>
-</div>

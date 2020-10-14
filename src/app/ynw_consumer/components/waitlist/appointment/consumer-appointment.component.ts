@@ -353,7 +353,7 @@ getRescheduleApptDet(){
           this.appointment = appt;
           this.sel_loc = this.appointment.location.id;
           this.selectedService = this.appointment.service.id;
-          this.sel_checkindate = this.appointment.appmtDate;
+          this.sel_checkindate = this.hold_sel_checkindate = this.appointment.appmtDate;
           console.log(this.sel_loc,this.selectedService,this.sel_checkindate)
           this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedService, this.sel_checkindate, this.account_id);
 
@@ -790,15 +790,15 @@ getRescheduleApptDet(){
     }
 rescheduleAppointment(){
     const post_Data = {
-        "uid": this.rescheduleUserId,
-        "time": this.apptTime['time'],
-        "date": this.sel_checkindate,
-        "schedule": this.apptTime['scheduleId']
+        'uid': this.rescheduleUserId,
+        'time': this.apptTime['time'],
+        'date': this.sel_checkindate,
+        'schedule': this.apptTime['scheduleId']
          };
     this.shared_services.rescheduleConsumerApptmnt(this.account_id, post_Data)
         .subscribe(
               () => {
-                           
+                     this.router.navigate(['/']);      
                },
           error => {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -1121,19 +1121,21 @@ rescheduleAppointment(){
         this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
     }
     disableMinus() {
-        const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
-        const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
-        const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
-        const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
-        if (startdate >= selecttdate) {
-            return true;
-        } else {
-            return false;
-        }
+    console.log(this.sel_checkindate);
+    console.log(this.hold_sel_checkindate);
+//         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+//         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
+//         const seldate = new Date(seldate2);
+//         const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+//         const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+//         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
+//         const strtDt = new Date(strtDt2);
+//         const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+//         if (startdate >= selecttdate) {
+//             return true;
+//         } else {
+//             return false;
+//         }
     }
     getPartysizeDetails(domain, subdomain) {
         this.shared_services.getPartysizeDetails(domain, subdomain)
@@ -1684,7 +1686,8 @@ rescheduleAppointment(){
         // }
     }
     goBack() {
-        if (this.action === '') {
+    console.log(this.action);
+        if (this.action === '' || this.action === '') {
             this.location.back();
         } else if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
             || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
