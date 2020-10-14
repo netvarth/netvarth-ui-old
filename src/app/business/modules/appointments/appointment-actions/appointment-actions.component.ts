@@ -400,6 +400,12 @@ export class AppointmentActionsComponent implements OnInit {
   }
   medicalRecord() {
     this.dialogRef.close();
+    let medicalrecord_mode = 'new';
+    let mrId = 0;
+    if (this.appt.mrId) {
+      medicalrecord_mode = 'view';
+      mrId = this.appt.mrId;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: {
         'customerDetail': JSON.stringify(this.appt.providerConsumer),
@@ -408,12 +414,14 @@ export class AppointmentActionsComponent implements OnInit {
         'department': this.appt.service.deptName,
         'booking_type': 'Appointment',
         'booking_date': this.appt.appmtDate,
-        'booking_time': this.appt.appmtTime
+        'booking_time': this.appt.appmtTime,
+        'mr_mode': medicalrecord_mode,
+        'mr_id': mrId,
         // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
 
       }
     };
 
-     this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+    this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
   }
 }

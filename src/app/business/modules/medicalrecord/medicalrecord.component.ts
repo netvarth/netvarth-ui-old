@@ -42,22 +42,24 @@ export class MedicalrecordComponent implements OnInit {
   ) {
     this.activated_route.queryParams.subscribe(
       (qparams) => {
-        this.customerDetails = JSON.parse(qparams.customerDetail);
-        console.log(this.customerDetails);
-        this.patientFirstName = this.customerDetails.firstName;
-        this.patientLastName = this.customerDetails.lastName;
-        this.PatientId = this.customerDetails.id;
-        this.department = qparams.department;
-        this.serviceName = qparams.serviceName;
-        if (this.customerDetails.gender) {
-          this.gender = this.customerDetails.gender;
+        if (qparams.mrId !== 0 && qparams.mr_mode === 'view') {
+          this.getMedicalRecordUsingMR(qparams.mrId);
+        } else {
+          this.customerDetails = JSON.parse(qparams.customerDetail);
+          console.log(this.customerDetails);
+          // this.PatientId = this.customerDetails.id;
+          this.department = qparams.department;
+          this.serviceName = qparams.serviceName;
+          // if (this.customerDetails.gender) {
+          //   this.gender = this.customerDetails.gender;
+          // }
+          // if (this.customerDetails.dob) {
+          //   this.PatientDob = this.customerDetails.dob;
+          // }
+          this.mrId = qparams.mrId;
+          this.medicalService.setPatientDetailsForMR(qparams);
+          this.medicalService.setCurrentMRID(qparams.mrId);
         }
-        if (this.customerDetails.dob) {
-          this.PatientDob = this.customerDetails.dob;
-        }
-        this.mrId = qparams.mrId;
-        this.medicalService.setPatientDetails(this.customerDetails);
-        this.medicalService.setCurrentMRID(qparams.mrId);
       }
 
     );
@@ -68,17 +70,19 @@ export class MedicalrecordComponent implements OnInit {
   ngOnInit() {
     this.isLoaded = true;
     this.mrDate = new Date();
-    // this.getallMedicalRecordsofthisPatient();
-  }
-  getallMedicalRecordsofthisPatient() {
-    const filter = {};
-    filter['patientId-eq'] = this.PatientId;
 
-    this.provider_services.GetMedicalRecordList(filter)
-      .subscribe((data) => {
+
+  }
+  getMedicalRecordUsingMR(mrId) {
+
+
+    this.provider_services.GetMedicalRecord(mrId)
+      .subscribe((data: any) => {
         if (data) {
-          this.mrlist = data;
-          this.mrDate = this.mrlist[0].mrConsultationDate;
+          this.mrDate = data.mrConsultationDate;
+          this.customerDetails = data.providerConsumer;
+          this.medicalService.setPatientDetailsForMR(data);
+          this.medicalService.setCurrentMRID(data.mrId);
         }
       },
         error => {

@@ -1546,6 +1546,10 @@ export class ProviderServices {
     const url = 'provider/user/digitalSign/' + providerId;
     return this.servicemeta.httpGet(url);
   }
+  GetMedicalRecord(mrId) {
+    const url = 'provider/mr/' + mrId;
+    return this.servicemeta.httpGet(url);
+  }
   uploadMrDigitalsign(id, data) {
     const url = 'provider/user/digitalSign/' + id;
     return this.servicemeta.httpPost(url, data);

@@ -20,7 +20,7 @@ export class MedicalrecordService {
   setDrugList(data) {
     this.drugList = data;
   }
-  setPatientDetails(data) {
+  setPatientDetailsForMR(data) {
     this.patientDetails.next(data);
   }
   setCurrentMRID(uid) {
