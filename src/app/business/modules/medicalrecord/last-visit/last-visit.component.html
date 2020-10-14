@@ -1,1 +1,37 @@
 <p>last-visit works!</p>
+  <section class="report">
+    <div class="content w-manager settings comn-cls lic-page">
+      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+        <div class="box" >
+         <mat-table [dataSource]="service_dataSource">
+          <ng-container matColumnDef="ConsultationDate">
+            <mat-header-cell *matHeaderCellDef>Consultation Date</mat-header-cell>
+            <!-- <mat-cell *matCellDef="let service">
+              <span class="mobile-label">Service ID:</span>
+              {{service.id}}</mat-cell> -->
+          </ng-container>
+          <ng-container matColumnDef="serviceName">
+            <mat-header-cell *matHeaderCellDef>Service Name</mat-header-cell>
+            <!-- <mat-cell *matCellDef="let service">
+              {{service.name}}</mat-cell> -->
+          </ng-container>
+
+          <ng-container matColumnDef="userName">
+            <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+            <!-- <mat-cell *matCellDef="let service">
+              {{service.user}}</mat-cell> -->
+          </ng-container>
+          <ng-container matColumnDef="MrCreatedDate">
+            <mat-header-cell *matHeaderCellDef>MR Created date</mat-header-cell>
+            <!-- <mat-cell *matCellDef="let service">
+              {{service.status}}</mat-cell> -->
+          </ng-container>
+          <!-- <mat-header-row *matHeaderRowDef="service_displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row;columns:service_displayedColumns"></mat-row> -->
+
+        </mat-table>  
+    </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>

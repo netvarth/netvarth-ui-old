@@ -1558,4 +1558,8 @@ export class ProviderServices {
     const url = 'provider/mr/clinicalNotes/' + mrId;
     return this.servicemeta.httpPut(url, data);
   }
+  getPatientVisitList(patientId) {
+    const url = 'provider/mr/patientPreviousVisit/' + patientId;
+    return this.servicemeta.httpGet(url);
+  }
 }

@@ -46,6 +46,7 @@ export class MedicalrecordComponent implements OnInit {
           this.getMedicalRecordUsingMR(qparams.mrId);
         } else {
           this.customerDetails = JSON.parse(qparams.customerDetail);
+          this.PatientId  = this.customerDetails.id;
           console.log(this.customerDetails);
           if (qparams.department) {
             this.department = qparams.department;
@@ -85,13 +86,14 @@ export class MedicalrecordComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  getLastVisitList() {
+  VisitList() {
+    console.log(this.PatientId);
     this.mrdialogRef = this.dialog.open(LastVisitComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        mrId: this.mrId
+        patientId: this.PatientId
 
       }
     });
