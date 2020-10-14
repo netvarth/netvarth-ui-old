@@ -93,13 +93,13 @@
             <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>
         </div>
         <div *ngIf="drugList.length > 0 && !showSave && digitalSign"> 
-                <button type="button" mat-button  style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt1" (click)="shareManualRx()" >
+                <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx()" >
                         
                     <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
                 
             </div>
             <div *ngIf="drugList.length > 0 && !showSave && !digitalSign">
-                <button type="button"   style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt2"  >
+                <button type="button"   style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt2"  >
                         
                     <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
                 

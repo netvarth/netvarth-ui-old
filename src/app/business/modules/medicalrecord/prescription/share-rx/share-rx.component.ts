@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+//import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
@@ -49,7 +49,7 @@ iconClass: string;
     public dialogRef: MatDialogRef<ShareRxComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
       public dialog: MatDialog,
-      private provider_services: ProviderServices,
+     // private provider_services: ProviderServices,
       private shared_functions: SharedFunctions,
       private fb: FormBuilder,
       ) {
@@ -76,14 +76,14 @@ iconClass: string;
   }
   onSubmit(formdata) {
       console.log(formdata);
-      const providerid = 78055;
-      this.provider_services.shareRx(this.mrId, providerid, formdata.message)
-            .subscribe((data) => {
-              this.shared_functions.openSnackBar('Prescription shared successfully');
-            },
-                error => {
-                    this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                });
+      // const providerid = 78055;
+      // this.provider_services.shareRx(this.mrId, providerid, formdata.message)
+      //       .subscribe((data) => {
+      //         this.shared_functions.openSnackBar('Prescription shared successfully');
+      //       },
+      //           error => {
+      //               this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      //           });
 
   }
   getMessageReceviers() {
