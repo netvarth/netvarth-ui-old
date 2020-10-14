@@ -47,18 +47,14 @@ export class MedicalrecordComponent implements OnInit {
         } else {
           this.customerDetails = JSON.parse(qparams.customerDetail);
           console.log(this.customerDetails);
-          // this.PatientId = this.customerDetails.id;
-          this.department = qparams.department;
-          this.serviceName = qparams.serviceName;
-          // if (this.customerDetails.gender) {
-          //   this.gender = this.customerDetails.gender;
-          // }
-          // if (this.customerDetails.dob) {
-          //   this.PatientDob = this.customerDetails.dob;
-          // }
-          this.mrId = qparams.mrId;
+          if (qparams.department) {
+            this.department = qparams.department;
+          }
+          if (qparams.serviceName) {
+            this.serviceName = qparams.serviceName;
+          }
           this.medicalService.setPatientDetailsForMR(qparams);
-          this.medicalService.setCurrentMRID(qparams.mrId);
+
         }
       }
 

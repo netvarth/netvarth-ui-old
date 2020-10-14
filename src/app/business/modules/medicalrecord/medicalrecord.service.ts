@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class MedicalrecordService {
   private patientDetails = new BehaviorSubject<any>('');
   patient_data = this.patientDetails.asObservable();
-  private mrId = new BehaviorSubject<any>('');
+  private mrId = new BehaviorSubject<number>(11);
   _mrUid = this.mrId.asObservable();
   drugList: any = [];
 

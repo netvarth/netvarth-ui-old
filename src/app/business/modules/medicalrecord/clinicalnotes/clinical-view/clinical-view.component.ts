@@ -3,6 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { MedicalrecordService } from '../../medicalrecord.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-clinical-view',
@@ -12,81 +13,76 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 export class ClinicalViewComponent implements OnInit {
 
 
+  clinicalNotes: { displayName: string; value: string; id: string; }[];
+  allergies: any;
   currentMRId: any;
   patientDetails: any;
   userId;
   customerDetails: any;
   editclinicaldialogRef: any;
-  ClinicalNotes;
   symptoms: any;
-  allergies: any;
   diagnosis: any;
   complaints: any;
   observations: any;
   misc_notes: any;
   vaccinationHistory: any;
   Cdata;
-
+  isLoaded = false;
   constructor(
 
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
     private medicalrecordService: MedicalrecordService) {
-    this.medicalrecordService.patient_data.subscribe(res => {
-      this.patientDetails = res;
-      console.log(this.patientDetails);
-    });
-    this.medicalrecordService._mrUid.subscribe(res => {
-      this.currentMRId = res;
-      console.log(this.currentMRId);
+
+
+    this.medicalrecordService._mrUid.subscribe(mrId => {
+      if (mrId !== 0) {
+        this.getMRClinicalNotes(mrId).then((res: any) => {
+          this.clinicalNotes = res;
+          this.isLoaded = true;
+
+        });
+      } else {
+        this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+      }
     });
   }
 
-    ngOnInit() {
-      this.getMRClinicalNotes();
-      // this.getCheckinDetails();
-    }
-    // getCheckinDetails() {
-    //   this.provider_services.getProviderWaitlistDetailById(this.uuid)
-    //     .subscribe(
-    //       data => {
+  ngOnInit() {
 
-    //       }, error => {
-    //         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //       }
-    //     );
-    // }
+  }
 
-    getMRClinicalNotes() {
-      this.provider_services.getClinicalRecordOfMRById(52)
-        .subscribe((data) => {
-          this.Cdata = data;
-          this.allergies = this.Cdata.ClinicalNotes.allergies;
-          this.complaints = this.Cdata.ClinicalNotes.complaints;
-          this.diagnosis = this.Cdata.ClinicalNotes.diagnosis;
-          this.misc_notes = this.Cdata.ClinicalNotes.misc_notes;
-          this.observations = this.Cdata.ClinicalNotes.observations;
-          this.symptoms = this.Cdata.ClinicalNotes.symptoms;
-          this.vaccinationHistory = this.Cdata.ClinicalNotes.vaccinationHistory;
-          this.misc_notes = this.Cdata.ClinicalNotes.misc_notes;
-          console.log(this.Cdata);
-          console.log(this.allergies);
+
+  getMRClinicalNotes(mrId) {
+    console.log('inideeeeeeeeeeeee');
+    const p_clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+    return new Promise((resolve) => {
+      this.provider_services.getClinicalRecordOfMRById(mrId)
+        .subscribe(res => {
+
+          Object.entries(res).forEach(
+            function (key, value) {
+              const index = p_clinicalNotes.findIndex(element => element.id === key.toString());
+              p_clinicalNotes[index.toString()].value = value;
+            });
         },
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
-      // GetMedicalRecord
+      resolve(p_clinicalNotes);
+    });
 
-    }
-    addOrEditClinicalNotes(type, data) {
-      const navigationExtras: NavigationExtras = {
-        queryParams: { 'type': type,
-                       'data': JSON.stringify(data) }
+  }
+  addOrEditClinicalNotes(object) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'data': object,
+        'clinicalNotes': this.clinicalNotes
+      }
     };
     console.log(navigationExtras);
-    console.log(type);
 
-      this.router.navigate(['/provider/medicalrecord/home/clinicalnotes/edit'] , navigationExtras);
-    }
+    this.router.navigate(['/provider/medicalrecord/home/clinicalnotes/edit'], navigationExtras);
+  }
 }

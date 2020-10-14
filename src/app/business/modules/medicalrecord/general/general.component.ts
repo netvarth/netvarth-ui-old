@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicalrecordService } from '../medicalrecord.service';
+// import { MedicalrecordService } from '../medicalrecord.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,53 +11,41 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./general.component.css']
 })
 export class GeneralComponent implements OnInit {
+  displayTitle: any;
+  editable_object: any;
+  clinicalNotes: any;
+  edit_data: any;
   Cnotes: string;
   patientDetails: any;
   userId: any;
   today = new Date();
   type;
   data;
-  notes = {'complaints': '', 'symptoms': '', 'allergies': '','vaccinationHistory': '', 'observations': '', 'diagnosis': '', 'misc_notes': ''}
+  notes = { 'complaints': '', 'symptoms': '', 'allergies': '', 'vaccinationHistory': '', 'observations': '', 'diagnosis': '', 'misc_notes': '' };
 
   constructor(
-    private medicalrecord_service: MedicalrecordService,
+    // private medicalrecord_service: MedicalrecordService,
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
   ) {
     this.activated_route.queryParams.subscribe(params => {
-      this.type = params.type;
-      console.log(this.type);
-      this.data = JSON.parse(params.data);
-      this.Cnotes = this.data;
+      this.editable_object = params.object;
+      this.edit_data = this.editable_object.value;
+      this.displayTitle = this.editable_object.displayName;
+      this.clinicalNotes = params.clinicalNotes;
+
     });
-    this.medicalrecord_service.patient_data.subscribe(data => {
-      this.patientDetails = data;
-      this.userId = this.patientDetails.id;
-      console.log(this.userId);
-    });
+
   }
 
   ngOnInit() {
   }
-  save(Cnotes) {
-    console.log(this.type);
-    if (this.type === 'Symptoms') {
-      this.notes.symptoms = this.Cnotes;
-    } else if (this.type === 'allergies') {
-      this.notes.allergies = this.Cnotes;
-    } else if (this.type === 'diagnosis') {
-      this.notes.diagnosis = this.Cnotes;
-    } else if (this.type === 'observations') {
-      this.notes.observations = this.Cnotes;
-    } else if (this.type === 'complaints') {
-      this.notes.complaints = this.Cnotes;
-    } else if (this.type === 'vaccinationHistory') {
-      this.notes.vaccinationHistory = this.Cnotes;
-    } else if (this.type === 'misc_notes') {
-      this.notes.misc_notes = this.Cnotes;
-    }
-    console.log(Cnotes);
+  save(notes) {
+
+    const index = this.clinicalNotes.findIndex(element => element.id === this.editable_object.id);
+    this.clinicalNotes[index].value = notes;
+    this.createRequestPayload();
     const post_itemdata = {
       'bookingType': 'NA',
       'consultationMode': 'EMAIL',
@@ -79,5 +67,12 @@ export class GeneralComponent implements OnInit {
     //     error => {
     //       this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     //     });
+  }
+
+  createRequestPayload() {
+
+    const obj = this.clinicalNotes.reduce((acc, cur) => ({ ...acc, [cur.id]: cur.value }), {});
+    console.log('object..' + obj);
+
   }
 }

@@ -198,15 +198,15 @@ export const projectConstantsLocal = {
   },
   DOMAIN_SERVICES_HINT: {
     healthCare: { helphint: 'In-person consultation, Video consultation, Lab services' },
-    personalCare: { helphint: 'Haircut facial, Spa treatment'},
-    foodJoints: { helphint: 'Pickup, Dine-in, Home delivery'},
+    personalCare: { helphint: 'Haircut facial, Spa treatment' },
+    foodJoints: { helphint: 'Pickup, Dine-in, Home delivery' },
     professionalConsulting: { helphint: 'Legal consultation, Auditing' },
-    vastuAstrology: { helphint: 'Palm reading, Horoscope reading'},
-    religiousPriests: { helphint: 'Pooja, Abhisheka seva'},
-    finance: { helphint: 'Loan appeal, Account opening'},
-    veterinaryPetcare: {helphint: 'In-person consultation, Video consultation, Pet training' },
-    retailStores: { helphint: 'Pickup, Home delivery'},
-    otherMiscellaneous: { helphint: 'Add your services here'},
+    vastuAstrology: { helphint: 'Palm reading, Horoscope reading' },
+    religiousPriests: { helphint: 'Pooja, Abhisheka seva' },
+    finance: { helphint: 'Loan appeal, Account opening' },
+    veterinaryPetcare: { helphint: 'In-person consultation, Video consultation, Pet training' },
+    retailStores: { helphint: 'Pickup, Home delivery' },
+    otherMiscellaneous: { helphint: 'Add your services here' },
   },
   SUBDOMAIN_ICONS: {
     physiciansSurgeons: { help: 'single doctor facility', iconClass: 'allopathy_doc' },
@@ -264,7 +264,7 @@ export const projectConstantsLocal = {
     'service_cap': 'Consultations and Services'
   },
   PersonalFitness: {
-    personalFitness:  { helphint: 'Personal training session, diet consultation'}
+    personalFitness: { helphint: 'Personal training session, diet consultation' }
   },
   TOOLTIP_CLS: 'ynwtooltipcls',
   TOOLTIP_PRIVACYPHONE: 'Example : Cell Phone,  Mobile, Emergency, Main Line, others etc',
@@ -649,111 +649,120 @@ export const projectConstantsLocal = {
   },
   PAYMENT_MODES: [
 
-    {value: 'Cash', displayName: 'Cash'},
-    {value: 'CC,DC', displayName: 'CC/DC'},
-    {value: 'NB', displayName: 'Net banking'},
-    {value: 'PPI', displayName: 'Wallet'},
-    {value: 'UPI', displayName: 'UPI'},
+    { value: 'Cash', displayName: 'Cash' },
+    { value: 'CC,DC', displayName: 'CC/DC' },
+    { value: 'NB', displayName: 'Net banking' },
+    { value: 'PPI', displayName: 'Wallet' },
+    { value: 'UPI', displayName: 'UPI' },
 
   ],
   PAYMENT_STATUS: [
 
-    {value: 'SUCCESS', displayName: 'Success'},
-    {value: 'FAILED', displayName: 'Failed'},
-    {value: 'INCOMPLETE', displayName: 'In Complete'}
+    { value: 'SUCCESS', displayName: 'Success' },
+    { value: 'FAILED', displayName: 'Failed' },
+    { value: 'INCOMPLETE', displayName: 'In Complete' }
 
 
   ],
   PAYMENT_PURPOSE: [
 
-    {value: 'prePayment', displayName: 'Advance Payment'},
-    {value: 'billPayment', displayName: 'Bill Payment'},
-    {value: 'donation', displayName: 'Donation'}
+    { value: 'prePayment', displayName: 'Advance Payment' },
+    { value: 'billPayment', displayName: 'Bill Payment' },
+    { value: 'donation', displayName: 'Donation' }
 
 
   ],
-  APPOINTMENT_MODE : [
-    {displayName: 'Walk-in ', value: 'WALK_IN_APPOINTMENT'},
-    {displayName: 'Online', value: 'ONLINE_APPOINTMENT'},
-    {displayName: 'Phone-in', value: 'PHONE_IN_APPOINTMENT'},
+  APPOINTMENT_MODE: [
+    { displayName: 'Walk-in ', value: 'WALK_IN_APPOINTMENT' },
+    { displayName: 'Online', value: 'ONLINE_APPOINTMENT' },
+    { displayName: 'Phone-in', value: 'PHONE_IN_APPOINTMENT' },
 
   ],
-  APPOINTMENT_STATUS : [
+  APPOINTMENT_STATUS: [
     // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
-    {displayName: 'Confirmed', value: 'Confirmed'},
-    {displayName: 'Arrived', value: 'Arrived'},
-    {displayName: 'Started', value: 'Started'},
-    {displayName: 'Cancelled', value: 'Cancelled'},
-    {displayName: 'Rejected', value: 'Rejected'},
+    { displayName: 'Confirmed', value: 'Confirmed' },
+    { displayName: 'Arrived', value: 'Arrived' },
+    { displayName: 'Started', value: 'Started' },
+    { displayName: 'Cancelled', value: 'Cancelled' },
+    { displayName: 'Rejected', value: 'Rejected' },
     // {displayName: 'Failed', value: 'failed'},
     // {displayName: 'Calling', value: 'calling'},
-    {displayName: 'Completed', value: 'Completed'},
+    { displayName: 'Completed', value: 'Completed' },
 
   ],
-  WAITLIST_MODE : [
-    {displayName: 'Walk-in ', value: 'WALK_IN_CHECKIN'},
-    {displayName: 'Online', value: 'ONLINE_CHECKIN'},
-    {displayName: 'Phone-in', value: 'PHONE_CHECKIN'},
+  WAITLIST_MODE: [
+    { displayName: 'Walk-in ', value: 'WALK_IN_CHECKIN' },
+    { displayName: 'Online', value: 'ONLINE_CHECKIN' },
+    { displayName: 'Phone-in', value: 'PHONE_CHECKIN' },
 
   ],
-  WAITLIST_STATUS : [
+  WAITLIST_STATUS: [
     // {displayName: 'Pre Payment Pending ', value: 'prepaymentPending'},
-    {displayName: 'Checked In ', value: 'checkedIn'},
-    {displayName: 'Arrived', value: 'arrived'},
+    { displayName: 'Checked In ', value: 'checkedIn' },
+    { displayName: 'Arrived', value: 'arrived' },
     // {displayName: 'Unrevertable', value: 'unrevertable'},
-    {displayName: 'Started', value: 'started'},
-    {displayName: 'Cancelled', value: 'cancelled'},
-    {displayName: 'Completed', value: 'done'},
+    { displayName: 'Started', value: 'started' },
+    { displayName: 'Cancelled', value: 'cancelled' },
+    { displayName: 'Completed', value: 'done' },
     // {displayName: 'Failed', value: 'failed'},
 
   ],
-  BILL_PAYMENT_STATUS : [
-    {value: 'NotPaid', displayName: 'Not Paid'},
-    {value: 'PartiallyPaid', displayName: 'Partially Paid'},
-    {value: 'FullyPaid', displayName: 'Fully Paid'},
-    {value: 'Refund', displayName: 'Refund'}
+  BILL_PAYMENT_STATUS: [
+    { value: 'NotPaid', displayName: 'Not Paid' },
+    { value: 'PartiallyPaid', displayName: 'Partially Paid' },
+    { value: 'FullyPaid', displayName: 'Fully Paid' },
+    { value: 'Refund', displayName: 'Refund' }
   ],
 
   REPORT_TYPE: [
-    {displayName: 'Token', value: 'TOKEN'},
-    {displayName: 'Appointment', value: 'APPOINTMENT'},
-    {displayName: 'Donation', value: 'DONATION'},
-    {displayName: 'Payment', value: 'PAYMENT'},
+    { displayName: 'Token', value: 'TOKEN' },
+    { displayName: 'Appointment', value: 'APPOINTMENT' },
+    { displayName: 'Donation', value: 'DONATION' },
+    { displayName: 'Payment', value: 'PAYMENT' },
 
   ],
 
   REPORT_TRANSACTION_TYPE: [
-    {displayName: 'Check-in/Token', value: 'Waitlist'},
-    {displayName: 'Appointment', value: 'Appointment'},
-     {displayName: 'Donation', value: 'Donation'},
+    { displayName: 'Check-in/Token', value: 'Waitlist' },
+    { displayName: 'Appointment', value: 'Appointment' },
+    { displayName: 'Donation', value: 'Donation' },
     // {displayName: 'Order', value: 'Order'}
     // {displayName: 'License', value: 'License'},
 
   ],
 
   REPORT_TIMEPERIOD: [
-    {value: 'TODAY', displayName: 'Today'},
-    {value: 'LAST_WEEK', displayName: 'Last 7 days'},
-    {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
-    {value: 'NEXT_WEEK', displayName: 'Next 7 days'},
-    {value: 'NEXT_THIRTY_DAYS', displayName: 'Next 30 days'},
-    {value: 'DATE_RANGE', displayName: 'Date Range'},
+    { value: 'TODAY', displayName: 'Today' },
+    { value: 'LAST_WEEK', displayName: 'Last 7 days' },
+    { value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days' },
+    { value: 'NEXT_WEEK', displayName: 'Next 7 days' },
+    { value: 'NEXT_THIRTY_DAYS', displayName: 'Next 30 days' },
+    { value: 'DATE_RANGE', displayName: 'Date Range' },
 
   ],
 
   DONATION_TIMEPERIOD: [
-    {value: 'TODAY', displayName: 'Today'},
-    {value: 'LAST_WEEK', displayName: 'Last 7 days'},
-    {value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days'},
-    {value: 'DATE_RANGE', displayName: 'Date Range'},
+    { value: 'TODAY', displayName: 'Today' },
+    { value: 'LAST_WEEK', displayName: 'Last 7 days' },
+    { value: 'LAST_THIRTY_DAYS', displayName: 'Last 30 days' },
+    { value: 'DATE_RANGE', displayName: 'Date Range' },
 
   ],
 
   COMPARISON: [
-    {value: 'eq', displayName: '='},
-    {value: 'le', displayName: '<'},
-    {value: 'ge', displayName: '>'},
+    { value: 'eq', displayName: '=' },
+    { value: 'le', displayName: '<' },
+    { value: 'ge', displayName: '>' },
 
+  ],
+  CLINICAL_NOTES: [
+    { displayName: 'Symptoms', value: '', id: 'symptoms' },
+    { displayName: 'Observations', value: '', id: 'observations' },
+    { displayName: 'Diagnosis', value: '', id: 'diagnosis' },
+    { displayName: 'Notes', value: '', id: 'misc_notes' },
+    { displayName: 'Allergies', value: '', id: 'allergies' },
+    { displayName: 'Complaints', value: '', id: 'complaints' },
+    { displayName: 'Vaccination Notes', value: '', id: 'vaccination_history' },
   ],
 
 
