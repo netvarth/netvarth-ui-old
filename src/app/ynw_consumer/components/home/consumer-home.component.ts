@@ -258,10 +258,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getDonations();
-   // this.getAppointmentToday();
+    // this.getAppointmentToday();
     this.getAppointmentFuture();
-   // this.getWaitlist();
-  //  this.getWaitlistFuture();
+    // this.getWaitlist();
+    //  this.getWaitlistFuture();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
@@ -879,25 +879,25 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.futureBookings_more = [];
             this.appointmentslist = [];
             this.getDonations();
-         //   this.getAppointmentToday();
+            //   this.getAppointmentToday();
             this.getAppointmentFuture();
-          //  this.getWaitlist();
-        //    this.getWaitlistFuture();
+            //  this.getWaitlist();
+            //    this.getWaitlistFuture();
             // this.getWaitlist();
           } else if (data === 'reloadlist' && type === 'appointment') {
-          //  this.getApptlist();
-          this.today_totalbookings = [];
-          this.future_totalbookings = [];
-          this.todayBookings = [];
-          this.todayBookings_more = [];
-          this.futureBookings = [];
-          this.futureBookings_more = [];
-          this.appointmentslist = [];
-          this.getDonations();
-          // this.getAppointmentToday();
-          this.getAppointmentFuture();
-        //  this.getWaitlist();
-         // this.getWaitlistFuture();
+            //  this.getApptlist();
+            this.today_totalbookings = [];
+            this.future_totalbookings = [];
+            this.todayBookings = [];
+            this.todayBookings_more = [];
+            this.futureBookings = [];
+            this.futureBookings_more = [];
+            this.appointmentslist = [];
+            this.getDonations();
+            // this.getAppointmentToday();
+            this.getAppointmentFuture();
+            //  this.getWaitlist();
+            // this.getWaitlistFuture();
           }
         },
         error => {
@@ -948,7 +948,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         account_id: apptlist.providerAccount.id
       }
     };
-    this.router.navigate(['consumer', 'appointment'],navigationExtras);
+    this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
 
   openNotification(data) {
@@ -1761,5 +1761,4 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   stopprop(event) {
     event.stopPropagation();
   }
-
 }

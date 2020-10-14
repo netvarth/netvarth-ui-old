@@ -10,7 +10,6 @@ import { CheckinDetailsSendComponent } from '../../check-ins/checkin-details-sen
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-customer.component';
-import * as moment from 'moment';
 
 @Component({
     selector: 'app-appointment-actions',

@@ -145,7 +145,7 @@ export class ConsumerServices {
     const path = 'consumer/waitlist/today';
     return this.servicemeta.httpGet(path);
   }
-  getWaitlistFuture(params) {
+  getWaitlistFuture(params?) {
     // const path = 'consumer/waitlist/future';
     // return this.servicemeta.httpGet(path);
     return this.servicemeta.httpGet('consumer/waitlist/future', null, params);
