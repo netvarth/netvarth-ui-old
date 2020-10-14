@@ -41,6 +41,7 @@ export class CheckinActionsComponent implements OnInit {
     pos = false;
     showBill = false;
     showMsg = false;
+    domain;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -53,6 +54,8 @@ export class CheckinActionsComponent implements OnInit {
         this.getPos();
         this.getLabel();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
     }
 
     printCheckin() {
