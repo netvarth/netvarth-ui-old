@@ -186,7 +186,7 @@
                                     </ng-container>
                                     <ng-container *ngIf="booking.waitlistStatus">
                                         <td>
-                                            <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')"
+                                            <h4 *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')"
                                                 class="now disp-flex">
                                                 <div class="circle-tokens">
                                                     <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
@@ -195,7 +195,16 @@
                                                     &nbsp;Now
                                                 </span>
                                             </h4>
-                                            <h4 *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')"
+                                            <h4 *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')"
+                                                class="now disp-flex">
+                                                <div class="circle-tokens">
+                                                    <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
+                                                </div>
+                                                <span class="mgn-up-10">
+                                                    {{booking.serviceTime}}
+                                                </span>
+                                            </h4>
+                                            <h4 *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')"
                                                 class="disp-grid">
                                                 <span class="mgn-up-10 disp-flex">
                                                     <div class="circle-tokens"><i class="fa chckn-icon" [matTooltip]="'Check-in'"></i></div>
@@ -208,6 +217,14 @@
                                                     </div>
                                                 </span>
                                             </h4>
+                                            <h4 *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')" class="disp-flex">
+                                                <div class="circle-tokens">
+                                                    <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
+                                                </div>
+                                                <span class="mgn-up-10">
+                                                    {{booking.serviceTime}}
+                                                </span>
+                                            </h4>
 
                                             <h4 *ngIf="booking.token" class="disp-flex">
                                                 <div class="circle-tokens">
@@ -217,7 +234,10 @@
                                                     Token #{{booking.token}}
                                                 </span>
                                             </h4>
-                                            <span class="est-wait-time" *ngIf="( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Est Wait Time : {{booking.appxWaitingTime}} min</span>
+                                            <span class="est-wait-time" *ngIf="!booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Est Wait Time : {{booking.appxWaitingTime}} min</span>
+
+                                            <span class="est-wait-time" *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Starts at : {{booking.serviceTime}}</span>
+
                                             <h4 *ngIf="(booking.waitlistStatus == 'cancelled' || booking.waitlistStatus =='done') && !booking.token && booking.appxWaitingTime == 0">
                                                 <div class="circle-tokens">
                                                     <i class="fa chckn-icon" [matTooltip]="'Token'"></i>
@@ -456,14 +476,22 @@
                                         </ng-container>
                                         <ng-container *ngIf="booking.waitlistStatus">
                                             <td>
-                                                <h4 *ngIf="!booking.token && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')"
+                                                <h4 *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')"
                                                     class="now disp-flex">
                                                     <div class="circle-tokens">
                                                         <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                     </div>
                                                     <span class="mgn-up-10">&nbsp;Now</span>
                                                 </h4>
-                                                <h4 *ngIf="!booking.token && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')"
+                                                <h4 *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')"
+                                                    class="now disp-flex">
+                                                    <div class="circle-tokens">
+                                                        <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
+                                                    </div>
+                                                    <span class="mgn-up-10">{{booking.serviceTime}}</span>
+                                                </h4>
+                                                
+                                                <h4 *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')"
                                                     class="disp-grid">
                                                     <span class="mgn-up-10 disp-flex">
                                                         <div class="circle-tokens">
@@ -478,6 +506,16 @@
                                                         </div>
                                                     </span>
                                                 </h4>
+                                                <h4 *ngIf="!booking.token && booking.serviceTime && (booking.appxWaitingTime > 0 && booking.waitlistStatus != 'cancelled')"
+                                                    class="disp-flex">
+                                                    <div class="circle-tokens">
+                                                        <i class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
+                                                    </div>
+                                                    <span class="mgn-up-10">
+                                                        {{booking.serviceTime}}
+                                                    </span>
+                                                </h4>
+
                                                 <h4 *ngIf="booking.token" class="disp-flex">
                                                     <div class="circle-tokens">
                                                         <i class="fa token-icon" [matTooltip]="'Token'"></i>
@@ -486,7 +524,10 @@
                                                         Token #{{booking.token}}
                                                     </span>
                                                 </h4>
-                                                <span class="est-wait-time" *ngIf="( booking.appxWaitingTime >= 0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Est Wait Time : {{booking.appxWaitingTime}} min</span>
+                                                <span class="est-wait-time" *ngIf="!booking.serviceTime && ( booking.appxWaitingTime >= 0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Est Wait Time : {{booking.appxWaitingTime}} min</span>
+
+                                                <span class="est-wait-time" *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Starts at : {{booking.serviceTime}}</span>
+
                                                 <h4 *ngIf="(booking.waitlistStatus == 'cancelled' || booking.waitlistStatus =='done') && !booking.token && booking.appxWaitingTime == 0">
                                                     <div class="circle-tokens">
                                                         <i class="fa chckn-icon" [matTooltip]="'Token'"></i>
