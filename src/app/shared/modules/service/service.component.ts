@@ -490,7 +490,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
             serviceActionModel['action'] = this.action;
             serviceActionModel['service'] = form_data;
             if (form_data.serviceType === 'virtualService') {
-                if (!form_data.virtualServiceType) {
+                if ((form_data.virtualCallingModes[0].callingMode === 'WhatsApp' || form_data.virtualCallingModes[0].callingMode === 'Phone') && form_data.virtualCallingModes[0].value.charAt(0) === '0') {
+                    this.sharedFunctons.openSnackBar('Please provide valid phone number', { 'panelClass': 'snackbarerror' });
+                } else if (!form_data.virtualServiceType) {
                     this.sharedFunctons.openSnackBar(Messages.SELECT_TELE_MODE, { 'panelClass': 'snackbarerror' });
                 } else {
                     if (!form_data.virtualCallingModes[0].callingMode) {
