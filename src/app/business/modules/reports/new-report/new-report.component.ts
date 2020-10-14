@@ -459,8 +459,8 @@ export class NewReportComponent implements OnInit {
           'transactionType': this.payment_transactionType,
           'queue': this.payment_queue_id,
           'service': this.payment_service_id,
-          'schedule': this.payment_schedule_id
-
+          'schedule': this.payment_schedule_id,
+          'providerOwnConsumerId': this.payment_customerId
 
         };
 
@@ -482,13 +482,13 @@ export class NewReportComponent implements OnInit {
         }
         if (this.payment_transactionType === 0) {
           delete this.filterparams.transactionType;
-          delete this.filterparams.queue;
-          delete this.filterparams.schedule;
-        } else if (this.payment_transactionType === 'appointment') {
-          delete this.filterparams.queue;
-        } else if (this.payment_transactionType === 'waitlist') {
-          delete this.filterparams.schedule;
         }
+
+        // } else if (this.payment_transactionType === 'appointment') {
+        //   delete this.filterparams.queue;
+        // } else if (this.payment_transactionType === 'waitlist') {
+        //   delete this.filterparams.schedule;
+        // }
         if (this.payment_paymentPurpose === 0) {
           delete this.filterparams.paymentPurpose;
         }

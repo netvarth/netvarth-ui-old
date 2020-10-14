@@ -82,8 +82,8 @@
                 </div> -->
                 <div class="item" *ngIf="waitlist_data.batchName"><span
                     class="ttle">Batch:</span><span>{{waitlist_data.batchName}}</span></div>
-                <div class="item" *ngIf="waitlist_data.checkinEncId"><span class="ttle">Status
-                    code</span><span>{{waitlist_data.checkinEncId}}</span></div>
+                <div class="item" *ngIf="waitlist_data.checkinEncId"><span class="ttle">Confirmation
+                    No</span><span>{{waitlist_data.checkinEncId}}</span></div>
                 <div class="item"><span class="ttle">{{location_cap}}</span><span>{{waitlist_data.queue.location.place
                     | capitalizeFirst}}</span></div>
                 <div class="item"><span class="ttle" *ngIf="!showToken">{{waitlist_for_cap}}</span>
@@ -94,6 +94,8 @@
                       *ngIf="user.primaryMobileNo && user.primaryMobileNo.length === 10">({{user.primaryMobileNo}})</span>
                   </span>
                 </div>
+                <div class="item" *ngIf="showToken"><span
+                  class="ttle">Token Number:</span><span>{{waitlist_data.token}}</span></div>
                 <div class="item"><span class="ttle">{{service_cap}}</span><span> 
                   <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]=iconClass></i>
                   {{waitlist_data.service.name |

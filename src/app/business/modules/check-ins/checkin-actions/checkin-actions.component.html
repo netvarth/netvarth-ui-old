@@ -42,7 +42,7 @@
         <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeWaitlistStatus('CANCEL')">
             <div class="action-box-sub">
                 <span class="cancel-icon"></span>
-                <div class="icon-text">Cancel {{(showToken) ? 'token' : 'check-in'}}</div>
+                <div class="icon-text">Cancel {{(checkin.showToken) ? 'token' : 'check-in'}}</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="showArrived" (click)="changeWaitlistStatus('REPORT')">
@@ -64,7 +64,7 @@
                 <div class="icon-text">Status change</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()">
+        <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()" *ngIf="showMsg">
             <div class="action-box-sub">
                 <span class="message-icon"></span>
                 <div class="icon-text">Send Message</div>
@@ -124,8 +124,9 @@
 <div *ngIf="action === 'label'">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+        <div class="label-caption">Label</div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-30">
         <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
             <a class="label-head pointer-cursor" (click)="addLabelvalue('newvalue', label)">
                 {{label.displayName}}</a>
@@ -138,7 +139,7 @@
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
-        <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="addLabelvalue('newlabel')">Add label</span>
+        <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="addLabelvalue('newlabel')">Create label</span>
         <span class="cs-btn bt3 pointer-cursor" (click)="gotoLabel()">Manage label</span>
     </div>
 </div>

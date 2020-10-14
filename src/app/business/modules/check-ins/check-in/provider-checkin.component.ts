@@ -265,12 +265,15 @@ export class ProviderCheckinComponent implements OnInit {
                 ];
                 this.heading = 'Create a Check-in';
             }
-            if (qparams.ph || qparams.haveMobile) {
+            if (qparams.ph || qparams.id) {
                 const filter = {};
                 if (qparams.ph) {
                     filter['phoneNo-eq'] = qparams.ph;
                 }
-                if (qparams.haveMobile && qparams.haveMobile === 'false') {
+                // if (qparams.haveMobile && qparams.haveMobile === 'false') {
+                //     filter['id-eq'] = qparams.id;
+                // }
+                if (qparams.id) {
                     filter['id-eq'] = qparams.id;
                 }
                 this.api_loading1 = true;
@@ -506,15 +509,21 @@ export class ProviderCheckinComponent implements OnInit {
                                         //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
                                         //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
                                         //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
-                                        _this.initDepartments(_this.account_id).then(
-                                            () => {
-                                                _this.handleDeptSelction(_this.selected_dept);
-                                            },
-                                            () => {
-                                                this.getAllUsers();
-                                                // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-                                            }
-                                        );
+                                        if (this.accountType === 'BRANCH') {
+                                            _this.initDepartments(_this.account_id).then(
+                                                () => {
+                                                    _this.handleDeptSelction(_this.selected_dept);
+                                                },
+                                                () => {
+                                                    this.getAllUsers();
+                                                    // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                }
+                                            );
+                                        } else {
+                                            this.sel_ser = this.servicesjson[0].id;
+                                            this.setServiceDetails(this.sel_ser);
+                                            this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+                                        }
                                     }
                                     //     this.api_loading1 = false;
                                     // },
@@ -1070,11 +1079,12 @@ export class ProviderCheckinComponent implements OnInit {
                 break;
         }
         this.step = cstep;
-        if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-            // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
-            // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
-        }
+        // if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
+        //     // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+        //     // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
+        //     this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+        //     console.log(this.waitlist_for);
+        // }
     }
     showCheckinButtonCaption() {
         let caption = '';
@@ -1674,9 +1684,9 @@ export class ProviderCheckinComponent implements OnInit {
         return this.sharedFunctionobj.isNumeric(evt);
     }
     addCallingmode(index) {
-        if (this.callingModes && this.callingModes.length === 10) {
+        if (this.callingModes && this.callingModes.length === 10 && this.callingModes.charAt(0) !== '0') {
             this.showInputSection = true;
-        } else if (!this.callingModes || this.callingModes.length < 10) {
+        } else if (!this.callingModes || this.callingModes.length < 10 || this.callingModes.charAt(0) === '0') {
             this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         }
     }

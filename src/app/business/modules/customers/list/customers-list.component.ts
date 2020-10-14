@@ -77,6 +77,7 @@ export class CustomersListComponent implements OnInit {
     customer: any = [];
     providerLabels: any;
     selectedIndex: any = [];
+    hide_msgicon = false;
     selectedcustomersforcall: any[];
     customerlist: any;
     customerDetails: any;
@@ -257,7 +258,8 @@ export class CustomersListComponent implements OnInit {
         this.filter_sidebar = false;
     }
 
-    selectcustomers(index) {
+    selectcustomers(index, detail) {
+        this.hide_msgicon = false;
         this.selectedcustomersformsg = [];
         this.selectedcustomersforcall = [];
         if (this.customerSelected[index]) {
@@ -267,14 +269,16 @@ export class CustomersListComponent implements OnInit {
             this.customerSelected[index] = true;
             this.customerselection++;
         }
-        if (this.customerselection === 1) {
-            // this.customers[this.customerSelected.indexOf(true)];
-        }
         for (let i = 0; i < this.customerSelected.length; i++) {
             if (this.customerSelected[i]) {
                 if (this.selectedcustomersformsg.indexOf(this.customers[i]) === -1) {
                     this.selectedcustomersformsg.push(this.customers[i]);
                 }
+            }
+        }
+        if (this.customerselection === 1) {
+            if (!this.selectedcustomersformsg[0].phoneNo && !this.selectedcustomersformsg[0].email) {
+                this.hide_msgicon = true;
             }
         }
         for (let i = 0; i < this.customerSelected.length; i++) {

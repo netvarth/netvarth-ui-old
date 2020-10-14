@@ -32,6 +32,16 @@
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{waitlist.token}}</td>
                                         </tr>
+                                        <tr *ngIf="waitlist.token">
+                                            <td width="48%" align="right">Token for</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{waitlist.waitlistingFor[0].firstName}} {{waitlist.waitlistingFor[0].lastName}}</td>
+                                        </tr>
+                                        <tr *ngIf="!waitlist.token">
+                                            <td width="48%" align="right">Check-in for</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{waitlist.waitlistingFor[0].firstName}} {{waitlist.waitlistingFor[0].lastName}}</td>
+                                        </tr>
                                         <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>

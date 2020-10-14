@@ -5,10 +5,10 @@
     <div class="row bill-section">
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <!-- <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <a class="pull-left back-btn mgn-up-5" routerLink="/"><i class="fa fa-arrow-left"></i></a>
-                </div>
-                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                </div> -->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                     <app-header *ngIf="shared_functions.checkLogin()"></app-header>
                 </div>
             </div>
@@ -16,7 +16,9 @@
                 <div class="c-outer">
                     <div class="c-body">
                         <div class="card title-gb">
-                            <h5 class="mgn-up-10">Payments Log</h5>
+                            <h5 class="mgn-up-10">Payments Log
+                                <a class="pull-left mgn-rt-20 back-btn" routerLink="/"><i class="fa fa-arrow-left"></i></a>
+                            </h5>
                         </div>
 
 
@@ -28,16 +30,15 @@
                                         <div class="listing" *ngFor="let payment of payments; let i = index">
                                             <div class="wrap pointer-cursor" (click)="gotoPayment(payment.id)">
                                                 <div class="td one" style="flex-basis: 10% !important">
-                                                    <span *ngIf="payment.txnType==='Appointment'"
-                                                        style="font-size: 1.2rem;" [matTooltip]="'Appointment'">A</span>
-                                                    <span *ngIf="payment.txnType==='Waitlist'"
-                                                        style="font-size: 1.2rem;" [matTooltip]="'Appointment'">C</span>
-                                                    <span *ngIf="payment.txnType==='Donation'"
-                                                        style="font-size: 1.2rem;" [matTooltip]="'Donation'">D</span>
+                                                    <span *ngIf="payment.txnType==='Appointment'"  [matTooltip]="'Appointment'" class="fa appt-icon"></span>
+                                                    <span *ngIf="payment.txnType==='Waitlist'" [matTooltip]="'Waitlist'" class="fa chckn-icon"></span>
+                                                    <span *ngIf="payment.txnType==='Donation'" [matTooltip]="'Donation'" class="fa donate-icon"></span>
                                                 </div>
                                                 <div class="td one proname" style="flex-basis: 70% !important">
-                                                    <div class="accname">
-                                                        {{payment.accountName}} </div>
+                                                    <div class="accname"
+                                                     (click)="providerDetail(payment.accountEncodedId,$event)"
+                                                     >
+                                                        {{payment.accountName}}</div>
                                                     <div class="mode"> {{payment.acceptPaymentBy}} </div>
                                                 </div>
                                                 <div class="td three"

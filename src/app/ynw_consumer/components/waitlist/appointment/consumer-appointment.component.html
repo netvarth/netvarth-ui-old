@@ -58,8 +58,8 @@
                                                     {{sel_ser_det.name}}
                                                 </h6>
                                                 <div class="">
-                                                    <div class="prepay-amt mgn-bt-20" *ngIf="sel_ser_det.isPrePayment">
-                                                        <!-- {{prepayment_amnt_cap}} -->
+                                                    
+                                                    <!-- <div class="prepay-amt mgn-bt-20" *ngIf="sel_ser_det.isPrePayment">
                                                         <div
                                                             class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
                                                             <i class="icon-bell"></i><span
@@ -76,7 +76,8 @@
                                                                 add your email <a class="lnk"
                                                                     (click)="handleEmail()">Click
                                                                     Here</a></span></div>
-                                                    </div>
+                                                    </div> -->
+
                                                     <div class="clearfix"></div>
                                                     <div class="callingmode mgn-lt-10 mgn-up-10"
                                                         *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
@@ -161,14 +162,16 @@
 
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                            Appointment Time</div>
+                                            Date/Time
+                                            <a class="lnk pull-right pointer-cursor action mgn-lt-10 mgn-rt-20"
+                                                (click)="changeSlot()">Change
+                                            </a>
+                                        </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
                                                 <h6 class="card-title serv-time" *ngIf="apptTime">
                                                     <span style="display: block;">
                                                         {{sel_checkindate | date: dateFormat}}</span><span>{{getSingleTime(apptTime.time)}}</span>
-                                                        <span><a class="lnk pointer-cursor action mgn-lt-10"
-                                                         (click)="changeSlot()">Change Slot
-                                                     </a></span>
+                                                        
                                                 </h6>
                                             </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
@@ -306,8 +309,16 @@
                                                     </h6>
                                                 </div>
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
+                                                    <div *ngIf="sel_ser_det.isPrePayment" class="mgn-bt-20">
+                                                            This service requires
+                                                            an advance
+                                                            payment of
+                                                            <span class="prepaymin-cls bold"><span
+                                                                    class="rupee-font">&#8377;
+                                                                </span>{{prepaymentAmount}}</span>
+                                                    </div>
                                                     <div class="checkin-btn-bp pointer-cursor"
-                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1)" (click)="handleApptClicked()">
+                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === ''"  (click)="handleApptClicked()">
                                                         <span *ngIf="!sel_ser_det.isPrePayment">Confirm
                                                             Appointment</span>
                                                         <span *ngIf="sel_ser_det.isPrePayment">Proceed to Payment</span>

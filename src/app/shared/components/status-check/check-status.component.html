@@ -44,7 +44,8 @@
                     <td>{{statusInfo.batchId}}</td>
                   </tr>
                   <tr *ngIf="type=='wl'">
-                    <td width="48%" align="right">Token For </td>
+                    <td width="48%" align="right" *ngIf="statusInfo.showToken">Token For </td>
+                    <td width="48%" align="right" *ngIf="!statusInfo.showToken"> Check-in For </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>
                       <span class="forwhom" *ngFor="let user of statusInfo.waitlistingFor">
@@ -130,10 +131,15 @@
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.personsAhead}}</td>
                   </tr>
-                  <tr *ngIf="getWaitTime(statusInfo)">
+                  <tr *ngIf="getWaitTime(statusInfo) && !statusInfo.serviceTime">
                     <td width="48%" align="right"><i class="fa fa-clock-o"></i>&nbsp;Est wait Time </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{getWaitTime(statusInfo)}}</td>
+                  </tr>
+                  <tr *ngIf="getWaitTime(statusInfo) && statusInfo.serviceTime">
+                    <td width="48%" align="right"><i class="fa fa-clock-o"></i>&nbsp;Service starts at </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>{{statusInfo.serviceTime}}</td>
                   </tr>
                 </tbody>
               </table>

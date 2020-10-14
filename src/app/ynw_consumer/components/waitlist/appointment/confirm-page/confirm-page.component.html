@@ -29,6 +29,11 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td width="48%" align="right">Appointment for</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{appointment.appmtFor[0].firstName}} {{appointment.appmtFor[0].lastName}}</td>
+                                        </tr>
+                                        <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.location?.place}}</td>
@@ -67,6 +72,11 @@
                                             <td width="48%" align="right">Pre Payment amount</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.service.minPrePaymentAmount}}</td>
+                                        </tr>
+                                        <tr *ngIf="appointment.batchId">
+                                            <td width="48%" align="right">Batch</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{appointment.batchId}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

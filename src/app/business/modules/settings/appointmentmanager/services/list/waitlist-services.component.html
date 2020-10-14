@@ -5,12 +5,11 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10"> 
-         <button type="button" class="btn default profile-back"  (click)="redirecToApptmanager()">
-            <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+         <!-- <button type="button" class="btn default profile-back"  (click)="redirecToApptmanager()">
+            <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
+            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToApptmanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{services_cap}}
-          <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
-               Help
-          </button> 
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> 
         </h5>     
     </div>
 </section>

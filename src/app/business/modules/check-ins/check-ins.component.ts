@@ -312,6 +312,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   startedAppointmentsChecked: any = [];
   startedChkAppointments: any = [];
   chkStartedSelectAppointments = false;
+  customerIdTooltip = '';
+  endminday;
+  maxday = new Date();
   voicedialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
@@ -422,6 +425,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
+    this.customerIdTooltip = this.customer_label + ' id';
     this.getDisplayboardCount();
     this.getPos();
     this.getLabel();
@@ -1617,7 +1621,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (appointments['checkedIn']) {
       Array.prototype.push.apply(scheduledList, appointments['checkedIn'].slice());
     }
-    this.sortCheckins(scheduledList);
+     if (this.time_type === 1) {
+      this.sortCheckins(scheduledList);
+    }
     return scheduledList;
   }
   getCancelledAppointment(appointments) {
@@ -1832,6 +1838,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     // this.filter.waitlist_status !== 'all'
+    this.endminday = this.filter.check_in_start_date;
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));

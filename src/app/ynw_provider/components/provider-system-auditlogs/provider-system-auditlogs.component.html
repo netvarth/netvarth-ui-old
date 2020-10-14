@@ -56,7 +56,7 @@
                                                                     <label class="filterHeaders">Filter By Date</label>
                                                                         <li class="filterli filterDatepicker">
                                                                             <input class="filterTextbox" type="text" [(ngModel)]="logSeldate" [min]="minday"  [max]="tday"
-                                                                            [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="Date">
+                                                                            [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="Date" readonly>
                                                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                                                             </mat-datepicker-toggle>
                                                                             <mat-datepicker #picker></mat-datepicker>

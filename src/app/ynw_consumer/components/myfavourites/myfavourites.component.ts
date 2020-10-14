@@ -61,6 +61,7 @@ export class MyfavouritesComponent implements OnInit {
   ngOnInit() {
     this.setSystemDate();
     this.getFavouriteProvider();
+    this.gets3curl();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
   }
 
@@ -122,7 +123,18 @@ export class MyfavouritesComponent implements OnInit {
       this.open_fav_div = open_fav_div;
     }, 500);
   }
-
+  gets3curl() {
+    this.shared_functions.getS3Url('provider')
+      .then(
+        res => {
+          this.s3url = res;
+          this.getFavouriteProvider();
+        },
+        error => {
+          this.shared_functions.apiErrorAutoHide(this, error);
+        }
+      );
+  }
   setWaitlistTimeDetailsProvider(provider, k) {
     if (this.s3url) {
       this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);

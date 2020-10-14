@@ -128,14 +128,18 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     } else {
       this.pay_link.emailNotification = 'false';
     }
-    this.provider_services.Paymentlink(this.pay_link)
-      .subscribe(() => {
-        this.dialogRef.close();
-        this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
-      },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
+    if (!form_data.mobile_number && !form_data.emailId) {
+      this.shared_functions.openSnackBar('Please provide atleast one field', { 'panelClass': 'snackbarerror' });
+    } else {
+      this.provider_services.Paymentlink(this.pay_link)
+        .subscribe(() => {
+          this.dialogRef.close();
+          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
+        },
+          error => {
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+    }
   }
 
 }

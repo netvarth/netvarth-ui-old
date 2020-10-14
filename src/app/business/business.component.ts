@@ -193,12 +193,12 @@ export class BusinessComponent implements OnInit {
           this.shared_functions.setitemToGroupStorage('accountId', bProfile.id);
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header
-            const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
+            // const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
             // this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
             //   || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
             this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
             || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '', '');
-            this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
+            this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.shared_functions.sendMessage(pdata);
             const statusCode = this.provider_shared_functions.getProfileStatusCode(bProfile);

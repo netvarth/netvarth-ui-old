@@ -1369,6 +1369,10 @@ sup {
   margin-left: 30px !important;
 }
 
+.mgn-rt-30 {
+  margin-right: 30px !important;
+}
+
 .mgn-up-10 {
   margin-top: 10px !important;
 }
@@ -1439,6 +1443,10 @@ sup {
 
 .mgn-up-30 {
   margin-top: 30px !important;
+}
+
+.mgn-up-40 {
+  margin-top: 40px !important;
 }
 
 .mgn-up-50 {
@@ -6187,7 +6195,11 @@ li.separator.setsplit {
     width: 180px !important;
   }
 }
-
+@media (max-width: 784px) {
+  .prov-bill-disc1 {
+    width: 150px !important;
+  }
+}
 .jdn-pg i.editbt {
   margin-left: 20px !important;
 }
@@ -10549,7 +10561,7 @@ a {
 
 .wtsapaud-icon {
   content: url(../images/teleservice/whatsapp_audio.svg);
-  top: 4px;
+  top: 4px !important;
   position: relative;
   padding-right: 1px;
   width: 26px;
@@ -11055,6 +11067,15 @@ image-cropper img {
   .gmedia .linkdisplay {
     display: grid !important;
   }
+  .email-img {
+    width: 90px !important;
+    height: 140px;
+  }
+  .support-num {
+    font-size: 1rem !important;
+    font-weight: 600;
+    color: blue;
+  }
 }
 
 .pt10 .pad-left-20 .left_icn {
@@ -11125,6 +11146,10 @@ image-cropper img {
 
 .pad-20 {
   padding: 20px !important;
+}
+
+.pad-30 {
+  padding: 30px !important;
 }
 
 .pad-top-15 {
@@ -11761,6 +11786,10 @@ img.busN-logo {
   padding-left: 0 !important;
 }
 
+.pad-lt-30 {
+  padding-left: 30px !important;
+}
+
 .lmenu-hlp li {
   list-style: none;
   font-weight: 600;
@@ -12181,7 +12210,9 @@ img.busN-logo {
   content: url(../images/dashboard-icons/arrivved2.svg);
   width: 40px;
 }
-.pro-dash .mat-tab-body-wrapper {
+.pro-dash .mat-tab-body-wrapper,
+.pro-dash .mat-tab-group,
+.pro-dash .mat-tab-label-container {
   z-index: 0;
 }
 @media (max-width: 963px) {
@@ -12193,4 +12224,107 @@ img.busN-logo {
   .rem-video {
     width: 100% !important;
   }
+}
+.act-btn {
+  border: 1px solid orange;
+}
+.done-btn {
+  border: 1px solid green;
+}
+.start-btn {
+  border: 1px solid purple;
+}
+.call-btn {
+  border: 1px solid green;
+}
+.stopcall-btn {
+  border: 1px solid red !important;
+}
+.cancel-btn {
+  border: 1px solid red;
+}
+@media (max-width: 490px) {
+  .single-action {
+    display: flex;
+  }
+  .single-action i {
+    padding-top: 3px;
+    padding-left: 2px;
+  }
+}
+.cons-payments .appt-icon {
+  content: url(../images/myjaldee/Appoinment-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.cons-payments .chckn-icon {
+    content: url(../images/myjaldee/Checkin-01.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 29px;
+    margin-top: 5px;
+}
+.cons-payments .donate-icon {
+    content: url(../images/donation2.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 25px;
+    margin-top: 7px;
+}
+.apptdate-slot {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.index-zero {
+  z-index: 0  !important;
+}
+@media only screen and (min-width: 991px) {
+  .font1 {
+    font-size: 1rem !important;
+  }
+  .font11 {
+    font-size: 1.1rem !important;
+  }
+}
+@media only screen and (max-width: 400px){
+  .divlftrt{
+  padding-left: 0px!important;
+  padding-right: 0px!important;
+  }
+  }
+  @media only screen and (max-width: 400px){
+  .lablresponssive{
+  font-size: .7rem;
+  }
+  }
+  @media (max-width: 350px){
+  .drop-width {
+    width: 25px;
+  }
+}
+.c-checkin-new .changeitem {
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+}
+.back-btn i {
+  color: black !important;
+}
+.email-txt-pad {
+  padding: 10px 30px 10px;
+}
+.bg-whitesmoke {
+  background: whitesmoke;
+}
+.email-smal-btn {
+  font-size: .80rem !important;
+  height: 35px !important;
+}
+.email-img {
+  width: 150px;
+  height: 140px;
+}
+.font-bold {
+  font-weight: 600 !important;
 }

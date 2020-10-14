@@ -29,9 +29,11 @@ export class ProviderSystemAlertComponent implements OnInit {
   load_complete = 0;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   alertSelAck = [];
-  alertSeldate = '';
-  holdalertSelAck = '';
-  holdalertSeldate = '';
+  alertStartdate = null;
+  alertEnddate = null;
+  holdalertSelAck = null;
+  holdalertStartdate = null;
+  holdalertEnddate = null;
   filterapplied;
   filter_sidebar = false;
   open_filter = false;
@@ -48,6 +50,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   ];
   tday = new Date();
   minday = new Date(1900, 0, 1);
+  endminday = new Date(1900, 0, 1);
   maxDate = new Date();
   isCheckin;
   breadcrumb_moreoptions: any = [];
@@ -70,16 +73,18 @@ export class ProviderSystemAlertComponent implements OnInit {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.alertSelAck = []; // default becuase maximise from footer alert panel
-    this.alertSeldate = '';
+    this.alertStartdate = null;
+    this.alertEnddate = null;
     this.alertStatus = 4;
     this.holdalertSelAck = this.alertSelAck.join(',');
-    this.holdalertSeldate = this.alertSeldate;
-    this.getAlertListTotalCnt('false', '');
+    this.holdalertStartdate = this.alertStartdate;
+    this.holdalertEnddate = this.alertEnddate;
+    this.getAlertListTotalCnt('false', '', '');
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
   }
-  getAlertListTotalCnt(ackStatus, sdate) {
-    this.shared_services.getAlertsTotalCnt(ackStatus, sdate)
+  getAlertListTotalCnt(ackStatus, sdate, edate) {
+    this.shared_services.getAlertsTotalCnt(ackStatus, sdate, edate)
       .subscribe(data => {
         this.totalCnt = data;
         this.sharedfunctionObj.sendMessage({ 'ttype': 'alertCount', alertCnt: this.totalCnt });
@@ -88,7 +93,7 @@ export class ProviderSystemAlertComponent implements OnInit {
           this.alert_details = [];
         } else {
           this.alertStatus = 1;
-          this.getAlertList(this.alertSelAck.join(','), sdate);
+          this.getAlertList(this.alertSelAck.join(','), sdate, edate);
         }
         this.api_loading = false;
       },
@@ -96,7 +101,7 @@ export class ProviderSystemAlertComponent implements OnInit {
           this.api_loading = false;
         });
   }
-  getAlertList(ackStatus, sdate) {
+  getAlertList(ackStatus, sdate, edate) {
     let pageval;
     if (this.startpageval) {
       pageval = (this.startpageval - 1) * this.perPage;
@@ -104,7 +109,7 @@ export class ProviderSystemAlertComponent implements OnInit {
       pageval = 0;
     }
     this.alert_details = [];
-    this.shared_services.getAlerts(ackStatus, sdate, Number(pageval), this.perPage)
+    this.shared_services.getAlerts(ackStatus, sdate, edate, Number(pageval), this.perPage)
       .subscribe(data => {
         this.alert_details = data;
         if (this.alert_details.length > 0) {
@@ -137,9 +142,11 @@ export class ProviderSystemAlertComponent implements OnInit {
       // 'ack_status': false,
       'date': false
     };
-    this.alertSeldate = '';
+    this.alertEnddate = null;
+    this.alertStartdate = null;
     this.alertSelAck = [];
-    this.holdalertSeldate = null;
+    this.holdalertStartdate = null;
+    this.holdalertEnddate = null;
     this.ackStatus = false;
     this.notAckStatus = false;
   }
@@ -147,6 +154,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     this.locationobj.back();
   }
   do_search(pagecall, status?) {
+    this.endminday = this.alertStartdate;
     this.alertStatus = 1;
     if (status === 'ackStatus') {
       if (this.ackStatus === true) {
@@ -169,10 +177,12 @@ export class ProviderSystemAlertComponent implements OnInit {
     if (pagecall === false) {
       this.startpageval = 1;
       this.holdalertSelAck = this.alertSelAck.join(',');
-      this.holdalertSeldate = this.alertSeldate;
+      this.holdalertStartdate = this.alertStartdate;
+      this.holdalertEnddate = this.alertEnddate;
     }
-    let seldate = '';
-    if (this.holdalertSeldate) {
+    let startseldate = '';
+    let endseldate = '';
+    if (this.holdalertStartdate) {
       // const mon = this.holdalertSeldate['_i']['month'] + 1;
       // let mn = '';
       // if (mon < 10) {
@@ -181,7 +191,18 @@ export class ProviderSystemAlertComponent implements OnInit {
       //   mn = mon;
       // }
       // seldate = this.holdalertSeldate['_i']['year'] + '-' + mn + '-' + this.holdalertSeldate['_i']['date'];
-      seldate = this.shared_functions.transformToYMDFormat(this.holdalertSeldate);
+      startseldate = this.shared_functions.transformToYMDFormat(this.holdalertStartdate);
+    }
+    if (this.holdalertEnddate) {
+      // const mon = this.holdalertSeldate['_i']['month'] + 1;
+      // let mn = '';
+      // if (mon < 10) {
+      //   mn = '0' + mon;
+      // } else {
+      //   mn = mon;
+      // }
+      // seldate = this.holdalertSeldate['_i']['year'] + '-' + mn + '-' + this.holdalertSeldate['_i']['date'];
+      endseldate = this.shared_functions.transformToYMDFormat(this.holdalertEnddate);
     }
     /*if (pagecall === false && this.holdalertSelAck === '' && seldate === '') {
       this.sharedfunctionObj.openSnackBar('Please select atleast one option', {'panelClass': 'snackbarerror'});
@@ -190,9 +211,9 @@ export class ProviderSystemAlertComponent implements OnInit {
     // if (pagecall === false) {
     //   this.getAlertListTotalCnt(this.holdalertSelAck || '', seldate);
     // } else {
-    this.getAlertList(this.holdalertSelAck || '', seldate);
+    this.getAlertList(this.holdalertSelAck || '', startseldate, endseldate);
     // }
-    if (seldate !== '' || this.holdalertSelAck !== 'false') {
+    if (endseldate !== '' || startseldate !== '' || this.holdalertSelAck !== 'false') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -217,7 +238,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     this.provider_servicesobj.acknowledgeAlert(obj.id)
       .subscribe(() => {
         this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
-        this.getAlertListTotalCnt('false', this.holdalertSeldate);
+        this.getAlertListTotalCnt('false', this.holdalertStartdate, this.holdalertEnddate);
         // this.sharedfunctionObj.sendMessage({ 'ttype': 'alertCount' });
       },
         error => {
@@ -225,17 +246,17 @@ export class ProviderSystemAlertComponent implements OnInit {
         });
   }
 
-  filterClicked(value) {
-    this.filters[value] = !this.filters[value];
-    if (!this.filters[value]) {
-      if (value === 'date') {
-        this.alertSeldate = null;
-      } else if (value === 'ack_status') {
-        this.alertSelAck = [];
-      }
-      this.do_search(false);
-    }
-  }
+  // filterClicked(value) {
+  //   this.filters[value] = !this.filters[value];
+  //   if (!this.filters[value]) {
+  //     if (value === 'date') {
+  //       this.alertSeldate = null;
+  //     } else if (value === 'ack_status') {
+  //       this.alertSelAck = [];
+  //     }
+  //     this.do_search(false);
+  //   }
+  // }
   showFilterSidebar() {
     this.filter_sidebar = true;
   }

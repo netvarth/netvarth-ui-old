@@ -240,6 +240,19 @@ export class AppointmentComponent implements OnInit {
             } else {
                 this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
             }
+            if (qparams.timeslot) {
+                this.slotTime = qparams.timeslot;
+                this.comingSchduleId = JSON.parse(qparams.scheduleId);
+                if (qparams.serviceId) {
+                    this.serviceIdParam = JSON.parse(qparams.serviceId);
+                }
+            }
+            if (qparams.deptId) {
+                this.selectDept = JSON.parse(qparams.deptId);
+            }
+            if (qparams.userId) {
+                this.selectUser = JSON.parse(qparams.userId);
+            }
             if (qparams.ph || qparams.id) {
                 const filter = {};
                 if (qparams.ph) {
@@ -260,17 +273,6 @@ export class AppointmentComponent implements OnInit {
                         }
                     );
                 }
-            }
-            if (qparams.timeslot) {
-                this.slotTime = qparams.timeslot;
-                this.comingSchduleId = JSON.parse(qparams.scheduleId);
-                this.serviceIdParam = JSON.parse(qparams.serviceId);
-            }
-            if (qparams.deptId) {
-                this.selectDept = JSON.parse(qparams.deptId);
-            }
-            if (qparams.userId) {
-                this.selectUser = JSON.parse(qparams.userId);
             }
             if (qparams.type && qparams.type === 'fill') {
                 this.initAppointment(this.thirdParty);
@@ -346,6 +348,8 @@ export class AppointmentComponent implements OnInit {
         this.qParams['serviceId'] = this.sel_ser;
         if (this.selectedUser && this.selectedUser.id) {
             this.qParams['userId'] = this.selectedUser.id;
+        } else {
+            this.qParams['userId'] = 0;
         }
         this.qParams['deptId'] = this.selected_dept;
         const navigationExtras: NavigationExtras = {
@@ -1059,11 +1063,11 @@ export class AppointmentComponent implements OnInit {
                 break;
         }
         this.step = cstep;
-        if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-            // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
-            // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
-        }
+        // if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
+        //     // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+        //     // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
+        //     this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+        // }
     }
     showCheckinButtonCaption() {
         let caption = '';
@@ -1406,7 +1410,11 @@ export class AppointmentComponent implements OnInit {
                             this.setServiceDetails(this.sel_ser);
                             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
                         } else {
+                            // if (this.filterDepart) {
                             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+                            // } else {
+                            //     this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
+                            // }
                         }
                     }
                 });
@@ -1479,11 +1487,11 @@ export class AppointmentComponent implements OnInit {
             this.setServiceDetails(this.sel_ser);
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         } else {
-            if (this.filterDepart) {
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
-            } else {
-                this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
-            }
+            // if (this.filterDepart) {
+            //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+            // } else {
+            this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
+            // }
         }
     }
     getServicebyLocationId(locid, pdate) {
@@ -1652,9 +1660,9 @@ export class AppointmentComponent implements OnInit {
         return this.sharedFunctionobj.isNumeric(evt);
     }
     addCallingmode(index) {
-        if (this.callingModes && this.callingModes.length === 10) {
+        if (this.callingModes && this.callingModes.length === 10 && this.callingModes.charAt(0) !== '0') {
             this.showInputSection = true;
-        } else if (!this.callingModes || this.callingModes.length < 10) {
+        } else if (!this.callingModes || this.callingModes.length < 10 || this.callingModes.charAt(0) === '0') {
             this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         }
     }

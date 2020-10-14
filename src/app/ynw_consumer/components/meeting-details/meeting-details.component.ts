@@ -8,6 +8,7 @@ import { projectConstants } from '../../../app.component';
   templateUrl: './meeting-details.component.html'
 })
 export class MeetingDetailsComponent implements OnInit {
+  iconClass: string;
   showJaldeeVideo = false;
   meetingLink: any;
 
@@ -16,6 +17,31 @@ export class MeetingDetailsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
   meetingDetails: any = [];
   ngOnInit() {
+  console.log(this.data);
+    if (this.data.details.service.serviceType === 'virtualService') {
+      switch (this.data.details.service.virtualCallingModes[0].callingMode) {
+        case 'Zoom': {
+          this.iconClass = 'fa zoom-icon';
+          break;
+        }
+        case 'GoogleMeet': {
+          this.iconClass = 'fa meet-icon';
+          break;
+        }
+        case 'WhatsApp': {
+          if (this.data.details.service.virtualServiceType === 'audioService') {
+            this.iconClass = 'fa wtsapaud-icon';
+          } else {
+            this.iconClass = 'fa wtsapvid-icon';
+          }
+          break;
+        }
+        case 'Phone': {
+          this.iconClass = 'fa phon-icon';
+          break;
+        }
+      }
+    }
     if (this.data.type === 'appt') {
       this.getApptMeetingDetails();
     } else {
