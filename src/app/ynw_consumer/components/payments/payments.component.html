@@ -27,6 +27,9 @@
                             <div class="c-body bill-wrapper">
                                 <div class="card history one section-four no-padding">
                                     <div class="list-outer consumer-pay">
+                                        <div *ngIf="payments.length === 0" class="no-payment">
+                                            No payments
+                                        </div>
                                         <div class="listing" *ngFor="let payment of payments; let i = index">
                                             <div class="wrap pointer-cursor" (click)="gotoPayment(payment.id)">
                                                 <div class="td one" style="flex-basis: 10% !important">
