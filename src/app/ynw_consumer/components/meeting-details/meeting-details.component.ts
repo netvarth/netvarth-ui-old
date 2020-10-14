@@ -1,12 +1,15 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { projectConstants } from '../../../app.component';
 
 @Component({
   selector: 'app-meeting-details',
   templateUrl: './meeting-details.component.html'
 })
 export class MeetingDetailsComponent implements OnInit {
+  showJaldeeVideo = false;
+  meetingLink: any;
 
   constructor(private shared_services: SharedServices,
     public dialogRef: MatDialogRef<MeetingDetailsComponent>,
@@ -27,6 +30,16 @@ export class MeetingDetailsComponent implements OnInit {
   getApptMeetingDetails() {
     this.shared_services.getConsumerApptMeetingDetails(this.data.details.uid, this.data.details.service.virtualCallingModes[0].callingMode, this.data.details.providerAccount.id).subscribe(data => {
       this.meetingDetails = data;
+      console.log(this.meetingDetails);
+      if (Object.keys(this.meetingDetails).length === 0) {
+        this.shared_services.getVideoIdForService(this.data.details.uid, 'consumer').subscribe(
+          (videoId) => {
+            this.meetingLink = projectConstants.PATH + 'video/' + videoId;
+            console.log(this.meetingLink);
+            this.showJaldeeVideo = true;
+          }
+        );
+      }
     });
   }
 }

@@ -41,4 +41,15 @@
     <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'Phone'">
         * When it is time for your call, you will receive a call on - +91{{data.details.virtualService['Phone']}}
     </div>
+    <div *ngIf="showJaldeeVideo">
+        Follow these instructions to join the video call:
+        <div class="mgn-up-10">1: You will receive an alert that the Jaldee Video Started.
+        </div>
+        <div class="mgn-up-5">2: When it is your turn, click on the following link -
+            <a href="{{meetingLink}}" target="blank">{{meetingLink}}</a>
+        </div>        
+        <div class="mgn-up-5">
+            3. Wait for the video call to start 
+        </div>
+    </div>
 </mat-dialog-content>

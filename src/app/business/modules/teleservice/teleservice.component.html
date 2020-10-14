@@ -100,10 +100,9 @@
                             <!-- Start consultation for gmeet/zoom/wtsap/phone-->
                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-bt-30 pad-10"
                                 *ngIf="(step === 1 && !servStarted)">
-
                                 <div
-                                    [ngClass]="{'dv-launch-video-serv' : (servDetails?.virtualServiceType === 'videoService'), 'dv-launch-aud-serv' : (servDetails?.virtualServiceType === 'audioService')}">
-                                    <div *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone')" class="strtvideo">
+                                    [ngClass]="{'dv-launch-video-serv' : ((servDetails?.virtualServiceType === 'videoService') || (servDetails?.virtualServiceType === 'VideoCall')), 'dv-launch-aud-serv' : (servDetails?.virtualServiceType === 'audioService')}">
+                                    <div *ngIf="(callingModes !== 'WhatsApp') && (callingModes !== 'Phone') && (callingModes !== 'VideoCall')" class="strtvideo">
                                         <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
                                             (click)="asktoLaunch()">
                                             <i *ngIf="callingModes === 'Zoom'" class="fa zoom-icon"></i>
@@ -122,7 +121,6 @@
                                         *ngIf="((callingModes === 'WhatsApp') || (callingModes === 'Phone')) && !is_web" class="strtaudio">
                                         <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
                                             (click)="asktoLaunch()">
-
                                             <i *ngIf="callingModes === 'WhatsApp'"
                                                 class="fa wtsapaud-icon"></i>
                                             <i *ngIf="callingModes === 'Phone'" class="fa phon-icon"></i>
@@ -132,17 +130,28 @@
                                             </b>
                                         </button>
                                     </div>
+                                    <div
+                                        *ngIf="callingModes === 'VideoCall'" class="strtvideo">
+                                        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
+                                            (click)="asktoLaunch()">
+                                            <i *ngIf="callingModes === 'VideoCall'" class="fa meet-icon"></i>
+                                            <b> &nbsp;Start Video Call</b>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-
-
                             <!-- End Meeting and relaunch for zoom/gmeet & whtsap/phone(if opened in mob or tab) -->
                             <div class="col-md-12 col-m-12 col-xs-12 col-lg-12 centeralign mgn-bt-30 pad-10"
-                                *ngIf="servStarted && ((callingModes === 'Zoom'||callingModes === 'GoogleMeet') || ((callingModes === 'Phone'|| callingModes === 'WhatsApp') && !is_web))">
+                                *ngIf="servStarted && ((callingModes === 'Zoom' || callingModes === 'GoogleMeet' || callingModes === 'VideoCall') || ((callingModes === 'Phone'|| callingModes === 'WhatsApp') && !is_web))">
                                 <button type="button" (click)="endmeeting()"
                                     class="cs-btn bt1 btn-red txt-trans-none">End
                                     Meeting</button> &nbsp;&nbsp;&nbsp;
-                                <a *ngIf="(callingModes !== 'Phone')" target="_blank" [href]="starting_url">
+                                <a *ngIf="(callingModes !== 'Phone' && callingModes !== 'VideoCall')" target="_blank" [href]="starting_url">
+                                    <button class="cs-btn bt1 btn-blue  txt-trans-none">Relaunch
+                                        Meeting
+                                    </button>
+                                </a>
+                                <a *ngIf="(callingModes === 'VideoCall')" target="_self" [href]="starting_url">
                                     <button class="cs-btn bt1 btn-blue  txt-trans-none">Relaunch
                                         Meeting
                                     </button>
