@@ -302,7 +302,7 @@ export class CustomersListComponent implements OnInit {
     };
 
     this.shared_functions.removeitemfromLocalStorage('mrId');
-    this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+    this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
   }
   searchCustomer() {
     const navigationExtras: NavigationExtras = {

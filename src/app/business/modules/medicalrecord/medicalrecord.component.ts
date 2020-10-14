@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
@@ -30,16 +30,27 @@ export class MedicalrecordComponent implements OnInit {
   patientFirstName: any;
   patientLastName: number;
   PatientDob: any;
-  isLoaded = false;
   mrlist;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
-  constructor( // private router: Router,
+  constructor(  private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private dialog: MatDialog,
     private medicalService: MedicalrecordService
   ) {
+    this.routeLinks = [
+      {
+        label: 'Clinical Notes',
+        link: './clinicalnotes',
+        index: 0
+      }, {
+        label: 'Prescription',
+        link: './prescription',
+        index: 1
+      }
+    ];
+
     this.activated_route.queryParams.subscribe(
       (qparams) => {
         if (qparams.mrId !== 0 && qparams.mr_mode === 'view') {
@@ -65,8 +76,10 @@ export class MedicalrecordComponent implements OnInit {
 
 
   ngOnInit() {
-    this.isLoaded = true;
     this.mrDate = new Date();
+    this.router.events.subscribe((res) => {
+      this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
+    });
 
 
   }

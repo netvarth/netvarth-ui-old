@@ -7,7 +7,7 @@
     </div>
 
 
-    <div class="card title-gb" *ngIf="isLoaded">
+    <div class="card title-gb" >
       <div class="mgn-up-10">
 
           <p>
@@ -49,25 +49,23 @@
               <button style="float: right;">Share RX</button>
             </span>
       </div>
-      <!-- <div class="content w-manager settings comn-cls">
+<hr>
+<p>hellooo</p>
+        <div class="content w-manager settings comn-cls">
+          <div style="padding: 5px;">
+            <nav mat-tab-nav-bar>
+              <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link" routerLinkActive="mat-tab-link-active"
+                #rla="routerLinkActive" [active]="activeLinkIndex === i" (click)="activeLinkIndex = i" [routerLinkActiveOptions]="{exact: true}">
+                {{routeLink.label}}
+              </a>
+            </nav>
+            <router-outlet></router-outlet>
+            <div class="clearfix"></div>
+          </div>
 
-            <div style="padding: 5px;">
-              <nav mat-tab-nav-bar>
-                <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link" routerLinkActive="mat-tab-link-active"
-                  #rla="routerLinkActive" [active]="activeLinkIndex === i" (click)="activeLinkIndex = i" [routerLinkActiveOptions]="{exact: true}">
-                  {{routeLink.label}}
-                </a>
-              </nav>
-              <router-outlet></router-outlet>
-            </div>
-
-
-        </div> -->
-        <div class="clearfix"></div>
-
-      <router-outlet></router-outlet>
+        </div>
     </div>
-
+    <div class="clearfix"></div>
   </section>
 </div>
-<div class="clearfix"></div>
+

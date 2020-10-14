@@ -3,8 +3,39 @@
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
-  }  
+  }
   .down {
     transform: rotate(45deg);
    -webkit-transform: rotate(45deg);
   }
+
+.mat-tab-link-active,
+.mat-tab-label-active {
+  background-color: #5EADB0;
+  color:	#0000FF;
+  border: 1px solid #6B7F7F;
+  font-weight: bold;
+}
+
+.mat-tab-link,
+.mat-tab-label {
+  line-height: 30px !important;
+  height: 50px !important;
+  min-width: 100px !important;
+  border: 2px solid #0000FF;
+}
+
+.tabContentContainer {
+  border: 1px solid #aaaaaa;
+  background: #ffffff 50% 50% repeat-x;
+}
+
+.mat-tab-nav-bar {
+    white-space: nowrap;
+    overflow: auto;
+  }
+  /* @media(max-width: 600px) {
+    .mat-tab-link {
+     font-size: 15px !important;
+    }
+  } */

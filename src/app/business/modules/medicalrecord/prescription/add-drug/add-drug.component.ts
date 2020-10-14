@@ -82,7 +82,7 @@ export class AddDrugComponent implements OnInit {
     this.api_loading = false;
     this.createForm();
   }
-  
+
 
   createForm() {
 

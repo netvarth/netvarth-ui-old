@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 // import { MedicalrecordService } from '../medicalrecord.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MedicalrecordService } from '../medicalrecord.service';
 
 
 @Component({
@@ -19,21 +20,20 @@ export class GeneralComponent implements OnInit {
   patientDetails: any;
   userId: any;
   today = new Date();
-  type;
-  data;
-  notes = { 'complaints': '', 'symptoms': '', 'allergies': '', 'vaccinationHistory': '', 'observations': '', 'diagnosis': '', 'misc_notes': '' };
 
   constructor(
-    // private medicalrecord_service: MedicalrecordService,
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
+    private shared_functions: SharedFunctions,
     private activated_route: ActivatedRoute,
+    private router: Router,
+    private medicalrecordService: MedicalrecordService
   ) {
     this.activated_route.queryParams.subscribe(params => {
-      this.editable_object = params.object;
+      this.editable_object = JSON.parse(params.data);
       this.edit_data = this.editable_object.value;
       this.displayTitle = this.editable_object.displayName;
-      this.clinicalNotes = params.clinicalNotes;
+      this.clinicalNotes = JSON.parse(params.clinicalNotes);
 
     });
 
@@ -41,38 +41,47 @@ export class GeneralComponent implements OnInit {
 
   ngOnInit() {
   }
-  save(notes) {
 
+  redirecToClinicalNotes() {
+    this.router.navigateByUrl('../clinicalnotes', { relativeTo: this.activated_route });
+  }
+
+  updateClinicalNotes(notes) {
     const index = this.clinicalNotes.findIndex(element => element.id === this.editable_object.id);
+    console.log(index);
+
     this.clinicalNotes[index].value = notes;
-    this.createRequestPayload();
-    const post_itemdata = {
-      'bookingType': 'NA',
-      'consultationMode': 'EMAIL',
-      'clinicalNotes': this.notes,
-      'mrConsultationDate': this.today
+    const payloadObject = this.clinicalNotes.reduce((acc, cur) => ({ ...acc, [cur.id]: cur.value }), {});
+    const payload = {
+      'clinicalNotes': payloadObject
     };
-    console.log(post_itemdata, this.userId);
-    // this.provider_services.createMedicalRecord(post_itemdata, this.userId)
-    //   .subscribe((data) => {
-    //     console.log(data);
-    //   },
-    //     error => {
-    //       this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    //     });
-    // this.provider_services.updateMrClinicalNOtes(post_itemdata, 52)
-    //   .subscribe((data) => {
-    //     console.log(data);
-    //   },
-    //     error => {
-    //       this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    //     });
-  }
-
-  createRequestPayload() {
-
-    const obj = this.clinicalNotes.reduce((acc, cur) => ({ ...acc, [cur.id]: cur.value }), {});
-    console.log('object..' + obj);
+    this.medicalrecordService._mrUid.subscribe(mrId => {
+      if (mrId !== 0) {
+        this.updateMrwithClinicalNotes(payload, mrId);
+      } else {
+        this.medicalrecordService.createMR(payload).then(res => {
+          this.sharedfunctionObj.openSnackBar('Medical Record Created Successfully');
+          this.router.navigate(['provider', 'medicalrecord']);
+        },
+          error => {
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+      }
+    });
 
   }
+
+  updateMrwithClinicalNotes(payload, mrId) {
+    this.provider_services.updateMrClinicalNOtes(payload, mrId)
+      .subscribe((data) => {
+        this.shared_functions.openSnackBar(this.displayTitle + 'updated successfully');
+        this.router.navigateByUrl('../clinicalnotes', { relativeTo: this.activated_route });
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+
+
+  }
+
 }

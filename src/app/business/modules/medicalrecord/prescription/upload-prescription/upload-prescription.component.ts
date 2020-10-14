@@ -28,7 +28,7 @@ export class UploadPrescriptionComponent implements OnInit {
 showSave = true;
 sharedialogRef;
 
-upload_status='Added to list';
+upload_status = 'Added to list';
   constructor( public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,

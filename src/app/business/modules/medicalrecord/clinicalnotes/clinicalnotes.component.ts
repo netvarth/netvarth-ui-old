@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { Router, NavigationExtras } from '@angular/router';
+import { MedicalrecordService } from '../medicalrecord.service';
 
 
 @Component({
@@ -8,9 +13,80 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClinicalnotesComponent implements OnInit {
 
-  constructor() { }
+  clinicalNotes: any[];
+  allergies: any;
+  currentMRId: any;
+  patientDetails: any;
+  userId;
+  customerDetails: any;
+  editclinicaldialogRef: any;
+  symptoms: any;
+  diagnosis: any;
+  complaints: any;
+  observations: any;
+  misc_notes: any;
+  vaccinationHistory: any;
+  Cdata;
+  isLoaded = false;
+  constructor(
+
+    public sharedfunctionObj: SharedFunctions,
+    public provider_services: ProviderServices,
+    private router: Router,
+    private medicalrecordService: MedicalrecordService) {
+
+
+    this.medicalrecordService._mrUid.subscribe(mrId => {
+      if (mrId !== 0) {
+        this.getMRClinicalNotes(mrId).then((res: any) => {
+          this.clinicalNotes = res;
+          this.isLoaded = true;
+
+        });
+      } else {
+        this.isLoaded = true;
+        this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+      }
+    });
+  }
 
   ngOnInit() {
 
+  }
+
+
+  getMRClinicalNotes(mrId) {
+    const _this = this;
+    _this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+
+    return new Promise((resolve) => {
+      _this.provider_services.getClinicalRecordOfMRById(mrId)
+        .subscribe(res => {
+          Object.entries(res).forEach(
+            function ([key, v]) {
+              const index = _this.clinicalNotes.findIndex(element => element.id === key);
+              _this.clinicalNotes[index].value = v;
+
+
+            });
+        },
+          error => {
+            _this.sharedfunctionObj.openSnackBar(_this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+
+
+      resolve(_this.clinicalNotes);
+    });
+
+  }
+  addOrEditClinicalNotes(object) {
+
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'data': JSON.stringify(object),
+        'clinicalNotes': JSON.stringify(this.clinicalNotes)
+      }
+    };
+    this.router.navigate(['/provider/medicalrecord/edit'], navigationExtras);
   }
 }

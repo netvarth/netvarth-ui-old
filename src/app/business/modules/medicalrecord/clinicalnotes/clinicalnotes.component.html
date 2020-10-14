@@ -1,4 +1,16 @@
 
+  <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small" *ngIf="isLoaded">
+           <div class="row" *ngFor="let entry of clinicalNotes">
+                  <div class="column">
+                    <b>{{entry.displayName}}</b>
+                    <button  style="float: right;" (click)="addOrEditClinicalNotes(entry)">{{ entry.value == '' ? 'Add' : 'Edit' }}</button>
+                    <div *ngIf= "entry.value" >
+                      <p>{{entry.value}}</p>
+                    </div>
+                  </div>
 
-<router-outlet></router-outlet>
+           </div>
+           <div class="clearfix"></div>
+       </div>
+
 

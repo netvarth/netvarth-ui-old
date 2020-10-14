@@ -1,7 +1,26 @@
-<!-- <p>general works!</p> -->
-<h2>Enter {{displayTitle}}<sub class="sunfont">(250 words)</sub></h2>
+
+
+
+
+
+  <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+    <section class="">
+      <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <button type="button" class="btn default profile-back" (click)="redirecToClinicalNotes()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span>
+              </button>
+          <h2 style="text-align: center;">{{displayTitle }}</h2>
+        </h5>
+
+
+<h4>Enter {{displayTitle}}<sub class="sunfont">(250 words)</sub></h4>
 <textarea [(ngModel)]="edit_data" name="paragraph_text" cols="50" rows="5"></textarea>
 
-<div style="text-align: center;"> <button (click) = "save(edit_data)" class="cs-btn bt1">Save</button></div>
+<div style="text-align: center;"> <button (click) = "updateClinicalNotes(edit_data)" class="cs-btn bt1">Save</button></div>
+
+</div>
+</section>
+</div>
 
 
