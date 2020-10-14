@@ -164,7 +164,7 @@ digitalSign = false;
   }
   deleteTempImage(index) {
     this.selectedMessage.files.splice(index, 1);
-    this.showSave = true;
+    
   }
   filesSelected(event) {
     const input = event.target.files;
@@ -186,7 +186,7 @@ digitalSign = false;
     }
 }
 
-saveDigitalSignImages() {
+saveDigitalSignImages(index) {
   this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
   const submit_data: FormData = new FormData();
   const propertiesDetob = {};
@@ -205,14 +205,15 @@ saveDigitalSignImages() {
     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
     submit_data.append('properties', blobPropdata);
       if (this.providerId) {
-        this.uploadMrDigitalsign(this.providerId, submit_data);
+        this.uploadMrDigitalsign(this.providerId, submit_data, index);
       }
 }
 
-uploadMrDigitalsign(id, submit_data) {
+uploadMrDigitalsign(id, submit_data,val) {
       this.provider_services.uploadMrDigitalsign(id, submit_data)
             .subscribe((data) => {
-              this.showSave = false;
+              this.digitalSign = true;
+              this.deleteTempImage(val);
               this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
             },
             error => {

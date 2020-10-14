@@ -1,4 +1,8 @@
 
+
+
+
+      
 <form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
 (keyup)="resetApiErrors()">
 <h1 class="mat-dialog-title">share
@@ -19,17 +23,7 @@
             errorMsg="Please enter a message.">
         </app-field-error-display>
     </div>
-    <div class="form-group" >
-      <mat-form-field appearance="fill">
-        <mat-label>Select an option</mat-label>
-        <mat-select [(value)]="selected"  formControlName="selectedForwhom">
-          <mat-option>None</mat-option>
-          <mat-option value="option1">Option 1</mat-option>
-          <mat-option value="option2">Option 2</mat-option>
-          <mat-option value="option3">Option 3</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+    
     <div class="mgtop40 form-group" >
             We will create a PDF of your prescription and will share Via
         <div class="coupon-outer">
@@ -57,8 +51,6 @@
 
     </div>
 </mat-dialog-actions>
-<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-</app-form-success-display>
 </form>
+
+

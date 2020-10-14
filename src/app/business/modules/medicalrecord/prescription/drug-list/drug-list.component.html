@@ -50,10 +50,10 @@
             </tr>
           </tbody>
         </table>
-        <span (click)="addDrug()" class="lnk action"> Add more</span>
+        <span (click)="addDrug()" class="lnk action" style="color: #3c8dbc; font-size: smaller"><u>Add more</u></span>
 
-        <div  *ngIf="!digitalSign">
-            <span>You never uploaded digital signature,<a class="lnk action pointer-cursor"
+        <div class="mgn-up-10">
+            <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">You never uploaded digital signature,<a class="lnk action pointer-cursor"
                 (click)="imagefile.click()"><input #imagefile type="file"
                     accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event)"> <u> create or Upload digital signature for sharing Rx</u></a>
@@ -79,16 +79,18 @@
                       </mat-menu>
                   </span>
               </div>
+              <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
+                    <button type="button"  class="cs-btn bt2"  (click)="deleteTempImage(i)">cancel</button>
+                  <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages(i)">OK</button>
+              </div>
           </div>
-          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv">
-              <button mat-button class="cs-btn bt1 savemember" (click)="saveDigitalSignImages()">OK</button>
-          </div>
+          
       </ng-container>
         </div>
 
         <div  *ngIf="drugList.length > 0 && showSave">
 
-            <button type="button" mat-button style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>
+            <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>
         </div>
         <div *ngIf="drugList.length > 0 && !showSave && digitalSign"> 
                 <button type="button" mat-button  style= "margin-left: 40%; margin-top: 1%;" class="cs-btn bt1" (click)="shareManualRx()" >

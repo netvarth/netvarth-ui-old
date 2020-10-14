@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-// import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+
 
 @Component({
   selector: 'app-share-rx',
@@ -45,16 +46,18 @@ export class ShareRxComponent implements OnInit {
   showToken = false;
 iconClass: string;
   constructor(
+    public dialogRef: MatDialogRef<ShareRxComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
-     // private provider_services: ProviderServices,
+      public dialog: MatDialog,
+      private provider_services: ProviderServices,
       private shared_functions: SharedFunctions,
       private fb: FormBuilder,
-      public dialogRef: MatDialogRef<ShareRxComponent>) {
-        this.createForm();
+      ) {
           this.patientId = this.data.userId;
           this.chekintype = this.data.chekintype;
       }
  ngOnInit() {
+  this.createForm();
   // this.msgreceivers = [{'id': 0, 'name': 'patient'}, { 'id': this.patientId, 'name': 'sp'} ];
 
   this.mrId = this.shared_functions.getitemfromLocalStorage('mrId');
@@ -62,10 +65,10 @@ iconClass: string;
  createForm() {
 
   this.amForm = this.fb.group({
-      selectedForwhom: [''],
-      message: ['', Validators.compose([Validators.required])],
+     // selectedForwhom: [''],
+      message: ['', Validators.compose([Validators.required])]
   });
-  this.getMessageReceviers();
+ // this.getMessageReceviers();
 
  }
   back() {
@@ -73,14 +76,14 @@ iconClass: string;
   }
   onSubmit(formdata) {
       console.log(formdata);
-      // const providerid = 78055;
-      // this.provider_services.shareprescription(this.mrId, providerid, formdata.message)
-      //       .subscribe((data) => {
-      //         this.shared_functions.openSnackBar('Prescription shared successfully');
-      //       },
-      //           error => {
-      //               this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      //           });
+      const providerid = 78055;
+      this.provider_services.shareRx(this.mrId, providerid, formdata.message)
+            .subscribe((data) => {
+              this.shared_functions.openSnackBar('Prescription shared successfully');
+            },
+                error => {
+                    this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
 
   }
   getMessageReceviers() {
