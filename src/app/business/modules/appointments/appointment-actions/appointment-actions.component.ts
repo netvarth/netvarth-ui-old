@@ -10,6 +10,7 @@ import { CheckinDetailsSendComponent } from '../../check-ins/checkin-details-sen
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-customer.component';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -41,6 +42,16 @@ export class AppointmentActionsComponent implements OnInit {
     pos = false;
     showBill = false;
     showMsg = false;
+    selectedTime;
+    sel_checkindate;
+    sel_schedule_id;
+    servId;
+    locId;
+    schedules: any = [];
+    availableSlots: any = [];
+    freeSlots: any = [];
+    hold_sel_checkindate;
+
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -52,9 +63,17 @@ export class AppointmentActionsComponent implements OnInit {
         this.appt = this.data.checkinData;
         this.getPos();
         this.getLabel();
+        this.setData();
+        
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
-
+    setData(){
+        this.selectedTime = this.appt.appmtTime;
+        this.sel_checkindate = this.appt.appmtDate;
+        this.sel_schedule_id = this.appt.schedule.id;
+        this.servId = this.appt.service.id;
+        this.locId = this.appt.location.id;
+    }
     printAppt() {
         this.dialogRef.close();
         const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
@@ -126,6 +145,17 @@ export class AppointmentActionsComponent implements OnInit {
                 () => { },
                 () => { }
             );
+    }
+    rescheduleActionClicked() {
+        this.action = 'reschedule';
+
+    }
+    changeSlot() {
+        this.action = 'slotChange';
+        this.getAppointmentSlots();
+    }
+    goBacktoApptDtls(){
+        this.action = 'reschedule';
     }
     smsCheckin() {
         this.dialogRef.close();
@@ -400,4 +430,59 @@ export class AppointmentActionsComponent implements OnInit {
             this.getDisplayboardCount();
         });
     }
+    rescheduleAppointment(){
+        const data = {
+            "uid": this.appt.uid,
+            "time": this.selectedTime,
+            "date": this.sel_checkindate,
+            "schedule": this.sel_schedule_id
+             };
+        this.provider_services.rescheduleProviderAppointment(data)
+            .subscribe(
+                  () => {
+                               
+                   },
+              error => {
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+    }
+    getAppointmentSlots(){
+        this.provider_services.getSlotsByLocationServiceandDate(this.locId,this.servId,this.sel_checkindate).subscribe(data => {
+            this.schedules = data;
+            console.log(this.schedules)
+
+            for (const scheduleSlots of this.schedules) {
+                       this.availableSlots = scheduleSlots.availableSlots;
+                console.log(this.availableSlots)
+
+                              for (const freslot of this.availableSlots) {
+                                    if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
+                                         freslot['scheduleId'] = scheduleSlots['scheduleId'];
+                                         freslot['displayTime'] = this.getSingleTime(freslot.time);
+                                          this.freeSlots.push(freslot);
+                                       }
+                                    }
+                console.log(this.freeSlots)
+                                }
+        });
+        
+        
+    }
+    // disableMinus() {
+    //             const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    //             const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
+    //             const seldate = new Date(seldate2);
+    //             const selecttdate = new Date(seldate.getFullYear() + '-' + this.shared_functions.addZero(seldate.getMonth() + 1) + '-' + this.shared_functions.addZero(seldate.getDate()));
+    //             const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    //             const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
+    //             const strtDt = new Date(strtDt2);
+    //             const startdate = new Date(strtDt.getFullYear() + '-' + this.shared_functions.addZero(strtDt.getMonth() + 1) + '-' + this.shared_functions.addZero(strtDt.getDate()));
+    //             if (startdate >= selecttdate) {
+    //                 return true;
+    //             } else {
+    //                 return false;
+    //             }
+    //         }
+        
 }
+

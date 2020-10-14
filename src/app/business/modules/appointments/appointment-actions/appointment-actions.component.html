@@ -115,6 +115,12 @@
                 <div class="icon-text">Print</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor"*ngIf="!data.multiSelection && data.timetype !== 3 && appt.apptStatus == 'Confirmed'"
+            (click)="rescheduleActionClicked()">
+            <div class="action-box-sub">
+                <div class="icon-text">Reschedule</div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="dashqr" *ngIf="showQR">
@@ -142,4 +148,75 @@
         <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="addLabelvalue('newlabel')">Create label</span>
         <span class="cs-btn bt3 pointer-cursor" (click)="gotoLabel()">Manage label</span>
     </div>
+</div>
+<div *ngIf="action === 'reschedule'">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10">
+        <div>
+            <div><span style="font-size: x-large;">Appointment Details</span></div><br>
+            <p>Appointment for : {{appt.appmtFor[0].userName}}</p>
+            <p>Service : 
+                <i *ngIf="data.qdata.service.serviceType === 'virtualService'" [class]=iconClass></i>
+                {{appt.service.name}}
+                
+            </p>
+            <p>Appointment Date & Time: {{appt.appmtDate | date: dateFormat}}</p>
+            <!-- <p *ngIf = "deptName">Department : {{deptName}}</p> -->
+            <p *ngIf = "Schedulestime">Schedule : {{schedulename}} [{{Schedulestime}} - {{Scheduleetime}}]</p>
+            <p *ngIf = "spfname && splname">Service Provider: {{spfname}} {{splname}}</p>
+            <p>Location: {{location}}</p>
+            <span><a class="lnk pointer-cursor action mgn-lt-10 mgn-lt-10"
+                (click)="changeSlot()">Change Slot
+            </a></span>
+     </div>
+        <div class="clearfix"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
+        <span class="cs-btn bt3 pointer-cursor mgn-rt-25" click ="rescheduleAppointment()">Reschedule</span>
+    </div>
+    </div>
+   
+</div>
+<div *ngIf="action === 'slotChange'">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a class="pull-left back-btn mgn-up-5" (click)="goBacktoApptDtls()"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10">
+                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20">Choose Date
+                                </div>
+                                <div class="date-body">
+                                    <span class="selected-date">
+                                        <span class="icon-minus"
+                                            (click)="calculateDate(-1)"></span>
+                                        {{sel_checkindate}}
+                                        <span class="icon-add"
+                                            (click)="calculateDate(1)"></span></span>
+                                    <div class="form-group dt">
+                                        <div class="pickerouter">
+                                            <mat-datepicker-toggle matSuffix [for]="picker">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                            <input class="form-control" type="text" matInput
+                                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                                [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20">Choose Slot
+                                </div>
+                                <div class="col-md-10 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20 slotdiv">
+                                    <mat-chip-list class="">
+                                        <mat-chip *ngFor="let slot of freeSlots"
+                                            
+                                            (click)="timeSelected(slot);">
+                                            {{slot.displayTime}}
+                                        </mat-chip>
+                                    </mat-chip-list>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10">
+                            No slots available.
+                        </div>
+                    
 </div>
