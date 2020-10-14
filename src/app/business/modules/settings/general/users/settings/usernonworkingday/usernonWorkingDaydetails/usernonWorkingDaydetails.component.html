@@ -3,12 +3,15 @@
 </section> -->
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToUserHolidaylist()">
+        <h5 class="mgn-up-10"> 
+          <!-- <button type="button" class="btn default profile-back" (click)="redirecToUserHolidaylist()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp;User Non Working Day
+            </button>&nbsp;&nbsp;&nbsp; -->
+            <span class="fa fa-arrow-left pointer-cursor"  (click)="redirecToUserHolidaylist()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            User Non Working Day
         </h5>
     </div>
-</section>
+</section> 
 <section>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
@@ -22,13 +25,13 @@
                             <form *ngIf="action=='add' || action === 'edit'" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
                               (keyup)="resetApiErrors()" class="ynw-common-form-nm" >
                               
-                              <div class="form-group no-padding nonworking">
+                              <div class="form-group no-padding nonworking">   
                                   <mat-form-field class="selctDte">
                                     <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'add'" formControlName="selectdate"
-                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date">
+                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date" readonly> 
                                     <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'edit'" formControlName="selectdate"
                                       [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date">
-                                    <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="action === 'add'"></mat-datepicker-toggle>
+                                    <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="action === 'add'"></mat-datepicker-toggle> 
                                     <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                                   </mat-form-field>
                                   <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'selectdate')"

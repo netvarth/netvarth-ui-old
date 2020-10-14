@@ -36,7 +36,7 @@
             </li> -->
             <li class="dropdown notifications-menu">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
-                <span class="statuslink " *ngIf="customerselection>0" [matTooltip]="'Send Message'">
+                <span class="statuslink " *ngIf="customerselection>0 && !hide_msgicon" [matTooltip]="'Send Message'">
                   <i class="fa fa-comments-o" (click)="CustomersInboxMessage()"></i> </span>
               </a>
             </li>
@@ -68,7 +68,7 @@
                 <li class="filterli filterDatepicker">
                   <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
                     #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
-                    placeholder="Date of birth">
+                    placeholder="Date of birth" readonly>
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>

@@ -240,6 +240,19 @@ export class AppointmentComponent implements OnInit {
             } else {
                 this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
             }
+            if (qparams.timeslot) {
+                this.slotTime = qparams.timeslot;
+                this.comingSchduleId = JSON.parse(qparams.scheduleId);
+                if (qparams.serviceId) {
+                    this.serviceIdParam = JSON.parse(qparams.serviceId);
+                }
+            }
+            if (qparams.deptId) {
+                this.selectDept = JSON.parse(qparams.deptId);
+            }
+            if (qparams.userId) {
+                this.selectUser = JSON.parse(qparams.userId);
+            }
             if (qparams.ph || qparams.id) {
                 const filter = {};
                 if (qparams.ph) {
@@ -260,17 +273,6 @@ export class AppointmentComponent implements OnInit {
                         }
                     );
                 }
-            }
-            if (qparams.timeslot) {
-                this.slotTime = qparams.timeslot;
-                this.comingSchduleId = JSON.parse(qparams.scheduleId);
-                this.serviceIdParam = JSON.parse(qparams.serviceId);
-            }
-            if (qparams.deptId) {
-                this.selectDept = JSON.parse(qparams.deptId);
-            }
-            if (qparams.userId) {
-                this.selectUser = JSON.parse(qparams.userId);
             }
             if (qparams.type && qparams.type === 'fill') {
                 this.initAppointment(this.thirdParty);
@@ -346,6 +348,8 @@ export class AppointmentComponent implements OnInit {
         this.qParams['serviceId'] = this.sel_ser;
         if (this.selectedUser && this.selectedUser.id) {
             this.qParams['userId'] = this.selectedUser.id;
+        } else {
+            this.qParams['userId'] = 0;
         }
         this.qParams['deptId'] = this.selected_dept;
         const navigationExtras: NavigationExtras = {
@@ -1404,7 +1408,11 @@ export class AppointmentComponent implements OnInit {
                             this.setServiceDetails(this.sel_ser);
                             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
                         } else {
+                            // if (this.filterDepart) {
                             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+                            // } else {
+                            //     this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
+                            // }
                         }
                     }
                 });
@@ -1477,11 +1485,11 @@ export class AppointmentComponent implements OnInit {
             this.setServiceDetails(this.sel_ser);
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         } else {
-            if (this.filterDepart) {
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
-            } else {
-                this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
-            }
+            // if (this.filterDepart) {
+            //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+            // } else {
+            this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
+            // }
         }
     }
     getServicebyLocationId(locid, pdate) {

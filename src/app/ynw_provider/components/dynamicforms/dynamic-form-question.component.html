@@ -135,7 +135,7 @@
       <mat-form-field class="selctDte">
         <input type="text" #date matInput [matDatepicker]="picker"
           [formControlName]="question.key" [min]="minDate" [max]="maxDate" autocomplete="off"
-          tabindex="-1" placeholder="Choose your date">
+          tabindex="-1" placeholder="Choose your date" readonly>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker [disabled]="false"></mat-datepicker>
       </mat-form-field>

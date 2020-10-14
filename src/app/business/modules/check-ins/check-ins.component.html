@@ -183,18 +183,18 @@
                       <div class="filterTextinput">
                         <li class="filterli">
                           <input type="text" #Ffname (keyup)="keyPressed($event)" class="filterTextbox"
-                            [(ngModel)]="filter.first_name" placeholder="First Name">
+                            [(ngModel)]="filter.first_name" placeholder="First Name" (blur)="doSearch()">
                         </li>
                       </div>
                       <div class="filterTextinput">
                         <li class="filterli">
                           <input type="text" #Flname (keyup)="keyPressed($event)" class="filterTextbox"
-                            [(ngModel)]="filter.last_name" placeholder="Last Name">
+                            [(ngModel)]="filter.last_name" placeholder="Last Name" (blur)="doSearch()">
                         </li>
                       </div>
                       <div class="filterTextinput">
                         <li class="filterli">
-                          <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
+                          <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId" (blur)="doSearch()"
                             (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
                         </li>
                       </div>
@@ -309,7 +309,7 @@
                   </tbody>
                   <tbody>
                     <tr *ngFor="let checkin of startedCheckins, let i=index">
-                      <td class="chkWth">
+                      <td class="chkWth" *ngIf="startedCheckins.length > 1">
                         <input type="checkbox" class="ckbx pull-left" [checked]="startedChkAppointments[i]"
                           (change)="chkStartedAptHistoryClicked(i, checkin)" />
                       </td>
@@ -320,15 +320,15 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                           {{checkin.date | date: display_dateFormat}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor"
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor"
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
@@ -336,7 +336,7 @@
                       </td>
                       <td class="title td-two">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -370,7 +370,7 @@
                           <span [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                             *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
-                          <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          <span [matTooltip]="cust_note_tooltip | capitalizeFirst" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                             <i class="icon-note"></i>
                           </span>
@@ -496,7 +496,7 @@
                   </tbody>
                   <tbody *ngFor="let checkin of check_in_filtered_list, let i=index">
                     <tr>
-                      <td class="chkWth">
+                      <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
                           (change)="chkAptHistoryClicked(i, checkin)" />
                       </td>
@@ -507,15 +507,15 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                           {{checkin.date | date: display_dateFormat}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor"
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor"
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
@@ -523,7 +523,7 @@
                       </td>
                       <td class="title td-two">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -558,7 +558,7 @@
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                             *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
-                          <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          <span [matTooltip]="cust_note_tooltip | capitalizeFirst" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                             <i class="icon-note"></i>
                           </span>
@@ -784,7 +784,7 @@
                 </tbody>
                 <tbody *ngFor="let checkin of check_in_filtered_list, let i=index">
                   <tr>
-                    <td class="chkWth">
+                    <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </td>
@@ -795,15 +795,15 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                         {{checkin.date | date: display_dateFormat}}</div>
-                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label"
-                        class="bold pull-left mgn-lt-5 name pointer-cursor"
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="goCheckinDetail(checkin)">
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}</div>
-                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip"
-                        class="bold pull-left mgn-lt-5 name pointer-cursor"
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="goCheckinDetail(checkin)">
@@ -811,7 +811,7 @@
                     </td>
                     <td class="title td-two">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
+                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -846,7 +846,7 @@
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                           class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                           *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
-                        <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                        <span [matTooltip]="cust_note_tooltip | capitalizeFirst" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                           <i class="icon-note"></i>
                         </span>
@@ -1100,7 +1100,7 @@
                         <div class="filterTextinput" *ngIf="time_type == 3">
                           <li class="filterli filterDatepicker">
                             <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday" [max]="maxday"
-                              [matDatepicker]="picker" #Fdate (dateChange)="doSearch()" (blur)="doSearch()"
+                              [matDatepicker]="picker" #Fdate (dateChange)="doSearch('start')" (blur)="doSearch()"
                               class="filterTextbox" placeholder="Start Date">
                             <mat-datepicker-toggle matSuffix [for]="picker">
                             </mat-datepicker-toggle>
@@ -1109,7 +1109,7 @@
                         </div>
                         <div class="filterTextinput" *ngIf="time_type == 3">
                           <li class="filterli filterDatepicker">
-                            <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="minday" [max]="maxday"
+                            <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="endminday" [max]="maxday"
                               [matDatepicker]="picker" #Fdate (dateChange)="doSearch()" (blur)="doSearch()"
                               class="filterTextbox" placeholder="End Date">
                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -1159,7 +1159,7 @@
                 </tbody>
                 <tbody *ngFor="let checkin of check_in_filtered_list, let i=index">
                   <tr>
-                    <td class="chkWth">
+                    <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </td>
@@ -1170,15 +1170,15 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                         {{checkin.date | date: display_dateFormat}}</div>
-                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label"
-                        class="bold pull-left mgn-lt-5 name pointer-cursor"
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="goCheckinDetail(checkin)">
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}</div>
-                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip"
-                        class="bold pull-left mgn-lt-5 name pointer-cursor"
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="goCheckinDetail(checkin)">
@@ -1186,7 +1186,7 @@
                     </td>
                     <td class="title td-two">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
+                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1220,7 +1220,7 @@
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                           class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                           *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
-                        <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                        <span [matTooltip]="cust_note_tooltip | capitalizeFirst" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                           <i class="icon-note"></i>
                         </span>

@@ -474,7 +474,7 @@
                             (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
                             {{getSingleTime(slot.time)}}</mat-chip>
                         </mat-chip-list>
-                        <span *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
+                        <span class="black" *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
                       </td>
                     </tr>
                   </thead>
@@ -538,20 +538,20 @@
                                     type="checkbox" class="ckbx pull-left"
                                     (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
                                 <td class="parent-selection parent-title td-one">
-                                  <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label"
-                                    class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)"
+                                  <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
+                                    class="bold pull-left pointer-cursor font11" (click)="goCheckinDetail(appt)"
                                     *ngIf="appt.appmtFor[0].firstName">
                                     {{appt.appmtFor[0].firstName}}
                                     {{appt.appmtFor[0].lastName}}</div>
-                                  <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip"
-                                    class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)"
+                                  <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
+                                    class="bold pull-left pointer-cursor font11" (click)="goCheckinDetail(appt)"
                                     *ngIf="!appt.appmtFor[0].firstName">
                                     {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}
                                   </div>
                                 </td>
                                 <td class="title td-two">
                                   <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                                    class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3 font-bold"
+                                    class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3 font-bold font1"
                                     *ngIf="servicesCount>1">
                                     <i class="fa meet-icon"
                                       [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -592,7 +592,7 @@
                                       [matTooltip]="'Arrived'"
                                       class="pull-left dashboardarrived-icon checkin_status icon-btn1 mgn-rt-10"
                                       *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
-                                    <span [matTooltip]="cust_note_tooltip"
+                                    <span [matTooltip]="cust_note_tooltip | capitalizeFirst"
                                       class="pull-left cnote icon-btn1  pointer-cursor mgn-rt-10"
                                       *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                                       <i class="icon-note"></i>
@@ -1032,7 +1032,7 @@
                                   <li class="filterli filterDatepicker">
                                     <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday"
                                       [max]="maxday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
-                                      (blur)="doSearch()" class="filterTextbox" placeholder="Start Date">
+                                      (blur)="doSearch()" class="filterTextbox" placeholder="Start Date" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
@@ -1042,7 +1042,7 @@
                                   <li class="filterli filterDatepicker">
                                     <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="minday"
                                       [max]="maxday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
-                                      (blur)="doSearch()" class="filterTextbox" placeholder="End Date">
+                                      (blur)="doSearch()" class="filterTextbox" placeholder="End Date" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
@@ -1067,7 +1067,7 @@
                             [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
                             {{getSingleTime(slot.time)}}</mat-chip>
                         </mat-chip-list>
-                        <span *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
+                        <span class="black" *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
                       </td>
                     </tr>
                   </thead>
@@ -1102,19 +1102,19 @@
                           {{appt.appmtDate | date: display_dateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date greenc bold" *ngIf="time_type!=3">
                           {{getSingleTime(appt.appmtTime)}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="goCheckinDetail(appt)"
                           *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">
                           {{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}</div>
-                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor" (click)="goCheckinDetail(appt)"
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="goCheckinDetail(appt)"
                           *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold">
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1149,7 +1149,7 @@
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                             *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
-                          <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          <span [matTooltip]="cust_note_tooltip | capitalizeFirst" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>

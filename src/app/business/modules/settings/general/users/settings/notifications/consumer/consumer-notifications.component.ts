@@ -315,6 +315,9 @@ export class ConsumerNotificationUserComponent implements OnInit {
     const minutes = val % 60;
     return hours + ' Hr ' + minutes + ' min';
   }
+  redirecToUserNotifications() {
+    this.routerobj.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings' ,'notifications']);
+  }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);

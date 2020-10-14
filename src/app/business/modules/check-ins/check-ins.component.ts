@@ -313,6 +313,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   startedChkAppointments: any = [];
   chkStartedSelectAppointments = false;
   customerIdTooltip = '';
+  endminday;
+  maxday = new Date();
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1835,6 +1837,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     // this.filter.waitlist_status !== 'all'
+    this.endminday = this.filter.check_in_start_date;
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));

@@ -16,6 +16,7 @@ export class CheckinDetailsSendComponent implements OnInit {
     location;
     customer_label: any;
     qname: any;
+    tokenno: any;
     qstarttime: any;
     qendtime: any;
     schedulename: any;
@@ -53,7 +54,7 @@ export class CheckinDetailsSendComponent implements OnInit {
     this.getProviderSettings();
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.bname = this.data.qdata.providerAccount.businessName;
-    // console.log(this.data.qdata);
+    console.log(this.data.qdata);
     if (this.data.qdata.service.serviceType === 'virtualService') {
       switch (this.data.qdata.service.virtualCallingModes[0].callingMode) {
         case 'Zoom': {
@@ -87,8 +88,10 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.time = this.data.qdata.checkInTime;
         this.deptName = this.data.qdata.service.deptName;
         this.qname =  this.data.qdata.queue.name;
+        this.tokenno = this.data.qdata.token;
         this.qstarttime = this.data.qdata.queue.queueStartTime;
         this.qendtime = this.data.qdata.queue.queueEndTime;
+
         this.location = this.data.qdata.queue.location.address;
         if (this.data.qdata.waitlistingFor[0].phoneNo) {
           this.phone = this.data.qdata.waitlistingFor[0].phoneNo;

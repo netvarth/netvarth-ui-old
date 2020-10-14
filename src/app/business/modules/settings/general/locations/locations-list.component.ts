@@ -79,6 +79,9 @@ export class LocationsListComponent implements OnInit {
                 () => {
                 });
     }
+    redirecToSettings() {
+        this.router.navigate(['provider', 'settings', 'general']);
+    }
     performActions(action) {
         if (action === 'addlocation') {
             this.addLocation();
@@ -130,6 +133,7 @@ export class LocationsListComponent implements OnInit {
         this.show_addlocationButton = false;
         this.provider_services.getProviderLocations()
             .subscribe(data => {
+                console.log(data);
                 this.loc_list = data;
                 this.api_loading = false;
                 if (this.multipeLocationAllowed && user.accountType === 'INDEPENDENT_SP') {
