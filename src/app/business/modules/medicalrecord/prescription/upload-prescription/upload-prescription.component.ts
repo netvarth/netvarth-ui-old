@@ -41,7 +41,14 @@ upload_status = 'Added to list';
     }
 
   ngOnInit() {
-    this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
+    // this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
+    this.medicalrecord_service._mrUid.subscribe(mrId => {
+      if (mrId !== 0) {
+        this.mrId = mrId;
+        // this.getMRClinicalNotes(mrId).then((res: any) => {
+        // });
+      }
+    });
     this.getMrprescription();
   }
 
@@ -107,15 +114,14 @@ saveImages() {
       this.uploadMrPrescription(this.mrId, submit_data);
     } else {
       // const passingdata = {
-      //   'bookingType': 'NA',
+      //   'bookingType': 'FOLLOWUP',
       //   'consultationMode': 'EMAIL',
       //   'mrConsultationDate': this.today
       // };
-      const passingdata = {};
-      this.medicalrecord_service.createMR(passingdata)
+      this.medicalrecord_service.createMr()
               .then(data => {
                 console.log(data);
-                this.sharedfunctionObj.setitemonLocalStorage('mrId', data );
+                this.medicalrecord_service.setCurrentMRID(data);
                 this.uploadMrPrescription(data, submit_data);
               },
                   error => {

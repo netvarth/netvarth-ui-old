@@ -57,11 +57,16 @@ export class DrugListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.providerId = user.id;
-    this.getMrprescription();
     this.getDigitalSign();
+   // this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
+    this.medicalrecord_service._mrUid.subscribe(mrId => {
+      if (mrId !== 0) {
+        this.mrId = mrId;
+      }
+    });
+    this.getMrprescription();
   }
   getDigitalSign() {
     if (this.providerId) {
@@ -145,16 +150,17 @@ export class DrugListComponent implements OnInit {
           this.showSave = false;
         });
     } else {
-      const passingdata = {
-        'bookingType': 'NA',
-        'consultationMode': 'EMAIL',
-        'prescriptions': this.drugList,
-        'mrConsultationDate': this.today
-      };
-      console.log(passingdata, this.userId);
-      this.medicalrecord_service.createMR(passingdata)
+      // const passingdata = {
+      //   'bookingType': 'NA',
+      //   'consultationMode': 'EMAIL',
+      //   'prescriptions': this.drugList,
+      //   'mrConsultationDate': this.today
+      // };
+     // console.log(passingdata, this.userId);
+      this.medicalrecord_service.createMR('prescriptions', this.drugList)
         .then(data => {
-          this.sharedfunctionObj.setitemonLocalStorage('mrId', data);
+         // this.sharedfunctionObj.setitemonLocalStorage('mrId', data);
+         this.medicalrecord_service.setCurrentMRID(data);
           this.showSave = false;
         },
           error => {
