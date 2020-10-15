@@ -47,8 +47,10 @@ export class LastVisitComponent implements OnInit {
   getUserName(userId) {
 
   }
-  viewMedicalRecord() {
+  viewMedicalRecord(visitDetails) {
+    console.log(JSON.stringify(visitDetails));
     console.log(this.PatientId);
     this.dialogRef.close();
+
   }
 }
