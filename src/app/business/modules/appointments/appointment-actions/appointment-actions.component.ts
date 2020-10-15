@@ -465,6 +465,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.loading = true;
         this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate).subscribe(data => {
             this.schedules = data;
+            this.loading = false;
             for (const scheduleSlots of this.schedules) {
                 this.availableSlots = scheduleSlots.availableSlots;
                 for (const freslot of this.availableSlots) {
@@ -477,7 +478,6 @@ export class AppointmentActionsComponent implements OnInit {
                 }
             } 
             this.timeSelected(this.freeSlots[0]);
-            this.loading = false;
         });
     }
     disableMinus() {
@@ -543,6 +543,7 @@ export class AppointmentActionsComponent implements OnInit {
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
+        this.getAppointmentSlots();
     }
     disableButn() {
         if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedTime === this.holdselectedTime) {
