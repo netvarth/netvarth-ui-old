@@ -51,7 +51,7 @@
                                             <td width="48%" align="right">Service</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>
-                                                <span class="service-icon"
+                                                <span class="service-icon pull-left"
                                                     *ngIf="waitlist.service && waitlist.service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
                                                         *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -64,7 +64,7 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                {{waitlist.service?.name}}</td>
+                                                <span>{{waitlist.service?.name}}</span></td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Time window </td>
