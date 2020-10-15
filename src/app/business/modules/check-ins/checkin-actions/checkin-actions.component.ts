@@ -395,11 +395,12 @@ export class CheckinActionsComponent implements OnInit {
           'customerDetail': JSON.stringify(this.checkin.consumer),
           'serviceId': this.checkin.service.id,
           'serviceName': this.checkin.service.name,
-          'booking_type': 'Waitlist',
+          'booking_type': 'Token',
           'booking_date': this.checkin.date,
           'booking_time': this.checkin.token,
           'department': this.checkin.service.deptName,
-          'consultationMode': 'OP'
+          'consultationMode': 'OP',
+          'booking_id': this.checkin.uid
           // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
 
         }

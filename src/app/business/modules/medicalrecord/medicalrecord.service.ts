@@ -8,7 +8,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 export class MedicalrecordService {
   patientData: any;
   mr_payload_new: any = {
-    'bookingType': 'NA',
+    'bookingType': 'FOLLOWUP',
     'consultationMode': 'OP',
     'mrConsultationDate': new Date()
   };
@@ -19,18 +19,8 @@ export class MedicalrecordService {
   drugList: any = [];
 
   constructor(private provider_services: ProviderServices) {
-
-    this.patient_data.subscribe(res => {
-      this.patientData = JSON.parse(res.customerDetail);
-      if (res.booking_type) {
-        this.mr_payload_new['bookingType'] = res.booking_type;
-
-      } if (res.consultationMode) {
-        this.mr_payload_new['consultationMode'] = res.consultationMode;
-      }
-
-    });
   }
+
 
   getDrugList() {
     return this.drugList;
@@ -40,6 +30,15 @@ export class MedicalrecordService {
     this.drugList = data;
   }
   setPatientDetailsForMR(data) {
+
+    this.patientData = JSON.parse(data.customerDetail);
+    if (data.booking_type) {
+      this.mr_payload_new['bookingType'] = data.booking_type;
+
+    } if (data.consultationMode) {
+      this.mr_payload_new['consultationMode'] = data.consultationMode;
+    }
+
     this.patientDetails.next(data);
   }
   setCurrentMRID(uid) {
@@ -48,18 +47,35 @@ export class MedicalrecordService {
   }
   createMR(data) {
     this.mr_payload_new.append(data);
-    return new Promise((resolve, reject) => {
-      this.provider_services.createMedicalRecord(this.mr_payload_new, this.patientData.id)
-        .subscribe(
-          response => {
-            resolve(response);
-          },
-          error => {
-            reject(error);
+    if (this.mr_payload_new.bookingType === 'FOLLOWUP') {
 
-          }
-        );
-    });
+      return new Promise((resolve, reject) => {
+        this.provider_services.createMedicalRecordForFollowUp(this.mr_payload_new, this.patientData.id)
+          .subscribe(
+            response => {
+              resolve(response);
+            },
+            error => {
+              reject(error);
+
+            }
+          );
+      });
+
+    } else {
+      return new Promise((resolve, reject) => {
+        this.provider_services.createMedicalRecord(this.mr_payload_new, this.patientData.id)
+          .subscribe(
+            response => {
+              resolve(response);
+            },
+            error => {
+              reject(error);
+
+            }
+          );
+      });
+    }
 
   }
 }

@@ -1518,10 +1518,15 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url, null, data);
   }
   // medical record
-  createMedicalRecord(data, patientId) {
+  createMedicalRecordForFollowUp(data, patientId) {
     const url = 'provider/mr/patient/' + patientId;
     return this.servicemeta.httpPost(url, data);
   }
+
+    createMedicalRecord(data, bookingId) {
+      const url = 'provider/mr/' + bookingId;
+      return this.servicemeta.httpPost(url, data);
+    }
   updateMRprescription(data, mrId) {
     const url = 'provider/mr/prescription/' + mrId;
     return this.servicemeta.httpPut(url, data);

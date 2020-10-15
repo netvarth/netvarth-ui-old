@@ -415,12 +415,12 @@ export class AppointmentActionsComponent implements OnInit {
         'serviceId': this.appt.service.id,
         'serviceName': this.appt.service.name,
         'department': this.appt.service.deptName,
-        'booking_type': 'Appointment',
+        'booking_type': 'Appt',
         'booking_date': this.appt.appmtDate,
         'booking_time': this.appt.appmtTime,
         'mr_mode': medicalrecord_mode,
         'mr_id': mrId,
-        // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
+        'booking_id': this.appt.uid
 
       }
     };
@@ -449,6 +449,6 @@ export class AppointmentActionsComponent implements OnInit {
         'mr_id': mrId,
       }
     };
-     this.router.navigate(['provider', 'medicalrecord' , 'prescription'], navigationExtras);
+    this.router.navigate(['provider', 'medicalrecord', 'prescription'], navigationExtras);
   }
 }

@@ -559,7 +559,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.appointment_timePeriod === 'DATE_RANGE') {
           if (this.appointment_startDate === undefined || this.appointment_endDate === undefined) {
-            this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' })
+            this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
 
           }
           filter['date-ge'] = this.dateformat.transformTofilterDate(this.appointment_startDate);
