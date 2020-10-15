@@ -1567,4 +1567,8 @@ export class ProviderServices {
     const url = 'provider/mr/patientPreviousVisit/' + patientId;
     return this.servicemeta.httpGet(url);
   }
+  getproviderprofile(id) {
+    const url = 'provider/profile/' + id;
+    return this.servicemeta.httpGet(url);
+  }
 }

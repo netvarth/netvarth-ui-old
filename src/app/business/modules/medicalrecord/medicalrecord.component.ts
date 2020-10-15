@@ -53,6 +53,8 @@ export class MedicalrecordComponent implements OnInit {
 
     this.activated_route.queryParams.subscribe(
       (qparams) => {
+        this.mrId = qparams.mr_id;
+        console.log(this.mrId);
         if (qparams.mrId !== 0 && qparams.mr_mode === 'view') {
           this.getMedicalRecordUsingMR(qparams.mrId);
         } else {
