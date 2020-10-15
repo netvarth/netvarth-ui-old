@@ -10,6 +10,7 @@ import { CheckinDetailsSendComponent } from '../../check-ins/checkin-details-sen
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-customer.component';
+import { MedicalrecordService } from '../../medicalrecord/medicalrecord.service';
 
 @Component({
   selector: 'app-appointment-actions',
@@ -46,6 +47,7 @@ export class AppointmentActionsComponent implements OnInit {
     private shared_functions: SharedFunctions, private provider_services: ProviderServices,
     public dateformat: DateFormatPipe, private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions,
+    private medicalrecordService: MedicalrecordService,
     public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
   }
   ngOnInit() {
@@ -428,15 +430,16 @@ export class AppointmentActionsComponent implements OnInit {
     this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
   }
   prescription() {
-    console.log(this.appt.mrId);
     this.dialogRef.close();
     let medicalrecord_mode = 'new';
-    let mrId = 0;
-    if (this.appt.mrId) {
+    this.medicalrecordService.setCurrentMRID(0);
+    this.medicalrecordService.setPatientDetailsForMR('');
+    if (this.appt.mrId !== 0) {
       medicalrecord_mode = 'view';
-      mrId = this.appt.mrId;
+
     }
     const navigationExtras: NavigationExtras = {
+
       queryParams: {
         'customerDetail': JSON.stringify(this.appt.providerConsumer),
         'serviceId': this.appt.service.id,
@@ -446,7 +449,8 @@ export class AppointmentActionsComponent implements OnInit {
         'booking_date': this.appt.appmtDate,
         'booking_time': this.appt.appmtTime,
         'mr_mode': medicalrecord_mode,
-        'mr_id': mrId,
+        'mr_id': this.appt.mrId,
+        'booking_id': this.appt.uid
       }
     };
     this.router.navigate(['provider', 'medicalrecord', 'prescription'], navigationExtras);
