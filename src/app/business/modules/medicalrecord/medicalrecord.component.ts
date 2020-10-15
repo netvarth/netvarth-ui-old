@@ -67,8 +67,10 @@ export class MedicalrecordComponent implements OnInit {
               this.serviceName = qparams.serviceName;
             }
             this.medicalService.setPatientDetailsForMR(qparams);
+            this.medicalService.setCurrentMRID(qparams.mrId);
 
           }
+
         } else {
           this.medicalService.patient_data.subscribe(res => {
             this.customerDetails = JSON.parse(res.customerDetail);

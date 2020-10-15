@@ -21,6 +21,8 @@ import { AdjustscheduleDelayComponent } from './schedule-delay/adjust-schedule-d
 import { CheckinDetailsSendModule } from '../check-ins/checkin-details-send/checkin-details-send.modules';
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { AppointmentActionsComponent } from './appointment-actions/appointment-actions.component';
+import { CustomerModule } from '../customer/customer.module';
+import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import { AppointmentActionsComponent } from './appointment-actions/appointment-a
         CallingModesModule,
         CheckinDetailsSendModule,
         NgxQRCodeModule,
+        CustomerModule,
+        MedicalrecordModule,
         ModalGalleryModule.forRoot()
     ],
     declarations: [
