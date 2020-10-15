@@ -64,7 +64,7 @@ export class GeneralComponent implements OnInit {
       if (mrId !== 0) {
         this.updateMrwithClinicalNotes(payload, mrId);
       } else {
-        this.medicalrecordService.createMR(payload).then(res => {
+        this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
           this.sharedfunctionObj.openSnackBar('Medical Record Created Successfully');
           this.router.navigate(['provider', 'medicalrecord']);
         },

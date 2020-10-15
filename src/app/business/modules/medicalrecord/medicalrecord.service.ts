@@ -6,6 +6,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
   providedIn: 'root'
 })
 export class MedicalrecordService {
+  bookingId: any;
   patientData: any;
   mr_payload_new: any = {
     'bookingType': 'FOLLOWUP',
@@ -38,6 +39,9 @@ export class MedicalrecordService {
     } if (data.consultationMode) {
       this.mr_payload_new['consultationMode'] = data.consultationMode;
     }
+    if (data.booking_id) {
+      this.bookingId = data.booking_id;
+    }
 
     this.patientDetails.next(data);
   }
@@ -45,12 +49,18 @@ export class MedicalrecordService {
     this.mrId.next(uid);
 
   }
-  createMR(data) {
-    this.mr_payload_new.append(data);
-    if (this.mr_payload_new.bookingType === 'FOLLOWUP') {
+  createMR(key, value) {
+    const _this = this;
+    console.log(_this.mr_payload_new);
+    console.log(_this.mr_payload_new.bookingType);
+    _this.mr_payload_new[key] = value;
+
+
+
+    if (_this.mr_payload_new.bookingType === 'FOLLOWUP') {
 
       return new Promise((resolve, reject) => {
-        this.provider_services.createMedicalRecordForFollowUp(this.mr_payload_new, this.patientData.id)
+        this.provider_services.createMedicalRecordForFollowUp(_this.mr_payload_new, _this.patientData.id)
           .subscribe(
             response => {
               resolve(response);
@@ -64,7 +74,7 @@ export class MedicalrecordService {
 
     } else {
       return new Promise((resolve, reject) => {
-        this.provider_services.createMedicalRecord(this.mr_payload_new, this.patientData.id)
+        this.provider_services.createMedicalRecord(_this.mr_payload_new, _this.bookingId)
           .subscribe(
             response => {
               resolve(response);
