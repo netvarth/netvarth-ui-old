@@ -37,9 +37,13 @@ export class ClinicalnotesComponent implements OnInit {
 
 
     this.medicalrecordService._mrUid.subscribe(mrId => {
+      console.log(mrId);
+
       if (mrId !== 0) {
         this.getMRClinicalNotes(mrId).then((res: any) => {
           this.clinicalNotes = res;
+          console.log(JSON.stringify(this.clinicalNotes));
+
           this.isLoaded = true;
 
         });
@@ -61,12 +65,12 @@ export class ClinicalnotesComponent implements OnInit {
 
     return new Promise((resolve) => {
       _this.provider_services.getClinicalRecordOfMRById(mrId)
-        .subscribe(res => {
-          Object.entries(res).forEach(
+        .subscribe((res: any) => {
+          const response = res.clinicalNotes;
+          Object.entries(response).forEach(
             function ([key, v]) {
               const index = _this.clinicalNotes.findIndex(element => element.id === key);
               _this.clinicalNotes[index].value = v;
-
 
             });
         },

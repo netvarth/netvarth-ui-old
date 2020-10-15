@@ -32,7 +32,7 @@ export class MedicalrecordComponent implements OnInit {
   PatientDob: any;
   mrlist;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
-  constructor(  private router: Router,
+  constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
@@ -53,31 +53,51 @@ export class MedicalrecordComponent implements OnInit {
 
     this.activated_route.queryParams.subscribe(
       (qparams) => {
-        this.mrId = qparams.mr_id;
-        console.log(this.mrId);
-        if (qparams.mrId !== 0 && qparams.mr_mode === 'view') {
-          this.getMedicalRecordUsingMR(qparams.mrId);
+        if (qparams['customerDetail']) {
+          this.mrId = qparams.mr_id;
+          if (qparams.mrId !== 0 && qparams.mr_mode === 'view') {
+            //  this.getMedicalRecordUsingMR(qparams.mrId);
+          } else {
+            this.customerDetails = JSON.parse(qparams.customerDetail);
+            this.PatientId = this.customerDetails.id;
+            if (qparams.department) {
+              this.department = qparams.department;
+            }
+            if (qparams.serviceName) {
+              this.serviceName = qparams.serviceName;
+            }
+            this.medicalService.setPatientDetailsForMR(qparams);
+
+          }
         } else {
-          this.customerDetails = JSON.parse(qparams.customerDetail);
-          this.PatientId  = this.customerDetails.id;
-          console.log(this.customerDetails);
-          if (qparams.department) {
-            this.department = qparams.department;
-          }
-          if (qparams.serviceName) {
-            this.serviceName = qparams.serviceName;
-          }
-          this.medicalService.setPatientDetailsForMR(qparams);
+          this.medicalService.patient_data.subscribe(res => {
+            this.customerDetails = JSON.parse(res.customerDetail);
+            this.PatientId = this.customerDetails.id;
+            if (res.department) {
+              this.department = res.department;
+            }
+            if (res.serviceName) {
+              this.serviceName = res.serviceName;
+            }
+            if (res.mrId) {
+              this.mrId = res.mrId;
+            }
+
+
+          });
+
 
         }
-      }
 
-    );
+      });
 
   }
 
 
   ngOnInit() {
+    const queryParams = this.activated_route.snapshot['queryParams'];
+    console.log(queryParams);
+
     this.mrDate = new Date();
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));

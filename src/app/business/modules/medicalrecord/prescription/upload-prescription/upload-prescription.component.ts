@@ -20,125 +20,112 @@ export class UploadPrescriptionComponent implements OnInit {
   editedIndex;
   drugdet;
   mrId;
-    selectedMessage = {
-        files: [],
-        base64: [],
-        caption: []
-    };
-showSave = true;
-sharedialogRef;
+  selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+  showSave = true;
+  sharedialogRef;
 
-upload_status = 'Added to list';
-  constructor( public sharedfunctionObj: SharedFunctions,
+  upload_status = 'Added to list';
+  constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
     private medicalrecord_service: MedicalrecordService) {
-      this.medicalrecord_service.patient_data.subscribe(data => {
-        this.patientDetails = data;
-        this.userId = this.patientDetails.id;
-        console.log(this.userId);
-      });
-    }
 
-  ngOnInit() {
-    // this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
-    this.medicalrecord_service._mrUid.subscribe(mrId => {
-      if (mrId !== 0) {
-        this.mrId = mrId;
-        // this.getMRClinicalNotes(mrId).then((res: any) => {
-        // });
-      }
-    });
-    this.getMrprescription();
   }
 
-  getMrprescription() {
-    if (this.mrId) {
-      this.provider_services.getMRprescription(this.mrId)
-            .subscribe((data) => {
-              console.log(data);
-            },
-                error => {
-                    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                });
+  ngOnInit() {
 
-    }
+    this.medicalrecord_service._mrUid.subscribe(mrId => {
+      this.mrId = mrId;
+      if (this.mrId !== 0) {
+        this.getMrprescription(this.mrId);
+      }
+    });
+
+  }
+
+  getMrprescription(mrId) {
+    this.provider_services.getMRprescription(mrId)
+      .subscribe((data) => {
+        console.log(data);
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+
   }
 
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
-        for (const file of input) {
-            if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-                this.sharedfunctionObj.apiErrorAutoHide(this, 'Selected image type not supported');
-            } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-                this.sharedfunctionObj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
-            } else {
-                this.selectedMessage.files.push(file);
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    this.selectedMessage.base64.push(e.target['result']);
-                };
-                reader.readAsDataURL(file);
-                this.showSave = true;
-            }
+      for (const file of input) {
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.sharedfunctionObj.apiErrorAutoHide(this, 'Selected image type not supported');
+        } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+          this.sharedfunctionObj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+        } else {
+          this.selectedMessage.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+          this.showSave = true;
         }
+      }
     }
-}
-    imageSize(val) {
+  }
+  imageSize(val) {
     let imgsize;
-        imgsize = Math.round((val / 1024));
-        return imgsize;
-    }
+    imgsize = Math.round((val / 1024));
+    return imgsize;
+  }
 
-saveImages() {
-    console.log(this.selectedMessage);
-    this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
+  saveImages() {
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;
     for (const pic of this.selectedMessage.files) {
-        submit_data.append('files', pic, pic['name']);
-        const properties = {
-            'caption': this.selectedMessage.caption[i] || ''
-        };
-        propertiesDetob[i] = properties;
-        i++;
+      submit_data.append('files', pic, pic['name']);
+      const properties = {
+        'caption': this.selectedMessage.caption[i] || ''
+      };
+      propertiesDetob[i] = properties;
+      i++;
     }
     const propertiesDet = {
-        'propertiesMap': propertiesDetob
+      'propertiesMap': propertiesDetob
     };
     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
     submit_data.append('properties', blobPropdata);
-    if (this.mrId) {
+    if (this.mrId !== 0) {
       this.uploadMrPrescription(this.mrId, submit_data);
     } else {
-      // const passingdata = {
-      //   'bookingType': 'FOLLOWUP',
-      //   'consultationMode': 'EMAIL',
-      //   'mrConsultationDate': this.today
-      // };
-      this.medicalrecord_service.createMr()
-              .then(data => {
-                console.log(data);
-                this.medicalrecord_service.setCurrentMRID(data);
-                this.uploadMrPrescription(data, submit_data);
-              },
-                  error => {
-                      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                  });
+      this.medicalrecord_service.createMRForUploadPrescription()
+        .then(data => {
+          console.log(data);
+
+          this.medicalrecord_service.setCurrentMRID(data);
+          this.uploadMrPrescription(data, submit_data);
+        },
+          error => {
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
     }
   }
   uploadMrPrescription(id, submit_data) {
     this.provider_services.uploadMRprescription(id, submit_data)
-              .subscribe((data) => {
-                this.showSave = false;
-                this.upload_status = 'Uploaded';
-                this.sharedfunctionObj.openSnackBar('Prescription uploaded successfully');
-              },
-                  error => {
-                      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                  });
+      .subscribe((data) => {
+        this.showSave = false;
+        this.upload_status = 'Uploaded';
+        this.sharedfunctionObj.openSnackBar('Prescription uploaded successfully');
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
   }
   deleteTempImage(index) {
     this.selectedMessage.files.splice(index, 1);

@@ -65,6 +65,7 @@ export class GeneralComponent implements OnInit {
         this.updateMrwithClinicalNotes(payload, mrId);
       } else {
         this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
+          this.medicalrecordService.setCurrentMRID(res);
           this.sharedfunctionObj.openSnackBar('Medical Record Created Successfully');
           this.router.navigate(['provider', 'medicalrecord']);
         },
@@ -79,8 +80,8 @@ export class GeneralComponent implements OnInit {
   updateMrwithClinicalNotes(payload, mrId) {
     this.provider_services.updateMrClinicalNOtes(payload, mrId)
       .subscribe((data) => {
-        this.shared_functions.openSnackBar(this.displayTitle + 'updated successfully');
-        this.router.navigateByUrl('../clinicalnotes', { relativeTo: this.activated_route });
+        this.shared_functions.openSnackBar(this.displayTitle + ' updated successfully');
+        this.router.navigate(['provider', 'medicalrecord']);
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

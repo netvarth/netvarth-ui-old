@@ -51,11 +51,42 @@ export class MedicalrecordService {
   }
   createMR(key, value) {
     const _this = this;
-    console.log(_this.mr_payload_new);
-    console.log(_this.mr_payload_new.bookingType);
-    _this.mr_payload_new[key] = value;
+    const mrObject = _this.mr_payload_new;
+    mrObject[key] = value;
+    if (mrObject.bookingType === 'FOLLOWUP') {
 
+      return new Promise((resolve, reject) => {
+        this.provider_services.createMedicalRecordForFollowUp(mrObject, _this.patientData.id)
+          .subscribe(
+            response => {
+              resolve(response);
+            },
+            error => {
+              reject(error);
 
+            }
+          );
+      });
+
+    } else {
+      return new Promise((resolve, reject) => {
+        this.provider_services.createMedicalRecord(mrObject, _this.bookingId)
+          .subscribe(
+            response => {
+              resolve(response);
+            },
+            error => {
+              reject(error);
+
+            }
+          );
+      });
+    }
+
+  }
+  createMRForUploadPrescription() {
+    const _this = this;
+    console.log(_this.patientData.id);
 
     if (_this.mr_payload_new.bookingType === 'FOLLOWUP') {
 
@@ -86,22 +117,5 @@ export class MedicalrecordService {
           );
       });
     }
-
-  }
-  createMr() {
-    console.log(this.mr_payload_new);
-    const _this = this;
-    return new Promise((resolve, reject) => {
-      this.provider_services.createMedicalRecord(this.mr_payload_new, _this.patientData.id)
-        .subscribe(
-          response => {
-            resolve(response);
-          },
-          error => {
-            reject(error);
-
-          }
-        );
-    });
   }
 }
