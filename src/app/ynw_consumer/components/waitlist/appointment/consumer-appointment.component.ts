@@ -14,7 +14,6 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog, MatCalendarCellCssClasses } from '@angular/material';
-import { RescheduleConfirmPageComponent } from '../../reschedule-confirm-page/reschedule-confirm-page.component';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -574,7 +573,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.freeSlots.length > 0) {
                     this.showApptTime = true;
                     console.log(this.appointment);
-                    if (this.appointment) {
+                    if (this.appointment.length > 0) {
                         console.log(this.freeSlots);
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
                         console.log(appttime);
@@ -813,14 +812,8 @@ export class ConsumerAppointmentComponent implements OnInit {
             .subscribe(
                 () => {
                     this.apptdisable = false;
-                    const rescheduledialog = this.dialog.open(RescheduleConfirmPageComponent, {
-                        width: '50%',
-                        panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-                        disableClose: true
-                    });
-                    rescheduledialog.afterClosed().subscribe(() => {
-                        this.router.navigate(['/']);
-                    });
+                
+                    
                 },
                 error => {
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });

@@ -45,7 +45,6 @@ import { MeetingDetailsComponent } from './components/meeting-details/meeting-de
 import { SearchFormModule } from '../shared/components/search-form/search-form.module';
 import { ConsumerFooterModule } from './components/footer/footer.module';
 import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
-import { RescheduleConfirmPageComponent } from './components/reschedule-confirm-page/reschedule-confirm-page.component';
 
 @NgModule({
   imports: [
@@ -84,8 +83,7 @@ import { RescheduleConfirmPageComponent } from './components/reschedule-confirm-
     AddMembersHolderComponent,
     AddManagePrivacyComponent,
     MeetingDetailsComponent,
-    MyfavouritesComponent,
-    RescheduleConfirmPageComponent
+    MyfavouritesComponent
   ],
   exports: [ConfirmBoxComponent],
   entryComponents: [
@@ -93,8 +91,7 @@ import { RescheduleConfirmPageComponent } from './components/reschedule-confirm-
     NotificationListBoxComponent,
     AddMembersHolderComponent,
     AddManagePrivacyComponent,
-    MeetingDetailsComponent,
-    RescheduleConfirmPageComponent
+    MeetingDetailsComponent
   ],
   providers: [
     SharedServices,

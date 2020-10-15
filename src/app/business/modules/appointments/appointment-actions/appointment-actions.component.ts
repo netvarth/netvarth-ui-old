@@ -512,24 +512,17 @@ export class AppointmentActionsComponent implements OnInit {
         const ndate3 = moment(ndate2, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(ndate3);
         const nDt = new Date(ndate);
-        // if (type === 'pre') {
-        //     if (strtDt.getTime() >= nDt.getTime()) {
-        //         this.sel_checkindate = ndate;
-        //         this.getAppointmentSlots();
-        //     }
-        // } else {
+        if (type === 'pre') {
+            if (strtDt.getTime() >= nDt.getTime()) {
+                this.sel_checkindate = ndate;
+                this.getAppointmentSlots();
+            }
+        } else {
             if (nDt.getTime() >= strtDt.getTime()) {
                 this.sel_checkindate = ndate;
                 this.getAppointmentSlots();
             }
-        // }
-
-        // if (strtDt.getTime() === nDt.getTime()) {
-        //     console.log('true');
-        //     this.todayDate = true;
-        // } else {
-        //     this.todayDate = false;
-        // }
+        }
     }
     setMinMaxDate() {
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -551,9 +544,14 @@ export class AppointmentActionsComponent implements OnInit {
         this.sel_checkindate = seldate;
     }
     disableButn() {
-        console.log(this.sel_checkindate);
-        console.log(this.hold_sel_checkindate);
-        console.log(this.selectedTime);
-        console.log(this.holdselectedTime);
+        // console.log(this.sel_checkindate);
+        // console.log(this.hold_sel_checkindate);
+        // console.log(this.selectedTime);
+        // console.log(this.holdselectedTime);
+        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedTime === this.holdselectedTime) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
