@@ -44,16 +44,12 @@ export class LastVisitComponent implements OnInit {
        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });
   }
-  // user(providerid) {
-  //   this.provider_services.getproviderprofile(providerid)
-  //     .subscribe((data: any) => {
-  //      console.log(data);
-  //     },
-  //     error => {
-  //      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-  //     });
-  // }
-  medicalRecord() {
-    this.dialogRef.close(this.PatientId);
+  getUserName(userId) {
+
+}
+viewMedicalRecord() {
+  console.log(this.PatientId);
+
+   // this.dialogRef.close(this.PatientId);
   }
 }
