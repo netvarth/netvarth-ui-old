@@ -13,7 +13,8 @@
                             <div class="info-img">
                                 <img src="assets/images/bg-01.png"></div>
                             <div class="details">
-                                <div class="book-head"> Booking Confirmed </div>
+                                <div class="book-head" *ngIf="type !== 'reschedule'"> Booking Confirmed </div>
+                                <div class="book-head" *ngIf="type === 'reschedule'"> Appointment rescheduled </div>
                                 <div class="book-details"> Booking details </div>
                                 <table class="book-details-sub">
                                     <tbody>

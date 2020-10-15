@@ -469,7 +469,8 @@ export class AppointmentActionsComponent implements OnInit {
             for (const scheduleSlots of this.schedules) {
                 this.availableSlots = scheduleSlots.availableSlots;
                 for (const freslot of this.availableSlots) {
-                    if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.selectedTime) {
+                    // if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.selectedTime) {
+                        if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
                         freslot['scheduleId'] = scheduleSlots['scheduleId'];
                         freslot['displayTime'] = this.getSingleTime(freslot.time);
                         this.freeSlots.push(freslot);
@@ -553,5 +554,8 @@ export class AppointmentActionsComponent implements OnInit {
         } else {
             return false;
         }
+    }
+    close() {
+        this.dialogRef.close();
     }
 }

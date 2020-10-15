@@ -216,6 +216,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     servicedialogRef: any;
     apptdisable = false;
     availableDates: any = [];
+    holdselectedTime;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -354,6 +355,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.selectedService = this.appointment.service.id;
                 this.sel_checkindate = this.hold_sel_checkindate = this.appointment.appmtDate;
                 this.sel_ser = this.appointment.service.id;
+                this.holdselectedTime = this.appointment.appmtTime;
                 console.log(this.sel_loc, this.selectedService, this.sel_checkindate) 
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 // this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedService, this.sel_checkindate, this.account_id);
@@ -563,7 +565,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
                     for (const freslot of this.availableSlots) {
-                        if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.appointment.appmtTime) {
+                        // if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.appointment.appmtTime) {
+                        if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);
@@ -812,8 +815,10 @@ export class ConsumerAppointmentComponent implements OnInit {
             .subscribe(
                 () => {
                     this.apptdisable = false;
-                
-                    
+                    if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
+                        this.consumerNoteAndFileSave(this.rescheduleUserId);
+                    }
+                    this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.appointment.uid, type: 'reschedule' } });
                 },
                 error => {
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1786,5 +1791,12 @@ export class ConsumerAppointmentComponent implements OnInit {
     // }
     showPreInfo() {
         this.action = 'preInfo';
+    }
+    disableButn() {
+        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.apptTime['time'] === this.holdselectedTime) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -40,7 +40,7 @@
                 <span class="wtsapvid-icon"
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></span>
                 <div class="icon-text">
-                    {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}}
+                    {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
                 </div>
             </div>
         </div>
@@ -165,34 +165,24 @@
                 <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
                         aria-hidden="true"></i></button></h1>
 <div *ngIf="action === 'reschedule'">
-    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
-    </div> -->
-
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10">
-        <div>
-            <!-- <p>Appointment for : {{appt.appmtFor[0].userName}} </p> -->
-            <p>Service  : {{appt.service.name}} </p>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <p>Service Provider : {{appt.providerAccount.businessName}} </p>
+            <p>Department : {{appt.service.name}} </p>
+            <p>{{provider_label}} : {{appt.provider.firstName}} {{appt.provider.lastName}} </p>
+            <p>Location: {{appt.location.place}}</p>
             <p>Service : {{appt.service.name}} </p>
-            <p>Service : {{appt.service.name}} </p>
-            <p>Service : {{appt.service.name}} </p>
-            <p>Appointment Date & Time: {{appt.appmtDate | date: dateFormat}}, {{getSingleTime(appt.appmtTime)}}
+            <p>Appointment Slot: {{appt.appmtDate | date: dateFormat}}, {{getSingleTime(appt.appmtTime)}}
             </p>
-            <p *ngIf="Schedulestime">Schedule : {{appt.schedule.name}} [{{appt.apptSchedule.timeSlots[0].sTime}} -
-                {{appt.apptSchedule.timeSlots[0].eTime}}]</p>
-            <p *ngIf="spfname && splname">Service Provider: {{appt.providerAccount.businessName}} </p>
-            <p>Location: {{appt.location.address}}</p>
         </div>
-        <div class="changelink"><a class="lnk pointer-cursor action" (click)="changeSlot()">Change Date & Time
-            </a></div>
         <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 changelink"><span class="cs-btn bt3" (click)="changeSlot()">Change Date & Time
+        </span></div>
+      
     </div>
 </div>
 <div class="reschedule p-checkin" *ngIf="action === 'slotChange'">
     <div class="mainouter">
-        <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <a class="pull-left back-btn mgn-up-5" (click)="goBacktoApptDtls()"><i class="fa fa-arrow-left"></i></a>
-        </div> -->
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 ">
             <div class="date-outer" style="border: none;">
                 <div class="date-head">Appointment Date</div>
@@ -230,11 +220,10 @@
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding reschedulebtn"
-            >
-            <button type="button" class="cs-btn bt2"
-            (click)="rescheduleAppointment()">Reschedule</button>   
-            <button mat-button class="cs-btn bt1 pointer-cursor" [class.disabled]="disableButn()"
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding reschedulebtn">
+            <button type="button" class="cs-btn bt2 mgn-rt-5"
+            (click)="close()">Cancel</button>   
+            <button mat-button class="cs-btn bt1" [class.disabled]="disableButn()"
                     (click)="rescheduleAppointment()">Reschedule</button>
             </div>
         </div>

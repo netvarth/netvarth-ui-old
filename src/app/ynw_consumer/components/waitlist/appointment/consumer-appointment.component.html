@@ -295,7 +295,7 @@
                                                     <mat-chip (click)="handleSideScreen('note')"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-file-text-o mgn-rt-5"
-                                                                aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}} <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span></a>
+                                                                aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}} <span *ngIf="sel_ser_det.consumerNoteMandatory && type != 'reschedule'">*</span></a>
                                                     </mat-chip>
                                                     <mat-chip (click)="gotoAttachments()"><a
                                                             class="lnk action pointer-cursor"><i
@@ -317,7 +317,7 @@
                                                     </h6>
                                                 </div>
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                    <div *ngIf="sel_ser_det.isPrePayment" class="mgn-bt-20">
+                                                    <div *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'" class="mgn-bt-20">
                                                             This service requires
                                                             an advance
                                                             payment of
@@ -334,7 +334,7 @@
                                                     </div>
 
                                                     <div class="checkin-btn-bp pointer-cursor" *ngIf="type == 'reschedule'"
-                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === ''"  (click)="rescheduleAppointment()">
+                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === '' || disableButn()"  (click)="rescheduleAppointment()">
                                                         Reschedule
                                                         <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                     </div>
