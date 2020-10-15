@@ -30,20 +30,21 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td width="48%" align="right">Appointment for</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{appointment.appmtFor[0].firstName}} {{appointment.appmtFor[0].lastName}}</td>
-                                        </tr>
-                                        <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.location?.place}}</td>
                                         </tr>
                                         <tr>
+                                            <td width="48%" align="right">Appointment for</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{appointment.appmtFor[0].firstName}} {{appointment.appmtFor[0].lastName}}</td>
+                                        </tr>
+                                        
+                                        <tr>
                                             <td width="48%" align="right">Service</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>
-                                                <span class="service-icon"
+                                                <span class="service-icon pull-left"
                                                     *ngIf="appointment.service && appointment.service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
                                                         *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -59,13 +60,13 @@
                                                 {{appointment.service?.name}}</td>
                                         </tr>
                                         <tr>
-                                            <td width="48%" align="right">Appointment Slot </td>
+                                            <td width="48%" align="right">Appointment Time </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.appmtDate | date: dateFormat }},
                                                 {{getSingleTime(appointment.appmtTime)}}</td>
                                         </tr>
                                         <tr>
-                                            <td width="48%" align="right">Confirmation No</td>
+                                            <td width="48%" align="right">Confirmation number</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.appointmentEncId}}</td>
                                         </tr>

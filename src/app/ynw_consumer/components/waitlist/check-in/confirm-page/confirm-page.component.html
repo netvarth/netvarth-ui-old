@@ -27,6 +27,11 @@
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{waitlist.provider.firstName}} {{waitlist.provider.lastName}}</td>
                                         </tr>
+                                        <tr>
+                                            <td width="48%" align="right">Location </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{waitlist.queue?.location.place}}</td>
+                                        </tr>
                                         <tr *ngIf="waitlist.token">
                                             <td width="48%" align="right">Token No </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
@@ -41,11 +46,6 @@
                                             <td width="48%" align="right">Check-in for</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{waitlist.waitlistingFor[0].firstName}} {{waitlist.waitlistingFor[0].lastName}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td width="48%" align="right">Location </td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{waitlist.queue?.location.place}}</td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Service</td>
@@ -74,7 +74,7 @@
                                                 {{waitlist.queue.queueEndTime}}</td>
                                         </tr>
                                         <tr>
-                                            <td width="48%" align="right">Confirmation No</td>
+                                            <td width="48%" align="right">Confirmation number</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{waitlist.checkinEncId}}</td>
                                         </tr>

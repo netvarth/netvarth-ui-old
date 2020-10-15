@@ -33,6 +33,20 @@
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.provider.firstName}} {{statusInfo.provider.lastName}}</td>
                   </tr>
+                  <tr *ngIf="type=='wl'">
+                    <td width="48%" align="right">Location </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td> {{statusInfo.queue?.location.place}}&nbsp;<a [href]="statusInfo.queue.location.googleMapUrl"
+                        target="_blank" class="icon-location" matTooltip="Click to navigate">
+                      </a></td>
+                  </tr>
+                  <tr *ngIf="type=='appt'">
+                    <td width="48%" align="right">Location </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td> {{statusInfo.location.place}}&nbsp;<a [href]="statusInfo.location.googleMapUrl" target="_blank"
+                        class="icon-location" matTooltip="Click to navigate">
+                      </a></td>
+                  </tr> 
                   <tr *ngIf="statusInfo.token">
                     <td width="48%" align="right">Token No </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
@@ -62,20 +76,7 @@
                       </span>
                     </td>
                   </tr>
-                  <tr *ngIf="type=='wl'">
-                    <td width="48%" align="right">Location </td>
-                    <td width="2%">&nbsp;:&nbsp;</td>
-                    <td> {{statusInfo.queue?.location.place}}&nbsp;<a [href]="statusInfo.queue.location.googleMapUrl"
-                        target="_blank" class="icon-location" matTooltip="Click to navigate">
-                      </a></td>
-                  </tr>
-                  <tr *ngIf="type=='appt'">
-                    <td width="48%" align="right">Location </td>
-                    <td width="2%">&nbsp;:&nbsp;</td>
-                    <td> {{statusInfo.location.place}}&nbsp;<a [href]="statusInfo.location.googleMapUrl" target="_blank"
-                        class="icon-location" matTooltip="Click to navigate">
-                      </a></td>
-                  </tr>
+                  
                   <tr>
                     <td width="48%" align="right">Service</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
@@ -103,13 +104,13 @@
                       {{statusInfo.queue.queueEndTime}}</td>
                   </tr>
                   <tr *ngIf="type=='appt'">
-                    <td width="48%" align="right">Appointment Slot </td>
+                    <td width="48%" align="right">Appointment Time </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td> {{statusInfo.appmtDate | date: dateFormat }},
                       {{getSingleTime(statusInfo.appmtTime)}}</td>
                   </tr>
                   <tr>
-                    <td width="48%" align="right">Confirmation No</td>
+                    <td width="48%" align="right">Confirmation number</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td *ngIf="type=='wl'"> {{statusInfo.checkinEncId}}</td>
                     <td *ngIf="type=='appt'"> {{statusInfo.appointmentEncId}}</td>
