@@ -48,6 +48,7 @@ export class TeleServiceShareComponent implements OnInit {
   waitFor: string;
   aloJoin: string;
   providr_msg: string;
+  provider_msgJV: string;
 
 
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
@@ -93,7 +94,7 @@ export class TeleServiceShareComponent implements OnInit {
     } else {
       this.instalZoom = '\n(If you do not have Zoom installed you will be prompted to install Zoom)';
       this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
-      this.videocall_msg = ' , your ' + this.data.app + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will recieve an alert that the ' + this.data.app + ' call has started.\nWhen it is your turn, click on the following link- ' + this.meetingLink;
+      this.videocall_msg = ' , your ' + this.data.app + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + this.data.app + ' call has started.\nWhen it is your turn, click on the following link- ' + this.meetingLink;
       this.waitFor = '\n3. Wait for the video call to start';
       switch (this.data.app) {
         case 'WhatsApp':
@@ -112,6 +113,9 @@ export class TeleServiceShareComponent implements OnInit {
         case 'GoogleMeet':
           this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.signinGoogle + this.waitFor;
           break;
+        case 'VideoCall':
+            this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.waitFor;
+            break;
       }
     }
   }
@@ -119,11 +123,11 @@ export class TeleServiceShareComponent implements OnInit {
   getMeetingDetailsData() {
     this.instalZoom = '\n(If you do not have Zoom installed you will be prompted to install Zoom)';
     this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
-    this.videocall_msg = 'Follow these instructions to join the video call:\n1. You will recieve an alert that the ' + this.data.app + ' call has started.\nOpen the following link- ' + this.meetingLink;
+    this.videocall_msg = 'Follow these instructions to join the video call:\n1. You will receive an alert that the ' + this.data.app + ' call has started.\nOpen the following link- ' + this.meetingLink;
     this.waitFor = '\n2. Wait for the video call to begin';
     this.providr_msg = 'How to start the video call -\n1. Open the following link - ' + this.meetingLink;
     this.aloJoin = '\n2. Allow ' + this.customer_label + ' to join the call when you are prompted';
-
+    this.provider_msgJV = 'How to start the video call -\n Click on "Start Video Call" button';
     switch (this.data.app) {
       case 'WhatsApp':
         if (this.data.serviceDetail.virtualServiceType === 'videoService') {
@@ -145,6 +149,10 @@ export class TeleServiceShareComponent implements OnInit {
       case 'GoogleMeet':
         this.msg_to_user = this.videocall_msg + this.signinGoogle + this.waitFor;
         this.msg_to_me = this.providr_msg + this.signinGoogle + this.aloJoin;
+        break;
+      case 'VideoCall':
+        this.msg_to_user = this.videocall_msg + this.waitFor;
+        this.msg_to_me = this.provider_msgJV;
         break;
     }
   }
