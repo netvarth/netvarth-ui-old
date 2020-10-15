@@ -50,6 +50,8 @@ export class MedicalrecordService {
 
   }
   createMR(key, value) {
+    console.log(this.bookingId);
+
     const _this = this;
     const mrObject = _this.mr_payload_new;
     mrObject[key] = value;

@@ -1,88 +1,80 @@
-
-
-
-        <form [formGroup]="amForm" novalidate (keyup)="resetApiErrors()"  (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="ynw-common-form">
-          <h1 class="mat-dialog-title">Add Drug
-              <button #queue mat-dialog-close class="modal_close" tabindex="-1">
-                  <i class="fa fa-window-close" aria-hidden="true"></i>
-              </button>
-          </h1>
-          <mat-dialog-content>
-        <div class="form-group">
-          <mat-form-field>
-            <input matInput type="text" class="form-control" placeholder="Enter the drug name " formControlName="medicine_name"
-              >
-          </mat-form-field>
-          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
+<form [formGroup]="amForm" novalidate (keyup)="resetApiErrors()" (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="ynw-common-form">
+  <h1 class="mat-dialog-title">Add Drug
+    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+  </h1>
+  <mat-dialog-content>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput type="text" class="form-control" placeholder="Enter the drug name " formControlName="medicine_name">
+      </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
 {
 'required' : 'Please enter medicine name',
-'maxlength' : 'Name can contain only ' + maxChars + ' characters'
+'maxlength' : ' Medicine Name can contain only ' + maxChars + ' characters'
 })">
-          </app-field-error-display>
-        </div>
+      </app-field-error-display>
+    </div>
 
-        <div class="form-group">
-            <mat-form-field>
-              <input matInput type="text" class="form-control" formControlName="duration"  placeholder="Duration in days *"
-               >
-            </mat-form-field>
-            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'duration')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'duration',
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput type="text" class="form-control" formControlName="duration" placeholder="Duration in days *">
+      </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'duration')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'duration',
 {
 'required' : 'Please enter the duration.',
 'pattern' : 'Please enter valid duration',
-'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
+'maxlength' : 'Duration can have only ' + maxNumbers + ' digits'
 })">
-            </app-field-error-display>
-          </div>
+      </app-field-error-display>
+    </div>
 
-        <div class="form-group">
-          <mat-form-field>
-            <input matInput type="text" class="form-control"  placeholder="Frequency" formControlName="frequency"
-            >
-          </mat-form-field>
-          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput type="text" class="form-control" placeholder="Frequency" formControlName="frequency">
+      </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
 {
 'required' : 'Please enter the frequency',
-'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
+'maxlength' : 'Frequency can contain only ' + maxChars + ' characters'
 })">
-          </app-field-error-display>
-        </div>
-        <div class="form-group">
-            <mat-form-field>
-              <input matInput type="text" class="form-control"  placeholder="Dosage" formControlName="dosage"
-              >
-            </mat-form-field>
-            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dosage')" [errorMsgs]="fed_service.getErrorMessage(amForm,'dosage',
+      </app-field-error-display>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput type="text" class="form-control" placeholder="Dosage" formControlName="dosage">
+      </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dosage')" [errorMsgs]="fed_service.getErrorMessage(amForm,'dosage',
 {
 'required' : 'Please enter the dosage',
-'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
+'maxlength' : 'Dosage can contain only ' + maxChars + ' characters'
 })">
-            </app-field-error-display>
-          </div>
+      </app-field-error-display>
+    </div>
 
 
-       
 
-        <div class="form-group">
-          <mat-form-field>
-            <textarea matInput class="form-control" id="instructions" placeholder="Instructions " formControlName="instructions"
-              maxlength="500"></textarea>
-          </mat-form-field>
-          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')" [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
+
+    <div class="form-group">
+      <mat-form-field>
+        <textarea matInput class="form-control" id="instructions" placeholder="Instructions " formControlName="instructions" maxlength="500"></textarea>
+      </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')" [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
 {
 'required' : 'Please enter detailed instructions.',
 'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
 })">
-          </app-field-error-display>
-          <!-- <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span> -->
-        </div>
+      </app-field-error-display>
+      <!-- <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span> -->
+    </div>
 
-      </mat-dialog-content>
+  </mat-dialog-content>
 
-<mat-dialog-actions>
-<button  *ngIf="formMode != 'edit'" type="button" mat-button class="cs-btn bt1" [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)">Save & Add another</button>
-<button type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid ">Save,I am done</button>
-</mat-dialog-actions>
+  <mat-dialog-actions>
+    <button *ngIf="formMode != 'edit'" type="button" mat-button class="cs-btn bt1" [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)">Save & Add another</button>
+    <button type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid ">Save I am done</button>
+  </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 

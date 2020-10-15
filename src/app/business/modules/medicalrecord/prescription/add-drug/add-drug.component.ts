@@ -65,15 +65,10 @@ export class AddDrugComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-   // private router: Router,
-
-
   ) {
     this.formMode = data.type;
     if (this.formMode === 'edit') {
-      console.log(data.drugDetails);
       this.drugData = data.drugDetails;
-      console.log(this.drugData);
     }
     this.fromWhr = data.isFrom;
   }
@@ -99,16 +94,6 @@ export class AddDrugComponent implements OnInit {
     }
   }
 
-  // setDescFocus() {
-  //   this.isfocused = true;
-  //   this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
-  // }
-  // lostDescFocus() {
-  //   this.isfocused = false;
-  // }
-  // setCharCount() {
-  //   this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
-  // }
   updateForm() {
     this.amForm.setValue({
       'medicine_name': this.drugData.medicine_name || null,
@@ -120,81 +105,19 @@ export class AddDrugComponent implements OnInit {
   }
 
   onSubmit(form_data) {
-    console.log(form_data);
-    console.log(this.drugDetail);
     this.drugDetail.push(form_data);
-    console.log(this.drugDetail);
     this.dialogRef.close(this.drugDetail);
 
   }
   saveAndAddOther(form_data) {
     this.drugDetail.push(form_data);
-    console.log(this.drugDetail);
     this.amForm.reset();
   }
 
 
 
 
-
-  // // console.log(form_data);
-  // //  const drugList = this.medicalRecordService.getDrugList();
-  // //  form_data.id = drugList.length + 1;
-  // // drugList.push(form_data);
-  // // this.dialogRef.close(form_data);
-  // }
-
-  // saveDrug(drugdata) {
-  //   const drugDetails = [];
-  //   let passingDrugdetail;
-  // if (this.listOfDrugs.length = 1) {
-  //   this.drugType = 'edit';
-  //   drugDetails.push(drugdata);
-  //   passingDrugdetail = drugDetails;
-  // } else if (this.listOfDrugs.length > 1) {
-  //   this.listOfDrugs.push(drugdata);
-  //   passingDrugdetail = this.listOfDrugs;
-  // } else {
-  //   drugDetails.push(drugdata);
-  //   passingDrugdetail = drugDetails;
-  // }
-  //   this.disableButton = true;
-  //   this.resetApiErrors();
-  //   this.api_loading = true;
-  //   const passingdata = {
-  //     'bookingType': 'NA',
-  //     'consultationMode': 'EMAIL',
-  //     'prescriptions': passingDrugdetail,
-  //     'mrConsultationDate': this.today
-  //   };
-  //   console.log(passingdata, this.userId);
-  //   const navigationExtras: NavigationExtras = {
-  //     queryParams: { customerId: this.userId,
-  //       }
-  // };
-  //   if (this.drugType === 'add') {
-  //         this.provider_services.createMedicalRecord(passingdata, this.userId).subscribe((data) => {
-  //           console.log(data);
-  //         this.sharedfunctionObj.setitemonLocalStorage('mrId', data );
-  //         this.router.navigate(['/provider/medicalrecords/' + this.userId + '/new-MR/prescription'], navigationExtras);
-  //          },
-  //          error => {
-  //                   this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-  //        });
-  //   }  else {
-  //     this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
-  //         this.provider_services.updateMRprescription(passingdata, this.mrId).subscribe((data) => {
-  //           console.log(data);
-  //         //this.sharedfunctionObj.setitemonLocalStorage('mrId', data );
-  //         this.router.navigate(['/provider/medicalrecords/' + this.userId + '/new-MR/prescription'], navigationExtras);
-  //           },
-  //          error => {
-  //                   this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-  //               });
-  //   }
-  // }
-
-  addDrugtoDrugList() {
-
-  }
 }
+
+
+

@@ -127,7 +127,8 @@
     (click)="prescription()">
     <div class="action-box-sub">
         <span class="notes-icon"></span>
-        <div class="icon-text">RX</div>
+        <div *ngIf="checkin.mrId === 0" class="icon-text">Create Rx</div>
+        <div *ngIf="checkin.mrId !== 0" class="icon-text">View Rx</div>
     </div>
 </div>
     </div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { MatDialog } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MedicalrecordService } from '../../medicalrecord.service';
 import { AddDrugComponent } from '../add-drug/add-drug.component';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
@@ -41,6 +41,7 @@ export class DrugListComponent implements OnInit {
     public provider_services: ProviderServices,
     public dialog: MatDialog,
     private activatedRoot: ActivatedRoute,
+    private router: Router,
     private medicalrecord_service: MedicalrecordService) {
     this.medicalrecord_service.patient_data.subscribe(data => {
       this.patientDetails = data;
@@ -60,7 +61,7 @@ export class DrugListComponent implements OnInit {
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.providerId = user.id;
     this.getDigitalSign();
-   // this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
+    // this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       if (mrId !== 0) {
         this.mrId = mrId;
@@ -150,18 +151,12 @@ export class DrugListComponent implements OnInit {
           this.showSave = false;
         });
     } else {
-      // const passingdata = {
-      //   'bookingType': 'NA',
-      //   'consultationMode': 'EMAIL',
-      //   'prescriptions': this.drugList,
-      //   'mrConsultationDate': this.today
-      // };
-     // console.log(passingdata, this.userId);
+
       this.medicalrecord_service.createMR('prescriptions', this.drugList)
         .then(data => {
-         // this.sharedfunctionObj.setitemonLocalStorage('mrId', data);
-         this.medicalrecord_service.setCurrentMRID(data);
+          this.medicalrecord_service.setCurrentMRID(data);
           this.showSave = false;
+          this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
         },
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -243,5 +238,8 @@ export class DrugListComponent implements OnInit {
         console.log(result);
       }
     });
+  }
+  redirecToPrescriptionHome() {
+    this.router.navigate(['provider', 'medicalrecord', 'prescription']);
   }
 }

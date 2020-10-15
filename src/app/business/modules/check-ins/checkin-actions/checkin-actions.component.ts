@@ -422,7 +422,8 @@ export class CheckinActionsComponent implements OnInit {
             'booking_time': this.checkin.token,
             'department': this.checkin.service.deptName,
             'consultationMode': 'OP',
-            'mr_id': this.checkin.mrId
+            'mr_id': this.checkin.mrId,
+            'booking_id': this.checkin.ynwUuid
           }
         };
          this.router.navigate(['provider', 'medicalrecord' , 'prescription'], navigationExtras);
