@@ -1,5 +1,5 @@
 
-<div>
+<div *ngIf="drugList.length === 0 && uploadlist.length === 0"> 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10" >
                     <span class="b-link" >
                         <h5>You can create prescription in two ways :</h5>
@@ -7,7 +7,7 @@
                         <p>2. You can create a prescription in this software with a digital signature  </p>
                     </span>
             </div>
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 " *ngIf="optionsForRx">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 " >
       <div class="card mrcreate">
           <span class="b-link" (click)="uploadRx()">
               <h5 style="color:#3c8dbc;">I will Upload paper prescription image<i class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
@@ -24,4 +24,85 @@
 
     </div>
   </div>
+  <div *ngIf="drugList.length>0">
+  <div class="no-dta table-responsive" >
+      <h5> Create prescription of your own</h5> 
+  <table class="table table-bordered" >
+        <thead>
+        <tr >
+          <th>
+              Drug name
+          </th>
+          <th>
+              Duration(days)
+          </th>
+           <th> 
+              Dosage
+          </th>
+          <th>
+              Frequency
+          </th>
+          <th>
+              Instructions
+          </th>
+         
+          <th>
+             
+          </th>
+        </tr>
+      </thead>
+        <tbody>
+          <tr *ngFor="let drug of drugList; let i = index;" >
+            <td >
+              {{drug.medicine_name}}
+            </td>
+            <td >
+              {{drug.duration}}
+            </td>
+            <td >
+                  {{drug.dosage}}
+               </td>
+            <td >
+                   {{drug.frequency}}
+                </td>
+            <td >
+             {{drug.instructions}}
+            </td>
+             <td >
+              <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+             </td>
+
+          </tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div *ngIf="uploadlist.length>0">
+        <div class="no-dta table-responsive" >
+            <h5> Create prescription of your own</h5> 
+        <table class="table table-bordered" >
+              <thead>
+              <tr >
+                <th>
+                    Image name
+                </th>
+               
+                <th>
+                   
+                </th>
+              </tr>
+            </thead>
+              <tbody>
+                <tr *ngFor="let img of uploadlist; let i = index;" >
+                  <td >
+                    {{img.keyName}}
+                  </td>
+                  
+                   <td >
+                    <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                   </td>
+      
+                </tr>
+              </tbody>
+            </table></div>
+          </div>
 

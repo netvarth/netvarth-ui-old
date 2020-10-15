@@ -154,6 +154,7 @@ export class DrugListComponent implements OnInit {
         subscribe(res => {
           console.log(this.drugList);
           this.showSave = false;
+          this.router.navigate(['provider', 'medicalrecord', 'prescription']);
         });
     } else {
 
@@ -162,6 +163,7 @@ export class DrugListComponent implements OnInit {
           this.medicalrecord_service.setCurrentMRID(data);
           this.showSave = false;
           this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
+          this.router.navigate(['provider', 'medicalrecord', 'prescription']);
         },
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

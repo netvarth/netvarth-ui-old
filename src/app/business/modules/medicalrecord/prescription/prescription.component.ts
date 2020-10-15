@@ -30,6 +30,7 @@ export class PrescriptionComponent implements OnInit {
     base64: [],
     caption: []
 };
+uploadlist: any = [];
   constructor(
   // private activatedRoot: ActivatedRoute,
   private router: Router,
@@ -61,6 +62,12 @@ getMrprescription(mrId) {
   this.provider_services.getMRprescription(mrId)
     .subscribe((data) => {
       console.log(data);
+      if (data[0].keyName) {
+      this.uploadlist = data;
+      console.log(this.uploadlist);
+    } else {
+      this.drugList = data;
+    }
     },
       error => {
         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
