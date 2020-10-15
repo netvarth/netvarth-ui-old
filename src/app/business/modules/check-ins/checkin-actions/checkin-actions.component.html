@@ -4,6 +4,10 @@
             aria-hidden="true"></i></button></h1>
 <div class="action-section col-md-12" *ngIf="action === ''">
     <div>
+        <div>  {{checkin.waitlistingFor[0].userName}} {{checkin.waitlistingFor[0].lastName}} </div>
+       <div *ngIf="checkin.token"> {{checkin.token)}} </div>
+     </div>
+    <div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
             <div class="action-box-sub" *ngIf="checkin.callingStatus">
                 <span class="callstop-icon"></span>

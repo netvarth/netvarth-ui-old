@@ -3,6 +3,10 @@
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
 <div class="action-section col-md-12" *ngIf="action === ''">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-10 mgn-up-10">
+        <div>{{appt.appmtFor[0].userName}} </div>
+        <div> {{getSingleTime(appt.appmtTime)}}</div>
+    </div>
     <div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingAppt()">
             <div class="action-box-sub" *ngIf="appt.callingStatus">
@@ -203,7 +207,7 @@
                 *ngIf="freeSlots.length > 0 && !loading">
                 <mat-chip-list class="appt-in-chip">
                     <mat-chip *ngFor="let slot of freeSlots" (click)="timeSelected(slot)"
-                        [selected]="slot.time==selectedTime && todayDate">
+                        [selected]="slot.time==selectedTime">
                         {{slot.displayTime}}
                     </mat-chip>
                 </mat-chip-list>
@@ -214,8 +218,9 @@
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks no-padding">
-                <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="rescheduleAppointment()">Reschedule</span>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding">
+                <span class="cs-btn bt3 pointer-cursor mgn-rt-25"
+                    (click)="rescheduleAppointment()">Reschedule</span>
             </div>
         </div>
     </div>

@@ -43,6 +43,7 @@ export class AppointmentActionsComponent implements OnInit {
     showBill = false;
     showMsg = false;
     selectedTime;
+    holdselectedTime;
     sel_checkindate;
     sel_schedule_id;
     servId;
@@ -76,7 +77,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
     setData() {
-        this.selectedTime = this.appt.appmtTime;
+        this.selectedTime = this.holdselectedTime = this.appt.appmtTime;
         this.sel_checkindate = this.hold_sel_checkindate = this.appt.appmtDate;
         this.sel_schedule_id = this.appt.schedule.id;
         this.servId = this.appt.service.id;
@@ -163,6 +164,8 @@ export class AppointmentActionsComponent implements OnInit {
         this.getAppointmentSlots();
     }
     goBacktoApptDtls() {
+        this.hold_sel_checkindate = this.sel_checkindate;
+        this.selectedTime = this.holdselectedTime;
         this.action = 'reschedule';
     }
     smsCheckin() {
@@ -445,7 +448,6 @@ export class AppointmentActionsComponent implements OnInit {
             'date': moment(this.sel_checkindate).format('YYYY-MM-DD'),
             'schedule': this.apptTime['scheduleId']
         };
-        console.log(data);
         this.provider_services.rescheduleProviderAppointment(data)
             .subscribe(
                 () => {
@@ -456,7 +458,6 @@ export class AppointmentActionsComponent implements OnInit {
                 });
     }
     timeSelected(slot) {
-        console.log(slot);
         this.apptTime = slot;
         this.selectedTime = slot.time;
     }
@@ -465,7 +466,6 @@ export class AppointmentActionsComponent implements OnInit {
         this.loading = true;
         this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate).subscribe(data => {
             this.schedules = data;
-            console.log(this.selectedTime);
             for (const scheduleSlots of this.schedules) {
                 this.availableSlots = scheduleSlots.availableSlots;
                 for (const freslot of this.availableSlots) {
@@ -477,7 +477,6 @@ export class AppointmentActionsComponent implements OnInit {
                 }
             }
             this.loading = false;
-            console.log(this.freeSlots);
         });
     }
     disableMinus() {
@@ -486,16 +485,9 @@ export class AppointmentActionsComponent implements OnInit {
         const seldate = new Date(seldate2);
         const selecttdate = new Date(seldate.getFullYear() + '-' + this.shared_functions.addZero(seldate.getMonth() + 1) + '-' + this.shared_functions.addZero(seldate.getDate()));
         const strtDt1 = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        // console.log(this.server_date);
-        // console.log(this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }));
-        // console.log(strtDt1);
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
-        // console.log(strtDt2);
         const strtDt = new Date(strtDt2);
-        // console.log(strtDt);
         const startdate = new Date(strtDt.getFullYear() + '-' + this.shared_functions.addZero(strtDt.getMonth() + 1) + '-' + this.shared_functions.addZero(strtDt.getDate()));
-    //    console.log(startdate);
-    //    console.log(selecttdate);
         if (startdate >= selecttdate) {
             return true;
         } else {
@@ -507,8 +499,6 @@ export class AppointmentActionsComponent implements OnInit {
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
         const newdate = new Date(date);
         const newdate1 = new Date(date);
-        console.log(newdate);
-        console.log(newdate1);
         newdate.setDate(newdate.getDate() + days);
         const dd = newdate.getDate();
         const mm = newdate.getMonth() + 1;
@@ -522,23 +512,24 @@ export class AppointmentActionsComponent implements OnInit {
         const ndate3 = moment(ndate2, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(ndate3);
         const nDt = new Date(ndate);
-        if (type === 'pre') {
-        if (strtDt.getTime() >= nDt.getTime()) {
-            this.sel_checkindate = ndate;
-            this.getAppointmentSlots();
-        }
-    } else {
-        if (nDt.getTime() >= strtDt.getTime()) {
-            this.sel_checkindate = ndate;
-            this.getAppointmentSlots();
-        }
-    }
-    if (strtDt.getTime() === nDt.getTime()) {
-        console.log('true');
-        this.todayDate = true;
-    } else {
-        this.todayDate = false;
-    }
+        // if (type === 'pre') {
+        //     if (strtDt.getTime() >= nDt.getTime()) {
+        //         this.sel_checkindate = ndate;
+        //         this.getAppointmentSlots();
+        //     }
+        // } else {
+            if (nDt.getTime() >= strtDt.getTime()) {
+                this.sel_checkindate = ndate;
+                this.getAppointmentSlots();
+            }
+        // }
+
+        // if (strtDt.getTime() === nDt.getTime()) {
+        //     console.log('true');
+        //     this.todayDate = true;
+        // } else {
+        //     this.todayDate = false;
+        // }
     }
     setMinMaxDate() {
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
