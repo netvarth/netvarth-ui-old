@@ -1,20 +1,33 @@
 
   
-      <section class="">
+      <section >
         <div class="card title-gb"> 
           <h5 class="mgn-up-10">
-              <button type="button" class="btn default profile-back" (click)="redirecToClinicalNotes()">
-                  <span class="fa fa-chevron-left">&nbsp;Back</span>
-                </button>
-            <h2 style="text-align: center;">Heading</h2>
+              <button type="button" class="btn default profile-back" (click)="goBack()">
+                  <span class="fa fa-chevron-left">&nbsp;Back</span></button>&nbsp;&nbsp;&nbsp;
+                  Create prescription
           </h5>
         </div>
-        </section>
-        <section>
-            <div class="content loc-list">
-                <div class="col-md-12 no-padding-small">
-                    <div class="card p0 w-dta">
-  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 no-dta"  *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
+        <!-- </section>
+        <section> -->
+            <!-- <div class="content loc-list">
+                <div class="col-md-12 no-padding-small">-->
+                    <div class="card title-gb"> 
+                        <div class="mgn-up-10">
+
+                            <p>
+                              <b>Patient:</b>
+                              <span color="blue"> {{patientDetails.id}} &nbsp;</span>
+                              <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}}</span>
+                              <span *ngIf="patientDetails.dob|| patientDetails.gender ">({{patientDetails.dob}} {{patientDetails.gender | capitalizeFirst}})</span>
+                            </p>
+                            <!-- <p>Patient Name:{{patientFirstName | capitalizeFirst}} {{patientLastName}} </p>-->
+                            <!-- <p>Patient Id: {{PatiendId}}</p>
+                            <p *ngIf="PatientDob">DOB: {{PatientDob}} </p>
+                            <p *ngIf="gender">Gender:{{gender | capitalizeFirst}}</p> -->
+                  
+                        </div>
+  <div class="no-dta"  *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
     <h5> By clicking upload prescription you will have choice of uploading a file or taking picture</h5>
    <div>
          <button  mat-button style= "margin-left: 25%; margin-top: 1%;" class="cs-btn bt1 " >
@@ -29,7 +42,7 @@
 
      </div>
   </div>
-  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 no-dta"  *ngIf="selectedMessage.files && selectedMessage.files.length > 0" >
+  <div class="no-dta"  *ngIf="selectedMessage.files && selectedMessage.files.length > 0" >
          <h5> Files uploaded</h5>
      <table class="table table-bordered" (change)="somethingChanged()">
                  <thead>
@@ -86,7 +99,9 @@
 
                  </div>
      </div>
-     </div></div></div>
+     <!-- </div>
+    </div>-->
+  </div>  
 
 
      </section>
