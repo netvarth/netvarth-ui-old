@@ -31,7 +31,7 @@ export class GeneralComponent implements OnInit {
     private medicalrecordService: MedicalrecordService
   ) {
     this.medicalrecordService.patient_data.subscribe(data => {
-      this.customerDetails =  data;
+      this.customerDetails =  JSON.parse(data.customerDetail);
       console.log(this.customerDetails);
     });
     this.activated_route.queryParams.subscribe(params => {
