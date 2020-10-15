@@ -14,17 +14,23 @@ export class LastVisitComponent implements OnInit {
   public lastVisit_dataSource = new MatTableDataSource<any>();
  lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'userName', 'mr_createdDate'];
   providerid: any;
+  accountType: any;
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     public dialogRef: MatDialogRef<LastVisitComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.PatientId = this.data.patientId;
       console.log(this.PatientId);
+      const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
+    if (this.accountType !== 'BRANCH') {
+      this.lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'mr_createdDate'];
+    }
     }
 
   ngOnInit() {
     this.getPatientVisitList();
-    this.getproviderVisitList();
+    // this.getproviderVisitList();
   }
   getPatientVisitList() {
     this.provider_services.getPatientVisitList(this.PatientId)
@@ -38,15 +44,16 @@ export class LastVisitComponent implements OnInit {
        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });
   }
-  getproviderVisitList() {
-    this.provider_services.getproviderprofile(6899)
-      .subscribe((data: any) => {
-       console.log(data);
-      },
-      error => {
-       this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      });
+  // user(providerid) {
+  //   this.provider_services.getproviderprofile(providerid)
+  //     .subscribe((data: any) => {
+  //      console.log(data);
+  //     },
+  //     error => {
+  //      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+  //     });
+  // }
+  medicalRecord() {
+    this.dialogRef.close(this.PatientId);
   }
-
-
 }

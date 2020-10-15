@@ -6,7 +6,7 @@
 
   <section class="report">
     <div class="content w-manager settings comn-cls lic-page">
-      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
         <div class="box" >
          <mat-table [dataSource]="lastVisit_dataSource">
           <ng-container matColumnDef="consultationDate">
@@ -23,12 +23,11 @@
           <ng-container matColumnDef="userName">
             <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
             <mat-cell *matCellDef="let visit">
-              {{visit.user}}</mat-cell>
+               {{visit.user}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="mr_createdDate">
             <mat-header-cell *matHeaderCellDef>MR</mat-header-cell>
-            <mat-cell *matCellDef="let visit"> <u>ViewMR</u> </mat-cell>
-            <mat-cell *matCellDef="let visit"> <u>CreateMR</u> </mat-cell>
+            <mat-cell *matCellDef="let visit"> <button (click)="medicalRecord"> ViewMR</button> </mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns"></mat-row>
