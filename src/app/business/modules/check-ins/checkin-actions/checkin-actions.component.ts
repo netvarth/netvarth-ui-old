@@ -395,7 +395,7 @@ export class CheckinActionsComponent implements OnInit {
           'customerDetail': JSON.stringify(this.checkin.consumer),
           'serviceId': this.checkin.service.id,
           'serviceName': this.checkin.service.name,
-          'booking_type': 'Token',
+          'booking_type': 'TOKEN',
           'booking_date': this.checkin.date,
           'booking_time': this.checkin.token,
           'department': this.checkin.service.deptName,
