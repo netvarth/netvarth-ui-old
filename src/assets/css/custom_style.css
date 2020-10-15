@@ -12085,7 +12085,7 @@ img.busN-logo {
 }
 .checkinactionclass {
   width: 750px !important;
-  min-height: 500px !important;
+  /* min-height: 500px !important; */
 }
 .bill-icon {
   content: url(../images/dashboard-icons/Bill-01-01.svg);

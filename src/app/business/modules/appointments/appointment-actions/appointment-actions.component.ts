@@ -161,11 +161,10 @@ export class AppointmentActionsComponent implements OnInit {
     }
     changeSlot() {
         this.action = 'slotChange';
+        this.selectedTime = '';
         this.getAppointmentSlots();
     }
     goBacktoApptDtls() {
-        this.hold_sel_checkindate = this.sel_checkindate;
-        this.selectedTime = this.holdselectedTime;
         this.action = 'reschedule';
     }
     smsCheckin() {
@@ -477,6 +476,7 @@ export class AppointmentActionsComponent implements OnInit {
                     }
                 }
             } 
+            this.timeSelected(this.freeSlots[0]);
             this.loading = false;
         });
     }
@@ -545,10 +545,6 @@ export class AppointmentActionsComponent implements OnInit {
         this.sel_checkindate = seldate;
     }
     disableButn() {
-        // console.log(this.sel_checkindate);
-        // console.log(this.hold_sel_checkindate);
-        // console.log(this.selectedTime);
-        // console.log(this.holdselectedTime);
         if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedTime === this.holdselectedTime) {
             return true;
         } else {

@@ -168,8 +168,8 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <p>Service Provider : {{appt.providerAccount.businessName}} </p>
-            <p>Department : {{appt.service.name}} </p>
-            <p>{{provider_label}} : {{appt.provider.firstName}} {{appt.provider.lastName}} </p>
+            <p *ngIf="appt.service.deptName">Department : {{appt.service.deptName}} </p>
+            <p *ngIf="appt.provider">{{provider_label | capitalizeFirst}} : {{appt.provider.firstName}} {{appt.provider.lastName}} </p>
             <p>Location: {{appt.location.place}}</p>
             <p>Service : {{appt.service.name}} </p>
             <p>Appointment Slot: {{appt.appmtDate | date: dateFormat}}, {{getSingleTime(appt.appmtTime)}}
