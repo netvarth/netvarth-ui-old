@@ -476,7 +476,7 @@ export class AppointmentActionsComponent implements OnInit {
                         this.freeSlots.push(freslot);
                     }
                 }
-            }
+            } 
             this.loading = false;
         });
     }
