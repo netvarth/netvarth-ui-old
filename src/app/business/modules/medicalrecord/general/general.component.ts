@@ -17,9 +17,10 @@ export class GeneralComponent implements OnInit {
   clinicalNotes: any;
   edit_data: any;
   Cnotes: string;
-  patientDetails: any;
+  customerDetails: any;
   userId: any;
   today = new Date();
+  patientid: any;
 
   constructor(
     public sharedfunctionObj: SharedFunctions,
@@ -29,6 +30,10 @@ export class GeneralComponent implements OnInit {
     private router: Router,
     private medicalrecordService: MedicalrecordService
   ) {
+    this.medicalrecordService.patient_data.subscribe(data => {
+      this.customerDetails =  data;
+      console.log(this.customerDetails);
+    });
     this.activated_route.queryParams.subscribe(params => {
       this.editable_object = JSON.parse(params.data);
       this.edit_data = this.editable_object.value;
