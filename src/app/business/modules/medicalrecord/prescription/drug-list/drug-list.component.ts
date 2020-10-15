@@ -7,6 +7,7 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 import { AddDrugComponent } from '../add-drug/add-drug.component';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
 import { projectConstants } from '../../../../../app.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-drug-list',
@@ -40,11 +41,12 @@ export class DrugListComponent implements OnInit {
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
+    private location: Location,
     private activatedRoot: ActivatedRoute,
     private router: Router,
     private medicalrecord_service: MedicalrecordService) {
     this.medicalrecord_service.patient_data.subscribe(data => {
-      this.patientDetails = data;
+      this.patientDetails = JSON.parse(data.customerDetail);
       this.userId = this.patientDetails.id;
     });
     this.activatedRoot.queryParams.subscribe(queryParams => {
@@ -68,6 +70,9 @@ export class DrugListComponent implements OnInit {
       }
     });
     this.getMrprescription();
+  }
+  goBack() {
+    this.location.back();
   }
   getDigitalSign() {
     if (this.providerId) {
@@ -232,7 +237,6 @@ export class DrugListComponent implements OnInit {
         userId: this.userId
       }
     });
-
     this.sharedialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);

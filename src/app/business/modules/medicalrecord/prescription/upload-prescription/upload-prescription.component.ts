@@ -5,6 +5,7 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-upload-prescription',
@@ -31,8 +32,13 @@ export class UploadPrescriptionComponent implements OnInit {
   upload_status = 'Added to list';
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
+    private location: Location,
     public dialog: MatDialog,
     private medicalrecord_service: MedicalrecordService) {
+      this.medicalrecord_service.patient_data.subscribe(data => {
+        this.patientDetails = JSON.parse(data.customerDetail);
+        this.userId = this.patientDetails.id;
+      });
 
   }
 
@@ -45,6 +51,9 @@ export class UploadPrescriptionComponent implements OnInit {
       }
     });
 
+  }
+  goBack() {
+    this.location.back();
   }
 
   getMrprescription(mrId) {

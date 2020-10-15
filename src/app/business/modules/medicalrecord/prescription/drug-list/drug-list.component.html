@@ -1,165 +1,170 @@
 <section class="">
-  <div class="card title-gb">
-    <h5 class="mgn-up-10">
-      <button type="button" class="btn default profile-back" (click)="redirecToPrescriptionHome()">
-        <span class="fa fa-chevron-left">&nbsp;Back</span>
-      </button>
-      <h2 style="text-align: center;">Heading</h2>
-    </h5>
-  </div>
-</section>
-<section>
-  <div class="content loc-list">
-    <div class="col-md-12 no-padding-small">
-      <div class="card p0 w-dta">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 no-dta table-responsive" *ngIf="drugList.length>0">
-          <h5> Create prescription of your own</h5>
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>
-                  Drug name
-                </th>
-                <th>
-                  Duration(days)
-                </th>
-                <th>
-                  Dosage
-                </th>
-                <th>
-                  Frequency
-                </th>
-                <th>
-                  Instructions
-                </th>
-
-                <th>
-
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let drug of drugList; let i = index;">
-                <td>
-                  {{drug.medicine_name}}
-                </td>
-                <td>
-                  {{drug.duration}}
-                </td>
-                <td>
-                  {{drug.dosage}}
-                </td>
-                <td>
-                  {{drug.frequency}}
-                </td>
-                <td>
-                  {{drug.instructions}}
-                </td>
-                <td>
-                  <span (click)="deleteDrug(i)">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                  </span> &nbsp;
-                  <span (click)="editDrug(drug,i)">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                  </span>
-                </td>
-
-              </tr>
-            </tbody>
-          </table>
-          <span (click)="addDrug()" class="lnk action" style="color: #3c8dbc; font-size: smaller">
-            <u>Add more</u>
-          </span>
-
-          <div class="mgn-up-10">
-            <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
-              <span class="red"> never uploaded digital signature,</span>
-              <a class="lnk action pointer-cursor" (click)="imagefile.click()">
-                <input #imagefile type="file" accept="/*;capture=camera" style="display:none;" multiple (change)="filesSelected($event)">
-                <u> create or Upload digital signature for sharing Rx</u>
-              </a>
-            </span>
-
-            <ng-container class="attachment" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-              <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10" *ngFor="let item of selectedMessage.files; let i = index">
-                <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
-                  <span class="ln-hgt-40">{{item.name}}</span>
-                </div>
-                <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
-                  <span class="">
-                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                      <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                      <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                        <i class="icon-delete"></i>
-                        <span>delete</span>
-                      </button>
-                    </mat-menu>
-                  </span>
-                </div>
-                <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
-                  <button type="button" class="cs-btn bt2" (click)="deleteTempImage(i)">cancel</button>
-                  <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages(i)">OK</button>
-                </div>
+        <div class="card title-gb"> 
+                <h5 class="mgn-up-10">
+                    <button type="button" class="btn default profile-back" (click)="redirecToPrescriptionHome()">
+                        <span class="fa fa-chevron-left">&nbsp;Back</span></button>&nbsp;&nbsp;&nbsp;
+                        Create prescription
+                </h5>
               </div>
+        <!-- </section>
+        <section>
+            <div class="content loc-list">
+                <div class="col-md-12 no-padding-small"> -->
+                        <div class="card title-gb"> 
+                                <div class="mgn-up-10">
+        
+                                    <p>
+                                      <b>Patient:</b>
+                                      <span color="blue"> {{patientDetails.id}} &nbsp;</span>
+                                      <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}}</span>
+                                      <span *ngIf="patientDetails.dob|| patientDetails.gender ">({{patientDetails.dob}} {{patientDetails.gender | capitalizeFirst}})</span>
+                                    </p>
+                                    <!-- <p>Patient Name:{{patientFirstName | capitalizeFirst}} {{patientLastName}} </p>-->
+                                    <!-- <p>Patient Id: {{PatiendId}}</p>
+                                    <p *ngIf="PatientDob">DOB: {{PatientDob}} </p>
+                                    <p *ngIf="gender">Gender:{{gender | capitalizeFirst}}</p> -->
+                          
+                                </div>
+       <div class="no-dta table-responsive" *ngIf="drugList.length>0">
+        <h5> Create prescription of your own</h5> 
+    <table class="table table-bordered" >
+          <thead>
+          <tr >
+            <th>
+                Drug name
+            </th>
+            <th>
+                Duration(days)
+            </th>
+             <th> 
+                Dosage
+            </th>
+            <th>
+                Frequency
+            </th>
+            <th>
+                Instructions
+            </th>
+           
+            <th>
+               
+            </th>
+          </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let drug of drugList; let i = index;" >
+              <td >
+                {{drug.medicine_name}}
+              </td>
+              <td >
+                {{drug.duration}}
+              </td>
+              <td >
+                    {{drug.dosage}}
+                 </td>
+              <td >
+                     {{drug.frequency}}
+                  </td>
+              <td >
+               {{drug.instructions}}
+              </td>
+               <td >
+                <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+               </td>
 
-            </ng-container>
+            </tr>
+          </tbody>
+        </table>
+        <span (click)="addDrug()" class="lnk action" style="color: #3c8dbc; font-size: smaller"><u>Add more</u></span>
+
+        <div class="mgn-up-10">
+            <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0"><span class="red"> never uploaded digital signature,</span><a class="lnk action pointer-cursor"
+                (click)="imagefile.click()"><input #imagefile type="file"
+                    accept="/*;capture=camera" style="display:none;" multiple
+                    (change)="filesSelected($event)"> <u> create or Upload digital signature for sharing Rx</u></a>
+               </span>
+
+               <ng-container class="attachment"
+          *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+          <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
+              *ngFor="let item of selectedMessage.files; let i = index">
+              <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
+                  <span class="ln-hgt-40">{{item.name}}</span>
+              </div>
+              <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
+                  <span class="">
+                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                          <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                          <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                              <i class="icon-delete"></i>
+                              <span>delete</span>
+                          </button>
+                      </mat-menu>
+                  </span>
+              </div>
+              <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
+                    <button type="button"  class="cs-btn bt2"  (click)="deleteTempImage(i)">cancel</button>
+                  <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages(i)">OK</button>
+              </div>
           </div>
-
-          <div *ngIf="drugList.length > 0 && showSave">
-
-            <button type="button" mat-button style="margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>
-          </div>
-          <!-- <div *ngIf="drugList.length > 0 && !showSave && digitalSign">
-            <button type="button" mat-button style="margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx()">
-
-              <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
-
-          </div>
-          <div *ngIf="drugList.length > 0 && !showSave && !digitalSign">
-            <button type="button" style="margin-left: 40%; margin-top: 4%;" class="cs-btn bt2">
-
-              <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
-
-          </div> -->
-
+          
+      </ng-container>
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 no-dta table-responsive" *ngIf="drugList.length === 0">
-          <h5> Create prescription of your own</h5>
-          <table class="table ">
-            <thead>
-              <tr>
-                <th>
-                  Drug name
-                </th>
-                <th>
-                  Duration(days)
-                </th>
-                <th>
-                  Dosage
-                </th>
-                <th>
-                  Frequency
-                </th>
-                <th>
-                  Instructions
-                </th>
 
-              </tr>
-            </thead>
-            <tbody>
+        <div  *ngIf="drugList.length > 0 && showSave">
 
-              No Medicines Added
-
-            </tbody>
-          </table>
-          <span (click)="addDrug()" class="lnk action" style="color: #3c8dbc; font-size: smaller">
-            <u>Add more</u>
-          </span>
-
+            <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>
         </div>
+        <div *ngIf="drugList.length > 0 && !showSave && digitalSign"> 
+                <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx()" >
+                        
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
+                
+            </div>
+            <div *ngIf="drugList.length > 0 && !showSave && !digitalSign">
+                <button type="button"   style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt2"  >
+                        
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
+                
+            </div>
+
       </div>
+      <div class=" no-dta table-responsive" *ngIf="drugList.length === 0">
+            <h5> Create prescription of your own</h5> 
+            <table  class="table ">
+                    <thead>
+                            <tr >
+                              <th>
+                                  Drug name
+                              </th>
+                              <th>
+                                  Duration(days)
+                              </th>
+                               <th> 
+                                  Dosage
+                              </th>
+                              <th>
+                                  Frequency
+                              </th>
+                              <th>
+                                  Instructions
+                              </th>
+                              
+                            </tr>
+                          </thead>
+                            <tbody>
+                    
+                        No Medicines Added
+                      
+                    </tbody>
+                  </table>
+                  <span (click)="addDrug()" class="lnk action" style="color: #3c8dbc; font-size: smaller"><u>Add more</u></span>
+
+      </div>
+      <!-- </div>
+    </div> -->
     </div>
-  </div>
-</section>
+    </section>
+          
