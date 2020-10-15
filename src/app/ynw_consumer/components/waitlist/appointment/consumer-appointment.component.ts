@@ -332,8 +332,6 @@ export class ConsumerAppointmentComponent implements OnInit {
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
-        console.log(this.sel_loc);
-        console.log(this.sel_checkindate);
         this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
         const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
@@ -356,10 +354,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.sel_checkindate = this.hold_sel_checkindate = this.appointment.appmtDate;
                 this.sel_ser = this.appointment.service.id;
                 this.holdselectedTime = this.appointment.appmtTime;
-                console.log(this.sel_loc, this.selectedService, this.sel_checkindate) 
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 // this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedService, this.sel_checkindate, this.account_id);
-
             });
 
     }
@@ -490,7 +486,6 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
-        console.log(curservid);
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
@@ -546,7 +541,6 @@ export class ConsumerAppointmentComponent implements OnInit {
         const _this = this;
         _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
             .subscribe((data: any) => {
-                console.log(data);
                 const availables = data.filter(obj => obj.availableSlots);
                 const availDates = availables.map(function (a) { return a.date; });
                 _this.availableDates = availDates.filter(function (elem, index, self) {
@@ -573,22 +567,21 @@ export class ConsumerAppointmentComponent implements OnInit {
                         }
                     }
                 }
+                console.log(this.freeSlots);
+                console.log(this.appointment.appmtTime);
                 if (this.freeSlots.length > 0) {
                     this.showApptTime = true;
-                    console.log(this.appointment);
                     if (this.appointment.length > 0) {
-                        console.log(this.freeSlots);
-                        const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
-                        console.log(appttime);
+                        const appttime = this.freeSlots.filter(slot => slot.time == this.appointment.appmtTime);
                         this.apptTime = appttime[0];
                     } else {
                         this.apptTime = this.freeSlots[0];
                     }
-                    console.log(this.apptTime);
                     this.waitlist_for[0].apptTime = this.apptTime['time'];
                 } else {
                     this.showApptTime = false;
                 }
+                console.log(this.apptTime);
                 this.api_loading1 = false;
             });
     }
@@ -618,7 +611,6 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.callingModes = [];
         this.showInputSection = false;
         this.sel_ser = obj;
-        console.log(obj);
         this.setServiceDetails(obj);
         // this.queuejson = [];
         // this.sel_queue_id = 0;
@@ -1332,7 +1324,6 @@ export class ConsumerAppointmentComponent implements OnInit {
                     }
                 }
                 if (this.sel_ser) {
-                    console.log(this.sel_ser);
                     this.setServiceDetails(this.sel_ser);
                     this.getAvailableSlotByLocationandService(locid, this.sel_ser, pdate, this.account_id);
                 }
@@ -1705,8 +1696,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         // }
     }
     goBack() {
-        console.log(this.action);
-        if (this.action === '' || this.action === '') {
+        if (this.action === '') {
             this.location.back();
         } else if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
             || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
