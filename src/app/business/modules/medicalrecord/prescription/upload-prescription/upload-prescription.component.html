@@ -1,5 +1,5 @@
 
-  <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+  
       <section class="">
         <div class="card title-gb">
           <h5 class="mgn-up-10">
@@ -8,8 +8,14 @@
                 </button>
             <h2 style="text-align: center;">Heading</h2>
           </h5>
-
-  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 cust-sect no-padding"  *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
+        </div>
+        </section>
+        <section>
+            <div class="content loc-list">
+                <div class="col-md-12 no-padding-small">
+        
+                    <div class="card p0 w-dta">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 no-dta"  *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
     <h5> By clicking upload prescription you will have choice of uploading a file or taking picture</h5>
    <div>
          <button  mat-button style= "margin-left: 25%; margin-top: 1%;" class="cs-btn bt1 " >
@@ -24,7 +30,7 @@
 
      </div>
   </div>
-  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 cust-sect no-padding"  *ngIf="selectedMessage.files && selectedMessage.files.length > 0" >
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 no-dta"  *ngIf="selectedMessage.files && selectedMessage.files.length > 0" >
          <h5> Files uploaded</h5>
      <table class="table table-bordered" (change)="somethingChanged()">
                  <thead>
@@ -81,7 +87,10 @@
 
                  </div>
      </div>
+     </div></div></div>
 
-     </div>
+
      </section>
-     </div>
+
+   
+   

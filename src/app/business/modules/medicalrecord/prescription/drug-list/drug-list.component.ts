@@ -152,8 +152,8 @@ export class DrugListComponent implements OnInit {
         'mrConsultationDate': this.today
       };
       console.log(passingdata, this.userId);
-      this.provider_services.createMedicalRecord(passingdata, this.userId)
-        .subscribe((data) => {
+      this.medicalrecord_service.createMR(passingdata)
+        .then(data => {
           this.sharedfunctionObj.setitemonLocalStorage('mrId', data);
           this.showSave = false;
         },

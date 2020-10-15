@@ -106,13 +106,14 @@ saveImages() {
     if (this.mrId) {
       this.uploadMrPrescription(this.mrId, submit_data);
     } else {
-      const passingdata = {
-        'bookingType': 'NA',
-        'consultationMode': 'EMAIL',
-        'mrConsultationDate': this.today
-      };
-      this.provider_services.createMedicalRecord(passingdata, this.userId)
-              .subscribe((data) => {
+      // const passingdata = {
+      //   'bookingType': 'NA',
+      //   'consultationMode': 'EMAIL',
+      //   'mrConsultationDate': this.today
+      // };
+      const passingdata = {};
+      this.medicalrecord_service.createMR(passingdata)
+              .then(data => {
                 console.log(data);
                 this.sharedfunctionObj.setitemonLocalStorage('mrId', data );
                 this.uploadMrPrescription(data, submit_data);
