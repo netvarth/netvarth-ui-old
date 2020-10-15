@@ -72,7 +72,6 @@ getMrprescription(mrId) {
       error => {
         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });
-
 }
 
 

@@ -94,7 +94,7 @@ export class DrugListComponent implements OnInit {
         .subscribe((data) => {
           console.log(data);
           this.drugList = data;
-        },
+        }, 
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
@@ -109,7 +109,6 @@ export class DrugListComponent implements OnInit {
         type: 'add'
       }
     });
-
     this.addDrugdialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
