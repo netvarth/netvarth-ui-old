@@ -36,10 +36,10 @@
           <label>Department:</label><span> {{department}}</span><br>
           <label>Service/Consultation:</label><span> {{serviceName}}</span>
         </div>
-        <div class="col-md-4 pull-right">
+        <div *ngIf = "mrId !== 0" class="col-md-4 pull-right">
             <label>MR NO:</label><span> 12345</span><br>
-          <label>MR created by:</label><span> dr.Ravi kumar:</span><br>
-          <label>MR creation date:</label><span> 09/10/2020</span>
+          <!-- <label>MR created by:</label><span> dr.Ravi kumar:</span><br> -->
+            <label>MR creation date:</label><span> 09/10/2020</span>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -50,7 +50,7 @@
             </span>
       </div>
 <hr>
-<p>hellooo</p>
+<!-- <p>hellooo</p> -->
         <div class="content w-manager settings comn-cls">
           <div style="padding: 5px;">
             <nav mat-tab-nav-bar>

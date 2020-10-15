@@ -390,6 +390,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     medicalRecord() {
       this.dialogRef.close();
+      console.log(this.checkin.mrId);
       const navigationExtras: NavigationExtras = {
         queryParams: {
           'customerDetail': JSON.stringify(this.checkin.consumer),
@@ -400,7 +401,8 @@ export class CheckinActionsComponent implements OnInit {
           'booking_time': this.checkin.token,
           'department': this.checkin.service.deptName,
           'consultationMode': 'OP',
-          'booking_id': this.checkin.uid
+          'booking_id': this.checkin.uid,
+          'mr_id': this.checkin.mrId
           // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
 
         }
@@ -419,7 +421,8 @@ export class CheckinActionsComponent implements OnInit {
             'booking_date': this.checkin.date,
             'booking_time': this.checkin.token,
             'department': this.checkin.service.deptName,
-            'consultationMode': 'OP'
+            'consultationMode': 'OP',
+            'mr_id': this.checkin.mrId
           }
         };
          this.router.navigate(['provider', 'medicalrecord' , 'prescription'], navigationExtras);
