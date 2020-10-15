@@ -27,7 +27,7 @@
           </ng-container>
           <ng-container matColumnDef="mr_createdDate">
             <mat-header-cell *matHeaderCellDef>MR</mat-header-cell>
-            <mat-cell *matCellDef="let visit"> <button (click)="viewMedicalRecord"> ViewMR</button> </mat-cell>
+            <mat-cell *matCellDef="let visit">  <button mat-button (click)="viewMedicalRecord()" >Edit</button></mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns"></mat-row>
