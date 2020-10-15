@@ -565,8 +565,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
                     for (const freslot of this.availableSlots) {
-                        // if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.appointment.appmtTime) {
-                        if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
+                        if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.appointment.appmtTime) {
+                        // if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);

@@ -80,7 +80,7 @@
 
                                                     <div class="clearfix"></div>
                                                     <div class="callingmode mgn-lt-10 mgn-up-10"
-                                                        *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
+                                                        *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService' && type !== 'reschedule'">
                                                         <div class="mgn-bt-10 mgn-up-5">
                                                             <div class=""
                                                                 *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
