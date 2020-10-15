@@ -146,11 +146,7 @@ export class TeleServiceComponent implements OnInit {
                     } else {
                         this.servStarted = false;
                     }
-                    if (this.data.service.virtualCallingModes) {
-                        this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
-                    } else {
-                        this.callingModes = 'VideoCall';
-                    }
+                    this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
                     this.serv_type = this.data.service.virtualServiceType;
                     if (this.data.provider) {
                         this.busnes_name = this.data.provider.firstName + ' ' + this.data.provider.lastName;
@@ -160,11 +156,8 @@ export class TeleServiceComponent implements OnInit {
                   //  this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
                     this.servDetails = this.data.service;
-                    if (this.callingModes === 'VideoCall') {
-                        this.servDetails['virtualServiceType'] = {'VideoCall': ''};
-                    } else {
-                        this.getMeetingDetails();
-                    }
+                    console.log(this.servDetails);
+                    this.getMeetingDetails();
                     if (this.data.providerConsumer.email) {
                         this.emailPresent = true;
                     }
@@ -253,7 +246,6 @@ export class TeleServiceComponent implements OnInit {
                 subscribe((meetingdata) => {
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
-
                 });
         }
     }
@@ -279,8 +271,12 @@ export class TeleServiceComponent implements OnInit {
                         } else {
                             console.log(this.starting_url);
                             this.chkinTeleserviceJoinLink();
-                            const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
-                            window.open(path, '_blank');
+                            if (this.callingModes !== 'VideoCall') {
+                                const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
+                                window.open(path, '_blank');
+                            } else {
+                                this.router.navigateByUrl(this.starting_url);
+                            }
                             this.getProviderWaitlstById();
                         }
                     }
@@ -295,16 +291,17 @@ export class TeleServiceComponent implements OnInit {
                             this.shared_functions.openSnackBar('Meeting has been ended');
                             this.router.navigate(['provider', 'appointments']);
                         } else {
+                            this.apptTeleserviceJoinLink();
                             if (this.callingModes !== 'VideoCall') {
-                                this.apptTeleserviceJoinLink();
                                 const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
                                 window.open(path, '_blank');
                             } else {
-                                this.shared_services.getVideoIdForService(waitlist.uid, 'provider').subscribe(
-                                    (videoId: any) => {
-                                        this.router.navigate(['provider', 'video', videoId]);
-                                    }
-                                );
+                                this.router.navigateByUrl(this.starting_url);
+                                // this.shared_services.getVideoIdForService(waitlist.uid, 'provider').subscribe(
+                                //     (videoId: any) => {
+                                //         this.router.navigate(['provider', 'video', videoId]);
+                                //     }
+                                // );
                             }
                             this.getProviderApptById();
                         }
