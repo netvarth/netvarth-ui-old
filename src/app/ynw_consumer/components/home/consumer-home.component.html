@@ -437,6 +437,7 @@
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'appointment')">
@@ -735,6 +736,7 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
+                                                <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">Reschedule</button>
                                                 <button mat-menu-item
                                                     *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
                                                     (click)="doCancelWaitlist(booking,'appointment')">
@@ -963,6 +965,7 @@
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'appointment')"><i class="fa cross-icon"></i>Cancel</button>

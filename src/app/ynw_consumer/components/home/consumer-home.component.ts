@@ -945,7 +945,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams: {
         uuid: apptlist.uid,
         type: 'reschedule',
-        account_id: apptlist.providerAccount.id
+        account_id: apptlist.providerAccount.id,
+        unique_id: apptlist.providerAccount.uniqueId
       }
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);

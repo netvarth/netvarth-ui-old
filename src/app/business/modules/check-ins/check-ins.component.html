@@ -485,9 +485,9 @@
                   <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeQs.length == 0)">
                     <tr>
                       <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0">
-                        <p *ngIf="statusAction === 'new'">No active {{(showToken) ? 'token' : 'check-ins'}}</p>
-                        <p *ngIf="statusAction === 'completed'">No completed {{(showToken) ? 'token' : 'check-ins'}}</p>
-                        <p *ngIf="statusAction === 'cancelled'">No cancelled {{(showToken) ? 'token' : 'check-ins'}}</p>
+                        <p *ngIf="statusAction === 'new'">No active {{(showToken) ? 'tokens' : 'check-ins'}}</p>
+                        <p *ngIf="statusAction === 'completed'">No completed {{(showToken) ? 'tokens' : 'check-ins'}}</p>
+                        <p *ngIf="statusAction === 'cancelled'">No cancelled {{(showToken) ? 'tokens' : 'check-ins'}}</p>
                       </td>
                       <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0">
                         {{no_service_cap}}
@@ -774,8 +774,8 @@
                 <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeQs.length == 0)">
                   <tr>
                     <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0">
-                      <p *ngIf="statusAction === 'new'">No active {{(showToken) ? 'Token' : 'Check-ins'}}</p>
-                      <p *ngIf="statusAction === 'cancelled'">No cancelled {{(showToken) ? 'Token' : 'Check-ins'}}</p>
+                      <p *ngIf="statusAction === 'new'">No active {{(showToken) ? 'tokens' : 'check-ins'}}</p>
+                      <p *ngIf="statusAction === 'cancelled'">No cancelled {{(showToken) ? 'tokens' : 'check-ins'}}</p>
                     </td>
                     <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0">
                       {{no_service_cap}}

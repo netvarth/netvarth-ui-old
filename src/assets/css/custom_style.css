@@ -12123,7 +12123,7 @@ img.busN-logo {
   width: 40px;
 }
 .reschedule-icon {
-  content: url(../images/dashboard-icons/viewdetails-01.svg);
+  content: url(../images/dashboard-icons/Reschedule-01.svg);
   width: 40px;
 }
 .act-icons .printer-icon {
@@ -12344,4 +12344,8 @@ img.busN-logo {
     font-size: 0.95rem  !important;
     overflow: visible !important;
   }
+}
+.cons-payments .no-payment {
+  padding: 50px;
+  text-align: center;
 }

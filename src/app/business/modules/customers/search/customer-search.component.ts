@@ -390,6 +390,9 @@ export class CustomerSearchComponent implements OnInit {
             this.router.navigate(['/provider/' + this.domain + '/customer']);
         }
     }
+    goBack() {
+        this.router.navigate(['provider', 'customers']);
+    }
     createForm() {
         this.searchForm = this.fb.group({
             search_input: ['', Validators.compose([Validators.required])]
