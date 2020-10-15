@@ -560,19 +560,17 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.availableSlots = scheduleSlots.availableSlots;
                     for (const freslot of this.availableSlots) {
                         if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.appointment.appmtTime) {
-                        // if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
+                            // if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);
                         }
                     }
                 }
-                console.log(this.freeSlots);
-                console.log(this.appointment.appmtTime);
                 if (this.freeSlots.length > 0) {
                     this.showApptTime = true;
-                    if (this.appointment.length > 0) {
-                        const appttime = this.freeSlots.filter(slot => slot.time == this.appointment.appmtTime);
+                    if (this.appointment && this.appointment.appmtTime) {
+                        const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
                         this.apptTime = appttime[0];
                     } else {
                         this.apptTime = this.freeSlots[0];
@@ -581,7 +579,6 @@ export class ConsumerAppointmentComponent implements OnInit {
                 } else {
                     this.showApptTime = false;
                 }
-                console.log(this.apptTime);
                 this.api_loading1 = false;
             });
     }
