@@ -393,18 +393,28 @@
                 <span class="form-level-settings">This will be sent 24 hours prior to the appointment. </span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
-              <mat-form-field class="example-full-width">
-                <input matInput min="0"  type="text"
-                  [(ngModel)]="firstAPPTNotificationSettings.time"
-                  placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                  (keypress)="showSubmit('FIRST_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                <div class="mgn-up-5" *ngIf="firstApptTime && !firstAPPTNotificationSettings.time"
-                  style="color: red;">Time is required</div>
-                
-              </mat-form-field>
+            <div class="form-group col-md-12 col-xs-12 col-sm-12">
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <mat-form-field>
+                  <mat-select placeholder="Hour" [ngModel]="f_selected_hr" #f_hrsel
+                  (selectionChange)="handleHrSelction(f_hrsel.value,'first')">
+                  <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                    {{hr}}
+                  </mat-option>
+                </mat-select>
+                </mat-form-field>
+                </div>
+                <div class="col-md-6 col-xs-6 col-sm-6">
+                  <mat-form-field>
+                    <mat-select placeholder="Minute" [ngModel]="f_selected_min" #f_minsel
+                    (selectionChange)="handleMinSelction(f_minsel.value,'first')">
+                      <mat-option *ngFor="let min of appt_remind_min" [value]="min">
+                        {{min}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
             </div>
-            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(firstAPPTNotificationSettings.time)}}</small></div> -->
             <div class="clearfix"></div>
             <ul class="notifications">
               <li class="mgn-lt-10">
@@ -426,8 +436,7 @@
                 </mat-slide-toggle>
               </li>
             </ul>
-            <button *ngIf="showButton['FIRST_APPT'] && firstAPPTNotificationSettings.time"
-              (click)="changeNotificationSettings('FIRST_APPT')" type="button" mat-button
+            <button (click)="changeNotificationSettings('FIRST_APPT')" type="button" mat-button
               class="cs-btn bt1 notifyOk">OK</button>
           </mat-expansion-panel>
         </mat-accordion>
@@ -439,18 +448,28 @@
                 <span class="form-level-settings">This will be sent 8 hours prior to the appointment. </span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
-              <mat-form-field class="example-full-width">
-                <input matInput min="0"  type="text"
-                  [(ngModel)]="secondAPPTNotificationSettings.time"
-                  placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                  (keypress)="showSubmit('SECOND_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                <div class="mgn-up-5" *ngIf="secondApptTime && !secondAPPTNotificationSettings.time"
-                  style="color: red;">Time is required</div>
-               
-              </mat-form-field>
+            <div class="form-group col-md-12 col-xs-12 col-sm-12">
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <mat-form-field>
+                  <mat-select placeholder="Hour" [ngModel]="s_selected_hr" #s_hrsel
+                      (selectionChange)="handleHrSelction(s_hrsel.value,'second')">
+                      <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                        {{hr}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <mat-form-field>
+                  <mat-select placeholder="Minute" [ngModel]="s_selected_min" #s_minsel
+                  (selectionChange)="handleMinSelction(s_minsel.value,'second')">
+                    <mat-option *ngFor="let min of appt_remind_min" [value]="min">
+                      {{min}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(secondAPPTNotificationSettings.time)}}</small></div> -->
             <div class="clearfix"></div>
             <ul class="notifications">
               <li class="mgn-lt-10">
@@ -472,8 +491,7 @@
                 </mat-slide-toggle>
               </li>
             </ul>
-            <button *ngIf="showButton['SECOND_APPT'] && secondAPPTNotificationSettings.time"
-              (click)="changeNotificationSettings('SECOND_APPT')" type="button" mat-button
+            <button (click)="changeNotificationSettings('SECOND_APPT')" type="button" mat-button
               class="cs-btn bt1 notifyOk">OK</button>
           </mat-expansion-panel>
         </mat-accordion>
@@ -486,18 +504,28 @@
                 <span class="form-level-settings">This will be sent 4 hours prior to the appointment. </span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
-              <mat-form-field class="example-full-width">
-                <input matInput min="0" type="text"
-                  [(ngModel)]="thirdAPPTNotificationSettings.time"
-                  placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                  (keypress)="showSubmit('THIRD_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                <div class="mgn-up-5" *ngIf="thirdApptTime && !thirdAPPTNotificationSettings.time"
-                  style="color: red;">Time is required</div>
-               
-              </mat-form-field>
+            <div class="form-group col-md-12 col-xs-12 col-sm-12">
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <mat-form-field>
+                  <mat-select placeholder="Hour" [ngModel]="t_selected_hr" #t_hrsel
+                  (selectionChange)="handleHrSelction(t_hrsel.value,'third')">
+                  <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                    {{hr}}
+                  </mat-option>
+                </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <mat-form-field>
+                  <mat-select placeholder="Minute" [ngModel]="t_selected_min" #t_minsel
+                    (selectionChange)="handleMinSelction(t_minsel.value,'third')">
+                      <mat-option *ngFor="let min of appt_remind_min" [value]="min">
+                        {{min}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(thirdAPPTNotificationSettings.time)}}</small></div> -->
             <div class="clearfix"></div>
             <ul class="notifications">
               <li class="mgn-lt-10">
@@ -519,8 +547,7 @@
                 </mat-slide-toggle>
               </li>
             </ul>
-            <button *ngIf="showButton['THIRD_APPT'] && thirdAPPTNotificationSettings.time"
-              (click)="changeNotificationSettings('THIRD_APPT')" type="button" mat-button
+            <button (click)="changeNotificationSettings('THIRD_APPT')" type="button" mat-button
               class="cs-btn bt1 notifyOk">OK</button>
           </mat-expansion-panel>
         </mat-accordion>
@@ -532,18 +559,28 @@
                 <span class="form-level-settings">This will be sent 1 hour prior to the appointment. </span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <!-- <div class="form-group col-md-4 col-xs-7 col-sm-4">
-              <mat-form-field class="example-full-width">
-                <input matInput min="0"  type="text"
-                  [(ngModel)]="fourthAPPTNotificationSettings.time"
-                  placeholder="Time(min)*" autocomplete="off" pattern="[0-9]"
-                  (keypress)="showSubmit('FOURTH_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                <div class="mgn-up-5" *ngIf="fourthApptTime && !fourthAPPTNotificationSettings.time"
-                  style="color: red;">Time is required</div>
-               
-              </mat-form-field>
+            <div class="form-group col-md-12 col-xs-12 col-sm-12">
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <mat-form-field>
+                  <mat-select placeholder="Hour" [ngModel]="ft_selected_hr" #ft_hrsel
+                  (selectionChange)="handleHrSelction(ft_hrsel.value,'fourth')">
+                  <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                    {{hr}}
+                  </mat-option>
+                </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <mat-form-field>
+                  <mat-select placeholder="Minute" [ngModel]="ft_selected_min" #ft_minsel
+                    (selectionChange)="handleMinSelction(ft_minsel.value,'fourth')">
+                      <mat-option *ngFor="let min of appt_remind_min" [value]="min">
+                        {{min}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-            <div class="col-md-4 col-xs-4 col-sm-4 mgtop40"><small style="color:#29b6f6;font-size:80%">{{timeinHrMin(fourthAPPTNotificationSettings.time)}}</small></div> -->
             <div class="clearfix"></div>
             <ul class="notifications">
               <li class="mgn-lt-10">
@@ -565,8 +602,7 @@
                 </mat-slide-toggle>
               </li>
             </ul>
-            <button *ngIf="showButton['FOURTH_APPT'] && fourthAPPTNotificationSettings.time"
-              (click)="changeNotificationSettings('FOURTH_APPT')" type="button" mat-button
+            <button (click)="changeNotificationSettings('FOURTH_APPT')" type="button" mat-button
               class="cs-btn bt1 notifyOk">OK</button>
           </mat-expansion-panel>
         </mat-accordion>
