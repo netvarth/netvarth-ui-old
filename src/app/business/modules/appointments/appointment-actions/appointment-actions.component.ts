@@ -41,6 +41,7 @@ export class AppointmentActionsComponent implements OnInit {
   pos = false;
   showBill = false;
   showMsg = false;
+  domain;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
     private shared_functions: SharedFunctions, private provider_services: ProviderServices,
     public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -53,6 +54,8 @@ export class AppointmentActionsComponent implements OnInit {
     this.getPos();
     this.getLabel();
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
   }
 
   printAppt() {
@@ -423,5 +426,29 @@ export class AppointmentActionsComponent implements OnInit {
     };
 
     this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+  }
+  prescription() {
+    console.log(this.appt.mrId);
+    this.dialogRef.close();
+    let medicalrecord_mode = 'new';
+    let mrId = 0;
+    if (this.appt.mrId) {
+      medicalrecord_mode = 'view';
+      mrId = this.appt.mrId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'customerDetail': JSON.stringify(this.appt.providerConsumer),
+        'serviceId': this.appt.service.id,
+        'serviceName': this.appt.service.name,
+        'department': this.appt.service.deptName,
+        'booking_type': 'Appointment',
+        'booking_date': this.appt.appmtDate,
+        'booking_time': this.appt.appmtTime,
+        'mr_mode': medicalrecord_mode,
+        'mr_id': mrId,
+      }
+    };
+     this.router.navigate(['provider', 'medicalrecord' , 'prescription'], navigationExtras);
   }
 }

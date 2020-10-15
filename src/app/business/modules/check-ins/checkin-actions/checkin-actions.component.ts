@@ -407,5 +407,21 @@ export class CheckinActionsComponent implements OnInit {
 
        this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
     }
+    prescription() {
+        this.dialogRef.close();
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            'customerDetail': JSON.stringify(this.checkin.consumer),
+            'serviceId': this.checkin.service.id,
+            'serviceName': this.checkin.service.name,
+            'booking_type': 'Waitlist',
+            'booking_date': this.checkin.date,
+            'booking_time': this.checkin.token,
+            'department': this.checkin.service.deptName,
+            'consultationMode': 'OP'
+          }
+        };
+         this.router.navigate(['provider', 'medicalrecord' , 'prescription'], navigationExtras);
+      }
 }
 

@@ -119,9 +119,17 @@
         (click)="medicalRecord()">
         <div class="action-box-sub">
             <span class="medicalrecord-icon"></span>
-            <div class="icon-text">Medical Record</div>
+            <div *ngIf="checkin.mrId === 0" class="icon-text">Create Medical Record</div>
+            <div *ngIf="checkin.mrId !== 0" class="icon-text">View Medical Record</div>
         </div>
     </div>
+    <div  *ngIf="domain === 'healthCare'" class="action-box pointer-cursor"
+    (click)="prescription()">
+    <div class="action-box-sub">
+        <span class="notes-icon"></span>
+        <div class="icon-text">RX</div>
+    </div>
+</div>
     </div>
 </div>
 <div class="dashqr" *ngIf="showQR">
