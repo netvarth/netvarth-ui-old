@@ -88,4 +88,20 @@ export class MedicalrecordService {
     }
 
   }
+  createMr() {
+    console.log(this.mr_payload_new);
+    const _this = this;
+    return new Promise((resolve, reject) => {
+      this.provider_services.createMedicalRecord(this.mr_payload_new, _this.patientData.id)
+        .subscribe(
+          response => {
+            resolve(response);
+          },
+          error => {
+            reject(error);
+
+          }
+        );
+    });
+  }
 }
