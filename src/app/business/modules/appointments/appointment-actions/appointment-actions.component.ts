@@ -550,4 +550,10 @@ export class AppointmentActionsComponent implements OnInit {
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
     }
+    disableButn() {
+        console.log(this.sel_checkindate);
+        console.log(this.hold_sel_checkindate);
+        console.log(this.selectedTime);
+        console.log(this.holdselectedTime);
+    }
 }
