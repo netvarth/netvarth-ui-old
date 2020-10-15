@@ -1,3 +1,8 @@
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
+   Patient Visit List
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button>
+  </h1>
 
   <section class="report">
     <div class="content w-manager settings comn-cls lic-page">
@@ -7,8 +12,7 @@
           <ng-container matColumnDef="consultationDate">
             <mat-header-cell *matHeaderCellDef>Consultation Date</mat-header-cell>
             <mat-cell *matCellDef="let visit">
-              <span class="mobile-label">Service ID:</span>
-              {{visit.service.id}}</mat-cell>
+              {{visit.createdDate}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="serviceName">
             <mat-header-cell *matHeaderCellDef>Service Name</mat-header-cell>
@@ -22,9 +26,9 @@
               {{visit.user}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="mr_createdDate">
-            <mat-header-cell *matHeaderCellDef>MR Created date</mat-header-cell>
-            <mat-cell *matCellDef="let visit">
-              {{visit.date}}</mat-cell>
+            <mat-header-cell *matHeaderCellDef>MR</mat-header-cell>
+            <mat-cell *matCellDef="let visit"> <u>ViewMR</u> </mat-cell>
+            <mat-cell *matCellDef="let visit"> <u>CreateMR</u> </mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns"></mat-row>
