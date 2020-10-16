@@ -13,7 +13,7 @@ import { NavigationExtras, Router } from '@angular/router';
 export class LastVisitComponent implements OnInit {
   PatientId: any;
   public lastVisit_dataSource = new MatTableDataSource<any>();
-  lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'userName', 'mr_createdDate'];
+  lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'userName', 'mr', 'rx'];
   providerid: any;
   accountType: any;
   visitdetails: string;
@@ -27,7 +27,7 @@ export class LastVisitComponent implements OnInit {
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     if (this.accountType !== 'BRANCH') {
-      this.lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'mr_createdDate'];
+      this.lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'mr', 'rx'];
     }
   }
 
@@ -39,36 +39,73 @@ export class LastVisitComponent implements OnInit {
     this.provider_services.getPatientVisitList(this.PatientId)
       .subscribe((data: any) => {
         this.lastVisit_dataSource = data;
-        console.log(this.lastVisit_dataSource);
-        this.providerid = data.providerId;
-        console.log(this.providerid);
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  getUserName(userId) {
+  getLastVisitDate(visit) {
+    let date = '';
+    if (visit.waitlist) {
+      date = visit.waitlist.date;
+    } else if (visit.appointmnet) {
+      date = visit.appointmnet.appmtDate;
+    }
+    return date;
+  }
+  getUserName(visit) {
+    return '';
+
+  }
+  isMRCreated(visit) {
+    let mrCreated = '';
+    if (visit.waitlist) {
+      mrCreated = visit.waitlist.mrCreated;
+    } else if (visit.appointmnet) {
+      mrCreated = visit.appointmnet.mrCreated;
+    }
+    return mrCreated;
+
+  }
+  isRxCreated(visit) {
+    let rxCreated = '';
+    if (visit.waitlist) {
+      rxCreated = visit.waitlist.prescriptionCreated;
+    } else if (visit.appointmnet) {
+      rxCreated = visit.appointmnet.prescriptionCreated;
+    }
+    return rxCreated;
+
+  }
+  getServiceName(visit) {
+    let serviceName = '';
+    if (visit.waitlist) {
+      serviceName = visit.waitlist.service.name;
+    } else if (visit.appointmnet) {
+      serviceName = visit.appointmnet.service.name;
+    }
+    return serviceName;
 
   }
   viewMedicalRecord(visitDetails) {
     this.visitdetails = JSON.stringify(visitDetails);
-      console.log(visitDetails);
+    console.log(visitDetails);
     if (visitDetails.waitlist) {
-       const navigationExtras: NavigationExtras = {
-      queryParams: {
-        'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
-        'serviceId': visitDetails.waitlist.service.id,
-        'serviceName': visitDetails.waitlist.service.name,
-        'booking_type': 'TOKEN',
-        'booking_date':  visitDetails.waitlist.date,
-        'booking_time': visitDetails.waitlist.checkInTime,
-        'department': visitDetails.service.deptName,
-        'consultationMode': 'OP',
-        'booking_id': visitDetails.waitlist.ynwUuid,
-        'mrId': visitDetails.mrId
-      }
-    };
-    this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
+          'serviceId': visitDetails.waitlist.service.id,
+          'serviceName': visitDetails.waitlist.service.name,
+          'booking_type': 'TOKEN',
+          'booking_date': visitDetails.waitlist.date,
+          'booking_time': visitDetails.waitlist.checkInTime,
+          'department': visitDetails.service.deptName,
+          'consultationMode': 'OP',
+          'booking_id': visitDetails.waitlist.ynwUuid,
+          'mrId': visitDetails.mrId
+        }
+      };
+      this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {

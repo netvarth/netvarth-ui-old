@@ -12,22 +12,26 @@
           <ng-container matColumnDef="consultationDate">
             <mat-header-cell *matHeaderCellDef>Consultation Date</mat-header-cell>
             <mat-cell *matCellDef="let visit">
-              {{visit.waitlist.date}}</mat-cell>
+              {{getLastVisitDate(visit)}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="serviceName">
             <mat-header-cell *matHeaderCellDef>Service Name</mat-header-cell>
             <mat-cell *matCellDef="let visit">
-              {{visit.service.name}}</mat-cell>
+              {{getServiceName(visit)}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="userName">
             <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
             <mat-cell *matCellDef="let visit">
-               {{getUserName(visit.user)}}</mat-cell>
+               {{getUserName(visit)}}</mat-cell>
           </ng-container>
-          <ng-container matColumnDef="mr_createdDate">
+          <ng-container matColumnDef="mr">
             <mat-header-cell *matHeaderCellDef>MR</mat-header-cell>
-            <mat-cell *matCellDef="let visit">  <button mat-button (click)="viewMedicalRecord(visit)"  style="text-align:center">{{visit.mrCreated===true?'View MR':'Create MR'}}</button></mat-cell>
+            <mat-cell *matCellDef="let visit">  <button mat-button (click)="viewMedicalRecord(visit)"  style="text-align:center">{{isMRCreated(visit) === true ?'View MR':'Create MR'}}</button></mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="rx">
+            <mat-header-cell *matHeaderCellDef>RX</mat-header-cell>
+            <mat-cell *matCellDef="let visit">  <button mat-button (click)="viewMR_prescription(visit)"  style="text-align:center">{{isRxCreated(visit)===true?'View Rx':'Create Rx'}}</button></mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns"></mat-row>
