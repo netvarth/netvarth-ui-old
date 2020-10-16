@@ -419,7 +419,7 @@ export class AppointmentActionsComponent implements OnInit {
         'booking_date': this.appt.appmtDate,
         'booking_time': this.appt.appmtTime,
         'mr_mode': medicalrecord_mode,
-        'mr_id': mrId,
+        'mrId': mrId,
         'booking_id': this.appt.uid
 
       }
@@ -445,7 +445,7 @@ export class AppointmentActionsComponent implements OnInit {
         'booking_date': this.appt.appmtDate,
         'booking_time': this.appt.appmtTime,
         'mr_mode': medicalrecord_mode,
-        'mr_id': this.appt.mrId,
+        'mrId': this.appt.mrId,
         'booking_id': this.appt.uid
       }
     };

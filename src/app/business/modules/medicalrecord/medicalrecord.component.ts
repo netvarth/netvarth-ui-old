@@ -54,10 +54,8 @@ export class MedicalrecordComponent implements OnInit {
     this.activated_route.queryParams.subscribe(
       (qparams) => {
         if (qparams['customerDetail']) {
-          this.mrId = qparams.mr_id;
-          if (qparams.mrId !== 0 && qparams.mr_mode === 'view') {
-            //  this.getMedicalRecordUsingMR(qparams.mrId);
-          } else {
+          // tslint:disable-next-line:radix
+          this.mrId = parseInt(qparams.mrId);
             this.customerDetails = JSON.parse(qparams.customerDetail);
             this.PatientId = this.customerDetails.id;
             if (qparams.department) {
@@ -66,12 +64,12 @@ export class MedicalrecordComponent implements OnInit {
             if (qparams.serviceName) {
               this.serviceName = qparams.serviceName;
             }
+            console.log(this.mrId);
+
             this.medicalService.setPatientDetailsForMR(qparams);
-            this.medicalService.setCurrentMRID(qparams.mrId);
+            this.medicalService.setCurrentMRID(this.mrId);
 
-          }
-
-        } else {
+          } else {
           this.medicalService.patient_data.subscribe(res => {
             this.customerDetails = JSON.parse(res.customerDetail);
             this.PatientId = this.customerDetails.id;
@@ -82,7 +80,8 @@ export class MedicalrecordComponent implements OnInit {
               this.serviceName = res.serviceName;
             }
             if (res.mrId) {
-              this.mrId = res.mrId;
+              // tslint:disable-next-line:radix
+              this.mrId = parseInt(res.mrId);
             }
 
 

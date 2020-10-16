@@ -406,7 +406,7 @@ export class CheckinActionsComponent implements OnInit {
         'department': this.checkin.service.deptName,
         'consultationMode': 'OP',
         'booking_id': this.checkin.ynwUuid,
-        'mr_id': this.checkin.mrId
+        'mrId': this.checkin.mrId
         // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
 
       }
@@ -428,7 +428,7 @@ export class CheckinActionsComponent implements OnInit {
         'booking_time': this.checkin.token,
         'department': this.checkin.service.deptName,
         'consultationMode': 'OP',
-        'mr_id': this.checkin.mrId,
+        'mrId': this.checkin.mrId,
         'booking_id': this.checkin.ynwUuid
       }
     };

@@ -36,10 +36,17 @@ export class ClinicalnotesComponent implements OnInit {
     private medicalrecordService: MedicalrecordService) {
 
 
-    this.medicalrecordService._mrUid.subscribe(mrId => {
-      console.log(mrId);
 
-      if (mrId !== 0 || mrId !== undefined) {
+  }
+
+  ngOnInit() {
+    this.medicalrecordService._mrUid.subscribe(mrId => {
+
+      if (mrId === 0 || mrId === undefined) {
+        this.isLoaded = true;
+        this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+
+      } else {
         this.getMRClinicalNotes(mrId).then((res: any) => {
           this.clinicalNotes = res;
           console.log(JSON.stringify(this.clinicalNotes));
@@ -47,16 +54,10 @@ export class ClinicalnotesComponent implements OnInit {
           this.isLoaded = true;
 
         });
-      } else {
-        this.isLoaded = true;
-        this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
       }
     });
   }
 
-  ngOnInit() {
-
-  }
 
 
   getMRClinicalNotes(mrId) {

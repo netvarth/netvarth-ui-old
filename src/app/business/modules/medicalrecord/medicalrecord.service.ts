@@ -15,7 +15,7 @@ export class MedicalrecordService {
   };
   private patientDetails = new BehaviorSubject<any>('');
   patient_data = this.patientDetails.asObservable();
-  private mrId = new BehaviorSubject<number>(0);
+  private mrId = new BehaviorSubject<any>(0);
   _mrUid = this.mrId.asObservable();
   drugList: any = [];
 
@@ -47,6 +47,8 @@ export class MedicalrecordService {
     this.patientDetails.next(data);
   }
   setCurrentMRID(uid) {
+    console.log(uid);
+
     this.mrId.next(uid);
 
   }

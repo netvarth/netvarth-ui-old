@@ -298,7 +298,7 @@ export class CustomersListComponent implements OnInit {
   }
   medicalRecord(customerDetail) {
     const navigationExtras: NavigationExtras = {
-      queryParams: { 'customerDetail': JSON.stringify(customerDetail) }
+      queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 }
     };
 
     this.shared_functions.removeitemfromLocalStorage('mrId');
