@@ -28,7 +28,7 @@
     margin: 10px;
   }
   .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon, 
-  .message-icon, .notes-icon, .printer-icon , .viewdetails-icon,
+  .message-icon, .notes-icon, .printer-icon , .viewdetails-icon, .reschedule-icon,
   .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon,
   .action-box .meet-icon, .action-box .phon-icon {
     width: 25px !important;
@@ -42,7 +42,7 @@
     font-size: smaller;
   }
   .action-box {
-    width: 90px;
+    width: 120px;
     height: 80px;
     margin: 5px;
   }
@@ -59,13 +59,13 @@
 .footerlinks {
   font-size: 1rem;
 }
-.zoom-icon, .wtsapaud-icon, .wtsapvid-icon {
+.action-box .zoom-icon, .action-box .wtsapaud-icon, .action-box .wtsapvid-icon {
   width: 70px;
 }
 .action-box .meet-icon, .action-box .phon-icon {
   width: 40px;
 }
-.wtsapaud-icon {
+.action-box .wtsapaud-icon {
   margin-top: -15px;
 }
 .label-caption {
