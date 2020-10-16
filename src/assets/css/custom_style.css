@@ -12277,4 +12277,15 @@ img.busN-logo {
   .drop-width {
     width: 25px;
   }
+  
+}
+
+.mrcreate{
+  margin-bottom: 5px !important;
+  border: 1px solid lightgrey!important;
+  /* box-shadow: 1px 1px 1px 1px lightgrey !important; */
+  /* width: 50%!important; */
+}
+.mrcreate:hover {
+  border: 1px solid #00aef2!important;
 }

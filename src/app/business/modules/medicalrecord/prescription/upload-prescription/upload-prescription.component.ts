@@ -133,6 +133,7 @@ export class UploadPrescriptionComponent implements OnInit {
         this.showSave = false;
         this.upload_status = 'Uploaded';
         this.sharedfunctionObj.openSnackBar('Prescription uploaded successfully');
+        this.router.navigate(['provider', 'medicalrecord', 'prescription']);
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
