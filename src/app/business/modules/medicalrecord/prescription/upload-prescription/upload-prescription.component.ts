@@ -5,7 +5,7 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload-prescription',
@@ -32,7 +32,7 @@ export class UploadPrescriptionComponent implements OnInit {
   upload_status = 'Added to list';
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
-    private location: Location,
+    private router: Router,
     public dialog: MatDialog,
     private medicalrecord_service: MedicalrecordService) {
       this.medicalrecord_service.patient_data.subscribe(data => {
@@ -46,14 +46,14 @@ export class UploadPrescriptionComponent implements OnInit {
 
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       this.mrId = mrId;
-      if (this.mrId !== 0 || this.mrId!==undefined) {
+      if (this.mrId !== 0 || this.mrId !== undefined) {
         this.getMrprescription(this.mrId);
       }
     });
 
   }
   goBack() {
-    this.location.back();
+    this.router.navigate(['provider', 'medicalrecord', 'prescription']);
   }
 
   getMrprescription(mrId) {

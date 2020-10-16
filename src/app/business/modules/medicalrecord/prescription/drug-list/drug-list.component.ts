@@ -7,7 +7,6 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 import { AddDrugComponent } from '../add-drug/add-drug.component';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
 import { projectConstants } from '../../../../../app.component';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-drug-list',
@@ -38,7 +37,6 @@ export class DrugListComponent implements OnInit {
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
-    private location: Location,
     private activatedRoot: ActivatedRoute,
     private router: Router,
     private medicalrecord_service: MedicalrecordService) {
@@ -62,14 +60,16 @@ export class DrugListComponent implements OnInit {
     this.getDigitalSign();
     // this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
     this.medicalrecord_service._mrUid.subscribe(mrId => {
+      console.log(mrId);
       if (mrId !== 0) {
         this.mrId = mrId;
+        console.log(mrId);
       }
     });
     this.getMrprescription();
   }
   goBack() {
-    this.location.back();
+    this.router.navigate(['provider', 'medicalrecord', 'prescription']);
   }
   getDigitalSign() {
     if (this.providerId) {
