@@ -229,7 +229,6 @@ export class ConsumerAppointmentComponent implements OnInit {
         public dialog: MatDialog) {
         this.route.queryParams.subscribe(
             params => {
-
                 this.sel_loc = params.loc_id;
                 if (params.qid) {
                     this.sel_queue_id = params.qid;
@@ -312,7 +311,9 @@ export class ConsumerAppointmentComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+        if (this.type !== 'reschedule') {
         this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+        }
         this.minDate = this.todaydate;
         if (this.change_date === 'true') {
             const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -349,6 +350,10 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
             (appt: any) => {
                 this.appointment = appt;
+                if (this.type === 'reschedule') {
+                     this.waitlist_for.push({ id: this.appointment.appmtFor[0].id, firstName: this.appointment.appmtFor[0].firstName, lastName: this.appointment.appmtFor[0].lastName });
+                }
+
                 this.sel_loc = this.appointment.location.id;
                 this.selectedService = this.appointment.service.id;
                 this.sel_checkindate = this.hold_sel_checkindate = this.appointment.appmtDate;
