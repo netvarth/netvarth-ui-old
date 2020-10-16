@@ -7,6 +7,7 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 import { AddDrugComponent } from '../add-drug/add-drug.component';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
 import { projectConstants } from '../../../../../app.component';
+import { LocateCustomerComponent } from '../../../check-ins/locate-customer/locate-customer.component';
 
 @Component({
   selector: 'app-drug-list',
@@ -35,6 +36,7 @@ export class DrugListComponent implements OnInit {
   providerId;
   digitalSign = false;
   deleteFromDb = false;
+  locateCustomerdialogRef;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
@@ -65,8 +67,8 @@ export class DrugListComponent implements OnInit {
     this.getMrprescription();
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
-  }
+       this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
+}
   getDigitalSign() {
     if (this.providerId) {
       this.provider_services.getDigitalSign(this.providerId)
@@ -150,7 +152,7 @@ export class DrugListComponent implements OnInit {
     }
   }
   saveRx() {
-    if (this.mrId) {
+     if (this.mrId) {
       this.provider_services.updateMRprescription(this.drugList, this.mrId).
         subscribe(res => {
           console.log(this.drugList);
@@ -229,7 +231,35 @@ export class DrugListComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-
+  instrutionType(val) {
+    const detail = val.length;
+    let len ;
+      if (detail > 25) {
+      len = 0;
+      } else {
+      len = 1;
+      }
+    return len;
+  }
+  truncateInst(val) {
+    const inst = val.substr(0, 25);
+    return inst;
+  }
+  instructPopUp(val) {
+    this.locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        message: val
+      }
+    });
+    this.locateCustomerdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
+  }
   shareManualRx() {
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '50%',
