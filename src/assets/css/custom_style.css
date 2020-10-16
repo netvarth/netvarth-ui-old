@@ -12090,6 +12090,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/Notes-01.svg);
   width: 40px;
 }
+.notes-icon-customer {
+  content: url(../images/dashboard-icons/Notes-01.svg);
+  width: 20px;
+}
 .printer-icon {
   content: url(../images/dashboard-icons/printer-01.svg);
   width: 40px;
@@ -12101,6 +12105,10 @@ img.busN-logo {
 .medicalrecord-icon {
   content: url(../images/dashboard-icons/medicalrecord-01.svg);
   width: 40px;
+}
+.medicalrecord-icon-customer {
+  content: url(../images/dashboard-icons/medicalrecord-01.svg);
+  width: 20px;
 }
 .act-icons .printer-icon {
   width: 17px !important;

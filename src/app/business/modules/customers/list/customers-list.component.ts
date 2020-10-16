@@ -304,6 +304,14 @@ export class CustomersListComponent implements OnInit {
     this.shared_functions.removeitemfromLocalStorage('mrId');
     this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
   }
+  prescription(customerDetail) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 }
+    };
+
+    this.shared_functions.removeitemfromLocalStorage('mrId');
+    this.router.navigate(['provider', 'medicalrecord', 'prescription'], navigationExtras);
+  }
   searchCustomer() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
