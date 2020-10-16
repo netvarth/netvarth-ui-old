@@ -7,7 +7,6 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 import { AddDrugComponent } from '../add-drug/add-drug.component';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
 import { projectConstants } from '../../../../../app.component';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-drug-list',
