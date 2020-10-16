@@ -12344,3 +12344,14 @@ img.busN-logo {
   content: url(../images/Reschedule-01-01.svg);
   width: 20px;
 }
+
+@media (min-width: 320px){
+  .tspacepdrt{
+    padding-right: 10px !important;
+  }
+}
+@media (min-width: 320px){
+  .mgn5mgnrt{
+    margin-right: 15px !important;
+  }
+}

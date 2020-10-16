@@ -25,8 +25,11 @@
                                                     {{appt.providerAccount.businessName | capitalizeFirst}}
                                                 </span></div>
                                             <div class="item"><span class="ttle">{{date_cap}}</span> <span>
-                                                    {{appt.appmtDate | date:dateFormatSp}}
-                                                </span></div>
+                                                    {{appt.appmtDate | date:dateFormatSp}}, {{getSingleTime(appt.appmtTime)}}
+                                            </span></div>
+                                            <!-- <div class="item"><span class="ttle">Time</span> <span>
+                                                    {{appt.appmtTime}}
+                                                </span></div> -->
                                             <div class="item"><span class="ttle">{{location_cap}}</span>
                                                 <span>{{appt.location.place | capitalizeFirst}}</span></div>
                                             <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>

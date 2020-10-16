@@ -36,11 +36,13 @@
                                             <div class="item"><span class="ttle">{{location_cap}}</span>
                                                 <span>{{waitlist.queue.location.place | capitalizeFirst}}</span>
                                             </div>
-                                            <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
-                                                <span class="waitlist_for">
+                                            <div class="item"><span class="ttle" *ngIf="!waitlist.token">{{waitlist_for_cap}}</span>
+                                                <span class="ttle" *ngIf="waitlist.token">Token for</span>
+                                                    <span class="waitlist_for">
                                                     {{waitlist.waitlistingFor[0].firstName | capitalizeFirst}}
                                                     {{waitlist.waitlistingFor[0].lastName | capitalizeFirst}}</span>
                                             </div>
+                                            
                                             <div *ngIf="waitlist.token" class="item"><span class="ttle">Token Number</span>
                                                 <span class="waitlist_for">{{waitlist.token}}</span>
                                             </div>
