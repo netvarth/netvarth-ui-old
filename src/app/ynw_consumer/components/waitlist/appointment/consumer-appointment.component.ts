@@ -1593,6 +1593,10 @@ export class ConsumerAppointmentComponent implements OnInit {
     editCallingmodes() {
         this.showInputSection = false;
     }
+    showPhoneInput(){
+        this.showInputSection = true;
+
+    }
     clearCouponErrors() {
         this.couponvalid = true;
         this.api_cp_error = null;

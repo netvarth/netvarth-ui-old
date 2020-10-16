@@ -1158,7 +1158,7 @@
                               style="font-size: 20px;" class="material-icons">attach_file</i></span>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
-                          *ngIf="!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')">
+                          *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
                           <span class="" style="font-size: smaller;">
                             {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
                           </span>
