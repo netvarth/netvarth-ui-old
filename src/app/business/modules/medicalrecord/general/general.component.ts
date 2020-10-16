@@ -12,6 +12,7 @@ import { MedicalrecordService } from '../medicalrecord.service';
   styleUrls: ['./general.component.css']
 })
 export class GeneralComponent implements OnInit {
+  mrId: any;
   displayTitle: any;
   editable_object: any;
   clinicalNotes: any;
@@ -31,8 +32,11 @@ export class GeneralComponent implements OnInit {
     private medicalrecordService: MedicalrecordService
   ) {
     this.medicalrecordService.patient_data.subscribe(data => {
-      this.customerDetails =  JSON.parse(data.customerDetail);
+      this.customerDetails = JSON.parse(data.customerDetail);
       console.log(this.customerDetails);
+    });
+    this.medicalrecordService._mrUid.subscribe(mrId => {
+      this.mrId = mrId;
     });
     this.activated_route.queryParams.subscribe(params => {
       this.editable_object = JSON.parse(params.data);
@@ -60,10 +64,9 @@ export class GeneralComponent implements OnInit {
     const payload = {
       'clinicalNotes': payloadObject
     };
-    this.medicalrecordService._mrUid.subscribe(mrId => {
-      if (mrId !== 0) {
-        this.updateMrwithClinicalNotes(payload, mrId);
-      } else {
+
+      if (this.mrId === 0) {
+
         this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
           this.medicalrecordService.setCurrentMRID(res);
           this.sharedfunctionObj.openSnackBar('Medical Record Created Successfully');
@@ -72,8 +75,11 @@ export class GeneralComponent implements OnInit {
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
+      } else {
+             this.updateMrwithClinicalNotes(payload, this.mrId);
+
       }
-    });
+
 
   }
 

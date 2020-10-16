@@ -13,6 +13,7 @@ import { MedicalrecordService } from '../medicalrecord.service';
 })
 export class ClinicalnotesComponent implements OnInit {
 
+  mrId: any;
   clinicalNotes: any[];
   allergies: any;
   currentMRId: any;
@@ -35,63 +36,65 @@ export class ClinicalnotesComponent implements OnInit {
     private router: Router,
     private medicalrecordService: MedicalrecordService) {
 
-
+    this.medicalrecordService._mrUid.subscribe(mrId => {
+      this.mrId = mrId;
+    });
 
   }
 
   ngOnInit() {
-    this.medicalrecordService._mrUid.subscribe(mrId => {
 
-      if (mrId === 0 || mrId === undefined) {
+
+    if (this.mrId === 0 || this.mrId === undefined) {
+      this.isLoaded = true;
+      this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+
+    } else {
+      this.getMRClinicalNotes(this.mrId).then((res: any) => {
+        this.clinicalNotes = res;
+        console.log(JSON.stringify(this.clinicalNotes));
+
         this.isLoaded = true;
-        this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
 
-      } else {
-        this.getMRClinicalNotes(mrId).then((res: any) => {
-          this.clinicalNotes = res;
-          console.log(JSON.stringify(this.clinicalNotes));
+      });
+    }
 
-          this.isLoaded = true;
-
-        });
-      }
-    });
-  }
+}
 
 
 
-  getMRClinicalNotes(mrId) {
-    const _this = this;
-    _this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+getMRClinicalNotes(mrId) {
+  const _this = this;
+  _this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
 
-    return new Promise((resolve) => {
-      _this.provider_services.getClinicalRecordOfMRById(mrId)
-        .subscribe((res: any) => {
-          const response = res.clinicalNotes;
-          Object.entries(response).forEach(
-            function ([key, v]) {
-              const index = _this.clinicalNotes.findIndex(element => element.id === key);
-              _this.clinicalNotes[index].value = v;
+  return new Promise((resolve) => {
+    _this.provider_services.getClinicalRecordOfMRById(mrId)
+      .subscribe((res: any) => {
+        const response = res.clinicalNotes;
+        Object.entries(response).forEach(
+          function ([key, v]) {
+            const index = _this.clinicalNotes.findIndex(element => element.id === key);
+            _this.clinicalNotes[index].value = v;
 
-            });
-        },
-          error => {
-            _this.sharedfunctionObj.openSnackBar(_this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
+      },
+        error => {
+          _this.sharedfunctionObj.openSnackBar(_this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
 
 
-      resolve(_this.clinicalNotes);
-    });
+    resolve(_this.clinicalNotes);
+  });
 
-  }
-  addOrEditClinicalNotes(object) {
+}
+addOrEditClinicalNotes(object) {
 
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        'data': JSON.stringify(object),
-        'clinicalNotes': JSON.stringify(this.clinicalNotes)
-      }
-    };
-    this.router.navigate(['/provider/medicalrecord/edit'], navigationExtras);
-  }
+  const navigationExtras: NavigationExtras = {
+    queryParams: {
+      'data': JSON.stringify(object),
+      'clinicalNotes': JSON.stringify(this.clinicalNotes)
+    }
+  };
+  this.router.navigate(['/provider/medicalrecord/edit'], navigationExtras);
+}
 }
