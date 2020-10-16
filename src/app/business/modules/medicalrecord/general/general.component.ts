@@ -64,7 +64,7 @@ export class GeneralComponent implements OnInit {
   }
 
   redirecToClinicalNotes() {
-    this.router.navigate(['provider', 'medicalrecord']);
+    this.router.navigate(['provider', 'customers', 'medicalrecord']);
     // this.router.navigateByUrl('../clinicalnotes', { relativeTo: this.activated_route });
   }
 
@@ -78,20 +78,20 @@ export class GeneralComponent implements OnInit {
       'clinicalNotes': payloadObject
     };
 
-      if (this.mrId === 0) {
+    if (this.mrId === 0) {
 
-        this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
-          this.medicalrecordService.setCurrentMRID(res);
-          this.sharedfunctionObj.openSnackBar('Medical Record Created Successfully');
-          this.router.navigate(['provider', 'medicalrecord']);
-        },
-          error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-          });
-      } else {
-             this.updateMrwithClinicalNotes(payload, this.mrId);
+      this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
+        this.medicalrecordService.setCurrentMRID(res);
+        this.sharedfunctionObj.openSnackBar('Medical Record Created Successfully');
+        this.router.navigate(['provider', 'customers', 'medicalrecord']);
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+    } else {
+      this.updateMrwithClinicalNotes(payload, this.mrId);
 
-      }
+    }
 
 
   }
@@ -100,7 +100,7 @@ export class GeneralComponent implements OnInit {
     this.provider_services.updateMrClinicalNOtes(payload, mrId)
       .subscribe((data) => {
         this.shared_functions.openSnackBar(this.displayTitle + ' updated successfully');
-        this.router.navigate(['provider', 'medicalrecord']);
+        this.router.navigate(['provider', 'customers', 'medicalrecord']);
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
