@@ -22,6 +22,8 @@ export class GeneralComponent implements OnInit {
   userId: any;
   today = new Date();
   patientid: any;
+  department: any;
+  serviceName: any;
 
   constructor(
     public sharedfunctionObj: SharedFunctions,
@@ -31,6 +33,16 @@ export class GeneralComponent implements OnInit {
     private router: Router,
     private medicalrecordService: MedicalrecordService
   ) {
+    this.medicalrecordService.patient_data.subscribe(res => {
+      if (res.department) {
+        this.department = res.department;
+        console.log(this.department);
+      }
+      if (res.serviceName) {
+        this.serviceName = res.serviceName;
+        console.log(this.serviceName);
+      }
+    });
     this.medicalrecordService.patient_data.subscribe(data => {
       this.customerDetails = JSON.parse(data.customerDetail);
       console.log(this.customerDetails);

@@ -13,10 +13,10 @@
 
         <div class="mgn-up-10">
             <div>
-                <p>Patient Name: <b>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </b>  <span style="float: right;">Op Consultation</span></p>
-                <p>Patient Id: <b>{{customerDetails.id}} </b>  <span style="float: right;">7am,22/05/2020</span></p>
-                <p><span *ngIf="customerDetails.dob">  DOB: <b>{{customerDetails.dob}} </b>  </span><span style="float: right;">Dr.Ravi kumar</span> </p>
-                <p><span *ngIf="customerDetails.gender">Gender:<b>{{customerDetails.gender | capitalizeFirst}} </b> </span> <span style="float: right;">Cardiolgy</span> </p>         
+                <p>Patient Name: <b>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </b>  <span *ngIf = "serviceName" style="float: right;"> <b>{{serviceName}}</b></span></p>
+                <p>Patient Id: <b>{{customerDetails.id}} </b>  <span *ngIf = "department"  style="float: right;"> <b>{{department}}</b></span>  </p>
+                <p><span *ngIf="customerDetails.dob">  DOB: <b>{{customerDetails.dob}} </b>  </span>  </p>
+                <p><span *ngIf="customerDetails.gender">Gender:<b>{{customerDetails.gender | capitalizeFirst}} </b> </span> </p>         
             
               </div>       
          </div>
