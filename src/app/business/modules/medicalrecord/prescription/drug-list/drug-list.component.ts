@@ -34,6 +34,7 @@ export class DrugListComponent implements OnInit {
   drugData: any = [];
   providerId;
   digitalSign = false;
+  deleteFromDb = false;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
@@ -86,6 +87,7 @@ export class DrugListComponent implements OnInit {
         .subscribe((data) => {
           console.log(data);
           this.drugList = data;
+          this.deleteFromDb = true;
         },
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -137,7 +139,14 @@ export class DrugListComponent implements OnInit {
     this.drugList.splice(index, 1);
     console.log(this.drugList);
     this.showSave = true;
-    // delete this.drugList[index];
+   if (this.deleteFromDb) {
+    if (this.mrId) {
+      this.provider_services.updateMRprescription(this.drugList, this.mrId).
+        subscribe(res => {
+          console.log(this.drugList);
+        });
+    }
+   }
   }
   saveRx() {
     if (this.mrId) {

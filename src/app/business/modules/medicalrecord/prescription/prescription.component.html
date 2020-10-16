@@ -44,9 +44,7 @@
               Instructions
           </th>
 
-          <th>
-
-          </th>
+          
         </tr>
       </thead>
         <tbody>
@@ -66,26 +64,27 @@
             <td >
              {{drug.instructions}}
             </td>
-             <td >
-              <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-             </td>
+             
 
           </tr>
         </tbody>
-      </table></div>
+      </table>
+    </div>
+
+    <div  *ngIf="drugList.length > 0 ">
+      <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="updatePrescription()">Update Prescription</button>
+  </div>
     </div>
     <div *ngIf="uploadlist.length>0">
         <div class="no-dta table-responsive" >
-            <h5> Create prescription of your own</h5>
+            <h5> Current Uploaded Prescription(s)</h5>
         <table class="table table-bordered" >
               <thead>
               <tr >
                 <th>
                     Image name
                 </th>
-                <th>
-
-                </th>
+               
               </tr>
             </thead>
               <tbody>
@@ -94,9 +93,7 @@
                     {{img.keyName}}
                   </td>
 
-                   <td >
-                    <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-                   </td>
+                  
 
                 </tr>
               </tbody>

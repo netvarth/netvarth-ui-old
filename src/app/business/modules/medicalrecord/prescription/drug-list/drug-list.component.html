@@ -114,21 +114,20 @@
         </div>
 
         <div  *ngIf="drugList.length > 0 && showSave">
-
             <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>
         </div>
-        <div *ngIf="drugList.length > 0 && !showSave && digitalSign"> 
+        <!-- <div *ngIf="drugList.length > 0 && !showSave && digitalSign"> 
                 <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx()" >
                         
                     <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
                 
-            </div>
-            <div *ngIf="drugList.length > 0 && !showSave && !digitalSign">
+            </div> -->
+            <!-- <div *ngIf="drugList.length > 0 && !showSave && !digitalSign">
                 <button type="button"   style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt2"  >
                         
                     <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
                 
-            </div>
+            </div> -->
 
       </div>
       <div class=" no-dta table-responsive" *ngIf="drugList.length === 0">

@@ -99,7 +99,9 @@ export class PrescriptionComponent implements OnInit {
     });
   }
 
-
+  updatePrescription() {
+    this.router.navigate(['/provider/medicalrecord/addrxlist']);
+  }
 
   deleteDrug(index) {
     this.drugList.splice(index, 1);
