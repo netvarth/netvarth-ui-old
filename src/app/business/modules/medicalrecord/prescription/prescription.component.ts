@@ -56,7 +56,7 @@ export class PrescriptionComponent implements OnInit {
 
   }
   uploadRx() {
-    this.router.navigate(['/provider/medicalrecord/uploadRx']);
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadRx']);
 
   }
 
@@ -94,13 +94,13 @@ export class PrescriptionComponent implements OnInit {
         const navigationExtras: NavigationExtras = {
           queryParams: { details: JSON.stringify(result) }
         };
-        this.router.navigate(['/provider/medicalrecord/addrxlist'], navigationExtras);
+        this.router.navigate(['/provider/customers/medicalrecord/addrxlist'], navigationExtras);
       }
     });
   }
 
   updatePrescription() {
-    this.router.navigate(['/provider/medicalrecord/addrxlist']);
+    this.router.navigate(['/provider/customers/medicalrecord/addrxlist']);
   }
 
   deleteDrug(index) {

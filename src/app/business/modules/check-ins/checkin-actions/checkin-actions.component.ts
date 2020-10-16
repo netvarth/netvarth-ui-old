@@ -412,7 +412,7 @@ export class CheckinActionsComponent implements OnInit {
       }
     };
 
-    this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+    this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
   }
   prescription() {
     this.dialogRef.close();
@@ -432,7 +432,7 @@ export class CheckinActionsComponent implements OnInit {
         'booking_id': this.checkin.ynwUuid
       }
     };
-    this.router.navigate(['provider', 'medicalrecord', 'prescription'], navigationExtras);
+    this.router.navigate(['provider', 'customers',  'medicalrecord', 'prescription'], navigationExtras);
   }
 }
 

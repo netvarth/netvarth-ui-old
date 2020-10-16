@@ -65,7 +65,7 @@ export class DrugListComponent implements OnInit {
     this.getMrprescription();
   }
   goBack() {
-    this.router.navigate(['provider', 'medicalrecord', 'prescription']);
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
   }
   getDigitalSign() {
     if (this.providerId) {
@@ -139,14 +139,14 @@ export class DrugListComponent implements OnInit {
     this.drugList.splice(index, 1);
     console.log(this.drugList);
     this.showSave = true;
-   if (this.deleteFromDb) {
-    if (this.mrId) {
-      this.provider_services.updateMRprescription(this.drugList, this.mrId).
-        subscribe(res => {
-          console.log(this.drugList);
-        });
+    if (this.deleteFromDb) {
+      if (this.mrId) {
+        this.provider_services.updateMRprescription(this.drugList, this.mrId).
+          subscribe(res => {
+            console.log(this.drugList);
+          });
+      }
     }
-   }
   }
   saveRx() {
     if (this.mrId) {
@@ -154,7 +154,7 @@ export class DrugListComponent implements OnInit {
         subscribe(res => {
           console.log(this.drugList);
           this.showSave = false;
-          this.router.navigate(['provider', 'medicalrecord', 'prescription']);
+          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
         });
     } else {
 
@@ -163,7 +163,7 @@ export class DrugListComponent implements OnInit {
           this.medicalrecord_service.setCurrentMRID(data);
           this.showSave = false;
           this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
-          this.router.navigate(['provider', 'medicalrecord', 'prescription']);
+          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
         },
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -246,6 +246,6 @@ export class DrugListComponent implements OnInit {
     });
   }
   redirecToPrescriptionHome() {
-    this.router.navigate(['provider', 'medicalrecord', 'prescription']);
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
   }
 }

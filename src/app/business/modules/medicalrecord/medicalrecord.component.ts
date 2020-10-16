@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
@@ -14,6 +14,7 @@ import { projectConstants } from '../../../app.component';
 })
 export class MedicalrecordComponent implements OnInit {
 
+  navigation_params: { [key: string]: any; };
   mrDate: Date;
   serviceName: any;
   department: any;
@@ -42,36 +43,45 @@ export class MedicalrecordComponent implements OnInit {
     this.routeLinks = [
       {
         label: 'Clinical Notes',
-        link: './clinicalnotes',
+        link: '/provider/customers/medicalrecord/clinicalnotes',
+        id: 'clinicalnotes',
         index: 0
       }, {
         label: 'Prescription',
-        link: './prescription',
+        link: '/provider/customers/medicalrecord/prescription',
+        id: 'prescription',
         index: 1
       }
     ];
 
+
     this.activated_route.queryParams.subscribe(
       (qparams) => {
         if (qparams['customerDetail']) {
+          this.navigation_params = qparams;
           // tslint:disable-next-line:radix
           this.mrId = parseInt(qparams.mrId);
-            this.customerDetails = JSON.parse(qparams.customerDetail);
-            this.PatientId = this.customerDetails.id;
-            if (qparams.department) {
-              this.department = qparams.department;
-            }
-            if (qparams.serviceName) {
-              this.serviceName = qparams.serviceName;
-            }
-            console.log(this.mrId);
+          this.customerDetails = JSON.parse(qparams.customerDetail);
+          this.PatientId = this.customerDetails.id;
+          if (qparams.department) {
+            this.department = qparams.department;
+          }
+          if (qparams.serviceName) {
+            this.serviceName = qparams.serviceName;
+          }
+          console.log(this.mrId);
 
-            this.medicalService.setPatientDetailsForMR(qparams);
-            this.medicalService.setCurrentMRID(this.mrId);
+          this.medicalService.setPatientDetailsForMR(qparams);
+          this.medicalService.setCurrentMRID(this.mrId);
 
-          } else {
+        } else {
+
+
           this.medicalService.patient_data.subscribe(res => {
+            this.navigation_params = res;
             this.customerDetails = JSON.parse(res.customerDetail);
+            console.log(JSON.stringify(this.customerDetails));
+
             this.PatientId = this.customerDetails.id;
             if (res.department) {
               this.department = res.department;
@@ -93,12 +103,21 @@ export class MedicalrecordComponent implements OnInit {
       });
 
   }
+  navigate(routeLink) {
+    switch (routeLink.id) {
+      case 'clinicalnotes': {
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], { queryParams: this.navigation_params });
+        break;
+      }
+      case 'prescription': {
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigation_params });
+        break;
+      }
+    }
 
+  }
 
   ngOnInit() {
-    const queryParams = this.activated_route.snapshot['queryParams'];
-    console.log(queryParams);
-
     this.mrDate = new Date();
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));

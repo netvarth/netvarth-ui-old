@@ -302,7 +302,7 @@ export class CustomersListComponent implements OnInit {
     };
 
     this.shared_functions.removeitemfromLocalStorage('mrId');
-    this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+    this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
   }
   prescription(customerDetail) {
     const navigationExtras: NavigationExtras = {
@@ -310,7 +310,7 @@ export class CustomersListComponent implements OnInit {
     };
 
     this.shared_functions.removeitemfromLocalStorage('mrId');
-    this.router.navigate(['provider', 'medicalrecord', 'prescription'], navigationExtras);
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
   }
   searchCustomer() {
     const navigationExtras: NavigationExtras = {

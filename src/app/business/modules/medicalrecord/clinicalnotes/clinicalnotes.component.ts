@@ -101,6 +101,6 @@ export class ClinicalnotesComponent implements OnInit {
         'clinicalNotes': JSON.stringify(this.clinicalNotes)
       }
     };
-    this.router.navigate(['/provider/medicalrecord/edit'], navigationExtras);
+    this.router.navigate(['/provider/customers/medicalrecord/edit'], navigationExtras);
   }
 }

@@ -425,7 +425,7 @@ export class AppointmentActionsComponent implements OnInit {
       }
     };
 
-    this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+    this.router.navigate(['provider', 'customers',  'medicalrecord'], navigationExtras);
   }
   prescription() {
     this.dialogRef.close();
@@ -449,6 +449,6 @@ export class AppointmentActionsComponent implements OnInit {
         'booking_id': this.appt.uid
       }
     };
-    this.router.navigate(['provider', 'medicalrecord', 'prescription'], navigationExtras);
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
   }
 }

@@ -15,6 +15,8 @@
   color:	#0000FF;
   border: 1px solid #6B7F7F;
   font-weight: bold;
+    border-radius:20px !important;
+  margin:5px!important;
 }
 
 .mat-tab-link,
@@ -23,6 +25,9 @@
   height: 50px !important;
   min-width: 100px !important;
   border: 2px solid #0000FF;
+  border-radius:20px !important;
+  margin:5px!important;
+  font-weight: bold;
 }
 
 .tabContentContainer {
