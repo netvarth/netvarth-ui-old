@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 //import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
   styleUrls: ['./share-rx.component.css']
 })
 export class ShareRxComponent implements OnInit {
-
+  email_id;
   msgreceivers: any = [{'id': 0, 'name': 'patient'}, { 'id': 0, 'name': 'sp'} ];
   patientId: any;
   mrId;
@@ -44,12 +45,14 @@ export class ShareRxComponent implements OnInit {
   SEND_MESSAGE = '';
   settings: any = [];
   showToken = false;
+  pushnotify;
+  disableButton;
 iconClass: string;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
       public dialog: MatDialog,
-     // private provider_services: ProviderServices,
+      public fed_service: FormMessageDisplayService,
       private shared_functions: SharedFunctions,
       private fb: FormBuilder,
       ) {

@@ -1,4 +1,4 @@
-<form [formGroup]="amForm" novalidate (keyup)="resetApiErrors()" (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="ynw-common-form">
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="ynw-common-form">
   <h1 class="mat-dialog-title">Add Drug
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>

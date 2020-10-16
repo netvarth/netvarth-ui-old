@@ -2,9 +2,8 @@
 
 
 
-      
-<form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
-(keyup)="resetApiErrors()">
+
+<form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
 <h1 class="mat-dialog-title">share
     <button #queue mat-dialog-close class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
@@ -23,7 +22,7 @@
             errorMsg="Please enter a message.">
         </app-field-error-display>
     </div>
-    
+
     <div class="mgtop40 form-group" >
             We will create a PDF of your prescription and will share Via
         <div class="coupon-outer">
