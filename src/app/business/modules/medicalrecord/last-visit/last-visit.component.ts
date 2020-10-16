@@ -52,16 +52,6 @@ export class LastVisitComponent implements OnInit {
     }
     return date;
   }
-  getUserName(visit) {
-    let userName = '';
-    if (visit.waitlist) {
-      userName = visit.waitlist.date;
-    } else if (visit.appointmnet) {
-      userName = visit.appointmnet.appmtDate;
-    }
-    return userName;
-
-  }
   isMRCreated(visit) {
     let mrCreated = '';
     if (visit.waitlist) {
@@ -93,6 +83,45 @@ export class LastVisitComponent implements OnInit {
 
   }
   viewMedicalRecord(visitDetails) {
+    this.visitdetails = JSON.stringify(visitDetails);
+    if (visitDetails.waitlist) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
+          'serviceId': visitDetails.waitlist.service.id,
+          'serviceName': visitDetails.waitlist.service.name,
+          'booking_type': 'TOKEN',
+          'booking_date': visitDetails.waitlist.date,
+          'booking_time': visitDetails.waitlist.checkInTime,
+          'department': visitDetails.service.deptName,
+          'consultationMode': 'OP',
+          'booking_id': visitDetails.waitlist.ynwUuid,
+          'mrId': visitDetails.mrId
+        }
+      };
+      this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+    } else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(visitDetails.appointmnet.providerConsumer),
+          'serviceId': visitDetails.appointmnet.service.id,
+          'serviceName': visitDetails.appointmnet.service.name,
+          'department': visitDetails.appointmnet.service.deptName,
+          'booking_type': 'APPT',
+          'booking_date': visitDetails.appointmnet.appmtDate,
+          'booking_time': visitDetails.appointmnet.appmtTime,
+          // 'mr_mode': medicalrecord_mode,
+          'mrId': visitDetails.mrId,
+          'booking_id': visitDetails.appointmnet.uid
+        }
+      };
+      this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+      this.dialogRef.close();
+
+    }
+  }
+
+  viewMR_prescription(visitDetails) {
     this.visitdetails = JSON.stringify(visitDetails);
     console.log(visitDetails);
     if (visitDetails.waitlist) {
@@ -126,8 +155,9 @@ export class LastVisitComponent implements OnInit {
           'booking_id': visitDetails.appointmnet.uid
         }
       };
-      this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
-
+      this.router.navigate(['provider', 'medicalrecord', 'prescription'], navigationExtras);
+      this.dialogRef.close();
     }
+
   }
 }

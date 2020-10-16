@@ -27,7 +27,7 @@
           </ng-container>
           <ng-container matColumnDef="mr">
             <mat-header-cell *matHeaderCellDef>MR</mat-header-cell>
-            <mat-cell *matCellDef="let visit">  <button mat-button (click)="viewMedicalRecord(visit)"  style="text-align:center">{{isMRCreated(visit) === true ?'View MR':'Create MR'}}</button></mat-cell>
+            <mat-cell *matCellDef="let visit"> <button mat-button (click)="viewMedicalRecord(visit)"  style="text-align:center">{{isMRCreated(visit) === true ?'View MR':'Create MR'}}</button></mat-cell>
           </ng-container>
           <ng-container matColumnDef="rx">
             <mat-header-cell *matHeaderCellDef>RX</mat-header-cell>
