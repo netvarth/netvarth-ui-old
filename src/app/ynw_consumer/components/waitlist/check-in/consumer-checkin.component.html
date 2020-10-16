@@ -104,16 +104,17 @@
                                                                             class="fa phon-icon ph-cal"
                                                                             aria-hidden="true"></i>
                                                                     </span>
-                                                                    <span> <input *ngIf="!showInputSection"
+                                                                    <span class="pointer-cursor whatsappNo" (click)="showPhoneInput()"*ngIf="!showInputSection">{{callingModes}}</span>
+                                                                    <span> <input *ngIf="showInputSection"
                                                                             (keypress)="isNumeric($event)"
                                                                             class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
                                                                             style="width:150px!important ;"
                                                                             placeholder="" [(ngModel)]="callingModes"
                                                                             autocomplete="off" maxlength="10"></span>
-                                                                    <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
-                                                                        *ngIf="showInputSection">
-                                                                        {{callingModes}}</span>
-                                                                    <div class="input-group-append mgn-up-6"
+                                                                    <!-- <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
+                                                                        *ngIf="editCallingmodes(i)">
+                                                                        {{callingModes}}</span> -->
+                                                                    <!-- <div class="input-group-append mgn-up-6"
                                                                         style="padding-left: 10px;">
                                                                         <button *ngIf="!showInputSection"
                                                                             class="btn bt3 btn-default"
@@ -122,7 +123,7 @@
                                                                         <span class="editbt mgn-lt-20"
                                                                             *ngIf="showInputSection"
                                                                             (click)="editCallingmodes(i)"></span>
-                                                                    </div>
+                                                                    </div> -->
                                                                     <!-- <div class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                                 *ngIf="showInputSection">
                                                                 {{callingModes}}
@@ -328,7 +329,7 @@
                                                     <mat-chip (click)="gotoAttachments()"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-paperclip mgn-rt-5"
-                                                                aria-hidden="true"></i>Upload Files<span
+                                                                aria-hidden="true"></i>Attachments<span
                                                                 *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
                                                         </a></mat-chip>
                                                 </mat-chip-list>
@@ -609,7 +610,7 @@
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 lnk pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
                                     *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                                    Upload Files
+                                    Attachments
                                 </div>
                                 <ng-container class="attachment"
                                     *ngIf="selectedMessage.files && selectedMessage.files.length > 0">

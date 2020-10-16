@@ -646,6 +646,11 @@ export class ConsumerCheckinComponent implements OnInit {
             this.confrmshow = true;
         }
     }
+    showPhoneInput(){
+        this.showInputSection = true;
+        console.log(this.showInputSection)
+
+    }
     isSelectedService(id) {
         let clr = false;
         if (id === this.sel_ser) {
