@@ -13,6 +13,16 @@
           <h2 style="text-align: center;">{{displayTitle }}</h2>
         </h5>
 
+        <div class="mgn-up-10">
+            <div>
+                <p>Patient Name: <b>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </b>  <span style="float: right;">Op Consultation</span></p>
+                <p>Patient Id: <b>{{customerDetails.id}} </b>  <span style="float: right;">7am,22/05/2020</span></p>
+                <p><span *ngIf="customerDetails.dob">  DOB: <b>{{customerDetails.dob}} </b>  </span><span style="float: right;">Dr.Ravi kumar</span> </p>
+                <p><span *ngIf="customerDetails.gender">Gender:<b>{{customerDetails.gender | capitalizeFirst}} </b> </span> <span style="float: right;">Cardiolgy</span> </p>         
+            
+              </div>       
+         </div>
+    <!-- 
     <div>
        <p>
         <b>Patient:</b>
@@ -20,16 +30,28 @@
         <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</span>
         <span *ngIf="customerDetails.dob|| customerDetails.gender ">({{customerDetails.dob}} {{customerDetails.gender | capitalizeFirst}})</span>
       </p>
-    </div>
+    </div> -->
 <h4>Enter {{displayTitle}}<sub class="sunfont">(250 words)</sub></h4>
-<!-- <div class="col-md-10 col-lg-10 col-xs-10 col-sm-10"> -->
+<div	class="col-md-12 col-lg-12 col-sm-12 no-padding">
 <textarea [(ngModel)]="edit_data" name="paragraph_text" cols="50" rows="5"></textarea>
-<!-- </div> -->
+</div>
 
 <div style="text-align: center;"> <button (click) = "updateClinicalNotes(edit_data)" class="cs-btn bt1">Save</button></div>
 
 </div>
 </section>
 </div>
+
+
+
+<!-- <div	class="col-md-12 col-lg-12 col-sm-12 no-padding">
+																						<div class="form-group ">
+																							<mat-checkbox
+																								[(ngModel)]="isProvNote">
+																								{{privatenote_cap}}
+																							</mat-checkbox>
+																						</div>
+																				
+																					</div> -->
 
 
