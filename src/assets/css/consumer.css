@@ -6675,3 +6675,19 @@
 .cursr-dfult {
     cursor: default !important;
 } 
+@media only screen and (max-width: 440px) {
+    .consumer-dash .card.c-checkins .table .bt3 {
+        border: none !important;
+    }
+    /* .consumer-dash .card.c-checkins .table .bill-big {
+        display: none !important;
+    } */
+    .consumer-dash .card.c-checkins .table .pay-wdth {
+        max-width: 36px !important;
+    }
+}
+@media (min-width: 441px) {
+    /* .consumer-dash .card.c-checkins .table .bill-smal {
+        display: none !important;
+    } */
+}

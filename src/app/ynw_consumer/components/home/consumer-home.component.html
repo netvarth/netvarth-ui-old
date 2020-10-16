@@ -116,7 +116,7 @@
                                                     (click)="stopprop($event)" target="blank"><u class="font-smalr">VIEW
                                                         STATUS</u></a></span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
@@ -125,7 +125,7 @@
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -286,7 +286,7 @@
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                         STATUS</u></a></span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                 <button class="bt3 cust-btn"
@@ -294,7 +294,7 @@
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -407,7 +407,7 @@
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                             STATUS</u></a></span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
@@ -416,7 +416,7 @@
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -579,7 +579,7 @@
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                             STATUS</u></a></span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                     <button class="bt3 cust-btn"
@@ -587,7 +587,7 @@
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -708,7 +708,7 @@
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                         STATUS</u></a></span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
@@ -717,7 +717,7 @@
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -827,7 +827,7 @@
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                         STATUS</u></a></span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                 <button class="bt3 cust-btn"
@@ -835,7 +835,7 @@
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -937,7 +937,7 @@
                                                         target="blank" (click)="stopprop($event)"><u
                                                             class="font-smalr">VIEW STATUS</u></a></span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
@@ -946,7 +946,7 @@
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -1054,7 +1054,7 @@
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                             STATUS</u></a></span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                     <button class="bt3 cust-btn"
@@ -1062,7 +1062,7 @@
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
