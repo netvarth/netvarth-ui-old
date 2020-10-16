@@ -35,21 +35,23 @@ export class UploadPrescriptionComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private medicalrecord_service: MedicalrecordService) {
-      this.medicalrecord_service.patient_data.subscribe(data => {
-        this.patientDetails = JSON.parse(data.customerDetail);
-        this.userId = this.patientDetails.id;
-      });
+    this.medicalrecord_service.patient_data.subscribe(data => {
+      this.patientDetails = JSON.parse(data.customerDetail);
+      this.userId = this.patientDetails.id;
+    });
+    this.medicalrecord_service._mrUid.subscribe(mrId => {
+      if (mrId !== 0) {
+        this.mrId = mrId;
+      }
+    });
 
   }
 
   ngOnInit() {
+    if (this.mrId) {
+      this.getMrprescription(this.mrId);
+    }
 
-    this.medicalrecord_service._mrUid.subscribe(mrId => {
-      this.mrId = mrId;
-      if (this.mrId !== 0 || this.mrId !== undefined) {
-        this.getMrprescription(this.mrId);
-      }
-    });
 
   }
   goBack() {
@@ -110,7 +112,7 @@ export class UploadPrescriptionComponent implements OnInit {
     };
     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
     submit_data.append('properties', blobPropdata);
-    if (this.mrId !== 0) {
+    if (this.mrId) {
       this.uploadMrPrescription(this.mrId, submit_data);
     } else {
       this.medicalrecord_service.createMRForUploadPrescription()

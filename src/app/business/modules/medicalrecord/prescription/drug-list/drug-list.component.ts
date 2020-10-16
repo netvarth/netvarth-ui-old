@@ -7,6 +7,7 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 import { AddDrugComponent } from '../add-drug/add-drug.component';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
 import { projectConstants } from '../../../../../app.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-drug-list',
@@ -45,12 +46,9 @@ export class DrugListComponent implements OnInit {
       this.userId = this.patientDetails.id;
     });
     this.activatedRoot.queryParams.subscribe(queryParams => {
-      console.log(JSON.parse(queryParams.details));
       const data = JSON.parse(queryParams.details);
-      console.log(data);
       this.drugList = data;
-      console.log(this.drugList);
-      console.log(this.drugList.length);
+
     });
   }
 
@@ -60,10 +58,8 @@ export class DrugListComponent implements OnInit {
     this.getDigitalSign();
     // this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
     this.medicalrecord_service._mrUid.subscribe(mrId => {
-      console.log(mrId);
       if (mrId !== 0) {
         this.mrId = mrId;
-        console.log(mrId);
       }
     });
     this.getMrprescription();
@@ -91,7 +87,7 @@ export class DrugListComponent implements OnInit {
         .subscribe((data) => {
           console.log(data);
           this.drugList = data;
-        }, 
+        },
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
