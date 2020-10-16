@@ -129,9 +129,9 @@ export class ProvidersignupComponent implements OnInit {
   images = {
     veterinaryPetcare: 'assets/images/home/pet-01.svg',
     finance: 'assets/images/home/bank-01.svg',
-    religiousPriests: 'assets/images/home/religoues presets-01.svg',
+    religiousPriests: 'assets/images/home/religouespresets-01.svg',
     vastuAstrology: 'assets/images/home/vasthu-01.svg',
-    foodJoints: 'assets/images/home/foodand beverages-01.svg',
+    foodJoints: 'assets/images/home/foodandbeverages-01.svg',
     professionalConsulting: 'assets/images/home/Proffesional.jpg',
     personalCare: 'assets/images/home/personal-care.jpg',
     healthCare: 'assets/images/home/HealthCare.jpg',

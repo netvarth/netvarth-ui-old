@@ -82,7 +82,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="form-group col-md-12 col-xs-12 col-sm-12" *ngIf="filterUsersList.length > 0">
+                <div class="form-group col-md-12 col-xs-12 col-sm-12" *ngIf="filterUsersList.length > 0 && account_type !== 'INDEPENDENT_SP'">
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     {{provider_label | capitalizeFirst}}s</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">

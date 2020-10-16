@@ -154,7 +154,7 @@
 																		<span class="label">{{qty_cap}}</span> <span
 																			class="number">
 																			<mat-form-field class="example-full-width">
-																				<input type="text" min="0"
+																				<input type="number" min="0"
 																					max="{{qty_limit}}" matInput
 																					#itemserviceqty aria-label="Number"
 																					(keypress)="isNumeric($event)"
@@ -946,13 +946,12 @@
 																	style="font-size:.875rem;color: #000;">{{wbamount_cap}}</span>
 																<span class="number">
 																	<mat-form-field class="example-full-width">
-																		<span matPrefix class='rupee'> ₹ &nbsp;</span>
-																		<mat-form-field>
-																			<input type="text" matInput #payamounttxt
+																		<span matPrefix class="rupee-font" style="font-size: larger;"> ₹ &nbsp;</span>
+																		<mat-form-field class="bill-ip">
+																			<input type="number" matInput #payamounttxt
 																				aria-label="Number" matInput value="1"
 																				size="5" max="{{price_limit}}" min="0"
 																				[(ngModel)]="amountpay"
-																				(keypress)="isNumeric($event)"
 																				(keyup)="isvalid($event)"
 																				autocomplete="off">
 																		</mat-form-field>

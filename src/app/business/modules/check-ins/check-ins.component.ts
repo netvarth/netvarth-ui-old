@@ -1241,6 +1241,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.resetPaginationData();
     // this.pagination.startpageval = 1;
     // this.pagination.totalCnt = 0; // no need of pagination in today
+    if (this.activeQs.length > 0) {
     const promise = this.getTodayWLCount(Mfilter);
     promise.then(
       result => {
@@ -1248,6 +1249,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getTodayWaitlist(Mfilter)
           .subscribe(
             (data: any) => {
+              this.appt_list = [];
               this.appt_list = data;
               this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
               if (this.filterapplied === true) {
@@ -1271,6 +1273,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       () => {
         this.loading = false;
       });
+    } else {
+       this.loading = false;
+    }
   }
   getFutureWL() {
     this.resetCheckList();
@@ -2337,6 +2342,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getHistoryWaitlist(Mfilter)
           .subscribe(
             data => {
+              console.log(data);
               this.historyCheckins = data;
               // const params = [
               //   'height=' + screen.height,
@@ -2350,9 +2356,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               checkin_html += '<td style="padding:10px;">Date & Time</td>';
               checkin_html += '<td style="padding:10px;">Name</td>';
               checkin_html += '<td style="padding:10px;">Service</td>';
-              // if (this.providerLabels.length > 0) {
+              if (this.providerLabels.length > 0) {
               checkin_html += '<td style="padding:10px;">Label</td>';
-              // }
+              }
               checkin_html += '</thead>';
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 checkin_html += '<tr style="line-height:20px;padding:10px">';

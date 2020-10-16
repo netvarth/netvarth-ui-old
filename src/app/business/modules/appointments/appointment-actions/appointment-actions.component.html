@@ -1,8 +1,13 @@
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === ''">
-    Select your action
+    Select an action to perform
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
 <div class="action-section col-md-12" *ngIf="action === ''">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-10 mgn-up-10">
+        <p>Appointment for : {{appt.appmtFor[0].userName}} </p>
+        <p>Appointment Time: {{getSingleTime(appt.appmtTime)}}
+        </p>
+    </div>
     <div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingAppt()">
             <div class="action-box-sub" *ngIf="appt.callingStatus">
@@ -18,7 +23,7 @@
         <div class="action-box pointer-cursor" *ngIf="showStart" (click)="changeWaitlistStatus('Started')">
             <div class="action-box-sub">
                 <span class="start-icon"></span>
-                <div class="icon-text">Start</div>
+                <div class="icon-text">Start Service</div>
             </div>
         </div>
         <div class="action-box pointer-cursor teleservice" *ngIf="showTeleserviceStart" [matTooltipClass]="tooltipcls"
@@ -35,7 +40,7 @@
                 <span class="wtsapvid-icon"
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></span>
                 <div class="icon-text">
-                    {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}}
+                    {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
                 </div>
             </div>
         </div>
@@ -73,7 +78,7 @@
         <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
             <div class="action-box-sub">
                 <span class="mail-icon"></span>
-                <div class="icon-text">Send details via SMS/Email</div>
+                <div class="icon-text">Share Booking Info</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="trackStatus" (click)="locateCustomer()">
@@ -86,7 +91,7 @@
         <div class="action-box pointer-cursor" *ngIf="showBill" (click)="viewBillPage()">
             <div class="action-box-sub">
                 <span class="bill-icon"></span>
-                <div class="icon-text">Bill</div>
+                <div class="icon-text">Billing</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="addProviderNote()">
@@ -113,6 +118,14 @@
             <div class="action-box-sub">
                 <span class="printer-icon"></span>
                 <div class="icon-text">Print</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && data.timetype !== 3 && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
+            (click)="rescheduleActionClicked()">
+            <div class="action-box-sub">
+                <span class="reschedule-icon"></span>
+                <div class="icon-text">Reschedule</div>
             </div>
         </div>
     </div>
@@ -143,3 +156,88 @@
         <span class="cs-btn bt3 pointer-cursor" (click)="gotoLabel()">Manage label</span>
     </div>
 </div>
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'reschedule'">
+    Reschedule Appointment for {{appt.appmtFor[0].userName | capitalizeFirst}}
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'slotChange'">
+    Choose Date & Time
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button></h1>
+<div *ngIf="action === 'reschedule'">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <p>Service Provider : {{appt.providerAccount.businessName}} </p>
+            <p *ngIf="appt.service.deptName">Department : {{appt.service.deptName}} </p>
+            <p *ngIf="appt.provider">{{provider_label | capitalizeFirst}} : {{appt.provider.firstName}}
+                {{appt.provider.lastName}} </p>
+            <p>Location: {{appt.location.place}}</p>
+            <p>Service :
+                <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                    class="fa meet-icon"></i>
+                <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                    class="fa zoom-icon"></i>
+                <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"
+                    class="fa phon-icon"></i>
+                <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"
+                    class="fa wtsapaud-icon"></i>
+                <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"
+                    class="fa wtsapvid-icon"></i>
+                {{appt.service.name}} </p>
+            <p>Appointment Slot: {{appt.appmtDate | date: dateFormat}}, {{getSingleTime(appt.appmtTime)}}
+            </p>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 changelink"><span class="cs-btn bt3"
+                (click)="changeSlot()">Change Date & Time
+            </span></div>
+
+    </div>
+</div>
+<div class="reschedule p-checkin" *ngIf="action === 'slotChange'">
+    <div class="mainouter">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 ">
+            <div class="date-outer" style="border: none;">
+                <div class="date-head">Appointment Date</div>
+                <div class="date-body">
+                    <span class="selected-date">
+                        <span class="icon-minus" (click)="calculateDate(-1, 'pre')"
+                            [class.disable]="disableMinus()"></span>
+                        {{sel_checkindate | date: dateDisplayFormat}}
+                        <span class="icon-add" (click)="calculateDate(1, 'post')"></span></span>
+                    <div class="form-group dt">
+                        <div class="pickerouter">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
+                                [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">Choose Slot
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 slotdiv no-padding queue-outer"
+                *ngIf="freeSlots.length > 0 && !loading">
+                <mat-chip-list class="appt-in-chip">
+                    <mat-chip *ngFor="let slot of freeSlots" (click)="timeSelected(slot)"
+                        [selected]="slot.time==selectedTime">
+                        {{slot.displayTime}}
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10" *ngIf="freeSlots.length === 0 && !loading">
+                No slots available.
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
+                <app-common-innerloading-spinner></app-common-innerloading-spinner>
+            </div>
+            <div
+                class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding reschedulebtn">
+                <button type="button" class="cs-btn bt2 mgn-rt-5" (click)="close()">Cancel</button>
+                <button mat-button class="cs-btn bt1" [class.disabled]="disableButn() || freeSlots.length === 0"
+                    (click)="rescheduleAppointment()">Reschedule</button>
+            </div>
+        </div>
+    </div>

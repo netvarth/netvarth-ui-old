@@ -1217,7 +1217,11 @@ export class SharedFunctions {
   doCancelWaitlist(waitlist, type, cthis?) {
     let msg;
     if (type === 'checkin') {
-      msg = 'Check-In';
+      if (waitlist.token) {
+        msg = 'Token';
+      } else {
+        msg = 'Check-In';
+      }
     } else if (type === 'appointment') {
       msg = 'Appointment';
     }

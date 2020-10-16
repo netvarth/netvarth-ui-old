@@ -664,7 +664,9 @@ export class SharedServices {
     // const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid + '/date/' + pdate;
     return this.servicemeta.httpGet(url);
   }
-
+  rescheduleConsumerApptmnt(accountid, postData){
+        return this.servicemeta.httpPut('consumer/appointment/reschedule?account=' + accountid, postData);
+      }
   getSlotsByLocationServiceandDate(locid, servid, pdate?, accountid?) {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
