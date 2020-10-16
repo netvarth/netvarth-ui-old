@@ -76,7 +76,6 @@ getMrprescription(mrId) {
 
 
 addDrug() {
-
   this.addDrugdialogRef = this.dialog.open(AddDrugComponent, {
     width: '50%',
     panelClass: ['popup-class', 'commonpopupmainclass'],

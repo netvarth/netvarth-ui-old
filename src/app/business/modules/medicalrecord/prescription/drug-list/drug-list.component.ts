@@ -35,9 +35,6 @@ export class DrugListComponent implements OnInit {
   drugData: any = [];
   providerId;
   digitalSign = false;
-
-
-
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
