@@ -59,42 +59,48 @@ export class ClinicalnotesComponent implements OnInit {
       });
     }
 
-}
+  }
 
 
 
-getMRClinicalNotes(mrId) {
-  const _this = this;
-  _this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+  getMRClinicalNotes(mrId) {
+    const _this = this;
+    let response = '';
+    _this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
 
-  return new Promise((resolve) => {
-    _this.provider_services.getClinicalRecordOfMRById(mrId)
-      .subscribe((res: any) => {
-        const response = res.clinicalNotes;
-        Object.entries(response).forEach(
-          function ([key, v]) {
-            const index = _this.clinicalNotes.findIndex(element => element.id === key);
-            _this.clinicalNotes[index].value = v;
+    return new Promise((resolve) => {
+      _this.provider_services.getClinicalRecordOfMRById(mrId)
+        .subscribe((res: any) => {
+          if (res.clinicalNotes) {
+            response = res.clinicalNotes;
+          } else {
+            response = res;
+          }
 
+          Object.entries(response).forEach(
+            function ([key, v]) {
+              const index = _this.clinicalNotes.findIndex(element => element.id === key);
+              _this.clinicalNotes[index].value = v;
+
+            });
+        },
+          error => {
+            _this.sharedfunctionObj.openSnackBar(_this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
-      },
-        error => {
-          _this.sharedfunctionObj.openSnackBar(_this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
 
 
-    resolve(_this.clinicalNotes);
-  });
+      resolve(_this.clinicalNotes);
+    });
 
-}
-addOrEditClinicalNotes(object) {
+  }
+  addOrEditClinicalNotes(object) {
 
-  const navigationExtras: NavigationExtras = {
-    queryParams: {
-      'data': JSON.stringify(object),
-      'clinicalNotes': JSON.stringify(this.clinicalNotes)
-    }
-  };
-  this.router.navigate(['/provider/medicalrecord/edit'], navigationExtras);
-}
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'data': JSON.stringify(object),
+        'clinicalNotes': JSON.stringify(this.clinicalNotes)
+      }
+    };
+    this.router.navigate(['/provider/medicalrecord/edit'], navigationExtras);
+  }
 }
