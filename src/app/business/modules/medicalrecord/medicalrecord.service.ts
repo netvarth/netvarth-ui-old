@@ -35,7 +35,8 @@ export class MedicalrecordService {
     this.patientData = JSON.parse(data.customerDetail);
     if (data.booking_type) {
       this.mr_payload_new['bookingType'] = data.booking_type;
-
+    } else {
+      this.mr_payload_new['bookingType'] = 'FOLLOWUP';
     } if (data.consultationMode) {
       this.mr_payload_new['consultationMode'] = data.consultationMode;
     }

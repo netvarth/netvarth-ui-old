@@ -39,7 +39,7 @@ export class ClinicalnotesComponent implements OnInit {
     this.medicalrecordService._mrUid.subscribe(mrId => {
       console.log(mrId);
 
-      if (mrId !== 0) {
+      if (mrId !== 0 || mrId !== undefined) {
         this.getMRClinicalNotes(mrId).then((res: any) => {
           this.clinicalNotes = res;
           console.log(JSON.stringify(this.clinicalNotes));

@@ -46,7 +46,7 @@ export class UploadPrescriptionComponent implements OnInit {
 
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       this.mrId = mrId;
-      if (this.mrId !== 0) {
+      if (this.mrId !== 0 || this.mrId!==undefined) {
         this.getMrprescription(this.mrId);
       }
     });

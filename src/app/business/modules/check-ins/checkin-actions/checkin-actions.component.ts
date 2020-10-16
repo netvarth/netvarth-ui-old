@@ -10,7 +10,8 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { NavigationExtras, Router } from '@angular/router';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ApplyLabelComponent } from '../apply-label/apply-label.component';
-import { MedicalrecordService } from '../../medicalrecord/medicalrecord.service';
+// import { MedicalrecordService } from '../../medicalrecord/medicalrecord.service';
+// import { MedicalrecordService } from '../../medicalrecord/medicalrecord.service';
 
 @Component({
   selector: 'app-checkin-actions',
@@ -47,7 +48,7 @@ export class CheckinActionsComponent implements OnInit {
     private shared_functions: SharedFunctions, private provider_services: ProviderServices,
     public dateformat: DateFormatPipe, private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions,
-    private medicalrecordService: MedicalrecordService,
+    // private medicalrecordService: MedicalrecordService,
     public dialogRef: MatDialogRef<CheckinActionsComponent>) {
   }
   ngOnInit() {
@@ -392,8 +393,8 @@ export class CheckinActionsComponent implements OnInit {
   }
   medicalRecord() {
     this.dialogRef.close();
-    this.medicalrecordService.setCurrentMRID(0);
-    this.medicalrecordService.setPatientDetailsForMR('');
+    // this.medicalrecordService.setCurrentMRID(0);
+    // this.medicalrecordService.setPatientDetailsForMR('');
     const navigationExtras: NavigationExtras = {
       queryParams: {
         'customerDetail': JSON.stringify(this.checkin.consumer),
@@ -404,7 +405,7 @@ export class CheckinActionsComponent implements OnInit {
         'booking_time': this.checkin.token,
         'department': this.checkin.service.deptName,
         'consultationMode': 'OP',
-        'booking_id': this.checkin.uid,
+        'booking_id': this.checkin.ynwUuid,
         'mr_id': this.checkin.mrId
         // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
 
@@ -415,8 +416,8 @@ export class CheckinActionsComponent implements OnInit {
   }
   prescription() {
     this.dialogRef.close();
-    this.medicalrecordService.setCurrentMRID(0);
-    this.medicalrecordService.setPatientDetailsForMR('');
+    // this.medicalrecordService.setCurrentMRID(0);
+    // this.medicalrecordService.setPatientDetailsForMR('');
     const navigationExtras: NavigationExtras = {
       queryParams: {
         'customerDetail': JSON.stringify(this.checkin.consumer),
