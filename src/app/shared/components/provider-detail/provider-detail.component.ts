@@ -1527,16 +1527,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   appointmentClicked(location, service: any) {
     this.futureAllowed = true;
-    let serviceDate;
-    if (service.serviceAvailability && service.serviceAvailability.nextAvailableDate) {
-      serviceDate = service.serviceAvailability.nextAvailableDate;
-    }
     const current_provider = {
       'id': location.id,
       'place': location.place,
       'location': location,
       'service': service,
-      'cdate': serviceDate
+      'cdate': service.serviceAvailability.nextAvailableDate
     };
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
@@ -1556,14 +1552,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       cmon = '' + mm;
     }
     const dtoday = yyyy + '-' + cmon + '-' + cday;
-    if (service.serviceAvailability && service.serviceAvailability.nextAvailableDate) {
-      if (dtoday === serviceDate) {
-        this.changedate_req = false;
-      } else {
-        this.changedate_req = true;
-      }
+    if (dtoday === service.serviceAvailability.nextAvailableDate) {
+      this.changedate_req = false;
     } else {
-      serviceDate = dtoday;
       this.changedate_req = true;
     }
     if (!location.futureAppt) {
@@ -1571,7 +1562,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showAppointment(location.id, location.place, serviceDate, service, 'consumer');
+      this.showAppointment(location.id, location.place, service.serviceAvailability.nextAvailableDate, service, 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider };
       this.doLogin('consumer', passParam);
