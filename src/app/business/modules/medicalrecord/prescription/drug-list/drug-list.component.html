@@ -1,18 +1,18 @@
 <section class="">
-        <div class="card title-gb"> 
+        <div class="card title-gb">
                 <h5 class="mgn-up-10">
                     <button type="button" class="btn default profile-back" (click)="redirecToPrescriptionHome()">
                         <span class="fa fa-chevron-left">&nbsp;Back</span></button>&nbsp;&nbsp;&nbsp;
-                        Create prescription
+                        Create Prescription
                 </h5>
               </div>
         <!-- </section>
         <section>
             <div class="content loc-list">
                 <div class="col-md-12 no-padding-small"> -->
-                        <div class="card title-gb"> 
+                        <div class="card title-gb">
                                 <div class="mgn-up-10">
-        
+
                                     <p>
                                       <b>Patient:</b>
                                       <span color="blue"> {{patientDetails.id}} &nbsp;</span>
@@ -23,10 +23,10 @@
                                     <!-- <p>Patient Id: {{PatiendId}}</p>
                                     <p *ngIf="PatientDob">DOB: {{PatientDob}} </p>
                                     <p *ngIf="gender">Gender:{{gender | capitalizeFirst}}</p> -->
-                          
+
                                 </div>
        <div class="no-dta table-responsive" *ngIf="drugList.length>0">
-        <h5> Create prescription of your own</h5> 
+        <h5> Drugs added to the prescription</h5>
     <table class="table table-bordered" >
           <thead>
           <tr >
@@ -36,7 +36,7 @@
             <th>
                 Duration(days)
             </th>
-             <th> 
+             <th>
                 Dosage
             </th>
             <th>
@@ -45,9 +45,9 @@
             <th>
                 Instructions
             </th>
-           
+
             <th>
-               
+
             </th>
           </tr>
         </thead>
@@ -109,29 +109,29 @@
                   <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages(i)">OK</button>
               </div>
           </div>
-          
+
       </ng-container>
         </div>
 
         <div  *ngIf="drugList.length > 0 && showSave">
             <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>
         </div>
-        <!-- <div *ngIf="drugList.length > 0 && !showSave && digitalSign"> 
+        <!-- <div *ngIf="drugList.length > 0 && !showSave && digitalSign">
                 <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx()" >
-                        
+
                     <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
-                
+
             </div> -->
             <!-- <div *ngIf="drugList.length > 0 && !showSave && !digitalSign">
                 <button type="button"   style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt2"  >
-                        
+
                     <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
-                
+
             </div> -->
 
       </div>
       <div class=" no-dta table-responsive" *ngIf="drugList.length === 0">
-            <h5> Create prescription of your own</h5> 
+            <h5> Create prescription of your own</h5>
             <table  class="table ">
                     <thead>
                             <tr >
@@ -141,7 +141,7 @@
                               <th>
                                   Duration(days)
                               </th>
-                               <th> 
+                               <th>
                                   Dosage
                               </th>
                               <th>
@@ -150,13 +150,13 @@
                               <th>
                                   Instructions
                               </th>
-                              
+
                             </tr>
                           </thead>
                             <tbody>
-                    
+
                         No Medicines Added
-                      
+
                     </tbody>
                   </table>
                   <span (click)="addDrug()" class="lnk action" style="color: #3c8dbc; font-size: smaller"><u>Add more</u></span>
@@ -166,4 +166,4 @@
     </div> -->
     </div>
     </section>
-          
+

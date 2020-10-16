@@ -55,7 +55,7 @@ export class DrugListComponent implements OnInit {
   ngOnInit() {
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.providerId = user.id;
-    this.getDigitalSign();
+    // this.getDigitalSign();
     // this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       if (mrId !== 0) {
@@ -84,9 +84,10 @@ export class DrugListComponent implements OnInit {
   getMrprescription() {
     if (this.mrId) {
       this.provider_services.getMRprescription(this.mrId)
-        .subscribe((data) => {
-          console.log(data);
-          this.drugList = data;
+        .subscribe((data: any) => {
+          if (data.length !== 0) {
+            this.drugList.push(data);
+          }
           this.deleteFromDb = true;
         },
           error => {

@@ -24,14 +24,14 @@
   line-height: 30px !important;
   height: 50px !important;
   min-width: 100px !important;
-  border: 2px solid #0000FF;
+  border: 2px solid rgb(117, 117, 119);
   border-radius:20px !important;
   margin:5px!important;
   font-weight: bold;
 }
 
 .tabContentContainer {
-  border: 1px solid #aaaaaa;
+  border: 1px solid 	#0000FF;;
   background: #ffffff 50% 50% repeat-x;
 }
 
