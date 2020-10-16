@@ -52,8 +52,7 @@ export class GeneralComponent implements OnInit {
   }
 
   redirecToClinicalNotes() {
-    this.router.navigateByUrl('');
-
+    this.router.navigate(['provider', 'medicalrecord']);
     // this.router.navigateByUrl('../clinicalnotes', { relativeTo: this.activated_route });
   }
 

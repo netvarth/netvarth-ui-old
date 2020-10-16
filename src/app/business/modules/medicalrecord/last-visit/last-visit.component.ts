@@ -23,7 +23,6 @@ export class LastVisitComponent implements OnInit {
     public dialogRef: MatDialogRef<LastVisitComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.PatientId = this.data.patientId;
-    console.log(this.PatientId);
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     if (this.accountType !== 'BRANCH') {
@@ -54,15 +53,21 @@ export class LastVisitComponent implements OnInit {
     return date;
   }
   getUserName(visit) {
-    return '';
+    let userName = '';
+    if (visit.waitlist) {
+      userName = visit.waitlist.date;
+    } else if (visit.appointmnet) {
+      userName = visit.appointmnet.appmtDate;
+    }
+    return userName;
 
   }
   isMRCreated(visit) {
     let mrCreated = '';
     if (visit.waitlist) {
-      mrCreated = visit.waitlist.mrCreated;
+      mrCreated = visit.mrCreated;
     } else if (visit.appointmnet) {
-      mrCreated = visit.appointmnet.mrCreated;
+      mrCreated = visit.mrCreated;
     }
     return mrCreated;
 
