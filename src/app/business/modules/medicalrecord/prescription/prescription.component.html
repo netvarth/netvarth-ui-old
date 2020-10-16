@@ -1,5 +1,5 @@
 
-<div *ngIf="drugList.length === 0 && uploadlist.length === 0"> 
+<div *ngIf="drugList.length === 0 && uploadlist.length === 0">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10" >
                     <span class="b-link" >
                         <h5>You can create prescription in two ways :</h5>
@@ -24,7 +24,7 @@
   </div>
   <div *ngIf="drugList.length>0">
   <div class="no-dta table-responsive" >
-      <h5> Create prescription of your own</h5> 
+      <h5> Current Prescription</h5>
   <table class="table table-bordered" >
         <thead>
         <tr >
@@ -34,7 +34,7 @@
           <th>
               Duration(days)
           </th>
-           <th> 
+           <th>
               Dosage
           </th>
           <th>
@@ -43,9 +43,9 @@
           <th>
               Instructions
           </th>
-         
+
           <th>
-             
+
           </th>
         </tr>
       </thead>
@@ -76,7 +76,7 @@
     </div>
     <div *ngIf="uploadlist.length>0">
         <div class="no-dta table-responsive" >
-            <h5> Create prescription of your own</h5> 
+            <h5> Create prescription of your own</h5>
         <table class="table table-bordered" >
               <thead>
               <tr >
@@ -84,7 +84,7 @@
                     Image name
                 </th>
                 <th>
-                   
+
                 </th>
               </tr>
             </thead>
@@ -93,11 +93,11 @@
                   <td >
                     {{img.keyName}}
                   </td>
-                  
+
                    <td >
                     <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
                    </td>
-      
+
                 </tr>
               </tbody>
             </table></div>
