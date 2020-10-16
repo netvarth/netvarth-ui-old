@@ -451,7 +451,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="disp-flex" *ngIf="showEditSection">
               <mat-form-field class="col-lg-8 col-md-8 col-sm-12 col-xs-12 no-padding">
-                <input matInput min="0" [(ngModel)]="consumerNote" [ngModelOptions]="{standalone: true}"
+                <input matInput min="0" maxlength="20" [(ngModel)]="consumerNote" [ngModelOptions]="{standalone: true}"
                   autocomplete="off" (keyup)="resetApiErrors()">
               </mat-form-field>
               <div class="mgn-up-20 col-lg-4 col-md-4 col-sm-12 col-xs-12">
