@@ -103,12 +103,13 @@
                                                                             class="fa phon-icon ph-cal"
                                                                             aria-hidden="true"></i>
                                                                     </span>
-                                                                    <span> <input *ngIf="!showInputSection"
+                                                                    <span class="pointer-cursor whatsappNo" (click)="showPhoneInput()"*ngIf="!showInputSection">{{callingModes}}</span>
+                                                                    <span> <input *ngIf="showInputSection"
                                                                             (keypress)="isNumeric($event)"
                                                                             class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" style="width:150px!important;"
                                                                             placeholder="" [(ngModel)]="callingModes"
                                                                             autocomplete="off" maxlength="10"></span>
-                                                                    <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
+                                                                    <!-- <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                                         *ngIf="showInputSection">
                                                                         {{callingModes}}</span>
                                                                     <div class="input-group-append mgn-up-6"
@@ -120,7 +121,7 @@
                                                                         <span class="editbt mgn-lt-20"
                                                                             *ngIf="showInputSection"
                                                                             (click)="editCallingmodes(i)"></span>
-                                                                    </div>
+                                                                    </div> -->
                                                                     <!-- <div class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                                 *ngIf="showInputSection">
                                                                 {{callingModes}}

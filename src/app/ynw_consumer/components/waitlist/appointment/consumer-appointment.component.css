@@ -1168,3 +1168,8 @@ height: 150px !important;
   background:rgb(133,233,133);
   border-radius: 100%;
  }
+ .whatsappNo {
+  color: #1572a8;
+  font-size: 1.2rem;
+  font-weight: 300;
+ }
