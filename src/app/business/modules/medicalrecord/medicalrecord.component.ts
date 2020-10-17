@@ -33,6 +33,7 @@ export class MedicalrecordComponent implements OnInit {
   PatientDob: any;
   mrlist;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  MrCreateddate: string;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -119,6 +120,7 @@ export class MedicalrecordComponent implements OnInit {
 
   ngOnInit() {
     this.mrDate = new Date();
+    this.MrCreateddate = this.sharedfunctionObj.formatDateDisplay(this.mrDate);
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
     });

@@ -43,6 +43,15 @@ export class LastVisitComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
+  getLastVisitTime(visit) {
+    let time = '';
+    if (visit.waitlist) {
+      time = visit.waitlist.checkInTime;
+    } else if (visit.appointmnet) {
+      time = visit.appointmnet.apptTakenTime;
+    }
+    return time;
+  }
   getLastVisitDate(visit) {
     let date = '';
     if (visit.waitlist) {

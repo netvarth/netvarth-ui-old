@@ -33,12 +33,12 @@
       <hr>
       <div class="col-md-12">
         <div class="col-md-4 pull-left">
-          <label>Department:</label><span> {{department}}</span><br>
-          <label>Service/Consultation:</label><span> {{serviceName}}</span>
+          <label>Department:</label><span> {{department | capitalizeFirst}}</span><br>
+          <label>Service/Consultation:</label><span> {{serviceName | capitalizeFirst}}</span>
         </div>
         <div *ngIf = "mrId !== 0" class="col-md-4 pull-right">
-            <label>MR NO:</label><span> 12345</span><br>
-            <label>MR creation date:</label><span> 09/10/2020</span>
+            <label>MR NO:</label><span> {{mrId}}</span><br>
+            <label>MR creation date:</label><span> {{MrCreateddate}}</span>
         </div>
         <div class="clearfix"></div>
       </div>
