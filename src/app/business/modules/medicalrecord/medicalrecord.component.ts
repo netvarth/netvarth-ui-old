@@ -35,6 +35,7 @@ export class MedicalrecordComponent implements OnInit {
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   MrCreateddate: string;
   visitdate: any;
+  consultationMode: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -66,9 +67,7 @@ export class MedicalrecordComponent implements OnInit {
           if (qparams.booking_date) {
             this.visitdate = qparams.booking_date;
           }
-          if (!qparams.booking_date) {
-           this.visitdate = new Date();
-          }
+         
           this.customerDetails = JSON.parse(qparams.customerDetail);
           this.PatientId = this.customerDetails.id;
           if (qparams.department) {
@@ -76,6 +75,9 @@ export class MedicalrecordComponent implements OnInit {
           }
           if (qparams.serviceName) {
             this.serviceName = qparams.serviceName;
+          }
+          if (qparams.consultationMode) {
+            this.consultationMode = qparams.consultationMode;
           }
           this.medicalService.setPatientDetailsForMR(qparams);
           this.medicalService.setCurrentMRID(this.mrId);
@@ -124,6 +126,7 @@ export class MedicalrecordComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.visitdate = new Date();
     this.mrDate = new Date();
     this.MrCreateddate = this.sharedfunctionObj.formatDateDisplay(this.mrDate);
     this.router.events.subscribe((res) => {
