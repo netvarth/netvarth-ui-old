@@ -50,6 +50,10 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     if (this.mrId === 0 || this.mrId === undefined) {
       console.log('kjfdsifhdsijfhjkdsnfkds');
       this.isLoaded = true;
+      for (let i = 0; i < this.clinical_constant.length; i++) {
+        this.clinical_constant[i].value = '';
+
+      }
       this.clinicalNotes = this.clinical_constant;
 
 
@@ -82,7 +86,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
           Object.entries(response).forEach(
             function ([key, v]) {
               const index = compArray.findIndex(element => element.id === key);
-             compArray[index].value = v;
+              compArray[index].value = v;
 
             });
         },

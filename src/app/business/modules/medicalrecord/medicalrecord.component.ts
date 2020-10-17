@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
@@ -61,13 +61,15 @@ export class MedicalrecordComponent implements OnInit {
     this.activated_route.queryParams.subscribe(
       (qparams) => {
         if (qparams['customerDetail']) {
+          console.log('imin');
+
           this.navigation_params = qparams;
           // tslint:disable-next-line:radix
-          this.mrId = parseInt(qparams.mrId);
+
           if (qparams.booking_date) {
             this.visitdate = qparams.booking_date;
           }
-         
+
           this.customerDetails = JSON.parse(qparams.customerDetail);
           this.PatientId = this.customerDetails.id;
           if (qparams.department) {
@@ -79,14 +81,23 @@ export class MedicalrecordComponent implements OnInit {
           if (qparams.consultationMode) {
             this.consultationMode = qparams.consultationMode;
           }
+          if (qparams.mrId) {
+            // tslint:disable-next-line:radix
+            this.mrId = parseInt(qparams.mrId);
+            this.medicalService.setCurrentMRID(this.mrId);
+          }
           this.medicalService.setPatientDetailsForMR(qparams);
-          this.medicalService.setCurrentMRID(this.mrId);
+
 
         } else {
 
 
           this.medicalService.patient_data.subscribe(res => {
-            this.navigation_params = res;
+            this.navigation_params = {
+              'clone_params': res
+            }
+            console.log('else' + JSON.stringify(this.navigation_params));
+
             this.customerDetails = JSON.parse(res.customerDetail);
             console.log(JSON.stringify(this.customerDetails));
 
@@ -97,12 +108,12 @@ export class MedicalrecordComponent implements OnInit {
             if (res.serviceName) {
               this.serviceName = res.serviceName;
             }
-            if (res.mrId) {
-              // tslint:disable-next-line:radix
-              this.mrId = parseInt(res.mrId);
-            }
 
 
+
+          });
+          this.medicalService._mrUid.subscribe(mrId => {
+            this.mrId = mrId;
           });
 
 

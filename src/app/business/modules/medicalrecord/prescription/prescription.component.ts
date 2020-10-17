@@ -41,6 +41,8 @@ export class PrescriptionComponent implements OnInit {
   ) {
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       this.mrId = mrId;
+      console.log(this.mrId);
+
     });
 
 
@@ -132,32 +134,29 @@ export class PrescriptionComponent implements OnInit {
         this.drugList.splice(index, 1);
         this.drugList.push(result);
       }
-      
+
     });
   }
 
-  savePrescription() {
-    this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
-    if (this.mrId) {
-      this.provider_services.updateMRprescription(this.drugList, this.mrId).
-        subscribe(res => {
+  // savePrescription() {
+  //   if (this.mrId) {
+  //     this.provider_services.updateMRprescription(this.drugList, this.mrId).
+  //       subscribe(res => {
 
-        });
-    } else {
-      const passingdata = {
-        'bookingType': 'NA',
-        'consultationMode': 'EMAIL',
-        'prescriptions': this.drugList,
-        'mrConsultationDate': this.today
-      };
-      console.log(passingdata, this.userId);
-      this.provider_services.createMedicalRecord(passingdata, this.userId)
-        .subscribe((data) => {
-          this.sharedfunctionObj.setitemonLocalStorage('mrId', data);
-        },
-          error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-          });
-    }
-  }
+  //       });
+  //   } else {
+  //     const passingdata = {
+  //       'prescriptions': this.drugList,
+
+  //     };
+  //     console.log(passingdata, this.userId);
+  //     this.provider_services.createMedicalRecord(passingdata, this.userId)
+  //       .subscribe((data) => {
+  //         this.sharedfunctionObj.setitemonLocalStorage('mrId', data);
+  //       },
+  //         error => {
+  //           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+  //         });
+  //   }
+  // }
 }
