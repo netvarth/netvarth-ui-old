@@ -15,9 +15,16 @@
                             <div class="lbl col-sm-12 col-md-7 col-lg-7">
                                 <ng-container *ngIf="this.activeWt">
                                     <div class="mainouter checkin-page ">
-                                        <div class="servicefor-outer btborder" *ngIf="members">
-                                            <div class="mgn-bt-5" *ngFor="let waitfor of members">
-                                                {{waitfor | capitalizeFirst}}
+                                        <div class="servicefor-outer btborder">
+                                            <div>
+                                                <!-- <ng-container
+                                            *ngFor="let waitfor of this.activeWt.waitlistingFor; let i = index">
+                                            {{waitfor.firstName | capitalizeFirst}}
+                                            {{waitfor.lastName | capitalizeFirst}}
+                                        </ng-container> -->
+                                                <ng-container *ngIf="consumer_name">
+                                                    {{consumer_name}}
+                                                </ng-container>
                                             </div>
                                         </div>
                                         <div class="mainouter checkin-page ">
