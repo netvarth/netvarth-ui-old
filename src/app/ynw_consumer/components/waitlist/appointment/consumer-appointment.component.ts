@@ -1795,4 +1795,4 @@ export class ConsumerAppointmentComponent implements OnInit {
             return false;
         }
     }
-}
+} 
