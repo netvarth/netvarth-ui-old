@@ -12281,9 +12281,10 @@ img.busN-logo {
 }
 
 .mrcreate{
+  border-radius: 0px !important;
   margin-bottom: 5px !important;
-  border: 1px solid lightgrey!important;
-  /* box-shadow: 1px 1px 1px 1px lightgrey !important; */
+  /* border: 1px solid lightgrey!important; */
+  box-shadow: 5px 5px 5px 5px lightgrey !important; 
   /* width: 50%!important; */
 }
 .mrcreate:hover {

@@ -86,6 +86,7 @@ export class DrugListComponent implements OnInit {
 
   getMrprescription() {
     if (this.mrId) {
+      console.log(this.mrId);
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data: any) => {
           if (data.length !== 0) {

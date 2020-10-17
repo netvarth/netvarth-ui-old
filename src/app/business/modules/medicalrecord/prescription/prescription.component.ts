@@ -61,6 +61,7 @@ export class PrescriptionComponent implements OnInit {
   }
 
   getMrprescription(mrId) {
+    console.log(mrId);
     this.provider_services.getMRprescription(mrId)
       .subscribe((data) => {
         console.log(data);
@@ -90,7 +91,6 @@ export class PrescriptionComponent implements OnInit {
 
     this.addDrugdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         const navigationExtras: NavigationExtras = {
           queryParams: { details: JSON.stringify(result) }
         };
@@ -124,7 +124,7 @@ export class PrescriptionComponent implements OnInit {
         this.drugList.splice(index, 1);
         this.drugList.push(result);
       }
-      console.log(this.drugList);
+      
     });
   }
 
