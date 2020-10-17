@@ -92,6 +92,7 @@ export class LastVisitComponent implements OnInit {
 
   }
   viewMedicalRecord(visitDetails) {
+    this.dialogRef.close();
     this.visitdetails = JSON.stringify(visitDetails);
     if (visitDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
@@ -119,18 +120,17 @@ export class LastVisitComponent implements OnInit {
           'booking_type': 'APPT',
           'booking_date': visitDetails.appointmnet.appmtDate,
           'booking_time': visitDetails.appointmnet.appmtTime,
-          // 'mr_mode': medicalrecord_mode,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid
         }
       };
       this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
-      this.dialogRef.close();
-
     }
   }
 
   viewMR_prescription(visitDetails) {
+    this.dialogRef.close();
+    this.dialogRef.close();
     this.visitdetails = JSON.stringify(visitDetails);
     console.log(visitDetails);
     if (visitDetails.waitlist) {
@@ -148,7 +148,7 @@ export class LastVisitComponent implements OnInit {
           'mrId': visitDetails.mrId
         }
       };
-      this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+      this.router.navigate(['provider',  'customers' , 'medicalrecord' , 'prescription'], navigationExtras);
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -159,13 +159,11 @@ export class LastVisitComponent implements OnInit {
           'booking_type': 'APPT',
           'booking_date': visitDetails.appointmnet.appmtDate,
           'booking_time': visitDetails.appointmnet.appmtTime,
-          // 'mr_mode': medicalrecord_mode,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid
         }
       };
-      this.router.navigate(['provider', 'medicalrecord', 'prescription'], navigationExtras);
-      this.dialogRef.close();
+      this.router.navigate(['provider',   'customers' , 'medicalrecord', 'prescription'], navigationExtras);
     }
 
   }
