@@ -8,6 +8,7 @@ import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/function
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html'
@@ -76,6 +77,7 @@ export class CustomersListComponent implements OnInit {
   customer: any = [];
   providerLabels: any;
   selectedIndex: any = [];
+  mrdialogRef: any;
 
   constructor(private provider_services: ProviderServices,
     private router: Router,
@@ -295,6 +297,17 @@ export class CustomersListComponent implements OnInit {
       queryParams: { action: 'view' }
     };
     this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
+  }
+  lastvisits(customerDetail) {
+    this.shared_functions.removeitemfromLocalStorage('mrId');
+    this.mrdialogRef = this.dialog.open(LastVisitComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        patientId: customerDetail.id
+      }
+    });
   }
   medicalRecord(customerDetail) {
     const navigationExtras: NavigationExtras = {

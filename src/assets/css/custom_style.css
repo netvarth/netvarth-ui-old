@@ -12102,6 +12102,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/viewdetails-01.svg);
   width: 40px;
 }
+.viewdetails-icon-customer {
+  content: url(../images/dashboard-icons/viewdetails-01.svg);
+   width: 20px;
+}
 .medicalrecord-icon {
   content: url(../images/dashboard-icons/medicalrecord-01.svg);
   width: 40px;
