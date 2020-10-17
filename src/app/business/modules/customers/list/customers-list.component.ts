@@ -306,7 +306,6 @@ export class CustomersListComponent implements OnInit {
       disableClose: true,
       data: {
         patientId: customerDetail.id
-
       }
     });
   }

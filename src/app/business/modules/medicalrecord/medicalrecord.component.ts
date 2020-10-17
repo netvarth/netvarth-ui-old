@@ -67,7 +67,7 @@ export class MedicalrecordComponent implements OnInit {
             this.visitdate = qparams.booking_date;
           }
           if (!qparams.booking_date) {
-            this.visitdate = new Date();
+           this.visitdate = new Date();
           }
           this.customerDetails = JSON.parse(qparams.customerDetail);
           this.PatientId = this.customerDetails.id;
