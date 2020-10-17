@@ -78,25 +78,38 @@
     <div *ngIf="uploadlist.length>0">
         <div class="no-dta table-responsive" >
             <h5> Current Uploaded Prescription(s)</h5>
-        <table class="table table-bordered" >
+            <table class="table table-bordered" >
               <thead>
               <tr >
                 <th>
-                    Image name
+                    File name
                 </th>
-               
+                <th>
+                    status
+                </th>
+                <th>
+                    Image size
+                </th>
+                
               </tr>
             </thead>
               <tbody>
-                <tr *ngFor="let img of uploadlist; let i = index;" >
+                <tr *ngFor="let file of uploadlist; let i = index;" >
+
                   <td >
-                    {{img.keyName}}
+                    {{file.keyName}}
                   </td>
-
-                  
-
+                  <td >
+                    Uploaded
+                  </td>
+                  <td >
+                  {{imageSize(file.imageSize)}} KB
+                  </td>
                 </tr>
               </tbody>
             </table></div>
+            <div  *ngIf="uploadlist.length > 0 ">
+              <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="updatePaperPrescription()">Update Prescription</button>
+          </div>
           </div>
 
