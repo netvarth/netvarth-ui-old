@@ -550,7 +550,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.tempgalleryjson = res;
             let indx = 0;
             if (this.bLogo !== '../../../assets/images/img-null.svg') {
-              this.galleryjson[0] = { keyName: 'logo', caption: 'Profile Picture', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+              this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               indx = 1;
               // this.galleryenabledArr.push(0);
             }
@@ -721,7 +721,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               const imgobj = new Image(0,
                 { // modal
                   img: this.galleryjson[0].url,
-                  description: this.galleryjson[0].caption || 'Profile Picture'
+                  description: this.galleryjson[0].caption || ''
                 });
               this.image_list_popup.push(imgobj);
             } else {
