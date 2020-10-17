@@ -41,6 +41,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
     livetrack: any;
     consumer_name: any;
     iconClass: string;
+    members;
 
     constructor(public router: Router,
         public route: ActivatedRoute,
@@ -61,6 +62,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
                 this.checkIn_type = params.type_check;
                 this.accountId = params.account_id;
                 this.pid = params.pid;
+                this.members = params.members;
             });
     }
     goBack () {
@@ -96,7 +98,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
                   }
                 this.consumer_name = this.activeWt.appmtFor[0].userName;
                 this.livetrack = this.activeWt.service.livetrack;
-                this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.activeWt.appmtFor.length;
+                this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.activeWt.members.length;
                 this.waitlistDetails = {
                     'amount': this.prepaymentAmount,
                     'paymentMode': null,
