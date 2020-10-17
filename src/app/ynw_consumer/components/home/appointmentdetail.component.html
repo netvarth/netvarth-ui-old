@@ -21,15 +21,20 @@
                                 <div class="card" *ngIf="api_loading">
                                     <div class="c-details">
                                         <div class="tp" *ngIf="appt">
-                                            <div class="item"><span class="ttle">{{bname_cap}}</span> <span style="cursor: pointer;" (click)="providerDetail(appt.providerAccount)">
+                                            <div class="item"><span class="ttle">{{bname_cap}}</span> <span
+                                                    style="cursor: pointer;"
+                                                    (click)="providerDetail(appt.providerAccount)">
                                                     {{appt.providerAccount.businessName | capitalizeFirst}}
                                                 </span></div>
                                             <div class="item"><span class="ttle">{{date_cap}}</span> <span>
-                                                    {{appt.appmtDate | date:dateFormatSp}}, {{getSingleTime(appt.appmtTime)}}
-                                            </span></div>
+                                                    {{appt.appmtDate | date:dateFormatSp}},
+                                                    {{getSingleTime(appt.appmtTime)}}
+                                                </span></div>
                                             <!-- <div class="item"><span class="ttle">Time</span> <span>
                                                     {{appt.appmtTime}}
                                                 </span></div> -->
+                                            <div class="item"><span class="ttle">Confirmation No</span>
+                                                <span>{{appt.appointmentEncId}}</span></div>
                                             <div class="item"><span class="ttle">{{location_cap}}</span>
                                                 <span>{{appt.location.place | capitalizeFirst}}</span></div>
                                             <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
@@ -37,10 +42,11 @@
                                                     {{appt.appmtFor[0].firstName | capitalizeFirst}}
                                                     {{appt.appmtFor[0].lastName | capitalizeFirst}}</span>
                                             </div>
-                                            <div *ngIf="appt.provider" class="item"><span class="ttle">{{provider_label | capitalizeFirst}}</span>
+                                            <div *ngIf="appt.provider" class="item"><span
+                                                    class="ttle">{{provider_label | capitalizeFirst}}</span>
                                                 <span class="waitlist_for">
-                                                        {{appt.provider.firstName | capitalizeFirst}}
-                                                        {{appt.provider.lastName | capitalizeFirst}}
+                                                    {{appt.provider.firstName | capitalizeFirst}}
+                                                    {{appt.provider.lastName | capitalizeFirst}}
                                                 </span>
                                             </div>
                                             <div class="item"><span class="ttle">{{service_cap}}</span>
@@ -62,7 +68,8 @@
                                             <div class="item"><span class="ttle">Schedule:</span>
                                                 {{appt.schedule.apptSchedule.timeSlots[0].sTime}} -
                                                 {{appt.schedule.apptSchedule.timeSlots[0].eTime}}</div>
-                                            <div class="item"><span class="ttle">{{pay_status_cap}}</span>
+                                            <div class="item" *ngIf="appt.paymentStatus != 'NotPaid'"><span
+                                                    class="ttle">{{pay_status_cap}}</span>
                                                 {{appt.paymentStatus}} </div>
                                             <div class="item" *ngIf="appt.phoneNumber"><span class="ttle">Phone
                                                     number</span>
@@ -74,6 +81,14 @@
                                                 <div [innerHTML]="appt.service.postInfoText">
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="item otp_scr mgn-bt-20" style="border-bottom: 1px solid #f2f2f2;"
+                                            *ngIf="appt && appt.appmtTime">
+                                            <div class="ttle mgn-bt-10" style="font-weight: 500;
+                                        font-size: 1rem;"> Appointment Time</div>
+                                            <div class="mgn-bt-15" style="font-weight: 600;"
+                                                *ngIf="appt && appt.appmtTime">
+                                                {{getSingleTime(appt.appmtTime)}} </div>
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="btm" *ngIf="appt">

@@ -86,7 +86,7 @@
                     No</span><span>{{waitlist_data.checkinEncId}}</span></div>
                 <div class="item"><span class="ttle">{{location_cap}}</span><span>{{waitlist_data.queue.location.place
                     | capitalizeFirst}}</span></div>
-                <div class="item"><span class="ttle" *ngIf="!showToken">{{waitlist_for_cap}}</span>
+                <div class="item" *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName"><span class="ttle" *ngIf="!showToken">{{waitlist_for_cap}}</span>
                   <span class="ttle" *ngIf="showToken">Token for</span>
                   <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">
                     {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}

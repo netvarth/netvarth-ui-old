@@ -17,7 +17,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 export class ApptDetailComponent implements OnInit {
     api_loading = true;
     go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
-    bname_cap = 'Appointment';
+    bname_cap = 'Service Provider';
     date_cap = Messages.CHECK_DET_DATE_CAP;
     location_cap = Messages.CHECK_DET_LOCATION_CAP;
     waitlist_for_cap = 'Appointment for';
