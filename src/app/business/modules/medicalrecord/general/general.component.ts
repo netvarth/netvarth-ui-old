@@ -4,6 +4,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MedicalrecordService } from '../medicalrecord.service';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { MedicalrecordService } from '../medicalrecord.service';
   styleUrls: ['./general.component.css']
 })
 export class GeneralComponent implements OnInit {
+  paramObject: any;
   mrId: any;
   displayTitle: any;
   editable_object: any;
@@ -45,7 +47,8 @@ export class GeneralComponent implements OnInit {
     });
     this.medicalrecordService.patient_data.subscribe(data => {
       this.customerDetails = JSON.parse(data.customerDetail);
-      console.log(this.customerDetails);
+      this.paramObject = JSON.stringify(data);
+
     });
     this.medicalrecordService._mrUid.subscribe(mrId => {
       this.mrId = mrId;
@@ -83,6 +86,7 @@ export class GeneralComponent implements OnInit {
       this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
         this.medicalrecordService.setCurrentMRID(res);
         this.sharedfunctionObj.openSnackBar('Medical Record Created Successfully');
+        this.clinicalNotes=projectConstantsLocal.CLINICAL_NOTES;
         this.router.navigate(['provider', 'customers', 'medicalrecord']);
       },
         error => {

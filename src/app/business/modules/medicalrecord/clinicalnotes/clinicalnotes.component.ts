@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -11,7 +11,8 @@ import { MedicalrecordService } from '../medicalrecord.service';
   templateUrl: './clinicalnotes.component.html',
   styleUrls: ['./clinicalnotes.component.css']
 })
-export class ClinicalnotesComponent implements OnInit {
+export class ClinicalnotesComponent implements OnInit, OnDestroy {
+
 
   mrId: any;
   clinicalNotes: any[];
@@ -29,6 +30,7 @@ export class ClinicalnotesComponent implements OnInit {
   vaccinationHistory: any;
   Cdata;
   isLoaded = false;
+  clinical_constant = projectConstantsLocal.CLINICAL_NOTES;
   constructor(
 
     public sharedfunctionObj: SharedFunctions,
@@ -46,8 +48,10 @@ export class ClinicalnotesComponent implements OnInit {
 
 
     if (this.mrId === 0 || this.mrId === undefined) {
+      console.log('kjfdsifhdsijfhjkdsnfkds');
       this.isLoaded = true;
-      this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+      this.clinicalNotes = this.clinical_constant;
+
 
     } else {
       this.getMRClinicalNotes(this.mrId).then((res: any) => {
@@ -61,12 +65,10 @@ export class ClinicalnotesComponent implements OnInit {
 
   }
 
-
-
   getMRClinicalNotes(mrId) {
     const _this = this;
     let response = '';
-    _this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+    const compArray = this.clinical_constant;
 
     return new Promise((resolve) => {
       _this.provider_services.getClinicalRecordOfMRById(mrId)
@@ -79,8 +81,8 @@ export class ClinicalnotesComponent implements OnInit {
 
           Object.entries(response).forEach(
             function ([key, v]) {
-              const index = _this.clinicalNotes.findIndex(element => element.id === key);
-              _this.clinicalNotes[index].value = v;
+              const index = compArray.findIndex(element => element.id === key);
+             compArray[index].value = v;
 
             });
         },
@@ -89,8 +91,15 @@ export class ClinicalnotesComponent implements OnInit {
           });
 
 
-      resolve(_this.clinicalNotes);
+      resolve(compArray);
     });
+
+  }
+
+  ngOnDestroy(): void {
+    this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
+    console.log('destroy');
+    console.log(projectConstantsLocal.CLINICAL_NOTES);
 
   }
   addOrEditClinicalNotes(object) {

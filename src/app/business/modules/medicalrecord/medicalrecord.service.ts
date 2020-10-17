@@ -53,12 +53,12 @@ export class MedicalrecordService {
 
   }
   createMR(key, value) {
-    console.log(this.bookingId);
 
+    let mrObject = {};
     const _this = this;
-    const mrObject = _this.mr_payload_new;
+    mrObject = _this.mr_payload_new;
     mrObject[key] = value;
-    if (mrObject.bookingType === 'FOLLOWUP') {
+    if (mrObject['bookingType'] === 'FOLLOWUP') {
 
       return new Promise((resolve, reject) => {
         this.provider_services.createMedicalRecordForFollowUp(mrObject, _this.patientData.id)
