@@ -64,9 +64,12 @@
               <td >
                      {{drug.frequency}}
                   </td>
-              <td >
-               {{drug.instructions}}
-              </td>
+                  <td  *ngIf="instrutionType(drug.instructions) === 0">
+                    <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug.instructions)"><u style="color: #3c8dbc ; font-size: smaller">more</u></span></span>
+                   </td>
+                   <td *ngIf="instrutionType(drug.instructions) === 1">
+                     {{drug.instructions}}
+                 </td>
                <td >
                 <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
                </td>
@@ -76,8 +79,8 @@
         </table>
         <span (click)="addDrug()" class="lnk action" style="color: #3c8dbc; font-size: smaller"><u>Add more</u></span>
 
-        <div class="mgn-up-10">
-            <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0"><span class="red"> never uploaded digital signature,</span><a class="lnk action pointer-cursor"
+        <!-- <div class="mgn-up-10">
+            <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0"><span class="red">You never uploaded digital signature,</span><a class="lnk action pointer-cursor"
                 (click)="imagefile.click()"><input #imagefile type="file"
                     accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event)"> <u> create or Upload digital signature for sharing Rx</u></a>
@@ -110,7 +113,7 @@
           </div>
 
       </ng-container>
-        </div>
+        </div> -->
 
         <div  *ngIf="drugList.length > 0 && showSave">
             <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>

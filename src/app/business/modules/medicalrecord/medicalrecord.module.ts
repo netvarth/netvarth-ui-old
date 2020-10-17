@@ -16,14 +16,14 @@ import { AddDrugComponent } from './prescription/add-drug/add-drug.component';
 import { ShareRxComponent } from './prescription/share-rx/share-rx.component';
 import { UploadPrescriptionComponent } from './prescription/upload-prescription/upload-prescription.component';
 import { DrugListComponent } from './prescription/drug-list/drug-list.component';
-//import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
+import { InstructionsComponent } from './prescription/instructions/instructions.component';
 
 
 
 
 
 @NgModule({
-  declarations: [MedicalrecordComponent, GeneralComponent, ClinicalnotesComponent, PrescriptionComponent, LastVisitComponent, AddDrugComponent, ShareRxComponent, UploadPrescriptionComponent, DrugListComponent],
+  declarations: [MedicalrecordComponent, GeneralComponent, ClinicalnotesComponent, PrescriptionComponent, LastVisitComponent, AddDrugComponent, ShareRxComponent, UploadPrescriptionComponent, DrugListComponent , InstructionsComponent],
   imports: [
     SharedModule,
     CommonModule,
@@ -37,7 +37,8 @@ import { DrugListComponent } from './prescription/drug-list/drug-list.component'
   entryComponents: [
   LastVisitComponent,
   AddDrugComponent,
-  ShareRxComponent
+  ShareRxComponent,
+  InstructionsComponent
   ],
   providers: [
     MedicalrecordService
