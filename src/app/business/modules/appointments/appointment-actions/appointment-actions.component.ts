@@ -419,7 +419,7 @@ export class AppointmentActionsComponent implements OnInit {
         'booking_date': this.appt.appmtDate,
         'booking_time': this.appt.appmtTime,
         'mr_mode': medicalrecord_mode,
-        'mrId': mrId,
+        'mrId': mrId ,
         'booking_id': this.appt.uid
 
       }
@@ -430,9 +430,10 @@ export class AppointmentActionsComponent implements OnInit {
   prescription() {
     this.dialogRef.close();
     let medicalrecord_mode = 'new';
-    if (this.appt.mrId !== 0) {
+    let mrId = 0;
+    if (this.appt.mrId) {
       medicalrecord_mode = 'view';
-
+      mrId = this.appt.mrId;
     }
     const navigationExtras: NavigationExtras = {
 
@@ -445,7 +446,7 @@ export class AppointmentActionsComponent implements OnInit {
         'booking_date': this.appt.appmtDate,
         'booking_time': this.appt.appmtTime,
         'mr_mode': medicalrecord_mode,
-        'mrId': this.appt.mrId,
+        'mrId': mrId ,
         'booking_id': this.appt.uid
       }
     };

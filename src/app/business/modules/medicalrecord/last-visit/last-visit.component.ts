@@ -99,7 +99,7 @@ export class LastVisitComponent implements OnInit {
           'mrId': visitDetails.mrId
         }
       };
-      this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+      this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -115,7 +115,7 @@ export class LastVisitComponent implements OnInit {
           'booking_id': visitDetails.appointmnet.uid
         }
       };
-      this.router.navigate(['provider', 'medicalrecord'], navigationExtras);
+      this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
       this.dialogRef.close();
 
     }

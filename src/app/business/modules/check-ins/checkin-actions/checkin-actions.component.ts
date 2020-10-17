@@ -393,8 +393,12 @@ export class CheckinActionsComponent implements OnInit {
   }
   medicalRecord() {
     this.dialogRef.close();
-    // this.medicalrecordService.setCurrentMRID(0);
-    // this.medicalrecordService.setPatientDetailsForMR('');
+    let medicalrecord_mode = 'new';
+    let mrId = 0;
+    if (this.checkin.mrId) {
+      medicalrecord_mode = 'view';
+      mrId = this.checkin.mrId;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: {
         'customerDetail': JSON.stringify(this.checkin.consumer),
@@ -406,7 +410,8 @@ export class CheckinActionsComponent implements OnInit {
         'department': this.checkin.service.deptName,
         'consultationMode': 'OP',
         'booking_id': this.checkin.ynwUuid,
-        'mrId': this.checkin.mrId
+        'mr_mode': medicalrecord_mode,
+        'mrId': mrId
         // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
 
       }
@@ -416,8 +421,13 @@ export class CheckinActionsComponent implements OnInit {
   }
   prescription() {
     this.dialogRef.close();
-    // this.medicalrecordService.setCurrentMRID(0);
-    // this.medicalrecordService.setPatientDetailsForMR('');
+    let medicalrecord_mode = 'new';
+    let mrId = 0;
+    if (this.checkin.mrId) {
+      medicalrecord_mode = 'view';
+      mrId = this.checkin.mrId;
+    }
+
     const navigationExtras: NavigationExtras = {
       queryParams: {
         'customerDetail': JSON.stringify(this.checkin.consumer),
@@ -428,7 +438,8 @@ export class CheckinActionsComponent implements OnInit {
         'booking_time': this.checkin.token,
         'department': this.checkin.service.deptName,
         'consultationMode': 'OP',
-        'mrId': this.checkin.mrId,
+        'mrId': mrId,
+        'mr_mode': medicalrecord_mode,
         'booking_id': this.checkin.ynwUuid
       }
     };
