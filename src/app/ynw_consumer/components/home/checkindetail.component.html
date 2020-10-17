@@ -144,7 +144,7 @@
                                             </mat-expansion-panel-header>
                                             <div class="pnotes"
                                                 *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">
-                                                <p>{{consumerNote}}</p>
+                                                <p>{{waitlist.consumerNote}}</p>
                                             </div>
                                             <div
                                                 *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">
