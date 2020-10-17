@@ -79,6 +79,10 @@
                                                 {{waitlist.waitlistPhoneNumber}} </div>
                                             <div class="item"><span class="ttle">Confirmation No</span>
                                                 {{waitlist.checkinEncId}} </div> 
+
+                                            <div class="item" *ngIf="waitlist.appxWaitingTime>=0"><span class="ttle" >Estimated Time</span>
+                                                    {{waitlist.appxWaitingTime}} minutes</div>
+
                                             <div class="item" *ngIf="waitlist.batchName"><span
                                                     class="ttle">Batch</span><span>{{waitlist.batchName}}</span>
                                             </div>
