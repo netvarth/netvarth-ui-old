@@ -86,11 +86,10 @@ export class DrugListComponent implements OnInit {
 
   getMrprescription() {
     if (this.mrId) {
-      console.log(this.mrId);
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data: any) => {
           if (data.length !== 0) {
-            this.drugList.push(data);
+            this.drugList = data;
           }
           this.deleteFromDb = true;
         },
@@ -154,6 +153,8 @@ export class DrugListComponent implements OnInit {
     }
   }
   saveRx() {
+    console.log(this.mrId);
+
      if (this.mrId) {
       this.provider_services.updateMRprescription(this.drugList, this.mrId).
         subscribe(res => {
@@ -261,7 +262,7 @@ export class DrugListComponent implements OnInit {
       }
     });
   }
-  
+
   shareManualRx() {
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '50%',
