@@ -90,6 +90,7 @@ export class DrugListComponent implements OnInit {
         .subscribe((data: any) => {
           if (data.length !== 0) {
             this.drugList = data;
+            console.log(this.drugList);
           }
           this.deleteFromDb = true;
         },
@@ -153,8 +154,6 @@ export class DrugListComponent implements OnInit {
     }
   }
   saveRx() {
-    console.log(this.mrId);
-
      if (this.mrId) {
       this.provider_services.updateMRprescription(this.drugList, this.mrId).
         subscribe(res => {
@@ -262,7 +261,7 @@ export class DrugListComponent implements OnInit {
       }
     });
   }
-
+  
   shareManualRx() {
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '50%',

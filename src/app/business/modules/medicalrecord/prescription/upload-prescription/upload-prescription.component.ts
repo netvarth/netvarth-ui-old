@@ -28,6 +28,7 @@ export class UploadPrescriptionComponent implements OnInit {
   };
   showSave = true;
   sharedialogRef;
+  uploadImages: any = [];
 
   upload_status = 'Added to list';
   constructor(public sharedfunctionObj: SharedFunctions,
@@ -61,7 +62,13 @@ export class UploadPrescriptionComponent implements OnInit {
   getMrprescription(mrId) {
     this.provider_services.getMRprescription(mrId)
       .subscribe((data) => {
+        this.uploadImages = data;
         console.log(data);
+        for (const pic of this.uploadImages) {
+          const imgdet = {'name': pic.keyName, 'size': pic.imageSize, 'view': true};
+          this.selectedMessage.files.push(imgdet);
+        }
+        console.log(this.selectedMessage.files);
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -96,10 +103,16 @@ export class UploadPrescriptionComponent implements OnInit {
   }
 
   saveImages() {
+    for (let i = 0; i < this.selectedMessage.files.length; i++) {
+      if (this.selectedMessage.files[i].view === true) {
+        this.selectedMessage.files.splice(i, 1);
+      }
+  }
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;
     for (const pic of this.selectedMessage.files) {
+      console.log(pic);
       submit_data.append('files', pic, pic['name']);
       const properties = {
         'caption': this.selectedMessage.caption[i] || ''

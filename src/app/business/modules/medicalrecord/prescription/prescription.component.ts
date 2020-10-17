@@ -102,6 +102,14 @@ export class PrescriptionComponent implements OnInit {
   updatePrescription() {
     this.router.navigate(['/provider/customers/medicalrecord/addrxlist']);
   }
+  updatePaperPrescription() {
+    this.router.navigate(['/provider/customers/medicalrecord/uploadRx']);
+  }
+  imageSize(val) {
+    let imgsize;
+    imgsize = Math.round((val / 1024));
+    return imgsize;
+  }
 
   deleteDrug(index) {
     this.drugList.splice(index, 1);
