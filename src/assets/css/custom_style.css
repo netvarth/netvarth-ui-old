@@ -12520,10 +12520,30 @@ img.busN-logo {
 }
 .previewContainer {
   padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   border: 2px solid #000 !important;
   border-radius: 20px;
   background: #000;
+  
 }
+
+@media (min-width: 575px) {
+  .videohgt {
+    min-height: 400px;
+  }
+  }
+@media (max-width: 575px) {
+  .videohgt {
+    min-height: 400px;
+  }
+  }
+@media (max-width: 320px) {
+.videohgt {
+  min-height: 310px;
+}
+}
+
 .previewContainer video {
   width:100%;
 }
