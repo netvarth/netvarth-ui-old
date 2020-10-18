@@ -42,8 +42,8 @@ export class AppointmentActionsComponent implements OnInit {
     pos = false;
     showBill = false;
     showMsg = false;
-    selectedTime;
-    holdselectedTime;
+    selectedTime = '';
+    holdselectedTime = '';
     sel_checkindate;
     sel_schedule_id;
     servId;
@@ -60,7 +60,7 @@ export class AppointmentActionsComponent implements OnInit {
     dateDisplayFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     loading = false;
-    todayDate = true;
+    apptDate = '';
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -77,7 +77,8 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
     setData() {
-        this.selectedTime = this.holdselectedTime = this.appt.appmtTime;
+        // this.selectedTime = this.holdselectedTime = this.appt.appmtTime;
+        this.holdselectedTime = this.appt.appmtTime;
         this.sel_checkindate = this.hold_sel_checkindate = this.appt.appmtDate;
         this.sel_schedule_id = this.appt.schedule.id;
         this.servId = this.appt.service.id;
@@ -161,11 +162,10 @@ export class AppointmentActionsComponent implements OnInit {
     }
     changeSlot() {
         this.action = 'slotChange';
+        this.selectedTime = '';
         this.getAppointmentSlots();
     }
     goBacktoApptDtls() {
-        this.hold_sel_checkindate = this.sel_checkindate;
-        this.selectedTime = this.holdselectedTime;
         this.action = 'reschedule';
     }
     smsCheckin() {
@@ -442,6 +442,11 @@ export class AppointmentActionsComponent implements OnInit {
         });
     }
     rescheduleAppointment() {
+        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === moment(this.server_date).format('YYYY-MM-DD')) {
+            this.apptDate = 'Today, ' + this.getSingleTime(this.apptTime['time']);
+        } else {
+            this.apptDate = moment(this.sel_checkindate).format('DD-MM-YYYY') + ', ' + this.getSingleTime(this.apptTime['time']);
+        }
         const data = {
             'uid': this.appt.uid,
             'time': this.apptTime['time'],
@@ -451,6 +456,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.rescheduleProviderAppointment(data)
             .subscribe(
                 () => {
+                    this.shared_functions.openSnackBar('Appointment rescheduled to ' + this.apptDate);
                     this.dialogRef.close();
                 },
                 error => {
@@ -466,17 +472,20 @@ export class AppointmentActionsComponent implements OnInit {
         this.loading = true;
         this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate).subscribe(data => {
             this.schedules = data;
+            this.loading = false;
             for (const scheduleSlots of this.schedules) {
                 this.availableSlots = scheduleSlots.availableSlots;
                 for (const freslot of this.availableSlots) {
-                    if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.selectedTime) {
+                    // if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || freslot.time === this.selectedTime) {
+                    if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
                         freslot['scheduleId'] = scheduleSlots['scheduleId'];
                         freslot['displayTime'] = this.getSingleTime(freslot.time);
                         this.freeSlots.push(freslot);
                     }
                 }
             }
-            this.loading = false;
+            this.apptTime = this.freeSlots[0];
+            // this.timeSelected(this.freeSlots[0]);
         });
     }
     disableMinus() {
@@ -512,6 +521,7 @@ export class AppointmentActionsComponent implements OnInit {
         const ndate3 = moment(ndate2, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(ndate3);
         const nDt = new Date(ndate);
+        this.selectedTime = '';
         if (type === 'pre') {
             if (strtDt.getTime() >= nDt.getTime()) {
                 this.sel_checkindate = ndate;
@@ -542,16 +552,16 @@ export class AppointmentActionsComponent implements OnInit {
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
+        this.getAppointmentSlots();
     }
     disableButn() {
-        // console.log(this.sel_checkindate);
-        // console.log(this.hold_sel_checkindate);
-        // console.log(this.selectedTime);
-        // console.log(this.holdselectedTime);
-        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedTime === this.holdselectedTime) {
+        if ((moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedTime === this.holdselectedTime) || this.selectedTime === '') {
             return true;
         } else {
             return false;
         }
+    }
+    close() {
+        this.dialogRef.close();
     }
 }

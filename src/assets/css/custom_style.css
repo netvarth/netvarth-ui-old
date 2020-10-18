@@ -12431,7 +12431,21 @@ img.busN-logo {
   padding: 50px;
   text-align: center;
 }
+.consumer-reschedule-icon {
+  content: url(../images/Reschedule-01-01.svg);
+  width: 20px;
+}
 
+@media (min-width: 320px){
+  .tspacepdrt{
+    padding-right: 10px !important;
+  }
+}
+@media (min-width: 320px){
+  .mgn5mgnrt{
+    margin-right: 15px !important;
+  }
+}
 /* @media (max-width: 963px) {
   .rem-video {
     height: 100% !important;

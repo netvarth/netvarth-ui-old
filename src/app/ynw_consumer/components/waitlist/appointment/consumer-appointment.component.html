@@ -80,7 +80,7 @@
 
                                                     <div class="clearfix"></div>
                                                     <div class="callingmode mgn-lt-10 mgn-up-10"
-                                                        *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
+                                                        *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService' && type !== 'reschedule'">
                                                         <div class="mgn-bt-10 mgn-up-5">
                                                             <div class=""
                                                                 *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
@@ -103,12 +103,13 @@
                                                                             class="fa phon-icon ph-cal"
                                                                             aria-hidden="true"></i>
                                                                     </span>
-                                                                    <span> <input *ngIf="!showInputSection"
+                                                                    <span class="pointer-cursor whatsappNo" (click)="showPhoneInput()"*ngIf="!showInputSection">{{callingModes}}</span>
+                                                                    <span> <input *ngIf="showInputSection"
                                                                             (keypress)="isNumeric($event)"
                                                                             class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" style="width:150px!important;"
                                                                             placeholder="" [(ngModel)]="callingModes"
                                                                             autocomplete="off" maxlength="10"></span>
-                                                                    <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
+                                                                    <!-- <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                                         *ngIf="showInputSection">
                                                                         {{callingModes}}</span>
                                                                     <div class="input-group-append mgn-up-6"
@@ -120,7 +121,7 @@
                                                                         <span class="editbt mgn-lt-20"
                                                                             *ngIf="showInputSection"
                                                                             (click)="editCallingmodes(i)"></span>
-                                                                    </div>
+                                                                    </div> -->
                                                                     <!-- <div class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                                 *ngIf="showInputSection">
                                                                 {{callingModes}}
@@ -137,7 +138,7 @@
                                                             <span [innerHTML]="sel_ser_det.preInfoText"></span>
                                                         </div>
                                                         <a *ngIf="sel_ser_det.preInfoText" (click)="showPreInfo()" class="pull-right pointer-cursor mgn-up-5">
-                                                            <i class="fa fa-eye"></i>&nbsp;See more
+                                                            See more
                                                         </a>
                                                     </div>
                                                     <!-- <div class="mgn-bt-5 pre-check-title color-grey">Pre Check In Instructions
@@ -295,12 +296,12 @@
                                                     <mat-chip (click)="handleSideScreen('note')"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-file-text-o mgn-rt-5"
-                                                                aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}} <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span></a>
+                                                                aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}} <span *ngIf="sel_ser_det.consumerNoteMandatory && type != 'reschedule'">*</span></a>
                                                     </mat-chip>
                                                     <mat-chip (click)="gotoAttachments()"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-paperclip mgn-rt-5"
-                                                                aria-hidden="true"></i>Attachments<span
+                                                                aria-hidden="true"></i>Upload Files<span
                                                                 *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
                                                         </a></mat-chip>
                                                 </mat-chip-list>
@@ -317,7 +318,7 @@
                                                     </h6>
                                                 </div>
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                    <div *ngIf="sel_ser_det.isPrePayment" class="mgn-bt-20">
+                                                    <div *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'" class="mgn-bt-20">
                                                             This service requires
                                                             an advance
                                                             payment of
@@ -334,7 +335,7 @@
                                                     </div>
 
                                                     <div class="checkin-btn-bp pointer-cursor" *ngIf="type == 'reschedule'"
-                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === ''"  (click)="rescheduleAppointment()">
+                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === '' || disableButn()"  (click)="rescheduleAppointment()">
                                                         Reschedule
                                                         <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                     </div>
@@ -395,6 +396,10 @@
                             <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10"
                             *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
                             No slots available.
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-10 mgn-lt-5">
+                            <button (click)="goBack()" class="btn bt3 btn-default coupon-apply-btn"
+                                type="button">Ok</button>
                         </div>
                             </div>
 
@@ -589,13 +594,12 @@
                                                 (click)="imagefile.click()"><input #imagefile type="file"
                                                     accept="/*;capture=camera" style="display:none;" multiple
                                                     (change)="filesSelected($event)"><i class="fa fa-paperclip mgn-rt-5"
-                                                    aria-hidden="true"></i>Attach
-                                                File</a></mat-chip>
+                                                    aria-hidden="true"></i>Upload File</a></mat-chip>
                                     </mat-chip-list>
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 lnk pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
                                     *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                                    Attachments
+                                    Upload Files
                                 </div>
                                 <ng-container class="attachment"
                                     *ngIf="selectedMessage.files && selectedMessage.files.length > 0">

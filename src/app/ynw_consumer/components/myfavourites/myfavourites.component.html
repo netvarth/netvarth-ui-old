@@ -40,8 +40,8 @@
                                                             </li>
                                                         </ul>
                                                         <mat-menu #appMenu="matMenu">
-                                                            <button mat-menu-item
-                                                                (click)="providerDetail(provider)">{{view_cap}}</button>
+                                                            <!-- <button mat-menu-item
+                                                                (click)="providerDetail(provider)">{{view_cap}}</button> -->
                                                             <button mat-menu-item (click)="doDeleteFavProvider(provider)">
                                                                 <span class="add-fav favourited">
                                                                     {{remove_fav_cap}}</span>
@@ -58,7 +58,7 @@
                                                         <div class="locationname">
                                                             <span class="icon-location"></span> {{loc.place | capitalizeFirst}}
                                                         </div>
-                                                        <div class="bt-l" *ngIf="loc['waitlist'] && provider.onlinePresence">
+                                                        <!-- <div class="bt-l" *ngIf="loc['waitlist'] && provider.onlinePresence">
                                                             <div style="display: block;" class="wt-tme"
                                                                 *ngIf="loc['estimatedtime_det']">
                                                                 <div class="timing"
@@ -120,7 +120,12 @@
                                                                 *ngIf="loc['apptAllowed'] && provider.onlinePresence"
                                                                 (click)="providerDetail(provider)">
                                                                 Appointment</span>
-                                                        </div>
+                                                        </div> -->
+                                                        <div class="bt-r">
+                                                        <span class="cs-btn chk-btn" style="padding: 10px;"
+                                                        
+                                                        (click)="providerDetail(provider)">
+                                                        View Profile</span></div>
                                                     </div>
                                                 </div>
                                             </div>

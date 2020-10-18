@@ -2356,9 +2356,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               checkin_html += '<td style="padding:10px;">Date & Time</td>';
               checkin_html += '<td style="padding:10px;">Name</td>';
               checkin_html += '<td style="padding:10px;">Service</td>';
-              // if (this.providerLabels.length > 0) {
+              if (this.providerLabels.length > 0) {
               checkin_html += '<td style="padding:10px;">Label</td>';
-              // }
+              }
               checkin_html += '</thead>';
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 checkin_html += '<tr style="line-height:20px;padding:10px">';

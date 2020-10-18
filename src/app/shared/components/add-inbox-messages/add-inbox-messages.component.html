@@ -33,7 +33,7 @@
             </div>
         </div>
         <div style="color: red;" *ngIf = "typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && ((!phone && !phone_history ) || phone === 'null')">{{SEND_MESSAGE}}</div>
-        <div *ngIf = "!api_loading &&  source ==='provider-waitlist' && selectedMessage.files.length !== 0"><i class="fa fa-bell-o"></i>&nbsp;Messages with attachments will be send to Jaldee inbox.</div>
+        <div *ngIf = "!api_loading &&  source ==='provider-waitlist' && selectedMessage.files.length !== 0"><i class="fa fa-bell-o"></i>&nbsp;Messages with upload files will be send to Jaldee inbox.</div>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>
     <mat-dialog-actions>
@@ -81,7 +81,7 @@
                 class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
             <button type="button"
                 *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist' || source == 'provider-waitlist-inbox')"
-                class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Attach files'">
+                class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Upload files'">
                 <!-- accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" -->
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event)">

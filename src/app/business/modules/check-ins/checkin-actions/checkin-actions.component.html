@@ -1,16 +1,15 @@
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === ''">
-    Select your action
+    Select an action to perform
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
 <div class="action-section col-md-12" *ngIf="action === ''">
-    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-10 mgn-up-10">
-        <p *ngIf="checkin.showToken">Token for : {{checkin.waitlistingFor[0].firstName}}
-            {{checkin.waitlistingFor[0].lastName}} </p>
-        <p *ngIf="!checkin.showToken">Check-in for : {{checkin.waitlistingFor[0].firstName}}
-            {{checkin.waitlistingFor[0].lastName}} </p>
-        <p *ngIf="checkin.token">Token: {{checkin.token)}}
-        </p>
-    </div> -->
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!data.multiSelection">
+        <p *ngIf="checkin.showToken">Token for: {{checkin.waitlistingFor[0].firstName}}
+            {{checkin.waitlistingFor[0].lastName}}</p>
+        <p *ngIf="!checkin.showToken">Check-in for: {{checkin.waitlistingFor[0].firstName}}
+            {{checkin.waitlistingFor[0].lastName}}</p>
+        <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
+    </div>
     <div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
             <div class="action-box-sub" *ngIf="checkin.callingStatus">

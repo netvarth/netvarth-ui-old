@@ -279,7 +279,7 @@ export const Messages = {
   'WORKINGHOUR_TOOLTIP': 'Working Hour',
   'SEARCH_TOOLTIP': 'Search',
   'SORT_TOOLTIP': 'Sort By',
-  'FILE_TOOLTIP': 'Attachments',
+  'FILE_TOOLTIP': 'Upload Files',
   'ENBLE_DISABLE_TOOLTIP': 'Enable/Disable [waitlist]s',
   'CUST_NOT_TOOLTIP': '[customer] note',
   // General

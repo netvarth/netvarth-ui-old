@@ -36,11 +36,13 @@
                                             <div class="item"><span class="ttle">{{location_cap}}</span>
                                                 <span>{{waitlist.queue.location.place | capitalizeFirst}}</span>
                                             </div>
-                                            <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
-                                                <span class="waitlist_for">
+                                            <div class="item"><span class="ttle" *ngIf="!waitlist.token">{{waitlist_for_cap}}</span>
+                                                <span class="ttle" *ngIf="waitlist.token">Token for</span>
+                                                    <span class="waitlist_for">
                                                     {{waitlist.waitlistingFor[0].firstName | capitalizeFirst}}
                                                     {{waitlist.waitlistingFor[0].lastName | capitalizeFirst}}</span>
                                             </div>
+                                            
                                             <div *ngIf="waitlist.token" class="item"><span class="ttle">Token Number</span>
                                                 <span class="waitlist_for">{{waitlist.token}}</span>
                                             </div>
@@ -77,6 +79,10 @@
                                                 {{waitlist.waitlistPhoneNumber}} </div>
                                             <div class="item"><span class="ttle">Confirmation No</span>
                                                 {{waitlist.checkinEncId}} </div> 
+
+                                            <div class="item" *ngIf="waitlist.appxWaitingTime>=0"><span class="ttle" >Estimated Time</span>
+                                                    {{waitlist.appxWaitingTime}} minutes</div>
+
                                             <div class="item" *ngIf="waitlist.batchName"><span
                                                     class="ttle">Batch</span><span>{{waitlist.batchName}}</span>
                                             </div>
@@ -142,7 +148,7 @@
                                             </mat-expansion-panel-header>
                                             <div class="pnotes"
                                                 *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">
-                                                <p>{{consumerNote}}</p>
+                                                <p>{{waitlist.consumerNote}}</p>
                                             </div>
                                             <div
                                                 *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">

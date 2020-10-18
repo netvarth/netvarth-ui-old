@@ -26,6 +26,7 @@ export class ConfirmPageComponent implements OnInit {
   email;
   apiloading = false;
   provider_label;
+  type = 'appt';
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions) {
@@ -40,13 +41,16 @@ export class ConfirmPageComponent implements OnInit {
               this.apiloading = false;
             });
         }
+        if (params.type) {
+          this.type = params.type;
+        }
       });
   }
 
   ngOnInit() {
   }
   okClick() {
-    if (this.appointment.service.livetrack) {
+    if (this.appointment.service.livetrack && this.type !== 'reschedule') {
       this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], { queryParams: { account_id: this.infoParams.account_id } });
     } else {
       this.router.navigate(['consumer']);

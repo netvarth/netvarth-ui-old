@@ -15,7 +15,7 @@
                             <div class="details">
                                 <div class="book-head"> Booking Confirmed </div>
                                 <div class="book-details"> Booking details </div>
-                                <table class="book-details-sub">
+                                <table class="book-details-sub  chkntoknappt-details">
                                     <tbody>
                                         <tr>
                                             <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
@@ -26,6 +26,11 @@
                                             <td width="48%" align="right">{{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{waitlist.provider.firstName}} {{waitlist.provider.lastName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="48%" align="right">Location </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{waitlist.queue?.location.place}}</td>
                                         </tr>
                                         <tr *ngIf="waitlist.token">
                                             <td width="48%" align="right">Token No </td>
@@ -41,11 +46,6 @@
                                             <td width="48%" align="right">Check-in for</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{waitlist.waitlistingFor[0].firstName}} {{waitlist.waitlistingFor[0].lastName}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td width="48%" align="right">Location </td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{waitlist.queue?.location.place}}</td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Service</td>
@@ -74,7 +74,7 @@
                                                 {{waitlist.queue.queueEndTime}}</td>
                                         </tr>
                                         <tr>
-                                            <td width="48%" align="right">Confirmation No</td>
+                                            <td width="48%" align="right">Confirmation number</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{waitlist.checkinEncId}}</td>
                                         </tr>
@@ -85,7 +85,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <div class="book-status"> Current status </div>
+                                <div class="book-status chkntoknappt-details"> Current status </div>
                                 <table class="status-table">
                                     <tbody>
                                         <tr>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="ok-btn">
                                     <span class="pointer-cursor" (click)="okClick()">
-                                        Ok</span></div>
+                                        <strong>OK</strong></span></div>
                             </div>
                         </div>
                         <div class="powered-by">

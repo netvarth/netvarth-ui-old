@@ -105,6 +105,10 @@
                                                 <!-- for
                                                 <span>{{booking.appmtFor[0].userName}}</span> -->
                                             </span>
+                                            <div class="userName">
+                                                <i class="fa fa-user for"></i>
+                                                {{booking.appmtFor[0].userName}}
+                                            </div>
                                         </td>
                                         <td>
                                             <h6
@@ -116,7 +120,7 @@
                                                     (click)="stopprop($event)" target="blank"><u class="font-smalr">VIEW
                                                         STATUS</u></a></span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
@@ -125,7 +129,7 @@
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -146,7 +150,8 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
-                                                <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">Reschedule</button>
+                                                <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">
+                                                    <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                 <button mat-menu-item
                                                     *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
                                                     (click)="doCancelWaitlist(booking,'appointment')">
@@ -265,10 +270,12 @@
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
                                             <span class="servName">{{booking.service.name | capitalizeFirst}} 
-                                                <!-- for
-                                                <span>{{booking.waitlistingFor[0].firstName}}
-                                                    {{booking.waitlistingFor[0].lastName}}</span> -->
                                             </span>
+                                            <div class="userName">
+                                                <i class="fa fa-user for"></i>
+                                                {{booking.waitlistingFor[0].firstName}}
+                                                    {{booking.waitlistingFor[0].lastName}}
+                                            </div>
                                         </td>
                                         <td>
                                             <h6
@@ -285,7 +292,7 @@
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                         STATUS</u></a></span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                 <button class="bt3 cust-btn"
@@ -293,7 +300,7 @@
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -395,6 +402,10 @@
                                                     <!-- for
                                                     <span>{{booking.appmtFor[0].userName}}</span> -->
                                                 </span>
+                                                <div class="userName">
+                                                    <i class="fa fa-user for"></i>
+                                                    {{booking.appmtFor[0].userName}}
+                                                </div>
                                             </td>
                                             <td>
                                                 <h6
@@ -406,7 +417,7 @@
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                             STATUS</u></a></span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
@@ -415,7 +426,7 @@
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -437,7 +448,8 @@
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">Reschedule</button>
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">
+                                                        <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'appointment')">
@@ -557,10 +569,12 @@
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <span class="servName">{{booking.service.name | capitalizeFirst}} 
-                                                    <!-- for
-                                                    <span>{{booking.waitlistingFor[0].firstName}}
-                                                        {{booking.waitlistingFor[0].lastName}}</span> -->
                                                 </span>
+                                                <div class="userName">
+                                                    <i class="fa fa-user for"></i>
+                                                    {{booking.waitlistingFor[0].firstName}}
+                                                        {{booking.waitlistingFor[0].lastName}}
+                                                </div>
                                             </td>
                                             <td>
                                                 <h6
@@ -577,7 +591,7 @@
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                             STATUS</u></a></span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                     <button class="bt3 cust-btn"
@@ -585,7 +599,7 @@
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -691,10 +705,12 @@
                                                 <i class="fa wtsapvid-icon"
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
-                                            <span class="servName">{{booking.service.name | capitalizeFirst}} 
-                                                <!-- for
-                                                <span>{{booking.appmtFor[0].userName}}</span> -->
-                                            </span>
+                                            <span class="servName">{{booking.service.name | capitalizeFirst}}
+                                            </span> 
+                                            <div class="userName">
+                                                <i class="fa fa-user for"></i>
+                                                {{booking.appmtFor[0].userName}}
+                                            </div>
                                         </td>
                                         <td>
                                             <h6
@@ -706,7 +722,7 @@
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                         STATUS</u></a></span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
@@ -715,7 +731,7 @@
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -736,7 +752,8 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
-                                                <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">Reschedule</button>
+                                                <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">
+                                                    <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                 <button mat-menu-item
                                                     *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
                                                     (click)="doCancelWaitlist(booking,'appointment')">
@@ -804,10 +821,12 @@
                                                     *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                             </span>
                                             <span class="servName">{{booking.service.name | capitalizeFirst}} 
-                                                <!-- for
-                                                <span>{{booking.waitlistingFor[0].firstName}}
-                                                    {{booking.waitlistingFor[0].lastName}}</span> -->
                                             </span>
+                                            <div class="userName">
+                                                <i class="fa fa-user for"></i>
+                                                {{booking.waitlistingFor[0].firstName}}
+                                                    {{booking.waitlistingFor[0].lastName}}
+                                            </div>
                                         </td>
                                         <td>
                                             <h6
@@ -824,7 +843,7 @@
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                         STATUS</u></a></span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span
                                                 *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                 <button class="bt3 cust-btn"
@@ -832,7 +851,7 @@
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
                                         </td>
-                                        <td>
+                                        <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
                                                 <button class="bt3 cust-btn"
                                                     *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -919,10 +938,12 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span class="servName">{{booking.service.name | capitalizeFirst}} 
-                                                    <!-- for
-                                                    <span>{{booking.appmtFor[0].userName}}</span> -->
+                                                <span class="servName">{{booking.service.name | capitalizeFirst}}
                                                 </span>
+                                                <div class="userName">
+                                                    <i class="fa fa-user for"></i>
+                                                    {{booking.appmtFor[0].userName}}
+                                                </div>
                                             </td>
                                             <td>
                                                 <h6
@@ -934,7 +955,7 @@
                                                         target="blank" (click)="stopprop($event)"><u
                                                             class="font-smalr">VIEW STATUS</u></a></span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'">
 
@@ -943,7 +964,7 @@
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -965,7 +986,8 @@
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">Reschedule</button>
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">
+                                                        <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'appointment')"><i class="fa cross-icon"></i>Cancel</button>
@@ -1030,10 +1052,12 @@
                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 <span class="servName">{{booking.service.name | capitalizeFirst}} 
-                                                    <!-- for
-                                                    <span>{{booking.waitlistingFor[0].firstName}}
-                                                        {{booking.waitlistingFor[0].lastName}}</span> -->
                                                 </span>
+                                                <div class="userName">
+                                                    <i class="fa fa-user for"></i>
+                                                    {{booking.waitlistingFor[0].firstName}}
+                                                        {{booking.waitlistingFor[0].lastName}}
+                                                </div>
                                             </td>
                                             <td>
                                                 <h6
@@ -1050,7 +1074,7 @@
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
                                                             STATUS</u></a></span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'">
                                                     <button class="bt3 cust-btn"
@@ -1058,7 +1082,7 @@
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td class="pay-wdth">
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button class="bt3 cust-btn"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"

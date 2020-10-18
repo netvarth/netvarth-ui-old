@@ -553,7 +553,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.tempgalleryjson = res;
             let indx = 0;
             if (this.bLogo !== '../../../assets/images/img-null.svg') {
-              this.galleryjson[0] = { keyName: 'logo', caption: 'Profile Picture', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+              this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               indx = 1;
               // const imgobj = new Image(
               //   0,
@@ -729,7 +729,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (this.bLogo !== '../../../assets/images/img-null.svg') {
               this.galleryExists = true;
               this.image_list_popup = [];
-              this.galleryjson[0] = { keyName: 'logo', caption: 'Profile Picture', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+              this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               const imgobj = new Image(0,
                 { // modal
                   img: this.galleryjson[0].url,
@@ -1542,15 +1542,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   appointmentClicked(location, service: any) {
     const _this = this;
     this.futureAllowed = true;
-    let serviceDate;
-    if (service.serviceAvailability && service.serviceAvailability.nextAvailableDate) {
-      serviceDate = service.serviceAvailability.nextAvailableDate;
-    }
     const current_provider = {
       'id': location.id,
       'place': location.place,
       'location': location,
-      'cdate': serviceDate,
+      'cdate': service.serviceAvailability.nextAvailableDate,
       'service': service
     };
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1571,14 +1567,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       cmon = '' + mm;
     }
     const dtoday = yyyy + '-' + cmon + '-' + cday;
-    if (service.serviceAvailability && service.serviceAvailability.nextAvailableDate) {
-      if (dtoday === serviceDate) {
-        this.changedate_req = false;
-      } else {
-        this.changedate_req = true;
-      }
+    if (dtoday === service.serviceAvailability.nextAvailableDate) {
+      this.changedate_req = false;
     } else {
-      serviceDate = dtoday;
       this.changedate_req = true;
     }
     if (!location.futureAppt) {
@@ -1590,7 +1581,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         if (status) {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-            this.showAppointment(location.id, location.place, serviceDate, service, 'consumer');
+            this.showAppointment(location.id, location.place, service.serviceAvailability.nextAvailableDate, service, 'consumer');
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
