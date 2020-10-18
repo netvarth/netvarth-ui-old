@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras } from '@angular/router';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class LastVisitComponent implements OnInit {
   visitdetails: string;
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-    private router: Router,
+    // private router: Router,
     public dialogRef: MatDialogRef<LastVisitComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.PatientId = this.data.patientId;
@@ -92,9 +92,10 @@ export class LastVisitComponent implements OnInit {
 
   }
   viewMedicalRecord(visitDetails) {
-    this.dialogRef.close();
-    this.visitdetails = JSON.stringify(visitDetails);
+    console.log(JSON.stringify(visitDetails));
+
     if (visitDetails.waitlist) {
+
       const navigationExtras: NavigationExtras = {
         queryParams: {
           'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
@@ -103,13 +104,20 @@ export class LastVisitComponent implements OnInit {
           'booking_type': 'TOKEN',
           'booking_date': visitDetails.waitlist.date,
           'booking_time': visitDetails.waitlist.checkInTime,
-          'department': visitDetails.service.deptName,
+          'department': visitDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
-          'mrId': visitDetails.mrId
+          'mrId': visitDetails.mrId,
+          'visitDate': visitDetails.date
         }
       };
-      this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+      console.log(navigationExtras);
+      console.log(JSON.stringify(navigationExtras));
+      const result = {
+        'navigationParams': navigationExtras,
+        'type': 'clinicalnotes'
+      };
+      this.dialogRef.close(result);
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -121,18 +129,20 @@ export class LastVisitComponent implements OnInit {
           'booking_date': visitDetails.appointmnet.appmtDate,
           'booking_time': visitDetails.appointmnet.appmtTime,
           'mrId': visitDetails.mrId,
-          'booking_id': visitDetails.appointmnet.uid
+          'booking_id': visitDetails.appointmnet.uid,
+          'visitDate': visitDetails.date
         }
       };
-      this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+      console.log(navigationExtras);
+      const result = {
+        'navigationParams': navigationExtras,
+        'type': 'clinicalnotes'
+      };
+      this.dialogRef.close(result);
     }
   }
 
   viewMR_prescription(visitDetails) {
-    this.dialogRef.close();
-    this.dialogRef.close();
-    this.visitdetails = JSON.stringify(visitDetails);
-    console.log(visitDetails);
     if (visitDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -142,13 +152,18 @@ export class LastVisitComponent implements OnInit {
           'booking_type': 'TOKEN',
           'booking_date': visitDetails.waitlist.date,
           'booking_time': visitDetails.waitlist.checkInTime,
-          'department': visitDetails.service.deptName,
+          'department': visitDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
-          'mrId': visitDetails.mrId
+          'mrId': visitDetails.mrId,
+          'visitDate': visitDetails.date
         }
       };
-      this.router.navigate(['provider',  'customers' , 'medicalrecord' , 'prescription'], navigationExtras);
+      const result = {
+        'navigationParams': navigationExtras,
+        'type': 'prescription'
+      };
+      this.dialogRef.close(result);
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -160,10 +175,15 @@ export class LastVisitComponent implements OnInit {
           'booking_date': visitDetails.appointmnet.appmtDate,
           'booking_time': visitDetails.appointmnet.appmtTime,
           'mrId': visitDetails.mrId,
-          'booking_id': visitDetails.appointmnet.uid
+          'booking_id': visitDetails.appointmnet.uid,
+          'visitDate': visitDetails.date
         }
       };
-      this.router.navigate(['provider',   'customers' , 'medicalrecord', 'prescription'], navigationExtras);
+      const result = {
+        'navigationParams': navigationExtras,
+        'type': 'prescription'
+      };
+      this.dialogRef.close(result);
     }
 
   }

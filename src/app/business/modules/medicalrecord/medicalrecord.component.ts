@@ -34,7 +34,7 @@ export class MedicalrecordComponent implements OnInit {
   mrlist;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   MrCreateddate: string;
-  visitdate: any;
+  visitdate = new Date();
   consultationMode: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
@@ -86,6 +86,9 @@ export class MedicalrecordComponent implements OnInit {
             this.mrId = parseInt(qparams.mrId);
             this.medicalService.setCurrentMRID(this.mrId);
           }
+          if (qparams.visitDate) {
+            this.visitdate = qparams.visitDate;
+          }
           this.medicalService.setPatientDetailsForMR(qparams);
 
 
@@ -95,7 +98,7 @@ export class MedicalrecordComponent implements OnInit {
           this.medicalService.patient_data.subscribe(res => {
             this.navigation_params = {
               'clone_params': res
-            }
+            };
             console.log('else' + JSON.stringify(this.navigation_params));
 
             this.customerDetails = JSON.parse(res.customerDetail);
@@ -137,7 +140,7 @@ export class MedicalrecordComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.visitdate = new Date();
+
     this.mrDate = new Date();
     this.MrCreateddate = this.sharedfunctionObj.formatDateDisplay(this.mrDate);
     this.router.events.subscribe((res) => {
@@ -165,7 +168,7 @@ export class MedicalrecordComponent implements OnInit {
   VisitList() {
     console.log(this.PatientId);
     this.mrdialogRef = this.dialog.open(LastVisitComponent, {
-      width: '50%',
+      width: '80%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
@@ -174,7 +177,16 @@ export class MedicalrecordComponent implements OnInit {
       }
     });
     this.mrdialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      console.log(JSON.stringify(result));
+      if (result.type === 'prescription') {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], result.navigationParams);
+      } else if (result.type === 'clinicalnotes') {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
+      }
     });
   }
 }

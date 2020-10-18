@@ -46,9 +46,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-
     if (this.mrId === 0 || this.mrId === undefined) {
-      console.log('kjfdsifhdsijfhjkdsnfkds');
       this.isLoaded = true;
       for (let i = 0; i < this.clinical_constant.length; i++) {
         this.clinical_constant[i].value = '';
@@ -60,8 +58,6 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     } else {
       this.getMRClinicalNotes(this.mrId).then((res: any) => {
         this.clinicalNotes = res;
-        console.log(JSON.stringify(this.clinicalNotes));
-
         this.isLoaded = true;
 
       });
