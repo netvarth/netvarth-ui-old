@@ -5,15 +5,22 @@ import * as twilio from 'twilio-video';
 export class TwilioService {
     remoteVideo: ElementRef;
     localVideo: ElementRef;
+    previewContainer: ElementRef;
     previewing: boolean;
     // msgSubject = new BehaviorSubject('');
     roomObj: any;
     microphone = true;
     video = true;
+    preview = true;
     roomParticipants;
     participantsCount = 0;
     showParticipant = false;
+    previewTrack;
+    frontCamTrack;
+    backCamTrack;
+    camDeviceCount = 0;
     private renderer: Renderer2;
+    cameraMode: string;
     constructor(
         public rendererFactory: RendererFactory2) {
         this.renderer = rendererFactory.createRenderer(null, null);
@@ -42,11 +49,63 @@ export class TwilioService {
         });
         this.microphone = true;
     }
+    switchCamera(cameraMode) {
+        // Capture the back facing camera.
+        twilio.createLocalVideoTrack({
+            facingMode: cameraMode
+        }).then(localTracks => {
+            if (cameraMode === 'user') {
+                this.frontCamTrack = localTracks;
+                this.backCamTrack.stop();
+                this.roomObj.localParticipant.unpublishTrack(this.backCamTrack);
+                this.roomObj.localParticipant.publishTrack(this.frontCamTrack);
+            } else {
+                this.backCamTrack = localTracks;
+                this.frontCamTrack.stop();
+                this.roomObj.localParticipant.unpublishTrack(this.frontCamTrack);
+                this.roomObj.localParticipant.publishTrack(this.backCamTrack);
+            }
+            this.cameraMode = cameraMode;
+        });
+    }
+    previewMedia() {
+        twilio.createLocalTracks({
+        }).then(
+        localTracks => {
+            localTracks.forEach(localTrack => {
+                if (localTrack.kind === 'video') {
+                    this.camDeviceCount++;
+                    if (this.camDeviceCount === 1) {
+                        this.previewTrack = localTrack;
+                        this.renderer.appendChild(this.previewContainer.nativeElement, localTrack.attach());
+                    }
+                }
+            });
+        }
+        );
+        // twilio.createLocalVideoTrack({
+        // }).then(localTracks => {
+        //     this.previewTrack = localTracks;
+        //     this.renderer.appendChild(this.previewContainer.nativeElement, localTracks.attach());
+        // });
+    }
     connectToRoom(accessToken, options): void {
         console.log(accessToken);
         console.log(options);
-        twilio.connect(accessToken, options).then(room => {
+        if (this.previewTrack) {
+            this.previewTrack.stop();
+        }
+        twilio.createLocalTracks({
+            audio: true,
+            video: { width: 640, facingMode: 'user' }
+        }).then(localTracks => {
+            options['tracks'] = localTracks;
+            this.frontCamTrack = localTracks;
+            return twilio.connect(accessToken, options);
+        }).then(room => {
+            this.preview = false;
             this.roomObj = room;
+            // navigator.mediaDevices.enumerateDevices().then(this.gotDevices);
             console.log('Connected to Room: ' + room.name);
             console.log('Successfully joined a Room:' + room);
             if (!this.previewing && options['video']) {
@@ -114,6 +173,7 @@ export class TwilioService {
             alert(error.message);
         });
     }
+
     attachParticipantTracks(participant, room): void {
         console.log('Attaching participants');
         participant.tracks.forEach(part => {
@@ -144,6 +204,7 @@ export class TwilioService {
     startLocalVideo(): void {
         console.log('Start Local Video');
         this.roomObj.localParticipant.videoTracks.forEach(publication => {
+            console.log(publication);
             const element = publication.track.attach();
             this.renderer.data.id = publication.track.sid;
             // this.renderer.setStyle(element, 'height', 'auto');

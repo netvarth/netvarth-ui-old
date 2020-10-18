@@ -1,4 +1,4 @@
-import { ViewChild, OnInit, OnDestroy, ElementRef, Component, AfterViewInit } from '@angular/core';
+import { ViewChild, OnInit, OnDestroy, ElementRef, Component, AfterViewInit, Renderer2, RendererFactory2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TwilioService } from '../../services/twilio-service';
 // import { projectConstantsLocal } from '../../constants/project-constants';
@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 })
 export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('localVideo', { static: false }) localVideo: ElementRef;
+    @ViewChild('previewContainer', { static: false }) previewContainer: ElementRef;
     @ViewChild('remoteVideo', { static: false }) remoteVideo: ElementRef;
     room_name;
     access_token;
@@ -20,67 +21,66 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     screenWidth: number;
     screenHeight: number;
     videoId: any;
+    cameraMode = 'user';
+    private renderer: Renderer2;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
         private sharedServices: SharedServices,
-        public twilioService: TwilioService
+        public twilioService: TwilioService,
+        public rendererFactory: RendererFactory2
         // private baCustomPreLoader: BaCustomPreLoader
     ) {
-        if (navigator.getUserMedia) {
-            console.log(navigator);
-            navigator.getUserMedia({ audio: false, video: true }, function (stream) {
-            }, function (error) {
-                console.log(error.name + ': ' + error.message);
-            });
-            // navigator.getUserMedia({ audio: false, video: true  }, function (stream) {
-            // }, function (error) {
-            //     console.log(error.name + ': ' + error.message);
-            // });
-        } else if (navigator.vendor.match(/[Aa]+pple/g) && navigator.vendor.match(/[Aa]+pple/g).length > 0) {
-            navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-                .then(function () { })
-                .catch(function (error) {
-                    console.log(error.name + ': ' + error.message);
-                });
-        }
+        this.renderer = rendererFactory.createRenderer(null, null);
+        console.log(this.renderer);
         window.addEventListener('unload', () => {
             this.disconnect();
         });
     }
     ngAfterViewInit() {
-        console.log(this.localVideo);
-        console.log(this.remoteVideo);
-        this.activateroute.params.subscribe(params => {
-            const videoId = params.id;
-            this.sharedServices.getJaldeeVideoAccessToken(videoId).subscribe(
-                (tokenObj: any) => {
-                    console.log(tokenObj);
-                    // this.access_token = tokenObj.token;
-                    this.twilioService.localVideo = this.localVideo;
-                    this.twilioService.remoteVideo = this.remoteVideo;
-                    this.connect(tokenObj);
-                }
-            );
-        });
+        this.twilioService.previewContainer = this.previewContainer;
+        this.twilioService.previewMedia();
     }
     ngOnInit() {
         this.screenWidth = window.innerWidth;
         this.screenHeight = window.innerHeight;
+        const isMobile = {
+            Android: function () {
+              return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function () {
+              return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function () {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function () {
+              return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function () {
+              return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function () {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+            }
+          };
     }
     disconnect() {
         if (this.twilioService.roomObj && this.twilioService.roomObj !== null) {
             this.twilioService.roomObj.disconnect();
             this.twilioService.roomObj = null;
+            this.location.back();
+        } else {
+            this.location.back();
         }
-        this.location.back();
     }
     connect(tokenObj) {
         console.log(tokenObj.tokenId);
+        this.twilioService.cameraMode = 'user';
         this.twilioService.connectToRoom(tokenObj.tokenId, {
             name: tokenObj.roomName,
             audio: true,
-            video: { height: '100%', frameRate: 24, width: '100%' },
+            video: { height: '100%', frameRate: 24, width: '100%', facingMode: 'user' },
             bandwidthProfile: {
                 video: {
                     mode: 'collaboration',
@@ -122,6 +122,27 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      */
     startVideo() {
         this.twilioService.enableVideo();
+    }
+    switchCamera() {
+        if (this.twilioService.cameraMode === 'user') {
+            this.twilioService.switchCamera('environment');
+        } else {
+            this.twilioService.switchCamera('user');
+        }
+    }
+    joinRoom () {
+        this.activateroute.params.subscribe(params => {
+            const videoId = params.id;
+            this.sharedServices.getJaldeeVideoAccessToken(videoId).subscribe(
+                (tokenObj: any) => {
+                    console.log(tokenObj);
+                    // this.access_token = tokenObj.token;
+                    this.twilioService.localVideo = this.localVideo;
+                    this.twilioService.remoteVideo = this.remoteVideo;
+                    this.connect(tokenObj);
+                }
+            );
+        });
     }
     ngOnDestroy() { this.disconnect(); }
 }

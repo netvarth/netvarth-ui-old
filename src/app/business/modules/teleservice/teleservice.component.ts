@@ -275,7 +275,9 @@ export class TeleServiceComponent implements OnInit {
                                 const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
                                 window.open(path, '_blank');
                             } else {
-                                this.router.navigateByUrl(this.starting_url);
+                                const startIndex = this.starting_url.lastIndexOf('/');
+                                const videoId = this.starting_url.substring(startIndex, this.starting_url.length);
+                                this.router.navigate(['video', videoId]);
                             }
                             this.getProviderWaitlstById();
                         }
@@ -296,7 +298,9 @@ export class TeleServiceComponent implements OnInit {
                                 const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
                                 window.open(path, '_blank');
                             } else {
-                                this.router.navigateByUrl(this.starting_url);
+                                const startIndex = this.starting_url.lastIndexOf('/');
+                                const videoId = this.starting_url.substring(startIndex, this.starting_url.length);
+                                this.router.navigate(['video', videoId]);
                                 // this.shared_services.getVideoIdForService(waitlist.uid, 'provider').subscribe(
                                 //     (videoId: any) => {
                                 //         this.router.navigate(['provider', 'video', videoId]);

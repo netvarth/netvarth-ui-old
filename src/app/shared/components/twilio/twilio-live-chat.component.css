@@ -1,8 +1,9 @@
 .remote {
   /* background: orange; */
-  height: 100vh;
+  height: 95vh;
   width: 100%;
   text-align: center;
+  background: #000 !important;
 }
 .remote-hide {
   display: none;
@@ -11,9 +12,10 @@
   /* background: green; */
   width: 100px;
   height: 100px;
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
+  margin-right: 10px;
 }
 .local-zeroPs {
   height: 100vh;
@@ -41,8 +43,8 @@
 }
 .icons {
   width: 100%;
-  position: fixed;
-  bottom: 25px;
+  position: absolute;
+  bottom: 70px;
   text-align: center;
   font-size: 1.30rem;
 }
