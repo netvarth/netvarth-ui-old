@@ -1,13 +1,13 @@
 
   <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small" *ngIf="isLoaded">
            <div class="card mrcreate" *ngFor="let entry of clinicalNotes">
-                  <div >
-                    <b>{{entry.displayName}}</b>
-                    <button type="button" mat-button style="float: right;"class="cs-btn bt1" (click)="addOrEditClinicalNotes(entry)">{{ entry.value == '' ? 'Add' : 'Edit' }}</button>
+                  <span >
+                    <h5>{{entry.displayName}}
+                    <button type="button" mat-button style="float: right;"class="cs-btn bt1" (click)="addOrEditClinicalNotes(entry)">{{ entry.value == '' ? 'Add' : 'Edit' }}</button></h5>
                     <div *ngIf= "entry.value" >
                       <p>{{entry.value}}</p>
                     </div>
-                  </div>
+                  </span>
 
            </div>
            <!-- <div class="clearfix"></div> -->

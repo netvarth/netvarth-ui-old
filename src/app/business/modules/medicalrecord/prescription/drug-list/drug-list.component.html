@@ -58,10 +58,10 @@
               <td >
                 {{drug.duration}}
               </td>
-              <td >
+              <td>
                     {{drug.dosage}}
                  </td>
-              <td >
+              <td>
                      {{drug.frequency}}
                   </td>
                   <td  *ngIf="instrutionType(drug.instructions) === 0">
@@ -70,7 +70,7 @@
                    <td *ngIf="instrutionType(drug.instructions) === 1">
                      {{drug.instructions}}
                  </td>
-               <td >
+               <td>
                 <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
                </td>
 
