@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { MedicalrecordService } from '../medicalrecord.service';
+import { InstructionsComponent } from './instructions/instructions.component';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { MedicalrecordService } from '../medicalrecord.service';
 })
 export class PrescriptionComponent implements OnInit {
 
+  instructiondialogRef: any;
   addDrugdialogRef;
   drugList: any = [];
   today = new Date();
@@ -139,26 +141,33 @@ export class PrescriptionComponent implements OnInit {
 
     });
   }
+  instrutionType(val) {
+    const detail = val.length;
+    let len;
+    if (detail > 25) {
+      len = 0;
+    } else {
+      len = 1;
+    }
+    return len;
+  }
 
-  // savePrescription() {
-  //   if (this.mrId) {
-  //     this.provider_services.updateMRprescription(this.drugList, this.mrId).
-  //       subscribe(res => {
-
-  //       });
-  //   } else {
-  //     const passingdata = {
-  //       'prescriptions': this.drugList,
-
-  //     };
-  //     console.log(passingdata, this.userId);
-  //     this.provider_services.createMedicalRecord(passingdata, this.userId)
-  //       .subscribe((data) => {
-  //         this.sharedfunctionObj.setitemonLocalStorage('mrId', data);
-  //       },
-  //         error => {
-  //           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-  //         });
-  //   }
-  // }
+  truncateInst(val) {
+    const inst = val.substr(0, 25);
+    return inst;
+  }
+  instructPopUp(drug) {
+    console.log(drug);
+    this.instructiondialogRef = this.dialog.open(InstructionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: drug
+    });
+    this.instructiondialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
+  }
 }

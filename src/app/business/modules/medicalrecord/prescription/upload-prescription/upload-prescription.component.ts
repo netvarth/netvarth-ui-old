@@ -65,7 +65,7 @@ export class UploadPrescriptionComponent implements OnInit {
         this.uploadImages = data;
         console.log(data);
         for (const pic of this.uploadImages) {
-          const imgdet = {'name': pic.keyName, 'size': pic.imageSize, 'view': true};
+          const imgdet = { 'name': pic.keyName, 'size': pic.imageSize, 'view': true };
           this.selectedMessage.files.push(imgdet);
         }
         console.log(this.selectedMessage.files);
@@ -103,11 +103,11 @@ export class UploadPrescriptionComponent implements OnInit {
   }
 
   saveImages() {
-    for (let i = 0; i < this.selectedMessage.files.length; i++) {
-      if (this.selectedMessage.files[i].view === true) {
-        this.selectedMessage.files.splice(i, 1);
+    for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
+      if (this.selectedMessage.files[ia].view === true) {
+        this.selectedMessage.files.splice(ia, 1);
       }
-  }
+    }
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;
@@ -146,22 +146,22 @@ export class UploadPrescriptionComponent implements OnInit {
         this.showSave = false;
         this.upload_status = 'Uploaded';
         this.sharedfunctionObj.openSnackBar('Prescription uploaded successfully');
-        this.router.navigate(['provider', 'customers','medicalrecord', 'prescription']);
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  deleteTempImage(img,index) {
+  deleteTempImage(img, index) {
     this.showSave = true;
     if (img.view && img.view === true) {
-      this.provider_services.deleteUplodedprescription(img.name , this.mrId)
-      .subscribe((data) => {
-        this.selectedMessage.files.splice(index, 1);
-       },
-      error => {
-        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      });
+      this.provider_services.deleteUplodedprescription(img.name, this.mrId)
+        .subscribe((data) => {
+          this.selectedMessage.files.splice(index, 1);
+        },
+          error => {
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
     } else {
       this.selectedMessage.files.splice(index, 1);
     }

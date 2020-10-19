@@ -252,14 +252,13 @@ export class DrugListComponent implements OnInit {
     const inst = val.substr(0, 25);
     return inst;
   }
-  instructPopUp(val) {
+  instructPopUp(drug) {
     this.instructiondialogRef = this.dialog.open(InstructionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
-      data: {
-        instructions: val
-      }
+      data: drug
+
     });
     this.instructiondialogRef.afterClosed().subscribe(result => {
       if (result) {
