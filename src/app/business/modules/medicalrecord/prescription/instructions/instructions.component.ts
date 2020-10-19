@@ -5,15 +5,16 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   templateUrl: './instructions.component.html'
 })
 export class InstructionsComponent implements OnInit {
+  medicine: any;
   locationMessage: any;
   constructor(
     public dialogRef: MatDialogRef<InstructionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-
+    this.medicine = this.data;
   }
   ngOnInit() {
-    this.locationMessage = this.data.instructions;
+    this.locationMessage = this.medicine.instructions;
   }
   closeDialog() {
     this.dialogRef.close();

@@ -13,18 +13,23 @@
                         <div class="card title-gb">
                                 <div class="mgn-up-10">
 
-                                    <p>
+                                    <!-- <p>
                                       <b>Patient:</b>
                                       <span color="blue"> {{patientDetails.jaldeeId}} &nbsp;</span>
                                       <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}}</span>
                                       <span *ngIf="patientDetails.dob|| patientDetails.gender ">({{patientDetails.dob}} {{patientDetails.gender | capitalizeFirst}})</span>
-                                    </p>
-                                    <!-- <p>Patient Name:{{patientFirstName | capitalizeFirst}} {{patientLastName}} </p>-->
-                                    <!-- <p>Patient Id: {{PatiendId}}</p>
-                                    <p *ngIf="PatientDob">DOB: {{PatientDob}} </p>
-                                    <p *ngIf="gender">Gender:{{gender | capitalizeFirst}}</p> -->
+                                    </p> -->
+                                    <hr>
+                                    <span>Patient Name: {{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
+                                    <span>Patient Id: {{patientDetails.jaldeeId}}</span><br>
+                                    <span *ngIf="patientDetails.dob">DOB: {{patientDetails.dob}}</span><br *ngIf="patientDetails.dob">
+                                    <span *ngIf="patientDetails.gender">Gender: {{patientDetails.gender | capitalizeFirst}}</span>
+                                    <hr>
 
                                 </div>
+                                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+      <ng-container *ngIf="!loading">
+
        <div class="no-dta table-responsive" *ngIf="drugList.length>0">
         <h5> Drugs added to the prescription</h5>
     <table class="table table-bordered" >
@@ -65,7 +70,7 @@
                      {{drug.frequency}}
                   </td>
                   <td  *ngIf="instrutionType(drug.instructions) === 0">
-                    <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug.instructions)"><u style="color: #3c8dbc ; font-size: smaller">more</u></span></span>
+                    <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u style="color: #3c8dbc ; font-size: smaller">more</u></span></span>
                    </td>
                    <td *ngIf="instrutionType(drug.instructions) === 1">
                      {{drug.instructions}}
@@ -116,7 +121,7 @@
         </div> -->
 
         <div  *ngIf="drugList.length > 0 && showSave">
-            <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="saveRx()">Save Rx </button>
+            <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="saveRx()">Save Prescription </button>
         </div>
         <!-- <div *ngIf="drugList.length > 0 && !showSave && digitalSign">
                 <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx()" >
@@ -164,6 +169,7 @@
                   <span (click)="addDrug()" class="lnk action" style="color: #3c8dbc; font-size: smaller"><u>Add more</u></span>
 
       </div>
+    </ng-container>
       <!-- </div>
     </div> -->
     </div>

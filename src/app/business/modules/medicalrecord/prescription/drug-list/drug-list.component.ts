@@ -38,6 +38,7 @@ export class DrugListComponent implements OnInit {
   digitalSign = false;
   deleteFromDb = false;
   instructiondialogRef;
+  loading = true;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
@@ -63,13 +64,16 @@ export class DrugListComponent implements OnInit {
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       if (mrId !== 0) {
         this.mrId = mrId;
+
+      } else {
+        this.loading = false;
       }
     });
     this.getMrprescription();
   }
   goBack() {
-       this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
-}
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
+  }
   getDigitalSign() {
     if (this.providerId) {
       this.provider_services.getDigitalSign(this.providerId)
@@ -88,9 +92,11 @@ export class DrugListComponent implements OnInit {
     if (this.mrId) {
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data: any) => {
-          if (data.length !== 0) {
+          if (data && data.length !== 0) {
             this.drugList = data;
-            console.log(this.drugList);
+            this.loading = false;
+          } else {
+            this.loading = false;
           }
           this.deleteFromDb = true;
         },
@@ -154,7 +160,7 @@ export class DrugListComponent implements OnInit {
     }
   }
   saveRx() {
-     if (this.mrId) {
+    if (this.mrId) {
       this.provider_services.updateMRprescription(this.drugList, this.mrId).
         subscribe(res => {
           console.log(this.drugList);
@@ -233,27 +239,26 @@ export class DrugListComponent implements OnInit {
         });
   }
   instrutionType(val) {
-      const detail = val.length;
-      let len ;
-        if (detail > 25) {
-        len = 0;
-        } else {
-        len = 1;
-        }
-      return len;
+    const detail = val.length;
+    let len;
+    if (detail > 25) {
+      len = 0;
+    } else {
+      len = 1;
+    }
+    return len;
   }
   truncateInst(val) {
-      const inst = val.substr(0, 25);
-      return inst;
-    }
-  instructPopUp(val) {
+    const inst = val.substr(0, 25);
+    return inst;
+  }
+  instructPopUp(drug) {
     this.instructiondialogRef = this.dialog.open(InstructionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
-      data: {
-        instructions: val
-      }
+      data: drug
+
     });
     this.instructiondialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -261,7 +266,7 @@ export class DrugListComponent implements OnInit {
       }
     });
   }
-  
+
   shareManualRx() {
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '50%',

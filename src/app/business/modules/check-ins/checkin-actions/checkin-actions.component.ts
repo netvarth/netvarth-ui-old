@@ -430,14 +430,12 @@ export class CheckinActionsComponent implements OnInit {
           'serviceName': this.checkin.service.name,
           'booking_type': 'TOKEN',
           'booking_date': this.checkin.date,
-          'booking_time': this.checkin.token,
+          'booking_time': this.checkin.checkInTime,
           'department': this.checkin.service.deptName,
           'consultationMode': 'OP',
           'booking_id': this.checkin.ynwUuid,
           'mr_mode': medicalrecord_mode,
           'mrId': mrId
-          // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
-
         }
       };
 
@@ -457,9 +455,9 @@ export class CheckinActionsComponent implements OnInit {
           'customerDetail': JSON.stringify(this.checkin.consumer),
           'serviceId': this.checkin.service.id,
           'serviceName': this.checkin.service.name,
-          'booking_type': 'Waitlist',
+          'booking_type': 'TOKEN',
           'booking_date': this.checkin.date,
-          'booking_time': this.checkin.token,
+          'booking_time': this.checkin.checkInTime,
           'department': this.checkin.service.deptName,
           'consultationMode': 'OP',
           'mrId': mrId,

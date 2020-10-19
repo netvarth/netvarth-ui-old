@@ -1,5 +1,5 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="ynw-common-form">
-  <h1 class="mat-dialog-title">Add Drug
+  <h1 class="mat-dialog-title">Add Medicine
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -7,7 +7,7 @@
   <mat-dialog-content>
     <div class="form-group">
       <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="Enter the drug name " formControlName="medicine_name">
+        <input matInput type="text" class="form-control" placeholder="Enter the medicine name " formControlName="medicine_name">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
 {
@@ -32,7 +32,7 @@
 
     <div class="form-group">
       <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="Frequency" formControlName="frequency">
+        <input matInput type="text" class="form-control" placeholder="Frequency(How often medicine needs to be taken in a day)" formControlName="frequency">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
 {
@@ -43,7 +43,7 @@
     </div>
     <div class="form-group">
       <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="Dosage" formControlName="dosage">
+        <input matInput type="text" class="form-control" placeholder="Dosage(Quantity to be taken at each consumption)" formControlName="dosage">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dosage')" [errorMsgs]="fed_service.getErrorMessage(amForm,'dosage',
 {
@@ -72,8 +72,10 @@
   </mat-dialog-content>
 
   <mat-dialog-actions>
-    <button *ngIf="formMode != 'edit'" type="button" mat-button class="cs-btn bt1" [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)">Save & Add another</button>
-    <button type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid ">Save I am done</button>
+      <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
+    <button  *ngIf="formMode != 'edit'" type="button" mat-button class="cs-btn bt1 style-button" [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)"> SAVE & ADD ANOTHER</button>
+    <button  type="submit" mat-button class="cs-btn bt1 style-button" [disabled]="!amForm.valid ">SAVE & CLOSE</button>
+  </div>
   </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
