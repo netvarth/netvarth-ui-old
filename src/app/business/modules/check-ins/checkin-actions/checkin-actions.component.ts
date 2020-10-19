@@ -306,11 +306,11 @@ export class CheckinActionsComponent implements OnInit {
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
                 // setTimeout(() => {
-                    this.labels();
-                    this.labelMap = new Object();
-                    this.labelMap[data.label] = data.value;
-                    this.addLabel();
-                    this.getDisplayname(data.label);
+                this.labels();
+                this.labelMap = new Object();
+                this.labelMap[data.label] = data.value;
+                this.addLabel();
+                this.getDisplayname(data.label);
                 // }, 500);
             }
             this.getLabel();
