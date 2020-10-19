@@ -4,27 +4,27 @@
                     <span class="b-link" >
                         <h5>You can create prescription in two ways :</h5>
                         <p>1.Take a picture of paper based prescription and upload that image </p>
-                        <p>2. You can create a prescription in this software with a digital signature  </p>
+                        <p>2. You can create a prescription in this software manually  </p>
                     </span>
             </div>
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 " >
       <div class="card mrcreate">
           <span  (click)="uploadRx()">
               <h5 style="color:#3c8dbc;"><u>I will Upload paper prescription image</u><i class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
-              <span  class="form-level-settings">you can scan or take a picture of prescription</span>
+              <span  class="form-level-settings">You can scan or take a picture of prescription</span>
           </span>
       </div>
       <div class="card mrcreate">
           <span  (click)="addDrug()">
-              <h5 style="color:#3c8dbc;"><u>I will create a prescription with digital signature</u><i class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
-              <span  class="form-level-settings">Create prescription manually and attach or put digital signature </span>
+              <h5 style="color:#3c8dbc;"><u>I will create a prescription manually</u><i class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
+              <span  class="form-level-settings">Create prescription manually </span>
           </span>
       </div>
     </div>
   </div>
   <div class="mgn-up-10" *ngIf="drugList.length>0">
   <div class="no-dta table-responsive" >
-      <h5> Current Prescription</h5>
+      <h5>  Prescription Created </h5>
   <table class="table table-bordered" >
         <thead>
         <tr >
@@ -44,7 +44,7 @@
               Instructions
           </th>
 
-          
+
         </tr>
       </thead>
         <tbody>
@@ -64,7 +64,7 @@
             <td >
              {{drug.instructions}}
             </td>
-             
+
 
           </tr>
         </tbody>
@@ -77,7 +77,7 @@
     </div>
     <div class="mgn-up-10" *ngIf="uploadlist.length>0">
         <div class="no-dta table-responsive" >
-            <h5> Current Uploaded Prescription(s)</h5>
+            <h5> Prescription  Image Uploaded</h5>
             <table class="table table-bordered" >
               <thead>
               <tr >
@@ -85,12 +85,12 @@
                     File name
                 </th>
                 <th>
-                    status
+                    Status
                 </th>
                 <th>
                     Image size
                 </th>
-                
+
               </tr>
             </thead>
               <tbody>
