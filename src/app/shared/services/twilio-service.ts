@@ -21,6 +21,7 @@ export class TwilioService {
     camDeviceCount = 0;
     private renderer: Renderer2;
     cameraMode: string;
+    previewTracks: any;
     constructor(
         public rendererFactory: RendererFactory2) {
         this.renderer = rendererFactory.createRenderer(null, null);
@@ -69,12 +70,15 @@ export class TwilioService {
         });
     }
     previewMedia() {
+        this.camDeviceCount = 0;
         twilio.createLocalTracks({
         }).then(
         localTracks => {
+            this.previewTracks = localTracks;
             localTracks.forEach(localTrack => {
                 if (localTrack.kind === 'video') {
                     this.camDeviceCount++;
+                    console.log(this.camDeviceCount);
                     if (this.camDeviceCount === 1) {
                         this.previewTrack = localTrack;
                         this.renderer.appendChild(this.previewContainer.nativeElement, localTrack.attach());
@@ -92,12 +96,14 @@ export class TwilioService {
     connectToRoom(accessToken, options): void {
         console.log(accessToken);
         console.log(options);
-        if (this.previewTrack) {
-            this.previewTrack.stop();
+        if (this.previewTracks) {
+            this.previewTracks.forEach(localTrack => {
+                localTrack.stop();
+            });
         }
         twilio.createLocalTracks({
             audio: true,
-            video: { width: 640, facingMode: 'user' }
+            video: { width: 640, facingMode: this.cameraMode }
         }).then(localTracks => {
             options['tracks'] = localTracks;
             this.frontCamTrack = localTracks;

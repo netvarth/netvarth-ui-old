@@ -46,26 +46,31 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.screenHeight = window.innerHeight;
         const isMobile = {
             Android: function () {
-              return navigator.userAgent.match(/Android/i);
+                return navigator.userAgent.match(/Android/i);
             },
             BlackBerry: function () {
-              return navigator.userAgent.match(/BlackBerry/i);
+                return navigator.userAgent.match(/BlackBerry/i);
             },
             iOS: function () {
-              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
             },
             Opera: function () {
-              return navigator.userAgent.match(/Opera Mini/i);
+                return navigator.userAgent.match(/Opera Mini/i);
             },
             Windows: function () {
-              return navigator.userAgent.match(/IEMobile/i);
+                return navigator.userAgent.match(/IEMobile/i);
             },
             any: function () {
-              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
             }
-          };
+        };
     }
     disconnect() {
+        if (this.twilioService.previewTracks) {
+            this.twilioService.previewTracks.forEach(localTrack => {
+                localTrack.stop();
+            });
+        }
         if (this.twilioService.roomObj && this.twilioService.roomObj !== null) {
             this.twilioService.roomObj.disconnect();
             this.twilioService.roomObj = null;
@@ -130,7 +135,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             this.twilioService.switchCamera('user');
         }
     }
-    joinRoom () {
+    joinRoom() {
         this.activateroute.params.subscribe(params => {
             const videoId = params.id;
             this.sharedServices.getJaldeeVideoAccessToken(videoId).subscribe(

@@ -772,6 +772,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else if (i === 'Phone') {
                     post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'VideoCall') {
+                    post_Data['virtualService'] = {'VideoCall': ''};
                 }
                 // else {
                 //     post_Data['virtualService'] = {};
@@ -1714,8 +1716,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.action = '';
         } else if (this.action === 'preInfo') {
             this.action = '';
-        }
-        else if (this.action === 'slotChange') {
+        } else if (this.action === 'slotChange') {
             this.action = '';
         }
     }
@@ -1795,4 +1796,4 @@ export class ConsumerAppointmentComponent implements OnInit {
             return false;
         }
     }
-} 
+}

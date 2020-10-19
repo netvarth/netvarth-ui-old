@@ -831,6 +831,8 @@ export class ConsumerCheckinComponent implements OnInit {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else if (i === 'Phone') {
                     post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'VideoCall') {
+                    post_Data['virtualService'] = {'VideoCall': ''};
                 }
                 //  else {
                 //     post_Data['virtualService'] = {};

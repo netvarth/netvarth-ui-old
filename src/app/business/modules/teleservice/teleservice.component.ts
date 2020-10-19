@@ -276,7 +276,7 @@ export class TeleServiceComponent implements OnInit {
                                 window.open(path, '_blank');
                             } else {
                                 const startIndex = this.starting_url.lastIndexOf('/');
-                                const videoId = this.starting_url.substring(startIndex, this.starting_url.length);
+                                const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
                                 this.router.navigate(['video', videoId]);
                             }
                             this.getProviderWaitlstById();
@@ -299,7 +299,7 @@ export class TeleServiceComponent implements OnInit {
                                 window.open(path, '_blank');
                             } else {
                                 const startIndex = this.starting_url.lastIndexOf('/');
-                                const videoId = this.starting_url.substring(startIndex, this.starting_url.length);
+                                const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
                                 this.router.navigate(['video', videoId]);
                                 // this.shared_services.getVideoIdForService(waitlist.uid, 'provider').subscribe(
                                 //     (videoId: any) => {
@@ -343,7 +343,11 @@ export class TeleServiceComponent implements OnInit {
             }
         });
     }
-
+    relauchMeeting (startingUrl) {
+        const startIndex = startingUrl.lastIndexOf('/');
+        const videoId = startingUrl.substring((startIndex + 1), startingUrl.length);
+        this.router.navigate(['video', videoId]);
+    }
     // Sending rest API to consumer and provider about service starting
     chkinTeleserviceJoinLink() {
         const uuid_data = {

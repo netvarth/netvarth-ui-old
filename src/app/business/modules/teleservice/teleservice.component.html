@@ -150,7 +150,7 @@
                                         Meeting
                                     </button>
                                 </a>
-                                <a *ngIf="(callingModes === 'VideoCall')" target="_self" [href]="starting_url">
+                                <a *ngIf="(callingModes === 'VideoCall')" target="_self" (click)="relauchMeeting(starting_url)" >
                                     <button class="cs-btn bt1 btn-blue  txt-trans-none">Relaunch
                                         Meeting
                                     </button>
