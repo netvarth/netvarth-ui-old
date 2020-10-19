@@ -1579,4 +1579,7 @@ export class ProviderServices {
       const url = 'provider/profile/' + id;
       return this.servicemeta.httpGet(url);
    }
+   deleteUplodedprescription(name,id) {
+    return this.servicemeta.httpDelete('provider/mr/prescription/' + id + '/' + name);
+  }
 }

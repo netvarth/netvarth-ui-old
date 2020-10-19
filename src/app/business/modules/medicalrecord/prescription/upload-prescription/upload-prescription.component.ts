@@ -152,9 +152,19 @@ export class UploadPrescriptionComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  deleteTempImage(index) {
-    this.selectedMessage.files.splice(index, 1);
+  deleteTempImage(img,index) {
     this.showSave = true;
+    if (img.view && img.view === true) {
+      this.provider_services.deleteUplodedprescription(img.name , this.mrId)
+      .subscribe((data) => {
+        this.selectedMessage.files.splice(index, 1);
+       },
+      error => {
+        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      });
+    } else {
+      this.selectedMessage.files.splice(index, 1);
+    }
   }
 
   somethingChanged() {
