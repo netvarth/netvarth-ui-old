@@ -69,7 +69,9 @@ export class PrescriptionComponent implements OnInit {
     console.log(mrId);
     this.provider_services.getMRprescription(mrId)
       .subscribe((data) => {
-        console.log(data);
+        if (data === null) {
+          this.loading = false;
+        }
         if (data[0].keyName) {
           this.uploadlist = data;
           console.log(this.uploadlist);
