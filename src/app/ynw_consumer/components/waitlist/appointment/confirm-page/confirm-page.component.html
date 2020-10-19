@@ -32,7 +32,9 @@
                                         <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{appointment.location?.place}}</td>
+                                            <td>{{appointment.location?.place}}<a [href]="appointment.location.googleMapUrl"
+                                                target="_blank" class="icon-location" matTooltip="Click to navigate">
+                                              </a></td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Appointment for</td>
