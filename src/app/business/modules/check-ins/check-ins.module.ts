@@ -28,6 +28,7 @@ import { CheckinDetailsSendModule } from './checkin-details-send/checkin-details
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { CheckinActionsComponent } from './checkin-actions/checkin-actions.component';
 // import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
+import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { VoicecallDetailsModule } from './voicecall-details/voicecall-details.modules';
 
 
@@ -55,6 +56,8 @@ import { VoicecallDetailsModule } from './voicecall-details/voicecall-details.mo
         ProviderWaitlistCheckInConsumerNoteModule,
         CheckinDetailsSendModule,
         NgxQRCodeModule,
+        CustomerModule,
+        MedicalrecordModule,
         ModalGalleryModule.forRoot()
     ],
     declarations: [

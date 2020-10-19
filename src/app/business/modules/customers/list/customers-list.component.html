@@ -176,6 +176,18 @@
                       <i class="icon-edit"></i>
                       Edit
                     </button>
+                    <button *ngIf="domain === 'healthCare'" mat-menu-item (click)="lastvisits(customer)">
+                    <i class="viewdetails-icon-customer"></i>
+                      Last visits
+                    </button>
+                    <button   *ngIf="domain === 'healthCare'" mat-menu-item (click)="medicalRecord(customer)">
+                      <i class="medicalrecord-icon-customer"></i>
+                      Create  MedicalRecord
+                    </button>
+                    <button   *ngIf="domain === 'healthCare'" mat-menu-item (click)="prescription(customer)">
+                       <i class="notes-icon-customer"></i>
+                        Create RX 
+                      </button>
                   </mat-menu>
                 </td>
               </tr>

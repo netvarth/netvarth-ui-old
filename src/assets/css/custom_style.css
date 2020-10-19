@@ -12162,7 +12162,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/Notes-01.svg);
   width: 40px;
 }
-
+.notes-icon-customer {
+  content: url(../images/dashboard-icons/Notes-01.svg);
+  width: 20px;
+}
 .printer-icon {
   content: url(../images/dashboard-icons/printer-01.svg);
   width: 40px;
@@ -12177,7 +12180,18 @@ img.busN-logo {
   content: url(../images/dashboard-icons/Reschedule-01.svg);
   width: 40px;
 }
-
+.viewdetails-icon-customer {
+  content: url(../images/dashboard-icons/viewdetails-01.svg);
+   width: 20px;
+}
+.medicalrecord-icon {
+  content: url(../images/dashboard-icons/medicalrecord-01.svg);
+  width: 40px;
+}
+.medicalrecord-icon-customer {
+  content: url(../images/dashboard-icons/medicalrecord-01.svg);
+  width: 20px;
+}
 .act-icons .printer-icon {
   width: 17px !important;
 }
@@ -12446,6 +12460,18 @@ img.busN-logo {
     margin-right: 15px !important;
   }
 }
+
+.mrcreate{
+  border-radius: 0px !important;
+  margin-bottom: 5px !important;
+  /* border: 1px solid lightgrey!important; */
+  box-shadow: 5px 5px 5px 5px lightgrey !important; 
+  /* width: 50%!important; */
+}
+.mrcreate:hover {
+  border: 1px solid #00aef2!important;
+}
+
 /* @media (max-width: 963px) {
   .rem-video {
     height: 100% !important;

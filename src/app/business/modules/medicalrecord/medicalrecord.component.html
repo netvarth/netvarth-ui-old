@@ -1,0 +1,73 @@
+<div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+  <section class="">
+    <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        <h2 style="text-align: center;">Medical Record</h2>
+      </h5>
+    </div>
+
+
+    <div class="card title-gb" >
+      <div class="mgn-up-10">
+
+          <p>
+            <b>Patient:</b>
+            <span color="blue"> {{customerDetails.jaldeeId}} &nbsp;</span>
+            <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</span>
+            <span *ngIf="customerDetails.dob|| customerDetails.gender ">({{customerDetails.dob}} {{customerDetails.gender | capitalizeFirst}})</span>
+          </p>
+          <!-- <p>Patient Name:{{patientFirstName | capitalizeFirst}} {{patientLastName}} </p>-->
+          <!-- <p>Patient Id: {{PatiendId}}</p>
+          <p *ngIf="PatientDob">DOB: {{PatientDob}} </p>
+          <p *ngIf="gender">Gender:{{gender | capitalizeFirst}}</p> -->
+
+      </div>
+      <hr>
+      <div>
+        <h5>Add or view medical records for a consultation</h5>
+        <p>Patient consultation date
+            <button (click) = "VisitList()">{{visitdate | date:dateFormatSp}}  &nbsp; <i class="arrow down"></i></button>  &nbsp;
+            <span>(Recent visit)</span>
+        </p>
+      </div>
+      <hr>
+      <div class="col-md-12">
+        <div class="col-md-4 pull-left">
+          <label>Department:</label><span> {{department | capitalizeFirst}}</span><br>
+          <label>Service/Consultation:</label><span> {{serviceName | capitalizeFirst}}</span>
+        </div>
+        <div *ngIf = "mrId !== 0" class="col-md-4 pull-right">
+            <label>MR NO:</label><span> {{mrId}}</span><br>
+            <label>MR Created On:</label><span> {{MrCreateddate}}</span>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <!-- <div class="col-md-12">
+          <span>
+              <button style="float: right;">Share MR </button> &nbsp;&nbsp;
+              <button style="float: right;">Share RX</button>
+            </span>
+      </div> -->
+<hr>
+<div class="clearfix"></div>
+<p> &nbsp;</p>
+
+        <div class="content w-manager settings comn-cls">
+          <div style="padding: 5px;">
+            <nav mat-tab-nav-bar>
+              <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link" routerLinkActive="mat-tab-link-active"
+                #rla="routerLinkActive" [active]="rla.isActive" (click)="navigate(routeLink)" [routerLinkActiveOptions]="{exact: true}">
+                {{routeLink.label}}
+              </a>
+            </nav>
+            <router-outlet></router-outlet>
+            <div class="clearfix"></div>
+          </div>
+
+        </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+</div>
+<div class="clearfix"></div>
+

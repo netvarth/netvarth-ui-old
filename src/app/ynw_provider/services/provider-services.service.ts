@@ -1533,4 +1533,61 @@ export class ProviderServices {
    const url = 'provider/appointment/reschedule';
     return this.servicemeta.httpPut(url, data);
 }
+// medical record
+  createMedicalRecordForFollowUp(data, patientId) {
+    const url = 'provider/mr/patient/' + patientId;
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  createMedicalRecord(data, bookingId) {
+    const url = 'provider/mr/' + bookingId;
+    return this.servicemeta.httpPost(url, data);
+  }
+  updateMRprescription(data, mrId) {
+    const url = 'provider/mr/prescription/' + mrId;
+    return this.servicemeta.httpPut(url, data);
+  }
+  getMRprescription(id) {
+    const url = 'provider/mr/prescription/' + id;
+    return this.servicemeta.httpGet(url);
+  }
+  GetMedicalRecordList(filter = {}) {
+    const url = 'provider/mr';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  uploadMRprescription(mrId, data) {
+    const url = 'provider/mr/uploadPrescription/' + mrId;
+    return this.servicemeta.httpPost(url, data);
+  }
+  getClinicalRecordOfMRById(mrId) {
+    const url = 'provider/mr/clinicalNotes/' + mrId;
+    return this.servicemeta.httpGet(url, null);
+  }
+  getDigitalSign(providerId) {
+    const url = 'provider/user/digitalSign/' + providerId;
+    return this.servicemeta.httpGet(url);
+  }
+  GetMedicalRecord(mrId) {
+    const url = 'provider/mr/' + mrId;
+    return this.servicemeta.httpGet(url);
+  }
+  uploadMrDigitalsign(id, data) {
+    const url = 'provider/user/digitalSign/' + id;
+    return this.servicemeta.httpPost(url, data);
+  }
+  updateMrClinicalNOtes(data, mrId) {
+    const url = 'provider/mr/clinicalNotes/' + mrId;
+    return this.servicemeta.httpPut(url, data);
+  }
+  getPatientVisitList(patientId) {
+    const url = 'provider/mr/patientPreviousVisit/' + patientId;
+    return this.servicemeta.httpGet(url);
+  }
+  getproviderprofile(id) {
+    const url = 'provider/profile/' + id;
+    return this.servicemeta.httpGet(url);
+  }
+  deleteUplodedprescription(name, id) {
+    return this.servicemeta.httpDelete('provider/mr/prescription/' + id + '/' + name);
+  }
 }

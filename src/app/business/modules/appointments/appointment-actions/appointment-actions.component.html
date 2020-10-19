@@ -128,6 +128,20 @@
                 <div class="icon-text">Reschedule</div>
             </div>
         </div>
+        <div *ngIf="domain === 'healthCare' && !data.multiSelection" class="action-box pointer-cursor" (click)="medicalRecord()">
+            <div class="action-box-sub">
+                <span class="medicalrecord-icon"></span>
+                <div *ngIf="appt.mrId === 0" class="icon-text">Create Medical Record</div>
+                <div *ngIf="appt.mrId !== 0" class="icon-text">View Medical Record</div>
+            </div>
+        </div>
+        <div *ngIf="domain === 'healthCare' && !data.multiSelection" class="action-box pointer-cursor" (click)="prescription()">
+            <div class="action-box-sub">
+                <span class="notes-icon"></span>
+                <div *ngIf="!appt.prescriptionCreated" class="icon-text">Create Rx</div>
+                <div *ngIf="appt.prescriptionCreated" class="icon-text">View Rx</div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="dashqr" *ngIf="showQR">

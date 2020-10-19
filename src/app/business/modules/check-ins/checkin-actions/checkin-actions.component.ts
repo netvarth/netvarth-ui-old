@@ -41,6 +41,7 @@ export class CheckinActionsComponent implements OnInit {
     pos = false;
     showBill = false;
     showMsg = false;
+    domain;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -53,6 +54,8 @@ export class CheckinActionsComponent implements OnInit {
         this.getPos();
         this.getLabel();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
     }
 
     printCheckin() {
@@ -411,5 +414,59 @@ export class CheckinActionsComponent implements OnInit {
                 }
             }
         }
+    }
+    medicalRecord() {
+      this.dialogRef.close();
+      let medicalrecord_mode = 'new';
+      let mrId = 0;
+      if (this.checkin.mrId) {
+        medicalrecord_mode = 'view';
+        mrId = this.checkin.mrId;
+      }
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(this.checkin.consumer),
+          'serviceId': this.checkin.service.id,
+          'serviceName': this.checkin.service.name,
+          'booking_type': 'TOKEN',
+          'booking_date': this.checkin.date,
+          'booking_time': this.checkin.token,
+          'department': this.checkin.service.deptName,
+          'consultationMode': 'OP',
+          'booking_id': this.checkin.ynwUuid,
+          'mr_mode': medicalrecord_mode,
+          'mrId': mrId
+          // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
+
+        }
+      };
+
+      this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+    }
+    prescription() {
+      this.dialogRef.close();
+      let medicalrecord_mode = 'new';
+      let mrId = 0;
+      if (this.checkin.mrId) {
+        medicalrecord_mode = 'view';
+        mrId = this.checkin.mrId;
+      }
+
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(this.checkin.consumer),
+          'serviceId': this.checkin.service.id,
+          'serviceName': this.checkin.service.name,
+          'booking_type': 'Waitlist',
+          'booking_date': this.checkin.date,
+          'booking_time': this.checkin.token,
+          'department': this.checkin.service.deptName,
+          'consultationMode': 'OP',
+          'mrId': mrId,
+          'mr_mode': medicalrecord_mode,
+          'booking_id': this.checkin.ynwUuid
+        }
+      };
+      this.router.navigate(['provider', 'customers',  'medicalrecord', 'prescription'], navigationExtras);
     }
 }
