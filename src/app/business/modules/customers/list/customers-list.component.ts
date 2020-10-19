@@ -78,6 +78,7 @@ export class CustomersListComponent implements OnInit {
     providerLabels: any;
     selectedIndex: any = [];
     hide_msgicon = false;
+    mrdialogRef: any;
 
     constructor(private provider_services: ProviderServices,
         private router: Router,
@@ -307,6 +308,18 @@ export class CustomersListComponent implements OnInit {
             }
         };
         this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+    }
+    lastvisits(customerDetail) {
+        this.shared_functions.removeitemfromLocalStorage('mrId');
+        this.mrdialogRef = this.dialog.open(LastVisitComponent, {
+          width: '80%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            patientId: customerDetail.id
+          }
+        });
+
     }
     medicalRecord(customerDetail) {
         const navigationExtras: NavigationExtras = {

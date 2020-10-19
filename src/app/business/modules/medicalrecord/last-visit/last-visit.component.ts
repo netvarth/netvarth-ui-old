@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { NavigationExtras } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class LastVisitComponent implements OnInit {
   visitdetails: string;
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-    // private router: Router,
+    private router: Router,
     public dialogRef: MatDialogRef<LastVisitComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.PatientId = this.data.patientId;
@@ -118,6 +118,7 @@ export class LastVisitComponent implements OnInit {
         'type': 'clinicalnotes'
       };
       this.dialogRef.close(result);
+      this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'] , navigationExtras);
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -139,6 +140,7 @@ export class LastVisitComponent implements OnInit {
         'type': 'clinicalnotes'
       };
       this.dialogRef.close(result);
+      this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'] , navigationExtras);
     }
   }
 
@@ -164,6 +166,7 @@ export class LastVisitComponent implements OnInit {
         'type': 'prescription'
       };
       this.dialogRef.close(result);
+      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -184,6 +187,7 @@ export class LastVisitComponent implements OnInit {
         'type': 'prescription'
       };
       this.dialogRef.close(result);
+      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
 
   }
