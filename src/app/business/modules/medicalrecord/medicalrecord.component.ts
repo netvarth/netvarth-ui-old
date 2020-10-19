@@ -36,7 +36,7 @@ export class MedicalrecordComponent implements OnInit {
   MrCreateddate: string;
   visitdate = new Date();
   consultationMode: any;
-  visitTime: any;
+  visitTime = new Date().toLocaleTimeString();
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
