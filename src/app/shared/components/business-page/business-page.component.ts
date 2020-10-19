@@ -223,6 +223,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   galleryenabledArr = [];
   gallerydisabledArr = [];
   onlinePresence = false;
+  imgLength;
   // cSource  = 'qr';
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -594,6 +595,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.image_list_popup.push(imgobj);
               }
             }
+            this.imgLength = this.image_list_popup.length;
             const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
             for (let i = 0; i < imgLength; i++) {
               this.galleryenabledArr.push(i);
@@ -1345,8 +1347,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         };
         this.shared_services.ConsumerLogin(data).subscribe(
           (loginInfo: any) => {
+            this.sharedFunctionobj.setLoginData(loginInfo, data, 'consumer');
             this.sharedFunctionobj.setitemonLocalStorage('qrp', data.password);
-            console.log(loginInfo);
             resolve(true);
           },
           (error) => {
@@ -1618,7 +1620,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
         if (passParam['callback'] === 'communicate') {
-          this.getFavProviders();
+          // this.getFavProviders();
           this.showCommunicate(passParam['providerId']);
         } else if (passParam['callback'] === 'history') {
           this.redirectToHistory();
