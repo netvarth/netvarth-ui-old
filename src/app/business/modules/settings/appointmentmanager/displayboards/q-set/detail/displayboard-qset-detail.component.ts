@@ -5,7 +5,8 @@ import { ProviderServices } from '../../../../../../../ynw_provider/services/pro
 import { Messages } from '../../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { projectConstants } from '../../../../../../../app.component';
+// import { projectConstants } from '../../../../../../../app.component';
+import { projectConstantsLocal } from '../../../../../../../shared/constants/project-constants';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -50,7 +51,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     boardDisplayname;
     providerLabels: any = [];
     providerLabelsList: any = [];
-    labelfromConstants = projectConstants.APPT_STATUS_BOARD;
+    labelfromConstants = projectConstantsLocal.APPT_STATUS_BOARD;
     submit_btn;
     id;
     filterByDept = false;
@@ -555,14 +556,14 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.providerLabels = data;
             this.providerLabelsList = this.providerLabels;
             this.providerLabelsCount = this.providerLabels.length;
-            for (let i = 0; i < this.providerLabels.length; i++) {
-                this.defaultLabels.push({
-                    'name': this.providerLabels[i].label,
-                    'displayname': this.providerLabels[i].displayName,
-                    'label': true,
-                    'order': this.defaultLabels.length + 1
-                });
-            }
+            // for (let i = 0; i < this.providerLabels.length; i++) {
+            //     this.defaultLabels.push({
+            //         'name': this.providerLabels[i].label,
+            //         'displayname': this.providerLabels[i].displayName,
+            //         'label': true,
+            //         'order': this.defaultLabels.length + 1
+            //     });
+            // }
         });
         this.defaultLabels = this.shared_Functionsobj.removeDuplicates(this.defaultLabels, 'name');
     }
@@ -837,7 +838,15 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         });
         this.labelsList.splice(index, 1);
     }
-    providerLabelSelection(value, label) {
-        this.labelList[label] = value;
+    // providerLabelSelection(value, label) {
+    //     this.labelList[label] = value;
+    // }
+    providerLabelSelection(label) {
+        this.labelList = {};
+        if (this.labelMultiCtrl.length > 0) {
+            for (let i = 0; i < this.labelMultiCtrl.length; i++) {
+                this.labelList[this.labelMultiCtrl[i].label] = true;
+            }
+        }
     }
 }

@@ -3,14 +3,15 @@
 </section> -->
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
+        <h5 class="mgn-up-10">
             <!-- <button type="button" class="btn default profile-back" (click)="redirecToGeneral()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span>
             </button>&nbsp;&nbsp;&nbsp; -->
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{labelcaption}}</h5>
     </div>
-  </section>
+</section>
 <section>
     <div class="content loc-list labels">
         <div class="col-md-12 no-padding-small">
@@ -29,12 +30,12 @@
                                             <span
                                                 *ngIf="labelData.description">{{ labelData.description | capitalizeFirst}}</span>
                                         </div>
-                                        <div class="item displyfont">
+                                        <!-- <div class="item displyfont">
                                             <span class="ttle">Data type</span>
                                             <span>Text</span>
-                                        </div>
+                                        </div> -->
                                     </div>
-                                    <div class="c-ot m0 mgn-up-20">
+                                    <!-- <div class="c-ot m0 mgn-up-20">
                                         <div class="item desfont"
                                             *ngIf="labelData && labelData.valueSet && labelData.valueSet.length > 0">
                                             <span class="ttle">Value Set</span>
@@ -42,17 +43,18 @@
                                             <span class="mgn-rt-5" *ngFor="let labelvalue of labelData.valueSet">
                                                 {{labelvalue.value}}({{labelvalue.shortValue}})</span>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-md-12" *ngIf="actionparam !== 'view'">
-                                <p class="form-level-settings no-margin mgn-up-10">Create label to group {{customer_label}}s,
+                                <p class="form-level-settings no-margin mgn-up-10">Create label to group
+                                    {{customer_label}}s,
                                     {{waitlist_label}}s, etc. </p>
                                 <form novalidate (keyup)="resetApiErrors()"
                                     class="ynw-common-form-nm wiz-service labelForm serviceform">
                                     <ng-container>
                                         <!-- <div class="form-group"> -->
-                                            <!-- <mat-form-field>
+                                        <!-- <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="label_name"
                                                     placeholder="{{label_name_cap}}" [(ngModel)]="label"
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
@@ -66,10 +68,10 @@
                                                         [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                 </mat-form-field>
                                             </div>
-                                            <div class="form-group item col-md-5 no-padding-small mgn-up-20">
+                                            <!-- <div class="form-group item col-md-5 no-padding-small mgn-up-20">
                                                 <span class="ttle">Data type</span>
                                                 <span>Text</span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="form-group">
                                             <mat-form-field>
@@ -80,7 +82,7 @@
                                                     maxlength="255"> </textarea>
                                             </mat-form-field>
                                         </div>
-                                        <div class="notifications mgn-bt-10">
+                                        <!-- <div class="notifications mgn-bt-10">
                                             <p class="form-level-settings no-margin mgn-up-20">Set values for labels and also set short names
                                                 for each value for easy usage. </p>
                                             <span class="shortcut pull-left"> Value Set</span>
@@ -88,8 +90,8 @@
                                                 [class.icon-minus]="showAddsec" (click)="showAddsection()"></div>
                                             <div class="clearfix"></div>
                                             <p class="form-level-settings">Actual Value(Short Value)</p>
-                                        </div>
-                                        <div class="form-group col-md-12 shortcuts no-padding  mgn-bt-20"
+                                        </div> -->
+                                        <!-- <div class="form-group col-md-12 shortcuts no-padding  mgn-bt-20"
                                             *ngIf="showAddsec">
                                             <div class="col-md-4 no-padding">
                                                 <mat-form-field>
@@ -121,29 +123,22 @@
                                                 </mat-form-field>
                                             </div>
                                             <div class="mgn-up-25 col-md-2 no-padding-small">
-                                                <!-- <button type="submit" (click)="onbtnCancel()"
-                                                    class="cs-btn bt2">Cancel</button> -->
-                                                <!-- </div> -->
-                                                <!-- <div class="col-md-2"> -->
                                                 <button type="submit" (click)="addtoValueSet(value, shortValue)"
                                                     class="cs-btn bt3">Add</button>
                                             </div>
-                                        </div>
-                                        <div class="no-padding col-md-12 label-list" *ngIf="!showAddsec">
+                                        </div> -->
+                                        <!-- <div class="no-padding col-md-12 label-list" *ngIf="!showAddsec">
                                             <div class="no-padding col-md-10 labeladsmall mgn-bt-10"
                                                 *ngFor="let valueset of valueSet; let j=index">
                                                 <div class="no-padding col-md-3 col-xs-5">
                                                     {{valueset.value}}({{valueset.shortValue}})
                                                 </div>
-                                                <!-- <div class="col-md-4 col-xs-6">
-                                                    {{valueset.shortValue}}
-                                                </div> -->
                                                 <div class="col-md-2 col-xs-1">
                                                     <span class="icon-delete pull-right"
                                                         (click)="deleteValueforSet(j)"></span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="actiondiv labelsave glbl-seting-heder" *ngIf="!showAddsec">
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>

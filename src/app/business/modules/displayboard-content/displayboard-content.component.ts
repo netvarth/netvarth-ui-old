@@ -482,6 +482,17 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     }
                 }
             }
+        } else if (field.name === 'label') {
+            // if (checkin.label[field.name]) {
+            //     fieldValue = checkin.label[field.name];
+            // } else {
+            //     fieldValue = field.defaultValue;
+            // }
+            const labels = [];
+            Object.keys(checkin.label).forEach(key => {
+                labels.push(key);
+            });
+            fieldValue = labels.toString();
         } else {
             fieldValue = checkin[field.name];
         }
