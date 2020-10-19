@@ -1571,7 +1571,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
-    return new Promise((resolve) => {
+    return new Promise(function (resolve, reject) {
       this.provider_services.getWaitlistFutureCount(Mfilter)
         .subscribe(
           data => {
@@ -1579,6 +1579,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.future_waitlist_count = data;
           },
           () => {
+            reject();
           });
     });
   }

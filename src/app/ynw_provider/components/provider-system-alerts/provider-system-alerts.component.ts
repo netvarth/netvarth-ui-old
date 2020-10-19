@@ -220,6 +220,9 @@ export class ProviderSystemAlertComponent implements OnInit {
     }
     // }
   }
+  redirecToHelp() {
+    this.routerobj.navigate(['/provider/' + this.domain + '/alert']);
+  }
   handle_pageclick(pg) {
     this.startpageval = pg;
     this.do_search(true);
