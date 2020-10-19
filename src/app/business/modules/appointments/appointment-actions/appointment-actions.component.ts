@@ -607,7 +607,7 @@ export class AppointmentActionsComponent implements OnInit {
           'serviceId': this.appt.service.id,
           'serviceName': this.appt.service.name,
           'department': this.appt.service.deptName,
-          'booking_type': 'Appointment',
+          'booking_type': 'APPT',
           'booking_date': this.appt.appmtDate,
           'booking_time': this.appt.apptTakenTime,
           'mr_mode': medicalrecord_mode,
