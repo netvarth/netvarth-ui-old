@@ -3309,6 +3309,11 @@ body {
   font-size: smaller !important;
 }
 
+.labelstyle {
+  color: #3f51b5 !important;
+  font-size: smaller !important;
+}
+
 .exstschdlesze {
   font-size: smaller !important;
 }
@@ -5107,7 +5112,7 @@ i.notavail {
 }
 
 /* .dashboard .chkins:last-child {
- 
+
 } */
 
 .dashboard .chkins .service, .dashboard .chkins .forwhom {
@@ -7344,9 +7349,9 @@ input.jdn_ip {
 } */
 
 .startWaitlist {
-  /* -webkit-animation: startWaitlist 1s infinite; 
-  -moz-animation:    startWaitlist 1s infinite; 
-  -o-animation:      startWaitlist 1s infinite; 
+  /* -webkit-animation: startWaitlist 1s infinite;
+  -moz-animation:    startWaitlist 1s infinite;
+  -o-animation:      startWaitlist 1s infinite;
   animation:         startWaitlist 1s infinite;  */
   background-color: #00cc96 !important;
 }
@@ -7888,7 +7893,7 @@ hr.wide-separator-line {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-/* 
+/*
 @font-face {
   font-family: 'icomoon';
   src: url('../fonts/icomoon.eot?vxnnmm');
@@ -7907,7 +7912,7 @@ hr.wide-separator-line {
   font-variant: normal;
   text-transform: none;
   line-height: 1;
- 
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 } */
@@ -8268,7 +8273,7 @@ owl-carousel .bt3.active {
   top: 1px;
   margin-left: 6px;
 
-  
+
 } */
 
 .navul {
@@ -10883,7 +10888,7 @@ image-cropper img {
   }
 }
 
-/* @media screen and (max-width: 768px){ 
+/* @media screen and (max-width: 768px){
   h4{
   font-size:.7rem!important;
   }
@@ -10923,7 +10928,7 @@ image-cropper img {
   color: #f2cd61 !important
 }
 
-/*   
+/*
   .p0 .locd .lbl .prof-pic {
     width: 180px;
     height: 180px;
@@ -12085,7 +12090,6 @@ img.busN-logo {
 }
 .checkinactionclass {
   width: 750px !important;
-  /* min-height: 500px !important; */
 }
 .bill-icon {
   content: url(../images/dashboard-icons/Bill-01-01.svg);
@@ -12115,6 +12119,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/Notes-01.svg);
   width: 40px;
 }
+.notes-icon-customer {
+  content: url(../images/dashboard-icons/Notes-01.svg);
+  width: 20px;
+}
 .printer-icon {
   content: url(../images/dashboard-icons/printer-01.svg);
   width: 40px;
@@ -12126,6 +12134,18 @@ img.busN-logo {
 .reschedule-icon {
   content: url(../images/dashboard-icons/Reschedule-01.svg);
   width: 40px;
+}
+.viewdetails-icon-customer {
+  content: url(../images/dashboard-icons/viewdetails-01.svg);
+   width: 20px;
+}
+.medicalrecord-icon {
+  content: url(../images/dashboard-icons/medicalrecord-01.svg);
+  width: 40px;
+}
+.medicalrecord-icon-customer {
+  content: url(../images/dashboard-icons/medicalrecord-01.svg);
+  width: 20px;
 }
 .act-icons .printer-icon {
   width: 17px !important;
@@ -12354,4 +12374,16 @@ img.busN-logo {
   .mgn5mgnrt{
     margin-right: 15px !important;
   }
+  
+}
+
+.mrcreate{
+  border-radius: 0px !important;
+  margin-bottom: 5px !important;
+  /* border: 1px solid lightgrey!important; */
+  box-shadow: 5px 5px 5px 5px lightgrey !important; 
+  /* width: 50%!important; */
+}
+.mrcreate:hover {
+  border: 1px solid #00aef2!important;
 }
