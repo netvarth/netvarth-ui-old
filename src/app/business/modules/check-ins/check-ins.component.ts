@@ -488,38 +488,70 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
 
-  setLabelFilter(label, value, event) {
+  setLabelFilter(label, event) {
     this.resetPaginationData();
-    if (value === 'all') {
-      this.selectedLabels[label.label] = [];
-      this.allLabelSelected[label.label] = false;
+    const value = event.checked;
+    if (label === 'all') {
+      this.allLabelSelected = false;
       if (event.checked) {
-        for (const value of label.valueSet) {
-          if (this.selectedLabels[label.label].indexOf(value.value) === -1) {
-            this.selectedLabels[label.label].push(value.value);
+        for (const lbl of this.providerLabels) {
+          if (!this.selectedLabels[lbl.label]) {
+            this.selectedLabels[lbl.label] = [];
+            this.selectedLabels[lbl.label].push(true);
           }
         }
-        this.allLabelSelected[label.label] = true;
+        this.allLabelSelected = true;
+      } else {
+        this.selectedLabels = [];
+        this.allLabelSelected = false;
       }
     } else {
-      this.allLabelSelected[label.label] = false;
+      this.allLabelSelected = false;
       if (this.selectedLabels[label.label]) {
-        const indx = this.selectedLabels[label.label].indexOf(value);
-        if (indx === -1) {
-          this.selectedLabels[label.label].push(value);
-        } else {
-          this.selectedLabels[label.label].splice(indx, 1);
-        }
+        delete this.selectedLabels[label.label];
       } else {
         this.selectedLabels[label.label] = [];
         this.selectedLabels[label.label].push(value);
       }
-      if (this.selectedLabels[label.label].length === label.valueSet.length) {
-        this.allLabelSelected[label.label] = true;
+      if (Object.keys(this.selectedLabels).length === this.providerLabels.length) {
+        this.allLabelSelected = true;
       }
     }
     this.doSearch();
   }
+
+  // setLabelFilter(label, value, event) {
+  //   this.resetPaginationData();
+  //   if (value === 'all') {
+  //     this.selectedLabels[label.label] = [];
+  //     this.allLabelSelected[label.label] = false;
+  //     if (event.checked) {
+  //       for (const value of label.valueSet) {
+  //         if (this.selectedLabels[label.label].indexOf(value.value) === -1) {
+  //           this.selectedLabels[label.label].push(value.value);
+  //         }
+  //       }
+  //       this.allLabelSelected[label.label] = true;
+  //     }
+  //   } else {
+  //     this.allLabelSelected[label.label] = false;
+  //     if (this.selectedLabels[label.label]) {
+  //       const indx = this.selectedLabels[label.label].indexOf(value);
+  //       if (indx === -1) {
+  //         this.selectedLabels[label.label].push(value);
+  //       } else {
+  //         this.selectedLabels[label.label].splice(indx, 1);
+  //       }
+  //     } else {
+  //       this.selectedLabels[label.label] = [];
+  //       this.selectedLabels[label.label].push(value);
+  //     }
+  //     if (this.selectedLabels[label.label].length === label.valueSet.length) {
+  //       this.allLabelSelected[label.label] = true;
+  //     }
+  //   }
+  //   this.doSearch();
+  // }
 
   setFilterDataCheckbox(type, value, event) {
     this.filter[type] = value;
@@ -1242,39 +1274,39 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.pagination.startpageval = 1;
     // this.pagination.totalCnt = 0; // no need of pagination in today
     if (this.activeQs.length > 0) {
-    const promise = this.getTodayWLCount(Mfilter);
-    promise.then(
-      result => {
-        this.chkSelectAppointments = false;
-        this.provider_services.getTodayWaitlist(Mfilter)
-          .subscribe(
-            (data: any) => {
-              this.appt_list = [];
-              this.appt_list = data;
-              this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
-              if (this.filterapplied === true) {
-                this.noFilter = false;
-              } else {
-                this.noFilter = true;
-              }
-              this.setCounts(this.appt_list);
-              this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-              this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
-              this.loading = false;
-            },
-            () => {
-              // this.load_waitlist = 1;
-              this.loading = false;
-            },
-            () => {
-              this.loading = false;
-            });
-      },
-      () => {
-        this.loading = false;
-      });
+      const promise = this.getTodayWLCount(Mfilter);
+      promise.then(
+        result => {
+          this.chkSelectAppointments = false;
+          this.provider_services.getTodayWaitlist(Mfilter)
+            .subscribe(
+              (data: any) => {
+                this.appt_list = [];
+                this.appt_list = data;
+                this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
+                if (this.filterapplied === true) {
+                  this.noFilter = false;
+                } else {
+                  this.noFilter = true;
+                }
+                this.setCounts(this.appt_list);
+                this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+                this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
+                this.loading = false;
+              },
+              () => {
+                // this.load_waitlist = 1;
+                this.loading = false;
+              },
+              () => {
+                this.loading = false;
+              });
+        },
+        () => {
+          this.loading = false;
+        });
     } else {
-       this.loading = false;
+      this.loading = false;
     }
   }
   getFutureWL() {
@@ -2342,7 +2374,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getHistoryWaitlist(Mfilter)
           .subscribe(
             data => {
-              console.log(data);
               this.historyCheckins = data;
               const params = [
                 'height=' + screen.height,
@@ -2357,7 +2388,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               checkin_html += '<td style="padding:10px;">Name</td>';
               checkin_html += '<td style="padding:10px;">Service</td>';
               if (this.providerLabels.length > 0) {
-              checkin_html += '<td style="padding:10px;">Label</td>';
+                checkin_html += '<td style="padding:10px;">Label</td>';
               }
               checkin_html += '</thead>';
               for (let i = 0; i < this.historyCheckins.length; i++) {

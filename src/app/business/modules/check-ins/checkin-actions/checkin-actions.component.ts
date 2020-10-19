@@ -259,6 +259,7 @@ export class CheckinActionsComponent implements OnInit {
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
+            this.labelselection();
         });
     }
     changeLabelvalue(labelname, value) {
@@ -387,5 +388,28 @@ export class CheckinActionsComponent implements OnInit {
             this.getDisplayboardCount();
         });
     }
+    addLabeltoAppt(label, event) {
+        this.labelMap = new Object();
+        if (event.checked) {
+            this.labelMap[label] = true;
+            this.addLabel();
+        } else {
+            this.deleteLabel(label, this.checkin.ynwUuid);
+        }
+    }
+    labelselection() {
+        const values = [];
+        if (this.checkin.label && Object.keys(this.checkin.label).length > 0) {
+            Object.keys(this.checkin.label).forEach(key => {
+                values.push(key);
+            });
+            for (let i = 0; i < this.providerLabels.length; i++) {
+                for (let k = 0; k < values.length; k++) {
+                    if (this.providerLabels[i].label === values[k]) {
+                        this.providerLabels[i].selected = true;
+                    }
+                }
+            }
+        }
+    }
 }
-

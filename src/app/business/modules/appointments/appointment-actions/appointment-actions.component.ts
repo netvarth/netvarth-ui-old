@@ -313,6 +313,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
+            this.labelselection();
         });
     }
     changeLabelvalue(labelname, value) {
@@ -563,5 +564,29 @@ export class AppointmentActionsComponent implements OnInit {
     }
     close() {
         this.dialogRef.close();
+    }
+    addLabeltoAppt(label, event) {
+        this.labelMap = new Object();
+        if (event.checked) {
+            this.labelMap[label] = true;
+            this.addLabel();
+        } else {
+            this.deleteLabel(label, this.appt.uid);
+        }
+    }
+    labelselection() {
+        const values = [];
+        if (this.appt.label && Object.keys(this.appt.label).length > 0) {
+            Object.keys(this.appt.label).forEach(key => {
+                values.push(key);
+            });
+            for (let i = 0; i < this.providerLabels.length; i++) {
+                for (let k = 0; k < values.length; k++) {
+                    if (this.providerLabels[i].label === values[k]) {
+                        this.providerLabels[i].selected = true;
+                    }
+                }
+            }
+        }
     }
 }

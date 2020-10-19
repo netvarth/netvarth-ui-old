@@ -121,6 +121,8 @@ export class LabelComponent implements OnInit {
         if (this.displayName) {
             label = this.displayName.trim().replace(/ /g, '_');
         }
+        this.valueSet.push({ 'value': true, 'shortValue': true });
+        this.valueSet.push({ 'value': false, 'shortValue': false });
         if (this.actionparam === 'add') {
             const post_data = {
                 'label': label,
