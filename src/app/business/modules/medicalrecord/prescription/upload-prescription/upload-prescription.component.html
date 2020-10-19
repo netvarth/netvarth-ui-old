@@ -21,7 +21,7 @@
                               <span *ngIf="patientDetails.dob|| patientDetails.gender ">({{patientDetails.dob}} {{patientDetails.gender | capitalizeFirst}})</span>
                             </p> -->
                             <p>Patient Name:{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </p>
-                            <p>Patient Id: {{patientDetails.id}}</p>
+                            <p>Patient Id: {{patientDetails.jaldeeId}}</p>
                             <p *ngIf="patientDetails.dob">DOB: {{patientDetails.dob}} </p>
                             <p *ngIf="patientDetails.gender">Gender:{{patientDetails.gender | capitalizeFirst}}</p>
 

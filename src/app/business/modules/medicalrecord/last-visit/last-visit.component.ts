@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/mate
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { NavigationExtras, Router } from '@angular/router';
-
+import { DateFormatPipe } from '../../../../shared//pipes/date-format/date-format.pipe';
 
 @Component({
   selector: 'app-last-visit',
@@ -20,6 +20,7 @@ export class LastVisitComponent implements OnInit {
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private router: Router,
+    public dateformat: DateFormatPipe,
     public dialogRef: MatDialogRef<LastVisitComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.PatientId = this.data.patientId;
@@ -59,7 +60,7 @@ export class LastVisitComponent implements OnInit {
     } else if (visit.appointmnet) {
       date = visit.appointmnet.appmtDate;
     }
-    return date;
+    return  this.dateformat.transformToDIsplayFormat(date);
   }
   isMRCreated(visit) {
     let mrCreated = '';
@@ -92,10 +93,7 @@ export class LastVisitComponent implements OnInit {
 
   }
   viewMedicalRecord(visitDetails) {
-    console.log(JSON.stringify(visitDetails));
-
     if (visitDetails.waitlist) {
-
       const navigationExtras: NavigationExtras = {
         queryParams: {
           'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
@@ -111,8 +109,6 @@ export class LastVisitComponent implements OnInit {
           'visitDate': visitDetails.date
         }
       };
-      console.log(navigationExtras);
-      console.log(JSON.stringify(navigationExtras));
       const result = {
         'navigationParams': navigationExtras,
         'type': 'clinicalnotes'
@@ -134,7 +130,6 @@ export class LastVisitComponent implements OnInit {
           'visitDate': visitDetails.date
         }
       };
-      console.log(navigationExtras);
       const result = {
         'navigationParams': navigationExtras,
         'type': 'clinicalnotes'

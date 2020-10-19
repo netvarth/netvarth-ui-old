@@ -15,7 +15,7 @@
 
                                     <p>
                                       <b>Patient:</b>
-                                      <span color="blue"> {{patientDetails.id}} &nbsp;</span>
+                                      <span color="blue"> {{patientDetails.jaldeeId}} &nbsp;</span>
                                       <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}}</span>
                                       <span *ngIf="patientDetails.dob|| patientDetails.gender ">({{patientDetails.dob}} {{patientDetails.gender | capitalizeFirst}})</span>
                                     </p>
