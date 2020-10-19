@@ -94,7 +94,7 @@ export class ConsumerPaymentComponent implements OnInit {
                     }
                   }
                 this.livetrack = this.activeWt.service.livetrack;
-                this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.activeWt.waitlistingFor.length;
+                this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.members.length;
                 this.waitlistDetails = {
                     'amount': this.prepaymentAmount,
                     'paymentMode': null,

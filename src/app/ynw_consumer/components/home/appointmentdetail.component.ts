@@ -17,7 +17,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 export class ApptDetailComponent implements OnInit {
     api_loading = true;
     go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
-    bname_cap = 'Appointment';
+    bname_cap = 'Service Provider';
     date_cap = Messages.CHECK_DET_DATE_CAP;
     location_cap = Messages.CHECK_DET_LOCATION_CAP;
     waitlist_for_cap = 'Appointment for';
@@ -68,6 +68,7 @@ export class ApptDetailComponent implements OnInit {
         this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
             (data) => {
                 this.appt = data;
+                console.log(this.appt);
             },
             (error) => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -99,6 +100,12 @@ export class ApptDetailComponent implements OnInit {
             }
         });
     }
+    getSingleTime(slot) {
+        if (slot) {
+          const slots = slot.split('-');
+          return this.shared_functions.convert24HourtoAmPm(slots[0]);
+        }
+      }
     getCommunicationHistory() {
         this.consumer_services.getConsumerCommunications(this.providerId)
             .subscribe(

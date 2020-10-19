@@ -327,8 +327,8 @@ export class SharedServices {
     }
     return param;
   }
-  getAlerts(ackStatus, sdate, startfrom, limit) {
-    let retparam = this.buildAlertsParams(ackStatus, sdate);
+  getAlerts(ackStatus, sdate, edate, startfrom, limit) {
+    let retparam = this.buildAlertsParams(ackStatus, sdate, edate);
     if (startfrom !== '') {
       if (retparam !== '') {
         retparam += '&';
@@ -347,15 +347,15 @@ export class SharedServices {
     const url = 'provider/alerts' + retparam;
     return this.servicemeta.httpGet(url);
   }
-  getAlertsTotalCnt(ackStatus, sdate) {
-    let retparam = this.buildAlertsParams(ackStatus, sdate);
+  getAlertsTotalCnt(ackStatus, sdate, edate) {
+    let retparam = this.buildAlertsParams(ackStatus, sdate, edate);
     if (retparam !== '') {
       retparam = '?' + retparam;
     }
     const url = 'provider/alerts/count' + retparam;
     return this.servicemeta.httpGet(url);
   }
-  buildAlertsParams(ackStatus, sdate) {
+  buildAlertsParams(ackStatus, sdate, edate) {
     let param = '';
     if (ackStatus === 'true') {
       param += 'ackStatus-eq=true';
@@ -382,7 +382,13 @@ export class SharedServices {
       if (param !== '') {
         param += '&';
       }
-      param += 'createdDate-eq=' + sdate;
+      param += 'createdDate-ge=' + sdate;
+    }
+    if (edate !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'createdDate-le=' + edate;
     }
     return param;
   }
@@ -658,7 +664,9 @@ export class SharedServices {
     // const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid + '/date/' + pdate;
     return this.servicemeta.httpGet(url);
   }
-
+  rescheduleConsumerApptmnt(accountid, postData){
+        return this.servicemeta.httpPut('consumer/appointment/reschedule?account=' + accountid, postData);
+      }
   getSlotsByLocationServiceandDate(locid, servid, pdate?, accountid?) {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);

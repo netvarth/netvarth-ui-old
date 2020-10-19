@@ -646,6 +646,10 @@ export class ConsumerCheckinComponent implements OnInit {
             this.confrmshow = true;
         }
     }
+    showPhoneInput(){
+        this.showInputSection = true;
+
+    }
     isSelectedService(id) {
         let clr = false;
         if (id === this.sel_ser) {
@@ -1705,9 +1709,9 @@ export class ConsumerCheckinComponent implements OnInit {
         return this.sharedFunctionobj.isNumeric(evt);
     }
     addCallingmode() {
-        if (this.callingModes === '' || this.callingModes.toString().length < 10) {
+        if (this.callingModes === '' || this.callingModes.toString().length < 10 || this.callingModes.charAt(0) === '0') {
             this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
-        } else if (this.callingModes && this.callingModes.toString().length === 10) {
+        } else if (this.callingModes && this.callingModes.toString().length === 10 && this.callingModes.charAt(0) !== '0') {
             this.showInputSection = true;
         }
     }

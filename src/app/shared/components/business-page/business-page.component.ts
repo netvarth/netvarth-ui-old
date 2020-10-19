@@ -553,7 +553,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.tempgalleryjson = res;
             let indx = 0;
             if (this.bLogo !== '../../../assets/images/img-null.svg') {
-              this.galleryjson[0] = { keyName: 'logo', caption: 'Profile Picture', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+              this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               indx = 1;
               // const imgobj = new Image(
               //   0,
@@ -729,7 +729,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (this.bLogo !== '../../../assets/images/img-null.svg') {
               this.galleryExists = true;
               this.image_list_popup = [];
-              this.galleryjson[0] = { keyName: 'logo', caption: 'Profile Picture', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+              this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               const imgobj = new Image(0,
                 { // modal
                   img: this.galleryjson[0].url,

@@ -201,6 +201,9 @@ export class AdjustqueueDelayComponent implements OnInit {
       this.route.navigate(['/provider/' + this.domain + '/check-ins->adjustdelay']);
     }
   }
+  goBack() {
+    this.route.navigate(['provider', 'check-ins']);
+  }
   setDescFocus() {
     this.isfocused = true;
     this.char_count = this.max_char_count - this.amForm.get('message').value.length;

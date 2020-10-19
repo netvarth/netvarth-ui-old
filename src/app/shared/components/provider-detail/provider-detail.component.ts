@@ -450,7 +450,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.account_Type = this.businessjson.accountType;
             if (this.account_Type === 'BRANCH') {
               this.getbusinessprofiledetails_json('departmentProviders', true);
-                }
+            }
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
@@ -550,7 +550,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.tempgalleryjson = res;
             let indx = 0;
             if (this.bLogo !== '../../../assets/images/img-null.svg') {
-              this.galleryjson[0] = { keyName: 'logo', caption: 'Profile Picture', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+              this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               indx = 1;
               // this.galleryenabledArr.push(0);
             }
@@ -721,7 +721,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               const imgobj = new Image(0,
                 { // modal
                   img: this.galleryjson[0].url,
-                  description: this.galleryjson[0].caption || 'Profile Picture'
+                  description: this.galleryjson[0].caption || ''
                 });
               this.image_list_popup.push(imgobj);
             } else {
@@ -1531,8 +1531,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       'id': location.id,
       'place': location.place,
       'location': location,
-      'cdate': service.serviceAvailability.nextAvailableDate,
-      'service': service
+      'service': service,
+      'cdate': service.serviceAvailability.nextAvailableDate
     };
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);

@@ -459,8 +459,8 @@ export class NewReportComponent implements OnInit {
           'transactionType': this.payment_transactionType,
           'queue': this.payment_queue_id,
           'service': this.payment_service_id,
-          'schedule': this.payment_schedule_id
-
+          'schedule': this.payment_schedule_id,
+          'providerOwnConsumerId': this.payment_customerId
 
         };
 

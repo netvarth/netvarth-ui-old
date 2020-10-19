@@ -13,3 +13,10 @@
  ::ng-deep .mat-autocomplete-panel {
     max-height: 242px !important;
   }
+
+.bill-ip input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance : none;
+    appearance : none;
+    margin : 0; 
+}

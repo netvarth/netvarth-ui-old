@@ -299,6 +299,9 @@ export class AdjustscheduleDelayComponent implements OnInit {
     }
 
   }
+  goBack() {
+    this.route.navigate(['provider', 'appointments']);
+  }
   handleUserSelection(user) {
     this.queuejson = [];
     this.servicesjson = this.serviceslist;

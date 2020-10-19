@@ -3,9 +3,12 @@
 </section> -->
 <section class="">
   <div class="card title-gb">
-      <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToGeneral()">
+      <h5 class="mgn-up-10"> 
+        <!-- <button type="button" class="btn default profile-back" (click)="redirecToGeneral()">
               <span class="fa fa-chevron-left">&nbsp;Back</span>
-          </button>&nbsp;&nbsp;&nbsp;Custom View</h5>
+          </button>&nbsp;&nbsp;&nbsp; -->
+          <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          Custom View</h5>
   </div>
 </section>
 <section>
@@ -79,7 +82,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="form-group col-md-12 col-xs-12 col-sm-12" *ngIf="filterUsersList.length > 0">
+                <div class="form-group col-md-12 col-xs-12 col-sm-12" *ngIf="filterUsersList.length > 0 && account_type !== 'INDEPENDENT_SP'">
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     {{provider_label | capitalizeFirst}}s</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">

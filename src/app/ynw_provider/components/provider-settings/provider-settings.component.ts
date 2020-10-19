@@ -289,7 +289,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.getJaldeeIntegrationSettings();
     this.getDisplayboardCountAppointment();
     this.getDisplayboardCountWaitlist();
-
+  
     this.getSchedulesCount();
     // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
@@ -307,7 +307,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
     });
   }
-
+  
+  getProviderLocations() {
+   this.provider_services.getProviderLocations()
+        .subscribe(data => {
+            console.log(data);
+            this.loc_list = data; });
+        }
   getAccountContactInfo() {
     this.provider_services.getAccountContactInfo().subscribe(
       data => {

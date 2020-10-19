@@ -70,6 +70,8 @@ export class CustomViewComponent implements OnInit {
     servicesList: any = [];
     serviceScheduleCount;
     serviceQCount;
+    account_type;
+
     constructor(public shared_functions: SharedFunctions,
         private router: Router,
         private activated_route: ActivatedRoute,
@@ -87,6 +89,8 @@ export class CustomViewComponent implements OnInit {
         });
     }
     ngOnInit() {
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.account_type = user.accountType;
         this.deptMultiFilterCtrl.valueChanges
             .pipe(takeUntil(this.onDestroy))
             .subscribe(() => {
@@ -738,6 +742,7 @@ export class CustomViewComponent implements OnInit {
     getOnlinePresence() {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
+                console.log(data);
                 this.appointment_status = data.appointment;
                 this.waitlist_status = data.waitlist;
             });

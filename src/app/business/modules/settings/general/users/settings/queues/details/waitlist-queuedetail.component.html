@@ -4,9 +4,10 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-            <button type="button" class="btn default profile-back" (click)="redirecToUserqueues()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
-            {{queuecaption}}
+            <!-- <button type="button" class="btn default profile-back" (click)="redirecToUserqueues()">
+                <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
+                <span class="fa fa-arrow-left pointer-cursor"  (click)="redirecToUserqueues()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+            {{queuecaption}} 
         </h5>
     </div>
 </section>
@@ -397,7 +398,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     <mat-form-field>
                                         <input matInput [matDatepicker]="picker"
                                             (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
-                                            formControlName="startdate">
+                                            formControlName="startdate" readonly>
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
@@ -409,7 +410,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     <mat-form-field>
                                         <input matInput [matDatepicker]="picker1"
                                             (dateChange)="compareDate($event.value,1)" placeholder="End Date"
-                                            formControlName="enddate">
+                                            formControlName="enddate" readonly>
                                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                         <mat-datepicker #picker1></mat-datepicker>
                                     </mat-form-field>

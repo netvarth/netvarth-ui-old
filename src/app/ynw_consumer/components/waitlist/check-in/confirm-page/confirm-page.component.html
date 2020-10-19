@@ -15,7 +15,7 @@
                             <div class="details">
                                 <div class="book-head"> Booking Confirmed </div>
                                 <div class="book-details"> Booking details </div>
-                                <table class="book-details-sub">
+                                <table class="book-details-sub  chkntoknappt-details">
                                     <tbody>
                                         <tr>
                                             <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
@@ -27,21 +27,31 @@
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{waitlist.provider.firstName}} {{waitlist.provider.lastName}}</td>
                                         </tr>
-                                        <tr *ngIf="waitlist.token">
-                                            <td width="48%" align="right">Token No </td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{waitlist.token}}</td>
-                                        </tr>
                                         <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{waitlist.queue?.location.place}}</td>
                                         </tr>
+                                        <tr *ngIf="waitlist.token">
+                                            <td width="48%" align="right">Token No </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{waitlist.token}}</td>
+                                        </tr>
+                                        <tr *ngIf="waitlist.token">
+                                            <td width="48%" align="right">Token for</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{waitlist.waitlistingFor[0].firstName}} {{waitlist.waitlistingFor[0].lastName}}</td>
+                                        </tr>
+                                        <tr *ngIf="!waitlist.token">
+                                            <td width="48%" align="right">Check-in for</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td>{{waitlist.waitlistingFor[0].firstName}} {{waitlist.waitlistingFor[0].lastName}}</td>
+                                        </tr>
                                         <tr>
                                             <td width="48%" align="right">Service</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>
-                                                <span class="service-icon"
+                                                <span class="service-icon pull-left"
                                                     *ngIf="waitlist.service && waitlist.service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
                                                         *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -54,7 +64,7 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                {{waitlist.service?.name}}</td>
+                                                <span>{{waitlist.service?.name}}</span></td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Time window </td>
@@ -64,7 +74,7 @@
                                                 {{waitlist.queue.queueEndTime}}</td>
                                         </tr>
                                         <tr>
-                                            <td width="48%" align="right">Confirmation No</td>
+                                            <td width="48%" align="right">Confirmation number</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{waitlist.checkinEncId}}</td>
                                         </tr>
@@ -75,7 +85,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <div class="book-status"> Current status </div>
+                                <div class="book-status chkntoknappt-details"> Current status </div>
                                 <table class="status-table">
                                     <tbody>
                                         <tr>
@@ -110,7 +120,7 @@
                                 </div>
                                 <div class="ok-btn">
                                     <span class="pointer-cursor" (click)="okClick()">
-                                        Ok</span></div>
+                                        <strong>OK</strong></span></div>
                             </div>
                         </div>
                         <div class="powered-by">

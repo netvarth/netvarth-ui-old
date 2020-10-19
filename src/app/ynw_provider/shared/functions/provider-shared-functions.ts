@@ -344,7 +344,7 @@ export class ProviderSharedFuctions {
               case 'REPORT': status_msg = '[arrived]'; break;
               case 'STARTED': status_msg = '[started]'; break;
               case 'CANCEL': status_msg = '[cancelled]'; break;
-              case 'CHECK_IN': status_msg = '[waitlisted]'; break;
+              case 'CHECK_IN': status_msg = 'checked-in'; break;
               case 'DONE': status_msg = 'completed'; break;
             }
             if (!showMessage) {

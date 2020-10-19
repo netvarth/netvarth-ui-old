@@ -208,6 +208,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   spname: any;
   provider_label: any;
   mobilenumber: any;
+  jaldeeConsumer: any;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -335,6 +336,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
+          this.jaldeeConsumer = this.checkin.providerConsumer.jaldeeConsumer;
           this.emailId = this.checkin.providerConsumer.email;
           this.mobilenumber = this.checkin.phoneNumber;
           this.getWaitlistBill();
@@ -363,6 +365,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
+          console.log(this.checkin);
+          this.jaldeeConsumer = this.checkin.consumer.jaldeeConsumer;
           this.mobilenumber = this.checkin.waitlistPhoneNumber,
           this.emailId = this.checkin.waitlistingFor[0].email;
           this.getWaitlistBill();

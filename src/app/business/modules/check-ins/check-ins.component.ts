@@ -313,6 +313,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   startedChkAppointments: any = [];
   chkStartedSelectAppointments = false;
   customerIdTooltip = '';
+  endminday;
+  maxday = new Date();
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1239,6 +1241,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.resetPaginationData();
     // this.pagination.startpageval = 1;
     // this.pagination.totalCnt = 0; // no need of pagination in today
+    if (this.activeQs.length > 0) {
     const promise = this.getTodayWLCount(Mfilter);
     promise.then(
       result => {
@@ -1246,6 +1249,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getTodayWaitlist(Mfilter)
           .subscribe(
             (data: any) => {
+              this.appt_list = [];
               this.appt_list = data;
               this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
               if (this.filterapplied === true) {
@@ -1269,6 +1273,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       () => {
         this.loading = false;
       });
+    } else {
+       this.loading = false;
+    }
   }
   getFutureWL() {
     this.resetCheckList();
@@ -1835,6 +1842,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     // this.filter.waitlist_status !== 'all'
+    this.endminday = this.filter.check_in_start_date;
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
@@ -2334,6 +2342,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getHistoryWaitlist(Mfilter)
           .subscribe(
             data => {
+              console.log(data);
               this.historyCheckins = data;
               const params = [
                 'height=' + screen.height,
@@ -2347,9 +2356,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               checkin_html += '<td style="padding:10px;">Date & Time</td>';
               checkin_html += '<td style="padding:10px;">Name</td>';
               checkin_html += '<td style="padding:10px;">Service</td>';
-              // if (this.providerLabels.length > 0) {
+              if (this.providerLabels.length > 0) {
               checkin_html += '<td style="padding:10px;">Label</td>';
-              // }
+              }
               checkin_html += '</thead>';
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 checkin_html += '<tr style="line-height:20px;padding:10px">';

@@ -1369,6 +1369,10 @@ sup {
   margin-left: 30px !important;
 }
 
+.mgn-rt-30 {
+  margin-right: 30px !important;
+}
+
 .mgn-up-10 {
   margin-top: 10px !important;
 }
@@ -1439,6 +1443,10 @@ sup {
 
 .mgn-up-30 {
   margin-top: 30px !important;
+}
+
+.mgn-up-40 {
+  margin-top: 40px !important;
 }
 
 .mgn-up-50 {
@@ -3301,11 +3309,6 @@ body {
   font-size: smaller !important;
 }
 
-.labelstyle {
-  color: #3f51b5 !important;
-  font-size: smaller !important;
-}
-
 .exstschdlesze {
   font-size: smaller !important;
 }
@@ -5104,7 +5107,7 @@ i.notavail {
 }
 
 /* .dashboard .chkins:last-child {
-
+ 
 } */
 
 .dashboard .chkins .service, .dashboard .chkins .forwhom {
@@ -6187,7 +6190,11 @@ li.separator.setsplit {
     width: 180px !important;
   }
 }
-
+@media (max-width: 784px) {
+  .prov-bill-disc1 {
+    width: 150px !important;
+  }
+}
 .jdn-pg i.editbt {
   margin-left: 20px !important;
 }
@@ -7337,9 +7344,9 @@ input.jdn_ip {
 } */
 
 .startWaitlist {
-  /* -webkit-animation: startWaitlist 1s infinite;
-  -moz-animation:    startWaitlist 1s infinite;
-  -o-animation:      startWaitlist 1s infinite;
+  /* -webkit-animation: startWaitlist 1s infinite; 
+  -moz-animation:    startWaitlist 1s infinite; 
+  -o-animation:      startWaitlist 1s infinite; 
   animation:         startWaitlist 1s infinite;  */
   background-color: #00cc96 !important;
 }
@@ -7881,7 +7888,7 @@ hr.wide-separator-line {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-/*
+/* 
 @font-face {
   font-family: 'icomoon';
   src: url('../fonts/icomoon.eot?vxnnmm');
@@ -7900,7 +7907,7 @@ hr.wide-separator-line {
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-
+ 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 } */
@@ -8261,7 +8268,7 @@ owl-carousel .bt3.active {
   top: 1px;
   margin-left: 6px;
 
-
+  
 } */
 
 .navul {
@@ -10549,7 +10556,7 @@ a {
 
 .wtsapaud-icon {
   content: url(../images/teleservice/whatsapp_audio.svg);
-  top: 4px;
+  top: 4px !important;
   position: relative;
   padding-right: 1px;
   width: 26px;
@@ -10876,7 +10883,7 @@ image-cropper img {
   }
 }
 
-/* @media screen and (max-width: 768px){
+/* @media screen and (max-width: 768px){ 
   h4{
   font-size:.7rem!important;
   }
@@ -10916,7 +10923,7 @@ image-cropper img {
   color: #f2cd61 !important
 }
 
-/*
+/*   
   .p0 .locd .lbl .prof-pic {
     width: 180px;
     height: 180px;
@@ -11055,6 +11062,15 @@ image-cropper img {
   .gmedia .linkdisplay {
     display: grid !important;
   }
+  .email-img {
+    width: 90px !important;
+    height: 140px;
+  }
+  .support-num {
+    font-size: 1rem !important;
+    font-weight: 600;
+    color: blue;
+  }
 }
 
 .pt10 .pad-left-20 .left_icn {
@@ -11125,6 +11141,10 @@ image-cropper img {
 
 .pad-20 {
   padding: 20px !important;
+}
+
+.pad-30 {
+  padding: 30px !important;
 }
 
 .pad-top-15 {
@@ -11761,6 +11781,10 @@ img.busN-logo {
   padding-left: 0 !important;
 }
 
+.pad-lt-30 {
+  padding-left: 30px !important;
+}
+
 .lmenu-hlp li {
   list-style: none;
   font-weight: 600;
@@ -12061,6 +12085,7 @@ img.busN-logo {
 }
 .checkinactionclass {
   width: 750px !important;
+  /* min-height: 500px !important; */
 }
 .bill-icon {
   content: url(../images/dashboard-icons/Bill-01-01.svg);
@@ -12090,10 +12115,6 @@ img.busN-logo {
   content: url(../images/dashboard-icons/Notes-01.svg);
   width: 40px;
 }
-.notes-icon-customer {
-  content: url(../images/dashboard-icons/Notes-01.svg);
-  width: 20px;
-}
 .printer-icon {
   content: url(../images/dashboard-icons/printer-01.svg);
   width: 40px;
@@ -12102,17 +12123,9 @@ img.busN-logo {
   content: url(../images/dashboard-icons/viewdetails-01.svg);
   width: 40px;
 }
-.viewdetails-icon-customer {
-  content: url(../images/dashboard-icons/viewdetails-01.svg);
-   width: 20px;
-}
-.medicalrecord-icon {
-  content: url(../images/dashboard-icons/medicalrecord-01.svg);
+.reschedule-icon {
+  content: url(../images/dashboard-icons/Reschedule-01.svg);
   width: 40px;
-}
-.medicalrecord-icon-customer {
-  content: url(../images/dashboard-icons/medicalrecord-01.svg);
-  width: 20px;
 }
 .act-icons .printer-icon {
   width: 17px !important;
@@ -12244,14 +12257,11 @@ img.busN-logo {
     margin-top: 5px;
 }
 .cons-payments .donate-icon {
-    content: url(../images/donation.svg);
+    content: url(../images/donation2.svg);
     position: relative;
     padding-right: 1px;
     width: 25px;
     margin-top: 7px;
-}
-.dash-name-bold {
-  font-weight: bold;
 }
 .apptdate-slot {
   font-weight: bold;
@@ -12260,10 +12270,12 @@ img.busN-logo {
 .index-zero {
   z-index: 0  !important;
 }
-@media only screen and (min-width: 575px) {
-  .dash-name-bold {
-    font-weight: bold;
+@media only screen and (min-width: 991px) {
+  .font1 {
     font-size: 1rem !important;
+  }
+  .font11 {
+    font-size: 1.1rem !important;
   }
 }
 @media only screen and (max-width: 400px){
@@ -12281,16 +12293,65 @@ img.busN-logo {
   .drop-width {
     width: 25px;
   }
-  
+}
+.c-checkin-new .changeitem {
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+}
+.back-btn i {
+  color: black !important;
+}
+.email-txt-pad {
+  padding: 10px 30px 10px;
+}
+.bg-whitesmoke {
+  background: whitesmoke;
+}
+.email-smal-btn {
+  font-size: .80rem !important;
+  height: 35px !important;
+}
+.email-img {
+  width: 150px;
+  height: 140px;
+}
+.font-bold {
+  font-weight: 600 !important;
 }
 
-.mrcreate{
-  border-radius: 0px !important;
-  margin-bottom: 5px !important;
-  /* border: 1px solid lightgrey!important; */
-  box-shadow: 5px 5px 5px 5px lightgrey !important; 
-  /* width: 50%!important; */
+.labelstyle {
+  font-size: 0.90rem !important;
+  font-weight: normal !important;
+  color: #3f51b5 !important;
+  }
+
+.mat-form-field-label:not(.mat-empty) {
+  font-size: 1.2rem  !important;
+  overflow: visible !important;
 }
-.mrcreate:hover {
-  border: 1px solid #00aef2!important;
+
+@media (max-width: 375px) {
+  .mat-form-field-label:not(.mat-empty) {
+    font-size: 0.95rem  !important;
+    overflow: visible !important;
+  }
+}
+.cons-payments .no-payment {
+  padding: 50px;
+  text-align: center;
+}
+.consumer-reschedule-icon {
+  content: url(../images/Reschedule-01-01.svg);
+  width: 20px;
+}
+
+@media (min-width: 320px){
+  .tspacepdrt{
+    padding-right: 10px !important;
+  }
+}
+@media (min-width: 320px){
+  .mgn5mgnrt{
+    margin-right: 15px !important;
+  }
 }

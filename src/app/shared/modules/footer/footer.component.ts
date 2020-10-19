@@ -203,7 +203,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   getAlertCount() {
-    this.shared_services.getAlertsTotalCnt('false', '')
+    this.shared_services.getAlertsTotalCnt('false', '', '')
       .subscribe((data: any) => {
         this.alert_count = data;
       },
@@ -214,7 +214,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
 
   getAlerts() {
     // this.alerts = [];
-    this.shared_services.getAlerts('false', '', 0, this.alertsCnt)
+    this.shared_services.getAlerts('false', '', '', 0, this.alertsCnt)
       .subscribe(data => {
         this.alerts = data;
         if (this.alerts.length > 0) {
