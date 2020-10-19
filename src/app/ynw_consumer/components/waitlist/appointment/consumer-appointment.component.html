@@ -265,10 +265,13 @@
                                                     </h6>
                                                     <div class="">
                                                         <i class="fa fa-mobile "></i>
+                                                        <span class="mgn-lt-10 phonevallabel">
+                                                            {{waitlist_for[0].phoneNo}}
+                                                        </span>
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="userPhone && !changePhno">{{userPhone}}</span>
+                                                            *ngIf="userPhone && !changePhno && type !== 'reschedule'">{{userPhone}}</span>
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
+                                                            *ngIf="currentPhone && changePhno && type !== 'reschedule'">{{currentPhone}}</span><a
                                                             class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'reschedule'" class="fa fa-pencil"
                                                                 (click)="editPhone()"></i></a>
                                                     </div>
