@@ -16,7 +16,7 @@ export class MedicalrecordComponent implements OnInit {
 
   navigation_params: { [key: string]: any; };
   mrDate: Date;
-  serviceName: any;
+  serviceName = 'Consultation';
   department: any;
   data: any;
   mrId: any;
@@ -36,6 +36,9 @@ export class MedicalrecordComponent implements OnInit {
   MrCreateddate: string;
   visitdate = new Date();
   consultationMode: any;
+  bookingType: any;
+  patientConsultationType = 'OP';
+  patientConsultationModes: any = [{'name': 'OP'}, {'name': 'PHONE'}, {'name': 'EMAIL'}, {'name': 'VIDEO'}];
   visitTime = new Date().toLocaleTimeString();
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
@@ -62,7 +65,7 @@ export class MedicalrecordComponent implements OnInit {
     this.activated_route.queryParams.subscribe(
       (qparams) => {
         if (qparams['customerDetail']) {
-          console.log('imin');
+          console.log(qparams);
 
           this.navigation_params = qparams;
           // tslint:disable-next-line:radix
@@ -79,8 +82,11 @@ export class MedicalrecordComponent implements OnInit {
           if (qparams.serviceName) {
             this.serviceName = qparams.serviceName;
           }
-          if (qparams.consultationMode) {
-            this.consultationMode = qparams.consultationMode;
+          if (qparams.booking_type && qparams.booking_type === 'TOKEN' || 'APPT') {
+           this.bookingType = qparams.booking_type;
+            if (qparams.consultationMode) {
+              this.consultationMode = qparams.consultationMode;
+            }
           }
           if (qparams.mrId) {
             // tslint:disable-next-line:radix
@@ -97,8 +103,6 @@ export class MedicalrecordComponent implements OnInit {
 
 
         } else {
-
-
           this.medicalService.patient_data.subscribe(res => {
             this.navigation_params = {
               'clone_params': res
@@ -152,6 +156,11 @@ export class MedicalrecordComponent implements OnInit {
     });
 
 
+  }
+  modeChanged(event) {
+    const mode = [];
+    mode['consultationMode'] = event;
+    this.medicalService.setPatientDetailsForMR(mode);
   }
   getMedicalRecordUsingMR(mrId) {
 

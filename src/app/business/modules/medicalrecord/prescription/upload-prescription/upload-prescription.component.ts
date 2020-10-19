@@ -65,7 +65,7 @@ export class UploadPrescriptionComponent implements OnInit {
         this.uploadImages = data;
         console.log(data);
         for (const pic of this.uploadImages) {
-          const imgdet = { 'name': pic.keyName, 'size': pic.imageSize, 'view': true };
+          const imgdet = {'name': pic.originalName, 'keyName': pic.keyName , 'size': pic.imageSize, 'view': true};
           this.selectedMessage.files.push(imgdet);
         }
         console.log(this.selectedMessage.files);
@@ -155,13 +155,13 @@ export class UploadPrescriptionComponent implements OnInit {
   deleteTempImage(img, index) {
     this.showSave = true;
     if (img.view && img.view === true) {
-      this.provider_services.deleteUplodedprescription(img.name, this.mrId)
-        .subscribe((data) => {
-          this.selectedMessage.files.splice(index, 1);
-        },
-          error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-          });
+      this.provider_services.deleteUplodedprescription(img.keyName , this.mrId)
+      .subscribe((data) => {
+        this.selectedMessage.files.splice(index, 1);
+       },
+      error => {
+        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      });
     } else {
       this.selectedMessage.files.splice(index, 1);
     }
