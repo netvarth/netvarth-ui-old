@@ -567,4 +567,55 @@ export class AppointmentActionsComponent implements OnInit {
     close() {
         this.dialogRef.close();
     }
+    medicalRecord() {
+      this.dialogRef.close();
+      let medicalrecord_mode = 'new';
+      let mrId = 0;
+      if (this.appt.mrId) {
+        medicalrecord_mode = 'view';
+        mrId = this.appt.mrId;
+      }
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(this.appt.providerConsumer),
+          'serviceId': this.appt.service.id,
+          'serviceName': this.appt.service.name,
+          'department': this.appt.service.deptName,
+          'booking_type': 'APPT',
+          'booking_date': this.appt.appmtDate,
+          'booking_time': this.appt.appmtTime,
+          'mr_mode': medicalrecord_mode,
+          'mrId': mrId ,
+          'booking_id': this.appt.uid
+
+        }
+      };
+
+      this.router.navigate(['provider', 'customers',  'medicalrecord'], navigationExtras);
+    }
+    prescription() {
+      this.dialogRef.close();
+      let medicalrecord_mode = 'new';
+      let mrId = 0;
+      if (this.appt.mrId) {
+        medicalrecord_mode = 'view';
+        mrId = this.appt.mrId;
+      }
+      const navigationExtras: NavigationExtras = {
+
+        queryParams: {
+          'customerDetail': JSON.stringify(this.appt.providerConsumer),
+          'serviceId': this.appt.service.id,
+          'serviceName': this.appt.service.name,
+          'department': this.appt.service.deptName,
+          'booking_type': 'Appointment',
+          'booking_date': this.appt.appmtDate,
+          'booking_time': this.appt.appmtTime,
+          'mr_mode': medicalrecord_mode,
+          'mrId': mrId ,
+          'booking_id': this.appt.uid
+        }
+      };
+      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+    }
 }

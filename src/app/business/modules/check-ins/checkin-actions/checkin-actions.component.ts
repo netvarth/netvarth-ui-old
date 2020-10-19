@@ -390,5 +390,59 @@ export class CheckinActionsComponent implements OnInit {
             this.getDisplayboardCount();
         });
     }
+    medicalRecord() {
+      this.dialogRef.close();
+      let medicalrecord_mode = 'new';
+      let mrId = 0;
+      if (this.checkin.mrId) {
+        medicalrecord_mode = 'view';
+        mrId = this.checkin.mrId;
+      }
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(this.checkin.consumer),
+          'serviceId': this.checkin.service.id,
+          'serviceName': this.checkin.service.name,
+          'booking_type': 'TOKEN',
+          'booking_date': this.checkin.date,
+          'booking_time': this.checkin.token,
+          'department': this.checkin.service.deptName,
+          'consultationMode': 'OP',
+          'booking_id': this.checkin.ynwUuid,
+          'mr_mode': medicalrecord_mode,
+          'mrId': mrId
+          // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
+
+        }
+      };
+
+      this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+    }
+    prescription() {
+      this.dialogRef.close();
+      let medicalrecord_mode = 'new';
+      let mrId = 0;
+      if (this.checkin.mrId) {
+        medicalrecord_mode = 'view';
+        mrId = this.checkin.mrId;
+      }
+
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(this.checkin.consumer),
+          'serviceId': this.checkin.service.id,
+          'serviceName': this.checkin.service.name,
+          'booking_type': 'Waitlist',
+          'booking_date': this.checkin.date,
+          'booking_time': this.checkin.token,
+          'department': this.checkin.service.deptName,
+          'consultationMode': 'OP',
+          'mrId': mrId,
+          'mr_mode': medicalrecord_mode,
+          'booking_id': this.checkin.ynwUuid
+        }
+      };
+      this.router.navigate(['provider', 'customers',  'medicalrecord', 'prescription'], navigationExtras);
+    }
 }
 
