@@ -36,6 +36,7 @@ export class MedicalrecordComponent implements OnInit {
   MrCreateddate: string;
   visitdate = new Date();
   consultationMode: any;
+  visitTime: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -88,6 +89,9 @@ export class MedicalrecordComponent implements OnInit {
           }
           if (qparams.visitDate) {
             this.visitdate = qparams.visitDate;
+          }
+          if (qparams.booking_time) {
+            this.visitTime = qparams.booking_time;
           }
           this.medicalService.setPatientDetailsForMR(qparams);
 

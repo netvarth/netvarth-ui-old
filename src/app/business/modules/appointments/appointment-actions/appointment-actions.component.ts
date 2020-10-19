@@ -583,11 +583,10 @@ export class AppointmentActionsComponent implements OnInit {
           'department': this.appt.service.deptName,
           'booking_type': 'APPT',
           'booking_date': this.appt.appmtDate,
-          'booking_time': this.appt.appmtTime,
+          'booking_time': this.appt.apptTakenTime,
           'mr_mode': medicalrecord_mode,
           'mrId': mrId ,
           'booking_id': this.appt.uid
-
         }
       };
 
@@ -610,7 +609,7 @@ export class AppointmentActionsComponent implements OnInit {
           'department': this.appt.service.deptName,
           'booking_type': 'Appointment',
           'booking_date': this.appt.appmtDate,
-          'booking_time': this.appt.appmtTime,
+          'booking_time': this.appt.apptTakenTime,
           'mr_mode': medicalrecord_mode,
           'mrId': mrId ,
           'booking_id': this.appt.uid

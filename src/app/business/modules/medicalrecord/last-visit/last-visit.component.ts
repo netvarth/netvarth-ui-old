@@ -124,7 +124,7 @@ export class LastVisitComponent implements OnInit {
           'department': visitDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
           'booking_date': visitDetails.appointmnet.appmtDate,
-          'booking_time': visitDetails.appointmnet.appmtTime,
+          'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
           'visitDate': visitDetails.date
@@ -171,7 +171,7 @@ export class LastVisitComponent implements OnInit {
           'department': visitDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
           'booking_date': visitDetails.appointmnet.appmtDate,
-          'booking_time': visitDetails.appointmnet.appmtTime,
+          'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
           'visitDate': visitDetails.date
