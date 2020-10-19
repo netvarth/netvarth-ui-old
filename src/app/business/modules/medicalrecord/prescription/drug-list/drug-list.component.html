@@ -13,16 +13,18 @@
                         <div class="card title-gb">
                                 <div class="mgn-up-10">
 
-                                    <p>
+                                    <!-- <p>
                                       <b>Patient:</b>
                                       <span color="blue"> {{patientDetails.jaldeeId}} &nbsp;</span>
                                       <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}}</span>
                                       <span *ngIf="patientDetails.dob|| patientDetails.gender ">({{patientDetails.dob}} {{patientDetails.gender | capitalizeFirst}})</span>
-                                    </p>
-                                    <!-- <p>Patient Name:{{patientFirstName | capitalizeFirst}} {{patientLastName}} </p>-->
-                                    <!-- <p>Patient Id: {{PatiendId}}</p>
-                                    <p *ngIf="PatientDob">DOB: {{PatientDob}} </p>
-                                    <p *ngIf="gender">Gender:{{gender | capitalizeFirst}}</p> -->
+                                    </p> -->
+                                    <hr>
+                                    <span>Patient Name: {{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
+                                    <span>Patient Id: {{patientDetails.jaldeeId}}</span><br>
+                                    <span *ngIf="patientDetails.dob">DOB: {{patientDetails.dob}}</span><br *ngIf="patientDetails.dob">
+                                    <span *ngIf="patientDetails.gender">Gender: {{patientDetails.gender | capitalizeFirst}}</span>
+                                    <hr>
 
                                 </div>
                                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
