@@ -17,7 +17,7 @@
             <span *ngIf="customerDetails.dob|| customerDetails.gender ">({{customerDetails.dob}} {{customerDetails.gender | capitalizeFirst}})</span>
           </p> -->
           <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
-          <span>Patient Id: {{customerDetails.id}}</span><br>
+          <span>Patient Id: {{customerDetails.jaldeeId}}</span><br>
           <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob}}</span><br *ngIf="customerDetails.dob">
           <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span>
 
