@@ -34,6 +34,7 @@ export class CustomersListComponent implements OnInit {
         page: 1
     }; // same in resetFilter Fn
     customer_label = '';
+    customer_labels = '';
     no_customer_cap = '';
     checkin_label = '';
     checkedin_label = '';
@@ -87,6 +88,7 @@ export class CustomersListComponent implements OnInit {
         private shared_functions: SharedFunctions) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
+        this.customer_labels = this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's';
         this.breadcrumbs_init = [
             {
                 title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's'
@@ -122,6 +124,9 @@ export class CustomersListComponent implements OnInit {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
         }
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
     }
     getCustomersList(from_oninit = true) {
         let filter = this.setFilterForApi();

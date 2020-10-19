@@ -609,12 +609,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'appointments', 'adjustdelay']);
     // }
   }
+  
   performActions(action) {
     if (action === 'adjustdelay') {
       this.showAdjustDelay();
     } else if (action === 'learnmore') {
       this.router.navigate(['/provider/' + this.domain + '/appointments']);
     }
+  }
+  redirecToHelp() {
+    this.router.navigate(['/provider/' + this.domain + '/appointments']);
   }
   getSchedules(date?) {
     const _this = this;
