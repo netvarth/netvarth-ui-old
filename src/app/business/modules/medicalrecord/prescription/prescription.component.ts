@@ -31,6 +31,7 @@ export class PrescriptionComponent implements OnInit {
     caption: []
   };
   uploadlist: any = [];
+  loading = true;
   constructor(
     // private activatedRoot: ActivatedRoute,
     private router: Router,
@@ -50,7 +51,7 @@ export class PrescriptionComponent implements OnInit {
 
   ngOnInit() {
     if (this.mrId === 0) {
-      console.log('mrIdis zero');
+      this.loading = false;
 
     } else {
       this.getMrprescription(this.mrId);
@@ -73,6 +74,7 @@ export class PrescriptionComponent implements OnInit {
         } else {
           this.drugList = data;
         }
+        this.loading = false;
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

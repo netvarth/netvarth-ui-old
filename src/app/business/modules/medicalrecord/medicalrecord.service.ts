@@ -75,6 +75,8 @@ export class MedicalrecordService {
 
     } else {
       return new Promise((resolve, reject) => {
+        console.log(JSON.stringify(mrObject));
+
         this.provider_services.createMedicalRecord(mrObject, _this.bookingId)
           .subscribe(
             response => {

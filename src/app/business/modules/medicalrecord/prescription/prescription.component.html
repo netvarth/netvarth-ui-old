@@ -1,4 +1,5 @@
-
+<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+<ng-container *ngIf="!loading" >
 <div class="mgn-up-10" *ngIf="drugList.length === 0 && uploadlist.length === 0">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10" >
                     <span class="b-link" >
@@ -112,4 +113,5 @@
               <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="updatePaperPrescription()">Update Prescription</button>
           </div>
           </div>
+        </ng-container>
 
