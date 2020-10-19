@@ -11,9 +11,9 @@
         <div class="box" > -->
          <mat-table class="mat-scrool"  [dataSource]="lastVisit_dataSource">
           <ng-container matColumnDef="consultationDate">
-            <mat-header-cell *matHeaderCellDef> <b>Consultation Date</b></mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> <b>Date</b></mat-header-cell>
             <mat-cell *matCellDef="let visit">
-              {{getLastVisitTime(visit)}} {{getLastVisitDate(visit)}}</mat-cell>
+              {{getLastVisitDate(visit)}} {{getLastVisitTime(visit)}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="serviceName">
             <mat-header-cell *matHeaderCellDef>  <b>Service Name</b></mat-header-cell>
@@ -28,11 +28,11 @@
           </ng-container>
           <ng-container matColumnDef="mr">
             <mat-header-cell *matHeaderCellDef> <b>MR</b></mat-header-cell>
-            <mat-cell *matCellDef="let visit"> <button (click)="viewMedicalRecord(visit)"  style="text-align:center">{{isMRCreated(visit) === true ?'View MR':'Create MR'}}</button></mat-cell>
+            <mat-cell *matCellDef="let visit"> <button (click)="viewMedicalRecord(visit)"  style="text-align:center"> <i class="medicalrecord-icon-customer"></i>{{isMRCreated(visit) === true ?'View MR':'Create MR'}}</button></mat-cell>
           </ng-container>
           <ng-container matColumnDef="rx">
             <mat-header-cell *matHeaderCellDef> <b>RX</b></mat-header-cell>
-            <mat-cell *matCellDef="let visit">  <button  (click)="viewMR_prescription(visit)"  style="text-align:center">{{isRxCreated(visit)===true?'View Rx':'Create Rx'}}</button></mat-cell>
+            <mat-cell *matCellDef="let visit">  <button  (click)="viewMR_prescription(visit)"  style="text-align:center">  <i class="notes-icon-customer"></i>{{isRxCreated(visit)===true?'View Rx':'Create Rx'}}</button></mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns"></mat-row>
