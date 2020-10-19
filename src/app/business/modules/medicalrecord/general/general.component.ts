@@ -18,7 +18,7 @@ export class GeneralComponent implements OnInit {
   displayTitle: any;
   editable_object: any;
   clinicalNotes: any;
-  edit_data: any;
+  edit_data = '';
   Cnotes: string;
   customerDetails: any;
   userId: any;

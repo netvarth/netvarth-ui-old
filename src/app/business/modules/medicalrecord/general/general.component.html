@@ -33,7 +33,7 @@
 <textarea [(ngModel)]="edit_data" name="paragraph_text"  maxlength = "500" cols="50" rows="5"></textarea>
 </div>
 
-<div style="text-align: center;"> <button (click) = "updateClinicalNotes(edit_data)" class="cs-btn bt1">Save</button></div>
+<div style="text-align: center;"> <button type="button" mat-button (click) = "updateClinicalNotes(edit_data)" [disabled]="edit_data == ''" class="cs-btn bt1">Save</button></div>
 
 </div>
 </section>
