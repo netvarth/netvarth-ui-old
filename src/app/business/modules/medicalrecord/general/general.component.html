@@ -16,7 +16,9 @@
           <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
           <span>Patient Id: {{customerDetails.jaldeeId}}</span><br>
           <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob}}</span><br *ngIf="customerDetails.dob">
-          <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span>
+          <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span> <br *ngIf="customerDetails.gender">
+          <span *ngIf="serviceName">Service/Consultation: {{serviceName}}</span><br *ngIf="serviceName">
+          <span *ngIf="department">Department: {{department}}</span>
           <hr>    
          </div>
     <!-- 
@@ -28,15 +30,20 @@
         <span *ngIf="customerDetails.dob|| customerDetails.gender ">({{customerDetails.dob}} {{customerDetails.gender | capitalizeFirst}})</span>
       </p>
     </div> -->
-<h4>Enter {{displayTitle}}<sub class="sunfont">(250 words)</sub></h4>
-<div	class="col-md-12 col-lg-12 col-sm-12 no-padding">
-<textarea [(ngModel)]="edit_data" name="paragraph_text"  maxlength = "500" cols="50" rows="5"></textarea>
-</div>
+<h4>Enter {{displayTitle}}<sub>(250 words)</sub></h4>
 
-<div style="text-align: center;"> <button type="button" mat-button (click) = "updateClinicalNotes(edit_data)" [disabled]="edit_data == ''" class="cs-btn bt1">Save</button></div>
+<textarea [(ngModel)]="edit_data" name="paragraph_text"  maxlength = "500" class="col-md-12 col-sm-12 col-xs-12" rows="5"></textarea>
+
+
+<div  style="text-align: center;">  <button type="button"  style="margin: 10px" class="cs-btn bt2 pad-bt" (click)="redirecToClinicalNotes()">cancel</button>
+  <button  type="button" mat-button (click) = "updateClinicalNotes(edit_data)" [disabled]="edit_data == ''" class="cs-btn bt1 sm">Save</button>
+</div>
 
 </div>
 </section>
+<div class="clearfix"></div>
 </div>
+<div class="clearfix"></div>
+
 
 

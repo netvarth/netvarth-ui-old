@@ -1590,4 +1590,8 @@ export class ProviderServices {
   deleteUplodedprescription(name, id) {
     return this.servicemeta.httpDelete('provider/mr/prescription/' + id + '/' + name);
   }
+  getPatientVisitListCount(patientId) {
+    const url = 'provider/mr/patientPreviousVisit/count/' + patientId;
+    return this.servicemeta.httpGet(url);
+  }
 }

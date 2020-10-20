@@ -32,7 +32,7 @@
 
     <div class="form-group">
       <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="Frequency(How often medicine needs to be taken in a day)" formControlName="frequency">
+        <input matInput type="text" class="form-control" placeholder="Frequency(How often medicine needs to be taken)" formControlName="frequency">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
 {
@@ -73,8 +73,8 @@
 
   <mat-dialog-actions>
       <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
-    <button  *ngIf="formMode != 'edit'" type="button" mat-button class="cs-btn bt1 style-button" [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)"> SAVE & ADD ANOTHER</button>
-    <button  type="submit" mat-button class="cs-btn bt1 style-button" [disabled]="!amForm.valid ">SAVE & CLOSE</button>
+    <button  *ngIf="formMode != 'edit'" type="button" mat-button class="cs-btn bt1 style-button" [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)"> Save & Add Another</button>
+    <button  type="submit" mat-button class="cs-btn bt1 style-button" [disabled]="!amForm.valid ">Save & Close</button>
   </div>
   </mat-dialog-actions>
 </form>

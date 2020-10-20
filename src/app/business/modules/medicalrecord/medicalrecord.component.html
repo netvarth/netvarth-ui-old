@@ -26,7 +26,8 @@
       <div>
         <h5>Add or view medical records for a consultation</h5>
         <p>Patient consultation date
-            <button (click) = "VisitList()">{{visitdate | date:dateFormatSp}} {{visitTime}}  &nbsp; <i class="arrow down"></i></button>  &nbsp;
+            <button  *ngIf="visitcount === 0">{{visitdate | date:dateFormatSp}} {{visitTime}}  &nbsp;</button>
+            <button  *ngIf="visitcount !== 0" (click) = "VisitList()">{{visitdate | date:dateFormatSp}} {{visitTime}}  &nbsp; <i class="arrow down"></i></button>  &nbsp;
             <span>(Recent visit)</span>
         </p>
       </div>
@@ -35,12 +36,12 @@
         <div class="col-md-6">
           <label *ngIf="department">Department:</label><span *ngIf="department"> {{department | capitalizeFirst}}</span><br *ngIf="department">
           <label *ngIf="serviceName">Service/Consultation:</label><span *ngIf="serviceName"> {{serviceName | capitalizeFirst}}</span><br *ngIf="serviceName">
-          <label *ngIf="bookingType && bookingType == ('TOKEN' || 'APPT')">Consultation Mode: </label><span  *ngIf="bookingType && bookingType == ('TOKEN' || 'APPT')"> {{consultationMode}}</span>
-         <span *ngIf="bookingType !== ('TOKEN' || 'APPT')"> <label>Consultation Mode: </label>&nbsp;
+          <!-- <label *ngIf="bookingType && bookingType == ('TOKEN' || 'APPT')">Consultation Mode: </label><span  *ngIf="bookingType && bookingType == ('TOKEN' || 'APPT')"> {{consultationMode}}</span> -->
+         <!-- <span *ngIf="bookingType !== ('TOKEN' || 'APPT')"> <label>Consultation Mode: </label>&nbsp;
           <select [(ngModel)]="patientConsultationType" (ngModelChange)="modeChanged($event)">
             <option *ngFor="let mode of patientConsultationModes" [value]="mode.name">{{mode.name}}</option>
           </select>
-        </span>
+        </span> -->
         </div>
         <div *ngIf = "mrId !== 0" class="col-md-6 ">
             <label>MR NO:</label><span> {{mrId}}</span><br>
@@ -55,14 +56,14 @@
             </span>
       </div> -->
 <hr>
-<div class="clearfix"></div>
-<p> &nbsp;</p>
+
+<div class="nopadding">&nbsp;</div>
 
         <div class="content w-manager settings comn-cls">
           <div style="padding: 5px;">
             <nav mat-tab-nav-bar>
               <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link" routerLinkActive="mat-tab-link-active"
-                #rla="routerLinkActive" [active]="rla.isActive" (click)="navigate(routeLink)" [routerLinkActiveOptions]="{exact: true}">
+                #rla="routerLinkActive"  class="routerLink.active" [active]="rla.isActive" (click)="navigate(routeLink)" [routerLinkActiveOptions]="{exact: true}">
                 {{routeLink.label}}
               </a>
             </nav>

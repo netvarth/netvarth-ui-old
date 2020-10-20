@@ -4,6 +4,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { NavigationExtras, Router } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared//pipes/date-format/date-format.pipe';
+import { MedicalrecordService } from '../medicalrecord.service';
 
 @Component({
   selector: 'app-last-visit',
@@ -17,18 +18,28 @@ export class LastVisitComponent implements OnInit {
   providerid: any;
   accountType: any;
   visitdetails: string;
+  customerDetails: any;
+  loading = true;
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private router: Router,
     public dateformat: DateFormatPipe,
+    private medicalrecordService: MedicalrecordService,
     public dialogRef: MatDialogRef<LastVisitComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.PatientId = this.data.patientId;
+    if (this.data.customerDetail) {
+      this.customerDetails = this.data.customerDetail;
+    }
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     if (this.accountType !== 'BRANCH') {
       this.lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'mr', 'rx'];
     }
+    // tslint:disable-next-line: no-shadowed-variable
+    this.medicalrecordService.patient_data.subscribe(data => {
+      this.customerDetails = JSON.parse(data.customerDetail);
+    });
   }
 
   ngOnInit() {
@@ -39,6 +50,7 @@ export class LastVisitComponent implements OnInit {
     this.provider_services.getPatientVisitList(this.PatientId)
       .subscribe((data: any) => {
         this.lastVisit_dataSource = data;
+        this.loading = false;
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
