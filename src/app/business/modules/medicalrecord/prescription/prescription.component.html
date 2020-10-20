@@ -9,13 +9,13 @@
                     </span>
             </div>
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 " >
-      <div class="card mrcreate">
+      <div class="card mrcreate pointlist">
           <span  (click)="uploadRx()">
               <h5 style="color:#3c8dbc;"><u>I will Upload paper prescription image</u><i class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
               <span  class="form-level-settings">You can scan or take a picture of prescription</span>
           </span>
       </div>
-      <div class="card mrcreate">
+      <div class="card mrcreate pointlist">
           <span  (click)="addDrug()">
               <h5 style="color:#3c8dbc;"><u>I will create a prescription manually</u><i class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
               <span  class="form-level-settings">Create prescription manually </span>
@@ -63,7 +63,7 @@
                    {{drug.frequency}}
                 </td>
                 <td  *ngIf="instrutionType(drug.instructions) === 0">
-                  <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u style="color: #3c8dbc ; font-size: smaller">more</u></span></span>
+                  <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u style="color: #3c8dbc ; font-size: smaller;cursor: pointer;">more</u></span></span>
                  </td>
                  <td *ngIf="instrutionType(drug.instructions) === 1">
                    {{drug.instructions}}
