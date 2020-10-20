@@ -70,7 +70,7 @@
                      {{drug.frequency}}
                   </td>
                   <td  *ngIf="instrutionType(drug.instructions) === 0">
-                    <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u style="color: #3c8dbc ; font-size: smaller">more</u></span></span>
+                    <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u style="color: #3c8dbc ; font-size: smaller;cursor: pointer;">more</u></span></span>
                    </td>
                    <td *ngIf="instrutionType(drug.instructions) === 1">
                      {{drug.instructions}}
