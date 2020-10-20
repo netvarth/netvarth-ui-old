@@ -265,10 +265,13 @@
                                                     </h6>
                                                     <div class="">
                                                         <i class="fa fa-mobile "></i>
+                                                        <span class="mgn-lt-10 phonevallabel">
+                                                            {{waitlist_for[0].phoneNo}}
+                                                        </span>
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="userPhone && !changePhno">{{userPhone}}</span>
+                                                            *ngIf="userPhone && !changePhno && type !== 'reschedule'">{{userPhone}}</span>
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
+                                                            *ngIf="currentPhone && changePhno && type !== 'reschedule'">{{currentPhone}}</span><a
                                                             class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'reschedule'" class="fa fa-pencil"
                                                                 (click)="editPhone()"></i></a>
                                                     </div>
@@ -354,15 +357,12 @@
 
                                 <div class="pull-left brd-round brd-light">
                                             
-                                    <div class="icon-minus pull-left" [class.disable]="disableMinus()"
-                                        *ngIf="settingsjson.futureDateWaitlist" (click)="calculateDate(-1)">
+                                    <div class="icon-minus pull-left" [class.disable]="disableMinus()" (click)="calculateDate(-1)">
                                     </div>
                                     <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
-                                    <div class="icon-add pull-left" *ngIf="settingsjson.futureDateWaitlist"
-                                        (click)="calculateDate(1)"></div>
+                                    <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
                                 </div>
-                                <div class="pickerouter caldiv pull-left "
-                                    *ngIf="settingsjson.futureDateWaitlist">
+                                <div class="pickerouter caldiv pull-left ">
 
                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                     </mat-datepicker-toggle>

@@ -41,7 +41,7 @@ export class CheckinActionsComponent implements OnInit {
     pos = false;
     showBill = false;
     showMsg = false;
-    domain;
+    customer_label = '';
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -54,8 +54,7 @@ export class CheckinActionsComponent implements OnInit {
         this.getPos();
         this.getLabel();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        this.domain = user.sector;
+        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
 
     printCheckin() {
@@ -262,6 +261,7 @@ export class CheckinActionsComponent implements OnInit {
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
+            this.labelselection();
         });
     }
     changeLabelvalue(labelname, value) {
@@ -307,13 +307,13 @@ export class CheckinActionsComponent implements OnInit {
         });
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
-                setTimeout(() => {
-                    this.labels();
-                    this.labelMap = new Object();
-                    this.labelMap[data.label] = data.value;
-                    this.addLabel();
-                    this.getDisplayname(data.label);
-                }, 500);
+                // setTimeout(() => {
+                this.labels();
+                this.labelMap = new Object();
+                this.labelMap[data.label] = data.value;
+                this.addLabel();
+                this.getDisplayname(data.label);
+                // }, 500);
             }
             this.getLabel();
         });
@@ -390,57 +390,28 @@ export class CheckinActionsComponent implements OnInit {
             this.getDisplayboardCount();
         });
     }
-    medicalRecord() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.checkin.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.checkin.mrId;
-      }
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(this.checkin.consumer),
-          'serviceId': this.checkin.service.id,
-          'serviceName': this.checkin.service.name,
-          'booking_type': 'TOKEN',
-          'booking_date': this.checkin.date,
-          'booking_time': this.checkin.checkInTime,
-          'department': this.checkin.service.deptName,
-          'consultationMode': 'OP',
-          'booking_id': this.checkin.ynwUuid,
-          'mr_mode': medicalrecord_mode,
-          'mrId': mrId
+    addLabeltoAppt(label, event) {
+        this.labelMap = new Object();
+        if (event.checked) {
+            this.labelMap[label] = true;
+            this.addLabel();
+        } else {
+            this.deleteLabel(label, this.checkin.ynwUuid);
         }
-      };
-
-      this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
     }
-    prescription() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.checkin.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.checkin.mrId;
-      }
-
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(this.checkin.consumer),
-          'serviceId': this.checkin.service.id,
-          'serviceName': this.checkin.service.name,
-          'booking_type': 'TOKEN',
-          'booking_date': this.checkin.date,
-          'booking_time': this.checkin.checkInTime,
-          'department': this.checkin.service.deptName,
-          'consultationMode': 'OP',
-          'mrId': mrId,
-          'mr_mode': medicalrecord_mode,
-          'booking_id': this.checkin.ynwUuid
+    labelselection() {
+        const values = [];
+        if (this.checkin.label && Object.keys(this.checkin.label).length > 0) {
+            Object.keys(this.checkin.label).forEach(key => {
+                values.push(key);
+            });
+            for (let i = 0; i < this.providerLabels.length; i++) {
+                for (let k = 0; k < values.length; k++) {
+                    if (this.providerLabels[i].label === values[k]) {
+                        this.providerLabels[i].selected = true;
+                    }
+                }
+            }
         }
-      };
-      this.router.navigate(['provider', 'customers',  'medicalrecord', 'prescription'], navigationExtras);
     }
 }
-

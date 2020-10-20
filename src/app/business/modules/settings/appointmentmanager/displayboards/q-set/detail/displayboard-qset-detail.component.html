@@ -265,10 +265,14 @@
                     <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
                         <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels">
                         </ngx-mat-select-search>
-                        <mat-option *ngFor="let label of providerLabelsList" [value]="label"
+                        <!-- <mat-option *ngFor="let label of providerLabelsList" [value]="label"
                             (click)="labelClick(label)">
                             {{label.displayName}}
-                        </mat-option>
+                        </mat-option> -->
+                        <mat-option *ngFor="let label of providerLabelsList" [value]="label"
+                        (click)="providerLabelSelection(label)">
+                        {{label.displayName}}
+                    </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <div class="mgn-up-20 mgn-lt-20 form-group" *ngIf="labelMultiCtrl.length > 0">
@@ -276,17 +280,17 @@
                         Selected Labels:
                     </label>
                     <ul *ngFor="let label of labelMultiCtrl" class="mgn-up-10 col-md-12 no-padding">
-                        <li style="list-style: none;">
+                        <li>
                             {{label.displayName}}
                         </li>
-                        <mat-form-field class="col-md-6 no-padding">
+                        <!-- <mat-form-field class="col-md-6 no-padding">
                             <mat-select placeholder="Select value" [(value)]="label.selectedValue">
                                 <mat-option *ngFor="let value of label.valueSet" [value]="value.value"
                                     (click)="providerLabelSelection(value.value, label.label)">
                                     {{value.shortValue}}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
                     </ul>
                 </div>
             </div>

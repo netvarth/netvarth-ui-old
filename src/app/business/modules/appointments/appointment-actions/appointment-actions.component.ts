@@ -61,7 +61,7 @@ export class AppointmentActionsComponent implements OnInit {
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     loading = false;
     apptDate = '';
-    domain;
+    customer_label = '';
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -76,8 +76,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.getLabel();
         this.setData();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        this.domain = user.sector;
+        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
     setData() {
         // this.selectedTime = this.holdselectedTime = this.appt.appmtTime;
@@ -316,6 +315,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
+            this.labelselection();
         });
     }
     changeLabelvalue(labelname, value) {
@@ -361,13 +361,13 @@ export class AppointmentActionsComponent implements OnInit {
         });
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
-                setTimeout(() => {
+                // setTimeout(() => {
                     this.labels();
                     this.labelMap = new Object();
                     this.labelMap[data.label] = data.value;
                     this.addLabel();
                     this.getDisplayname(data.label);
-                }, 500);
+                // }, 500);
             }
             this.getLabel();
         });
@@ -567,54 +567,28 @@ export class AppointmentActionsComponent implements OnInit {
     close() {
         this.dialogRef.close();
     }
-    medicalRecord() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.appt.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.appt.mrId;
-      }
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(this.appt.providerConsumer),
-          'serviceId': this.appt.service.id,
-          'serviceName': this.appt.service.name,
-          'department': this.appt.service.deptName,
-          'booking_type': 'APPT',
-          'booking_date': this.appt.appmtDate,
-          'booking_time': this.appt.apptTakenTime,
-          'mr_mode': medicalrecord_mode,
-          'mrId': mrId ,
-          'booking_id': this.appt.uid
+    addLabeltoAppt(label, event) {
+        this.labelMap = new Object();
+        if (event.checked) {
+            this.labelMap[label] = true;
+            this.addLabel();
+        } else {
+            this.deleteLabel(label, this.appt.uid);
         }
-      };
-
-      this.router.navigate(['provider', 'customers',  'medicalrecord'], navigationExtras);
     }
-    prescription() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.appt.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.appt.mrId;
-      }
-      const navigationExtras: NavigationExtras = {
-
-        queryParams: {
-          'customerDetail': JSON.stringify(this.appt.providerConsumer),
-          'serviceId': this.appt.service.id,
-          'serviceName': this.appt.service.name,
-          'department': this.appt.service.deptName,
-          'booking_type': 'APPT',
-          'booking_date': this.appt.appmtDate,
-          'booking_time': this.appt.apptTakenTime,
-          'mr_mode': medicalrecord_mode,
-          'mrId': mrId ,
-          'booking_id': this.appt.uid
+    labelselection() {
+        const values = [];
+        if (this.appt.label && Object.keys(this.appt.label).length > 0) {
+            Object.keys(this.appt.label).forEach(key => {
+                values.push(key);
+            });
+            for (let i = 0; i < this.providerLabels.length; i++) {
+                for (let k = 0; k < values.length; k++) {
+                    if (this.providerLabels[i].label === values[k]) {
+                        this.providerLabels[i].selected = true;
+                    }
+                }
+            }
         }
-      };
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
 }

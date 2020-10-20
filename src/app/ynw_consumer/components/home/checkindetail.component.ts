@@ -91,6 +91,7 @@ export class CheckinDetailComponent implements OnInit {
     ngOnInit() {
         this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
             (data) => {
+                console.log(data);
                 this.waitlist = data;
                 this.showtoken = this.waitlist.showToken;
                 if (this.showtoken) {

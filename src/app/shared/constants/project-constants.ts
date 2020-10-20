@@ -574,11 +574,18 @@ export const projectConstantsLocal = {
       'order': 7,
     },
     {
+      'name': 'label',
+      'displayname': 'Label',
+      'label': false,
+      'checked': false,
+      'order': 8,
+    },
+    {
       'name': 'calling',
       'displayname': 'Calling',
       'label': false,
       'checked': false,
-      'order': 8,
+      'order': 9,
     }
   ],
   APPT_STATUS_BOARD: [
@@ -618,11 +625,18 @@ export const projectConstantsLocal = {
       'order': 7,
     },
     {
+      'name': 'label',
+      'displayname': 'Label',
+      'label': false,
+      'checked': false,
+      'order': 8,
+    },
+    {
       'name': 'calling',
       'displayname': 'Calling',
       'label': false,
       'checked': false,
-      'order': 8,
+      'order': 9,
     }
   ],
   ADWORDSPLIT: '__',
@@ -755,15 +769,6 @@ export const projectConstantsLocal = {
     { value: 'ge', displayName: '>' },
 
   ],
-  CLINICAL_NOTES: [
-    { displayName: 'Symptoms', value: '', id: 'symptoms' },
-    { displayName: 'Observations', value: '', id: 'observations' },
-    { displayName: 'Diagnosis', value: '', id: 'diagnosis' },
-    { displayName: 'Notes', value: '', id: 'misc_notes' },
-    { displayName: 'Allergies', value: '', id: 'allergies' },
-    { displayName: 'Complaints', value: '', id: 'complaints' },
-    { displayName: 'Vaccination Notes', value: '', id: 'vaccination_history' },
-  ],
 
 
 
@@ -798,5 +803,3 @@ export const projectConstantsLocal = {
   PATH: 'https://' + window.location.host + '/'
 
 };
-
-

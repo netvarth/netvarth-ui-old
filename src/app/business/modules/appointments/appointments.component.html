@@ -1,7 +1,15 @@
-<section #apptSection>
+<!-- <section #apptSection>
   <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section>
+</section> -->
+<section class="">
+    <div class="title-gb no-padding">
+        <h5 class="mgn-up-15 mgn-lt-15 mgn-rt-15">
+         Appointments
+          <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </h5>
+    </div>
+  </section>
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
@@ -424,7 +432,7 @@
                                   </li>
                                 </div>
                                 <div *ngIf="time_type !== 3">
-                                  <div *ngFor="let lbl of providerLabels">
+                                  <!-- <div *ngFor="let lbl of providerLabels">
                                     <label class="filterHeaders">{{lbl.displayName}}</label>
                                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                       <mat-checkbox [checked]="allLabelSelected[lbl.label]"
@@ -437,6 +445,21 @@
                                         [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(valueset.value) !== -1"
                                         (change)="setLabelFilter(lbl, valueset.value , $event)">
                                         {{valueset.shortValue}}</mat-checkbox>
+                                    </li>
+                                  </div> -->
+                                  <div>
+                                    <label class="filterHeaders">Labels</label>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                      <mat-checkbox [checked]="allLabelSelected"
+                                        (change)="setLabelFilter('all', $event)">
+                                        All</mat-checkbox>
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                      *ngFor="let lbl of providerLabels">
+                                      <mat-checkbox
+                                        [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                                        (change)="setLabelFilter(lbl, $event)">
+                                        {{lbl.displayName}}</mat-checkbox>
                                     </li>
                                   </div>
                                 </div>
@@ -574,7 +597,7 @@
                                   <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                                     class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                     <span class="checkin-label mgn-rt-10"
-                                      *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
+                                      *ngFor="let label of appt.label | keyvalue">{{label.key}}</span>
                                   </div>
                                   <!-- <div *ngIf="appt.batchId" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-3 bold">
                                     Batch: {{appt.batchId}}
@@ -1012,7 +1035,7 @@
                                   </li>
                                 </div>
                                 <div *ngIf="time_type !== 3">
-                                  <div *ngFor="let lbl of providerLabels">
+                                  <!-- <div *ngFor="let lbl of providerLabels">
                                     <label class="filterHeaders">{{lbl.displayName}}</label>
                                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                       <mat-checkbox [checked]="allLabelSelected[lbl.label]"
@@ -1025,6 +1048,21 @@
                                         [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(valueset.value) !== -1"
                                         (change)="setLabelFilter(lbl, valueset.value , $event)">
                                         {{valueset.shortValue}}</mat-checkbox>
+                                    </li>
+                                  </div> -->
+                                  <div>
+                                    <label class="filterHeaders">Labels</label>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                      <mat-checkbox [checked]="allLabelSelected"
+                                        (change)="setLabelFilter('all', $event)">
+                                        All</mat-checkbox>
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                      *ngFor="let lbl of providerLabels">
+                                      <mat-checkbox
+                                        [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                                        (change)="setLabelFilter(lbl, $event)">
+                                        {{lbl.displayName}}</mat-checkbox>
                                     </li>
                                   </div>
                                 </div>
@@ -1131,7 +1169,7 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="checkin-label mgn-rt-10"
-                            *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
+                            *ngFor="let label of appt.label | keyvalue">{{label.key}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -1149,8 +1187,9 @@
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                             *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
-                          <span [matTooltip]="cust_note_tooltip | capitalizeFirst" class="pull-left cnote  pointer-cursor mgn-rt-10"
-                            *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
+                          <span [matTooltip]="cust_note_tooltip | capitalizeFirst"
+                            class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
+                            (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>
                           <span (click)="openAttachmentGallery(appt)" [matTooltip]="'Attachment included'"
@@ -1242,8 +1281,8 @@
                         <i class="fa fa-undo" style="color: green;"></i> <span *ngIf="!small_device_display">
                           Confirmed</span>
                       </a> -->
-                        <a class="statusText btn-play pointer-cursor act-btn single-action" (click)="showCheckinActions(appt)"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                        <a class="statusText btn-play pointer-cursor act-btn single-action"
+                          (click)="showCheckinActions(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                           <!-- <i class="dashaction-icon"></i> -->
                           Actions <i class="fa fa-caret-down"></i>
                         </a>

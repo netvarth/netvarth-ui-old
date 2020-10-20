@@ -62,7 +62,8 @@
               <mat-expansion-panel [expanded]="true">
                   <mat-expansion-panel-header>
                       <mat-panel-title class="report_title">
-                         Tokens/Check-ins
+                          <span *ngIf="showToken">Token</span>
+                          <span *ngIf="!showToken">Check-in</span>
                       </mat-panel-title>
                   </mat-expansion-panel-header>
                   <ng-container *ngIf="checkinReports.length===0">

@@ -8,7 +8,6 @@ import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/function
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 @Component({
     selector: 'app-customers-list',
     templateUrl: './customers-list.component.html'
@@ -35,6 +34,7 @@ export class CustomersListComponent implements OnInit {
         page: 1
     }; // same in resetFilter Fn
     customer_label = '';
+    customer_labels = '';
     no_customer_cap = '';
     checkin_label = '';
     checkedin_label = '';
@@ -78,7 +78,6 @@ export class CustomersListComponent implements OnInit {
     providerLabels: any;
     selectedIndex: any = [];
     hide_msgicon = false;
-    mrdialogRef: any;
 
     constructor(private provider_services: ProviderServices,
         private router: Router,
@@ -89,6 +88,7 @@ export class CustomersListComponent implements OnInit {
         private shared_functions: SharedFunctions) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
+        this.customer_labels = this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's';
         this.breadcrumbs_init = [
             {
                 title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's'
@@ -124,6 +124,9 @@ export class CustomersListComponent implements OnInit {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
         }
+    }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
     }
     getCustomersList(from_oninit = true) {
         let filter = this.setFilterForApi();
@@ -308,34 +311,5 @@ export class CustomersListComponent implements OnInit {
             }
         };
         this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
-    }
-    lastvisits(customerDetail) {
-        this.shared_functions.removeitemfromLocalStorage('mrId');
-        this.mrdialogRef = this.dialog.open(LastVisitComponent, {
-          width: '80%',
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true,
-          data: {
-            patientId: customerDetail.id,
-            customerDetail: customerDetail
-          }
-        });
-
-    }
-    medicalRecord(customerDetail) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 }
-        };
-
-        this.shared_functions.removeitemfromLocalStorage('mrId');
-        this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
-    }
-    prescription(customerDetail) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 }
-        };
-
-        this.shared_functions.removeitemfromLocalStorage('mrId');
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
 }

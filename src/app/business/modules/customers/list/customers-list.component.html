@@ -1,7 +1,15 @@
-<section>
+<!-- <section>
   <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" *ngIf="!apiloading"
     (performAction)="performActions($event)">
   </app-breadcrumb>
+</section> -->
+<section class="">
+  <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        {{customer_labels}}
+        <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+      </h5>
+  </div>
 </section>
 <section class="dashboard content customers" *ngIf="!apiloading">
   <div class="col-md-12 no-padding-small">

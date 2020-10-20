@@ -135,6 +135,9 @@ export class ProviderSystemAuditLogComponent implements OnInit {
         this.routerobj.navigate(['/provider/' + this.domain + '/auditlog']);
     }
 }
+redirecToHelp() {
+  this.routerobj.navigate(['/provider/' + this.domain + '/auditlog']);
+}
   selectCategory() {
     this.logSelsubcat = '';
     this.setSubcategories(this.logSelcat);

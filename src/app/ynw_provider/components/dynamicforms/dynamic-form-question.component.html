@@ -89,7 +89,7 @@
         <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key"
           [formControlName]="question.key">
           <!-- <mat-option [value]="''">- Select One-</mat-option> -->
-          <mat-option *ngFor="let opt of question.options;first as isFirst" [value]="opt.name">
+          <mat-option *ngFor="let opt of question.options | orderBy: 'displayName' : 'descending'" [value]="opt.name">
             {{opt.displayName}}
           </mat-option>
         </mat-select>

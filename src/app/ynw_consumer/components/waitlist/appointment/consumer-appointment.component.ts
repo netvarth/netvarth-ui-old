@@ -351,7 +351,8 @@ export class ConsumerAppointmentComponent implements OnInit {
             (appt: any) => {
                 this.appointment = appt;
                 if (this.type === 'reschedule') {
-                     this.waitlist_for.push({ id: this.appointment.appmtFor[0].id, firstName: this.appointment.appmtFor[0].firstName, lastName: this.appointment.appmtFor[0].lastName });
+                     this.waitlist_for.push({ id: this.appointment.appmtFor[0].id, firstName: this.appointment.appmtFor[0].firstName, lastName: this.appointment.appmtFor[0].lastName, phoneNo: this.appointment.phoneNumber });
+                     console.log(this.waitlist_for)
                 }
 
                 this.sel_loc = this.appointment.location.id;
@@ -1433,7 +1434,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     timeSelected(slot) {
         this.apptTime = slot;
         this.waitlist_for[0].apptTime = this.apptTime['time'];
-        // this.action = '';
+        this.action = '';
     }
     getProfile() {
         this.sharedFunctionobj.getProfile()
@@ -1795,4 +1796,4 @@ export class ConsumerAppointmentComponent implements OnInit {
             return false;
         }
     }
-} 
+}

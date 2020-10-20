@@ -205,4 +205,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/inbox']);
     }
 }
+redirecToHelp() {
+  this.routerobj.navigate(['/provider/' + this.domain + '/inbox']);
+}
 }
