@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-upload-prescription',
@@ -31,6 +32,7 @@ export class UploadPrescriptionComponent implements OnInit {
   uploadImages: any = [];
 
   upload_status = 'Added to list';
+  display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,

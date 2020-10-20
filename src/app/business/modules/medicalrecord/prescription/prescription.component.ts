@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { InstructionsComponent } from './instructions/instructions.component';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class PrescriptionComponent implements OnInit {
   };
   uploadlist: any = [];
   loading = true;
+  dateFormatSp = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   constructor(
     // private activatedRoot: ActivatedRoute,
     private router: Router,

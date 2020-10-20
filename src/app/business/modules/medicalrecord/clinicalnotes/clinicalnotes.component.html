@@ -1,16 +1,16 @@
 
-  <div  class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-up-10" *ngIf="isLoaded">
-           <div class="card mrcreate" style="cursor: pointer;" *ngFor="let entry of clinicalNotes" (click)="addOrEditClinicalNotes(entry)">
-                  <span >
-                    <h5>{{entry.displayName}}
-                    <button type="button" mat-button style="float: right;"class="cs-btn bt1" (click)="addOrEditClinicalNotes(entry)">{{ entry.value == '' ? 'Add' : 'Edit' }}</button></h5>
-                    <div *ngIf= "entry.value" >
-                      <p>{{entry.value}}</p>
-                    </div>
-                  </span>
+  <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-up-10" *ngIf="isLoaded">
+    <div class="card mrcreate pointlist" *ngFor="let entry of clinicalNotes">
+           <span (click)="addOrEditClinicalNotes(entry)">
+             <h5> <i [className]="'mr-'+entry.id +'-icon'"></i> &nbsp;&nbsp;{{entry.displayName}}
+             <button type="button" mat-button style="float: right;"class="cs-btn bt1" >{{ entry.value == '' ? 'Add' : 'Edit' }}</button></h5>
+             <div *ngIf= "entry.value" >
+               <p>{{entry.value}}</p>
+             </div>
+           </span>
 
-           </div>
-           <!-- <div class="clearfix"></div> -->
-       </div>
+    </div>
+    <!-- <div class="clearfix"></div> -->
+</div>
 
 

@@ -12203,7 +12203,55 @@ img.busN-logo {
 .act-icons .printer-icon {
   width: 17px !important;
 }
-
+.mr-allergies-icon{
+  content: url(../images/mr-icons/allergies.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.mr-observations-icon{
+  content: url(../images/mr-icons/observations.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.mr-symptoms-icon{
+  content: url(../images/mr-icons/symptoms.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.mr-diagnosis-icon{
+  content: url(../images/mr-icons/diagnosis.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.mr-misc_notes-icon{
+  content: url(../images/mr-icons/misc_notes.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+/* .mr-vaccination_history-icon{
+  content: url(../images/mr-icons/vaccination_history.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+}
+.mr-complaints-icon{
+  content: url(../images/mr-icons/complaints.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
+} */
 .consumer-appthistory .appt-icon {
   content: url(../images/myjaldee/Appoinment-01.svg);
   position: relative;
@@ -12480,11 +12528,17 @@ img.busN-logo {
   border-radius: 0px !important;
   margin-bottom: 5px !important;
   /* border: 1px solid lightgrey!important; */
-  box-shadow: 5px 5px 5px 5px lightgrey !important; 
+  box-shadow: 5px 5px 5px 5px lightgrey !important;
   /* width: 50%!important; */
 }
 .mrcreate:hover {
   border: 1px solid #00aef2!important;
+}
+@media only screen and (max-width: 767px){
+.sm {
+    padding: 5px 10px !important;;
+    height: auto;
+}
 }
 
 /* @media (max-width: 963px) {

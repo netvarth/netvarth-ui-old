@@ -20,6 +20,7 @@ export class LastVisitComponent implements OnInit {
   visitdetails: string;
   customerDetails: any;
   loading = true;
+  visitcount: any;
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private router: Router,
@@ -44,7 +45,18 @@ export class LastVisitComponent implements OnInit {
 
   ngOnInit() {
     this.getPatientVisitList();
+    this.getPatientVisitListCount();
     // this.getproviderVisitList();
+  }
+  getPatientVisitListCount() {
+    this.provider_services.getPatientVisitListCount(this.PatientId)
+    .subscribe((data: any) => {
+      this.visitcount = data;
+      console.log(this.visitcount);
+    },
+      error => {
+        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      });
   }
   getPatientVisitList() {
     this.provider_services.getPatientVisitList(this.PatientId)
