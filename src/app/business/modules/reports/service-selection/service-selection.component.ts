@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewChild, AfterViewInit, } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ReportDataService } from '../reports-data.service';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { QueueDataService } from '../../../../shared/services/queue-data.service';
 
 
 @Component({
@@ -40,6 +42,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
   service_displayedColumns = ['select', 'serviceName', 'userName', 'status'];
   selection = new SelectionModel(true, []);
+  queueDetail = false;
 
 
 
@@ -47,7 +50,9 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
     private router: Router,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private report_data_service: ReportDataService) {
+    private report_data_service: ReportDataService,
+    private queue_data_service: QueueDataService
+  ) {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     if (this.accountType !== 'BRANCH') {
@@ -56,7 +61,11 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
     const _this = this;
     _this.activated_route.queryParams.subscribe(qparams => {
-
+      if (qparams.source) {
+        this.queueDetail = true;
+      } else {
+        this.queueDetail = false;
+      }
       _this.reportType = qparams.report_type;
       _this.selected_data_id = qparams.data;
       if (_this.reportType === 'donation') {
@@ -83,7 +92,6 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
               _this.selected_data.forEach(data => {
                 // tslint:disable-next-line:radix
                 if (parseInt(data) === row.id) {
-                  console.log('equals');
                   _this.selection.select(row);
                 }
               });
@@ -132,7 +140,6 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
   // service related method-------------------------------------------------------->
   setServiceDataSource(result) {
-    console.log(result);
     const service_list: any = [];
     result.forEach(serviceObj => {
       let userName = '';
@@ -194,7 +201,6 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
   // common method got o previous page------------------------------------->
   passServiceToReports() {
     this.services_selected = this.selection.selected;
-    console.log('length..' + this.services_selected.length);
 
     if (this.selection.selected.length === 0) {
       this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
@@ -221,14 +227,14 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
         this.services_selected = service_id;
       }
 
-      console.log(this.services_selected + '=' + this.serviceCount);
-
-      this.report_data_service.updatedServiceDataSelection(this.services_selected);
-      this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
-
-      //
-      // }
-
+      console.log(this.services_selected);
+      if (this.queueDetail) {
+        this.queue_data_service.updatedServiceDataSelection(this.services_selected);
+        this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add']);
+      } else {
+        this.report_data_service.updatedServiceDataSelection(this.services_selected);
+        this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
+      }
     }
 
 

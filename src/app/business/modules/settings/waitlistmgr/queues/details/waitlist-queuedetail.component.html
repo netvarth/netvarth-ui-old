@@ -2,14 +2,15 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section> -->
 <section class="">
-        <div class="card title-gb">
-            <h5 class="mgn-up-10"> 
-             <!-- <button type="button" class="btn default profile-back" (click)="redirecToQueues()">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <!-- <button type="button" class="btn default profile-back" (click)="redirecToQueues()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
-                <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToQueues()" ></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                {{queuecaption}}
-            </h5>     
-        </div>
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToQueues()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{queuecaption}}
+        </h5>
+    </div>
 </section>
 <section>
     <div class="content loc-list">
@@ -66,14 +67,19 @@
                                                 <span class="ttle">{{service_cap}}</span> <span class="it0"
                                                     *ngFor="let service of queue_data.services">
                                                     <span class="itm">
-                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
-                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
-                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'" class="fa phon-icon"></i>
-                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'" class="fa wtsapaud-icon"></i>
-                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'" class="fa wtsapvid-icon"></i>
-                                                    
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                            class="fa meet-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                            class="fa zoom-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                                                            class="fa phon-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                                                            class="fa wtsapaud-icon"></i>
+                                                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                                                            class="fa wtsapvid-icon"></i>
+
                                                         {{service.name | capitalizeFirst}}
-                                                        </span>
+                                                    </span>
                                                 </span>
                                             </div>
                                         </div>
@@ -254,8 +260,9 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     </div>
                                 </div>
                             </div>
+                            <!-- Old UI -->
                             <div class="form-group" *ngIf="filterbyDept">
-                                <label class="labelstyle">{{service_cap}}</label>
+                                <!-- <label class="labelstyle">{{service_cap}}</label>
                                 <div class="schselectall">
                                     <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectdept()">
                                         {{select_All}}</i>
@@ -276,14 +283,31 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             </mat-checkbox>
                                         </div>
                                     </section>
+                                </div> -->
+
+                                <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                                    [(ngModel)]="token_service">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary " type="button"
+                                        (click)="goToSelectionPage()">Change</button>
                                 </div>
                             </div>
+
                             <div class="form-group" *ngIf="!filterbyDept">
                                 <label class="labelstyle">{{service_cap}}</label>
-                                <div class="schselectall" *ngIf="services_list.length === 0">   
-                                    None <span style="color: red;"> (Enable/Add services) </span>   
-                                </div>                                
-                                <div class="schselectall" *ngIf="services_list.length > 0">
+                                <div class="schselectall" *ngIf="services_list.length === 0">
+                                    None <span style="color: red;"> (Enable/Add services) </span>
+                                </div>
+
+                                <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly placeholder="{{token_service}}"
+                                    [(ngModel)]="token_service">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary " type="button"
+                                        (click)="goToSelectionPage(token_service_id)">Change </button>
+                                </div>
+
+                                <!-- Old service UI -->
+                                <!-- <div class="schselectall" *ngIf="services_list.length > 0">
                                     <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectAllService()">
                                         {{select_All}}</i>
                                     <i class="fa fa-check-square-o" *ngIf="SelServcall" (click)="deselectAllService()">
@@ -303,7 +327,15 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             {{service.name | capitalizeFirst}}
                                             </mat-checkbox>
                                     </div>
-                                </section>
+                                </section> -->
+
+                                <!-- <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                                    [(ngModel)]="token_service">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary " type="button"
+                                        (click)="goToSelectionPage('service',appointment_service_id)">Change</button>
+                                </div> -->
+
                             </div>
                             <div class="form-group col-md-6 no-padding">
                                 <mat-form-field>
@@ -406,9 +438,10 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     </app-field-error-display> -->
                                 </div>
                             </div>
-                            <div class="form-group" *ngIf="showAdvancedSettings && waitlist_manager && waitlist_manager.showTokenId">
+                            <div class="form-group"
+                                *ngIf="showAdvancedSettings && waitlist_manager && waitlist_manager.showTokenId">
                                 <mat-form-field class="example-full-width">
-                                    <input matInput min="0" max="100000" type="text" class="number-ip-sm"
+                                    <input matInput min="0" max="100000" type="number" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"
                                         (keypress)="isNumericforToken($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
