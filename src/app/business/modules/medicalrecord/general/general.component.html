@@ -47,12 +47,13 @@
       </p>
     </div> -->
 <h4 class="genral-st">Enter {{displayTitle}}<sub>(250 words)</sub></h4>
-<div class="col-md-12 col-sm-12 col-xs-12 genral-st">
+<div class="col-md-12 col-sm-12 col-xs-12 ">
   <textarea  [(ngModel)]="edit_data" name="paragraph_text"  maxlength = "500" cols="30" rows="5"></textarea>
 </div>
 
 
-<div class="genral-st">  <button type="button"  style="margin: 10px" class="cs-btn bt2 pad-bt" (click)="redirecToClinicalNotes()">cancel</button>
+<div >  
+  <button type="button"  style="margin: 10px" class="cs-btn bt2 sm" (click)="redirecToClinicalNotes()">cancel</button>
   <button  type="button" mat-button (click) = "updateClinicalNotes(edit_data)" [disabled]="edit_data == ''" class="cs-btn bt1 sm">Save</button>
 </div>
 
