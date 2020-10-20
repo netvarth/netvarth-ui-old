@@ -8,8 +8,11 @@
       <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
       <span>Patient Id: {{customerDetails.jaldeeId}}</span><br>
    </div>
+   <div *ngIf="visitcount === 0" class="mgn-up-10 style-padding">
+      <p>No Visits for this Patient</p>
+   </div>
 
-  <section class="report">
+  <section class="report"  *ngIf="visitcount !== 0">
       <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
       <ng-container *ngIf="!loading" >
     <!-- <div class="content w-manager settings comn-cls lic-page">
