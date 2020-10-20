@@ -150,7 +150,7 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
-                                                <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">
+                                                <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                     <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                 <button mat-menu-item
                                                     *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -448,7 +448,7 @@
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -752,7 +752,7 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
-                                                <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">
+                                                <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                     <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                 <button mat-menu-item
                                                     *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -986,7 +986,7 @@
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed'" (click)="gotoAptmtReschedule(booking)">
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
