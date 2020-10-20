@@ -316,7 +316,8 @@ export class CustomersListComponent implements OnInit {
           panelClass: ['popup-class', 'commonpopupmainclass'],
           disableClose: true,
           data: {
-            patientId: customerDetail.id
+            patientId: customerDetail.id,
+            customerDetail: customerDetail
           }
         });
 

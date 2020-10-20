@@ -4,6 +4,10 @@
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
   </h1>
+  <div class="mgn-up-10 style-padding">
+      <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
+      <span>Patient Id: {{customerDetails.jaldeeId}}</span><br>
+   </div>
 
   <section class="report">
     <!-- <div class="content w-manager settings comn-cls lic-page">
