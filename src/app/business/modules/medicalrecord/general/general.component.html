@@ -17,7 +17,7 @@
           <span>Patient Id: {{customerDetails.jaldeeId}}</span><br>
           <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob}}</span><br *ngIf="customerDetails.dob">
           <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span> <br *ngIf="customerDetails.gender">
-          <span *ngIf="serviceName">Service: {{serviceName}}</span><br *ngIf="serviceName">
+          <span *ngIf="serviceName">Service/Consultation: {{serviceName}}</span><br *ngIf="serviceName">
           <span *ngIf="department">Department: {{department}}</span>
           <hr>    
          </div>
