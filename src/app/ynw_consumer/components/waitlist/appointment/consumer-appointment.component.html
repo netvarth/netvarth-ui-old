@@ -357,15 +357,12 @@
 
                                 <div class="pull-left brd-round brd-light">
                                             
-                                    <div class="icon-minus pull-left" [class.disable]="disableMinus()"
-                                        *ngIf="settingsjson.futureDateWaitlist" (click)="calculateDate(-1)">
+                                    <div class="icon-minus pull-left" [class.disable]="disableMinus()" (click)="calculateDate(-1)">
                                     </div>
                                     <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
-                                    <div class="icon-add pull-left" *ngIf="settingsjson.futureDateWaitlist"
-                                        (click)="calculateDate(1)"></div>
+                                    <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
                                 </div>
-                                <div class="pickerouter caldiv pull-left "
-                                    *ngIf="settingsjson.futureDateWaitlist">
+                                <div class="pickerouter caldiv pull-left ">
 
                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                     </mat-datepicker-toggle>

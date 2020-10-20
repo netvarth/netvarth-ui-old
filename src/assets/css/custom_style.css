@@ -1357,6 +1357,10 @@ sup {
   margin-left: 10px !important;
 }
 
+.mgn-lt-15 {
+  margin-left: 15px !important;
+}
+
 .mgn-lt-20 {
   margin-left: 20px !important;
 }
@@ -1419,6 +1423,10 @@ sup {
 
 .mgn-rt-10 {
   margin-right: 10px !important;
+}
+
+.mgn-rt-15 {
+  margin-right: 15px !important;
 }
 
 .mgn-rt-20 {
