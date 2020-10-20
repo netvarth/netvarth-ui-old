@@ -4,8 +4,8 @@
             aria-hidden="true"></i></button></h1>
 <div class="action-section col-md-12 no-padding" *ngIf=" action===''">
     <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-10 mgn-up-10" *ngIf="!data.multiSelection">
-    <p *ngIf="appt.appmtFor[0].userName != ''">Appointment for : {{appt.appmtFor[0].userName}} </p>
-    <p *ngIf="appt.appmtFor[0].userName === ''">{{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
+    <p *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''">Appointment for : {{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}} </p>
+    <p *ngIf="appt.appmtFor[0].firstName == '' && appt.appmtFor[0].lastName == ''">{{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
     <p>Appointment Time : {{getSingleTime(appt.appmtTime)}}
     </p>
 </div>
