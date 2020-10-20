@@ -40,6 +40,7 @@ export class MedicalrecordComponent implements OnInit {
   patientConsultationType = 'OP';
   patientConsultationModes: any = [{'name': 'OP'}, {'name': 'PHONE'}, {'name': 'EMAIL'}, {'name': 'VIDEO'}];
   visitTime = new Date().toLocaleTimeString();
+  visitcount: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -154,8 +155,19 @@ export class MedicalrecordComponent implements OnInit {
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
     });
+    this.getPatientVisitListCount();
 
 
+  }
+  getPatientVisitListCount() {
+    this.provider_services.getPatientVisitListCount(this.PatientId)
+    .subscribe((data: any) => {
+      this.visitcount = data;
+      console.log(this.visitcount);
+    },
+      error => {
+        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      });
   }
   modeChanged(event) {
     const mode = [];
