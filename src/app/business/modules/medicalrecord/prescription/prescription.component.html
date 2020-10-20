@@ -1,6 +1,6 @@
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <ng-container *ngIf="!loading" >
-<div class="mgn-up-10" *ngIf="drugList.length === 0 && uploadlist.length === 0">
+<div class="mgn-up-20" *ngIf="drugList.length === 0 && uploadlist.length === 0">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10" >
                     <span class="b-link" >
                         <h5>You can create prescription in two ways :</h5>
@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="mgn-up-10" *ngIf="drugList.length>0">
+  <div class="mgn-up-20" *ngIf="drugList.length>0">
   <div class="no-dta table-responsive" >
       <h5>  Prescription Created </h5>
   <table class="table table-bordered" >
@@ -79,7 +79,7 @@
       <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="updatePrescription()">Update Prescription</button>
   </div>
     </div>
-    <div class="mgn-up-10" *ngIf="uploadlist.length>0">
+    <div class="mgn-up-20" *ngIf="uploadlist.length>0">
         <div class="no-dta table-responsive" >
             <h5> Prescription  Image Uploaded</h5>
             <table class="table table-bordered" >

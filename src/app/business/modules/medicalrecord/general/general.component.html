@@ -28,12 +28,14 @@
         <span *ngIf="customerDetails.dob|| customerDetails.gender ">({{customerDetails.dob}} {{customerDetails.gender | capitalizeFirst}})</span>
       </p>
     </div> -->
-<h4>Enter {{displayTitle}}<sub class="sunfont">(250 words)</sub></h4>
+<h4>Enter {{displayTitle}}<sub>(250 words)</sub></h4>
 
 <textarea [(ngModel)]="edit_data" name="paragraph_text"  maxlength = "500" class="col-md-12 col-sm-12 col-xs-12" rows="5"></textarea>
 
 
-<div  style="text-align: center;"> <button type="button" mat-button (click) = "updateClinicalNotes(edit_data)" [disabled]="edit_data == ''" class="cs-btn bt1">Save</button></div>
+<div  style="text-align: center;">  <button type="button" style="margin: 10px" class="cs-btn bt2" (click)="redirecToClinicalNotes()">cancel</button>
+  <button  type="button" mat-button (click) = "updateClinicalNotes(edit_data)" [disabled]="edit_data == ''" class="cs-btn bt1 sm">Save</button>
+</div>
 
 </div>
 </section>
