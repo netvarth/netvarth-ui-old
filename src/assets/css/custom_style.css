@@ -12573,11 +12573,16 @@ img.busN-logo {
   .previewContainer, .videohgt {
     min-height: 400px;
   }
-  
+  .previewContainer video {
+    height: 380px;
+  }
   }
 @media (max-width: 320px) {
   .previewContainer, .videohgt {
   min-height: 310px;
+}
+.previewContainer video {
+  height: 290px;
 }
 }
 .previewContainer video {
