@@ -12363,3 +12363,11 @@ img.busN-logo {
     margin-right: 15px !important;
   }
 }
+
+.extra-count {
+  border: 1px solid #106e76;
+  border-radius: 50px;
+  font-size: .6rem;
+  padding: 1px 3px;
+  color: #106e76;
+}

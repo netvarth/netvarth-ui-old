@@ -223,6 +223,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   galleryenabledArr = [];
   // gallerydisabledArr = [];
   onlinePresence = false;
+  extra_img_count: number;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -548,6 +549,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.galleryenabledArr = []; // For showing gallery
             this.image_list_popup = [];
             this.tempgalleryjson = res;
+            if (this.tempgalleryjson.length > 5) {
+              this.extra_img_count = this.tempgalleryjson.length - 5;
+            }
             let indx = 0;
             if (this.bLogo !== '../../../assets/images/img-null.svg') {
               this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
