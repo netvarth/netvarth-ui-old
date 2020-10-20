@@ -8,6 +8,7 @@ import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/function
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 @Component({
     selector: 'app-customers-list',
     templateUrl: './customers-list.component.html'
@@ -78,6 +79,7 @@ export class CustomersListComponent implements OnInit {
     providerLabels: any;
     selectedIndex: any = [];
     hide_msgicon = false;
+    mrdialogRef: any;
 
     constructor(private provider_services: ProviderServices,
         private router: Router,
@@ -311,5 +313,34 @@ export class CustomersListComponent implements OnInit {
             }
         };
         this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+    }
+    lastvisits(customerDetail) {
+        this.shared_functions.removeitemfromLocalStorage('mrId');
+        this.mrdialogRef = this.dialog.open(LastVisitComponent, {
+          width: '80%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            patientId: customerDetail.id,
+            customerDetail: customerDetail
+          }
+        });
+
+    }
+    medicalRecord(customerDetail) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 }
+        };
+
+        this.shared_functions.removeitemfromLocalStorage('mrId');
+        this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+    }
+    prescription(customerDetail) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 }
+        };
+
+        this.shared_functions.removeitemfromLocalStorage('mrId');
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
 }
