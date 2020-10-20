@@ -4,10 +4,11 @@
             aria-hidden="true"></i></button></h1>
 <div class="action-section col-md-12 no-padding" *ngIf="action === ''">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!data.multiSelection">
-        <p *ngIf="checkin.showToken">Token for: {{checkin.waitlistingFor[0].firstName}}
+        <p *ngIf="checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">Token for : {{checkin.waitlistingFor[0].firstName}}
             {{checkin.waitlistingFor[0].lastName}}</p>
-        <p *ngIf="!checkin.showToken">Check-in for: {{checkin.waitlistingFor[0].firstName}}
+        <p *ngIf="!checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">Check-in for : {{checkin.waitlistingFor[0].firstName}}
             {{checkin.waitlistingFor[0].lastName}}</p>
+              <p *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName">{{customer_label | capitalizeFirst}} id : {{checkin.consumer.jaldeeId}}</p>
         <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
