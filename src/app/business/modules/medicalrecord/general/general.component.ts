@@ -26,6 +26,7 @@ export class GeneralComponent implements OnInit {
   patientid: any;
   department: any;
   serviceName: any;
+  display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
 
   constructor(
     public sharedfunctionObj: SharedFunctions,

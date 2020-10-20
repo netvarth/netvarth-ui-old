@@ -16,7 +16,7 @@
             <div class="col-md-6">
                 <label>Patient Name: :</label><span> {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</span><br>
                 <label>Patient Id:</label><span>{{customerDetails.jaldeeId}}</span><br>
-                <label *ngIf="customerDetails.dob">DOB:</label><span *ngIf="customerDetails.dob">  {{customerDetails.dob}}</span><br *ngIf="customerDetails.dob">
+                <label *ngIf="customerDetails.dob">DOB:</label><span *ngIf="customerDetails.dob">  {{customerDetails.dob | date:display_dateFormat}}</span><br *ngIf="customerDetails.dob">
                 <label *ngIf="customerDetails.gender">Gender:</label><span *ngIf="customerDetails.gender"> {{department}}</span>
             </div>
             <div class="col-md-6">

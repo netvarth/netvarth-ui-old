@@ -6,6 +6,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { LastVisitComponent } from './last-visit/last-visit.component';
 import { MedicalrecordService } from './medicalrecord.service';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-medicalrecord',
@@ -41,6 +42,7 @@ export class MedicalrecordComponent implements OnInit {
   patientConsultationModes: any = [{'name': 'OP'}, {'name': 'PHONE'}, {'name': 'EMAIL'}, {'name': 'VIDEO'}];
   visitTime = new Date().toLocaleTimeString();
   visitcount: any;
+  display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,

@@ -8,6 +8,7 @@ import { AddDrugComponent } from '../add-drug/add-drug.component';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
 import { projectConstants } from '../../../../../app.component';
 import { InstructionsComponent } from '../instructions/instructions.component';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class DrugListComponent implements OnInit {
   deleteFromDb = false;
   instructiondialogRef;
   loading = true;
+  display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
