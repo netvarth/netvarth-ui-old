@@ -89,11 +89,12 @@
                     File name
                 </th>
                 <th>
-                    Status
+                    Last modified
                 </th>
                 <th>
                     Image size
                 </th>
+                
 
               </tr>
             </thead>
@@ -101,10 +102,10 @@
                 <tr *ngFor="let file of uploadlist; let i = index;" >
 
                   <td >
-                   <i class="fa fa-paperclip"></i> {{file.originalName}}
+                    {{file.originalName}}
                   </td>
                   <td >
-                    Uploaded
+                    {{file.date  | date:dateFormatSp}}
                   </td>
                   <td >
                   {{imageSize(file.imageSize)}} KB
