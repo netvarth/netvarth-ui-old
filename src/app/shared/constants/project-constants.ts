@@ -770,13 +770,13 @@ export const projectConstantsLocal = {
 
   ],
   CLINICAL_NOTES: [
-    { displayName: 'Symptoms', value: '', id: 'symptoms' },
+    { displayName: 'Symptoms',value: '', id: 'symptoms' },
     { displayName: 'Observations', value: '', id: 'observations' },
     { displayName: 'Diagnosis', value: '', id: 'diagnosis' },
     { displayName: 'Notes', value: '', id: 'misc_notes' },
-    { displayName: 'Allergies', value: '', id: 'allergies' },
-    { displayName: 'Complaints', value: '', id: 'complaints' },
-    { displayName: 'Vaccination Notes', value: '', id: 'vaccination_history' },
+    { displayName: 'Allergies', value: '', id: 'allergies' }
+    // { displayName: 'Complaints', value: '', id: 'complaints' },
+    // { displayName: 'Vaccination Notes', value: '', id: 'vaccination_history' },
   ],
 
 
