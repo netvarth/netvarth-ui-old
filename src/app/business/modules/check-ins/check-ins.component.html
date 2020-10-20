@@ -368,7 +368,7 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="checkin-label mgn-rt-10"
-                            *ngFor="let label of checkin.label | keyvalue">{{label.key}}</span>
+                            *ngFor="let label of checkin.label | keyvalue">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -558,7 +558,7 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="checkin-label mgn-rt-10"
-                            *ngFor="let label of checkin.label | keyvalue">{{label.key}}</span>
+                            *ngFor="let label of checkin.label | keyvalue">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -858,7 +858,7 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="checkin-label mgn-rt-10"
-                          *ngFor="let label of checkin.label | keyvalue">{{label.key}}</span>
+                          *ngFor="let label of checkin.label | keyvalue">{{getDisplayname(label.key)}}</span>
                       </div>
                     </td>
                     <td class="td-three">
@@ -1215,7 +1215,7 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="checkin-label mgn-rt-10"
-                          *ngFor="let label of checkin.label | keyvalue">{{label.key}}</span>
+                          *ngFor="let label of checkin.label | keyvalue">{{getDisplayname(label.key)}}</span>
                       </div>
                     </td>
                     <td class="td-three">

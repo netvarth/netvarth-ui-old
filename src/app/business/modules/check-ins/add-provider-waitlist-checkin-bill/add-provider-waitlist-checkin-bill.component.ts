@@ -336,7 +336,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
-          this.jaldeeConsumer = this.checkin.providerConsumer.jaldeeConsumer;
+          this.jaldeeConsumer = this.checkin.consumer ? true : false;
           this.emailId = this.checkin.providerConsumer.email;
           this.mobilenumber = this.checkin.phoneNumber;
           this.getWaitlistBill();
@@ -365,8 +365,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
-          console.log(this.checkin);
-          this.jaldeeConsumer = this.checkin.consumer.jaldeeConsumer;
+          this.jaldeeConsumer = this.checkin.consumer.jaldeeConsumer !== 0 ? true : false;
           this.mobilenumber = this.checkin.waitlistPhoneNumber,
           this.emailId = this.checkin.waitlistingFor[0].email;
           this.getWaitlistBill();

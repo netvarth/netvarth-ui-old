@@ -13,7 +13,7 @@
 			<div class="w-dta">
 				<div class="row">
 					<div class="copy one" style="width: 100%">
-						<div class="col-a pl0 col-md-12 col-lg-8 col-xl-8">
+						<div class="col-a pl0 col-md-12 col-lg-8 col-xl-8 col-xs-12">
 							<div class="card bill-section">
 								<div class="bill-section-content" *ngIf="bill_data && checkin" id="receipt">
 									<div class="bill-wrapper ">
@@ -997,7 +997,7 @@
 													(click)="printMe()">Print</button>
 
 												<button type="button" mat-button class="cs-btn bt1 accept"
-													*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer !== 0"
+													*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer"
 													(click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
 												<button type="button" mat-button class="cs-btn bt1 accept"
 													*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"

@@ -597,7 +597,7 @@
                                   <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                                     class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                     <span class="checkin-label mgn-rt-10"
-                                      *ngFor="let label of appt.label | keyvalue">{{label.key}}</span>
+                                      *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
                                   </div>
                                   <!-- <div *ngIf="appt.batchId" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-3 bold">
                                     Batch: {{appt.batchId}}
@@ -1169,7 +1169,7 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="checkin-label mgn-rt-10"
-                            *ngFor="let label of appt.label | keyvalue">{{label.key}}</span>
+                            *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">

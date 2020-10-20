@@ -224,6 +224,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   gallerydisabledArr = [];
   onlinePresence = false;
   imgLength;
+  extra_img_count: number;
   // cSource  = 'qr';
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -552,6 +553,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.galleryenabledArr = []; // For showing gallery
             this.image_list_popup = [];
             this.tempgalleryjson = res;
+            if (this.tempgalleryjson.length > 5) {
+              this.extra_img_count = this.tempgalleryjson.length - 5;
+            }
             let indx = 0;
             if (this.bLogo !== '../../../assets/images/img-null.svg') {
               this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
