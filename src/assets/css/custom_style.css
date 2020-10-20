@@ -12569,11 +12569,10 @@ img.busN-logo {
   min-height: 310px;
 }
 }
-
 .previewContainer video {
   width:100%;
 }
-.video-container video, .previewContainer video {
+.local video, .local-zeroPs video, .previewContainer video {
   transform: scaleX(-1);
 }
 .videocontainer .join-vid-btn button {
