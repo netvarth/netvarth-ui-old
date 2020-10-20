@@ -3345,6 +3345,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     actiondialogRef.afterClosed().subscribe(data => {
       this.chkSelectAppointments = false;
+      this.getLabel();
       this.loadApiSwitch('');
     });
   }

@@ -1357,6 +1357,10 @@ sup {
   margin-left: 10px !important;
 }
 
+.mgn-lt-15 {
+  margin-left: 15px !important;
+}
+
 .mgn-lt-20 {
   margin-left: 20px !important;
 }
@@ -12461,6 +12465,13 @@ img.busN-logo {
   }
 }
 
+.extra-count {
+  border: 1px solid #106e76;
+  border-radius: 50px;
+  font-size: .6rem;
+  padding: 1px 3px;
+  color: #106e76;
+}
 .mrcreate{
   border-radius: 0px !important;
   margin-bottom: 5px !important;
