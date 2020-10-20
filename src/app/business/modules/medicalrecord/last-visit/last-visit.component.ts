@@ -19,6 +19,7 @@ export class LastVisitComponent implements OnInit {
   accountType: any;
   visitdetails: string;
   customerDetails: any;
+  loading = true;
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private router: Router,
@@ -49,6 +50,7 @@ export class LastVisitComponent implements OnInit {
     this.provider_services.getPatientVisitList(this.PatientId)
       .subscribe((data: any) => {
         this.lastVisit_dataSource = data;
+        this.loading = false;
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

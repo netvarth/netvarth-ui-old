@@ -10,6 +10,8 @@
    </div>
 
   <section class="report">
+      <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+      <ng-container *ngIf="!loading" >
     <!-- <div class="content w-manager settings comn-cls lic-page">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
         <div class="box" > -->
@@ -42,7 +44,8 @@
           <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns"></mat-row>
 
         </mat-table>
-<!-- 
+        </ng-container>
+<!--
     </div>
       </div>
     </div> -->
