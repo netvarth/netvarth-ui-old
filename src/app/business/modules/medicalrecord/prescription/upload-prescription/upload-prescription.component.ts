@@ -5,7 +5,7 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
@@ -33,11 +33,13 @@ export class UploadPrescriptionComponent implements OnInit {
 
   upload_status = 'Added to list';
   disable = false;
+  heading = 'Create prescription';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
+    private activatedRoot: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
     this.medicalrecord_service.patient_data.subscribe(data => {
       this.patientDetails = JSON.parse(data.customerDetail);
@@ -47,6 +49,14 @@ export class UploadPrescriptionComponent implements OnInit {
       if (mrId !== 0) {
         this.mrId = mrId;
       }
+    });
+    this.activatedRoot.queryParams.subscribe(queryParams => {
+    if (queryParams.mode) {
+      const type = queryParams.mode;
+      if (type === 'view') {
+        this.heading = 'Update Prescription';
+      }
+     }
     });
 
   }
@@ -140,6 +150,7 @@ export class UploadPrescriptionComponent implements OnInit {
           this.uploadMrPrescription(data, submit_data);
         },
           error => {
+            this.disable = false;
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
@@ -153,6 +164,7 @@ export class UploadPrescriptionComponent implements OnInit {
         this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
       },
         error => {
+          this.disable = false;
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }

@@ -3,7 +3,7 @@
         <h5 class="mgn-up-10">
             <!-- <button type="button" class="btn default profile-back" (click)="goBack()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
-                <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{heading}}
         </h5>
     </div>
@@ -125,9 +125,9 @@
                                                     *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span> -->
                                             </li>
                                         </ng-container>
-                                        <li>
+                                        <li *ngIf="jaldeeId">
                                             {{customer_label | capitalizeFirst}} id:
-                                            {{customer_data.jaldeeId | capitalizeFirst}}</li>
+                                            {{jaldeeId}}</li>
                                     </ul>
                                     <div *ngIf="thirdParty !== ''">
                                         {{customer_label | capitalizeFirst}} from
@@ -494,10 +494,9 @@
                                                         <mat-radio-group>
                                                             <li *ngFor="let memb of familymembers">
                                                                 <mat-radio-button
-                                                                    (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName, $event)"
-                                                                    [value]="memb.userProfile.id"
-                                                                    [checked]="isChecked(memb.userProfile.id)">
-                                                                    {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
+                                                                    (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId, $event)"
+                                                                    [value]="memb.id" [checked]="isChecked(memb.id)">
+                                                                    {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
                                                                 </mat-radio-button>
                                                             </li>
                                                         </mat-radio-group>
@@ -515,6 +514,7 @@
                                         <div class="addmember-outer">
                                             <div class="addMemberHeader">{{add_member_cap}}</div>
                                             <app-checkin-consumer-add-member [calledFrom]="'checkin'"
+                                                [globalsettings]="customidFormat"
                                                 (returnDetails)="handleReturnDetails($event)">
                                             </app-checkin-consumer-add-member>
                                             <div class="actiondiv">

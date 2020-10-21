@@ -77,14 +77,17 @@ export class LastVisitComponent implements OnInit {
     }
     return time;
   }
+  // getLastVisitDate(visit) {
+  //   let date = '';
+  //   if (visit.waitlist) {
+  //     date = visit.waitlist.date;
+  //   } else if (visit.appointmnet) {
+  //     date = visit.appointmnet.appmtDate;
+  //   }
+  //   return  this.dateformat.transformToDIsplayFormat(date);
+  // }
   getLastVisitDate(visit) {
-    let date = '';
-    if (visit.waitlist) {
-      date = visit.waitlist.date;
-    } else if (visit.appointmnet) {
-      date = visit.appointmnet.appmtDate;
-    }
-    return  this.dateformat.transformToDIsplayFormat(date);
+    return  this.dateformat.transformToDIsplayFormat(visit.lastVisitedDate);
   }
   isMRCreated(visit) {
     let mrCreated = '';
@@ -130,7 +133,7 @@ export class LastVisitComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
-          'visitDate': visitDetails.date
+          'visitDate': visitDetails.lastVisitedDate
         }
       };
       const result = {
@@ -151,7 +154,7 @@ export class LastVisitComponent implements OnInit {
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
-          'visitDate': visitDetails.date
+          'visitDate': visitDetails.lastVisitedDate
         }
       };
       const result = {
@@ -177,7 +180,7 @@ export class LastVisitComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
-          'visitDate': visitDetails.date
+          'visitDate': visitDetails.lastVisitedDate
         }
       };
       const result = {
@@ -198,7 +201,7 @@ export class LastVisitComponent implements OnInit {
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
-          'visitDate': visitDetails.date
+          'visitDate': visitDetails.lastVisitedDate
         }
       };
       const result = {

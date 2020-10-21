@@ -63,6 +63,7 @@ export class AppointmentActionsComponent implements OnInit {
     apptDate = '';
     domain;
     customer_label = '';
+    showmrrx = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -309,6 +310,9 @@ export class AppointmentActionsComponent implements OnInit {
             }
             if (this.pos && ((this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') || ((this.appt.apptStatus === 'cancelled' || this.appt.apptStatus === 'Rejected') && this.appt.paymentStatus !== 'NotPaid'))) {
                 this.showBill = true;
+            }
+            if (this.data.timetype !== 2 && (this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected')) {
+                this.showmrrx = true;
             }
         } else {
             this.showMsg = true;
@@ -602,9 +606,10 @@ export class AppointmentActionsComponent implements OnInit {
         medicalrecord_mode = 'view';
         mrId = this.appt.mrId;
       }
+      console.log(this.appt);
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(this.appt.providerConsumer),
+          'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
           'serviceId': this.appt.service.id,
           'serviceName': this.appt.service.name,
           'department': this.appt.service.deptName,
@@ -630,7 +635,7 @@ export class AppointmentActionsComponent implements OnInit {
       const navigationExtras: NavigationExtras = {
 
         queryParams: {
-          'customerDetail': JSON.stringify(this.appt.providerConsumer),
+          'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
           'serviceId': this.appt.service.id,
           'serviceName': this.appt.service.name,
           'department': this.appt.service.deptName,

@@ -15,9 +15,9 @@
             <hr>
             <div class="col-md-6">
                 <label>Patient Name: :</label><span> {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</span><br>
-                <label>Patient Id:</label><span>{{customerDetails.jaldeeId}}</span><br>
+                <label>Patient Id:</label><span>{{customerDetails.id}}</span><br>
                 <label *ngIf="customerDetails.dob">DOB:</label><span *ngIf="customerDetails.dob">  {{customerDetails.dob | date:display_dateFormat}}</span><br *ngIf="customerDetails.dob">
-                <label *ngIf="customerDetails.gender">Gender:</label><span *ngIf="customerDetails.gender"> {{customerDetails.gender}}</span>
+                <label *ngIf="customerDetails.gender">Gender:</label><span *ngIf="customerDetails.gender"> {{customerDetails.gender | capitalizeFirst}}</span>
             </div>
             <div class="col-md-6">
                 <label  *ngIf="serviceName">Service/Consultation:</label><span *ngIf="serviceName">{{serviceName}}</span><br>
@@ -46,8 +46,8 @@
         <span *ngIf="customerDetails.dob|| customerDetails.gender ">({{customerDetails.dob}} {{customerDetails.gender | capitalizeFirst}})</span>
       </p>
     </div> -->
-<h4 class="genral-st">Enter {{displayTitle}}<sub>(250 words)</sub></h4>
-<div class="col-md-12 col-sm-12 col-xs-12 ">
+<h6 class="mgn-lt-15">Enter {{displayTitle}}  <span class="word-hint">(250 words)</span></h6>
+<div class="col-md-12 col-sm-12 col-xs-12 mr-area">
   <textarea  [(ngModel)]="edit_data" name="paragraph_text"  maxlength = "500" cols="30" rows="5"></textarea>
 </div>
 
