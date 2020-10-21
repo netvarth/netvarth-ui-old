@@ -1740,7 +1740,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       let date;
       if (this.time_type === 2) {
-date = this.filter.future_appt_date;
+        date = this.filter.future_appt_date;
       }
       this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
         { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: date } });
