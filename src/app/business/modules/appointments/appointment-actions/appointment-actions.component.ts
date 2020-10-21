@@ -63,6 +63,7 @@ export class AppointmentActionsComponent implements OnInit {
     apptDate = '';
     domain;
     customer_label = '';
+    showmrrx = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -309,6 +310,9 @@ export class AppointmentActionsComponent implements OnInit {
             }
             if (this.pos && ((this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') || ((this.appt.apptStatus === 'cancelled' || this.appt.apptStatus === 'Rejected') && this.appt.paymentStatus !== 'NotPaid'))) {
                 this.showBill = true;
+            }
+            if (this.data.timetype !== 2 && this.appt.apptStatus !== 'cancelled') {
+                this.showmrrx = true;
             }
         } else {
             this.showMsg = true;
