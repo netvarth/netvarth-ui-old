@@ -43,6 +43,7 @@ export class CheckinActionsComponent implements OnInit {
     showMsg = false;
     domain;
     customer_label = '';
+    showmrrx = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -255,6 +256,9 @@ export class CheckinActionsComponent implements OnInit {
             }
             if (this.pos && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
                 this.showBill = true;
+            }
+            if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled') {
+                this.showmrrx = true;
             }
         } else {
             this.showMsg = true;
