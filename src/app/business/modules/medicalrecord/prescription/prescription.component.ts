@@ -7,6 +7,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { MedicalrecordService } from '../medicalrecord.service';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { ImagesviewComponent } from './imagesview/imagesview.component';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class PrescriptionComponent implements OnInit {
   loading = true;
   dateFormatSp = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   disable = false;
+  imagesviewdialogRef: any;
   constructor(
     // private activatedRoot: ActivatedRoute,
     private router: Router,
@@ -168,6 +170,19 @@ export class PrescriptionComponent implements OnInit {
   truncateInst(val) {
     const inst = val.substr(0, 25);
     return inst;
+  }
+  showimgPopup(file) {
+    this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: file,
+    });
+    this.imagesviewdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
   instructPopUp(drug) {
     console.log(drug);
