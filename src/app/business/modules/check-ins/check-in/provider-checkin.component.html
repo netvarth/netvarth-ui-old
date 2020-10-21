@@ -99,7 +99,7 @@
                                                     *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span> -->
                       </li>
                     </ng-container>
-                    <li>
+                    <li *ngIf="jaldeeId">
                       {{customer_label | capitalizeFirst}} id: {{jaldeeId}}</li>
                   </ul>
                   <div *ngIf="thirdParty !== ''">
@@ -434,7 +434,7 @@
                             <mat-radio-group>
                               <li *ngFor="let memb of familymembers">
                                 <mat-radio-button
-                                  (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, $event)"
+                                  (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId, $event)"
                                   [value]="memb.id" [checked]="isChecked(memb.id)">
                                   {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
                                 </mat-radio-button>

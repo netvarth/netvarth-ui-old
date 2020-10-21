@@ -125,7 +125,7 @@
                                                     *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span> -->
                                             </li>
                                         </ng-container>
-                                        <li>
+                                        <li *ngIf="jaldeeId">
                                             {{customer_label | capitalizeFirst}} id:
                                             {{jaldeeId}}</li>
                                     </ul>
