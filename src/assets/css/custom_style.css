@@ -12156,6 +12156,14 @@ img.busN-logo {
   content: url(../images/dashboard-icons/medicalrecord-01.svg);
   width: 20px;
 }
+.mr-rx-icon{
+  content: url(../images/dashboard-icons/prescription.svg);
+   width: 40px;
+}
+.mr-rx-icon-customer{
+  content: url(../images/dashboard-icons/prescription.svg);
+  width: 20px;
+}
 .act-icons .printer-icon {
   width: 17px !important;
 }

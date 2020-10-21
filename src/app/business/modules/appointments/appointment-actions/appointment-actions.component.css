@@ -30,7 +30,7 @@
   .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon, 
   .message-icon, .notes-icon, .printer-icon , .viewdetails-icon, .reschedule-icon,
   .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon,
-  .action-box .meet-icon, .action-box .phon-icon, .medicalrecord-icon {
+  .action-box .meet-icon, .action-box .phon-icon, .medicalrecord-icon, .mr-rx-icon {
     width: 25px !important;
   }
   .action-box .zoom-icon, .action-box .wtsapaud-icon, .action-box .wtsapvid-icon {
