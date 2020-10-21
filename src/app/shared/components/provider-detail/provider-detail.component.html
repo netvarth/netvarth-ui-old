@@ -29,7 +29,7 @@
                             <div class="gallery-bullet centeralign pointer-cursor"
                                 (click)="openImageModalRow(image_list_popup[0])">
                                 <i class="fa fa-circle" *ngFor="let enable of galleryenabledArr"></i>
-                                <span class="extra-count">+{{extra_img_count}}</span>
+                                <span class="extra-count" *ngIf="tempgalleryjson.length > 5">+{{extra_img_count}}</span>
                                 <!-- <i class="fa fa-circle-o" *ngFor="let i of gallerydisabledArr"></i> -->
                             </div>
                         </div>
