@@ -40,6 +40,7 @@ export class DrugListComponent implements OnInit {
   deleteFromDb = false;
   instructiondialogRef;
   loading = true;
+  disable = false;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
@@ -162,6 +163,7 @@ export class DrugListComponent implements OnInit {
     }
   }
   saveRx() {
+    this.disable = true;
     if (this.mrId) {
       this.provider_services.updateMRprescription(this.drugList, this.mrId).
         subscribe(res => {

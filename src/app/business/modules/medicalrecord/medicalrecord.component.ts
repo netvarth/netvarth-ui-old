@@ -39,7 +39,7 @@ export class MedicalrecordComponent implements OnInit {
   consultationMode: any;
   bookingType: any;
   patientConsultationType = 'OP';
-  patientConsultationModes: any = [{'name': 'OP'}, {'name': 'PHONE'}, {'name': 'EMAIL'}, {'name': 'VIDEO'}];
+  patientConsultationModes: any = [{ 'name': 'OP' }, { 'name': 'PHONE' }, { 'name': 'EMAIL' }, { 'name': 'VIDEO' }];
   visitTime = new Date().toLocaleTimeString();
   visitcount: any;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
@@ -86,7 +86,7 @@ export class MedicalrecordComponent implements OnInit {
             this.serviceName = qparams.serviceName;
           }
           if (qparams.booking_type && qparams.booking_type === 'TOKEN' || 'APPT') {
-           this.bookingType = qparams.booking_type;
+            this.bookingType = qparams.booking_type;
             if (qparams.consultationMode) {
               this.consultationMode = qparams.consultationMode;
             }
@@ -136,17 +136,18 @@ export class MedicalrecordComponent implements OnInit {
       });
 
   }
-  navigate(routeLink) {
-    switch (routeLink.id) {
-      case 'clinicalnotes': {
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], { queryParams: this.navigation_params });
-        break;
-      }
-      case 'prescription': {
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigation_params });
-        break;
-      }
-    }
+  navigate(event) {
+    console.log(event);
+    // switch (routeLink.id) {
+    //   case 'clinicalnotes': {
+    //     this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], { queryParams: this.navigation_params });
+    //     break;
+    //   }
+    //   case 'prescription': {
+    //     this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigation_params });
+    //     break;
+    //   }
+    // }
 
   }
 
@@ -162,14 +163,16 @@ export class MedicalrecordComponent implements OnInit {
 
   }
   getPatientVisitListCount() {
-    this.provider_services.getPatientVisitListCount(this.PatientId)
-    .subscribe((data: any) => {
-      this.visitcount = data;
-      console.log(this.visitcount);
-    },
-      error => {
-        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      });
+    if (this.PatientId !== null && this.PatientId !== undefined) {
+      this.provider_services.getPatientVisitListCount(this.PatientId)
+        .subscribe((data: any) => {
+          this.visitcount = data;
+          console.log(this.visitcount);
+        },
+          error => {
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+    }
   }
   modeChanged(event) {
     const mode = [];

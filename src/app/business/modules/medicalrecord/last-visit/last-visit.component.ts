@@ -71,9 +71,9 @@ export class LastVisitComponent implements OnInit {
   getLastVisitTime(visit) {
     let time = '';
     if (visit.waitlist) {
-      time = visit.waitlist.checkInTime;
+      time = '';
     } else if (visit.appointmnet) {
-      time = visit.appointmnet.apptTakenTime;
+      time = visit.appointmnet.apptStartTime;
     }
     return time;
   }
