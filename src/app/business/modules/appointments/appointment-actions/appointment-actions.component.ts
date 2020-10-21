@@ -582,9 +582,10 @@ export class AppointmentActionsComponent implements OnInit {
         medicalrecord_mode = 'view';
         mrId = this.appt.mrId;
       }
+      console.log(this.appt);
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(this.appt.providerConsumer),
+          'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
           'serviceId': this.appt.service.id,
           'serviceName': this.appt.service.name,
           'department': this.appt.service.deptName,
@@ -610,7 +611,7 @@ export class AppointmentActionsComponent implements OnInit {
       const navigationExtras: NavigationExtras = {
 
         queryParams: {
-          'customerDetail': JSON.stringify(this.appt.providerConsumer),
+          'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
           'serviceId': this.appt.service.id,
           'serviceName': this.appt.service.name,
           'department': this.appt.service.deptName,

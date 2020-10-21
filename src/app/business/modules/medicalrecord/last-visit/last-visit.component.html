@@ -6,7 +6,7 @@
   </h1>
   <div class="mgn-up-10 style-padding">
       <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
-      <span>Patient Id: {{customerDetails.jaldeeId}}</span><br>
+      <span>Patient Id: {{customerDetails.id}}</span><br>
    </div>
    <div *ngIf="visitcount === 0" class="mgn-up-10 style-padding">
       <p>No Visits for this Patient</p>

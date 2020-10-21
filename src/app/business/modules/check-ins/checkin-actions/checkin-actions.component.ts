@@ -404,9 +404,10 @@ export class CheckinActionsComponent implements OnInit {
         medicalrecord_mode = 'view';
         mrId = this.checkin.mrId;
       }
+      console.log(this.checkin);
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(this.checkin.consumer),
+          'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
           'serviceId': this.checkin.service.id,
           'serviceName': this.checkin.service.name,
           'booking_type': 'TOKEN',
@@ -433,7 +434,7 @@ export class CheckinActionsComponent implements OnInit {
 
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(this.checkin.consumer),
+          'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
           'serviceId': this.checkin.service.id,
           'serviceName': this.checkin.service.name,
           'booking_type': 'TOKEN',

@@ -21,7 +21,7 @@
                               </p> -->
                               <hr>
                               <span>Patient Name: {{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
-                              <span>Patient Id: {{patientDetails.jaldeeId}}</span><br>
+                              <span>Patient Id: {{patientDetails.id}}</span><br>
                               <span *ngIf="patientDetails.dob">DOB: {{patientDetails.dob  | date:display_dateFormat}}</span><br *ngIf="patientDetails.dob">
                               <span *ngIf="patientDetails.gender">Gender: {{patientDetails.gender | capitalizeFirst}}</span>
                               <hr>
