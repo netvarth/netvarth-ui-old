@@ -23,15 +23,15 @@
               <div class="book-details" *ngIf="type=='appt'"> Appointment details </div>
               <table class="book-details-sub chkntoknappt-details">
                 <tbody>
-                  <tr>
+                  <tr *ngIf="!statusInfo.provider">
                     <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.providerAccount?.businessName}}</td>
                   </tr>
                   <tr *ngIf="statusInfo.provider">
-                    <td width="48%" align="right">{{provider_label | capitalizeFirst}}</td>
+                    <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td>{{statusInfo.provider.firstName}} {{statusInfo.provider.lastName}}</td>
+                    <td>{{statusInfo.provider.firstName}} {{statusInfo.provider.lastName}}, {{statusInfo.providerAccount?.businessName}}</td>
                   </tr>
                   <tr *ngIf="type=='wl'">
                     <td width="48%" align="right">Location </td>
