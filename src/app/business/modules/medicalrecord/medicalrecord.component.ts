@@ -115,7 +115,7 @@ export class MedicalrecordComponent implements OnInit {
 
             this.customerDetails = JSON.parse(res.customerDetail);
             console.log(JSON.stringify(this.customerDetails));
-
+              this.visitdate = res.booking_date;
             this.PatientId = this.customerDetails.id;
             if (res.department) {
               this.department = res.department;
