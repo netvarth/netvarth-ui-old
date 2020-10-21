@@ -42,9 +42,9 @@
 
      </div>
   </div>
-  <div class="pad-20"  *ngIf="selectedMessage.files && selectedMessage.files.length > 0" >
+  <div class="pad-20 table-responsive"  *ngIf="selectedMessage.files && selectedMessage.files.length > 0" >
          <h5> Files uploaded</h5>
-     <table class="table table-bordered" (change)="somethingChanged()">
+     <table class="table table-bordered " (change)="somethingChanged()">
                  <thead>
                  <tr >
                    <th>
@@ -64,7 +64,6 @@
                </thead>
                  <tbody>
                    <tr *ngFor="let file of selectedMessage.files; let i = index;" >
-
                      <td >
                        {{file.name}}
                      </td>
