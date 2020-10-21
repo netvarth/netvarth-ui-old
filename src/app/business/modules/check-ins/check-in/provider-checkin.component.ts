@@ -282,7 +282,6 @@ export class ProviderCheckinComponent implements OnInit {
                     (data) => {
                         this.customer_data = data[0];
                         this.jaldeeId = this.customer_data.jaldeeId;
-                        console.log(this.customer_data);
                         this.getFamilyMembers();
                         this.initCheckIn();
                     }
@@ -426,7 +425,6 @@ export class ProviderCheckinComponent implements OnInit {
                     } else {
                         this.customer_data = data[0];
                         this.jaldeeId = this.customer_data.jaldeeId;
-                        console.log(this.customer_data);
                         this.getFamilyMembers();
                         this.initCheckIn();
                     }
@@ -928,7 +926,6 @@ export class ProviderCheckinComponent implements OnInit {
                 (data: any) => {
                     this.customer_data = data[0];
                     this.jaldeeId = this.customer_data.jaldeeId;
-                    console.log(this.customer_data);
                     this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
                     this.saveCheckin();
                 });
@@ -1103,7 +1100,6 @@ export class ProviderCheckinComponent implements OnInit {
         this.resetApi();
         this.waitlist_for = [];
         this.jaldeeId = jaldeeid;
-        console.log(jaldeeid);
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
     }
     handleMemberSelect(id, firstName, lastName, obj) {

@@ -1081,7 +1081,6 @@ export class AppointmentComponent implements OnInit {
         this.resetApi();
         this.waitlist_for = [];
         this.jaldeeId = jaldeeid;
-        console.log(this.jaldeeId);
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
     }
     handleMemberSelect(id, firstName, lastName, obj) {
