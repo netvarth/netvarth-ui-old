@@ -42,6 +42,7 @@ export class MedicalrecordComponent implements OnInit {
   patientConsultationModes: any = [{ 'name': 'OP' }, { 'name': 'PHONE' }, { 'name': 'EMAIL' }, { 'name': 'VIDEO' }];
   visitTime = new Date().toLocaleTimeString();
   visitcount: any;
+  selectedTab = 0;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
@@ -136,18 +137,17 @@ export class MedicalrecordComponent implements OnInit {
       });
 
   }
-  navigate(event) {
-    console.log(event);
-    // switch (routeLink.id) {
-    //   case 'clinicalnotes': {
-    //     this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], { queryParams: this.navigation_params });
-    //     break;
-    //   }
-    //   case 'prescription': {
-    //     this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigation_params });
-    //     break;
-    //   }
-    // }
+  navigate(routeLink) {
+    switch (routeLink.id) {
+      case 'clinicalnotes': {
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], { queryParams: this.navigation_params });
+        break;
+      }
+      case 'prescription': {
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigation_params });
+        break;
+      }
+    }
 
   }
 
@@ -186,6 +186,7 @@ export class MedicalrecordComponent implements OnInit {
       .subscribe((data: any) => {
         if (data) {
           this.mrDate = data.mrConsultationDate;
+          this.MrCreateddate = this.sharedfunctionObj.formatDateDisplay(this.mrDate);
           this.customerDetails = data.providerConsumer;
           this.medicalService.setPatientDetailsForMR(data);
           this.medicalService.setCurrentMRID(data.mrId);

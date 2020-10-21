@@ -250,24 +250,29 @@ export class CustomerDetailComponent implements OnInit {
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
                         this.customerErrorMsg1 = 'The system found the record details in Jaldee.com';
                         this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + ' to create ' + this.source + '?';
+                        this.loading = false;
                     } else {
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
                         this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                        this.loading = false;
                     }
                 },
                 error => {
                     this.shared_functions.apiErrorAutoHide(this, error);
+                    this.loading = false;
                 }
             );
     }
     getJaldeeIntegrationSettings() {
+        this.loading = true;
         this.provider_services.getJaldeeIntegrationSettings().subscribe(
             (data: any) => {
                 if (data.walkinConsumerBecomesJdCons) {
                     this.getJaldeeCustomer();
                 } else {
                     this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
-                    this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    this.loading = false;
                 }
             }
         );
