@@ -279,8 +279,13 @@ export class ProviderCheckinComponent implements OnInit {
                 }
                 this.api_loading1 = true;
                 this.provider_services.getProviderCustomers(filter).subscribe(
-                    (data) => {
-                        this.customer_data = data[0];
+                    (data: any) => {
+                        if (data.length > 1) {
+                            const customer = data.filter(member => !member.parent);
+                            this.customer_data = customer[0];
+                        } else {
+                            this.customer_data = data[0];
+                        }
                         this.jaldeeId = this.customer_data.jaldeeId;
                         this.getFamilyMembers();
                         this.initCheckIn();
@@ -423,7 +428,12 @@ export class ProviderCheckinComponent implements OnInit {
                         // }
                         this.createNew('create');
                     } else {
-                        this.customer_data = data[0];
+                        if (data.length > 1) {
+                            const customer = data.filter(member => !member.parent);
+                            this.customer_data = customer[0];
+                        } else {
+                            this.customer_data = data[0];
+                        }
                         this.jaldeeId = this.customer_data.jaldeeId;
                         this.getFamilyMembers();
                         this.initCheckIn();
@@ -924,7 +934,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.provider_services.getCustomer(filter)
             .subscribe(
                 (data: any) => {
-                    this.customer_data = data[0];
+                    if (data.length > 1) {
+                        const customer = data.filter(member => !member.parent);
+                        this.customer_data = customer[0];
+                    } else {
+                        this.customer_data = data[0];
+                    }
                     this.jaldeeId = this.customer_data.jaldeeId;
                     this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
                     this.saveCheckin();
