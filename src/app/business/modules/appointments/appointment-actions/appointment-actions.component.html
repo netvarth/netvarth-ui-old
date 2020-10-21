@@ -120,7 +120,7 @@
             <div class="icon-text">Print</div>
         </div>
     </div>
-    <div class="action-box pointer-cursor"
+    <div class="action-box pointer-cursor" 
         *ngIf="!data.multiSelection && data.timetype !== 3 && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
         (click)="rescheduleActionClicked()">
         <div class="action-box-sub">
@@ -189,7 +189,7 @@
         <a class="" (click)="gotoLabel()">Manage labels</a>
     </div>
 </div>
-<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'reschedule'">
+<h1 class="mat-dialog-title" style="font-size: .877rem !important;" *ngIf="action === 'reschedule'">
     Reschedule Appointment for {{appt.appmtFor[0].userName | capitalizeFirst}}
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
