@@ -36,6 +36,7 @@ export class PrescriptionComponent implements OnInit {
   uploadlist: any = [];
   loading = true;
   dateFormatSp = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  disable = false;
   constructor(
     // private activatedRoot: ActivatedRoute,
     private router: Router,
@@ -110,9 +111,11 @@ export class PrescriptionComponent implements OnInit {
   }
 
   updatePrescription() {
+    this.disable = true;
     this.router.navigate(['/provider/customers/medicalrecord/addrxlist']);
   }
   updatePaperPrescription() {
+    this.disable = true;
     this.router.navigate(['/provider/customers/medicalrecord/uploadRx']);
   }
   imageSize(val) {

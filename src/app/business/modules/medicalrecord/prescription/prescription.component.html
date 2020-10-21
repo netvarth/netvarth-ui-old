@@ -76,7 +76,7 @@
     </div>
 
     <div  *ngIf="drugList.length > 0 ">
-      <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="updatePrescription()">Update Prescription</button>
+      <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="updatePrescription()">Update Prescription</button>
   </div>
     </div>
     <div class="mgn-up-20" *ngIf="uploadlist.length>0">
@@ -114,7 +114,7 @@
               </tbody>
             </table></div>
             <div  *ngIf="uploadlist.length > 0 ">
-              <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="updatePaperPrescription()">Update Prescription</button>
+              <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="updatePaperPrescription()">Update Prescription</button>
           </div>
           </div>
         </ng-container>

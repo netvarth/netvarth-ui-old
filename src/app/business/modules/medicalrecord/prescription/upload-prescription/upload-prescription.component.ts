@@ -32,6 +32,7 @@ export class UploadPrescriptionComponent implements OnInit {
   uploadImages: any = [];
 
   upload_status = 'Added to list';
+  disable = false;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
@@ -105,6 +106,7 @@ export class UploadPrescriptionComponent implements OnInit {
   }
 
   saveImages() {
+    this.disable = true;
     for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
       if (this.selectedMessage.files[ia].view === true) {
         this.selectedMessage.files.splice(ia, 1);
