@@ -56,6 +56,7 @@ export class AddDrugComponent implements OnInit {
   mrId;
   fromWhr;
   drugData;
+  addAnother = false;
 
   constructor(
     public dialogRef: MatDialogRef<AddDrugComponent>,
@@ -109,8 +110,17 @@ export class AddDrugComponent implements OnInit {
     this.dialogRef.close(this.drugDetail);
 
   }
+  close() {
+    if (this.addAnother === true) {
+      this.dialogRef.close(this.drugDetail);
+    } else {
+      this.dialogRef.close();
+    }
+    
+  }
   saveAndAddOther(form_data) {
     this.drugDetail.push(form_data);
+    this.addAnother = true;
     this.amForm.reset();
   }
 
