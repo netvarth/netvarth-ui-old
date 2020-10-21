@@ -133,7 +133,7 @@ export class LastVisitComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
-          'visitDate': visitDetails.date
+          'visitDate': visitDetails.lastVisitedDate
         }
       };
       const result = {
@@ -154,7 +154,7 @@ export class LastVisitComponent implements OnInit {
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
-          'visitDate': visitDetails.date
+          'visitDate': visitDetails.lastVisitedDate
         }
       };
       const result = {
@@ -180,7 +180,7 @@ export class LastVisitComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
-          'visitDate': visitDetails.date
+          'visitDate': visitDetails.lastVisitedDate
         }
       };
       const result = {
@@ -201,7 +201,7 @@ export class LastVisitComponent implements OnInit {
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
-          'visitDate': visitDetails.date
+          'visitDate': visitDetails.lastVisitedDate
         }
       };
       const result = {
