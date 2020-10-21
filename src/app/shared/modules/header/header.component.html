@@ -37,8 +37,8 @@
             <div class="tc1 col-md-3 col-xs-7 no-padding-small ml-auto"
                 *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
                 <div class="topsignouter" [matTooltipClass]="tooltipcls" [matTooltip]="custsignTooltip"><button
-                        class="sgn" (click)="doLogin('consumer')"
-                        *ngIf="!shared_functions.checkLogin()">{{sign_in_cap}}</button> <button class="jn"
+                        class="sgn cons_btn_login_top" (click)="doLogin('consumer')"
+                        *ngIf="!shared_functions.checkLogin()">{{sign_in_cap}}</button> <button class="jn cons_btn_join_top"
                         (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">{{join_cap}}</button>
                 </div>
                 <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()"><b
@@ -213,9 +213,9 @@
                     <div class="tc1"
                         [ngClass]="{'pad-rt-10 mgn-up-5': (!shared_functions.checkLogin() && pageSource == 'details')}">
                         <div class="topsignouter">
-                            <button class="sgn" (click)="doLogin('consumer')"
+                            <button class="sgn cons_btn_login_top" (click)="doLogin('consumer')"
                                 *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button>
-                            <button class="jn" (click)="doSignup('consumer')"
+                            <button class="jn cons_btn_join_top" (click)="doSignup('consumer')"
                                 *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{join_cap}}</button>
                             <ng-container *ngIf="ctype=='consumer'">
                                 <div class="bnps">
@@ -270,7 +270,7 @@
                         </div>
                         <div class="isprovidertop"
                             *ngIf="!shared_functions.checkLogin() && source !== 'business' && pageSource!='details'"><b
-                                style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn"
+                                style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn cons_btn_go_top"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
                                 (click)="providerLinkClicked()">{{click_here_cap}}</button>
                         </div>
