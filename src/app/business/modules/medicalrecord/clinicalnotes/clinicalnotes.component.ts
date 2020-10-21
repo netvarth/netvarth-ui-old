@@ -56,6 +56,11 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
 
     } else {
+      for (let i = 0; i < this.clinical_constant.length; i++) {
+        this.clinical_constant[i].value = '';
+
+      }
+      this.clinicalNotes = this.clinical_constant;
       this.getMRClinicalNotes(this.mrId).then((res: any) => {
         this.clinicalNotes = res;
         this.isLoaded = true;
@@ -68,6 +73,10 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   getMRClinicalNotes(mrId) {
     const _this = this;
     let response = '';
+    for (let i = 0; i < this.clinical_constant.length; i++) {
+      this.clinical_constant[i].value = '';
+
+    }
     const compArray = this.clinical_constant;
 
     return new Promise((resolve) => {
@@ -96,10 +105,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(): void {
-    this.clinicalNotes = projectConstantsLocal.CLINICAL_NOTES;
-    console.log('destroy');
-    console.log(projectConstantsLocal.CLINICAL_NOTES);
+  ngOnDestroy() {
 
   }
   addOrEditClinicalNotes(object) {

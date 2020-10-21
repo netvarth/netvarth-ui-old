@@ -53,6 +53,9 @@ export class MedicalrecordService {
 
   }
   createMR(key, value) {
+    if (key !== 'clinicalNotes') {
+      delete this.mr_payload_new['clinicalNotes'];
+    }
 
     let mrObject = {};
     const _this = this;
@@ -94,6 +97,7 @@ export class MedicalrecordService {
   createMRForUploadPrescription() {
     const _this = this;
     console.log(_this.patientData.id);
+    delete _this.mr_payload_new['clinicalNotes'];
 
     if (_this.mr_payload_new.bookingType === 'FOLLOWUP') {
 
