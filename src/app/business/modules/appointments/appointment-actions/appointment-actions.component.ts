@@ -311,7 +311,7 @@ export class AppointmentActionsComponent implements OnInit {
             if (this.pos && ((this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') || ((this.appt.apptStatus === 'cancelled' || this.appt.apptStatus === 'Rejected') && this.appt.paymentStatus !== 'NotPaid'))) {
                 this.showBill = true;
             }
-            if (this.data.timetype !== 2 || (this.appt.apptStatus !== 'Cancelled' || this.appt.apptStatus !== 'Rejected')) {
+            if (this.data.timetype !== 2 && (this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected')) {
                 this.showmrrx = true;
             }
         } else {
