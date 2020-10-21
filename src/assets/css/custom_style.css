@@ -12472,3 +12472,10 @@ input[type=number]::-webkit-outer-spin-button {
     height: auto;
 }
 }
+.word-hint {
+  font-size: 0.8rem !important;
+  color: #9d9a9a !important
+}
+.mr-area textarea{
+  width: 100%;
+}

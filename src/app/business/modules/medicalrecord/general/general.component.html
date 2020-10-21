@@ -46,8 +46,8 @@
         <span *ngIf="customerDetails.dob|| customerDetails.gender ">({{customerDetails.dob}} {{customerDetails.gender | capitalizeFirst}})</span>
       </p>
     </div> -->
-<h4 class="genral-st">Enter {{displayTitle}}<sub>(250 words)</sub></h4>
-<div class="col-md-12 col-sm-12 col-xs-12 ">
+<h6 class="mgn-lt-15">Enter {{displayTitle}}  <span class="word-hint">(250 words)</span></h6>
+<div class="col-md-12 col-sm-12 col-xs-12 mr-area">
   <textarea  [(ngModel)]="edit_data" name="paragraph_text"  maxlength = "500" cols="30" rows="5"></textarea>
 </div>
 
