@@ -41,6 +41,7 @@ export class DrugListComponent implements OnInit {
   instructiondialogRef;
   loading = true;
   disable = false;
+  heading = 'Create Prescription';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
@@ -53,9 +54,16 @@ export class DrugListComponent implements OnInit {
       this.userId = this.patientDetails.id;
     });
     this.activatedRoot.queryParams.subscribe(queryParams => {
+      if (queryParams.details) {
       const data = JSON.parse(queryParams.details);
       this.drugList = data;
-
+    }
+    if (queryParams.mode) {
+      const type = queryParams.mode;
+      if (type === 'view') {
+        this.heading = 'Update Prescription';
+      }
+     }
     });
   }
 
@@ -170,9 +178,12 @@ export class DrugListComponent implements OnInit {
           console.log(this.drugList);
           this.showSave = false;
           this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
+        },
+        error => {
+          this.disable = false;
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
     } else {
-
       this.medicalrecord_service.createMR('prescriptions', this.drugList)
         .then(data => {
           this.medicalrecord_service.setCurrentMRID(data);
@@ -181,6 +192,7 @@ export class DrugListComponent implements OnInit {
           this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
         },
           error => {
+            this.disable = false;
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }

@@ -112,11 +112,17 @@ export class PrescriptionComponent implements OnInit {
 
   updatePrescription() {
     this.disable = true;
-    this.router.navigate(['/provider/customers/medicalrecord/addrxlist']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: { mode: 'view' }
+    };
+    this.router.navigate(['/provider/customers/medicalrecord/addrxlist'], navigationExtras);
   }
   updatePaperPrescription() {
     this.disable = true;
-    this.router.navigate(['/provider/customers/medicalrecord/uploadRx']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: { mode: 'view' }
+    };
+    this.router.navigate(['/provider/customers/medicalrecord/uploadRx'],navigationExtras);
   }
   imageSize(val) {
     let imgsize;
