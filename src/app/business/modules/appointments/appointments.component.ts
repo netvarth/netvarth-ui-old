@@ -746,7 +746,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.activeSchedules = this.tempActiveSchedules = this.activeSchedules.concat(groupbyQs['DISABLED']);
       }
     }
-    this.getQsByProvider();
+    // this.getQsByProvider();
     if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
       const selQdetails = this.activeSchedules.filter(q => q.id === this.selQId);
@@ -841,6 +841,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
       }
     }
+    this.getQsByProvider();
     this.loadApiSwitch(source);
   }
   resetAll() {
@@ -1218,6 +1219,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getFutureAppointmentsCount(Mfilter = null) {
     // let no_filter = false;
+    if (this.filter.future_appt_date === null) {
+      this.getTomorrowDate();
+    }
     const queueid = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
     if (!Mfilter) {
       Mfilter = {};
@@ -1231,6 +1235,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    }
+    if (this.filter.future_appt_date !== null) {
+      const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
+      Mfilter['date-eq'] = date;
     }
     return new Promise((resolve) => {
       this.provider_services.getFutureAppointmentsCount(Mfilter)

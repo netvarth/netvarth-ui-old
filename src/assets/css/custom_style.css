@@ -12524,6 +12524,13 @@ img.busN-logo {
   padding: 1px 3px;
   color: #106e76;
 }
+.qtoken input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
 .mrcreate{
   border-radius: 0px !important;
   margin-bottom: 5px !important;

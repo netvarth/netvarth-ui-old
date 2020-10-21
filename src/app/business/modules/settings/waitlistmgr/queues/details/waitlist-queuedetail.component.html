@@ -440,7 +440,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             </div>
                             <div class="form-group"
                                 *ngIf="showAdvancedSettings && waitlist_manager && waitlist_manager.showTokenId">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="example-full-width qtoken">
                                     <input matInput min="0" max="100000" type="number" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"
                                         (keypress)="isNumericforToken($event)" (keyup)="isvalid($event)">
