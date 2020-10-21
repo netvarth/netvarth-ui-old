@@ -135,7 +135,7 @@
             <div *ngIf="appt.mrId !== 0" class="icon-text">View Medical Record</div>
         </div>
     </div>
-    <div *ngIf="domain === 'healthCare' && !data.multiSelection && showmrrx" class="action-box pointer-cursor" (click)="prescription()">
+    <div *ngIf="domain === 'healthCare' && !data.multiSelection &&  showmrrx" class="action-box pointer-cursor" (click)="prescription()">
         <div class="action-box-sub">
             <span class="mr-rx-icon"></span>
             <div *ngIf="!appt.prescriptionCreated" class="icon-text">Create Rx</div>
