@@ -12202,20 +12202,20 @@ img.busN-logo {
   width: 25px;
   margin-top: 7px;
 }
-/* .mr-vaccination_history-icon{
-  content: url(../images/mr-icons/vaccination_history.svg);
+.mr-vaccination_history-icon{
+  content: url(../images/mr-icons/syringe.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
   margin-top: 7px;
 }
 .mr-complaints-icon{
-  content: url(../images/mr-icons/complaints.svg);
+  content: url(../images/mr-icons/complaint.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
   margin-top: 7px;
-} */
+}
 .consumer-appthistory .appt-icon {
   content: url(../images/myjaldee/Appoinment-01.svg);
   position: relative;
