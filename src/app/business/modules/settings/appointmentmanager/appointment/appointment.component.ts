@@ -108,7 +108,7 @@ export class AppointmentComponent implements OnInit {
     loggedinuser;
     maxsize;
     isFuturedate = false;
-    addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
+    addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '', 'jaldeeid': '' };
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     fromKiosk = false;
@@ -214,6 +214,7 @@ export class AppointmentComponent implements OnInit {
     customidFormat: any;
     heading = 'Create an Appointment';
     serviceIdParam = '';
+    jaldeeId;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -268,6 +269,7 @@ export class AppointmentComponent implements OnInit {
                     this.provider_services.getProviderCustomers(filter).subscribe(
                         (data) => {
                             this.customer_data = data[0];
+                            this.jaldeeId = this.customer_data.jaldeeId;
                             this.getFamilyMembers();
                             this.initAppointment();
                         }
@@ -420,6 +422,7 @@ export class AppointmentComponent implements OnInit {
                         this.createNew('create');
                     } else {
                         this.customer_data = data[0];
+                        this.jaldeeId = this.customer_data.jaldeeId;
                         this.consumerPhoneNo = this.customer_data.phoneNo;
                         this.getFamilyMembers();
                         this.initAppointment();
@@ -438,10 +441,10 @@ export class AppointmentComponent implements OnInit {
             });
     }
     initAppointment(thirdParty?) {
-        if (thirdParty) {
-            //     this.thirdParty = thirdParty;
-            this.getGlobalSettings();
-        }
+        // if (thirdParty) {
+        //     this.thirdParty = thirdParty;
+        this.getGlobalSettings();
+        // }
         this.thirdParty = thirdParty ? thirdParty : '';
         this.api_loading1 = false;
         this.showCheckin = true;
@@ -605,20 +608,20 @@ export class AppointmentComponent implements OnInit {
         if (this.thirdParty === '') {
             this.api_loading1 = true;
             let fn;
-            let self_obj;
+            // let self_obj;
             fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
-            self_obj = {
-                'userProfile': {
-                    'id': this.customer_data.id,
-                    'firstName': this.customer_data.firstName,
-                    'lastName': this.customer_data.lastName
-                }
-            };
+            // self_obj = {
+            //     'userProfile': {
+            //         'id': this.customer_data.id,
+            //         'firstName': this.customer_data.firstName,
+            //         'lastName': this.customer_data.lastName
+            //     }
+            // };
             fn.subscribe(data => {
                 this.familymembers = [];
-                this.familymembers.push(self_obj);
+                this.familymembers.push(this.customer_data);
                 for (const mem of data) {
-                    if (mem.userProfile.id !== self_obj.userProfile.id) {
+                    if (mem.id !== this.customer_data.id) {
                         this.familymembers.push(mem);
                     }
                 }
@@ -892,19 +895,20 @@ export class AppointmentComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.customer_data = data[0];
+                    this.jaldeeId = this.customer_data.jaldeeId;
                     this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
                     this.saveCheckin();
                 });
     }
     saveCheckin() {
         this.is_wtsap_empty = false;
-        if (this.waitlist_for.length !== 0) {
-            for (const list of this.waitlist_for) {
-                if (list.id === this.customer_data.id) {
-                    list['id'] = 0;
-                }
-            }
-        }
+        // if (this.waitlist_for.length !== 0) {
+        //     for (const list of this.waitlist_for) {
+        //         if (list.id === this.customer_data.id) {
+        //             list['id'] = 0;
+        //         }
+        //     }
+        // }
         // const waitlistarr = [];
         // for (let i = 0; i < this.waitlist_for.length; i++) {
         //     waitlistarr.push({ id: this.waitlist_for[i].id });
@@ -1058,6 +1062,7 @@ export class AppointmentComponent implements OnInit {
                 this.addmemberobj.mobile = '';
                 this.addmemberobj.gender = '';
                 this.addmemberobj.dob = '';
+                this.addmemberobj.jaldeeid = '';
                 break;
         }
         this.step = cstep;
@@ -1072,9 +1077,10 @@ export class AppointmentComponent implements OnInit {
         caption = 'Confirm';
         return caption;
     }
-    handleOneMemberSelect(id, firstName, lastName) {
+    handleOneMemberSelect(id, firstName, lastName, jaldeeid) {
         this.resetApi();
         this.waitlist_for = [];
+        this.jaldeeId = jaldeeid;
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
     }
     handleMemberSelect(id, firstName, lastName, obj) {
@@ -1145,6 +1151,7 @@ export class AppointmentComponent implements OnInit {
         this.addmemberobj.mobile = obj.mobile || '';
         this.addmemberobj.gender = obj.gender || '';
         this.addmemberobj.dob = obj.dob || '';
+        this.addmemberobj.jaldeeid = obj.jaldeeid || '';
     }
     handleSaveMember() {
         this.disable = true;
@@ -1170,28 +1177,40 @@ export class AppointmentComponent implements OnInit {
             }
         }
         if (derror === '') {
-            const post_data = {
-                'userProfile': {
-                    'firstName': this.addmemberobj.fname,
-                    'lastName': this.addmemberobj.lname
-                }
-            };
-            if (this.addmemberobj.mobile !== '') {
-                post_data.userProfile['phoneNo'] = this.addmemberobj.mobile;
-                post_data.userProfile['countryCode'] = '+91';
-            }
-            if (this.addmemberobj.gender !== '') {
-                post_data.userProfile['gender'] = this.addmemberobj.gender;
-            }
-            if (this.addmemberobj.dob !== '') {
-                post_data.userProfile['dob'] = this.addmemberobj.dob;
-            }
+            // const post_data = {
+            //     'userProfile': {
+            //         'firstName': this.addmemberobj.fname,
+            //         'lastName': this.addmemberobj.lname
+            //     }
+            // };
+            // if (this.addmemberobj.mobile !== '') {
+            //     post_data.userProfile['phoneNo'] = this.addmemberobj.mobile;
+            //     post_data.userProfile['countryCode'] = '+91';
+            // }
+            // if (this.addmemberobj.gender !== '') {
+            //     post_data.userProfile['gender'] = this.addmemberobj.gender;
+            // }
+            // if (this.addmemberobj.dob !== '') {
+            //     post_data.userProfile['dob'] = this.addmemberobj.dob;
+            // }
             let fn;
-            post_data['parent'] = this.customer_data.id;
+            // post_data['parent'] = this.customer_data.id;
+            const post_data = {
+                'firstName': this.addmemberobj.fname,
+                'lastName': this.addmemberobj.lname,
+                'dob': '',
+                'gender': '',
+                'phoneNo': '',
+                'address': '',
+                'parent': this.customer_data.id
+            };
+            if (this.addmemberobj.jaldeeid) {
+                post_data['jaldeeId'] = this.addmemberobj.jaldeeid;
+            }
             fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
             fn.subscribe(() => {
                 this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
-                //this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+                // this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.handleGoBack(3);
