@@ -73,11 +73,12 @@
           </tr>
         </tbody>
       </table>
+      <span (click)="updatePrescription()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span>
     </div>
 
-    <div  *ngIf="drugList.length > 0 ">
+    <!-- <div  *ngIf="drugList.length > 0 ">
       <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="updatePrescription()">Edit Prescription</button>
-    </div>
+    </div> -->
     </div>
     <div class="mgn-up-20" *ngIf="uploadlist.length>0">
         <div class="pad-20 table-responsive" >
@@ -111,10 +112,12 @@
                   </td>
                 </tr>
               </tbody>
-            </table></div>
-            <div  *ngIf="uploadlist.length > 0 ">
+            </table>
+            <span (click)="updatePaperPrescription()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span></div>
+            <!-- <div  *ngIf="uploadlist.length > 0 ">
               <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="updatePaperPrescription()">Edit Prescription</button>
-          </div>
+             
+          </div> -->
           </div>
         </ng-container>
 
