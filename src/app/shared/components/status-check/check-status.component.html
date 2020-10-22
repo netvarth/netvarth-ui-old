@@ -52,7 +52,7 @@
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.token}}</td>
                   </tr>
-                  <tr *ngIf="statusInfo.batchId">
+                  <tr *ngIf="type=='appt' && statusInfo.batchId">
                     <td width="48%" align="right">Batch </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.batchId}}</td>
