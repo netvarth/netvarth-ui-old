@@ -16,6 +16,8 @@ export class MedicalrecordService {
   private patientDetails = new BehaviorSubject<any>('');
   patient_data = this.patientDetails.asObservable();
   private mrId = new BehaviorSubject<any>(0);
+  private back_type = new BehaviorSubject<any>('');
+  back_nav = this.back_type.asObservable();
   _mrUid = this.mrId.asObservable();
   drugList: any = [];
 
@@ -51,6 +53,9 @@ export class MedicalrecordService {
 
     this.mrId.next(uid);
 
+  }
+  setBacknav(back) {
+    this.back_type.next(back);
   }
   createMR(key, value) {
     if (key !== 'clinicalNotes') {

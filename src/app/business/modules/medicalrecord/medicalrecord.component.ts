@@ -44,6 +44,7 @@ export class MedicalrecordComponent implements OnInit {
   visitcount: any;
   selectedTab = 0;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  back_type: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -77,6 +78,9 @@ export class MedicalrecordComponent implements OnInit {
           if (qparams.booking_date) {
             this.visitdate = qparams.booking_date;
           }
+          if (qparams.back_type) {
+            this.medicalService.setBacknav(qparams.back_type);
+          }
 
           this.customerDetails = JSON.parse(qparams.customerDetail);
           this.PatientId = this.customerDetails.id;
@@ -86,6 +90,7 @@ export class MedicalrecordComponent implements OnInit {
           if (qparams.serviceName) {
             this.serviceName = qparams.serviceName;
           }
+       
           if (qparams.booking_type && qparams.booking_type === 'TOKEN' || 'APPT') {
             this.bookingType = qparams.booking_type;
             if (qparams.consultationMode) {
@@ -115,7 +120,9 @@ export class MedicalrecordComponent implements OnInit {
 
             this.customerDetails = JSON.parse(res.customerDetail);
             console.log(JSON.stringify(this.customerDetails));
+            if (res.booking_date) {
               this.visitdate = res.booking_date;
+            }
             this.PatientId = this.customerDetails.id;
             if (res.department) {
               this.department = res.department;
@@ -152,6 +159,9 @@ export class MedicalrecordComponent implements OnInit {
   // }
 
   ngOnInit() {
+    this.medicalService.back_nav.subscribe(res => {
+      this.back_type = res;
+   });
 
     this.mrDate = new Date();
     this.MrCreateddate = this.sharedfunctionObj.formatDateDisplay(this.mrDate);
@@ -219,5 +229,17 @@ export class MedicalrecordComponent implements OnInit {
         this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
       }
     });
+  }
+  goback() {
+    console.log(this.back_type);
+    if (this.back_type === 'waitlist') {
+      this.router.navigate(['provider', 'check-ins']);
+    } else if (this.back_type === 'appt') {
+      this.router.navigate(['provider', 'appointments']);
+    } else if (this.back_type === 'consumer') {
+      this.router.navigate(['provider', 'customers']);
+    } else {
+      this.router.navigate(['provider', 'customers']);
+    }
   }
 }

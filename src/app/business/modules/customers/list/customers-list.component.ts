@@ -336,7 +336,7 @@ export class CustomersListComponent implements OnInit {
     }
     medicalRecord(customerDetail) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 }
+            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 , back_type: 'consumer' }
         };
 
         this.shared_functions.removeitemfromLocalStorage('mrId');
@@ -344,7 +344,7 @@ export class CustomersListComponent implements OnInit {
     }
     prescription(customerDetail) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 }
+            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 ,  back_type: 'consumer' }
         };
 
         this.shared_functions.removeitemfromLocalStorage('mrId');

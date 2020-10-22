@@ -417,7 +417,8 @@ export class CheckinActionsComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': this.checkin.ynwUuid,
           'mr_mode': medicalrecord_mode,
-          'mrId': mrId
+          'mrId': mrId,
+          'back_type': 'waitlist'
         }
       };
 
@@ -444,7 +445,8 @@ export class CheckinActionsComponent implements OnInit {
           'consultationMode': 'OP',
           'mrId': mrId,
           'mr_mode': medicalrecord_mode,
-          'booking_id': this.checkin.ynwUuid
+          'booking_id': this.checkin.ynwUuid,
+          'back_type': 'waitlist'
         }
       };
       this.router.navigate(['provider', 'customers',  'medicalrecord', 'prescription'], navigationExtras);
