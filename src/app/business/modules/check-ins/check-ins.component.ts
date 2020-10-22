@@ -944,7 +944,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.activeQs = this.tempActiveQs = this.activeQs.concat(groupbyQs['DISABLED']);
       }
     }
-    this.getQsByProvider();
     if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('future_selQ')) {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('future_selQ');
     } else if (this.time_type === 1 && this.shared_functions.getitemFromGroupStorage('selQ')) {
@@ -964,6 +963,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
+    this.getQsByProvider();
     this.loadApiSwitch(source);
   }
   findCurrentActiveQueue(ques) {
@@ -1571,7 +1571,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve) => {
       this.provider_services.getWaitlistFutureCount(Mfilter)
         .subscribe(
           data => {
@@ -1579,7 +1579,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.future_waitlist_count = data;
           },
           () => {
-            reject();
           });
     });
   }
@@ -2660,18 +2659,24 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = [];
     } else {
       const qids = [];
-      // for (const id of this.selQIds) {
-      //   for (const q of this.activeQs) {
-      //     if (id === q.id) {
-      //       qids.push(id);
-      //     }
-      //   }
-      // }
       for (const q of this.activeQs) {
         qids.push(q.id);
       }
+      const selQids = [];
       if (qids.length > 0) {
-        this.selQIds = qids;
+        if (this.selQIds && this.selQIds.length > 0) {
+          for (const id of this.selQIds) {
+            const qArr = qids.filter(qid => qid === id);
+            if (qArr.length > 0) {
+              selQids.push(id);
+            }
+          }
+          if (selQids.length === 0) {
+            this.selQIds = qids;
+          }
+        } else {
+          this.selQIds = qids;
+        }
       } else {
         this.selQIds.push(this.activeQs[0].id);
       }
