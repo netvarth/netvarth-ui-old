@@ -35,7 +35,7 @@
                         <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-10" *ngIf="jdnType==='Label'; else elseBlock">
                             <label class="col-form-label">Label </label>
                             <input *ngIf="rewrite ==='edit' || status ==='Create'" matInput type="text"
-                                    [(ngModel)]="jdnlabeltext" class="form-control" id="jdnlabeltext" autocomplete="off"/>   
+                                    (ngModel)="jdnlabeltext" class="form-control" id="jdnlabeltext" autocomplete="off"/>   
                             <div *ngIf="rewrite !='edit'&& status !='Create'"
                                 class="col-md-12 col-xs-12 col-sm-12 no-padding">                                
                                 <div>{{jdnlabeltext}}</div>                                
@@ -58,7 +58,7 @@
                             </div>
                             <div *ngIf="rewrite ==='edit'|| status ==='Create'"
                                 class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
-                                <mat-radio-group (change)="radioChange($event)" [(ngModel)]="discType"
+                                <mat-radio-group (change)="radioChange($event)" (ngModel)="discType"
                                     [disabled]="status === 'DISABLED'">
                                     <mat-radio-button class="jdnpercent" [value]=option.percentage
                                         *ngFor="let option of jdnPercentage;"><div class="pull-left mgn-up-4">{{option.percentage}}%</div>
@@ -66,7 +66,7 @@
                                             <input class="jdn_ip" *ngIf="rewrite ==='edit' || status ==='Create'"
                                         [disabled]="status === 'DISABLED'" (keypress)="isNumeric($event)"
                                         (keyup)="isvalid($event)"
-                                        [(ngModel)]="jdnmaxDiscounttext" id="jdnmaxDiscounttext" maxlength="10"></div>
+                                        (ngModel)="jdnmaxDiscounttext" id="jdnmaxDiscounttext" maxlength="10"></div>
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>
@@ -77,7 +77,7 @@
                                 <input *ngIf="rewrite ==='edit' || status ==='Create'"
                                     [disabled]="status === 'DISABLED'" (keypress)="isNumeric($event)"
                                     (keyup)="isvalid($event)" matInput class="form-control"
-                                    [(ngModel)]="jdnmaxDiscounttext" id="jdnmaxDiscounttext">
+                                    (ngModel)="jdnmaxDiscounttext" id="jdnmaxDiscounttext">
                             </div> -->
                         </ng-template>
                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
@@ -86,7 +86,7 @@
                             <label class="col-form-label" *ngIf="rewrite ==='edit' || status ==='Create'">Note</label>
                             <div *ngIf="rewrite !='edit'&& status !='Create'">{{jdndisplayNote}}</div>
                             <textarea *ngIf="rewrite ==='edit' || status ==='Create'" [disabled]="status === 'DISABLED'"
-                                placeholder="Enter the message for your {{cust_label}}s" class="form-control" [(ngModel)]="jdndisplayNote"
+                                placeholder="Enter the message for your {{cust_label}}s" class="form-control" (ngModel)="jdndisplayNote"
                                 id="jdndisplayNote" maxlength="500">
                             </textarea>
                         </div>

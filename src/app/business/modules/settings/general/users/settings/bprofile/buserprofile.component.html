@@ -67,7 +67,7 @@
   <div class="ctrl">
   <div class="ct-l">
   <h2>Jaldee Online &nbsp;
-  <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
+  <mat-slide-toggle (ngModel)="jaldee_online_status" (change)="confirm_searchStatus();">
   </mat-slide-toggle> &nbsp;{{jaldee_online_status_str}}</h2>
   <div class="col-md-12 col-sm-12 col-xs-12 head-level-settings">
   <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in jaldee.com</span>

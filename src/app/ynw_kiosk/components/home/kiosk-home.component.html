@@ -52,12 +52,12 @@
         
                 <div class="form-group">
                     <span class="label">Enter Your <span>Mobile Number</span></span>
-                    <input type="text" #srchmobile id="srchmobilebox" class="form-control" [(ngModel)]="srch_mobile" autocomplete="off">
+                    <input type="text" #srchmobile id="srchmobilebox" class="form-control" (ngModel)="srch_mobile" autocomplete="off">
                 </div>
         
                 <div class="form-group">
                     <span class="label">Enter first 3 letters of your <span>First Name/Last Name</span></span>
-                    <input type="text" #srchname class="form-control" [(ngModel)]="srch_fname" autocomplete="off">
+                    <input type="text" #srchname class="form-control" (ngModel)="srch_fname" autocomplete="off">
                 </div>
         
                 <div class="form-group">
@@ -76,14 +76,14 @@
                     <div class="input-group-prepend mob-prefix">
                         <span class="input-group-text" id="">+91</span>
                     </div>
-                    <input type="text" class="form-control" id="regmobilebox" #regmobile [(ngModel)]="reg_mobile" autofocus placeholder="Enter New Mobile #"
+                    <input type="text" class="form-control" id="regmobilebox" #regmobile (ngModel)="reg_mobile" autofocus placeholder="Enter New Mobile #"
                         autocomplete="off" maxlength="10">
                 </div>
             </div>
 
             <div class="form-group">
                 <span class="label">{{enter_first_letters_name}} <span>{{first_last_name_cap}}</span></span>
-                <input type="text" #srchname class="form-control" [(ngModel)]="srch_fname" autocomplete="off">
+                <input type="text" #srchname class="form-control" (ngModel)="srch_fname" autocomplete="off">
             </div>
 
             <div class="form-group">
@@ -110,18 +110,18 @@
                     <div class="input-group-prepend mob-prefix">
                         <span class="input-group-text" id="">+91</span>
                     </div>
-                    <input type="text" class="form-control" #regmobile [(ngModel)]="reg_mobile" autofocus placeholder="Enter New Mobile #"
+                    <input type="text" class="form-control" #regmobile (ngModel)="reg_mobile" autofocus placeholder="Enter New Mobile #"
                         autocomplete="off" ngModel maxlength="10">
                 </div>
             </div>
             <div class="form-group">
                 <span class="label">{{enter_your}} <span>{{first_name_cap}}</span></span>
-                <input type="text" class="form-control" [(ngModel)]="reg_fname" #regfname autocomplete="off">
+                <input type="text" class="form-control" (ngModel)="reg_fname" #regfname autocomplete="off">
             </div>
 
             <div class="form-group">
                 <span class="label">{{enter_your}} <span>{{last_name_cap}}</span></span>
-                <input type="text" class="form-control" [(ngModel)]="reg_lname" #reglname autocomplete="off">
+                <input type="text" class="form-control" (ngModel)="reg_lname" #reglname autocomplete="off">
             </div>
 
             <div class="form-group">

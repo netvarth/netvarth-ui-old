@@ -18,6 +18,7 @@ import * as moment from 'moment';
     styleUrls: ['./appointment-actions.component.css']
 })
 export class AppointmentActionsComponent implements OnInit {
+    elementType = 'url';
     appt;
     provider_label = '';
     qr_value;

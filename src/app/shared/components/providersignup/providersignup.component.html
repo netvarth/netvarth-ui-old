@@ -206,7 +206,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input class="number-ip-sm" matInput placeholder="Enter OTP"
-                                                    [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
+                                                    (ngModel)="otp" [ngModelOptions]="{standalone: true}"
                                                     autocomplete="off" (keypress)="removSpecChar($event)" maxlength="5">
                                             </mat-form-field>
                                         </div>
@@ -239,7 +239,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                 <div class="ynw-common-form-nm otpemailsection">
                                     <div class="form-group">
                                         <mat-form-field>
-                                            <input type="email" matInput [(ngModel)]="email"
+                                            <input type="email" matInput (ngModel)="email"
                                                 [ngModelOptions]="{standalone: true}" placeholder="Enter your email id"
                                                 autocomplete="off" />
                                         </mat-form-field>
@@ -324,7 +324,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                                     <mat-form-field>
                                                         <input matInput placeholder="Sales Partner Id/ Phone"
                                                             type="text" class="form-control"
-                                                            (keypress)="handlekeyup($event)" [(ngModel)]="scCode_Ph"
+                                                            (keypress)="handlekeyup($event)" (ngModel)="scCode_Ph"
                                                             [ngModelOptions]="{standalone: true}">
                                                     </mat-form-field>
                                                 </div>

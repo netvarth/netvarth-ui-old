@@ -33,7 +33,7 @@
                 
                 <div class="form-group col-md-6 mgn-lt-20">
                   <mat-form-field>
-                    <input [(ngModel)]="customViewName" matInput type="text" class="form-control"
+                    <input (ngModel)="customViewName" matInput type="text" class="form-control"
                       placeholder="Custom view name *" autocomplete="off">
                   </mat-form-field>
                 </div>
@@ -44,7 +44,7 @@
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <div>
                     <mat-form-field>
-                      <mat-select placeholder="Custom View For" [(ngModel)]="customViewFor">
+                      <mat-select placeholder="Custom View For" (ngModel)="customViewFor">
                         <mat-option *ngIf="waitlist_status == true" [value]="'Waitlist'">
                           Check-in/Token
                         </mat-option>
@@ -61,7 +61,7 @@
                     Department</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
-                      <mat-select placeholder="Departments" [(ngModel)]="selectedDepartments" [multiple]="true">
+                      <mat-select placeholder="Departments" (ngModel)="selectedDepartments" [multiple]="true">
                         <ngx-mat-select-search [formControl]="deptMultiFilterCtrl" placeholderLabel="Search departments"
                           noEntriesFoundLabel="no matching department found"></ngx-mat-select-search>
                         <mat-option *ngFor=" let dept of departments" [value]="dept"
@@ -87,7 +87,7 @@
                     {{provider_label | capitalizeFirst}}s</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="filterUsersList.length > 0">
-                      <mat-select placeholder="{{provider_label | capitalizeFirst}}s" [(ngModel)]="selectedUsers" [multiple]="true">
+                      <mat-select placeholder="{{provider_label | capitalizeFirst}}s" (ngModel)="selectedUsers" [multiple]="true">
                         <ngx-mat-select-search [formControl]="userMultiFilterCtrl"
                           placeholderLabel="Search {{provider_label}}s"
                           noEntriesFoundLabel="no matching {{provider_label}} found">
@@ -118,7 +118,7 @@
                     Services</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="filterServiicesList.length > 0">
-                      <mat-select placeholder="Services" [(ngModel)]="selectedServices" [multiple]="true">
+                      <mat-select placeholder="Services" (ngModel)="selectedServices" [multiple]="true">
                         <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl" placeholderLabel="Search services"
                           noEntriesFoundLabel="no matching service found"></ngx-mat-select-search>
                         <mat-option *ngFor="let service of service_list" [value]="service"
@@ -147,7 +147,7 @@
                     Queues</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="queuestoDisplay.length > 0 && serviceQCount !== 0">
-                      <mat-select placeholder="Queues" [(ngModel)]="selectedQs" [multiple]="true">
+                      <mat-select placeholder="Queues" (ngModel)="selectedQs" [multiple]="true">
                         <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"
                           noEntriesFoundLabel="no matching queue found">
                         </ngx-mat-select-search>
@@ -179,7 +179,7 @@
                     Choose Schedules</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="schedulestoDisplay.length > 0 && serviceScheduleCount !== 0">
-                      <mat-select placeholder="Schedules" [(ngModel)]="selectedScheduls" [multiple]="true">
+                      <mat-select placeholder="Schedules" (ngModel)="selectedScheduls" [multiple]="true">
                         <ngx-mat-select-search [formControl]="scheduleMultiFilterCtrl"
                           placeholderLabel="Search schedules" noEntriesFoundLabel="no matching schedule found">
                         </ngx-mat-select-search>

@@ -88,7 +88,7 @@
                                                         {{selectedMessage[parentIndex].message.message}}</div>
                                                     <div class="input-group">
                                                         <input type="text" name="message" placeholder="Type Message ..."
-                                                            class="form-control" [(ngModel)]="messageToSend"
+                                                            class="form-control" (ngModel)="messageToSend"
                                                             [ngModelOptions]="{standalone: true}">
                                                         <span class="input-group-btn">
                                                             <button
@@ -143,7 +143,7 @@
                                                                 <div class="input-group">
                                                                     <input placeholder="Enter image caption" type="text"
                                                                         class="form-control"
-                                                                        [(ngModel)]="activeImageCaption[parentIndex][i]"
+                                                                        (ngModel)="activeImageCaption[parentIndex][i]"
                                                                         [ngModelOptions]="{standalone: true}">
                                                                     <span class="input-group-btn">
                                                                         <button

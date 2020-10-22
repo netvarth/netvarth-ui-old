@@ -197,7 +197,7 @@
               <mat-datepicker-toggle matSuffix [for]="picker">
               </mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
-              <input readonly matInput type="text" [(ngModel)]="filter.future_appt_date" [matDatepicker]="picker"
+              <input readonly matInput type="text" (ngModel)="filter.future_appt_date" [matDatepicker]="picker"
                 [min]="tomorrowDate" #futuredate (dateChange)="getFutureAppointments()">
             </button>
           </div>
@@ -210,7 +210,7 @@
                 <table class="table tbl-qboard" style="width: 100%;">
                   <thead id="childActionBar" class="childActionBar">
                     <tr>
-                      <th class="chkWth"><input style="margin-left: -3px; margin-top: 6px;" [(ngModel)]="selAllSlots"
+                      <th class="chkWth"><input style="margin-left: -3px; margin-top: 6px;" (ngModel)="selAllSlots"
                           type="checkbox" class="ckbx pull-left" (click)="selectAllSlots()" [checked]="selAllSlots" />
                       </th>
                       <th colspan="3">
@@ -332,25 +332,25 @@
                                 <div class="filterTextinput">
                                   <li class="filterli">
                                     <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                      class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                                      class="filterTextbox" (ngModel)="filter.first_name" placeholder="First Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput">
                                   <li class="filterli">
                                     <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                      class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                                      class="filterTextbox" (ngModel)="filter.last_name" placeholder="Last Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
+                                    <input type="text" id="txt_mobile" (ngModel)="filter.phone_number" #Fmobile
                                       (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
                                       maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                   </li>
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type != 3">
                                   <li class="filterli">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
+                                    <input type="text" id="txt_mobile" (ngModel)="filter.appointmentEncId"
                                       (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox"
                                       placeholder="Confirmation No">
                                   </li>
@@ -465,7 +465,7 @@
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli filterDatepicker">
-                                    <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday"
+                                    <input type="text" (ngModel)="filter.check_in_start_date" [min]="minday"
                                       [max]="maxday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
                                       (blur)="doSearch()" class="filterTextbox" placeholder="Start Date">
                                     <mat-datepicker-toggle matSuffix [for]="picker">
@@ -475,7 +475,7 @@
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli filterDatepicker">
-                                    <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="minday"
+                                    <input type="text" (ngModel)="filter.check_in_end_date" [min]="minday"
                                       [max]="maxday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
                                       (blur)="doSearch()" class="filterTextbox" placeholder="End Date">
                                     <mat-datepicker-toggle matSuffix [for]="picker">
@@ -504,7 +504,7 @@
                   <tbody *ngFor="let slot of availableSlotDetails.availableSlots, let slotIndex=index">
                     <tr class="parentRow" [ngClass]="{greenb: timeSlotAppts[slot.time]?true:false}">
                       <td class="chkWth">
-                        <input [(ngModel)]="chkSlotInput[slotIndex]" [checked]="this.slotsChecked[slotIndex]"
+                        <input (ngModel)="chkSlotInput[slotIndex]" [checked]="this.slotsChecked[slotIndex]"
                           type="checkbox" class="ckbx pull-left" [disabled]="!timeSlotAppts[slot.time]"
                           (change)="slotCheckSelected(slotIndex, slot)" />
                       </td>
@@ -727,7 +727,7 @@
                       <th class="chkWth">
                         <input *ngIf="check_in_filtered_list.length != 0" type="checkbox" class="ckbx pull-left"
                           [checked]="chkSelectAppointments" (change)="selectAllAppoinments()"
-                          [(ngModel)]="chkSelectAppointments" />
+                          (ngModel)="chkSelectAppointments" />
                       </th>
                       <th colspan="4" class="childActionBar" style="padding-left: 5px;">
                         <div class="pull-left">
@@ -853,25 +853,25 @@
                                 <div class="filterTextinput">
                                   <li class="filterli">
                                     <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                      class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                                      class="filterTextbox" (ngModel)="filter.first_name" placeholder="First Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput">
                                   <li class="filterli">
                                     <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                      class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                                      class="filterTextbox" (ngModel)="filter.last_name" placeholder="Last Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
+                                    <input type="text" id="txt_mobile" (ngModel)="filter.phone_number" #Fmobile
                                       (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
                                       maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                   </li>
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type != 3">
                                   <li class="filterli">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
+                                    <input type="text" id="txt_mobile" (ngModel)="filter.appointmentEncId"
                                       (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox"
                                       placeholder="Confirmation No">
                                   </li>
@@ -1068,7 +1068,7 @@
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli filterDatepicker">
-                                    <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday"
+                                    <input type="text" (ngModel)="filter.check_in_start_date" [min]="minday"
                                       [max]="maxday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
                                       (blur)="doSearch()" class="filterTextbox" placeholder="Start Date" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="picker">
@@ -1078,7 +1078,7 @@
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli filterDatepicker">
-                                    <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="minday"
+                                    <input type="text" (ngModel)="filter.check_in_end_date" [min]="minday"
                                       [max]="maxday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
                                       (blur)="doSearch()" class="filterTextbox" placeholder="End Date" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="picker">
@@ -1088,7 +1088,7 @@
                                 </div>
                                 <!-- <div class="filterTextinput" *ngIf="time_type !== 1">
                                   <li class="filterli filterDatepicker">
-                                    <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                                    <input type="text" id="txt_email" (ngModel)="filter.email" #Femail (blur)="doSearch()"
                                       (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
                                   </li>
                                 </div> -->
@@ -1302,7 +1302,7 @@
               </div>
               <div class="clearfix"></div>
               <div class="dashqr" *ngIf="showQR">
-                <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
+                <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
                 </ngx-qrcode>
               </div>
               <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>

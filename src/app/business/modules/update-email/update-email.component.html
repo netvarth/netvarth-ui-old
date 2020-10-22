@@ -16,7 +16,7 @@
   </div>
     <div class="col-md-12 col-sm-12 col-xs-12 icon-invoice-td bg-whitesmoke">
         <div class="mgn-rt-30 mgn-lt-30">
-            <input type="text" class="form-control" (keyup)="resetError()" placeholder="Enter your email here..." [(ngModel)]="email"
+            <input type="text" class="form-control" (keyup)="resetError()" placeholder="Enter your email here..." (ngModel)="email"
                 autocomplete="off">
         </div>
         <div class="mgn-bt-20 txt-align-center">

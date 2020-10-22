@@ -63,14 +63,14 @@
                                       <div>
                                           <label class="filterHeaders">Filter By Date</label>
                                               <li class="filterli filterDatepicker">
-                                                  <input class="filterTextbox" type="text" [(ngModel)]="filter.from_date" [min]="minday" [matDatepicker]="picker1"
+                                                  <input class="filterTextbox" type="text" (ngModel)="filter.from_date" [min]="minday" [matDatepicker]="picker1"
                                                   #Fdate (dateChange)="doSearch()" (blur)="doSearch()" placeholder="From Date">
                                                   <mat-datepicker-toggle matSuffix [for]="picker1">
                                                   </mat-datepicker-toggle>
                                                   <mat-datepicker #picker1></mat-datepicker>
                                               </li>
                                               <li class="filterli filterDatepicker">
-                                                  <input class="filterTextbox" type="text" [(ngModel)]="filter.to_date" [min]="minday" [matDatepicker]="picker2" #Tdate
+                                                  <input class="filterTextbox" type="text" (ngModel)="filter.to_date" [min]="minday" [matDatepicker]="picker2" #Tdate
                                                   (dateChange)="doSearch()" (blur)="doSearch()" placeholder="To Date">
                                                   <mat-datepicker-toggle matSuffix [for]="picker2">
                                                   </mat-datepicker-toggle>
@@ -100,7 +100,7 @@
                         <!-- <a [class.button_filter]="filters['from_date']" (click)="filterClicked('from_date')"
                           class="anchorbutton remMarginRight genMarginLeft" name="from_date"
                           id="btn_date_filter_id"><span>{{date_from_cap}}</span></a>
-                        <input type="text" [(ngModel)]="filter.from_date" [min]="minday" [matDatepicker]="picker1"
+                        <input type="text" (ngModel)="filter.from_date" [min]="minday" [matDatepicker]="picker1"
                           #Fdate (dateChange)="doSearch()" class="genTextHeight" [hidden]="!filters['from_date']"
                           (blur)="doSearch()">
                         <mat-datepicker-toggle matSuffix [for]="picker1" [hidden]="!filters['from_date']">
@@ -110,7 +110,7 @@
                         <a [class.button_filter]="filters['to_date']" (click)="filterClicked('to_date')"
                           class="anchorbutton remMarginRight genMarginLeft" name="to_date"
                           id="btn_date_filter_id"><span>{{date_to_cap}}</span></a>
-                        <input type="text" [(ngModel)]="filter.to_date" [min]="minday" [matDatepicker]="picker2" #Tdate
+                        <input type="text" (ngModel)="filter.to_date" [min]="minday" [matDatepicker]="picker2" #Tdate
                           (dateChange)="doSearch()" class="genTextHeight" [hidden]="!filters['to_date']"
                           (blur)="doSearch()">
                         <mat-datepicker-toggle matSuffix [for]="picker2" [hidden]="!filters['to_date']">

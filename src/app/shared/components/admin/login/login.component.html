@@ -33,12 +33,12 @@ onSubmit(loginForm.value)">
                     alt="">
                 <h1 class="text-center login-subtitle">Sign in to start your session</h1>
                 <form class="form-signin" #f="ngForm" (ngSubmit)="login(f)">
-                    <input type="text" disabled class="form-control" name="loginId" placeholder="Email" [(ngModel)]="loginId"
+                    <input type="text" disabled class="form-control" name="loginId" placeholder="Email" (ngModel)="loginId"
                         >
                     <input type="text" disabled class="form-control" name="accountId" placeholder="Account Id"
-                        [(ngModel)]="accountId">
+                        (ngModel)="accountId">
                     <input type="password"  class="form-control" placeholder="Enter your password" name="password"
-                        [(ngModel)]="password" required>
+                        (ngModel)="password" required>
                     <button class="btn btn-md btn-primary btn-block" type="submit">
                         Sign in</button>
                 </form>

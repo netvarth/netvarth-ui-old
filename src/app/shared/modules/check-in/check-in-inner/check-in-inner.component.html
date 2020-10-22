@@ -75,7 +75,7 @@
                         <label *ngIf="!edit">
                             <input type="text" maxlength="10"
                                 style="width: 85px; border-bottom: 1px solid; font-size:.75rem"
-                                placeholder="Contact number" class=" emailPrepay" [(ngModel)]="selected_phone" />
+                                placeholder="Contact number" class=" emailPrepay" (ngModel)="selected_phone" />
                             <span (click)="addPhone()" style="color: #00aef2; padding-left:5px">Ok</span>
                             <app-field-error-display [displayError]="true" *ngIf="phoneerror != null"
                                 errorMsg={{phoneerror}}>
@@ -176,7 +176,7 @@
                         <div class="form-group party-size">
                             <label class="col-form-label">{{enter_party_size_cap}}</label>
                             <input class="partysize-input" type="text" matInput #partysize
-                                [(ngModel)]="enterd_partySize" (focus)="clearerrorParty()"
+                                (ngModel)="enterd_partySize" (focus)="clearerrorParty()"
                                 (blur)="checkPartySize(partysize.value)" maxlength="5" />
                             <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
                         </div>
@@ -254,7 +254,7 @@
                             <ng-container>
                                 <div class="form-group">
                                     <input style="border-bottom: 1px solid" class="form-control emailPrepay" id="email"
-                                        placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail" autocomplete="off"
+                                        placeholder="Email(user@xyz.com)" (ngModel)="payEmail" autocomplete="off"
                                         (keyup)="showConfrmEmail($event)" onpaste="return false;" oncopy="return false"
                                         oncut="return false" ondrag="return false" ondrop="return false">
                                     <app-field-error-display [displayError]="true" *ngIf="emailerror != null"
@@ -264,7 +264,7 @@
                                 <div class="form-group" *ngIf="confrmshow">
                                     <!-- <mat-form-field> -->
                                     <input style="border-bottom: 1px solid" class="form-control emailPrepay" id="email1"
-                                        placeholder="Re-enter Email(user@xyz.com)" [(ngModel)]="payEmail1"
+                                        placeholder="Re-enter Email(user@xyz.com)" (ngModel)="payEmail1"
                                         autocomplete="off" onpaste="return false;" oncopy="return false"
                                         oncut="return false" ondrag="return false" ondrop="return false">
                                     <!-- </mat-form-field> -->
@@ -285,7 +285,7 @@
                     </div>
                     <div class="prepay-gateway-outer" *ngIf="paymentModes.length > 0">
                     <div class='prepay-head'>Select Payment Mode</div>
-                    <mat-radio-group [(ngModel)]="paytype">
+                    <mat-radio-group (ngModel)="paytype">
                     <mat-radio-button value="paytm" *ngFor="let paym of paymentModes" [value]="paym.name">{{paym.Displayname}}</mat-radio-button>
                     </mat-radio-group>
                     </div> -->
@@ -304,7 +304,7 @@
                                 <div class="input-group">
                                     <input [ngClass]="{'invalid':!couponvalid}" (keydown)="clearCouponErrors()"
                                         placeholder="Enter coupon code" type="text" class="form-control"
-                                        [(ngModel)]="selected_coupon">
+                                        (ngModel)="selected_coupon">
                                     <span class="input-group-btn">
                                         <button class="btn bt3 btn-default coupon-apply-btn"
                                             (click)="applyCoupons(selected_coupon)" type="button">Add</button>
@@ -466,16 +466,16 @@
                     <div class="" *ngIf="">From your current location you are {{"!"}} away and it takes around {{"3"}}. </div> -->
             <div *ngIf="tracking" class="mgn-up-20">Allow {{activeWt.providerAccount.businessName}} to track your
                 <p class="bold">Estimated Time of Arrival <span class="mgn-lt-30">
-                        <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)>
+                        <mat-slide-toggle (ngModel)="shareLoc" (change)=locationEnableDisable($event)>
                         </mat-slide-toggle>
                     </span></p>
                 <!-- <span >
-                        <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
+                        <mat-slide-toggle (ngModel)="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
                     </span> -->
             </div>
             <div  class="mgn-up-20" *ngIf="shareLoc && tracking">Automatically track your ETA
                 <span class="mgn-lt-10">
-                    <mat-slide-toggle [(ngModel)]="notifyAutomatic" (change)=notifyEvent($event)></mat-slide-toggle>
+                    <mat-slide-toggle (ngModel)="notifyAutomatic" (change)=notifyEvent($event)></mat-slide-toggle>
                 </span>
                 <div><span class="info-lst form-level-settings" *ngIf="notifyAutomatic">In "Automatic tracking" Jaldee
                         will start tracking 1 hour prior to your turn. </span></div>

@@ -9,7 +9,7 @@
             <div class="book-head ynw-common-form-nm" *ngIf="type!='wl' && type!='appt'">
               <div class="col-md-8 col-xs-8 col-sm-8">
                 <mat-form-field>
-                  <input matInput placeholder='Enter Confirmation id' class="form-control" [(ngModel)]="encId"
+                  <input matInput placeholder='Enter Confirmation id' class="form-control" (ngModel)="encId"
                     autocomplete="off">
                 </mat-form-field>
               </div>

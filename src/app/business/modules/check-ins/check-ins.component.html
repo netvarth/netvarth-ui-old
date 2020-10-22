@@ -184,18 +184,18 @@
                       <div class="filterTextinput">
                         <li class="filterli">
                           <input type="text" #Ffname (keyup)="keyPressed($event)" class="filterTextbox"
-                            [(ngModel)]="filter.first_name" placeholder="First Name" (blur)="doSearch()">
+                            (ngModel)="filter.first_name" placeholder="First Name" (blur)="doSearch()">
                         </li>
                       </div>
                       <div class="filterTextinput">
                         <li class="filterli">
                           <input type="text" #Flname (keyup)="keyPressed($event)" class="filterTextbox"
-                            [(ngModel)]="filter.last_name" placeholder="Last Name" (blur)="doSearch()">
+                            (ngModel)="filter.last_name" placeholder="Last Name" (blur)="doSearch()">
                         </li>
                       </div>
                       <div class="filterTextinput">
                         <li class="filterli">
-                          <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId" (blur)="doSearch()"
+                          <input type="text" id="txt_mobile" (ngModel)="filter.checkinEncId" (blur)="doSearch()"
                             (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
                         </li>
                       </div>
@@ -296,7 +296,7 @@
                     <tr>
                       <th class="chkWth check-table-head" *ngIf="startedCheckins.length > 1" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkStartedSelectAppointments"
-                          (change)="selectAllStarted()" [(ngModel)]="chkStartedSelectAppointments" />
+                          (change)="selectAllStarted()" (ngModel)="chkStartedSelectAppointments" />
                         <label class="selectall"> Select all</label>
                         <a *ngIf="apptStartedMultiSelection" class="statusText btn-play pointer-cursor act-btn"
                           (click)="showCheckinActions('started')" [matTooltipClass]="tooltipcls"
@@ -482,7 +482,7 @@
                     <tr>
                       <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
-                          (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments" />
+                          (change)="selectAllAppoinments()" (ngModel)="chkSelectAppointments" />
                         <label class="selectall"> Select all</label>
                         <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
                           (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
@@ -687,18 +687,18 @@
                         <div class="filterTextinput">
                           <li class="filterli">
                             <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                              class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                              class="filterTextbox" (ngModel)="filter.first_name" placeholder="First Name">
                           </li>
                         </div>
                         <div class="filterTextinput">
                           <li class="filterli">
                             <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                              class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                              class="filterTextbox" (ngModel)="filter.last_name" placeholder="Last Name">
                           </li>
                         </div>
                         <div class="filterTextinput">
                           <li class="filterli">
-                            <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId" (blur)="doSearch()"
+                            <input type="text" id="txt_mobile" (ngModel)="filter.checkinEncId" (blur)="doSearch()"
                               (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
                           </li>
                         </div>
@@ -785,7 +785,7 @@
                   <tr>
                     <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
-                        (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments" />
+                        (change)="selectAllAppoinments()" (ngModel)="chkSelectAppointments" />
                       <label class="selectall"> Select all</label>
                       <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
                         (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
@@ -976,18 +976,18 @@
                         <div class="filterTextinput">
                           <li class="filterli">
                             <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                              class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                              class="filterTextbox" (ngModel)="filter.first_name" placeholder="First Name">
                           </li>
                         </div>
                         <div class="filterTextinput">
                           <li class="filterli">
                             <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                              class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                              class="filterTextbox" (ngModel)="filter.last_name" placeholder="Last Name">
                           </li>
                         </div>
                         <div class="filterTextinput" *ngIf="time_type == 3">
                           <li class="filterli">
-                            <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
+                            <input type="text" id="txt_mobile" (ngModel)="filter.phone_number" #Fmobile
                               (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
                               maxlength="10" class="filterTextbox" placeholder="Phone Number">
                           </li>
@@ -1109,7 +1109,7 @@
                         </div>
                         <div class="filterTextinput" *ngIf="time_type == 3">
                           <li class="filterli filterDatepicker">
-                            <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday" [max]="maxday"
+                            <input type="text" (ngModel)="filter.check_in_start_date" [min]="minday" [max]="maxday"
                               [matDatepicker]="picker" #Fdate (dateChange)="doSearch('start')" (blur)="doSearch()"
                               class="filterTextbox" placeholder="Start Date">
                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -1119,7 +1119,7 @@
                         </div>
                         <div class="filterTextinput" *ngIf="time_type == 3">
                           <li class="filterli filterDatepicker">
-                            <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="endminday" [max]="maxday"
+                            <input type="text" (ngModel)="filter.check_in_end_date" [min]="endminday" [max]="maxday"
                               [matDatepicker]="picker" #Fdate (dateChange)="doSearch()" (blur)="doSearch()"
                               class="filterTextbox" placeholder="End Date">
                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -1129,7 +1129,7 @@
                         </div>
                         <!-- <div class="filterTextinput" *ngIf="time_type !== 1">
                           <li class="filterli filterDatepicker">
-                            <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                            <input type="text" id="txt_email" (ngModel)="filter.email" #Femail (blur)="doSearch()"
                               (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
                           </li>
                         </div> -->
@@ -1143,7 +1143,7 @@
                   <tr>
                     <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
-                        (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments" />
+                        (change)="selectAllAppoinments()" (ngModel)="chkSelectAppointments" />
                       <label class="selectall"> Select all</label>
                       <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
                         (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"

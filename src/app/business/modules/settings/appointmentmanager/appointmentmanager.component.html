@@ -22,7 +22,7 @@
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Accept Appointments
-                            <mat-slide-toggle [(ngModel)]="createappointment_status"
+                            <mat-slide-toggle (ngModel)="createappointment_status"
                                 (change)="handle_appointmentPresence($event)">
                             </mat-slide-toggle> &nbsp;{{createappointment_statusstr}} -->
             <!-- <div class="onoff">{{createappointment_statusstr}}</div> -->
@@ -38,7 +38,7 @@
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Same Day Online Appointments
-                            <mat-slide-toggle [(ngModel)]="apptlist_status"
+                            <mat-slide-toggle (ngModel)="apptlist_status"
                                 (change)="handle_apptliststatus($event)">
                             </mat-slide-toggle>&nbsp;{{apptlist_statusstr}} -->
             <!-- <div class="onoff">{{apptlist_statusstr}}</div> -->
@@ -54,7 +54,7 @@
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Future Appointments
-                            <mat-slide-toggle [(ngModel)]="futureDateApptlist"
+                            <mat-slide-toggle (ngModel)="futureDateApptlist"
                                 (change)="handle_futureapptliststatus($event)">
                             </mat-slide-toggle>&nbsp;{{futureapptlist_statusstr}} -->
             <!-- <div class="onoff">{{futureapptlist_statusstr}}</div> -->
@@ -69,7 +69,7 @@
                 <div class="card pos">
                     <div style="margin-bottom: 10px">
                         <h4>Appointment Manager
-                            <mat-slide-toggle [(ngModel)]="createappointment_status"
+                            <mat-slide-toggle (ngModel)="createappointment_status"
                                 (change)="handle_appointmentPresence($event)">
                             </mat-slide-toggle> &nbsp;{{createappointment_statusstr}}
                         </h4>
@@ -79,13 +79,13 @@
                         <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Online appointments
                         </div>
                         <div>
-                            <mat-checkbox [checked]="apptlist_status" [(ngModel)]="apptlist_status"
+                            <mat-checkbox [checked]="apptlist_status" (ngModel)="apptlist_status"
                                 (change)="handle_apptliststatus($event)">
                                 Allow online appointments for today
                             </mat-checkbox>
                         </div>
                         <div>
-                            <mat-checkbox [checked]="futureDateApptlist" [(ngModel)]="futureDateApptlist"
+                            <mat-checkbox [checked]="futureDateApptlist" (ngModel)="futureDateApptlist"
                                 (change)="handle_futureapptliststatus($event)">
                                 Allow online appointments for future
                             </mat-checkbox>

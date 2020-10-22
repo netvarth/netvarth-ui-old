@@ -3,7 +3,7 @@
         <div class="col-md-9 col-xs-10 col-sm-10">
             <mat-form-field>
                 <input matInput placeholder="Sales Partner Id/ Phone" type="text" class="form-control" (keypress)="handlekeyup($event)"
-                    [(ngModel)]="scCode_Ph" (blur)="blurSC()" [ngModelOptions]="{standalone: true}">
+                    (ngModel)="scCode_Ph" (blur)="blurSC()" [ngModelOptions]="{standalone: true}">
             </mat-form-field>
         </div>
         <div class="col-md-3 col-xs-2 col-sm-2">

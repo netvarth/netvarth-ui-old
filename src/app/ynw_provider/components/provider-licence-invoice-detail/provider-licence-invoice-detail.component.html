@@ -301,7 +301,7 @@
     <!-- <div class="payment-option" *ngIf="payment_status === 'NotPaid' && source != 'payment-history'"> 
           <h4>Payment Options</h4>
           <div>
-            <mat-radio-group [(ngModel)]="pay_data.paymentMode">
+            <mat-radio-group (ngModel)="pay_data.paymentMode">
               <mat-radio-button [value]="opt.name"
               *ngFor="let opt of payment_modes">{{opt.Displayname}}
               </mat-radio-button>

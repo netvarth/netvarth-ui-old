@@ -4,26 +4,26 @@
     <div class="form-group col-md-12" *ngIf="source === 'newlabel'">
         <mat-form-field>
             <input matInput type="text" class="form-control" id="displayName" placeholder="Label"
-                [(ngModel)]="labelname" autocomplete="off">
+                (ngModel)="labelname" autocomplete="off">
             <app-field-error-display [displayError]="true" *ngIf="api_error['label']" errorMsg="{{api_error['label']}}">
             </app-field-error-display>
         </mat-form-field>
     </div>
     <!-- <div class="form-group col-md-12">
 <mat-form-field>
-    <input matInput type="text" maxlength="50" class="form-control" id="value" (keyup)="resetApiErrors()" [(ngModel)]="value"
+    <input matInput type="text" maxlength="50" class="form-control" id="value" (keyup)="resetApiErrors()" (ngModel)="value"
         placeholder="Enter  Value*" autocomplete="off" (keyup)="valueKeyup($event)">
     <app-field-error-display [displayError]="true" *ngIf="api_error['value']" errorMsg="{{api_error['value']}}">
     </app-field-error-display>
 </mat-form-field>
 </div> -->
-    <!-- <mat-checkbox [(ngModel)]="defaultShortValue" (change)="settingDeafultValue($event)" [disabled]="exceedLimit">Set same
+    <!-- <mat-checkbox (ngModel)="defaultShortValue" (change)="settingDeafultValue($event)" [disabled]="exceedLimit">Set same
 as short value
 </mat-checkbox> -->
     <!-- <div class="form-group col-md-12" *ngIf="!defaultShortValue">
 <mat-form-field>
     <input matInput (keyup)="resetApiErrors()" type="text" class="form-control" id="value"
-        [(ngModel)]="short_value" placeholder="Enter short Value*" autocomplete="off">
+        (ngModel)="short_value" placeholder="Enter short Value*" autocomplete="off">
     <app-field-error-display [displayError]="true" *ngIf="api_error['short']" errorMsg="{{api_error['short']}}">
     </app-field-error-display>
 </mat-form-field>

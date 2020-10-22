@@ -145,7 +145,7 @@
 </div>
 </div>
 <div class="dashqr" *ngIf="showQR">
-    <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value" style="width: 10px;">
+    <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value" style="width: 10px;">
     </ngx-qrcode>
 </div>
 <!-- <div *ngIf="action === 'label'">

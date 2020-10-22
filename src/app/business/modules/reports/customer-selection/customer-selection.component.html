@@ -16,7 +16,7 @@
 
       <div class="box " style="height: 150px;">
              <div class="col-md-12 mgn-up-10 ">
-              <textarea class="form-control" [placeholder]=placeHolder_msg [(ngModel)]="customerList"></textarea>
+              <textarea class="form-control" [placeholder]=placeHolder_msg (ngModel)="customerList"></textarea>
             </div>
             <div class="text-center  m20 ">
                 <button type="button" class="btn btn-lg default profile-back mgn-up-20"  (click)="passCustomersToReports();"> Select </button>

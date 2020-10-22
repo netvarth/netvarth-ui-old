@@ -74,7 +74,7 @@
             <ul class="sidebar-menu">
               <div class="filterTextinput">
                   <li class="filterli" *ngFor="let location of locations;let i = index" [(value)]="i">
-                    <a class="pointer-cursor" (click)="getDonationsList('true',location)">
+                    <a class="pointer-cursor" (click)="getDonationsList(true ,location)">
                       <span class="donate-loc" [ngClass]="{'donate-sel-loc': (selected_loc_id === location.id)}" *ngIf="location.place.length>='27'">
                         {{ location.place.substring(0,24) | capitalizeFirst }}...</span>
                       <span class="donate-loc" [ngClass]="{'donate-sel-loc': (selected_loc_id === location.id)}" *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</span>
@@ -96,13 +96,14 @@
             <ul class="sidebar-menu">
               <div class="filterTextinput">
                 <li class="filterli">
-                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
-                    class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="Name">
+                  <!-- (keyup)="focusInput($event,Fmobile)" -->
+                  <input type="text" #Ffname (blur)="doSearch()" 
+                    class="filterTextbox" (ngModel)="filter.first_name" placeholder="Name">
                 </li>
               </div>
               <div class="filterTextinput">
                 <li class="filterli filterDatepicker">
-                  <input type="text" [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
+                  <input type="text" (ngModel)="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
                     (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date">
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
@@ -142,14 +143,14 @@
             </div>
               <!-- <div class="filterTextinput">
                 <li class="filterli">
-                  <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
+                  <input type="text" id="txt_mobile" (ngModel)="filter.mobile" #Fmobile (blur)="doSearch()"
                     (keyup)="focusInput($event, Femail)" maxlength="10" class="filterTextbox"
                     placeholder="Phone Number">
                 </li>
               </div>
               <div class="filterTextinput">
                 <li class="filterli filterDatepicker">
-                  <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                  <input type="text" id="txt_email" (ngModel)="filter.email" #Femail (blur)="doSearch()"
                     (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
                 </li>
               </div> -->

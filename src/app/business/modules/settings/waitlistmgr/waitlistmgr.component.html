@@ -24,7 +24,7 @@
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Accept Check-Ins
-                            <mat-slide-toggle [(ngModel)]="waitlist_status"
+                            <mat-slide-toggle (ngModel)="waitlist_status"
                                 (change)="handleCheckinPresence($event)">
                             </mat-slide-toggle> &nbsp;{{waitlist_statusstr}} -->
             <!-- <div class="onoff">{{createappointment_statusstr}}</div> -->
@@ -40,7 +40,7 @@
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Same Day Online Check-Ins
-                            <mat-slide-toggle [(ngModel)]="online_checkin"
+                            <mat-slide-toggle (ngModel)="online_checkin"
                                 (change)="handle_waitliststatus($event)">
                             </mat-slide-toggle>&nbsp;{{todaycheckin_statusstr}}
                             <div class="form-level-settings">Set up same day check-ins here<a class="learnmore-pointer"
@@ -54,7 +54,7 @@
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Same Day Online Future Check-Ins
-                            <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
+                            <mat-slide-toggle (ngModel)="futureDateWaitlist"
                                 (change)="handleFuturewaitlist($event)">
                             </mat-slide-toggle>&nbsp;{{futurecheckin_statusstr}}                            
                             <div class="form-level-settings">Set up future checked here<a class="learnmore-pointer"
@@ -99,7 +99,7 @@
             <!-- <div class="row"> -->
             <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12">
                                 <label>Accept Check-Ins &nbsp;&nbsp;
-                                    <mat-slide-toggle [(ngModel)]="waitlist_status"
+                                    <mat-slide-toggle (ngModel)="waitlist_status"
                                         (change)="handleCheckinPresence($event)">
                                     </mat-slide-toggle>&nbsp;{{waitlist_statusstr}}
                                 </label>
@@ -112,10 +112,10 @@
                             </div> -->
             <!-- <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12"
                                 style="margin-left: 10px; display: grid">
-                                <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
+                                <mat-checkbox [checked]="online_checkin" (ngModel)="online_checkin"
                                     (change)="handle_waitliststatus($event)">Same Day
                                 </mat-checkbox>
-                                <mat-checkbox [checked]="futureDateWaitlist" [(ngModel)]="futureDateWaitlist"
+                                <mat-checkbox [checked]="futureDateWaitlist" (ngModel)="futureDateWaitlist"
                                     (change)="handleFuturewaitlist($event)">Future
                                 </mat-checkbox>
                                 Walk-in Check-Ins always enabled
@@ -130,7 +130,7 @@
                 <div class="card pos wtmgr">
                     <div style="margin-bottom: 10px">
                         <h4>QManager
-                            <mat-slide-toggle [(ngModel)]="waitlist_status" (change)="handleCheckinPresence($event)">
+                            <mat-slide-toggle (ngModel)="waitlist_status" (change)="handleCheckinPresence($event)">
                             </mat-slide-toggle> &nbsp;{{waitlist_statusstr}}
                         </h4>
                         <span class="form-level-settings">
@@ -141,7 +141,7 @@
                         system</div> -->
                     <div class="mgn-bt-30" *ngIf="domain !=='healthCare'">
                         <div class="mgn-bt-10" style="font-weight: 600"> Choose your Queue system </div>
-                        <mat-radio-group [(ngModel)]="qSystem">
+                        <mat-radio-group (ngModel)="qSystem">
                             <mat-radio-button class="mgn-rt-10" [value]="'token'"
                                 (change)="handleModeSelection('token')">Token system
                             </mat-radio-button>
@@ -166,7 +166,7 @@
                                 </div>
                                 <div class="mgn-lt-20">
                                     <div class="mgn-bt-10"> Calculate estimated waiting time based on</div>
-                                    <mat-radio-group [(ngModel)]="calcMode">
+                                    <mat-radio-group (ngModel)="calcMode">
                                         <mat-radio-button
                                             class="mgn-lt-5 col-xs-12 col-sm-12 col-md-12 no-padding mgn-bt-5"
                                             [value]="'conventional'" (change)="fixedModeChanged('conventional')">
@@ -181,7 +181,7 @@
                                         </mat-radio-button>
                                         <span *ngIf="isManualMode"><input type="number" min="0" max="999" maxlength="3"
                                                 class="number-ip-sm mgn-lt-5" (keyup)="inputChange()"
-                                                [(ngModel)]="trnArndTime" (change)="inputChange()">
+                                                (ngModel)="trnArndTime" (change)="inputChange()">
                                             <span class='mins mgn-lt-5'>Minutes</span>
                                             <span class="jd_btn_spn mgn-lt-5" *ngIf="is_data_chnge===1"><button
                                                     type="button" (click)="cancelChange()"
@@ -228,13 +228,13 @@
                                     class="fa fa-info-circle" style="font-size: 1rem;"></i>
                             </div>
                             <div>
-                                <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
+                                <mat-checkbox [checked]="online_checkin" (ngModel)="online_checkin"
                                     (change)="handle_waitliststatus($event)">
                                     Allow online check-in for today
                                 </mat-checkbox>
                             </div>
                             <div>
-                                <mat-checkbox [checked]="futureDateWaitlist" [(ngModel)]="futureDateWaitlist"
+                                <mat-checkbox [checked]="futureDateWaitlist" (ngModel)="futureDateWaitlist"
                                     (change)="handleFuturewaitlist($event)">
                                     Allow online check-in for future
                                 </mat-checkbox>
@@ -290,13 +290,13 @@
                                 <i [matTooltip]="'Your ' + customer_label + 's can get tokens using Jaldee App, Jaldee.com, by scanning Jaldee QR code or clicking Jaldee link that you shared with your' + customer_label +'s'"
                                     class="fa fa-info-circle" style="font-size: 1rem;"></i> </div>
                             <div>
-                                <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
+                                <mat-checkbox [checked]="online_checkin" (ngModel)="online_checkin"
                                     (change)="handle_waitliststatus($event)">
                                     Issue tokens for today
                                 </mat-checkbox>
                             </div>
                             <div>
-                                <mat-checkbox [checked]="futureDateWaitlist" [(ngModel)]="futureDateWaitlist"
+                                <mat-checkbox [checked]="futureDateWaitlist" (ngModel)="futureDateWaitlist"
                                     (change)="handleFuturewaitlist($event)">
                                     Issue tokens for future
                                 </mat-checkbox>

@@ -26,6 +26,7 @@ import { VoicecallDetailsSendComponent } from './voicecall-details-send/voicecal
   templateUrl: './appointments.component.html'
 })
 export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
+  elementType = 'url';
   today_cap = Messages.TODAY_HOME_CAP;
   future_cap = Messages.FUTURE_HOME_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;

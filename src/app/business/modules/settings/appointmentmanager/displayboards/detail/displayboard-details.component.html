@@ -37,14 +37,14 @@
                                     <div class="form-group col-md-6">
                                         <mat-form-field>
                                             <input matInput type="text" class="form-control" id="displayName"
-                                                placeholder="Display Name for QBoard *" [(ngModel)]="displayName"
+                                                placeholder="Display Name for QBoard *" (ngModel)="displayName"
                                                 [ngModelOptions]="{standalone: true}" autocomplete="off">
                                         </mat-form-field>
                                     </div>
                                     <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                         <mat-form-field>
                                             <input matInput type="text" class="form-control" id="serviceRoom"
-                                                placeholder="Enter the service room" [(ngModel)]="serviceRoom"
+                                                placeholder="Enter the service room" (ngModel)="serviceRoom"
                                                 [ngModelOptions]="{standalone: true}" autocomplete="off">
                                         </mat-form-field>
                                     </div>
@@ -53,7 +53,7 @@
                                     <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                         <mat-form-field>
                                             <mat-select placeholder="Choose the QBoard layout" id="layout"
-                                                (selectionChange)="handleLayout(layout)" [(ngModel)]="layout"
+                                                (selectionChange)="handleLayout(layout)" (ngModel)="layout"
                                                 [ngModelOptions]="{standalone: true}">
                                                 <mat-option *ngFor="let layout of boardLayouts" [value]="layout">
                                                     {{ layout.displayName }}
@@ -70,7 +70,7 @@
                                                             class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
                                                             <mat-form-field>
                                                                 <mat-select placeholder="Choose QBoard query"
-                                                                    [(ngModel)]="boardSelectedItems[row + '_' + col]"
+                                                                    (ngModel)="boardSelectedItems[row + '_' + col]"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)">
                                                                     <mat-option [value]="qset.id"
@@ -199,14 +199,14 @@
                                         <div class="form-group col-md-6">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="displayName"
-                                                    placeholder="Display Name for QBoard *" [(ngModel)]="displayName"
+                                                    placeholder="Display Name for QBoard *" (ngModel)="displayName"
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
                                         </div>
                                         <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="serviceRoom"
-                                                    placeholder="Enter the service room" [(ngModel)]="serviceRoom"
+                                                    placeholder="Enter the service room" (ngModel)="serviceRoom"
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
                                         </div>
@@ -221,7 +221,7 @@
                                         <mat-form-field>
                                             <input matInput type="text" class="form-control" id="refreshInterval1"
                                                 placeholder="Enter refresh interval in seconds *"
-                                                [(ngModel)]="refreshInterval" [ngModelOptions]="{standalone: true}"
+                                                (ngModel)="refreshInterval" [ngModelOptions]="{standalone: true}"
                                                 autocomplete="off">
                                         </mat-form-field>
                                     </div>
@@ -229,7 +229,7 @@
                                         <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                             <mat-form-field>
                                                 <mat-select placeholder="Choose the QBoard layout" id="layout"
-                                                    (selectionChange)="handleLayout(layout)" [(ngModel)]="layout"
+                                                    (selectionChange)="handleLayout(layout)" (ngModel)="layout"
                                                     [ngModelOptions]="{standalone: true}">
                                                     <mat-option *ngFor="let layout of boardLayouts" [value]="layout">
                                                         {{ layout.displayName }}
@@ -246,7 +246,7 @@
                                                                 class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
                                                                 <mat-form-field>
                                                                     <mat-select placeholder="Choose QBoard query"
-                                                                        [(ngModel)]="boardSelectedItems[row + '_' + col]"
+                                                                        (ngModel)="boardSelectedItems[row + '_' + col]"
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)">
                                                                         <mat-option [value]="qset.id"
@@ -299,7 +299,7 @@
                                                             <input matInput type="text" class="form-control"
                                                                 id="refreshInterval"
                                                                 placeholder="Enter refresh interval in seconds *"
-                                                                [(ngModel)]="nestedRefreshInterval"
+                                                                (ngModel)="nestedRefreshInterval"
                                                                 [ngModelOptions]="{standalone: true}"
                                                                 autocomplete="off">
                                                         </mat-form-field>

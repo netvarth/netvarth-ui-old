@@ -160,7 +160,7 @@
 																					(keypress)="isNumeric($event)"
 																					(keyup)="isvalid($event)" matInput
 																					value="1" size="3"
-																					[(ngModel)]="curSelItm.qty"
+																					(ngModel)="curSelItm.qty"
 																					(blur)="blurQty($event.target.value, curSelItm)">
 																			</mat-form-field>
 																		</span>
@@ -176,7 +176,7 @@
 																					(keypress)="isNumeric($event)"
 																					max="100000"
 																					(keyup)="isvalid($event)" matInput
-																					[(ngModel)]="curSelItm.price">
+																					(ngModel)="curSelItm.price">
 																			</mat-form-field>
 																		</span>
 																	</div>
@@ -195,9 +195,9 @@
 																<div class="spl col-md-7 col-sm-7 col-lg-7 no-padding">
 																	<div class="item selectbox">
 																		<mat-form-field class="example-full-width">
-																			<!-- <input type="text" #jcoupon matInput [(ngModel)]="jCoupon"> -->
+																			<!-- <input type="text" #jcoupon matInput (ngModel)="jCoupon"> -->
 																			<mat-select
-																				[(ngModel)]="selOrderProviderjCoupon"
+																				(ngModel)="selOrderProviderjCoupon"
 																				[ngModelOptions]="{standalone: true}">
 																				<mat-option [value]="''">
 																					{{select_jcoupon_cap}}</mat-option>
@@ -240,7 +240,7 @@
 																							*ngIf="discounts.length >0 && showDiscountSection">
 																							<mat-form-field>
 																								<mat-select
-																									[(ngModel)]="selOrderDiscount"
+																									(ngModel)="selOrderDiscount"
 																									[ngModelOptions]="{standalone: true}"
 																									placeholder="{{select_discount_cap}}">
 																									<mat-option
@@ -256,7 +256,7 @@
 																							*ngIf="coupons.length >0 && showPCouponSection">
 																							<mat-form-field>
 																								<mat-select
-																									[(ngModel)]="selOrderProviderCoupon"
+																									(ngModel)="selOrderProviderCoupon"
 																									[ngModelOptions]="{standalone: true}">
 																									<mat-option
 																										[value]="''">
@@ -290,7 +290,7 @@
 																										size="3"
 																										(keypress)="isNumeric($event)"
 																										(keyup)="isvalid($event)"
-																										[(ngModel)]="discAmount">
+																										(ngModel)="discAmount">
 																								</mat-form-field>
 																							</span>
 
@@ -303,7 +303,7 @@
 																						class="col-md-12 col-lg-12 col-sm-12 no-padding">
 																						<div class="form-group ">
 																							<mat-checkbox
-																								[(ngModel)]="isProvNote">
+																								(ngModel)="isProvNote">
 																								{{privatenote_cap}}
 																							</mat-checkbox>
 																						</div>
@@ -313,7 +313,7 @@
 																								class="form-control"
 																								id="message"
 																								placeholder="Message"
-																								[(ngModel)]="discProvNote">
+																								(ngModel)="discProvNote">
 																								</textarea>
 																						</div>
 																					</div>
@@ -321,7 +321,7 @@
 																						class="col-md-12 col-lg-12 col-sm-12 no-padding">
 																						<div class="form-group ">
 																							<mat-checkbox
-																								[(ngModel)]="isConsNote">
+																								(ngModel)="isConsNote">
 																								{{notesfor_cap}}{{customer_label}}
 																							</mat-checkbox>
 																						</div>
@@ -331,7 +331,7 @@
 																								class="form-control"
 																								id="message"
 																								placeholder="Message"
-																								[(ngModel)]="discConsNote">
+																								(ngModel)="discConsNote">
 																								</textarea>
 																						</div>
 																					</div>
@@ -380,7 +380,7 @@
 																								class="form-control"
 																								id="message"
 																								placeholder="Message"
-																								[(ngModel)]="billDisplayNote"
+																								(ngModel)="billDisplayNote"
 																								(keyup)="handledisplaykeyup()">
 																</textarea>
 																						</div>
@@ -390,7 +390,7 @@
 																								class="form-control"
 																								id="message"
 																								placeholder="Message"
-																								[(ngModel)]="billPrivateNote"
+																								(ngModel)="billPrivateNote"
 																								(keyup)="handleprivatekeyup()">
 																</textarea>
 																						</div>
@@ -494,7 +494,7 @@
 																				<div class="item selectbox1 prov-bill-disc1">
 																					<mat-form-field>
 																						<mat-select
-																							[(ngModel)]="bill_data.service[i].serviceDiscount"
+																							(ngModel)="bill_data.service[i].serviceDiscount"
 																							[ngModelOptions]="{standalone: true}"
 																							placeholder="{{select_discount_cap}}">
 																							<mat-option
@@ -523,7 +523,7 @@
 																								value="1" size="3"
 																								(keypress)="isNumeric($event)"
 																								(keyup)="isvalid($event)"
-																								[(ngModel)]="bill_data.service[i].serviceDiscount.discAmount"
+																								(ngModel)="bill_data.service[i].serviceDiscount.discAmount"
 																								(blur)="blurQty($event.target.value, bill_data.service[i].serviceDiscount.discAmount)">
 																						</mat-form-field>
 																					</span>
@@ -633,7 +633,7 @@
 																				<div class="item selectbox1">
 																					<mat-form-field>
 																						<mat-select
-																							[(ngModel)]="bill_data.items[i].itemDiscount"
+																							(ngModel)="bill_data.items[i].itemDiscount"
 																							[ngModelOptions]="{standalone: true}"
 																							placeholder="{{select_discount_cap}}">
 																							<mat-option
@@ -650,7 +650,7 @@
 																				<!-- <ng-container *ngIf="bill_data.items[i].itemDiscount.discType=='OnDemand'">
 																<span class="label">Value</span> <span class="number">
 																	<mat-form-field class="example-full-width"> <input type="text" matInput #billdiscvalue
-																			aria-label="Number" max="{{price_limit}}" min="0" matInput value="1" size="3"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)" [(ngModel)]="bill_data.items[i].itemDiscount.discAmount"
+																			aria-label="Number" max="{{price_limit}}" min="0" matInput value="1" size="3"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)" (ngModel)="bill_data.items[i].itemDiscount.discAmount"
 																			(blur)="blurQty($event.target.value, bill_data.items[i].itemDiscount.discAmount)">
 																	</mat-form-field>
 																</span>
@@ -951,7 +951,7 @@
 																			<input type="number" matInput #payamounttxt
 																				aria-label="Number" matInput value="1"
 																				size="5" max="{{price_limit}}" min="0"
-																				[(ngModel)]="amountpay"
+																				(ngModel)="amountpay"
 																				(keyup)="isvalid($event)"
 																				autocomplete="off">
 																		</mat-form-field>
@@ -970,7 +970,7 @@
 															<label style="font-weight: 500;">Leave a Payment Note
 															</label>
 															<textarea matInput style="margin-bottom: 10px;"
-																[(ngModel)]="paynot"></textarea>
+																(ngModel)="paynot"></textarea>
 														</mat-form-field>
 													</div>
 												</div>

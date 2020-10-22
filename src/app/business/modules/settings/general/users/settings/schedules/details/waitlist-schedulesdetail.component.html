@@ -417,7 +417,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                                 <mat-form-field>
                                                     <input
                                                         style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                        matInput placeholder="Prefix" [(ngModel)]="sprefixName"
+                                                        matInput placeholder="Prefix" (ngModel)="sprefixName"
                                                         autocomplete="off" [ngModelOptions]="{standalone: true}">
                                                 </mat-form-field>
                                             </div>
@@ -425,7 +425,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                                 <mat-form-field>
                                                     <input
                                                         style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                        matInput placeholder="Suffix" [(ngModel)]="ssuffixName"
+                                                        matInput placeholder="Suffix" (ngModel)="ssuffixName"
                                                         autocomplete="off" [ngModelOptions]="{standalone: true}">
                                                 </mat-form-field>
                                             </div>

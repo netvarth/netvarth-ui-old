@@ -8,6 +8,7 @@ import {  Meta, Title } from '@angular/platform-browser';
   templateUrl: './qrcodegenerator.component.html'
 })
 export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
+  elementType = 'url';
   accuid: any;
   qr_code_cId = false;
   qr_code_oId = false;

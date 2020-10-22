@@ -113,7 +113,7 @@
                     </div>
                     <div class="form-group" *ngIf="queuejson.length > 0">
                       <label class="col-form-label">{{delay_cap}}</label>
-                      <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay">
+                      <ngb-timepicker (ngModel)="time" (keyup)="isInRange($event)" formControlName="delay">
                       </ngb-timepicker>
                     </div>
                     <div class="form-group inline" *ngIf="queuejson.length > 0">
@@ -123,7 +123,7 @@
                       <ng-container class="example-full-width" *ngIf="amForm.get('send_message').value === true">
                         <label class="col-form-label">{{messgae_cap}}</label>
                         <textarea class="form-control" placeholder="Message" formControlName="message"
-                          autocomplete="off" [placeholder]="placeholder" (keyup)="setCharCount($event)"
+                          autocomplete="off" [placeholder]="placeholder" (keyup)="setCharCount()"
                           (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500">
 
                         </textarea>

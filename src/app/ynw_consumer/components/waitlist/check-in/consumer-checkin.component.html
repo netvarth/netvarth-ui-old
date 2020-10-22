@@ -109,7 +109,7 @@
                                                                             (keypress)="isNumeric($event)"
                                                                             class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
                                                                             style="width:150px!important ;"
-                                                                            placeholder="" [(ngModel)]="callingModes"
+                                                                            placeholder="" (ngModel)="callingModes"
                                                                             autocomplete="off" maxlength="10"></span>
                                                                     <!-- <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                                         *ngIf="editCallingmodes(i)">
@@ -434,7 +434,7 @@
                                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
                                         <label>
                                             <input type="text" maxlength="10" placeholder="Contact number"
-                                                class="phonenum" [(ngModel)]="selected_phone" />
+                                                class="phonenum" (ngModel)="selected_phone" />
                                             <button (click)="addPhone()" class="btn bt3 btn-default coupon-apply-btn"
                                                 type="button">Ok</button>
                                             <!-- <span " style="color: #00aef2; padding-left:5px">Ok</span> -->
@@ -458,7 +458,7 @@
                                             <div class="input-group">
                                                 <input [ngClass]="{'invalid':!couponvalid}"
                                                     (keydown)="clearCouponErrors()" placeholder="Enter coupon code"
-                                                    type="text" class="form-control" [(ngModel)]="selected_coupon">
+                                                    type="text" class="form-control" (ngModel)="selected_coupon">
                                                 <span class="input-group-btn">
                                                     <button class="btn bt3 btn-default coupon-apply-btn"
                                                         (click)="applyCoupons(selected_coupon)"
@@ -525,7 +525,7 @@
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <!-- <mat-form-field>{{note_placeholder}} -->
-                                <textarea class="form-control mgn-bt-20 mgn-up-20" [(ngModel)]="consumerNote"
+                                <textarea class="form-control mgn-bt-20 mgn-up-20" (ngModel)="consumerNote"
                                     #consumernote (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
                                     placeholder="{{note_placeholder}}"></textarea>
                                 <!-- </mat-form-field> -->
@@ -547,7 +547,7 @@
                                 <ng-container>
                                     <div class="form-group">
                                         <input style="border-bottom: 1px solid" class="form-control emailPrepay"
-                                            id="email" placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
+                                            id="email" placeholder="Email(user@xyz.com)" (ngModel)="payEmail"
                                             autocomplete="off" (keyup)="showConfrmEmail($event)" onpaste="return false;"
                                             oncopy="return false" oncut="return false" ondrag="return false"
                                             ondrop="return false">
@@ -559,7 +559,7 @@
                                         <!-- <mat-form-field> -->
                                         <input style="border-bottom: 1px solid" class="form-control emailPrepay"
                                             id="email1" placeholder="Re-enter Email(user@xyz.com)"
-                                            [(ngModel)]="payEmail1" autocomplete="off" onpaste="return false;"
+                                            (ngModel)="payEmail1" autocomplete="off" onpaste="return false;"
                                             oncopy="return false" oncut="return false" ondrag="return false"
                                             ondrop="return false">
                                         <!-- </mat-form-field> -->

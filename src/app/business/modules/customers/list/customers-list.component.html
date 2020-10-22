@@ -75,12 +75,12 @@
               <div class="filterTextinput">
                 <li class="filterli">
                   <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
-                    class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                    class="filterTextbox" (ngModel)="filter.first_name" placeholder="First Name">
                 </li>
               </div>
               <div class="filterTextinput">
                 <li class="filterli filterDatepicker">
-                  <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
+                  <input type="text" (ngModel)="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
                     #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
                     placeholder="Date of birth" readonly>
                   <mat-datepicker-toggle matSuffix [for]="picker">
@@ -90,14 +90,14 @@
               </div>
               <div class="filterTextinput">
                 <li class="filterli">
-                  <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
+                  <input type="text" id="txt_mobile" (ngModel)="filter.mobile" #Fmobile (blur)="doSearch()"
                     (keyup)="focusInput($event, Femail)" (keypress)="isNumeric($event)" maxlength="10"
                     class="filterTextbox" placeholder="Phone Number">
                 </li>
               </div>
               <div class="filterTextinput">
                 <li class="filterli filterDatepicker">
-                  <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                  <input type="text" id="txt_email" (ngModel)="filter.email" #Femail (blur)="doSearch()"
                     (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
                 </li>
               </div>
@@ -112,12 +112,12 @@
                 class="anchorbutton remMarginRight genMarginLeft" name="first_name"
                 id="btn_first_name_filter_id"><span>First Name</span></a>
               <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)" class="genTextHeight"
-                [(ngModel)]="filter.first_name" [hidden]="!filters['first_name']">
+                (ngModel)="filter.first_name" [hidden]="!filters['first_name']">
 
               <a [class.button_filter]="filters['date']" (click)="filterClicked('date')"
                 class="anchorbutton remMarginRight genMarginLeft" name="date"
                 id="btn_date_filter_id"><span>Date</span></a>
-              <input type="text" [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
+              <input type="text" (ngModel)="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
                 (dateChange)="doSearch()" class="genTextHeight" [hidden]="!filters['date']" (blur)="doSearch()">
               <mat-datepicker-toggle matSuffix [for]="picker" [hidden]="!filters['date']"></mat-datepicker-toggle>
               <mat-datepicker #picker [hidden]="!filters['date']"></mat-datepicker>
@@ -125,13 +125,13 @@
               <a [class.button_filter]="filters['mobile']" (click)="filterClicked('mobile')"
                 class="anchorbutton remMarginRight genMarginLeft" name="mobile"
                 id="btn_mobile_filter_id"><span>Mobile</span></a>
-              <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
+              <input type="text" id="txt_mobile" (ngModel)="filter.mobile" #Fmobile (blur)="doSearch()"
                 (keyup)="focusInput($event, Femail)" maxlength="10" class="genTextHeight" [hidden]="!filters['mobile']">
 
               <a [class.button_filter]="filters['email']" (click)="filterClicked('email')"
                 class="anchorbutton remMarginRight genMarginLeft" name="email"
                 id="btn_email_filter_id"><span>Email</span></a>
-              <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+              <input type="text" id="txt_email" (ngModel)="filter.email" #Femail (blur)="doSearch()"
                 (keyup)="focusInput($event, Fdate)" class="genTextHeight" [hidden]="!filters['email']">
               <input type="button" value=" Go " (click)="doSearch()" id="btnGo"
                 class="genMarginLeft genTextHeight btn_black qo_bt">

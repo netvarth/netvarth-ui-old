@@ -17,6 +17,7 @@ import { ApplyLabelComponent } from '../apply-label/apply-label.component';
     styleUrls: ['./checkin-actions.component.css']
 })
 export class CheckinActionsComponent implements OnInit {
+    elementType = 'url';
     checkin;
     provider_label = '';
     qr_value;

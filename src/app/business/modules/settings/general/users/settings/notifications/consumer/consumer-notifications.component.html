@@ -34,7 +34,7 @@
           <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-20">
             <label class="notifi-togl" style="display: flex">Send Notifications -&nbsp;
               <span class="{{notification_statusstr}}">{{notification_statusstr}}</span>
-              <!-- <mat-slide-toggle class="example-margin" [(ngModel)]="consumerNotification"
+              <!-- <mat-slide-toggle class="example-margin" (ngModel)="consumerNotification"
                 (change)="handleNotificationSettings($event)">
               </mat-slide-toggle> -->
             </label>
@@ -64,7 +64,7 @@
                   <div class="form-group col-md-4 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
                       <input matInput min="0" max="1000" type="number"
-                        [(ngModel)]="earlyWLNotificatonSettings.personsAhead"
+                        (ngModel)="earlyWLNotificatonSettings.personsAhead"
                         placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
                         (keypress)="showSubmit('EARLY_WL');numberOnly($event)" (keyup)="isvalid($event)"><br>
                       <div class="mgn-up-5" *ngIf="wltstPersonsahead && !earlyWLNotificatonSettings.personsAhead"
@@ -83,19 +83,19 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyWLNotificatonSettings.sms"
+                      <mat-slide-toggle class="example-margin" (ngModel)="earlyWLNotificatonSettings.sms"
                         (change)="showSubmit('EARLY_WL')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyWLNotificatonSettings.email"
+                      <mat-slide-toggle class="example-margin" (ngModel)="earlyWLNotificatonSettings.email"
                         (change)="showSubmit('EARLY_WL')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyWLNotificatonSettings.pushNotification"
+                      <mat-slide-toggle class="example-margin" (ngModel)="earlyWLNotificatonSettings.pushNotification"
                         (change)="showSubmit('EARLY_WL')">
                       </mat-slide-toggle>
                     </li>
@@ -117,20 +117,20 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="prefinalWLNotificationSettings.sms"
+                      <mat-slide-toggle class="example-margin" (ngModel)="prefinalWLNotificationSettings.sms"
                         (change)="showSubmit('PREFINAL_WL')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="prefinalWLNotificationSettings.email"
+                      <mat-slide-toggle class="example-margin" (ngModel)="prefinalWLNotificationSettings.email"
                         (change)="showSubmit('PREFINAL_WL')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="prefinalWLNotificationSettings.pushNotification"
+                        (ngModel)="prefinalWLNotificationSettings.pushNotification"
                         (change)="showSubmit('PREFINAL_WL')">
                       </mat-slide-toggle>
                     </li>
@@ -151,20 +151,20 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalWLNotificationSettings.sms"
+                      <mat-slide-toggle class="example-margin" (ngModel)="finalWLNotificationSettings.sms"
                         (change)="showSubmit('FINAL_WL')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalWLNotificationSettings.email"
+                      <mat-slide-toggle class="example-margin" (ngModel)="finalWLNotificationSettings.email"
                         (change)="showSubmit('FINAL_WL')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="finalWLNotificationSettings.pushNotification" (change)="showSubmit('FINAL_WL')">
+                        (ngModel)="finalWLNotificationSettings.pushNotification" (change)="showSubmit('FINAL_WL')">
                       </mat-slide-toggle>
                     </li>
                   </ul>
@@ -188,19 +188,19 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="wlAddNotificationSettings.sms"
+                      <mat-slide-toggle class="example-margin" (ngModel)="wlAddNotificationSettings.sms"
                         (change)="showSubmit('WAITLISTADD')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="wlAddNotificationSettings.email"
+                      <mat-slide-toggle class="example-margin" (ngModel)="wlAddNotificationSettings.email"
                         (change)="showSubmit('WAITLISTADD')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="wlAddNotificationSettings.pushNotification"
+                      <mat-slide-toggle class="example-margin" (ngModel)="wlAddNotificationSettings.pushNotification"
                         (change)="showSubmit('WAITLISTADD')">
                       </mat-slide-toggle>
                     </li>
@@ -233,7 +233,7 @@
                   <div class="form-group col-md-3 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
                       <input matInput min="0" max="1000" type="text"
-                        [(ngModel)]="earlyAPPTNotificatonSettings.personsAhead"
+                        (ngModel)="earlyAPPTNotificatonSettings.personsAhead"
                         placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
                         (keypress)="showSubmit('EARLY_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
                       <div class="mgn-up-5" *ngIf="!earlyAPPTNotificatonSettings.personsAhead && apptPersonsahead"
@@ -252,20 +252,20 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyAPPTNotificatonSettings.sms"
+                      <mat-slide-toggle class="example-margin" (ngModel)="earlyAPPTNotificatonSettings.sms"
                         (change)="showSubmit('EARLY_APPT')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyAPPTNotificatonSettings.email"
+                      <mat-slide-toggle class="example-margin" (ngModel)="earlyAPPTNotificatonSettings.email"
                         (change)="showSubmit('EARLY_APPT')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="earlyAPPTNotificatonSettings.pushNotification" (change)="showSubmit('EARLY_APPT')">
+                        (ngModel)="earlyAPPTNotificatonSettings.pushNotification" (change)="showSubmit('EARLY_APPT')">
                       </mat-slide-toggle>
                     </li>
                   </ul>
@@ -286,20 +286,20 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="prefinalAPPTNotificationSettings.sms"
+                      <mat-slide-toggle class="example-margin" (ngModel)="prefinalAPPTNotificationSettings.sms"
                         (change)="showSubmit('PREFINAL_APPT')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="prefinalAPPTNotificationSettings.email"
+                      <mat-slide-toggle class="example-margin" (ngModel)="prefinalAPPTNotificationSettings.email"
                         (change)="showSubmit('PREFINAL_APPT')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="prefinalAPPTNotificationSettings.pushNotification"
+                        (ngModel)="prefinalAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('PREFINAL_APPT')">
                       </mat-slide-toggle>
                     </li>
@@ -320,20 +320,20 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalAPPTNotificationSettings.sms"
+                      <mat-slide-toggle class="example-margin" (ngModel)="finalAPPTNotificationSettings.sms"
                         (change)="showSubmit('FINAL_APPT')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalAPPTNotificationSettings.email"
+                      <mat-slide-toggle class="example-margin" (ngModel)="finalAPPTNotificationSettings.email"
                         (change)="showSubmit('FINAL_APPT')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="finalAPPTNotificationSettings.pushNotification"
+                        (ngModel)="finalAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('FINAL_APPT')">
                       </mat-slide-toggle>
                     </li>
@@ -353,20 +353,20 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="apptAddNotificationSettings.sms"
+                      <mat-slide-toggle class="example-margin" (ngModel)="apptAddNotificationSettings.sms"
                         (change)="showSubmit('APPOINTMENTADD')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="apptAddNotificationSettings.email"
+                      <mat-slide-toggle class="example-margin" (ngModel)="apptAddNotificationSettings.email"
                         (change)="showSubmit('APPOINTMENTADD')">
                       </mat-slide-toggle>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="apptAddNotificationSettings.pushNotification"
+                        (ngModel)="apptAddNotificationSettings.pushNotification"
                         (change)="showSubmit('APPOINTMENTADD')">
                       </mat-slide-toggle>
                     </li>
@@ -419,19 +419,19 @@
             <ul class="notifications">
               <li class="mgn-lt-10">
                 <span class="notification"> via SMS </span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.sms"
+                <mat-slide-toggle class="example-margin" (ngModel)="firstAPPTNotificationSettings.sms"
                   (change)="showSubmit('FIRST_APPT')">
                 </mat-slide-toggle>
               </li>
               <li class="mgn-lt-10">
                 <span class="notification"> via Email</span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.email"
+                <mat-slide-toggle class="example-margin" (ngModel)="firstAPPTNotificationSettings.email"
                   (change)="showSubmit('FIRST_APPT')">
                 </mat-slide-toggle>
               </li>
               <li class="mgn-lt-10">
                 <span class="notification">App notification</span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.pushNotification"
+                <mat-slide-toggle class="example-margin" (ngModel)="firstAPPTNotificationSettings.pushNotification"
                   (change)="showSubmit('FIRST_APPT')">
                 </mat-slide-toggle>
               </li>
@@ -474,19 +474,19 @@
             <ul class="notifications">
               <li class="mgn-lt-10">
                 <span class="notification"> via SMS </span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.sms"
+                <mat-slide-toggle class="example-margin" (ngModel)="secondAPPTNotificationSettings.sms"
                   (change)="showSubmit('SECOND_APPT')">
                 </mat-slide-toggle>
               </li>
               <li class="mgn-lt-10">
                 <span class="notification"> via Email</span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.email"
+                <mat-slide-toggle class="example-margin" (ngModel)="secondAPPTNotificationSettings.email"
                   (change)="showSubmit('SECOND_APPT')">
                 </mat-slide-toggle>
               </li>
               <li class="mgn-lt-10">
                 <span class="notification">App notification</span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.pushNotification"
+                <mat-slide-toggle class="example-margin" (ngModel)="secondAPPTNotificationSettings.pushNotification"
                   (change)="showSubmit('SECOND_APPT')">
                 </mat-slide-toggle>
               </li>
@@ -530,19 +530,19 @@
             <ul class="notifications">
               <li class="mgn-lt-10">
                 <span class="notification"> via SMS </span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.sms"
+                <mat-slide-toggle class="example-margin" (ngModel)="thirdAPPTNotificationSettings.sms"
                   (change)="showSubmit('THIRD_APPT')">
                 </mat-slide-toggle>
               </li>
               <li class="mgn-lt-10">
                 <span class="notification"> via Email</span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.email"
+                <mat-slide-toggle class="example-margin" (ngModel)="thirdAPPTNotificationSettings.email"
                   (change)="showSubmit('THIRD_APPT')">
                 </mat-slide-toggle>
               </li>
               <li class="mgn-lt-10">
                 <span class="notification">App notification</span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.pushNotification"
+                <mat-slide-toggle class="example-margin" (ngModel)="thirdAPPTNotificationSettings.pushNotification"
                   (change)="showSubmit('THIRD_APPT')">
                 </mat-slide-toggle>
               </li>
@@ -585,19 +585,19 @@
             <ul class="notifications">
               <li class="mgn-lt-10">
                 <span class="notification"> via SMS </span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.sms"
+                <mat-slide-toggle class="example-margin" (ngModel)="fourthAPPTNotificationSettings.sms"
                   (change)="showSubmit('FOURTH_APPT')">
                 </mat-slide-toggle>
               </li>
               <li class="mgn-lt-10">
                 <span class="notification"> via Email</span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.email"
+                <mat-slide-toggle class="example-margin" (ngModel)="fourthAPPTNotificationSettings.email"
                   (change)="showSubmit('FOURTH_APPT')">
                 </mat-slide-toggle>
               </li>
               <li class="mgn-lt-10">
                 <span class="notification">App notification</span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.pushNotification"
+                <mat-slide-toggle class="example-margin" (ngModel)="fourthAPPTNotificationSettings.pushNotification"
                   (change)="showSubmit('FOURTH_APPT')">
                 </mat-slide-toggle>
               </li>

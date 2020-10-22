@@ -74,7 +74,7 @@
                 <div class="col-md-12">
                     <mat-form-field>
                         <input matInput type="text" class="form-control" id="bName" autocomplete="off"
-                            [(ngModel)]="boardDisplayname" placeholder="Name the QBoard query *">
+                            (ngModel)="boardDisplayname" placeholder="Name the QBoard query *">
                     </mat-form-field>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                     <label class="col-form-label mgn-bt-10">Choose one from below to be displayed on
                         your QBoard
                     </label>
-                    <mat-radio-group [(ngModel)]="selectedCategory">
+                    <mat-radio-group (ngModel)="selectedCategory">
                         <mat-radio-button class="mgright50" [value]="'DEPARTMENT'"
                             *ngIf="departments.length > 0 && filterByDept" (change)="categorySelection('DEPARTMENT')">
                             {{department_cap}}s</mat-radio-button>
@@ -120,7 +120,7 @@
                     Department</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
-                        <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments" [multiple]="true">
+                        <mat-select (ngModel)="deptMultiCtrl" placeholder="Departments" [multiple]="true">
                             <ngx-mat-select-search [formControl]="deptMultiFilterCtrl"
                                 placeholderLabel="Search departments"
                                 noEntriesFoundLabel="no matching department found"></ngx-mat-select-search>
@@ -148,7 +148,7 @@
                     {{provider_label | capitalizeFirst}}s</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="users.length > 0">
-                        <mat-select [(ngModel)]="userMultiCtrl" placeholder="{{provider_label | capitalizeFirst}}s" [multiple]="true">
+                        <mat-select (ngModel)="userMultiCtrl" placeholder="{{provider_label | capitalizeFirst}}s" [multiple]="true">
                             <ngx-mat-select-search [formControl]="userMultiFilterCtrl"
                                 placeholderLabel="Search {{provider_label}}s"
                                 noEntriesFoundLabel="no matching {{provider_label}} found"></ngx-mat-select-search>
@@ -177,7 +177,7 @@
                     Services</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="services_list.length > 0">
-                        <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
+                        <mat-select (ngModel)="servMultiCtrl" placeholder="Services" [multiple]="true">
                             <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
                                 placeholderLabel="Search services" noEntriesFoundLabel="no matching service found">
                             </ngx-mat-select-search>
@@ -205,7 +205,7 @@
                     Queues</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="display_schedule.length > 0 && serviceScheduleCount !== 0">
-                        <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
+                        <mat-select (ngModel)="qMultiCtrl" placeholder="Queues" [multiple]="true">
                             <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"
                                 noEntriesFoundLabel="no matching queue found"></ngx-mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
@@ -260,7 +260,7 @@
                     Select Labels
                 </label>
                 <mat-form-field>
-                    <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
+                    <mat-select (ngModel)="labelMultiCtrl" placeholder="Labels" [multiple]="true">
                         <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels"
                             noEntriesFoundLabel="no matching label found"></ngx-mat-select-search>
                         <!-- <mat-option *ngFor="let label of providerLabelsList" [value]="label"
@@ -296,7 +296,7 @@
                 <label class="col-form-label mgn-bt-10">
                     Sort by
                 </label>
-                <mat-radio-group [(ngModel)]="selectedSortField">
+                <mat-radio-group (ngModel)="selectedSortField">
                     <mat-radio-button class="mgright50" style="display: block;" [value]="'sort_token'"
                         (change)="sortByField('sort_token')">
                         Token</mat-radio-button>
@@ -326,14 +326,14 @@
                         <mat-form-field>
                             <input matInput type="text" class="form-control" id="fieldName"
                                 placeholder="Enter Displayname" autocomplete="off"
-                                (blur)="getLabelName(labelDisplayname[i], label)" [(ngModel)]="labelDisplayname[i]">
+                                (blur)="getLabelName(labelDisplayname[i], label)" (ngModel)="labelDisplayname[i]">
                         </mat-form-field>
                     </div>
                     <div class="col-md-4" *ngIf="label.label">
                         <mat-form-field>
                             <input matInput type="text" class="form-control" id="labelDisplayname"
                                 placeholder="Enter Defaultvalue" (blur)="getLabelvalue(labelDefaultvalue[i], label)"
-                                autocomplete="off" [(ngModel)]="labelDefaultvalue[i]">
+                                autocomplete="off" (ngModel)="labelDefaultvalue[i]">
                         </mat-form-field>
                     </div>
                 </div>

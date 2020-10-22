@@ -628,7 +628,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     };
     this.location_data = undefined;
   }
-  private setKeyword(kw) {
+  public setKeyword(kw) {
     // if (this.kw_autoname) {
     //   this.filterKeywords();
     // }

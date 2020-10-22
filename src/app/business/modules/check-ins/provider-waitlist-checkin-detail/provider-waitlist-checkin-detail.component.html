@@ -61,7 +61,7 @@
                     (click)="editClicked()"></span>
                   <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding" *ngIf="showEditView">
                     <div class="input-group">
-                      <input type="text" [(ngModel)]="esttime" id="estWatTme" max="500" maxlength="3"
+                      <input type="text" (ngModel)="esttime" id="estWatTme" max="500" maxlength="3"
                         (keyup)="isvalid($event)" (keypress)="isNumeric($event)"
                         class="form-control number-ip-sm col-md-8 col-sm-12 col-xs-12">
                       <span class="wait-btn">
@@ -78,7 +78,7 @@
                   <span *ngIf="!editAppntTime" style="margin-left: 30px" class="editbt" (click)="editApptTime()"></span>
                   <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding" *ngIf="editAppntTime">
                     <div class="input-group">
-                      <ngb-timepicker meridian="true" [(ngModel)]="apptTime" (ngModelChange)="changetime($event)">
+                      <ngb-timepicker meridian="true" (ngModel)="apptTime" (ngModelChange)="changetime($event)">
                       </ngb-timepicker>
                       <span class="wait-btn">
                         <button class="cs-btn bt3 mgn-rt-5" style="margin-left: 5px;" (click)="cancelUpdation()"
@@ -160,13 +160,13 @@
                       (click)="saveApptTime(slot)">{{slot}}</mat-chip>
                   </mat-chip-list>
                   <!-- <mat-form-field>
-                          <mat-select placeholder="Appointment Time" [(ngModel)]="apptTime" #appttime>
+                          <mat-select placeholder="Appointment Time" (ngModel)="apptTime" #appttime>
                               <mat-option *ngFor="let slot of availableSlots" [value]="slot">
                                   {{slot}}
                               </mat-option>
                           </mat-select>
                           </mat-form-field> -->
-                  <!-- <ngb-timepicker meridian="true" [(ngModel)]="appttime" (ngModelChange)="changetime($event)">
+                  <!-- <ngb-timepicker meridian="true" (ngModel)="appttime" (ngModelChange)="changetime($event)">
                         </ngb-timepicker> -->
                   <!-- <div class="wait-btn mgn-up-25">
                           <button class="cs-btn bt3 mgn-rt-5"

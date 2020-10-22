@@ -40,7 +40,7 @@
           <label *ngIf="serviceName">Service/Consultation:</label><span *ngIf="serviceName"> {{serviceName | capitalizeFirst}}</span><br *ngIf="serviceName">
           <!-- <label *ngIf="bookingType && bookingType == ('TOKEN' || 'APPT')">Consultation Mode: </label><span  *ngIf="bookingType && bookingType == ('TOKEN' || 'APPT')"> {{consultationMode}}</span> -->
          <!-- <span *ngIf="bookingType !== ('TOKEN' || 'APPT')"> <label>Consultation Mode: </label>&nbsp;
-          <select [(ngModel)]="patientConsultationType" (ngModelChange)="modeChanged($event)">
+          <select (ngModel)="patientConsultationType" (ngModelChange)="modeChanged($event)">
             <option *ngFor="let mode of patientConsultationModes" [value]="mode.name">{{mode.name}}</option>
           </select>
         </span> -->
