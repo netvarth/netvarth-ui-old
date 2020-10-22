@@ -5,7 +5,7 @@ import { MedicalrecordService } from '../../medicalrecord.service';
 import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
@@ -35,12 +35,18 @@ export class UploadPrescriptionComponent implements OnInit {
   disable = false;
   heading = 'Create prescription';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  navigationParams: any;
+  navigationExtras: NavigationExtras;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
     private activatedRoot: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
+      this.medicalrecord_service.patient_data.subscribe(res => {
+        this.navigationParams = res;
+        this.navigationExtras = this.navigationParams;
+      });
     this.medicalrecord_service.patient_data.subscribe(data => {
       this.patientDetails = JSON.parse(data.customerDetail);
       this.userId = this.patientDetails.id;
@@ -69,7 +75,7 @@ export class UploadPrescriptionComponent implements OnInit {
 
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , this.navigationExtras);
   }
 
   getMrprescription(mrId) {
@@ -161,7 +167,7 @@ export class UploadPrescriptionComponent implements OnInit {
         this.showSave = false;
         this.upload_status = 'Uploaded';
         this.sharedfunctionObj.openSnackBar('Prescription uploaded successfully');
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , this.navigationExtras);
       },
         error => {
           this.disable = false;
