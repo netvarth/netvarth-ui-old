@@ -27,6 +27,11 @@ export class UploadPrescriptionComponent implements OnInit {
     base64: [],
     caption: []
   };
+  temarry = {
+    files: [],
+    base64: [],
+    caption: []
+  };
   showSave = true;
   sharedialogRef;
   uploadImages: any = [];
@@ -120,22 +125,43 @@ export class UploadPrescriptionComponent implements OnInit {
     imgsize = Math.round((val / 1024));
     return imgsize;
   }
+ 
+   
 
-  saveImages() {
-    this.disable = true;
+deletePrevUploadRx() {
+  return new Promise((resolve, reject) => {
     for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
       if (this.selectedMessage.files[ia].view === true) {
         this.selectedMessage.files.splice(ia, 1);
       }
     }
+  });
+  // for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
+  //   if (this.selectedMessage.files[ia].view === true) {
+  //     this.selectedMessage.files.splice(ia, 1);
+  //   }
+  // }
+  
+}
+
+  saveImages() {
+    this.disable = true;
+   
+    for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
+      if (this.selectedMessage.files[ia].view !== true) {
+        this.temarry.files.push(this.selectedMessage.files[ia])
+        
+      }
+    }
+    console.log(this.temarry.files);
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;
-    for (const pic of this.selectedMessage.files) {
+    for (const pic of this.temarry.files) {
       console.log(pic);
       submit_data.append('files', pic, pic['name']);
       const properties = {
-        'caption': this.selectedMessage.caption[i] || ''
+        'caption': this.temarry.caption[i] || ''
       };
       propertiesDetob[i] = properties;
       i++;
@@ -160,6 +186,7 @@ export class UploadPrescriptionComponent implements OnInit {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
+  
   }
   uploadMrPrescription(id, submit_data) {
     this.provider_services.uploadMRprescription(id, submit_data)
