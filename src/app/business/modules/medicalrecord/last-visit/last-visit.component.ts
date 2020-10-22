@@ -126,7 +126,6 @@ export class LastVisitComponent implements OnInit {
 
   }
   viewMedicalRecord(visitDetails) {
-    console.log(JSON.stringify(visitDetails.waitlist.waitlistingFor[0]));
     if (visitDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -178,7 +177,7 @@ export class LastVisitComponent implements OnInit {
   }
 
   viewMR_prescription(visitDetails) {
-    console.log(JSON.stringify(visitDetails.waitlist.waitlistingFor[0]));
+
     if (visitDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -219,7 +218,6 @@ export class LastVisitComponent implements OnInit {
           'back_type': this.back_type
         }
       };
-
       const result = {
         'navigationParams': navigationExtras,
         'type': 'prescription'
