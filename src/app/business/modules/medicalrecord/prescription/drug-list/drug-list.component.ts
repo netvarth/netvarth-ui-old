@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { MatDialog } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { MedicalrecordService } from '../../medicalrecord.service';
 import { AddDrugComponent } from '../add-drug/add-drug.component';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
@@ -43,12 +43,18 @@ export class DrugListComponent implements OnInit {
   disable = false;
   heading = 'Create Prescription';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  navigationParams: any;
+  navigationExtras: NavigationExtras;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
     private activatedRoot: ActivatedRoute,
     private router: Router,
     private medicalrecord_service: MedicalrecordService) {
+      this.medicalrecord_service.patient_data.subscribe(res => {
+      this.navigationParams = res;
+      this.navigationExtras = this.navigationParams;
+    });
     this.medicalrecord_service.patient_data.subscribe(data => {
       this.patientDetails = JSON.parse(data.customerDetail);
       this.userId = this.patientDetails.id;
@@ -83,7 +89,7 @@ export class DrugListComponent implements OnInit {
     this.getMrprescription();
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , this.navigationExtras );
   }
   getDigitalSign() {
     if (this.providerId) {
@@ -177,7 +183,7 @@ export class DrugListComponent implements OnInit {
         subscribe(res => {
           console.log(this.drugList);
           this.showSave = false;
-          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
+          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , this.navigationExtras );
         },
         error => {
           this.disable = false;
@@ -189,7 +195,7 @@ export class DrugListComponent implements OnInit {
           this.medicalrecord_service.setCurrentMRID(data);
           this.showSave = false;
           this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
-          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
+          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , this.navigationExtras );
         },
           error => {
             this.disable = false;
@@ -300,6 +306,6 @@ export class DrugListComponent implements OnInit {
     });
   }
   redirecToPrescriptionHome() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription']);
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , this.navigationExtras );
   }
 }
