@@ -21,6 +21,7 @@ export class LastVisitComponent implements OnInit {
   customerDetails: any;
   loading = true;
   visitcount: any;
+  back_type: any;
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private router: Router,
@@ -29,6 +30,10 @@ export class LastVisitComponent implements OnInit {
     public dialogRef: MatDialogRef<LastVisitComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.PatientId = this.data.patientId;
+    if (this.data.back_type) {
+      this.back_type = this.data.back_type;
+      console.log(this.back_type);
+    }
     if (this.data.customerDetail) {
       this.customerDetails = this.data.customerDetail;
     }
@@ -133,7 +138,8 @@ export class LastVisitComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
-          'visitDate': visitDetails.lastVisitedDate
+          'visitDate': visitDetails.lastVisitedDate,
+          'back_type': this.back_type
         }
       };
       const result = {
@@ -154,7 +160,8 @@ export class LastVisitComponent implements OnInit {
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
-          'visitDate': visitDetails.lastVisitedDate
+          'visitDate': visitDetails.lastVisitedDate,
+          'back_type': this.back_type
         }
       };
       const result = {
@@ -180,7 +187,8 @@ export class LastVisitComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
-          'visitDate': visitDetails.lastVisitedDate
+          'visitDate': visitDetails.lastVisitedDate,
+          'back_type': this.back_type
         }
       };
       const result = {
@@ -201,7 +209,8 @@ export class LastVisitComponent implements OnInit {
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
-          'visitDate': visitDetails.lastVisitedDate
+          'visitDate': visitDetails.lastVisitedDate,
+          'back_type': this.back_type
         }
       };
       const result = {

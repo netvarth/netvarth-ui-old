@@ -431,7 +431,7 @@
                                       {{mode.value}}</mat-checkbox>
                                   </li>
                                 </div>
-                                <div *ngIf="time_type !== 3">
+                                <div *ngIf="time_type !== 3 && providerLabels.length > 0">
                                   <!-- <div *ngFor="let lbl of providerLabels">
                                     <label class="filterHeaders">{{lbl.displayName}}</label>
                                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -1034,7 +1034,7 @@
                                       {{mode.value}}</mat-checkbox>
                                   </li>
                                 </div>
-                                <div *ngIf="time_type !== 3">
+                                <div *ngIf="time_type !== 3 && providerLabels.length > 0">
                                   <!-- <div *ngFor="let lbl of providerLabels">
                                     <label class="filterHeaders">{{lbl.displayName}}</label>
                                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">

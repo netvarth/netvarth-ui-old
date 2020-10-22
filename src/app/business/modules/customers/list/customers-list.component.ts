@@ -347,14 +347,22 @@ export class CustomersListComponent implements OnInit {
           disableClose: true,
           data: {
             patientId: customerDetail.id,
-            customerDetail: customerDetail
+            customerDetail: customerDetail,
+            back_type: 'consumer'
           }
         });
 
     }
+    listMedicalrecords(customer) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: { 'id': customer.id }
+    };
+
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
+    }
     medicalRecord(customerDetail) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 }
+            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 , back_type: 'consumer' }
         };
 
         this.shared_functions.removeitemfromLocalStorage('mrId');
@@ -362,7 +370,7 @@ export class CustomersListComponent implements OnInit {
     }
     prescription(customerDetail) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 }
+            queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0 ,  back_type: 'consumer' }
         };
 
         this.shared_functions.removeitemfromLocalStorage('mrId');

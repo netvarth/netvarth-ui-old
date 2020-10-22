@@ -319,9 +319,11 @@ export class AppointmentActionsComponent implements OnInit {
         }
     }
     getLabel() {
+        this.loading = true;
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
+            this.loading = false;
             this.labelselection();
         });
     }
@@ -369,7 +371,7 @@ export class AppointmentActionsComponent implements OnInit {
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
                 // setTimeout(() => {
-                    this.labels();
+                    // this.labels();
                     this.labelMap = new Object();
                     this.labelMap[data.label] = data.value;
                     this.addLabel();
@@ -618,7 +620,8 @@ export class AppointmentActionsComponent implements OnInit {
           'booking_time': this.appt.apptTakenTime,
           'mr_mode': medicalrecord_mode,
           'mrId': mrId ,
-          'booking_id': this.appt.uid
+          'booking_id': this.appt.uid,
+          'back_type': 'appt'
         }
       };
 
@@ -644,7 +647,8 @@ export class AppointmentActionsComponent implements OnInit {
           'booking_time': this.appt.apptTakenTime,
           'mr_mode': medicalrecord_mode,
           'mrId': mrId ,
-          'booking_id': this.appt.uid
+          'booking_id': this.appt.uid,
+          'back_type': 'appt'
         }
       };
       this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);

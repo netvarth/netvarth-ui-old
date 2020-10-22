@@ -18,13 +18,26 @@ import { UploadPrescriptionComponent } from './prescription/upload-prescription/
 import { DrugListComponent } from './prescription/drug-list/drug-list.component';
 import { InstructionsComponent } from './prescription/instructions/instructions.component';
 import { ImagesviewComponent } from './prescription/imagesview/imagesview.component';
+import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-list.component';
 
 
 
 
 
 @NgModule({
-  declarations: [MedicalrecordComponent, GeneralComponent, ClinicalnotesComponent, PrescriptionComponent, LastVisitComponent, AddDrugComponent, ShareRxComponent, UploadPrescriptionComponent, DrugListComponent , InstructionsComponent, ImagesviewComponent],
+  declarations: [MedicalrecordComponent,
+     GeneralComponent,
+      ClinicalnotesComponent,
+       PrescriptionComponent,
+        LastVisitComponent,
+         AddDrugComponent,
+          ShareRxComponent,
+           UploadPrescriptionComponent,
+            DrugListComponent ,
+             InstructionsComponent,
+              ImagesviewComponent,
+              MedicalrecordListComponent
+            ],
   imports: [
     SharedModule,
     CommonModule,

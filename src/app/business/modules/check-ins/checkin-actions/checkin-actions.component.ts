@@ -44,6 +44,7 @@ export class CheckinActionsComponent implements OnInit {
     domain;
     customer_label = '';
     showmrrx = false;
+    loading = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -265,10 +266,12 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     getLabel() {
+        this.loading = true;
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
             this.labelselection();
+            this.loading = false;
         });
     }
     changeLabelvalue(labelname, value) {
@@ -315,11 +318,11 @@ export class CheckinActionsComponent implements OnInit {
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
                 // setTimeout(() => {
-                this.labels();
-                this.labelMap = new Object();
-                this.labelMap[data.label] = data.value;
-                this.addLabel();
-                this.getDisplayname(data.label);
+                // this.labels();
+                    this.labelMap = new Object();
+                    this.labelMap[data.label] = data.value;
+                    this.addLabel();
+                    this.getDisplayname(data.label);
                 // }, 500);
             }
             this.getLabel();
@@ -442,7 +445,8 @@ export class CheckinActionsComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': this.checkin.ynwUuid,
           'mr_mode': medicalrecord_mode,
-          'mrId': mrId
+          'mrId': mrId,
+          'back_type': 'waitlist'
         }
       };
 
@@ -469,7 +473,8 @@ export class CheckinActionsComponent implements OnInit {
           'consultationMode': 'OP',
           'mrId': mrId,
           'mr_mode': medicalrecord_mode,
-          'booking_id': this.checkin.ynwUuid
+          'booking_id': this.checkin.ynwUuid,
+          'back_type': 'waitlist'
         }
       };
       this.router.navigate(['provider', 'customers',  'medicalrecord', 'prescription'], navigationExtras);

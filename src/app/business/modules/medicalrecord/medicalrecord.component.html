@@ -2,7 +2,9 @@
   <section class="">
     <div class="card title-gb">
       <h5 class="mgn-up-10">
-        <h2 style="text-align: center;">Medical Record</h2>
+          <span class="fa fa-arrow-left pointer-cursor"  (click)="goback()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Medical Record
+        <!-- <h2 style="text-align: center;">Medical Record</h2> -->
       </h5>
     </div>
 
@@ -26,7 +28,7 @@
       <div>
         <h5>Add or view medical records for a consultation</h5>
         <p>Patient consultation date
-            <button  *ngIf="visitcount === 0" (click) = "VisitList()">{{visitdate | date:dateFormatSp}}   &nbsp;</button>
+            <button  *ngIf="visitcount === 0" >{{visitdate | date:dateFormatSp}}   &nbsp;</button>
             <button  *ngIf="visitcount !== 0" (click) = "VisitList()">{{visitdate | date:dateFormatSp}}   &nbsp; <i class="arrow down"></i></button>  &nbsp;
             <!-- <span>(Recent visit)</span> -->
         </p>
