@@ -70,7 +70,7 @@ export class MedicalrecordComponent implements OnInit {
       (qparams) => {
         if (qparams['customerDetail']) {
           console.log(qparams);
-
+          this.visitdate = new Date();
           this.navigation_params = qparams;
           // tslint:disable-next-line:radix
 
@@ -137,19 +137,19 @@ export class MedicalrecordComponent implements OnInit {
       });
 
   }
-  navigate(routeLink) {
-    switch (routeLink.id) {
-      case 'clinicalnotes': {
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], { queryParams: this.navigation_params });
-        break;
-      }
-      case 'prescription': {
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigation_params });
-        break;
-      }
-    }
+  // navigate(routeLink) {
+  //   switch (routeLink.id) {
+  //     case 'clinicalnotes': {
+  //       this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], { queryParams: this.navigation_params });
+  //       break;
+  //     }
+  //     case 'prescription': {
+  //       this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigation_params });
+  //       break;
+  //     }
+  //   }
 
-  }
+  // }
 
   ngOnInit() {
 
