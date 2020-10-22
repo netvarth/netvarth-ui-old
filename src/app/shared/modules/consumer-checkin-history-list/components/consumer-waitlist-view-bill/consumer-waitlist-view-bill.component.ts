@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -12,7 +12,7 @@ import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc
   templateUrl: './consumer-waitlist-view-bill.component.html'
 })
 export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
-  @ViewChild('itemservicesearch', { static: false }) item_service_search;
+  @ViewChild('itemservicesearch') item_service_search;
 
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;

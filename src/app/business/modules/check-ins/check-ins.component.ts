@@ -10,7 +10,7 @@ import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/p
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { filter, pairwise } from 'rxjs/operators';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { KeyValue } from '@angular/common';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
@@ -267,7 +267,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   trackDetail: any = [];
   consumerTrackstatus = false;
   labeldialogRef;
-  @ViewChild('chekinSection', { static: false }) chekinSection: ElementRef<HTMLElement>;
+  @ViewChild('chekinSection') chekinSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   topHeight = 0;
   smsdialogRef: any;

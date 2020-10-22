@@ -5,7 +5,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { SharedServices } from './shared-services';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Razorpaymodel } from '../components/razorpay/razorpay.model';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../constants/project-messages';
 
 @Injectable()

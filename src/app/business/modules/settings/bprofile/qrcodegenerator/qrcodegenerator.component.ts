@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { projectConstants } from '../../../../../app.component';
 import {  Meta, Title } from '@angular/platform-browser';
 
@@ -27,14 +27,14 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
 
   }
   private qrCodeParent: ElementRef;
-  @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
+  @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
     }
   }
   // private qrCodeCustId: ElementRef;
 
-  @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
+  @ViewChild('qrCodeCustId') set content2(content2: ElementRef) {
     if (content2) { // initially setter gets called with undefined
       this.qrCodeParent = content2;
     }

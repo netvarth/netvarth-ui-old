@@ -2,7 +2,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatAutocompleteTrigger, MatSelect } from '@angular/material';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatSelect } from '@angular/material/select';
 import { Messages } from '../../constants/project-messages';
 import { SharedServices } from '../../services/shared-services';
 import { SearchDataStorageService } from '../../services/search-datastorage.services';
@@ -100,9 +101,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   showmoreoptionsSec = false;
   holdsrchlocname = '';
   clearLocationCalled = false;
-  @ViewChild('locrefrence', {static: false}) private locRef: ElementRef;
-  @ViewChild('locrefrence', { read: MatAutocompleteTrigger, static: false }) locationRef: MatAutocompleteTrigger;
-  @ViewChild('provbox', { read: MatAutocompleteTrigger, static: false }) provRef: MatAutocompleteTrigger;
+  @ViewChild('locrefrence') private locRef: ElementRef;
+  @ViewChild('locrefrence', { read: MatAutocompleteTrigger }) locationRef: MatAutocompleteTrigger;
+  @ViewChild('provbox', { read: MatAutocompleteTrigger }) provRef: MatAutocompleteTrigger;
   moreoptionsTooltip = '';
   show = false;
   showmorepopularoptions = false;
@@ -120,7 +121,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   isCurrentLocation = false;
   searchLength = 0;
   showmoreSearch = false;
-  @ViewChild('seldomain', {static: false}) seldomain: MatSelect;
+  @ViewChild('seldomain') seldomain: MatSelect;
 
   constructor(
     private shared_service: SharedServices,

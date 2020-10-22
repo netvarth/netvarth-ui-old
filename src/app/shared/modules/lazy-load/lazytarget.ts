@@ -1,8 +1,10 @@
+import { Injectable } from "@angular/core";
 export interface LazyTarget {
     element: Element;
     updateVisibility: (isVisible: boolean, ratio: number) => void;
 }
 
+@Injectable()
 export class LazyViewPort {
     private observer: IntersectionObserver;
     private targets: Map<Element, LazyTarget>;

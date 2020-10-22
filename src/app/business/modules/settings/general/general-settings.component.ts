@@ -5,7 +5,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     'selector': 'app-general-settings',

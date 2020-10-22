@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { DonationCauseListComponent } from './causes/causes.component';
 import { CommonModule } from '@angular/common';
 import { DonationMgrRoutingModule } from './donation-mgr.routing.module';
-import { MatSlideToggleModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';

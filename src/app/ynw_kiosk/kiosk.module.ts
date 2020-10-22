@@ -25,9 +25,6 @@ import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { KioskServices } from './services/kiosk-services.service';
 import { projectConstants } from '../app.component';
-
-
-import 'hammerjs';
 import 'mousetrap';
 
 @NgModule({

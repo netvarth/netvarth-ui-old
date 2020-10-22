@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AddDrugComponent } from './add-drug/add-drug.component';
 import { NavigationExtras, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { MedicalrecordService } from '../medicalrecord.service';

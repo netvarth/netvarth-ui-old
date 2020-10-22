@@ -10,7 +10,7 @@ import { projectConstants } from '../../../../app.component';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import * as moment from 'moment';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 @Component({

@@ -8,7 +8,7 @@ import { projectConstants } from '../../../../../app.component';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
 import { RazorpayprefillModel } from '../../../../../shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../../../../shared/services/windowRef.service';
@@ -20,7 +20,7 @@ import { RazorpayService } from '../../../../../shared/services/razorpay.service
     templateUrl: './checkin-bill.component.html'
 })
 export class ConsumerCheckinBillComponent implements OnInit {
-    @ViewChild('itemservicesearch', { static: false }) item_service_search;
+    @ViewChild('itemservicesearch') item_service_search;
 
     new_cap = Messages.NEW_CAP;
     bill_cap = Messages.BILL_CAPTION;

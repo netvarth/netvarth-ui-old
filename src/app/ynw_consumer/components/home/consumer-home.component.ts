@@ -3,7 +3,7 @@ import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ConsumerServices } from '../../services/consumer-services.service';

@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export class GlobalFunctions {
     public getitemfromLocalStorage(itemname) { // function to get local storage item value
         if (localStorage.getItem(itemname) !== 'undefined') {

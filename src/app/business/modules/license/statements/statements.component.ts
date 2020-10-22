@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -32,7 +32,7 @@ export class StatementsComponent implements OnInit {
   subsc_pack_cap = Messages.SUBSC_PACKAGE;
   id_cap = Messages.ID_CAP;
   ref_id_cap = Messages.REF_ID_CAP;
-  @ViewChild('div', { static: false }) div: ElementRef;
+  @ViewChild('div') div: ElementRef;
   api_error = null;
   api_success = null;
   invoice: any = null;

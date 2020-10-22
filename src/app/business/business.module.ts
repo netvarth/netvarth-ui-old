@@ -15,7 +15,7 @@ import { QuestionService } from '../ynw_provider/components/dynamicforms/dynamic
 import { MessageService } from '../ynw_provider/services/provider-message.service';
 import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
 import { ProviderResolver } from '../ynw_provider/services/provider-resolver.service';
-import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { projectConstants } from '../app.component';
 import { ProviderFaqModule } from './modules/faq/provider-faq.module';

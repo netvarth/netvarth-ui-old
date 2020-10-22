@@ -4,7 +4,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstants } from '../../../app.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import { Location } from '@angular/common';
 import { ConsumerServices } from '../../services/consumer-services.service';

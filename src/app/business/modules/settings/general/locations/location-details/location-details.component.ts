@@ -8,7 +8,7 @@ import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/fu
 import { projectConstants } from '../../../../../../app.component';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { GoogleMapComponent } from '../../../../../../ynw_provider/components/googlemap/googlemap.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { AddProviderWaitlistLocationsComponent } from '../../../../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';

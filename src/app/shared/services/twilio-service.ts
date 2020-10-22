@@ -108,7 +108,7 @@ export class TwilioService {
             options['tracks'] = localTracks;
             this.frontCamTrack = localTracks;
             return twilio.connect(accessToken, options);
-        }).then(room => {
+        }).then((room: any) => {
             this.preview = false;
             this.roomObj = room;
             // navigator.mediaDevices.enumerateDevices().then(this.gotDevices);
@@ -174,7 +174,7 @@ export class TwilioService {
                     // this.router.navigate(['thanks']);
                 });
             });
-        }, (error) => {
+        }, (error: any) => {
             console.log(error);
             alert(error.message);
         });

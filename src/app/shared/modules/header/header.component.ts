@@ -4,7 +4,7 @@ import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, HostListener
 import { Router, NavigationEnd, NavigationExtras } from '@angular/router';
 import * as moment from 'moment';
 import { SharedServices } from '../../services/shared-services';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';

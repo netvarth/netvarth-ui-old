@@ -3,7 +3,7 @@ import { Messages } from '../../../../../../../../../shared/constants/project-me
 import { projectConstants } from '../../../../../../../../../app.component';
 import { ProviderServices } from '../../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../../shared/functions/shared-functions';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../../../../../../../shared/constants/project-constants';
 
 @Component({

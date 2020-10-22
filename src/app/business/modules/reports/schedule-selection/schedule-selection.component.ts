@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -29,7 +30,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
   select_All = Messages.SELECT_ALL;
   public schedule_dataSource = new MatTableDataSource<any>([]);
   selection = new SelectionModel(true, []);
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns = ['select', 'name', 'schedule', 'status', 'userName'];
   constructor(private router: Router,
     private activated_route: ActivatedRoute,

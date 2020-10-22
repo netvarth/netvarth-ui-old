@@ -6,7 +6,7 @@ import { FormMessageDisplayService } from '../../../../../../shared/modules/form
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { MatSelect } from '@angular/material';
+import { MatSelect } from '@angular/material/select';
 import { takeUntil, startWith, map } from 'rxjs/operators';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 
@@ -44,7 +44,7 @@ export class DisplayboardDetailComponent implements OnInit {
     /** list of banks filtered by search keyword for multi-selection */
     public filteredQboardsMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
 
-    @ViewChild('singleSelect', { static: false }) singleSelect: MatSelect;
+    @ViewChild('singleSelect') singleSelect: MatSelect;
 
     /** Subject that emits when the component has been destroyed. */
     private _onDestroy = new Subject<void>();

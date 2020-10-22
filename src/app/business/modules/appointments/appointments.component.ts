@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ApplyLabelComponent } from '../check-ins/apply-label/apply-label.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { CallingModesComponent } from '../check-ins/calling-modes/calling-modes.component';
@@ -278,7 +278,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   topHeight = 0;
 
   @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
-  @ViewChild('apptSection', { static: false }) apptSection: ElementRef<HTMLElement>;
+  @ViewChild('apptSection') apptSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   batchEnabled = false;
   consumerTrackstatus = false;

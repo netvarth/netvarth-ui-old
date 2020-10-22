@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Input, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../shared/functions/shared-functions';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { UpdateProfilePopupComponent } from '../shared/components/update-profile-popup/update-profile-popup.component';
 import { SharedServices } from '../shared/services/shared-services';
 

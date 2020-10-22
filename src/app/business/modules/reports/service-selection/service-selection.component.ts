@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -36,7 +37,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
   public service_dataSource = new MatTableDataSource<any>();
   selected_data: any = [];
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   service_loading$ = true;
 

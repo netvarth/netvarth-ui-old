@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, EventEmitter, OnChanges, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { GalleryService } from '../galery-service';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -35,7 +35,7 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
     canceldisabled = false;
     source_id;
     subscription: Subscription;
-    @ViewChild('filed', { static: false }) fileInput: ElementRef;
+    @ViewChild('filed') fileInput: ElementRef;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<GalleryImportComponent>,
         public sharedfunctionObj: SharedFunctions,

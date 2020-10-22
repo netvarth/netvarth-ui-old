@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Location } from '@angular/common';
 

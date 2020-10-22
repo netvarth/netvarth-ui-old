@@ -9,7 +9,7 @@ import { projectConstants } from '../../../../../../app.component';
 import * as moment from 'moment';
 import { SharedServices } from '../../../../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 @Component({
     'selector': 'app-branchuser-detail',

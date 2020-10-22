@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -10,7 +10,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProPicPopupComponent } from '../../bprofile/pro-pic-popup/pro-pic-popup.component';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QuestionService } from '../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';

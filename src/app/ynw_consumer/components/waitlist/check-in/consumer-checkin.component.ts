@@ -13,7 +13,8 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Location } from '@angular/common';
-import { MatDialog, MatCalendarCellCssClasses } from '@angular/material';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 @Component({
     selector: 'app-consumer-checkin',

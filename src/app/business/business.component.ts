@@ -6,7 +6,7 @@ import { CommonDataStorageService } from '../shared/services/common-datastorage.
 import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedServices } from '../shared/services/shared-services';
 import { Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 
 @Component({

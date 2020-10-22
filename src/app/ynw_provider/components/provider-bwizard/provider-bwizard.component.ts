@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Messages } from '../../../shared/constants/project-messages';
 import { GoogleMapComponent } from '../googlemap/googlemap.component';
@@ -101,7 +101,7 @@ export class ProviderbWizardComponent implements OnInit {
   foodServc_frmsentns = Messages.FOODSRVC_FORMLEVEL_CAP;
   remem_msg = Messages.REMEM_MSG_CAP;
   rupee_symbol = '₹';
-  @ViewChild('bnameId', { static: false }) bnameIdref: ElementRef;
+  @ViewChild('bnameId') bnameIdref: ElementRef;
   tbprof;
 
 

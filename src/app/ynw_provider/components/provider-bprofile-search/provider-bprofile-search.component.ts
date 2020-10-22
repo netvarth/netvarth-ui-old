@@ -1,6 +1,6 @@
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import {

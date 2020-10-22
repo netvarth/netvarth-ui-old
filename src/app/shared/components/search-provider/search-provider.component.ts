@@ -5,7 +5,7 @@ import { projectConstants } from '../../../app.component';
 import { SharedServices } from '../../services/shared-services';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { Messages } from '../../constants/project-messages';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { SignUpComponent } from '../signup/signup.component';

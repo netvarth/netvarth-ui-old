@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { projectConstants } from '../../../app.component';

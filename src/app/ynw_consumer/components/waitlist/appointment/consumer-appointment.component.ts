@@ -13,7 +13,8 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
-import { MatDialog, MatCalendarCellCssClasses } from '@angular/material';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',

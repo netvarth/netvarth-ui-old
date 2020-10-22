@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { Observable } from 'rxjs';
@@ -96,8 +96,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   update_display_note = Messages.UPDATE_DISPLAY_NOTE;
   update_private_note = Messages.UPDATE_PRIVATE_NOTE;
   update_note_btn = Messages.UPDATE_NOTE;
-  @ViewChild('itemservicesearch', { static: false }) item_service_search;
-  @ViewChild('itemserviceqty', { static: false }) item_service_qty;
+  @ViewChild('itemservicesearch') item_service_search;
+  @ViewChild('itemserviceqty') item_service_qty;
   amForm: FormGroup;
   api_error = null;
   api_success = null;

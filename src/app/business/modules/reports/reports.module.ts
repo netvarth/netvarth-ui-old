@@ -8,14 +8,16 @@ import { ReportsRoutingModule } from './reports.routing.module';
 import { NewReportComponent } from './new-report/new-report.component';
 import { ReportDataService } from './reports-data.service';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
-import { MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatDatepickerModule } from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 import { ServiceSelectionComponent } from './service-selection/service-selection.component';
 import { ScheduleSelectionComponent } from './schedule-selection/schedule-selection.component';
 import { QueueSelectionComponent } from './queue-selection/queue-selection.component';
 import { GeneratedReportComponent } from './generated-report/generated-report.component';
 import { CustomerSelectionComponent } from './customer-selection/customer-selection.component';
-
-
 
 @NgModule({
   imports: [

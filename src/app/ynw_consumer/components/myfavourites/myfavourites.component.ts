@@ -5,7 +5,7 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
 

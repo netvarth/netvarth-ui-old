@@ -14,10 +14,10 @@ import { Messages } from '../../../shared/constants/project-messages';
   templateUrl: './kiosk-home.component.html'
 })
 export class KioskHomeComponent implements OnInit, OnDestroy {
-  @ViewChild('srchname', {static: false}) private srchname: ElementRef;
-  @ViewChild('regmobile', {static: false}) private regmobile: ElementRef;
-  @ViewChild('regfname', {static: false}) private regfname: ElementRef;
-  @ViewChild('reglname', {static: false}) private reglname: ElementRef;
+  @ViewChild('srchname') private srchname: ElementRef;
+  @ViewChild('regmobile') private regmobile: ElementRef;
+  @ViewChild('regfname') private regfname: ElementRef;
+  @ViewChild('reglname') private reglname: ElementRef;
 
   welcome_cap = Messages.WELCOME_CAP;
   checkin_youself_cap = Messages.CHECKIN_YOURSELF_CAP;

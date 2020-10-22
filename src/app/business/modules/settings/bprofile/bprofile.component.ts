@@ -7,7 +7,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -319,7 +319,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
   licenseMetrics: any = [];
   parkingType: any;
   park_type: any;
-  @ViewChild('logofile', { static: false }) myInputVariable: ElementRef;
+  @ViewChild('logofile') myInputVariable: ElementRef;
   show_passcode = false;
   onlinepresence_status = false;
   onlinepresence_statusstr = '';

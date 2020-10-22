@@ -3,7 +3,7 @@ import { Messages } from '../../constants/project-messages';
 import { ForgotPasswordModel } from '../forgot-password/forgot-password.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SharedServices } from '../../services/shared-services';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';

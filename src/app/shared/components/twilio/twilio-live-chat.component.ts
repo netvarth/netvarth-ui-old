@@ -12,9 +12,9 @@ import { Location } from '@angular/common';
     styleUrls: ['./twilio-live-chat.component.css']
 })
 export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
-    @ViewChild('localVideo', { static: false }) localVideo: ElementRef;
-    @ViewChild('previewContainer', { static: false }) previewContainer: ElementRef;
-    @ViewChild('remoteVideo', { static: false }) remoteVideo: ElementRef;
+    @ViewChild('localVideo') localVideo: ElementRef;
+    @ViewChild('previewContainer') previewContainer: ElementRef;
+    @ViewChild('remoteVideo') remoteVideo: ElementRef;
     room_name;
     access_token;
     app_id;

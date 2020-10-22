@@ -3,7 +3,7 @@ import { WaitlistServicesComponent } from './list/waitlist-services.component';
 import { WaitlistServiceDetailComponent } from './details/waitlistservice-detail.component';
 import { CommonModule } from '@angular/common';
 import { WaitlistServicesRoutingModule } from './waitlist-services.routing.module';
-import { MatSlideToggleModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { BreadCrumbModule } from '../../../../../../../shared/modules/breadcrumb/breadcrumb.module';

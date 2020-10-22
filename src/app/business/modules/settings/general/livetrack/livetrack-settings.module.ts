@@ -4,7 +4,7 @@ import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/bread
 import { LiveTrackSettingsComponent } from './livetrack-settings.component';
 import { LiveTrackSettingsRoutingModule } from './livetrack-settings.routing.module';
 import { CommonModule } from '@angular/common';
-import { MatSlideToggleModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 

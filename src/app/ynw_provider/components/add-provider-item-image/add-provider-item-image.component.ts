@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
@@ -35,7 +35,7 @@ export class AddProviderItemImageComponent implements OnInit {
   show_img_select = true;
   upload_button_caption = 'Upload';
   uploading = false;
-  @ViewChild('caption', {static: false}) private captionRef: ElementRef;
+  @ViewChild('caption') private captionRef: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<AddProviderItemImageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

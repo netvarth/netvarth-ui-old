@@ -1,6 +1,6 @@
 import { OnInit, Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { ButtonEvent, Image, ButtonType, ButtonsStrategy, ButtonsConfig, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig } from 'angular-modal-gallery';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { GalleryImportComponent } from './import/gallery-import.component';
 import { Subscription } from 'rxjs';
 import { GalleryService } from './galery-service';

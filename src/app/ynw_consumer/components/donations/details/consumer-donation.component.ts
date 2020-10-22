@@ -17,7 +17,7 @@ import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
