@@ -67,6 +67,7 @@ export class LastVisitComponent implements OnInit {
     this.provider_services.getPatientVisitList(this.PatientId)
       .subscribe((data: any) => {
         this.lastVisit_dataSource = data;
+        console.log(this.lastVisit_dataSource);
         this.loading = false;
       },
         error => {
@@ -125,10 +126,11 @@ export class LastVisitComponent implements OnInit {
 
   }
   viewMedicalRecord(visitDetails) {
+    console.log(JSON.stringify(visitDetails.waitlist.waitlistingFor[0]));
     if (visitDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
+          'customerDetail': JSON.stringify(visitDetails.waitlist.waitlistingFor[0]),
           'serviceId': visitDetails.waitlist.service.id,
           'serviceName': visitDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
@@ -139,9 +141,10 @@ export class LastVisitComponent implements OnInit {
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
           'visitDate': visitDetails.lastVisitedDate,
-          'back_type': this.back_type
+          'back_type': this.back_type,
         }
       };
+     console.log(navigationExtras);
       const result = {
         'navigationParams': navigationExtras,
         'type': 'clinicalnotes'
@@ -151,7 +154,8 @@ export class LastVisitComponent implements OnInit {
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.appointmnet.providerConsumer),
+          'customerDetail': JSON.stringify(visitDetails.appointmnet.appmtFor[0]),
+          // 'customerDetail': JSON.stringify(visitDetails.appointmnet.providerConsumer),
           'serviceId': visitDetails.appointmnet.service.id,
           'serviceName': visitDetails.appointmnet.service.name,
           'department': visitDetails.appointmnet.service.deptName,
@@ -174,10 +178,12 @@ export class LastVisitComponent implements OnInit {
   }
 
   viewMR_prescription(visitDetails) {
+    console.log(JSON.stringify(visitDetails.waitlist.waitlistingFor[0]));
     if (visitDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
+          'customerDetail': JSON.stringify(visitDetails.waitlist.waitlistingFor[0]),
+          // 'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
           'serviceId': visitDetails.waitlist.service.id,
           'serviceName': visitDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
@@ -200,7 +206,7 @@ export class LastVisitComponent implements OnInit {
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.appointmnet.providerConsumer),
+          'customerDetail': JSON.stringify(visitDetails.appointmnet.appmtFor[0]),
           'serviceId': visitDetails.appointmnet.service.id,
           'serviceName': visitDetails.appointmnet.service.name,
           'department': visitDetails.appointmnet.service.deptName,
@@ -213,6 +219,7 @@ export class LastVisitComponent implements OnInit {
           'back_type': this.back_type
         }
       };
+
       const result = {
         'navigationParams': navigationExtras,
         'type': 'prescription'
