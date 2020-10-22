@@ -1,11 +1,15 @@
 <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
-
-      Medical Records
+      <span class="fa fa-arrow-left pointer-cursor"  (click)="back()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+      Medical records of {{patientDetails[0].firstName}} {{patientDetails[0].lastName}}
 
     </h5>
   </div>
+
+  
+
+
 </section>
 <section class="report">
   <div class="content w-manager settings comn-cls lic-page">
@@ -30,7 +34,6 @@
 
             <mat-table *ngIf="mr_dataSource.length > 0" [dataSource]="mr_dataSource">
 
-              .
               <ng-container matColumnDef="consultationDate">
                 <mat-header-cell *matHeaderCellDef> Consultation Date</mat-header-cell>
                 <mat-cell *matCellDef=" let mr">

@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MatTableDataSource } from '@angular/material';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-medicalrecord-list',
@@ -16,11 +17,13 @@ export class MedicalrecordListComponent implements OnInit {
   patientId: any;
   public mr_dataSource = new MatTableDataSource<any>();
   displayedColumns = ['consultationDate', 'serviceName', 'bookingType', 'medicalrecord', 'rx'];
+  patientDetails: ArrayBuffer;
   constructor(private provider_services: ProviderServices,
     private activatedRoute: ActivatedRoute,
     public dateformat: DateFormatPipe,
     private router: Router,
-    private sharedfunctionObj: SharedFunctions) {
+    private sharedfunctionObj: SharedFunctions,
+    private location: Location) {
     this.activatedRoute.queryParams.subscribe(queryParams => {
       this.patientId = queryParams.id;
 
@@ -29,10 +32,23 @@ export class MedicalrecordListComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getPatientDetails();
     this.getPatientMedicalRecords();
   }
-  getLastVisitDate(visit) {
-    return this.dateformat.transformToDatewithtime(visit.lastVisitedDate);
+  // getLastVisitDate(visit) {
+  //   return this.dateformat.transformToDatewithtime(visit.lastVisitedDate);
+  // }
+  getPatientDetails() {
+    const filter = { 'id-eq': this.patientId };
+    this.provider_services.getProviderCustomers(filter)
+    .subscribe(
+        res => {
+          this.patientDetails = res;
+          console.log(this.patientDetails);
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
   }
   getPatientMedicalRecords() {
     this.provider_services.getPatientMedicalRecords(this.patientId)
@@ -43,6 +59,9 @@ export class MedicalrecordListComponent implements OnInit {
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
+  }
+  back(){
+    this.location.back();
   }
   getServiceName(mr) {
     let serviceName = 'Consultation';
