@@ -175,11 +175,17 @@
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
 <div *ngIf="action === 'label'">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 scro">
+    <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
+        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 scro" *ngIf="providerLabels.length > 0 && !loading">
         <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
             <mat-checkbox [checked]="label.selected" (change)="addLabeltoAppt(label.label, $event)">
                 {{label.displayName | capitalizeFirst}}</mat-checkbox>
         </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-30 scro" *ngIf="providerLabels.length === 0 && !loading">
+    No labels created till now
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
@@ -251,6 +257,9 @@
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">Choose Slot
             </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
+                <app-common-innerloading-spinner></app-common-innerloading-spinner>
+            </div>
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 slotdiv no-padding queue-outer"
                 *ngIf="freeSlots.length > 0 && !loading">
                 <mat-chip-list class="appt-in-chip">
@@ -262,9 +271,6 @@
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10" *ngIf="freeSlots.length === 0 && !loading">
                 No slots available.
-            </div>
-            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
-                <app-common-innerloading-spinner></app-common-innerloading-spinner>
             </div>
             <div
                 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding reschedulebtn">

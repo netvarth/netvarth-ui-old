@@ -44,6 +44,7 @@ export class CheckinActionsComponent implements OnInit {
     domain;
     customer_label = '';
     showmrrx = false;
+    loading = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -265,9 +266,12 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     getLabel() {
+        this.loading = true;
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
+            this.labelselection();
+            this.loading = false;
         });
     }
     changeLabelvalue(labelname, value) {
@@ -314,7 +318,7 @@ export class CheckinActionsComponent implements OnInit {
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
                 // setTimeout(() => {
-                    this.labels();
+                    // this.labels();
                     this.labelMap = new Object();
                     this.labelMap[data.label] = data.value;
                     this.addLabel();

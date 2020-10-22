@@ -243,7 +243,7 @@
                             {{mode.value}}</mat-checkbox>
                         </li>
                       </div>
-                      <div>
+                      <div *ngIf="providerLabels.length > 0">
                         <!-- <div *ngFor="let lbl of providerLabels">
                           <label class="filterHeaders">{{lbl.displayName}}</label>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -746,7 +746,7 @@
                               {{mode.value}}</mat-checkbox>
                           </li>
                         </div>
-                        <div>
+                        <div *ngIf="providerLabels.length > 0">
                           <!-- <div *ngFor="let lbl of providerLabels">
                             <label class="filterHeaders">{{lbl.displayName}}</label>
                             <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
