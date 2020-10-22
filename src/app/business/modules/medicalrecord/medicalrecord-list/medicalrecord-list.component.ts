@@ -68,7 +68,9 @@ export class MedicalrecordListComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': mrDetails.waitlist.ynwUuid,
           'mrId': mrDetails.mrId,
-          'visitDate': mrDetails.lastVisitedDate
+          'visitDate': mrDetails.lastVisitedDate,
+          'back_type': 'consumer'
+
         }
       };
 
@@ -86,7 +88,8 @@ export class MedicalrecordListComponent implements OnInit {
           'booking_time': mrDetails.appointmnet.apptTakenTime,
           'mrId': mrDetails.mrId,
           'booking_id': mrDetails.appointmnet.uid,
-          'visitDate': mrDetails.lastVisitedDate
+          'visitDate': mrDetails.lastVisitedDate,
+          'back_type': 'consumer'
         }
       };
       this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], navigationExtras);
@@ -97,7 +100,8 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': 'Consultation',
           'booking_type': 'FOLLOWUP',
           'mrId': mrDetails.id,
-          'visitDate': mrDetails.mrConsultationDate
+          'visitDate': mrDetails.mrConsultationDate,
+          'back_type': 'consumer'
         }
       };
       this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], navigationExtras);
@@ -118,7 +122,8 @@ export class MedicalrecordListComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': mrDetails.waitlist.ynwUuid,
           'mrId': mrDetails.mrId,
-          'visitDate': mrDetails.date
+          'visitDate': mrDetails.date,
+          'back_type': 'consumer'
         }
       };
 
@@ -136,7 +141,8 @@ export class MedicalrecordListComponent implements OnInit {
           'booking_time': mrDetails.appointmnet.apptTakenTime,
           'mrId': mrDetails.mrId,
           'booking_id': mrDetails.appointmnet.uid,
-          'visitDate': mrDetails.date
+          'visitDate': mrDetails.date,
+          'back_type': 'consumer'
         }
       };
 
@@ -148,7 +154,8 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': 'Consultation',
           'booking_type': 'FOLLOWUP',
           'mrId': mrDetails.id,
-          'visitDate': mrDetails.mrConsultationDate
+          'visitDate': mrDetails.mrConsultationDate,
+          'back_type': 'consumer'
         }
       };
       this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);

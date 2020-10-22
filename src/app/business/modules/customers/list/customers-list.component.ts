@@ -322,7 +322,8 @@ export class CustomersListComponent implements OnInit {
           disableClose: true,
           data: {
             patientId: customerDetail.id,
-            customerDetail: customerDetail
+            customerDetail: customerDetail,
+            back_type: 'consumer'
           }
         });
 
