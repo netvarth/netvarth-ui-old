@@ -55,7 +55,7 @@
                                                 <div class="detail" [@hideShowAnimator]="hideShowAnimator"
                                                     *ngIf="open_fav_div == i">
                                                     <div class="location">
-                                                        <div class="locationname">
+                                                        <div class="locationname" *ngIf="provider.locations[0] && provider.locations[0].place">
                                                             <span class="icon-location"></span> {{provider.locations[0].place | capitalizeFirst}}
                                                         </div>
                                                         <!-- <div class="bt-l" *ngIf="loc['waitlist'] && provider.onlinePresence">
