@@ -6,6 +6,8 @@ import { UploadPrescriptionComponent } from './prescription/upload-prescription/
 import { DrugListComponent } from './prescription/drug-list/drug-list.component';
 import { ClinicalnotesComponent } from './clinicalnotes/clinicalnotes.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
+import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-list.component';
+
 
 
 const routes: Routes = [
@@ -21,6 +23,7 @@ const routes: Routes = [
       }
     ]
   },
+   { path: 'list', component: MedicalrecordListComponent },
   { path: 'edit', component: GeneralComponent },
   { path: 'uploadRx', component: UploadPrescriptionComponent },
   { path: 'addrxlist', component: DrugListComponent }

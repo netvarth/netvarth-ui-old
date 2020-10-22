@@ -1586,4 +1586,9 @@ export class ProviderServices {
     const url = 'provider/mr/patientPreviousVisit/count/' + patientId;
     return this.servicemeta.httpGet(url);
   }
+  getPatientMedicalRecords(patientId) {
+    const filter = { 'patientId-eq': patientId };
+    const url = 'provider/mr';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
 }
