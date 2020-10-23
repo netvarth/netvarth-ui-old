@@ -128,7 +128,7 @@
                                             <div class="mgn-up-10" style="display: flex;">
                                                 <h6> Batch mode </h6>
                                                 <mat-slide-toggle class="example-margin mgn-lt-10"
-                                                    (ngModel)="batchStatus" (change)="changeBatchStatus($event)">
+                                                    [(ngModel)]="batchStatus" (change)="changeBatchStatus($event)">
                                                 </mat-slide-toggle>
                                                 <span class="greenc mgn-lt-5" *ngIf="batchStatus">
                                                     Enabled  
@@ -156,7 +156,7 @@
                                                         <mat-form-field>
                                                             <input
                                                                 style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                                matInput placeholder="Prefix" (ngModel)="prefixName"
+                                                                matInput placeholder="Prefix" [(ngModel)]="prefixName"
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </div>
@@ -164,7 +164,7 @@
                                                         <mat-form-field>
                                                             <input
                                                                 style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                                matInput placeholder="Suffix" (ngModel)="suffixName"
+                                                                matInput placeholder="Suffix" [(ngModel)]="suffixName"
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </div>
@@ -286,7 +286,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 </div> -->
 
                                 <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                                    (ngModel)="token_service">
+                                    [(ngModel)]="token_service">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary " type="button"
                                         (click)="goToSelectionPage()">Change</button>
@@ -300,7 +300,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 </div>
 
                                 <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly placeholder="{{token_service}}"
-                                    (ngModel)="token_service">
+                                    [(ngModel)]="token_service">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary " type="button"
                                         (click)="goToSelectionPage(token_service_id)">Change </button>
@@ -330,7 +330,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 </section> -->
 
                                 <!-- <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                                    (ngModel)="token_service">
+                                    [(ngModel)]="token_service">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary " type="button"
                                         (click)="goToSelectionPage('service',appointment_service_id)">Change</button>
@@ -459,7 +459,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             <mat-form-field>
                                                 <input
                                                     style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                    matInput placeholder="Prefix" (ngModel)="qprefixName"
+                                                    matInput placeholder="Prefix" [(ngModel)]="qprefixName"
                                                     autocomplete="off" [ngModelOptions]="{standalone: true}">
                                             </mat-form-field>
                                         </div>
@@ -467,7 +467,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             <mat-form-field>
                                                 <input
                                                     style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                    matInput placeholder="Suffix" (ngModel)="qsuffixName"
+                                                    matInput placeholder="Suffix" [(ngModel)]="qsuffixName"
                                                     autocomplete="off" [ngModelOptions]="{standalone: true}">
                                             </mat-form-field>
                                         </div>

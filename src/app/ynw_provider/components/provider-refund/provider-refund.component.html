@@ -8,12 +8,12 @@
             data.payment_det.refundableAmount | currency:'&#8377;'}}</span></div>
     <div class="form-group">
         <label class="col-form-label" for="displayName">{{amt_want_to_refund}} (<i class="fa fa-inr"></i>) *</label>
-        <input matInput type="text" class="form-control" (ngModel)="refpayAmt" autocomplete="off">
+        <input matInput type="text" class="form-control" [(ngModel)]="refpayAmt" autocomplete="off">
     </div>
     <div class="form-group">
         <div class="refmod-outer">
             <div class="col-form-label">{{refund_cap}} {{mode_cap}} *</div>
-            <mat-radio-group class="refpayment-mode" (ngModel)="refpayMode">
+            <mat-radio-group class="refpayment-mode" [(ngModel)]="refpayMode">
                 <ng-container *ngFor="let pmode of payment_options; let i=index;">
                     <mat-radio-button [value]="pmode.value" *ngIf="pmode.enabled">{{pmode.label}}</mat-radio-button>
                 </ng-container>

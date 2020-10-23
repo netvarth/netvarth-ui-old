@@ -142,7 +142,7 @@ onSubmit()" (keyup)="resetApiErrors()">
           <label class="col-form-label bold">How did you hear us?</label>
       </div>
       <div class="form-group col-md-12 col-xs-12 col-sm-12 hearus no-padding">
-          <mat-radio-group (ngModel)="hearus">
+          <mat-radio-group [(ngModel)]="hearus">
               <mat-radio-button value="Jaldee">Jaldee</mat-radio-button>
               <mat-radio-button value="Facebook">Facebook</mat-radio-button>
               <mat-radio-button value="Friend">Friend</mat-radio-button>

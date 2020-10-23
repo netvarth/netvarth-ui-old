@@ -25,7 +25,7 @@
                                             <div class="mgn-up-20">Allow {{activeWt.providerAccount.businessName}} to
                                                 track your
                                                 <span class="bold">Estimated Time of Arrival <span class="mgn-lt-30">
-                                                        <mat-slide-toggle (ngModel)="shareLoc"
+                                                        <mat-slide-toggle [(ngModel)]="shareLoc"
                                                             (change)=locationEnableDisable($event)>
                                                         </mat-slide-toggle>
                                                     </span></span>
@@ -33,7 +33,7 @@
                                             </div>
                                             <div class="mgn-up-20" *ngIf="shareLoc">Automatically track your ETA
                                                 <!-- <span class="mgn-lt-10">
-                                            <mat-slide-toggle (ngModel)="notifyAutomatic"
+                                            <mat-slide-toggle [(ngModel)]="notifyAutomatic"
                                                 (change)=notifyEvent($event)></mat-slide-toggle>
                                         </span> -->
                                                 <div><span class="info-lst form-level-settings"

@@ -28,7 +28,7 @@ export interface ItemServiceGroup {
 })
 
 export class AddProviderWaitlistCheckInBillComponent implements OnInit {
-  paynot;
+  paynot = '';
   tooltipcls = '';
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;
@@ -1242,7 +1242,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   hidePayWorkBench() {
     this.showPayWorkBench = false;
   }
-  makePayment(mode, amount, paynot, status?) {
+  makePayment(mode, amount, paynot?, status?) {
     if (this.source) {
       this.pay_data.uuid = this.checkin.uid;
     } else {

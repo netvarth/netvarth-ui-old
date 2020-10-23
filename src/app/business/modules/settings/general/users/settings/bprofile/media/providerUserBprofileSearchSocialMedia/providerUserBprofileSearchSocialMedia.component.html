@@ -4,7 +4,7 @@
     <mat-dialog-content class="ynw-common-form">
 <div class="form-group" *ngIf="curmod=='add'">
     <mat-form-field class="example-full-width">
-        <mat-select placeholder="{{select_cap}}" #selsocial (ngModel)="socialkey">
+        <mat-select placeholder="{{select_cap}}" #selsocial [(ngModel)]="socialkey">
             <mat-option *ngFor="let slist of social_list" [value]="slist.key">
                 <mat-icon [class]="slist.iconClass" aria-hidden="true"></mat-icon>
                 {{ slist.displayName }}
@@ -23,7 +23,7 @@
 
 <div class="form-group">
     <mat-form-field>
-        <input matInput class="form-control" placeholder="{{social_url_cap}} (E.g:- https://www.jaldee.com)" type="url" (ngModel)="socialurl"
+        <input matInput class="form-control" placeholder="{{social_url_cap}} (E.g:- https://www.jaldee.com)" type="url" [(ngModel)]="socialurl"
             name="socialurl" matInput autocomplete="off" [placeholder]="placeholder">
     </mat-form-field>
 </div>

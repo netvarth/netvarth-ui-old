@@ -835,7 +835,6 @@ export class ConsumerDonationComponent implements OnInit {
             .then(
                 data => {
                     this.userData = data;
-                    console.log(this.userData)
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';

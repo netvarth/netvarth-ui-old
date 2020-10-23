@@ -18,6 +18,7 @@ import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-bo
 
 export class BranchUsersComponent implements OnInit {
     tooltipcls = '';
+    filtericonTooltip = '';
     add_button = '';
     users_list: any = [];
     breadcrumb_moreoptions: any = [];

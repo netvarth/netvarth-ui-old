@@ -188,8 +188,8 @@
                                                                                         </div>
                                                                                         <div class="price rupee-font" style="flex-basis: 30% !important">
                                                                                             <span>(-)</span>
-                                                                                            <span (click)="showJCCouponNote(jcoupon)"
-                                                                                                [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value |
+                                                                                            <!-- (click)="showJCCouponNote(jcoupon)" -->
+                                                                                            <span [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value |
                                                                                 currency:'&#8377; '}}</span>
                                                                                         </div>
                                                                                     </div>

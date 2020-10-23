@@ -33,7 +33,7 @@
                                     More</a> -->
                             </span>
 
-                            <mat-radio-group class="" (ngModel)="optJaldeeAccount">
+                            <mat-radio-group class="" [(ngModel)]="optJaldeeAccount">
                                 <div class="lbr mt-3  col-sm-12 col-md-12 col-lg-12">
                                     <div class="rw">
                                         <div class="form-group" style="margin-top: 15px">
@@ -78,7 +78,7 @@
                                                                                     <input class="form-control"
                                                                                         maxlength="10" matInput
                                                                                         #paymobref
-                                                                                        (ngModel)="paytmmobile"
+                                                                                        [(ngModel)]="paytmmobile"
                                                                                         placeholder="Enter 10 digits mobile
                                                                                                 number(+91)"
                                                                                         (keypress)="resetApi('paytmmobile')"
@@ -100,7 +100,7 @@
                                                                         <div class="form-group">
                                                                             <mat-form-field>
                                                                                 <input matInput #paytmidref
-                                                                                    (ngModel)="paytmMerchantId"
+                                                                                    [(ngModel)]="paytmMerchantId"
                                                                                     placeholder="Merchant Id *"
                                                                                     (keypress)="resetApi('paytmMerchantId')"
                                                                                     autocomplete="off"
@@ -119,7 +119,7 @@
                                                                         <div class="form-group">
                                                                             <mat-form-field>
                                                                                 <input matInput #paytmmkeyref
-                                                                                    (ngModel)="paytmMerchantKey"
+                                                                                    [(ngModel)]="paytmMerchantKey"
                                                                                     (keypress)="resetApi('paytmMerchantKey')"
                                                                                     placeholder="Merchant Key *"
                                                                                     autocomplete="off"
@@ -138,7 +138,7 @@
                                                                         <div class="form-group">
                                                                             <mat-form-field>
                                                                                 <input matInput #paytmWebsitewebref
-                                                                                    (ngModel)="paytmWebsiteWeb"
+                                                                                    [(ngModel)]="paytmWebsiteWeb"
                                                                                     (keypress)="resetApi('paytmWebsiteWeb')"
                                                                                     placeholder="Website Web *"
                                                                                     autocomplete="off"
@@ -157,7 +157,7 @@
                                                                         <div class="form-group">
                                                                             <mat-form-field>
                                                                                 <input matInput #paytmWebsiteappref
-                                                                                    (ngModel)="paytmWebsiteApp"
+                                                                                    [(ngModel)]="paytmWebsiteApp"
                                                                                     (keypress)="resetApi('paytmWebsiteApp')"
                                                                                     placeholder="Website App *"
                                                                                     autocomplete="off"
@@ -176,7 +176,7 @@
                                                                         <div class="form-group">
                                                                             <mat-form-field>
                                                                                 <input matInput #paytmIndustryTypeidref
-                                                                                    (ngModel)="paytmIndustryType"
+                                                                                    [(ngModel)]="paytmIndustryType"
                                                                                     (keypress)="resetApi('paytmIndustryType')"
                                                                                     placeholder="Industry Type *"
                                                                                     autocomplete="off"
@@ -212,9 +212,9 @@
                                                                 <mat-expansion-panel-header>
                                                                     <mat-panel-title>
                                                                         <span> {{cc_dc_netbanking_cap}} <span
-                                                                                *ngIf="payuverified ||razorpayVerified"
+                                                                                *ngIf="payuverified || razorpayVerified"
                                                                                 class="verified">{{verified_cap}}</span><span
-                                                                                *ngIf="!payuverified && razorpayVerfied==false"
+                                                                                *ngIf="!payuverified && !razorpayVerified"
                                                                                 class="not-verified">{{not_verified_cap}}</span>
                                                                         </span>
                                                                     </mat-panel-title>
@@ -224,7 +224,7 @@
                                                                         <div class="form-group">
                                                                             <mat-form-field>
                                                                                 <input matInput #acholdernameref
-                                                                                    (ngModel)="bankacname"
+                                                                                    [(ngModel)]="bankacname"
                                                                                     (change)="resetApi('bankacname')"
                                                                                     placeholder="{{account_holder_name_cap}}"
                                                                                     autocomplete="off"
@@ -244,7 +244,7 @@
                                                                         <div class="form-group">
                                                                             <mat-form-field>
                                                                                 <input matInput
-                                                                                    (ngModel)="bankacnumber"
+                                                                                    [(ngModel)]="bankacnumber"
                                                                                     (change)="resetApi('bankacnumber')"
                                                                                     placeholder="{{bank_account_number_cap}}"
                                                                                     maxlength="18" autocomplete="off"
@@ -262,7 +262,7 @@
                                                                     <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                         <div class="form-group">
                                                                             <mat-form-field>
-                                                                                <input matInput (ngModel)="bankname"
+                                                                                <input matInput [(ngModel)]="bankname"
                                                                                     (change)="resetApi('bankname')"
                                                                                     placeholder="{{bank_name_cap}}"
                                                                                     autocomplete="off"
@@ -281,7 +281,7 @@
                                                                     <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                         <div class="form-group">
                                                                             <mat-form-field>
-                                                                                <input matInput (ngModel)="bankifsc"
+                                                                                <input matInput [(ngModel)]="bankifsc"
                                                                                     (change)="resetApi('bankifsc')"
                                                                                     placeholder="{{ifsc_code_cap}}"
                                                                                     autocomplete="off"
@@ -299,7 +299,7 @@
                                                                     <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                         <div class="form-group">
                                                                             <mat-form-field>
-                                                                                <input matInput (ngModel)="bankbranch"
+                                                                                <input matInput [(ngModel)]="bankbranch"
                                                                                     (change)="resetApi('bankbranch')"
                                                                                     placeholder="{{branch_name_cap}}"
                                                                                     maxlength="50" autocomplete="off"
@@ -317,7 +317,7 @@
                                                                     <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                         <div class="form-group">
                                                                             <mat-form-field>
-                                                                                <mat-select (ngModel)="bankfiling"
+                                                                                <mat-select [(ngModel)]="bankfiling"
                                                                                     (selectionChange)="resetApi('bankfiling')"
                                                                                     [disabled]="!ineditMode"
                                                                                     tabindex="12">
@@ -354,7 +354,7 @@
                                                                     <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                         <div class="form-group">
                                                                             <mat-form-field>
-                                                                                <mat-select (ngModel)="bankactype"
+                                                                                <mat-select [(ngModel)]="bankactype"
                                                                                     (selectionChange)="resetApi('bankactype')"
                                                                                     [disabled]="!ineditMode"
                                                                                     tabindex="13">
@@ -379,7 +379,7 @@
                                                                     <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                         <div class="form-group">
                                                                             <mat-form-field>
-                                                                                <input matInput (ngModel)="pannumber"
+                                                                                <input matInput [(ngModel)]="pannumber"
                                                                                     (change)="resetApi('pannumber')"
                                                                                     autocomplete="off"
                                                                                     placeholder="{{pan_card_number_cap}}"
@@ -398,7 +398,7 @@
                                                                     <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                         <div class="form-group">
                                                                             <mat-form-field>
-                                                                                <input matInput (ngModel)="panname"
+                                                                                <input matInput [(ngModel)]="panname"
                                                                                     (change)="resetApi('panname')"
                                                                                     autocomplete="off"
                                                                                     placeholder="{{name_on_pan_card_cap}}"

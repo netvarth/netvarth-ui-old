@@ -229,7 +229,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
     this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
   }
-  private setLocation(loc) {
+  public setLocation(loc) {
     if (loc) {
       this.locationholder = {
         name: loc.name,

@@ -94,7 +94,7 @@
                             address.</div> -->
                                 <!-- <div class="update-email"
                             *ngIf="appointment.consumer && !appointment.consumer.userProfile.emailVerified">
-                            <input placeholder="Email" (ngModel)="email"><span class="email-btn"
+                            <input placeholder="Email" [(ngModel)]="email"><span class="email-btn"
                                 (click)="updateEmail()">Ok</span>
                         </div> -->
                                 <div class="notes" *ngIf="appointment.service && appointment.service.postInfoEnabled && appointment.service.postInfoTitle">

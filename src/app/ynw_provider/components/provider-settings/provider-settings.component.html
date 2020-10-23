@@ -99,7 +99,7 @@
                                       <span class="lnk setings">Jaldee Link
                                           <span class="pull-right">
                                               {{onlinepresence_statusstr}}</span>
-                                          <!-- <mat-slide-toggle (ngModel)="search_status"
+                                          <!-- <mat-slide-toggle [(ngModel)]="search_status"
                                               (change)="handle_searchstatus()">
                                           </mat-slide-toggle> -->
                                       </span>
@@ -122,7 +122,7 @@
                                       <span class="lnk setings">List my Profile on Jaldee.com
                                           <span class="pull-right">
                                               {{search_statusstr}}
-                                              <!-- <mat-slide-toggle (ngModel)="search_status"
+                                              <!-- <mat-slide-toggle [(ngModel)]="search_status"
                                               (change)="handle_searchstatus()">
                                           </mat-slide-toggle> -->
                                           </span>
@@ -236,7 +236,7 @@
                                   <a class="pointer-cursor">
                                       <span class="lnk setings">QManager
                                           <span class="pull-right">
-                                              <!-- <mat-slide-toggle (ngModel)="waitlistStatus"
+                                              <!-- <mat-slide-toggle [(ngModel)]="waitlistStatus"
                                               (change)="handleCheckinPresence($event)">
                                           </mat-slide-toggle> -->
                                               {{waitlistStatusStr}}</span>
@@ -255,7 +255,7 @@
                               <!-- <li (click)="redirecTo('waitlistmanager')"><a class="pointer-cursor"><span
                                           class="lnk setings">Same Day Online {{checkin_label |capitalizeFirst}}s
                                           <span class="pull-right"> -->
-                              <!-- <mat-slide-toggle (ngModel)="waitlist_status" [disabled]="!waitlistStatus"
+                              <!-- <mat-slide-toggle [(ngModel)]="waitlist_status" [disabled]="!waitlistStatus"
                                               (change)="handle_waitliststatus($event)"></mat-slide-toggle> -->
                               <!-- {{waitlist_statusstr}}</span>
                                       </span> -->
@@ -265,7 +265,7 @@
                               <li (click)="redirecTo('waitlistmanager')"><a class="pointer-cursor"><span
                                           class="lnk setings">Future {{checkin_label |capitalizeFirst}}s
                                           <span class="pull-right"> -->
-                              <!-- <mat-slide-toggle (ngModel)="futureDateWaitlist"
+                              <!-- <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
                                               [disabled]="!waitlistStatus"
                                               (change)="handle_futurewaitliststatus($event)"></mat-slide-toggle> -->
                               <!-- {{futurewaitlist_statusstr}}</span>
@@ -352,7 +352,7 @@
                                   <a class="pointer-cursor">
                                       <span class="lnk setings">Appointment Manager
                                           <span class="pull-right">
-                                              <!-- <mat-slide-toggle (ngModel)="createappointment_status"
+                                              <!-- <mat-slide-toggle [(ngModel)]="createappointment_status"
                                               (change)="handle_appointmentPresence($event)">
                                           </mat-slide-toggle> -->
                                               {{createappointment_statusstr}} </span></span>
@@ -376,7 +376,7 @@
                               </li>
                               <!-- <li (click)="redirecTo('appointmentmanager')"><a class="pointer-cursor"><span
                                           class="lnk setings">Same Day Online Appointments <span class="pull-right"> -->
-                              <!-- <mat-slide-toggle (ngModel)="apptlist_status"
+                              <!-- <mat-slide-toggle [(ngModel)]="apptlist_status"
                                               [disabled]="!createappointment_status"
                                               (change)="handle_apptliststatus($event)"></mat-slide-toggle> -->
                               <!-- {{apptlist_statusstr}}</span>
@@ -387,7 +387,7 @@
                               <li (click)="redirecTo('appointmentmanager')"><a class="pointer-cursor"><span
                                           class="lnk setings">Future Appointments
                                           <span class="pull-right"> -->
-                              <!-- <mat-slide-toggle (ngModel)="futureDateApptlist"
+                              <!-- <mat-slide-toggle [(ngModel)]="futureDateApptlist"
                                               [disabled]="!createappointment_status"
                                               (change)="handle_futureapptliststatus($event)"></mat-slide-toggle> -->
                               <!-- {{futureapptlist_statusstr}}</span>
@@ -478,7 +478,7 @@
                                   <a class="pointer-cursor">
                                       <span class="lnk setings">Locate Your {{cust_domain_name |capitalizeFirst}}
                                           <span class="pull-right">
-                                              <!-- <mat-slide-toggle (ngModel)="livetrack_status"
+                                              <!-- <mat-slide-toggle [(ngModel)]="livetrack_status"
                                                   (change)="handle_liveTracking($event)">
                                               </mat-slide-toggle> -->
                                               {{livetrack_statusstr}}</span>
@@ -532,7 +532,7 @@
                               <li class="form-level-settings"><a>{{frm_waitlist_cap}}</a></li>
                               <li><a>Same Day Online Home Service  <span
                                           class="pull-right">
-                                          <mat-slide-toggle (ngModel)="waitlist_status"
+                                          <mat-slide-toggle [(ngModel)]="waitlist_status"
                                               (change)="handle_waitliststatus($event)"></mat-slide-toggle>
                                       </span>
                                       <p class="sts"
@@ -540,7 +540,7 @@
                                   </a></li>
                               <li><a> Future Home Service
                                       <span class="pull-right">
-                                          <mat-slide-toggle (ngModel)="futureDateWaitlist"
+                                          <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
                                               (change)="handle_futurewaitliststatus($event)"></mat-slide-toggle>
                                       </span>
                                       <p class="sts"
@@ -607,7 +607,7 @@
                                   <a class="pointer-cursor">
                                       <span class="lnk setings">Billing
                                           <span class="pull-right">
-                                              <!-- <mat-slide-toggle (ngModel)="pos_status"
+                                              <!-- <mat-slide-toggle [(ngModel)]="pos_status"
                                               (change)="handle_posStatus($event)">
                                           </mat-slide-toggle> -->
                                               {{pos_statusstr}}</span>
@@ -668,7 +668,7 @@
                                   <a class="pointer-cursor">
                                       <span class="lnk setings">Jaldee Pay
                                           <span class="pull-right">
-                                              <!-- <mat-slide-toggle (ngModel)="payment_status"
+                                              <!-- <mat-slide-toggle [(ngModel)]="payment_status"
                                               (change)="handle_paymentstatus($event)"></mat-slide-toggle> -->
                                               {{payment_statusstr}}</span>
                                       </span>
@@ -721,7 +721,7 @@
                                   <a class="pointer-cursor">
                                       <span class="lnk setings">Accept Donations
                                           <span class="pull-right">
-                                              <!-- <mat-slide-toggle (ngModel)="donations_status"
+                                              <!-- <mat-slide-toggle [(ngModel)]="donations_status"
                                               (change)="handle_Donations($event)">
                                           </mat-slide-toggle> -->{{donations_statusstr}}</span>
                                       </span>
@@ -765,7 +765,7 @@
                                   <a class="pointer-cursor">
                                       <span class="lnk setings">Teleservice
                                           <span class="pull-right">
-                                              <!-- <mat-slide-toggle (ngModel)="virtualCallingMode_status"
+                                              <!-- <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
                                               (change)="handle_virtualCallingModeStatus($event)">
                                           </mat-slide-toggle> -->
                                               {{virtualCallingMode_statusstr}}</span>
@@ -846,7 +846,7 @@
                               <li class="form-level-settings"><a>These settings allows the customers to see their
                                       walkin check-ins</a></li>
                               <li><a>Jaldee.com Online Presence<span class="pull-right">
-                                          <mat-slide-toggle (ngModel)="onlinepresence_status"
+                                          <mat-slide-toggle [(ngModel)]="onlinepresence_status"
                                               (change)="handle_jaldeeOnlinePresence($event)">
                                           </mat-slide-toggle>
                                       </span>
@@ -857,7 +857,7 @@
                                   </a>
                               </li>
                               <li><a>Jaldee Mobile App Integration<span class="pull-right">
-                                          <mat-slide-toggle (ngModel)="walkinConsumer_status"
+                                          <mat-slide-toggle [(ngModel)]="walkinConsumer_status"
                                               (change)="handle_jaldeeWalkinConsumer($event)">
                                           </mat-slide-toggle>
                                       </span>
@@ -894,7 +894,7 @@
                                   </a>
                               </li>
                               <!-- <li><a>Jaldee.com Integration<span class="pull-right">
-                                          <mat-slide-toggle (ngModel)="jaldeeintegration_status"
+                                          <mat-slide-toggle [(ngModel)]="jaldeeintegration_status"
                                               (change)="handle_jaldeeIntegration($event)">
                                           </mat-slide-toggle>
                                       </span>

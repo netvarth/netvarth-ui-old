@@ -7,6 +7,7 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { AddMembersHolderComponent } from '../../components/add-members-holder/add-members-holder.component';
 // import { AddMemberComponent } from '../add-member/add-member.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { projectConstants } from '../../../app.component';
 import { Location } from '@angular/common';
 
 @Component({
@@ -14,6 +15,7 @@ import { Location } from '@angular/common';
   templateUrl: './members.component.html'
 })
 export class MembersComponent implements OnInit {
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   dashboard_cap = Messages.DASHBOARD_TITLE;
   add_fam_memb_cap = Messages.ADD_FAMILY_MEMBER;
   first_name_cap = Messages.FIRST_NAME_CAP;

@@ -211,7 +211,7 @@
                             {{frm_wiz_five_cap}}{{frm_wiz_five1_cap |  capitalizeFirst}}{{frm_wiz_five2_cap}} </P>
                         <label>{{business_name_cap}}</label>
                         <input type="text" class="form-control" id="bnameId" maxlength="50"
-                            (ngModel)="wizard_data_holder['name']" name="providername"
+                            [(ngModel)]="wizard_data_holder['name']" name="providername"
                             placeholder={{name_placeholder}} (keyup)="handlekeyup('bussnesnmerror')" autocomplete="off">
                         <div class="sts-msg error" *ngIf="bussnesnmerror!=''">{{bussnesnmerror}}</div>
                     </div>
@@ -219,7 +219,7 @@
                         <label>{{profile_summary_cap}}</label>
                         <textarea class="form-control" id="" rows="3" maxlength="2000"
                             placeholder="Enter brief summary (max 2000 characters)"
-                            (ngModel)="wizard_data_holder['summary']" name="providersummary"></textarea>
+                            [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
                     </div>
                 </div>
                 <div class="footer">
@@ -268,13 +268,13 @@
                                 <div class="col-md-6 col-12 no-padding-small">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" id="blatId"
-                                            (ngModel)="wizard_data_holder['lat']" name="lat" placeholder="Latitude"
+                                            [(ngModel)]="wizard_data_holder['lat']" name="lat" placeholder="Latitude"
                                             autocomplete="off" (keyup)="handlekeyup('coord_error')"></mat-form-field>
                                     <div class="sts-msg error" *ngIf="laterror_Exists">{{lati_error}}</div>
                                 </div>
                                 <div class="col-md-6 col-12 no-padding-small">
                                     <mat-form-field><input matInput type="text" class="form-control" id=""
-                                            (ngModel)="wizard_data_holder['lon']" name="lon" placeholder="Longitude"
+                                            [(ngModel)]="wizard_data_holder['lon']" name="lon" placeholder="Longitude"
                                             autocomplete="off" (keyup)="handlekeyup('coord_error')">
                                     </mat-form-field>
                                     <div class="sts-msg error" *ngIf="longerror_Exists">{{longi_error}}</div>
@@ -287,7 +287,7 @@
                             <span class="expl">Enter your Business address</span>
                             <textarea class="form-control"
                                 placeholder="This is what your {{customer_label}}s see when they search online"
-                                id="locaddress" (ngModel)="wizard_data_holder['address']" name="address"
+                                id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address"
                                 (keyup)="handlekeyup('address_error')" #locaddress></textarea>
                             <div class="sts-msg error" *ngIf="address_error!=''">{{address_error}}</div>
                         </div>
@@ -296,7 +296,7 @@
                             <span class="expl">{{disp_name_loc_cap}} {{customer_label}}s.</span>
                             <mat-form-field>
                                 <input matInput type="text" class="form-control" id=""
-                                    (ngModel)="wizard_data_holder['location']" name="location"
+                                    [(ngModel)]="wizard_data_holder['location']" name="location"
                                     placeholder="This is what your {{customer_label}}s see when they search online"
                                     autocomplete="off" maxlength="50" (keyup)="handlekeyup('locname_error')">
                             </mat-form-field>
@@ -306,7 +306,7 @@
                             <label>{{google_map_url_cap}}</label>
                             <span class="expl">{{used_find_exact_loc}}</span>
                             <input matInput type="text" class="form-control nofocus" id=""
-                                (ngModel)="wizard_data_holder['mapurl']" name="mapurl" placeholder=""
+                                [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder=""
                                 autocomplete="off" readonly tabindex="-1">
                             <div class="sts-msg error" *ngIf="gurl_error!=''">{{gurl_error}}</div>
                         </div>
@@ -417,7 +417,7 @@
                             <div class="form-group">
                                 <label>Description</label>
                                 <textarea class="form-control" id="description" placeholder="Briefly describe service"
-                                    formControlName="description" (keyup)="setCharCount($event)"
+                                    formControlName="description" (keyup)="setCharCount()"
                                     (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"> </textarea>
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
                                     [errorMsg]="fed_service.getErrorMessage(amForm,'description',
@@ -437,7 +437,7 @@
                                     <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
                                     maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
                                     placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
-                                    <ngb-timepicker (ngModel)="duration" (keyup)="isvalid($event)"
+                                    <ngb-timepicker [(ngModel)]="duration" (keyup)="isvalid($event)"
                                         formControlName="serviceDuration">
                                     </ngb-timepicker>
                                     <!-- </mat-form-field> -->
@@ -826,7 +826,7 @@
                     <div class="form-group">
                         <label class="mb20">{{prof_searchable_viewable_cap}}</label>
 
-                        <mat-radio-group (ngModel)="search_status" ngDefaultControl>
+                        <mat-radio-group [(ngModel)]="search_status" ngDefaultControl>
                             <div class="rdo ton" [class.active]="search_status === 'ENABLE'">
                                 <mat-radio-button [value]="'ENABLE'" (change)="handle_searchstatus('ENABLE')">
                                 </mat-radio-button>

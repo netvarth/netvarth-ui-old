@@ -21,7 +21,7 @@
                     <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
                         <label>Teleservice
                             <span class="ctrl">
-                                <mat-slide-toggle (ngModel)="virtualCallingMode_status"
+                                <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
                                     (change)="handle_virtualCallingModeStatus($event)">
                                 </mat-slide-toggle>&nbsp;{{virtualCallingMode_statusstr}}
                             </span>

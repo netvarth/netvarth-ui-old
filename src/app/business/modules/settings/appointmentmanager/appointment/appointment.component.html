@@ -89,7 +89,7 @@
                                     <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
                                         <mat-form-field>
                                             <input matInput placeholder="Enter your third party listing site *"
-                                                (ngModel)="otherThirdParty" type="text" class="form-control"
+                                                [(ngModel)]="otherThirdParty" type="text" class="form-control"
                                                 (keypress)="resetError()">
                                         </mat-form-field>
                                         <app-field-error-display style="color: #f24949 !important;"
@@ -140,7 +140,7 @@
                                         <div class="form-group party-size">
                                             <label class="col-form-label">{{enter_party_size_cap}}</label>
                                             <input class="partysize-input" type="text" matInput #partysize
-                                                (ngModel)="enterd_partySize" (focus)="clearerrorParty()"
+                                                [(ngModel)]="enterd_partySize" (focus)="clearerrorParty()"
                                                 (blur)="checkPartySize(partysize.value)" maxlength="5" />
                                             <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
                                         </div>
@@ -250,7 +250,7 @@
                                                     <span> <input *ngIf="!showInputSection"
                                                             (keypress)="isNumeric($event)"
                                                             class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
-                                                            placeholder="" (ngModel)="callingModes" autocomplete="off"
+                                                            placeholder="" [(ngModel)]="callingModes" autocomplete="off"
                                                             maxlength="10"></span>
                                                     <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                         *ngIf="showInputSection"> {{callingModes}}</span>
@@ -277,7 +277,7 @@
                                     <div class="date-body">
                                         <span class="selected-date">
                                             <span class="icon-minus" *ngIf="!slotTime" [class.disable]="disableMinus()"
-                                                (click)="calculateDate(-1)"></span>{{sel_day}}
+                                                (click)="calculateDate(-1)"></span>
                                             {{sel_checkindate | date: dateFormat}}
                                             <span *ngIf="!slotTime" class="icon-add"
                                                 (click)="calculateDate(1)"></span></span>
@@ -541,7 +541,7 @@
                                 <ng-container *ngIf="action=='note'">
                                     <div class="col-md-12 mgn-bt-20">
                                         <mat-form-field>
-                                            <textarea matInput class="form-control" (ngModel)="consumerNote"
+                                            <textarea matInput class="form-control" [(ngModel)]="consumerNote"
                                                 #consumernote (change)="handleConsumerNote(consumernote.value)"
                                                 maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
                                         </mat-form-field>

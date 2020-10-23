@@ -2,7 +2,7 @@
     <div class="example-full-width" style="padding-top: 30px;">
         <div>
             <mat-form-field>
-                <mat-select placeholder="Choose Phone Number" (ngModel)="number"
+                <mat-select placeholder="Choose Phone Number" [(ngModel)]="number"
                     (selectionChange)="onSelectionChange(number)">
                     <mat-option *ngFor="let phone of phonearr" [value]="phone.number">
                         {{ phone.number }}

@@ -106,16 +106,14 @@
             </ng-container>
             <span class="checkin-btn" (click)="checkinClicked(search_result)"
               *ngIf="((search_result['estimatedtime_det']['onlineCheckIn'] && search_result['estimatedtime_det']['isAvailableToday'] && search_result['estimatedtime_det']['availableToday'])
-              || (search_result['estimatedtime_det']['cdate'] && search_result['estimatedtime_det']['futureWaitlist'])) && !search_result['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
-                            search_result)}}</span>
+              || (search_result['estimatedtime_det']['cdate'] && search_result['estimatedtime_det']['futureWaitlist'])) && !search_result['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist')}}</span>
             <span class="checkin-btn" (click)="checkinClicked(search_result)"
               *ngIf="((search_result['estimatedtime_det']['onlineCheckIn'] && search_result['estimatedtime_det']['isAvailableToday'] && search_result['estimatedtime_det']['availableToday'])
               || (search_result['estimatedtime_det']['cdate'] && search_result['estimatedtime_det']['futureWaitlist'])) && search_result['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
             <span class="checkin-btn disabled"
               *ngIf="!search_result['estimatedtime_det']['showToken'] && 
               (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || 
-              !search_result['estimatedtime_det']['availableToday']) && (!search_result['estimatedtime_det']['cdate'] || !search_result['estimatedtime_det']['futureWaitlist'])">{{getTerminologyTerm('waitlist',
-                            search_result)}}</span>
+              !search_result['estimatedtime_det']['availableToday']) && (!search_result['estimatedtime_det']['cdate'] || !search_result['estimatedtime_det']['futureWaitlist'])">{{getTerminologyTerm('waitlist')}}</span>
             <span class="checkin-btn disabled"
               *ngIf="search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])
               && (!search_result['estimatedtime_det']['cdate'] || !search_result['estimatedtime_det']['futureWaitlist'])">{{get_token_btn}}</span>

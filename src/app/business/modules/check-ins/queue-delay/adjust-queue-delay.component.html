@@ -16,7 +16,7 @@ onSubmit(amForm.value)" class="ynw-common-form">
           </span>
          
         <!-- <mat-form-field>
-          <mat-select placeholder="{{service_window_cap}}" (ngModel)="selected_queue" [ngModelOptions]="{standalone: true}"
+          <mat-select placeholder="{{service_window_cap}}" [(ngModel)]="selected_queue" [ngModelOptions]="{standalone: true}"
             #selQueue (selectionChange)="handle_queue_sel(selQueue.value)">
             <mat-option *ngFor="let queue of queues" [value]="queue.id">
               {{queue.name}}
@@ -39,7 +39,7 @@ onSubmit(amForm.value)" class="ynw-common-form">
       <div class="form-group">
         <label class="col-form-label">{{delay_cap}}</label>
         <!-- <span><small>* Maximum 24 hours delay allowed</small></span> -->
-        <ngb-timepicker (ngModel)="time" (keyup)="isInRange($event)" formControlName="delay"></ngb-timepicker>
+        <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay"></ngb-timepicker>
       </div>
       <div class="form-group inline">
         <!-- <label class="col-form-label"></label> -->

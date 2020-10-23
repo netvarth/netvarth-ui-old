@@ -21,7 +21,7 @@
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding" style="margin-bottom: 10px">
                         <label>Select services by department
-                            <mat-slide-toggle (ngModel)="filterbydepartment" (change)="doRemoveservice()">
+                            <mat-slide-toggle [(ngModel)]="filterbydepartment" (change)="doRemoveservice()">
                             </mat-slide-toggle> &nbsp;{{deptstatusstr}}
                         </label>
                         <div class="form-level-settings"> Enable to select services by department.<a

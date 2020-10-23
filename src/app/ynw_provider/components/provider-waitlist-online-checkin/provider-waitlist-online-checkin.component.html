@@ -6,24 +6,24 @@
     </div>
     <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12  no-padding">
       <div class="col-md-12  col-sm-12 col-xs-12  no-padding ">
-        <h6>Token Manager <mat-slide-toggle (ngModel)="tokenManager" (change)="handleTokenManager($event)">
+        <h6>Token Manager <mat-slide-toggle [(ngModel)]="tokenManager" (change)="handleTokenManager($event)">
           </mat-slide-toggle>&nbsp;{{showToken_str}}</h6>
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="tokenManager">
           <div class="col-sm-12 col-md-12 col-lg-12 mgn-up-10  no-padding" style="margin-bottom: 10px">
             <label>Show Token No.
-              <mat-slide-toggle (ngModel)="showToken" [disabled]="true">
+              <mat-slide-toggle [(ngModel)]="showToken" [disabled]="true">
               </mat-slide-toggle>&nbsp;{{showToken_str}}
             </label>
           </div>
           <div class="col-sm-12 col-md-12 col-lg-12  no-padding" style="margin-bottom: 10px">
             <label>Show No. of Persons Ahead of you
-              <mat-slide-toggle (ngModel)="personsAhead" [disabled]="true">
+              <mat-slide-toggle [(ngModel)]="personsAhead" [disabled]="true">
               </mat-slide-toggle>&nbsp;{{showPersonsahead_str}}
             </label>
           </div>
           <div class="col-sm-12 col-md-12 col-lg-12  no-padding" style="margin-bottom: 10px">
             <label>Show Waiting Time
-              <mat-slide-toggle (ngModel)="showTokenWaitTime" (change)="updateTokenWaitTime($event)">
+              <mat-slide-toggle [(ngModel)]="showTokenWaitTime" (change)="updateTokenWaitTime($event)">
               </mat-slide-toggle>&nbsp;{{showTokenWaitTime_str}}
             </label>
           </div>
@@ -33,27 +33,27 @@
     <div class="clearfix"></div>
     <div class="lbr col-sm-12 col-md-12 col-lg-12 brd-tp mgn-up-20 no-padding padding-tp-10">
       <div class="col-md-12 col-xs-12 col-sm-12  no-padding">
-        <h6>Check-In Manager <mat-slide-toggle (ngModel)="checkinManager" (change)="handleCheckinManager($event)">
+        <h6>Check-In Manager <mat-slide-toggle [(ngModel)]="checkinManager" (change)="handleCheckinManager($event)">
           </mat-slide-toggle>&nbsp;{{showCheckinmgr_str}}</h6>
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="checkinManager">
           <div class="col-sm-12 col-md-12 col-lg-12 mgn-up-10  no-padding" style="margin-bottom: 10px">
             <label>Show Waiting Time
-              <mat-slide-toggle (ngModel)="showCheckinWaitTime" [disabled]="true">
+              <mat-slide-toggle [(ngModel)]="showCheckinWaitTime" [disabled]="true">
               </mat-slide-toggle>&nbsp;{{showCheckinWaitTime_str}}
             </label>
           </div>
           <div class="col-sm-12 col-md-12 col-lg-12  no-padding" style="margin-bottom: 10px">
             <label>Show No. of Persons Ahead of you
-              <mat-slide-toggle (ngModel)="personsAhead" [disabled]="true">
+              <mat-slide-toggle [(ngModel)]="personsAhead" [disabled]="true">
               </mat-slide-toggle>&nbsp;{{showPersonsahead_str}}
             </label>
           </div>
           <div class="col-sm-12 col-md-12 col-lg-12 no-padding " style="margin-bottom: 10px">
             <label>Manual&nbsp;
-              <mat-slide-toggle (ngModel)="manualMode" (change)="fixedModeChanged($event)">
+              <mat-slide-toggle [(ngModel)]="manualMode" (change)="fixedModeChanged($event)">
               </mat-slide-toggle>&nbsp;{{manualMode_str}}
               <span *ngIf="isManualMode"><input type="number" min="0" (keyup)="isValid('trnArndTime')"
-                  class="number-ip-sm mgn-lt-5" (ngModel)="trnArndTime" ngDefaultControl (change)="inputChanged()">
+                  class="number-ip-sm mgn-lt-5" [(ngModel)]="trnArndTime" ngDefaultControl (change)="inputChanged()">
                 <span class='mins mgn-lt-5'>{{mins_cap}}</span>
                 <span class="jd_btn_spn" *ngIf="is_data_chnge===1"><button type="button" (click)="cancelChange()" class="jd-btn bt2">Reset</button>
                   <button (click)="updateManualMode(trnArndTime)" type="button" class="jd-btn bt1"

@@ -29,7 +29,7 @@ import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic
 })
 
 export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
-
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   jaldeeonline_on_cap: string;
   jaldeeonline_off_cap: string;
   onlinepresence_status_str: string;
@@ -43,7 +43,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   progress_bar_one: number;
   weightageClass = 'danger';
   weightageObjectOfDomainAndSubDomain: any;
-
+  additional_cap = Messages.BPROFILE_ADDITIONAL_CAP;
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
   add_cap = Messages.ADD_BTN;

@@ -61,9 +61,10 @@
                                                             <div class="">
                                                                 <i class="fa fa-mobile "></i>
                                                                 <span class="mgn-lt-10 phonevallabel"
-                                                                    *ngIf="userPhone && !changePhno">{{userPhone}}</span>
-                                                                <span class="mgn-lt-10 phonevallabel"
-                                                                    *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
+                                                                    *ngIf="userPhone">{{userPhone}}</span>
+                                                                <!-- <span class="mgn-lt-10 phonevallabel"
+                                                                    *ngIf="currentPhone && changePhno">{{currentPhone}}</span> -->
+                                                                    <a
                                                                     class="mgn-lt-5 lnk pointer-cursor"><i
                                                                         class="fa fa-pencil"
                                                                         (click)="editPhone()"></i></a>
@@ -93,7 +94,7 @@
                                                         <label>
                                                             <input type="number" min="0" class="form-control rupee-font"
                                                                 placeholder="&#8377; Enter Amount"
-                                                                (ngModel)="donationAmount">
+                                                                [(ngModel)]="donationAmount">
                                                         </label>
                                                     </div>
                                                 </div>
@@ -144,7 +145,7 @@
                                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
                                             <label>
                                                 <input type="text" placeholder="donor name"
-                                                    class="phonenum" (ngModel)="donor" />
+                                                    class="phonenum" [(ngModel)]="donor" />
                                                 <button (click)="addDonor()" class="btn bt3 btn-default coupon-apply-btn"
                                                     type="button">Ok</button>
                                                     <app-field-error-display [displayError]="true"
@@ -163,7 +164,7 @@
                                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
                                             <label>
                                                 <input type="text" maxlength="10" placeholder="Mobile number"
-                                                    class="phonenum" (ngModel)="selected_phone" />
+                                                    class="phonenum" [(ngModel)]="selected_phone" />
                                                 <button (click)="addPhone()"
                                                     class="btn bt3 btn-default coupon-apply-btn"
                                                     type="button">Ok</button>
@@ -183,7 +184,7 @@
                                 <ng-container>
                                     <div class="form-group">
                                         <input style="border-bottom: 1px solid" class="form-control emailPrepay"
-                                            id="email" placeholder="Email(user@xyz.com)" (ngModel)="payEmail"
+                                            id="email" placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
                                             autocomplete="off" (keyup)="showConfrmEmail($event)" onpaste="return false;"
                                             oncopy="return false" oncut="return false" ondrag="return false"
                                             ondrop="return false">
@@ -195,7 +196,7 @@
                                         <!-- <mat-form-field> -->
                                         <input style="border-bottom: 1px solid" class="form-control emailPrepay"
                                             id="email1" placeholder="Re-enter Email(user@xyz.com)"
-                                            (ngModel)="payEmail1" autocomplete="off" onpaste="return false;"
+                                            [(ngModel)]="payEmail1" autocomplete="off" onpaste="return false;"
                                             oncopy="return false" oncut="return false" ondrag="return false"
                                             ondrop="return false">
                                         <!-- </mat-form-field> -->
@@ -226,7 +227,7 @@
                                                 <div class="card card-item-n no-padding ">
                                                     <div class="card-item-title">
                                                         <a class="pointer-cursor"
-                                                            (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
+                                                            (click)="showServiceDetail(service, businessjson.businessName)">
                                                             <b>
                                                                 {{service.name | capitalizeFirst}}
                                                             </b>

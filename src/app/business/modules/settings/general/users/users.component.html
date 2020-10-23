@@ -64,7 +64,7 @@
                                                 <ul class="sidebar-menu">
                                                     <div class="filterTextinput">
                                                         <li class="filterli">
-                                                            <input type="text" id="firstName" (ngModel)="filter.firstName"
+                                                            <input type="text" id="firstName" [(ngModel)]="filter.firstName"
                                                                 #firstName (blur)="doSearch()"
                                                                 (keyup)="focusInput($event, lastName)" maxlength="20"
                                                                 class="filterTextbox" placeholder="First Name">
@@ -73,7 +73,7 @@
 
                                                     <div class="filterTextinput">
                                                         <li class="filterli">
-                                                            <input type="text" id="lastName" (ngModel)="filter.lastName"
+                                                            <input type="text" id="lastName" [(ngModel)]="filter.lastName"
                                                                 #lastName (blur)="doSearch()"
                                                                 (keyup)="focusInput($event, primaryMobileNo)" maxlength="10"
                                                                 class="filterTextbox" placeholder="Last Name">
@@ -81,7 +81,7 @@
                                                     </div>
                                                     <div class="filterTextinput">
                                                         <li class="filterli">
-                                                            <input type="text" id="primaryMobileNo" (ngModel)="filter.primaryMobileNo"
+                                                            <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
                                                                 #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, userType)"
                                                                 maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                                         </li>
@@ -90,7 +90,7 @@
                                                     <div>
                                                         <li class="filterli filterDatepicker">
                                                             <mat-form-field class="userfilter">
-                                                                <mat-select id="userType"  #userType (ngModel)="filter.userType" placeholder="User type"
+                                                                <mat-select id="userType"  #userType [(ngModel)]="filter.userType" placeholder="User type"
                                                                     (blur)="doSearch()" style="height: 0px;padding: 2px;">
                                                                     <mat-option *ngFor="let user of userTypesFormfill"
                                                                         [value]="user">
@@ -242,7 +242,7 @@
                                     <ul class="sidebar-menu">
                                         <div class="filterTextinput">
                                             <li class="filterli">
-                                                <input type="text" id="firstName" (ngModel)="filter.firstName"
+                                                <input type="text" id="firstName" [(ngModel)]="filter.firstName"
                                                     #firstName (blur)="doSearch()"
                                                     (keyup)="focusInput($event, lastName)" maxlength="20"
                                                     class="filterTextbox" placeholder="First Name">
@@ -251,7 +251,7 @@
 
                                         <div class="filterTextinput">
                                             <li class="filterli">
-                                                <input type="text" id="lastName" (ngModel)="filter.lastName"
+                                                <input type="text" id="lastName" [(ngModel)]="filter.lastName"
                                                     #lastName (blur)="doSearch()"
                                                     (keyup)="focusInput($event, primaryMobileNo)" maxlength="10"
                                                     class="filterTextbox" placeholder="Last Name">
@@ -259,7 +259,7 @@
                                         </div>
                                         <div class="filterTextinput">
                                             <li class="filterli">
-                                                <input type="text" id="primaryMobileNo" (ngModel)="filter.primaryMobileNo"
+                                                <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
                                                     #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, userType)"
                                                     maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                             </li>
@@ -268,7 +268,7 @@
                                         <div>
                                             <li class="filterli filterDatepicker">
                                                 <mat-form-field class="userfilter">
-                                                    <mat-select id="userType"  #userType (ngModel)="filter.userType" placeholder="User type"
+                                                    <mat-select id="userType"  #userType [(ngModel)]="filter.userType" placeholder="User type"
                                                         (blur)="doSearch()" style="height: 0px;padding: 2px;">
                                                         <mat-option *ngFor="let user of userTypesFormfill"
                                                             [value]="user">

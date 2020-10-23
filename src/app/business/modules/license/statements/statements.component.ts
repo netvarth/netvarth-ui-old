@@ -361,16 +361,13 @@ export class StatementsComponent implements OnInit {
   }
   redirecToLicenseInvoice() {
     if (this.data.data1 === 'invo-statement NotPaid') {
-      this.router.navigate(['provider', 'license' , 'invoicestatus']);
+      this.router.navigate(['provider', 'license', 'invoicestatus']);
     } else if (this.data.data2 === 'invo-statement Paid') {
-      this.router.navigate(['provider', 'license' , 'invoicestatus']);
+      this.router.navigate(['provider', 'license', 'invoicestatus']);
     } else if (this.temp === 'payment-history') {
-      this.router.navigate(['provider', 'license' , 'payment' , 'history']);
+      this.router.navigate(['provider', 'license', 'payment', 'history']);
     } else {
       this.router.navigate(['provider', 'license']);
     }
- 
+  }
 }
-}
-
-

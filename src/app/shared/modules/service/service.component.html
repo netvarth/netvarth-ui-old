@@ -117,7 +117,7 @@
           <span *ngIf="!is_donation" class="ttle">{{serv_status}}</span>
           <span *ngIf="is_donation" class="ttle">Cause Status</span>
           <span>
-            <mat-slide-toggle [checked]="service_data.status=='ACTIVE'" (ngModel)="servstatus"
+            <mat-slide-toggle [checked]="service_data.status=='ACTIVE'" [(ngModel)]="servstatus"
               (change)="changeServiceStatus(service_data)"></mat-slide-toggle>
           </span>
           <span class='enabled' *ngIf="service_data.status=='ACTIVE'">{{enable_cap}}</span>
@@ -212,7 +212,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <mat-label>Select
             <span *ngIf="serv_mode === 'videoService'">Video</span>
             <span *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
-          <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" (ngModel)="tool_name" name="toolname"
+          <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name" name="toolname"
             [ngModelOptions]="{standalone: true}">
             <mat-option *ngFor="let mode of telemodes" [value]="mode">
               <span *ngIf="(mode == 'GoogleMeet'||mode == 'Phone')">&nbsp;</span>
@@ -232,7 +232,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           class="example-full-width mat-select-virtualservice">
           <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}"
             placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}"
-            (ngModel)="tool_id" [ngModelOptions]="{standalone: true}">
+            [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
       </div>
       <!-- <div class="form-group"
@@ -240,13 +240,13 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  <mat-form-field class="example-full-width">
  <textarea matInput class="form-control" id="tooldescription"
  placeholder="Enter instructions to your {{customer_label}}" (keyup)="setCharCount($event)"
- (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500" (ngModel)="tool_instruct"
+ (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500" [(ngModel)]="tool_instruct"
  [ngModelOptions]="{standalone: true}"> </textarea>
  </mat-form-field>
  </div> -->
       <div class="form-group"
         *ngIf="bprofile.accountType === 'BRANCH' && !serviceFrom && action === 'add' && !is_donation && users_list.length >= 1">
-        <mat-checkbox (ngModel)="userspecific" [ngModelOptions]="{standalone: true}">
+        <mat-checkbox [(ngModel)]="userspecific" [ngModelOptions]="{standalone: true}">
           User specific
         </mat-checkbox>
         <mat-form-field class="example-full-width" *ngIf="userspecific && users_list.length >= 1">
@@ -265,7 +265,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
  maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
  placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
-          <ngb-timepicker (ngModel)="duration" formControlName="serviceDuration" (ngModelChange)="resetApiErrors()">
+          <ngb-timepicker [(ngModel)]="duration" formControlName="serviceDuration" (ngModelChange)="resetApiErrors()">
           </ngb-timepicker>
           <!-- </mat-form-field> -->
           <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"
@@ -451,7 +451,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="disp-flex" *ngIf="showEditSection">
               <mat-form-field class="col-lg-8 col-md-8 col-sm-12 col-xs-12 no-padding">
-                <input matInput min="0" maxlength="20" (ngModel)="consumerNote" [ngModelOptions]="{standalone: true}"
+                <input matInput min="0" maxlength="20" [(ngModel)]="consumerNote" [ngModelOptions]="{standalone: true}"
                   autocomplete="off" (keyup)="resetApiErrors()">
               </mat-form-field>
               <div class="mgn-up-20 col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -556,19 +556,19 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       <div class="form-group preinfo">
         <label class="col-form-label">Show personalized information about this service in the booking
           window&nbsp;&nbsp;</label>
-        <mat-slide-toggle class="example-margin" (ngModel)="preInfoEnabled">
+        <mat-slide-toggle class="example-margin" [(ngModel)]="preInfoEnabled">
         </mat-slide-toggle>
       </div>
       <div class="form-level-settings">These instructions will be seen by your {{customer_label}}s while choosing the
         service.</div>
       <div class="form-group pre-post-info" *ngIf="preInfoEnabled">
         <mat-form-field>
-          <input matInput type="text" placeholder="Title *" autocomplete="off" (ngModel)="preInfoTitle"
+          <input matInput type="text" placeholder="Title *" autocomplete="off" [(ngModel)]="preInfoTitle"
             [ngModelOptions]="{standalone: true}" maxlength="20">
         </mat-form-field>
         Enter the text your {{customer_label}}s will see
         <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
-          <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" (ngModel)="preInfoText"
+          <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
             [ngModelOptions]="{standalone: true}">
           </ckeditor>
         </div>
@@ -579,19 +579,19 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       <div class="form-group postinfo">
         <label class="col-form-label">Show personalized messages to your {{customer_label}}s upon successful booking
           confirmation&nbsp;&nbsp;</label>
-        <mat-slide-toggle class="example-margin" (ngModel)="postInfoEnabled">
+        <mat-slide-toggle class="example-margin" [(ngModel)]="postInfoEnabled">
         </mat-slide-toggle>
       </div>
       <div class="form-level-settings">These instructions will be seen by your {{customer_label}}s after confirmation of
         the service.</div>
       <div class="form-group pre-post-info" *ngIf="postInfoEnabled">
         <mat-form-field>
-          <input matInput type="text" placeholder="Title *" autocomplete="off" (ngModel)="postInfoTitle"
+          <input matInput type="text" placeholder="Title *" autocomplete="off" [(ngModel)]="postInfoTitle"
             [ngModelOptions]="{standalone: true}" maxlength="20">
         </mat-form-field>
         Enter the text your {{customer_label}}s will see
         <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
-          <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" (ngModel)="postInfoText"
+          <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="postInfoText"
             [ngModelOptions]="{standalone: true}">
           </ckeditor>
         </div>

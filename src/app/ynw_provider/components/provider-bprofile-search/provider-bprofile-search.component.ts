@@ -897,7 +897,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   editSocialmedia(key) {
     this.handleSocialmedia(key);
   }
-  handleSocialmedia(key) {
+  handleSocialmedia(key?) {
     this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
       width: '50%',
       // panelClass: 'socialmediamainclass',

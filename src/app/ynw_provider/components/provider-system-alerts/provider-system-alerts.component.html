@@ -61,16 +61,16 @@
                                                                 <div>
                                                                     <label class="filterHeaders">{{acknow_status_cap}}</label>
                                                                         <li class="filterli filterCheckboxborder filtercheckboxSize">
-                                                                              <mat-checkbox [value]="'true'" (ngModel)="ackStatus" (change)="do_search(false, 'ackStatus')"> {{acknowledged_cap}}</mat-checkbox>
+                                                                              <mat-checkbox [value]="'true'" [(ngModel)]="ackStatus" (change)="do_search(false, 'ackStatus')"> {{acknowledged_cap}}</mat-checkbox>
                                                                         </li>
                                                                         <li class="filterli filterCheckboxborder filtercheckboxSize">
-                                                                                <mat-checkbox [value]="'false'" (ngModel)="notAckStatus" (change)="do_search(false, 'notAckStatus')"> {{not_acknowledged_cap}}</mat-checkbox>
+                                                                                <mat-checkbox [value]="'false'" [(ngModel)]="notAckStatus" (change)="do_search(false, 'notAckStatus')"> {{not_acknowledged_cap}}</mat-checkbox>
                                                                         </li>
                                                                 </div>
                                                                 <div>
                                                                     <label class="filterHeaders"> From</label>
                                                                     <li class="filterli filterDatepicker">
-                                                                        <input class="filterTextbox" type="text" (ngModel)="alertStartdate" [min]="minday" [max]="maxDate"
+                                                                        <input class="filterTextbox" type="text" [(ngModel)]="alertStartdate" [min]="minday" [max]="maxDate"
                                                                         [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="Start date" readonly>
                                                                         <mat-datepicker-toggle matSuffix [for]="picker">
                                                                         </mat-datepicker-toggle>
@@ -80,7 +80,7 @@
                                                                 <div>
                                                                     <label class="filterHeaders"> To</label>
                                                                     <li class="filterli filterDatepicker">
-                                                                        <input class="filterTextbox" type="text" (ngModel)="alertEnddate" [min]="endminday" [max]="maxDate"
+                                                                        <input class="filterTextbox" type="text" [(ngModel)]="alertEnddate" [min]="endminday" [max]="maxDate"
                                                                         [matDatepicker]="picker1" #Edate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="End date" readonly>
                                                                         <mat-datepicker-toggle matSuffix [for]="picker1">
                                                                         </mat-datepicker-toggle>
@@ -99,7 +99,7 @@
                                                     id="btn_first_name_filter_id"><span>{{acknow_status_cap}}</span></a>
                                                 <mat-form-field *ngIf="filters['ack_status']">
                                                     <mat-select (selectionChange)="do_search(false)"
-                                                        (ngModel)="alertSelAck" name="catg">
+                                                        [(ngModel)]="alertSelAck" name="catg">
                                                         <mat-option value=""> {{any_cap}}
                                                         </mat-option>
                                                         <mat-option value="true">
@@ -112,7 +112,7 @@
                                                 <a [class.button_filter]="filters['date']" (click)="filterClicked('date')"
                                                     class="anchorbutton remMarginRight genMarginLeft" name="date"
                                                     id="btn_date_filter_id"><span>Date</span></a>
-                                                <input type="text" (ngModel)="alertSeldate" [min]="minday"
+                                                <input type="text" [(ngModel)]="alertSeldate" [min]="minday"
                                                     [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)"
                                                     class="genTextHeight" [hidden]="!filters['date']" (blur)="do_search(false)">
                                                 <mat-datepicker-toggle matSuffix [for]="picker" [hidden]="!filters['date']">

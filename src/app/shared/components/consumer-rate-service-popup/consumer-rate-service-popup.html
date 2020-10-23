@@ -14,7 +14,7 @@
             <div class="form-group">
                 <mat-form-field>
                     <!-- <label class="col-form-label" for="displayName">{{message_cap}} </label> -->
-                    <textarea matInput class="form-control" (ngModel)="message" id="message" [ngModelOptions]="{standalone: true}"
+                    <textarea matInput class="form-control" [(ngModel)]="message" id="message" [ngModelOptions]="{standalone: true}"
                         placeholder="Message">
             </textarea>
                 </mat-form-field>

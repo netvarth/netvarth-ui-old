@@ -206,15 +206,15 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input class="number-ip-sm" matInput placeholder="Enter OTP"
-                                                    (ngModel)="otp" [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
                                                     autocomplete="off" (keypress)="removSpecChar($event)" maxlength="5">
                                             </mat-form-field>
                                         </div>
                                         <mat-dialog-actions>
                                             <div class="resendouter" *ngIf="resetCounterVal==0">
-                                                <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}}
+                                                <!-- <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}}
                                                     <ng-container *ngIf="type=='change_email'">
-                                                        Email</ng-container></span>
+                                                        Email</ng-container></span> -->
                                                 <ul class="info-lst">
                                                     <span class="black">Having a problem with your phone? &nbsp;<span
                                                             (click)="setResendViaEmail()"
@@ -239,7 +239,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                 <div class="ynw-common-form-nm otpemailsection">
                                     <div class="form-group">
                                         <mat-form-field>
-                                            <input type="email" matInput (ngModel)="email"
+                                            <input type="email" matInput [(ngModel)]="email"
                                                 [ngModelOptions]="{standalone: true}" placeholder="Enter your email id"
                                                 autocomplete="off" />
                                         </mat-form-field>
@@ -276,7 +276,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                             <div class="form-group">
                                 <label for="re-enter"></label>
                                 <input type="password" formControlName="confirm_password" name="passsword" id="password"
-                                    placeholder="Re-enter password*" (keyup)="keyPressed($event)" />
+                                    placeholder="Re-enter password*" (keyup)="keyPressed()" />
                                 <app-field-error-display
                                     [displayError]="fed_service.isFieldValid(spForm,'confirm_password')" [errorMsgs]="fed_service.getErrorMessage(spForm,'confirm_password',
                                     {'required' : 'Re-enter Password'})">
@@ -324,7 +324,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                                     <mat-form-field>
                                                         <input matInput placeholder="Sales Partner Id/ Phone"
                                                             type="text" class="form-control"
-                                                            (keypress)="handlekeyup($event)" (ngModel)="scCode_Ph"
+                                                            (keypress)="handlekeyup($event)" [(ngModel)]="scCode_Ph"
                                                             [ngModelOptions]="{standalone: true}">
                                                     </mat-form-field>
                                                 </div>

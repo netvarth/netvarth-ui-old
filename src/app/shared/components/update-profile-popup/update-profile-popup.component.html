@@ -2,11 +2,11 @@
     <p>Please provide the details to update your profile</p>
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="mgn-bt-10">
-            <input type="text" class="form-control" (keyup)="resetError()" placeholder="First name" (ngModel)="fname"
+            <input type="text" class="form-control" (keyup)="resetError()" placeholder="First name" [(ngModel)]="fname"
                 autocomplete="off">
         </div>
         <div class="">
-            <input type="text" class="form-control" (keyup)="resetError()" placeholder="Last name" (ngModel)="lname"
+            <input type="text" class="form-control" (keyup)="resetError()" placeholder="Last name" [(ngModel)]="lname"
                 autocomplete="off">
         </div>
     </div>

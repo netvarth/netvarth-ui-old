@@ -51,10 +51,10 @@
                                             target="_blank" *ngIf="locationjson[0].googleMapUrl!=''"><i
                                                 class="fa fa-map-marker"></i>&nbsp;{{locationjson[0].place | capitalizeFirst}}</a>
                                     </h6>
-                                    <h6 *ngIf="locationjson[0].isPlaceisSame"><a [href]="loc.googleMapUrl"
+                                    <h6 *ngIf="locationjson[0].isPlaceisSame"><a [href]="locationjson[0].googleMapUrl"
                                             target="_blank" *ngIf="locationjson[0].googleMapUrl!=''"><i
                                                 class="fa fa-map-marker"></i>
-                                            {{loc.address.substr(0, locationjson[0].address.split(',', 2).join(',').length)}}</a>
+                                            {{locationjson[0].address.substr(0, locationjson[0].address.split(',', 2).join(',').length)}}</a>
                                     </h6>
                                 </div>
                                 <div class="question-main-outer col-md-12 col-xs-12 col-sm-12 no-padding"
@@ -141,8 +141,8 @@
 
                     <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
                         [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
-                        [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook($event)"
-                        (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+                        [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+                        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 showmoresec"
                         *ngIf="showMore">
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10" *ngIf="showMore">
@@ -283,7 +283,7 @@
                                             <div class="card card-item-n no-padding">
                                                 <div class="card-item-title">
                                                     <a class="pointer-cursor"
-                                                        (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
+                                                        (click)="showServiceDetail(service, businessjson.businessName)">
                                                         <span class="service-icon"
                                                             *ngIf="service.serviceType == 'virtualService'">
                                                             <i class="fa phon-icon"
@@ -335,7 +335,7 @@
                                             <div class="card card-item-n no-padding">
                                                 <div class="card-item-title">
                                                     <a class="pointer-cursor"
-                                                        (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
+                                                        (click)="showServiceDetail(service, businessjson.businessName)">
                                                         <span class="service-icon"
                                                             *ngIf="service.serviceType == 'virtualService'">
                                                             <i class="fa phon-icon"
@@ -458,7 +458,7 @@
                                                 <div class="card card-item-n no-padding">
                                                     <div class="card-item-title">
                                                         <a class="pointer-cursor"
-                                                            (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
+                                                            (click)="showServiceDetail(service, businessjson.businessName)">
                                                             <span class="service-icon"
                                                                 *ngIf="service.serviceType == 'virtualService'">
                                                                 <i class="fa phon-icon"
@@ -510,7 +510,7 @@
                                                 <div class="card card-item-n no-padding">
                                                     <div class="card-item-title">
                                                         <a class="pointer-cursor"
-                                                            (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
+                                                            (click)="showServiceDetail(service, businessjson.businessName)">
                                                             <span class="service-icon"
                                                                 *ngIf="service.serviceType == 'virtualService'">
                                                                 <i class="fa phon-icon"
@@ -606,7 +606,7 @@
                                                     <div class="card card-item-n no-padding">
                                                         <div class="card-item-title">
                                                             <a class="pointer-cursor"
-                                                                (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
+                                                                (click)="showServiceDetail(service, businessjson.businessName)">
                                                                 <span class="service-icon"
                                                                     *ngIf="service.serviceType == 'virtualService'">
                                                                     <i class="fa phon-icon"
@@ -701,7 +701,7 @@
                                     <div class="card card-item-n no-padding">
                                         <div class="card-item-title">
                                             <a class="pointer-cursor"
-                                                (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
+                                                (click)="showServiceDetail(service, businessjson.businessName)">
                                                 <span class="service-icon"
                                                     *ngIf="service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
@@ -752,7 +752,7 @@
                                     <div class="card card-item-n no-padding">
                                         <div class="card-item-title">
                                             <a class="pointer-cursor"
-                                                (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')">
+                                                (click)="showServiceDetail(service, businessjson.businessName)">
                                                 <span class="service-icon"
                                                     *ngIf="service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
@@ -866,7 +866,7 @@
                             <div class="card card-item-n no-padding">
                                 <div class="card-item-title">
                                     <a class="pointer-cursor"
-                                        (click)="showServiceDetail(service, businessjson.businessName,'servicedetails')"><b>
+                                        (click)="showServiceDetail(service, businessjson.businessName)"><b>
                                             {{service.name | capitalizeFirst | limitTo: [35, '...']}}
                                         </b> </a>
                                 </div>

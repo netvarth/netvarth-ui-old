@@ -17,10 +17,10 @@
                             </div>
                             <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12"
                                 style="margin-left: 10px; display: grid">
-                                <mat-checkbox [checked]="online_checkin" (ngModel)="online_checkin"
+                                <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
                                     (change)="handle_waitliststatus($event)">Same Day
                                 </mat-checkbox>
-                                <mat-checkbox [checked]="futureDateWaitlist" (ngModel)="futureDateWaitlist"
+                                <mat-checkbox [checked]="futureDateWaitlist" [(ngModel)]="futureDateWaitlist"
                                     (change)="handleFuturewaitlist($event)">Future
                                 </mat-checkbox>
 

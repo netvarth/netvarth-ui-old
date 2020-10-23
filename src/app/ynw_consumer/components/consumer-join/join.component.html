@@ -56,7 +56,7 @@ onSubmit(loginForm.value)">
 
     <!-- step 2 for forgot password -->
     <div class="example-container" *ngIf="step==2">
-        <app-forgot-password (retonChangePassword)="onChangePassword($event)" [business]="true"
+        <app-forgot-password (retonChangePassword)="onChangePassword()" [business]="true"
             (retonCancelForgotPassword)="cancelForgotPassword()" [consumerlogin]="consumerjoin"></app-forgot-password>
     </div>
 

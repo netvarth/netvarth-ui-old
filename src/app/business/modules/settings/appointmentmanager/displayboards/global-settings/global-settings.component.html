@@ -62,19 +62,19 @@
                                         <table class="glbl-seting-tbl">
                                             <tr>
                                                 <td>Width</td>
-                                                <td><input type="text" (ngModel)="width" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;px</td>
+                                                <td><input type="text" [(ngModel)]="width" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;px</td>
                                             </tr>
                                             <tr>
                                                 <td>Height</td>
-                                                <td><input type="text" (ngModel)="height" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;px</td>
+                                                <td><input type="text" [(ngModel)]="height" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;px</td>
                                             </tr>
                                             <tr>
                                                 <td>Position</td>
                                                 <td>
                                                         <mat-form-field class="example-full-width">
-                                                            <!-- <input type="text" #jcoupon matInput (ngModel)="jCoupon"> -->
+                                                            <!-- <input type="text" #jcoupon matInput [(ngModel)]="jCoupon"> -->
                                                             <mat-select
-                                                                (ngModel)="position"
+                                                                [(ngModel)]="position"
                                                                 [ngModelOptions]="{standalone: true}">                                                                
                                                                 <mat-option
                                                                     *ngFor="let positionObj of position_values; let i = index"
@@ -100,7 +100,7 @@
                                 <div class="lbr col-sm-12 col-md-8 col-lg-8" style="padding: 1%;">
                                     <div class="no-paddig-small glbl-seting-editor">
                                         <ckeditor [editor]="Editor" (ready)="onReady($event)"
-                                            (ngModel)="headerSettings.title1">
+                                            [(ngModel)]="headerSettings.title1">
                                         </ckeditor>
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                             </div>
                             <div>
                                 <div>
-                                    <div [innerHTML]="headerContent"></div>
+                                    <!-- <div [innerHTML]="headerContent"></div> -->
                                     <div *ngIf="is_image" [ngStyle]="{ 'text-align' : position }"> <img
                                             [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}"
                                             [src]="item_pic.base64" style="width: 50%;height: auto;"></div>
@@ -142,7 +142,7 @@
                         <div class="lbr col-sm-12 col-md-8 col-lg-8" style="padding: 1%;">
                             <div class="no-paddig-small glbl-seting-editor">
                                 <ckeditor [editor]="Editor" (ready)="onReady($event)"
-                                    (ngModel)="footerSettings.title1">
+                                    [(ngModel)]="footerSettings.title1">
                                 </ckeditor>
                             </div>
                         </div>
@@ -209,12 +209,12 @@
                                         <table class="glbl-seting-tbl">
                                             <tr>
                                                 <td>Width</td>
-                                                <td><input type="text" (ngModel)="width">&nbsp;&nbsp;px
+                                                <td><input type="text" [(ngModel)]="width">&nbsp;&nbsp;px
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Height</td>
-                                                <td><input type="text" (ngModel)="height">&nbsp;&nbsp;px</td>
+                                                <td><input type="text" [(ngModel)]="height">&nbsp;&nbsp;px</td>
                                             </tr>
                                             <tr>
                                                 <td>Position</td>
@@ -244,7 +244,7 @@
                                 <div class="lbr col-sm-12 col-md-8 col-lg-8" style="padding: 1%;">
                                     <div class="no-paddig-small glbl-seting-editor">
                                         <ckeditor [editor]="Editor" (ready)="onReady($event)"
-                                            (ngModel)="headerContent">
+                                            [(ngModel)]="headerContent">
                                         </ckeditor>
                                     </div>
                                 </div>
@@ -283,7 +283,7 @@
                         </div>
                         <div class="lbr col-sm-12 col-md-8 col-lg-8" style="padding: 1%;">
                             <div class="no-paddig-small glbl-seting-editor">
-                                <ckeditor [editor]="Editor" (ready)="onReady($event)" (ngModel)="footerContent">
+                                <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="footerContent">
                                 </ckeditor>
                             </div>
                         </div>

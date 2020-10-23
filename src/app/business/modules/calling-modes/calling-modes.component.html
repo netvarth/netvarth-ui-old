@@ -155,7 +155,7 @@
                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-30">
                                 <div *ngIf="!isPrevStep" class="form-group mgn-bt-10 centeralign">
                                     <span>{{reminder_cap}}</span>&nbsp;&nbsp;
-                                    <mat-select class="brd-solid-1" (ngModel)="selectedTime"
+                                    <mat-select class="brd-solid-1" [(ngModel)]="selectedTime"
                                         (selectionChange)="handleTimeSelction(time.value)" #time>
                                         <mat-option *ngFor="let min of minute" [value]="min.value">
                                             {{min.viewValue}}
@@ -165,7 +165,7 @@
                                 <div class="form-group mgn-bt-10 reminder">
                                     <div id="reminderData">
                                         <textarea class="tele_srv_txtarea" matInput placeholder=""
-                                            (ngModel)="msg_to_user" (ngModelChange)="dataChanged($event)">
+                                            [(ngModel)]="msg_to_user" (ngModelChange)="dataChanged($event)">
                                         </textarea>
                                     </div>
                                     <div class="btn-primary-n custId-cursor delteTC" (click)="copyReminderInfo()">
@@ -177,13 +177,13 @@
                                 <div class="form-group">
                                     Send Reminder to {{customer_label | capitalizeFirst}} Via
                                     <div class="coupon-outer dsp-grd">
-                                        <mat-checkbox class="mgright50 example-margin" (ngModel)="sms">
+                                        <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
                                             {{customer_label | capitalizeFirst}}'s Mobile
                                             <span *ngIf="waiting_type === 'checkin'"> - {{phNo}}</span>
                                             <span *ngIf="waiting_type === 'appt'"> - {{data.phoneNumber}}</span>
                                         </mat-checkbox>
                                         <mat-checkbox class="mgright50 example-margin" [disabled]="!emailPresent"
-                                            (ngModel)="email">
+                                            [(ngModel)]="email">
                                             {{customer_label | capitalizeFirst}}'s Email Id
                                             <span
                                                 *ngIf="(waiting_type === 'checkin') && (data.waitlistingFor[0].email)">
@@ -191,7 +191,7 @@
                                             <span *ngIf="(waiting_type === 'appt') && (data.providerConsumer.email)">
                                                 - {{data.providerConsumer.email}}</span>
                                         </mat-checkbox>
-                                        <mat-checkbox class="mgright50 example-margin" (ngModel)="pushnotify">
+                                        <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">
                                             App Notification for
                                             {{customer_label | capitalizeFirst}}'s Jaldee Account
                                         </mat-checkbox>
@@ -225,7 +225,7 @@
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                     <div id="usrmeetDetailsData">
                                         <textarea class="tele_srv_txtarea" matInput placeholder=""
-                                            (ngModel)="msg_to_user" (ngModelChange)="dataChanged($event)">
+                                            [(ngModel)]="msg_to_user" (ngModelChange)="dataChanged($event)">
                                             </textarea>
                                     </div>
                                     <div class="btn-primary-n custId-cursor delteTC" (click)="copyUsrMeetingDetailsInfo()">
@@ -237,13 +237,13 @@
                                         Send Meeting Details to {{customer_label | capitalizeFirst}}
                                         Via
                                         <div class="coupon-outer dsp-grd">
-                                            <mat-checkbox class="mgright50 example-margin" (ngModel)="sms">
+                                            <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
                                                 {{customer_label | capitalizeFirst}}'s Mobile<span
                                                     *ngIf="waiting_type === 'checkin'"> - {{phNo}}</span>
                                                 <span *ngIf="waiting_type === 'appt'"> - {{data.phoneNumber}}</span>
                                             </mat-checkbox>
                                             <mat-checkbox class="mgright50 example-margin" [disabled]="!emailPresent"
-                                                (ngModel)="email">
+                                                [(ngModel)]="email">
                                                 {{customer_label | capitalizeFirst}}'s Email Id
                                                 <span
                                                     *ngIf="(waiting_type === 'checkin') && (data.waitlistingFor[0].email)">
@@ -252,7 +252,7 @@
                                                     *ngIf="(waiting_type === 'appt') && (data.providerConsumer.email)">
                                                     - {{data.providerConsumer.email}}</span>
                                             </mat-checkbox>
-                                            <mat-checkbox class="mgright50 example-margin" (ngModel)="pushnotify">
+                                            <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">
                                                 App Notification for
                                                 {{customer_label | capitalizeFirst}}'s Jaldee Account
                                             </mat-checkbox>
@@ -278,7 +278,7 @@
                                 <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
                                     <div id="mymeetDetailsData">
                                         <textarea class="tele_srv_txtarea" matInput placeholder=""
-                                            (ngModel)="msg_to_me" (ngModelChange)="dataChanged($event)">
+                                            [(ngModel)]="msg_to_me" (ngModelChange)="dataChanged($event)">
                                             </textarea>
                                     </div>
                                     <div class="btn-primary-n custId-cursor delteTC" (click)="copyMyMeetingDetailsInfo()">
@@ -290,7 +290,7 @@
                                         <div class="form-group">
                                             Send Meeting Details to Me Via
                                             <div class="coupon-outer dsp-grd">
-                                                <mat-checkbox class="mgright50 example-margin" (ngModel)="sms">
+                                                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
                                                     My Mobile- {{ynwUser.primaryPhoneNumber}}
                                                 </mat-checkbox>
                                             </div>

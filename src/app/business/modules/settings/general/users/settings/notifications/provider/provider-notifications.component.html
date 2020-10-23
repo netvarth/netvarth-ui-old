@@ -41,7 +41,7 @@
                   <span *ngIf="showToken" class="notification" style="font-weight: 600">Notify whenever a token is generated</span>
                   <span *ngIf="!showToken"class="notification" style="font-weight: 600"> Notify whenever check-in happens</span>
                   <mat-slide-toggle class="example-margin" (change)="selectChekinNotify($event)"
-                    (ngModel)="SelchkinNotify">
+                    [(ngModel)]="SelchkinNotify">
                   </mat-slide-toggle>
                 </div>
               </div>
@@ -53,7 +53,7 @@
                     <div class="form-group" *ngIf="sms">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber"
-                          (ngModel)="notifyphonenumber" minlength="0" maxlength="10">
+                          [(ngModel)]="notifyphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addChkinPh()" type="button">Add</button>
                         </div>
@@ -69,7 +69,7 @@
                     <span [class.icon-add]="!email" [class.icon-minus]="email" (click)="emailAddClicked()"></span>
                     <div class="form-group" *ngIf="email">
                       <div class="input-group mb-3 emadd">
-                        <input type="text" class="form-control" placeholder="Email" (ngModel)="notifyemail">
+                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyemail">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default " (click)="addChkinemil()" type="button">Add</button>
                         </div>
@@ -82,7 +82,7 @@
                   </li>
                   <!-- <li>
                     <span class="notification">App notification</span>
-                    <mat-slide-toggle class="example-margin" (ngModel)="cheknpush"
+                    <mat-slide-toggle class="example-margin" [(ngModel)]="cheknpush"
                       (change)="changePushMsgStatus('newcheckin')">
                     </mat-slide-toggle>
                   </li> -->
@@ -92,7 +92,7 @@
                     <div class="form-group" *ngIf="pushcheckin">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber"
-                          (ngModel)="notifypushcheckinphonenumber" minlength="0" maxlength="10">
+                          [(ngModel)]="notifypushcheckinphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addpushChkinPh()" type="button">Add</button>
                         </div>
@@ -115,7 +115,7 @@
                   <span *ngIf="!showToken" class="notification" style="font-weight: 600"> Notify whenever check-in gets
                     cancelled</span>
                   <mat-slide-toggle class="example-margin" (change)="selectChekinCanclNotify($event)"
-                    (ngModel)="SelchkincnclNotify">
+                    [(ngModel)]="SelchkincnclNotify">
                   </mat-slide-toggle>
                 </div>
               </div>
@@ -128,7 +128,7 @@
                     <div class="form-group" *ngIf="cancelsms">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber"
-                          (ngModel)="notifycanclphonenumber" minlength="0" maxlength="10">
+                          [(ngModel)]="notifycanclphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addCheknCanclph()" type="button">Add</button>
                         </div>
@@ -145,7 +145,7 @@
                       (click)="cancelledCheckinemailAddClicked()"></span>
                     <div class="form-group" *ngIf="cancelemail">
                       <div class="input-group mb-3 emadd">
-                        <input type="text" class="form-control" placeholder="Email" (ngModel)="notifycanclemail">
+                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifycanclemail">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addCheknCanclemil()" type="button">Add</button>
                         </div>
@@ -158,7 +158,7 @@
                   </li>
                   <!-- <li>
                     <span class="notification">App notification</span>
-                    <mat-slide-toggle class="example-margin" (ngModel)="cancelpush"
+                    <mat-slide-toggle class="example-margin" [(ngModel)]="cancelpush"
                       (change)="changePushMsgStatus('cancelcheckin')">
                     </mat-slide-toggle>
                   </li> -->
@@ -169,7 +169,7 @@
                     <div class="form-group" *ngIf="pushcancelph">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber"
-                          (ngModel)="notifypushcanclcheckinphonenumber" minlength="0" maxlength="10">
+                          [(ngModel)]="notifypushcanclcheckinphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addCheknCanclpushph()" type="button">Add</button>
                         </div>
@@ -200,7 +200,7 @@
                 <div style="display: flex">
                   <span class="notification" style="font-weight: 600"> Notify whenever appointment happens</span>
                   <mat-slide-toggle class="example-margin" (change)="selectApptNotify($event)"
-                    (ngModel)="selApptNotify">
+                    [(ngModel)]="selApptNotify">
                   </mat-slide-toggle>
                 </div>
               </div>
@@ -212,7 +212,7 @@
                     <div class="form-group" *ngIf="smsAppt">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
-                          (ngModel)="notifyApptphonenumber" minlength="0" maxlength="10">
+                          [(ngModel)]="notifyApptphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addApptPh()" type="button">Add</button>
                         </div>
@@ -228,7 +228,7 @@
                     <span [class.icon-add]="!emailAppt" [class.icon-minus]="emailAppt" (click)="emailApptAddClicked()"></span>
                     <div class="form-group" *ngIf="emailAppt">
                       <div class="input-group mb-3 emadd">
-                        <input type="text" class="form-control" placeholder="Email" (ngModel)="notifyApptemail">
+                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyApptemail">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default " (click)="addApptemail()" type="button">Add</button>
                         </div>
@@ -241,7 +241,7 @@
                   </li>
                   <!-- <li>
                     <span class="notification">App notification</span>
-                    <mat-slide-toggle class="example-margin" (ngModel)="apptPush"
+                    <mat-slide-toggle class="example-margin" [(ngModel)]="apptPush"
                       (change)="changePushMsgStatus('newappointment')">
                     </mat-slide-toggle>
                   </li> -->
@@ -251,7 +251,7 @@
                     <div class="form-group" *ngIf="pushApptPh">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
-                          (ngModel)="notifypushApptphonenumber" minlength="0" maxlength="10">
+                          [(ngModel)]="notifypushApptphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addpushApptPh()" type="button">Add</button>
                         </div>
@@ -273,7 +273,7 @@
                   <span class="notification" style="font-weight: 600"> Notify whenever appointment gets
                     cancelled</span>
                   <mat-slide-toggle class="example-margin" (change)="selectApptCanclNotify($event)"
-                    (ngModel)="selApptCancelNotify">
+                    [(ngModel)]="selApptCancelNotify">
                   </mat-slide-toggle>
                 </div>
               </div>
@@ -286,7 +286,7 @@
                     <div class="form-group" *ngIf="cancelsmsAppt">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
-                          (ngModel)="notifyApptcanclphonenumber" minlength="0" maxlength="10">
+                          [(ngModel)]="notifyApptcanclphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addApptCanclph()" type="button">Add</button>
                         </div>
@@ -303,7 +303,7 @@
                       (click)="cancelledApptemailAddClicked()"></span>
                     <div class="form-group" *ngIf="cancelemailAppt">
                       <div class="input-group mb-3 emadd">
-                        <input type="text" class="form-control" placeholder="Email" (ngModel)="notifyApptcanclemail">
+                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyApptcanclemail">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addApptCancelemail()" type="button">Add</button>
                         </div>
@@ -316,7 +316,7 @@
                   </li>
                   <!-- <li>
                     <span class="notification">App notification</span>
-                    <mat-slide-toggle class="example-margin" (ngModel)="cancelpushAppt"
+                    <mat-slide-toggle class="example-margin" [(ngModel)]="cancelpushAppt"
                       (change)="changePushMsgStatus('cancelappointment')">
                     </mat-slide-toggle>
                   </li> -->
@@ -327,7 +327,7 @@
                     <div class="form-group" *ngIf="pushcancelAppt">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
-                          (ngModel)="notifypushApptcanclphonenumber" minlength="0" maxlength="10">
+                          [(ngModel)]="notifypushApptcanclphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addpushApptCanclph()" type="button">Add</button>
                         </div>

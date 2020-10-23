@@ -42,7 +42,7 @@
                 <div class="ctrl enable-disable">
                     <span class="ttle">{{serv_status}}</span>
                     <span>
-                        <mat-slide-toggle [checked]="service_data.status=='ACTIVE'" (ngModel)="servstatus"
+                        <mat-slide-toggle [checked]="service_data.status=='ACTIVE'" [(ngModel)]="servstatus"
                             (change)="changeServiceStatus(service_data)"></mat-slide-toggle>
                     </span>
                     <span class='enabled' *ngIf="service_data.status=='ACTIVE'">{{enable_cap}}</span>
@@ -106,7 +106,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
                         maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
                         placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
-                    <ngb-timepicker (ngModel)="duration" (keyup)="isvalid($event)" formControlName="serviceDuration">
+                    <ngb-timepicker [(ngModel)]="duration" (keyup)="isvalid($event)" formControlName="serviceDuration">
                     </ngb-timepicker>
                     <!-- </mat-form-field> -->
                     <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"

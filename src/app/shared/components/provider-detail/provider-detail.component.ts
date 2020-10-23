@@ -1880,7 +1880,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   handlepanelOpen() {
     this.virtualsectionHeader = 'Click here to hide details';
   }
-  openCoupons(type) {
+  openCoupons(type?) {
     this.coupondialogRef = this.dialog.open(CouponsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],

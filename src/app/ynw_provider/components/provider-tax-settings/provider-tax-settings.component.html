@@ -32,7 +32,7 @@
                                     <label class="caption">Enter 15 digit GST number
                                         *</label>
                                     <mat-form-field *ngIf="showEditSection || !allFieldsExists">
-                                        <input matInput (ngModel)="gstnumber" id="gstno" (keypress)="resetApi()"
+                                        <input matInput [(ngModel)]="gstnumber" id="gstno" (keypress)="resetApi()"
                                             autocomplete="off" maxlength="15" tabindex="14">
                                     </mat-form-field>
                                     <label *ngIf="!showEditSection && allFieldsExists"> {{gstnumber}}</label>
@@ -42,7 +42,7 @@
                                 <div class="form-group border-style">
                                     <label class="caption">{{tax_percentage_cap}}</label>
                                     <mat-form-field *ngIf="showEditSection || !allFieldsExists">
-                                        <input matInput (ngModel)="taxpercentage" (keypress)="isNumeric($event)"
+                                        <input matInput [(ngModel)]="taxpercentage" (keypress)="isNumeric($event)"
                                             (keyup)="isvalid($event)" max="100" class="tax-per number-ip-sm"
                                             autocomplete="off" tabindex="15">%
                                     </mat-form-field>
@@ -61,7 +61,7 @@
                         <div class="taxstatus" *ngIf="allFieldsExists">
                             <span class="ttle">Tax Settings</span>
                             <span style="margin-left: 20px">
-                                <mat-slide-toggle (ngModel)="enabletax" (change)="changeTaxStatus($event)">
+                                <mat-slide-toggle [(ngModel)]="enabletax" (change)="changeTaxStatus($event)">
                                 </mat-slide-toggle>
                             </span>
                             <span class='enabled' *ngIf="enabletax">{{enable_cap}}</span>

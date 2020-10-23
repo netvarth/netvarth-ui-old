@@ -42,12 +42,12 @@
             <div class="startendtime start-endtime-wrap">
                 <div class="starttimediv">
                     <label for="changeHourStep">{{start_time_cap}}</label>
-                    <ngb-timepicker (ngModel)="dstart_time" meridian="true" #sch_start_time
+                    <ngb-timepicker [(ngModel)]="dstart_time" meridian="true" #sch_start_time
                         (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
                 </div>
                 <div class="endtimediv">
                     <label for="changeHourStep">{{end_time_cap}}</label>
-                    <ngb-timepicker (ngModel)="dend_time" meridian="true" #sch_end_time
+                    <ngb-timepicker [(ngModel)]="dend_time" meridian="true" #sch_end_time
                         (ngModelChange)="changetime('end',$event)"></ngb-timepicker>
                 </div>
             </div>

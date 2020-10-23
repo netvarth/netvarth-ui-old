@@ -12,7 +12,7 @@
                         <mat-form-field>
                                 <div>
                                         <input type="text" (keypress)="isNumeric($event)" matInput class="form-control"
-                                                id="phone1" placeholder="{{mobile_cap}}" (ngModel)="phonenumber"
+                                                id="phone1" placeholder="{{mobile_cap}}" [(ngModel)]="phonenumber"
                                                 [ngModelOptions]="{standalone: true}" autocomplete="off" maxlength="10"
                                                 style="display: inline;">
                                 </div>
@@ -24,14 +24,14 @@
                         <mat-form-field>
                                 <input type="text" matInput class="form-control"
                                         placeholder="{{phone_label_cap}} (e.g: Mobile, Emergency, Main line, others, etc)"
-                                        (ngModel)="phonelabel" [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="phonelabel" [ngModelOptions]="{standalone: true}"
                                         autocomplete="off" maxlength="50">
                         </mat-form-field>
                 </div>
                 <div class="form-group">
                         <div>
                                 <label class="col-form-label">{{phone_no_visible_cap}}</label>
-                                <mat-radio-group (ngModel)="phonepermission" [ngModelOptions]="{standalone: true}">
+                                <mat-radio-group [(ngModel)]="phonepermission" [ngModelOptions]="{standalone: true}">
                                         <mat-radio-button value="all">{{privacypermissiontxt['all']}}</mat-radio-button>
                                         <!-- <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button> -->
                                         <mat-radio-button value="self">{{privacypermissiontxt['self']}}
@@ -45,7 +45,7 @@
                 <div class="form-group">
                         <mat-form-field>
                                 <input type="text" matInput class="form-control" id="phone1"
-                                        placeholder="{{email_id_cap}}(user@xyz.com)*" (ngModel)="emailemailid"
+                                        placeholder="{{email_id_cap}}(user@xyz.com)*" [(ngModel)]="emailemailid"
                                         [ngModelOptions]="{standalone: true}" autocomplete="off">
                         </mat-form-field>
                 </div>
@@ -53,14 +53,14 @@
                         <mat-form-field>
                                 <input type="text" matInput class="form-control"
                                         placeholder="{{email_label_cap}}(E.g. Office Email, Personal Email, etc)*"
-                                        (ngModel)="emaillabel" [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="emaillabel" [ngModelOptions]="{standalone: true}"
                                         autocomplete="off" maxlength="50">
                         </mat-form-field>
                 </div>
                 <div class="form-group">
                         <div>
                                 <label class="col-form-label">{{email_visible_cap}}</label>
-                                <mat-radio-group (ngModel)="emailpermission" [ngModelOptions]="{standalone: true}">
+                                <mat-radio-group [(ngModel)]="emailpermission" [ngModelOptions]="{standalone: true}">
                                         <mat-radio-button value="all">{{privacypermissiontxt['all']}}</mat-radio-button>
                                         <!-- <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button> -->
                                         <mat-radio-button value="self">{{privacypermissiontxt['self']}}

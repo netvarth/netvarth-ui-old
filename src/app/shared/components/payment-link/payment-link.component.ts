@@ -15,6 +15,7 @@ import { Razorpaymodel } from '../razorpay/razorpay.model';
 })
 
 export class PaymentLinkComponent implements OnInit {
+  tooltipcls = '';
   api_loading: boolean;
   genid;
   isCheckin;

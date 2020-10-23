@@ -41,7 +41,7 @@
                                                     </mat-expansion-panel-header>
                                                     <mat-form-field>
                                                         <div>
-                                                            <mat-select placeholder="" (ngModel)="refined_domain"
+                                                            <mat-select placeholder="" [(ngModel)]="refined_domain"
                                                                 #refineddomain
                                                                 (selectionChange)="handlerefineddomainchange(refineddomain.value)">
                                                                 <mat-option value="">{{select_cap}}</mat-option>
@@ -67,7 +67,7 @@
                                                     </mat-expansion-panel-header>
                                                     <mat-form-field>
                                                         <div>
-                                                            <mat-select placeholder="" (ngModel)="refined_subdomain"
+                                                            <mat-select placeholder="" [(ngModel)]="refined_subdomain"
                                                                 #refinedsubdomain
                                                                 (selectionChange)="handlerefinedsubdomainchange(refinedsubdomain.value)">
                                                                 <mat-option value="">{{select_cap}}</mat-option>

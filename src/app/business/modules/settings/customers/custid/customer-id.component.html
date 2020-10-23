@@ -22,7 +22,7 @@
                     <label>{{cust_domain_name |capitalizeFirst}} Id Format</label>
                     <p class="form-level-settings">Choose one of the two {{cust_domain_name}} series options.</p>
  
-                    <mat-radio-group (ngModel)='custIdFormat' ngDefaultControl (change)="formatChanged()">
+                    <mat-radio-group [(ngModel)]='custIdFormat' ngDefaultControl (change)="formatChanged()">
                         <mat-radio-button value="{{formats.manual.value}}"></mat-radio-button>
                         <label for="">{{formats.manual.displayName}}</label><br><br>
                         <mat-radio-button *ngIf="custIdFormat != 'PATTERN'"
@@ -41,14 +41,14 @@
                         <div class="col-md-3 col-sm-6 col-xs-6">
                             <mat-form-field>
                                 <input style="padding-top: 20px!important;padding-bottom: 5px !important;" matInput
-                                    placeholder="Prefix" (ngModel)="prefixName" autocomplete="off"
+                                    placeholder="Prefix" [(ngModel)]="prefixName" autocomplete="off"
                                     (keyup)="formatChanged($event)">
                             </mat-form-field>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-6">
                             <mat-form-field>
                                 <input style="padding-top: 20px!important;padding-bottom: 5px !important;" matInput
-                                    placeholder="Suffix" (ngModel)="suffixName" autocomplete="off"
+                                    placeholder="Suffix" [(ngModel)]="suffixName" autocomplete="off"
                                     (keyup)="formatChanged($event)">
                             </mat-form-field>
                         </div>
