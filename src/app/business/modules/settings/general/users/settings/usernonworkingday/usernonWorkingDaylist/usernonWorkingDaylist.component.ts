@@ -125,11 +125,11 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
       });
   }
 
-  addHolidays(action) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: action }
-    };
-    this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'holidays', 'add'], navigationExtras);
+  addHolidays() {
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: { action: action }
+    // };
+    this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'holidays', 'add']);
   }
 
   editHolidays(holiday, ) {

@@ -9,6 +9,8 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
     templateUrl: './corporate-settings.component.html'
 })
 export class CorporateSettingsComponent implements OnInit {
+    corporateCode;
+    corporateName;
     breadcrumb_moreoptions: any = [];
     cancel_btn = Messages.CANCEL_BTN;
     save_btn_cap = Messages.SAVE_BTN;

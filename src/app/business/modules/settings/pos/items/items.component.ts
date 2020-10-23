@@ -14,6 +14,7 @@ import { Router, NavigationExtras } from '@angular/router';
     styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit, OnDestroy {
+    tooltipcls = '';
     name_cap = Messages.ITEM_NAME_CAP;
     price_cap = Messages.PRICES_CAP;
     taxable_cap = Messages.TAXABLE_CAP;

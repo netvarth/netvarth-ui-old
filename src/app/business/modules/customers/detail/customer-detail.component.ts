@@ -13,7 +13,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
     templateUrl: './customer-detail.component.html'
 })
 export class CustomerDetailComponent implements OnInit {
-
+    dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
     create_cap = Messages.CREATE_CAP;
     mobile_cap = Messages.MOBILE_CAP;
     f_name_cap = Messages.FIRST_NAME_CAP;

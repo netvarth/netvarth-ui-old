@@ -770,7 +770,7 @@ export const projectConstantsLocal = {
 
   ],
   CLINICAL_NOTES: [
-    { displayName: 'Symptoms',value: '', id: 'symptoms' },
+    { displayName: 'Symptoms', value: '', id: 'symptoms' },
     { displayName: 'Observations', value: '', id: 'observations' },
     { displayName: 'Diagnosis', value: '', id: 'diagnosis' },
     { displayName: 'Notes', value: '', id: 'misc_notes' },

@@ -17,6 +17,7 @@ import { projectConstantsLocal } from '../../../../../../../../shared/constants/
     styleUrls: ['./waitlist-schedules.component.css']
 })
 export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
+    tooltipcls = '';
     loc_name;
     new_serv_cap = Messages.ADD_SCHEDULE_CAP;
     work_hours = Messages.SERVICE_TIME_CAP;

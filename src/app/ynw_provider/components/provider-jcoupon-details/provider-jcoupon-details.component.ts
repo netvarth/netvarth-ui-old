@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./provider-jcoupon-details.component.css']
 })
 export class ProviderJcouponDetailsComponent implements OnInit {
-
+  tooltipcls = '';
   coupon_details_cap = Messages.COUPON_DETAILS_CAP;
   name_cap = Messages.PRO_NAME_CAP;
   descr_cap = Messages.DESCRIPTION_CAP;
