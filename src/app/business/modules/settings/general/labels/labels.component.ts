@@ -87,12 +87,12 @@ export class LabelsComponent implements OnInit {
                 this.getLabels();
             },
             error => {
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
     }
     redirecToGeneral() {
-        this.router.navigate(['provider', 'settings' , 'general']);
+        this.router.navigate(['provider', 'settings', 'general']);
     }
     redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/general->labels']);
