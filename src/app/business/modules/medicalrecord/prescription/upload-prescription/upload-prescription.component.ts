@@ -15,6 +15,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 })
 export class UploadPrescriptionComponent implements OnInit {
 
+  display_PatientId: any;
   today = new Date();
   patientDetails;
   userId;
@@ -54,6 +55,11 @@ export class UploadPrescriptionComponent implements OnInit {
       });
     this.medicalrecord_service.patient_data.subscribe(data => {
       this.patientDetails = JSON.parse(data.customerDetail);
+      if (this.patientDetails.memberJaldeeId) {
+        this.display_PatientId = this.patientDetails.memberJaldeeId;
+      } else if (this.patientDetails.jaldeeId) {
+        this.display_PatientId = this.patientDetails.jaldeeId;
+      }
       this.userId = this.patientDetails.id;
     });
     this.medicalrecord_service._mrUid.subscribe(mrId => {

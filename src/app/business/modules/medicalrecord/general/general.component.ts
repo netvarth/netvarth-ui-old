@@ -13,6 +13,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
   styleUrls: ['./general.component.css']
 })
 export class GeneralComponent implements OnInit {
+  display_PatientId: any;
   paramObject: any;
   mrId: any;
   displayTitle: any;
@@ -52,12 +53,15 @@ export class GeneralComponent implements OnInit {
         this.serviceName = res.serviceName;
         console.log(this.serviceName);
       }
+      this.customerDetails = JSON.parse(res.customerDetail);
+      if (this.customerDetails.memberJaldeeId) {
+        this.display_PatientId = this.customerDetails.memberJaldeeId;
+      } else if (this.customerDetails.jaldeeId) {
+        this.display_PatientId = this.customerDetails.jaldeeId;
+      }
+      this.paramObject = JSON.stringify(res);
     });
-    this.medicalrecordService.patient_data.subscribe(data => {
-      this.customerDetails = JSON.parse(data.customerDetail);
-      this.paramObject = JSON.stringify(data);
 
-    });
     this.medicalrecordService._mrUid.subscribe(mrId => {
       this.mrId = mrId;
     });
