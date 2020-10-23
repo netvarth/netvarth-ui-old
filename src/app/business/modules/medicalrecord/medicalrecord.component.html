@@ -27,8 +27,8 @@
       </div>
       <hr>
       <div>
-        <h5>Add or view medical records for a consultation</h5>
-        <p>Patient consultation date
+        <h5>Add or view medical records for a consultation/visit</h5>
+        <p>Patient visit date
             <button  *ngIf="visitcount === 0" >{{visitdate | date:dateFormatSp}}   &nbsp;</button>
             <button  *ngIf="visitcount !== 0" (click) = "VisitList()">{{visitdate | date:dateFormatSp}}   &nbsp; <i class="arrow down"></i></button>  &nbsp;
             <!-- <span>(Recent visit)</span> -->
