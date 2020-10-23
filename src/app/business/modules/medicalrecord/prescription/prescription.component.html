@@ -101,7 +101,7 @@
             </thead>
               <tbody>
                 <tr *ngFor="let file of uploadlist; let i = index;" >
-                  <td (click)="showimgPopup(file)">
+                  <td (click)="showimgPopup(file)" class="pointlist">
                       <i class="fa fa-paperclip" aria-hidden="true" ></i>&nbsp;<u style="color: #3c8dbc; ">{{file.originalName}}</u>
                   </td>
                   <td >

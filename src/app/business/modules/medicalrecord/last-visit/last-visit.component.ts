@@ -12,6 +12,7 @@ import { MedicalrecordService } from '../medicalrecord.service';
   styleUrls: ['./last-visit.component.css']
 })
 export class LastVisitComponent implements OnInit {
+  display_PatientId: any;
   PatientId: any;
   public lastVisit_dataSource = new MatTableDataSource<any>();
   lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'userName', 'mr', 'rx'];
@@ -45,6 +46,11 @@ export class LastVisitComponent implements OnInit {
     // tslint:disable-next-line: no-shadowed-variable
     this.medicalrecordService.patient_data.subscribe(data => {
       this.customerDetails = JSON.parse(data.customerDetail);
+      if (this.customerDetails.memberJaldeeId) {
+        this.display_PatientId = this.customerDetails.memberJaldeeId;
+      } else if (this.customerDetails.jaldeeId) {
+        this.display_PatientId = this.customerDetails.jaldeeId;
+      }
     });
   }
 

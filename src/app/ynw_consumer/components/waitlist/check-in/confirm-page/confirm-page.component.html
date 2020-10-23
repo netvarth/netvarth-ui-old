@@ -90,7 +90,7 @@
                                 <div class="book-status chkntoknappt-details"> Current status </div>
                                 <table class="status-table">
                                     <tbody>
-                                        <tr>
+                                        <tr *ngIf="waitlist.personsAhead>=0">
                                             <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;Persons ahead
                                             </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>

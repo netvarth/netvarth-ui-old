@@ -15,8 +15,7 @@
             <hr>
             <div class="col-md-6">
                 <label>Patient Name:</label><span> {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</span><br>
-                <label  *ngIf = "customerDetails.jaldeeId" >Patient Id:</label><span  *ngIf = 'customerDetails.jaldeeId'>{{customerDetails.jaldeeId}}</span><br *ngIf = "customerDetails.jaldeeId">
-                <label  *ngIf = "customerDetails.memberJaldeeId" >Patient Id:</label><span  *ngIf = 'customerDetails.memberJaldeeId'>{{customerDetails.memberJaldeeId}}</span><br *ngIf = "customerDetails.memberJaldeeId">
+                <span >Patient Id: {{display_PatientId}}</span>
                 <label *ngIf="customerDetails.dob">DOB:</label><span *ngIf="customerDetails.dob">  {{customerDetails.dob | date:display_dateFormat}}</span><br *ngIf="customerDetails.dob">
                 <label *ngIf="customerDetails.gender">Gender:</label><span *ngIf="customerDetails.gender"> {{customerDetails.gender | capitalizeFirst}}</span>
             </div>
@@ -27,18 +26,18 @@
             <div class="clearfix"></div>
             <hr>
           </div>
-        
-<!-- 
+
+<!--
         <div class="mgn-up-10">
           <hr>
           <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
           <span>Patient Id: {{customerDetails.jaldeeId}}</span><br>
           <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob}}</span><br *ngIf="customerDetails.dob">
           <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span> <br *ngIf="customerDetails.gender">
-       
-          <hr>    
+
+          <hr>
          </div> -->
-    <!-- 
+    <!--
     <div>
        <p>
         <b>Patient:</b>
@@ -53,7 +52,7 @@
 </div>
 
 
-<div >  
+<div >
   <button type="button"  style="margin: 10px" class="cs-btn bt2 sm" (click)="redirecToClinicalNotes()">cancel</button>
   <button  type="button" mat-button (click) = "updateClinicalNotes(edit_data)" [disabled]="edit_data == ''" class="cs-btn bt1 sm">Save</button>
 </div>
