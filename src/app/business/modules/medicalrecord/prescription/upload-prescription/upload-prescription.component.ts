@@ -80,7 +80,7 @@ export class UploadPrescriptionComponent implements OnInit {
 
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , this.navigationExtras);
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
   }
 
   getMrprescription(mrId) {
@@ -125,8 +125,8 @@ export class UploadPrescriptionComponent implements OnInit {
     imgsize = Math.round((val / 1024));
     return imgsize;
   }
- 
-   
+
+
 
 deletePrevUploadRx() {
   return new Promise((resolve, reject) => {
@@ -141,16 +141,16 @@ deletePrevUploadRx() {
   //     this.selectedMessage.files.splice(ia, 1);
   //   }
   // }
-  
+
 }
 
   saveImages() {
     this.disable = true;
-   
+
     for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
       if (this.selectedMessage.files[ia].view !== true) {
-        this.temarry.files.push(this.selectedMessage.files[ia])
-        
+        this.temarry.files.push(this.selectedMessage.files[ia]);
+
       }
     }
     console.log(this.temarry.files);
@@ -176,8 +176,7 @@ deletePrevUploadRx() {
     } else {
       this.medicalrecord_service.createMRForUploadPrescription()
         .then(data => {
-          console.log(data);
-
+          this.navigationParams = { ...this.navigationParams, 'mrId': data };
           this.medicalrecord_service.setCurrentMRID(data);
           this.uploadMrPrescription(data, submit_data);
         },
@@ -186,7 +185,7 @@ deletePrevUploadRx() {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
-  
+
   }
   uploadMrPrescription(id, submit_data) {
     this.provider_services.uploadMRprescription(id, submit_data)
@@ -194,7 +193,7 @@ deletePrevUploadRx() {
         this.showSave = false;
         this.upload_status = 'Uploaded';
         this.sharedfunctionObj.openSnackBar('Prescription uploaded successfully');
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , this.navigationExtras);
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
       },
         error => {
           this.disable = false;

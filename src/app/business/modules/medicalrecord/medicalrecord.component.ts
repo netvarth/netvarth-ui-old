@@ -90,7 +90,7 @@ export class MedicalrecordComponent implements OnInit {
           if (qparams.serviceName) {
             this.serviceName = qparams.serviceName;
           }
-       
+
           if (qparams.booking_type && qparams.booking_type === 'TOKEN' || 'APPT') {
             this.bookingType = qparams.booking_type;
             if (qparams.consultationMode) {
