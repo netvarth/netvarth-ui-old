@@ -2461,7 +2461,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.cancelReason || result.rejectReason) {
-        this.changeApptStatusByBatch('Rejected', appt, result);
+        this.changeApptStatusByBatch('Cancelled', appt, result);
       }
     });
   }
