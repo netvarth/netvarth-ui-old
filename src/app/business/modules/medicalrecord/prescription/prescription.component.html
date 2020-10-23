@@ -101,8 +101,8 @@
             </thead>
               <tbody>
                 <tr *ngFor="let file of uploadlist; let i = index;" >
-                  <td>
-                      <i class="fa fa-paperclip" aria-hidden="true" (click)="showimgPopup(file)"></i>&nbsp;{{file.originalName}}
+                  <td (click)="showimgPopup(file)">
+                      <i class="fa fa-paperclip" aria-hidden="true" ></i>&nbsp;<u style="color: #3c8dbc; ">{{file.originalName}}</u>
                   </td>
                   <td >
                     {{file.date  | date:dateFormatSp}}

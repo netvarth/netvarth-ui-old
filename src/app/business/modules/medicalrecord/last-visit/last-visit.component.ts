@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras} from '@angular/router';
 import { DateFormatPipe } from '../../../../shared//pipes/date-format/date-format.pipe';
 import { MedicalrecordService } from '../medicalrecord.service';
 
@@ -24,7 +24,7 @@ export class LastVisitComponent implements OnInit {
   back_type: any;
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-    private router: Router,
+
     public dateformat: DateFormatPipe,
     private medicalrecordService: MedicalrecordService,
     public dialogRef: MatDialogRef<LastVisitComponent>,
@@ -149,7 +149,7 @@ export class LastVisitComponent implements OnInit {
         'type': 'clinicalnotes'
       };
       this.dialogRef.close(result);
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'] , navigationExtras);
+
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -172,7 +172,7 @@ export class LastVisitComponent implements OnInit {
         'type': 'clinicalnotes'
       };
       this.dialogRef.close(result);
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'] , navigationExtras);
+
     }
   }
 
@@ -201,7 +201,7 @@ export class LastVisitComponent implements OnInit {
         'type': 'prescription'
       };
       this.dialogRef.close(result);
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -223,7 +223,7 @@ export class LastVisitComponent implements OnInit {
         'type': 'prescription'
       };
       this.dialogRef.close(result);
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+
     }
 
   }

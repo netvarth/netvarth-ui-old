@@ -15,6 +15,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 })
 export class MedicalrecordComponent implements OnInit {
 
+  display_PatientId: any;
   navigation_params: { [key: string]: any; };
   mrDate: Date;
   serviceName = 'Consultation';
@@ -83,6 +84,11 @@ export class MedicalrecordComponent implements OnInit {
           }
 
           this.customerDetails = JSON.parse(qparams.customerDetail);
+          if (this.customerDetails.memberJaldeeId) {
+            this.display_PatientId = this.customerDetails.memberJaldeeId;
+          } else if (this.customerDetails.jaldeeId) {
+            this.display_PatientId = this.customerDetails.jaldeeId;
+          }
           this.PatientId = this.customerDetails.id;
           if (qparams.department) {
             this.department = qparams.department;
@@ -90,7 +96,7 @@ export class MedicalrecordComponent implements OnInit {
           if (qparams.serviceName) {
             this.serviceName = qparams.serviceName;
           }
-       
+
           if (qparams.booking_type && qparams.booking_type === 'TOKEN' || 'APPT') {
             this.bookingType = qparams.booking_type;
             if (qparams.consultationMode) {
@@ -161,7 +167,7 @@ export class MedicalrecordComponent implements OnInit {
   ngOnInit() {
     this.medicalService.back_nav.subscribe(res => {
       this.back_type = res;
-   });
+    });
 
     this.mrDate = new Date();
     this.MrCreateddate = this.sharedfunctionObj.formatDateDisplay(this.mrDate);

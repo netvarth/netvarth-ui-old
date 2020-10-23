@@ -321,6 +321,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedLabels: any = [];
   allLabelSelected: any = [];
   customerIdTooltip = '';
+  allLabels: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1763,13 +1764,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getLabel() {
     this.providerLabels = [];
     this.provider_services.getLabelList().subscribe(data => {
-      this.providerLabels = data;
+      this.allLabels = data;
+      this.providerLabels = this.allLabels.filter(label => label.status === 'ACTIVE');
     });
   }
   getDisplayname(label) {
-    for (let i = 0; i < this.providerLabels.length; i++) {
-      if (this.providerLabels[i].label === label) {
-        return this.providerLabels[i].displayName;
+    for (let i = 0; i < this.allLabels.length; i++) {
+      if (this.allLabels[i].label === label) {
+        return this.allLabels[i].displayName;
       }
     }
   }
@@ -2459,7 +2461,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.cancelReason || result.rejectReason) {
-        this.changeApptStatusByBatch('Rejected', appt, result);
+        this.changeApptStatusByBatch('Cancelled', appt, result);
       }
     });
   }

@@ -41,7 +41,7 @@ export class MedicalrecordListComponent implements OnInit {
   getPatientDetails() {
     const filter = { 'id-eq': this.patientId };
     this.provider_services.getProviderCustomers(filter)
-    .subscribe(
+      .subscribe(
         res => {
           this.patientDetails = res;
           console.log(this.patientDetails);
@@ -60,7 +60,7 @@ export class MedicalrecordListComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  back(){
+  back() {
     this.location.back();
   }
   getServiceName(mr) {
@@ -73,11 +73,30 @@ export class MedicalrecordListComponent implements OnInit {
     return serviceName;
 
   }
+  getBookingName(bookingType) {
+    let bkgType = '';
+    switch (bookingType) {
+      case 'FOLLOWUP': {
+        bkgType = 'Follow up';
+        break;
+      }
+      case 'APPT': {
+        bkgType = 'Appointment';
+        break;
+      }
+      case 'TOKEN': {
+        bkgType = 'Check-ins/Tokens';
+        break;
+      }
+    }
+    return bkgType;
+
+  }
   viewMedicalRecord(mrDetails) {
     if (mrDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(mrDetails.waitlist.consumer),
+          'customerDetail': JSON.stringify(mrDetails.waitlist.waitlistingFor[0]),
           'serviceId': mrDetails.waitlist.service.id,
           'serviceName': mrDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
@@ -98,7 +117,7 @@ export class MedicalrecordListComponent implements OnInit {
     } else if (mrDetails.appointmnet) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(mrDetails.appointmnet.providerConsumer),
+          'customerDetail': JSON.stringify(mrDetails.appointmnet.appmtFor[0]),
           'serviceId': mrDetails.appointmnet.service.id,
           'serviceName': mrDetails.appointmnet.service.name,
           'department': mrDetails.appointmnet.service.deptName,
@@ -131,7 +150,7 @@ export class MedicalrecordListComponent implements OnInit {
     if (mrDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(mrDetails.waitlist.consumer),
+          'customerDetail': JSON.stringify(mrDetails.waitlist.waitlistingFor[0]),
           'serviceId': mrDetails.waitlist.service.id,
           'serviceName': mrDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
@@ -151,7 +170,7 @@ export class MedicalrecordListComponent implements OnInit {
     } else if (mrDetails.appointmnet) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(mrDetails.appointmnet.providerConsumer),
+          'customerDetail': JSON.stringify(mrDetails.appointmnet.appmtFor[0]),
           'serviceId': mrDetails.appointmnet.service.id,
           'serviceName': mrDetails.appointmnet.service.name,
           'department': mrDetails.appointmnet.service.deptName,
