@@ -15,7 +15,7 @@
                 <div class="card p0" *ngIf="!showCheckin">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
-                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
+                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()">
                                 <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 sc-frm">
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding mgn-bt-50 apptdate-slot"
@@ -44,7 +44,7 @@
                                                 <!-- <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
                                         searchCustomer(searchForm.value,selectedMode)"></i> -->
                                                 <button class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
-                                        searchCustomer(searchForm.value,selectedMode)">Find</button>
+                                        searchCustomer(searchForm.value)">Find</button>
                                             </div>
                                         </div>
                                     </div>
@@ -494,7 +494,7 @@
                                                         <mat-radio-group>
                                                             <li *ngFor="let memb of familymembers">
                                                                 <mat-radio-button
-                                                                    (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId, $event)"
+                                                                    (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                                                     [value]="memb.id" [checked]="isChecked(memb.id)">
                                                                     {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
                                                                 </mat-radio-button>

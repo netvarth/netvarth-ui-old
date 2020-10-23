@@ -14,7 +14,7 @@ import { projectConstants } from '../../../app.component';
   styleUrls: ['./provider-coupons.component.css']
 })
 export class ProviderCouponsComponent implements OnInit, OnDestroy {
-
+  tooltipcls = '';
   desc_cap = Messages.DESCRIPTION_CAP;
   name_cap = Messages.CUPN_NAME_CAP;
   jCouponCode_Cap = Messages.JCOUPON_CODE;

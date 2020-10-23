@@ -22,6 +22,7 @@ import { ProPicPopupComponent } from '../../../../../bprofile/pro-pic-popup/pro-
 })
 
 export class AboutmeComponent implements OnInit, OnDestroy {
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   logoDetails = null;
   showVirtualFields = false;
   notedialogRef: MatDialogRef<ProPicPopupComponent, any>;

@@ -82,7 +82,7 @@
                                                                                                         <mat-slide-toggle
                                                                                                                 class="example-margin"
                                                                                                                 [checked]="queue.todayAppt"
-                                                                                                                (change)="changeScheduleSameDayOnlineStatus(queue, i, $event)">
+                                                                                                                (change)="changeScheduleSameDayOnlineStatus(queue)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
                                                                                                                         class="tstat">{{queue.todayAppt ? 'On' : 'Off'}}</label>
@@ -98,7 +98,7 @@
                                                                                                                 style="padding-left: 22px;"
                                                                                                                 class="example-margin"
                                                                                                                 [checked]="queue.futureAppt"
-                                                                                                                (change)="changeScheduleFutureStatus(queue, i, $event)">
+                                                                                                                (change)="changeScheduleFutureStatus(queue)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
                                                                                                                         class="tstat">{{queue.futureAppt ? 'On' : 'Off'}}</label>

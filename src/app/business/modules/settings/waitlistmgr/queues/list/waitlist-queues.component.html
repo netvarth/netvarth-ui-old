@@ -114,8 +114,7 @@
                                                                                         </span>
                                                                                         <mat-menu #menu="matMenu">
                                                                                                 <button mat-menu-item
-                                                                                                        *ngFor="let location of locations;let i = index"
-                                                                                                        [(value)]="i"
+                                                                                                        *ngFor="let location of locations;let i = index"                                                                                                        
                                                                                                         (click)="onChangeLocationSelect(i)">
                                                                                                         <strong>
                                                                                                                 {{ location.place | capitalizeFirst }}</strong>
@@ -125,8 +124,8 @@
                                                                         </div>
                                                                         <div *ngIf="action=='edit'"
                                                                                 style="margin-top: -23px">
-                                                                                <label class="labelstyle">{{location_cap}}
-                                                                                </label>
+                                                                                <!-- <label class="labelstyle">{{location_cap}}
+                                                                                </label> -->
                                                                                 <div>:&nbsp;{{loc_name}}</div>
                                                                         </div>
                                                                 </div>
@@ -136,10 +135,10 @@
                                                                                 &nbsp;&nbsp;
                                                                                 <i class="fa fa-square-o"
                                                                                         *ngIf="!isAllServicesSelected"
-                                                                                        (click)="selectAllService()">{{select_All}}</i>
+                                                                                        (click)="selectAllService()"></i>
                                                                                 <i class="fa fa-check-square-o"
                                                                                         *ngIf="isAllServicesSelected"
-                                                                                        (click)="deselectAllService()">{{select_All}}</i>
+                                                                                        (click)="deselectAllService()"></i>
                                                                         </div>
                                                                         <section class="service-section check-horiz leftselectAll"
                                                                                 *ngIf="!isAllServicesSelected">
@@ -273,7 +272,7 @@
                                                                                         <mat-slide-toggle
                                                                                                 class="example-margin"
                                                                                                 [checked]="queue.onlineCheckIn"
-                                                                                                (change)="changeQSameDayOnlineStatus(queue, i, $event)">
+                                                                                                (change)="changeQSameDayOnlineStatus(queue)">
                                                                                         </mat-slide-toggle>
                                                                                         <p><label
                                                                                                         class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
@@ -399,7 +398,7 @@
                                                                                                         <mat-slide-toggle
                                                                                                                 class="example-margin"
                                                                                                                 [checked]="queue.onlineCheckIn"
-                                                                                                                (change)="changeQSameDayOnlineStatus(queue, i, $event)">
+                                                                                                                (change)="changeQSameDayOnlineStatus(queue)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
                                                                                                                         class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
@@ -415,7 +414,7 @@
                                                                                                                 style="padding-left: 22px;"
                                                                                                                 class="example-margin"
                                                                                                                 [checked]="queue.futureWaitlist"
-                                                                                                                (change)="changeQFutureStatus(queue, i, $event)">
+                                                                                                                (change)="changeQFutureStatus(queue)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
                                                                                                                         class="tstat">{{queue.futureWaitlist ? 'On' : 'Off'}}</label>

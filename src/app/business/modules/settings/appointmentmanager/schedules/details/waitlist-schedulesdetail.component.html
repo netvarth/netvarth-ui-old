@@ -205,7 +205,7 @@
                                 <ul class="dropdown-menu" *ngIf="action=='add' && loc_list.length > 1">
                                     <li>
                                         <ul class="menu">
-                                            <li *ngFor="let loc of loc_list;let i = index" [(value)]="i"
+                                            <li *ngFor="let loc of loc_list;let i = index"
                                                 [ngClass]="{'active': (loc.place == selected_location.place)}">
                                                 <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
                                                     <h4>{{ loc.place | capitalizeFirst }}</h4>

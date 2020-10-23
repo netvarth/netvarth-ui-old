@@ -37,11 +37,11 @@
           </ng-container>
           <ng-container matColumnDef="mr">
             <mat-header-cell *matHeaderCellDef> <b>MR</b></mat-header-cell>
-            <mat-cell *matCellDef="let visit"> <button (click)="viewMedicalRecord(visit)"  style="text-align:center"> <i class="medicalrecord-icon-customer"></i>{{isMRCreated(visit) === true ?'View MR':'Create MR'}}</button></mat-cell>
+            <mat-cell *matCellDef="let visit"> <button (click)="viewMedicalRecord(visit)"  style="text-align:center"> <i class="medicalrecord-icon-customer"></i>{{isMRCreated(visit) ?'View MR':'Create MR'}}</button></mat-cell>
           </ng-container>
           <ng-container matColumnDef="rx">
             <mat-header-cell *matHeaderCellDef> <b>RX</b></mat-header-cell>
-            <mat-cell *matCellDef="let visit">  <button  (click)="viewMR_prescription(visit)"  style="text-align:center">  <i class="mr-rx-icon-customer"></i>{{isRxCreated(visit)===true?'View Rx':'Create Rx'}}</button></mat-cell>
+            <mat-cell *matCellDef="let visit">  <button  (click)="viewMR_prescription(visit)"  style="text-align:center">  <i class="mr-rx-icon-customer"></i>{{isRxCreated(visit) ?'View Rx':'Create Rx'}}</button></mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns"></mat-row>

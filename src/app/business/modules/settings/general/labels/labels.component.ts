@@ -9,6 +9,8 @@ import { Messages } from '../../../../../shared/constants/project-messages';
     templateUrl: './labels.component.html'
 })
 export class LabelsComponent implements OnInit {
+    tooltipcls = '';
+    add_button = '';
     breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         {

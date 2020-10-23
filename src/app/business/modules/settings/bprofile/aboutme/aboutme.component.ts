@@ -22,13 +22,13 @@ import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/funct
 })
 export class AboutMeComponent implements OnInit {
 
-
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   showVirtualFields = false;
   showMandatory: boolean;
   subdomain_fields_mandatory = [];
   domain_fields_mandatory = [];
   dynamicdialogRef: MatDialogRef<ProviderBprofileSearchDynamicComponent, any>;
-
+  change_cap = Messages.BPROFILE_CHANGE_CAP;
   profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
   business_name_cap = Messages.SEARCH_PRI_BUISINESS_NAME_CAP;
   profile_summary_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;

@@ -1715,7 +1715,7 @@ export class AppointmentComponent implements OnInit {
         const slots = slot.split('-');
         return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
     }
-    showOtherSection(value) {
+    showOtherSection(value?) {
         if (value) {
             if (this.otherThirdParty.trim() === '') {
                 this.thirdparty_error = 'Third party listing site required';

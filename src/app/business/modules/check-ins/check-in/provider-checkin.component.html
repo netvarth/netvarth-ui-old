@@ -15,7 +15,7 @@
         <div class="card p0" *ngIf="!showCheckin">
           <div class="copy locd">
             <div class="lbl col-sm-12 col-md-8 col-lg-8">
-              <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
+              <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()">
                 <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 sc-frm">
                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                     <div class="mgn-up-10"> Find an existing {{customer_label}} and create {{(showtoken? 'token' :
@@ -30,7 +30,7 @@
                       </div>
                       <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
                         <button class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
-                    searchCustomer(searchForm.value,selectedMode)">Find</button>
+                    searchCustomer(searchForm.value)">Find</button>
                       </div>
                     </div>
                   </div>

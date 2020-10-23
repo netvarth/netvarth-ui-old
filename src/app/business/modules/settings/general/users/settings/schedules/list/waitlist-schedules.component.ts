@@ -670,7 +670,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
      * @param qObj queue object
      * @param event field checked status
      */
-    changeScheduleSameDayOnlineStatus(qObj, index) {
+    changeScheduleSameDayOnlineStatus(qObj) {
         let chstatusmsg = '';
         if (qObj.todayAppt) {
             chstatusmsg = 'disabled';
@@ -692,7 +692,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
      * @param qObj queue Object
      * @param event field checked status
      */
-    changeScheduleFutureStatus(qObj, index) {
+    changeScheduleFutureStatus(qObj) {
         let chstatusmsg = '';
         if (qObj.futureAppt) {
             chstatusmsg = 'disabled';

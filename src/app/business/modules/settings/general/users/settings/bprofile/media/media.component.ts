@@ -210,7 +210,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         }
         return false;
     }
-    handleSocialmedia(key) {
+    handleSocialmedia(key?) {
         this.socialdialogRef = this.dialog.open(ProviderUserBprofileSearchSocialMediaComponent, {
             width: '50%',
             // panelClass: 'socialmediamainclass',

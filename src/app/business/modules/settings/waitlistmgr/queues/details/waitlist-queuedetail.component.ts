@@ -952,7 +952,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
   }
 
-  goToSelectionPage(selected_id) {
+  goToSelectionPage(selected_id?) {
     this.setSelectedData().then(res => {
       this.report_data_service.storeSelectedValues(res);
         this.router.navigate(['provider', 'reports', 'service'], { queryParams: { report_type: this.report_type, data: selected_id, source: 'queueDetail' } });

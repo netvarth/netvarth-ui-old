@@ -26,7 +26,7 @@ import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.comp
 
 
 export class BProfileComponent implements OnInit,  AfterViewChecked {
-
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   listmyprofile_status: boolean;
   onlinepresence_status_str: string;
   subdomainVirtualFieldFilledStatus: any;
@@ -136,6 +136,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
   // add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
   to_turn_search = Messages.BPROFILE_TURN_ON_PUBLIC_SEARCH;
   change_cap = Messages.BPROFILE_CHANGE_CAP;
+  additional_cap = Messages.BPROFILE_ADDITIONAL_CAP;
   pic_cap = Messages.BPROFILE_PICTURE_CAP;
   delete_pic = Messages.BPROFILE_DELETE_PICTURE_CAP;
   info_cap = Messages.BPROFILE_INFORMATION_CAP;
