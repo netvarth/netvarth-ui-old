@@ -717,7 +717,7 @@ export class CustomerSearchComponent implements OnInit {
         }
         return true;
     }
-    resetApiErrors(event) {
+    resetApiErrors() {
         this.emailerror = null;
         this.email1error = null;
         this.phoneerror = null;

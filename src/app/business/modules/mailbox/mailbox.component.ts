@@ -60,7 +60,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
     type;
     @ViewChildren('msgId') msgIds: QueryList<ElementRef>;
     constructor(private inbox_services: InboxServices,
-        private shared_functions: SharedFunctions,
+        public shared_functions: SharedFunctions,
         private shared_services: SharedServices,
         private routerobj: Router,
         private provider_services: ProviderServices) { }

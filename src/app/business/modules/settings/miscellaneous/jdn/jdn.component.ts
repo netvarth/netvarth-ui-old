@@ -218,12 +218,12 @@ export class JDNComponent implements OnInit {
                 }
             );
     }
-    edit(stat) {
-        this.rewrite = stat;
+    edit() {
+        // this.rewrite = stat;
         this.getJdnDetails();
     }
-    cancel(stat) {
-        this.rewrite = stat;
+    cancel() {
+        // this.rewrite = stat;
         this.getJdnDetails();
     }
     handlejdn_status(status) {

@@ -28,6 +28,7 @@ export class Keywordscls {
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit, OnChanges, DoCheck {
+  tooltipcls = '';
   all_cap = Messages.ALL_DOMAINSCAP;
   more_options_cap = Messages.MORE_OPTIONS_CAP;
   @Input() searchfields: SearchFields;

@@ -28,6 +28,8 @@ export interface ItemServiceGroup {
 })
 
 export class AddProviderWaitlistCheckInBillComponent implements OnInit {
+  paynot;
+  tooltipcls = '';
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;
   date_cap = Messages.SYS_ALERTS_DATE_CAP;

@@ -21,6 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
     styleUrls: ['./consumer-appointment.component.css']
 })
 export class ConsumerAppointmentComponent implements OnInit {
+    tooltipcls = '';
     checkinSubscribtion: Subscription;
     select_service_cap = Messages.SELECT_SER_CAP;
     select_deptment_cap = Messages.SELECT_DEPT_CAP;
@@ -313,7 +314,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         if (this.type !== 'reschedule') {
-        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         }
         this.minDate = this.todaydate;
         if (this.change_date === 'true') {
@@ -352,8 +353,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             (appt: any) => {
                 this.appointment = appt;
                 if (this.type === 'reschedule') {
-                     this.waitlist_for.push({ id: this.appointment.appmtFor[0].id, firstName: this.appointment.appmtFor[0].firstName, lastName: this.appointment.appmtFor[0].lastName, phoneNo: this.appointment.phoneNumber });
-                     console.log(this.waitlist_for)
+                    this.waitlist_for.push({ id: this.appointment.appmtFor[0].id, firstName: this.appointment.appmtFor[0].firstName, lastName: this.appointment.appmtFor[0].lastName, phoneNo: this.appointment.phoneNumber });
                 }
 
                 this.sel_loc = this.appointment.location.id;
@@ -775,7 +775,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 } else if (i === 'Phone') {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else if (i === 'VideoCall') {
-                    post_Data['virtualService'] = {'VideoCall': ''};
+                    post_Data['virtualService'] = { 'VideoCall': '' };
                 }
                 // else {
                 //     post_Data['virtualService'] = {};
@@ -1602,7 +1602,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     editCallingmodes() {
         this.showInputSection = false;
     }
-    showPhoneInput(){
+    showPhoneInput() {
         this.showInputSection = true;
 
     }

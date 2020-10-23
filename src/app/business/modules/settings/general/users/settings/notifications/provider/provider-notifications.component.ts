@@ -21,7 +21,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     {
       title: Messages.GENERALSETTINGS,
       url: '/provider/settings/general'
-  },
+    },
     {
       url: '/provider/settings/general/users',
       title: 'Users'
@@ -121,7 +121,7 @@ export class ProviderNotificationUserComponent implements OnInit {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        }, () => {
+      }, () => {
       });
   }
   getUser() {
@@ -179,7 +179,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     if (notificationList.length !== 0) {
       for (const notifyList of notificationList) {
         if (notifyList.eventType && notifyList.eventType === 'WAITLISTADD') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0)  {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.SelchkinNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -432,7 +432,7 @@ export class ProviderNotificationUserComponent implements OnInit {
         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
-     
+
       this.okCancelStatus = true;
       this.notifycanclphonenumber = '';
     }
@@ -722,7 +722,7 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.em1_arr = [];
       this.ph1_arr = [];
       this.pushcanclcheckin_arr = [];
-     // this.cancelpush = false;
+      // this.cancelpush = false;
     }
     this.savecancelNotification_json.resourceType = 'CHECKIN';
     this.savecancelNotification_json.eventType = 'WAITLISTCANCEL';
@@ -747,7 +747,7 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.apptem_arr = [];
       this.apptph_arr = [];
       this.apptpushph_arr = [];
-      //this.apptPush = false;
+      // this.apptPush = false;
     }
     this.savechekinNotification_json.resourceType = 'APPOINTMENT';
     this.savechekinNotification_json.eventType = 'APPOINTMENTADD';
@@ -773,7 +773,7 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.apptem1_arr = [];
       this.apptph1_arr = [];
       this.pushapptcancelph_arr = [];
-      //this.cancelpushAppt = false;
+      // this.cancelpushAppt = false;
     }
     this.savecancelNotification_json.resourceType = 'APPOINTMENT';
     this.savecancelNotification_json.eventType = 'APPOINTMENTCANCEL';
@@ -864,11 +864,11 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.sms = true;
     }
   }
-  pushcheckinAddClicked(){
+  pushcheckinAddClicked() {
     if (this.pushcheckin) {
       this.pushcheckin = false;
     } else {
-      this.pushcheckin= true;
+      this.pushcheckin = true;
     }
   }
   cancelledCheckinsmsAddClicked() {
@@ -908,7 +908,7 @@ export class ProviderNotificationUserComponent implements OnInit {
   }
   pushcancelledApptAddClicked() {
     if (this.pushcancelAppt) {
-      this.pushcancelAppt= false;
+      this.pushcancelAppt = false;
     } else {
       this.pushcancelAppt = true;
     }
@@ -960,6 +960,9 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
   }
   redirecToUserNotifications() {
-    this.routerobj.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings' ,'notifications']);
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'notifications']);
+  }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
   }
 }

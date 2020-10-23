@@ -63,14 +63,14 @@
                                       <div>
                                           <label class="filterHeaders">Filter By Date</label>
                                               <li class="filterli filterDatepicker">
-                                                  <input class="filterTextbox" type="text" (ngModel)="filter.from_date" [min]="minday" [matDatepicker]="picker1"
+                                                  <input class="filterTextbox" type="text" (ngModel)="filter.from_date" [matDatepicker]="picker1"
                                                   #Fdate (dateChange)="doSearch()" (blur)="doSearch()" placeholder="From Date">
                                                   <mat-datepicker-toggle matSuffix [for]="picker1">
                                                   </mat-datepicker-toggle>
                                                   <mat-datepicker #picker1></mat-datepicker>
                                               </li>
                                               <li class="filterli filterDatepicker">
-                                                  <input class="filterTextbox" type="text" (ngModel)="filter.to_date" [min]="minday" [matDatepicker]="picker2" #Tdate
+                                                  <input class="filterTextbox" type="text" (ngModel)="filter.to_date" [matDatepicker]="picker2" #Tdate
                                                   (dateChange)="doSearch()" (blur)="doSearch()" placeholder="To Date">
                                                   <mat-datepicker-toggle matSuffix [for]="picker2">
                                                   </mat-datepicker-toggle>

@@ -735,7 +735,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     changeConsumerNoteStatus(ev) {
         this.showConsumerNote = ev.checked;
     }
-    editClicked(type) {
+    editClicked(type?) {
         this.showNoteError = '';
         if (type && type === 'save') {
             if (this.consumerNote === '' || this.consumerNote.trim() === '') {

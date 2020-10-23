@@ -291,14 +291,13 @@
                                     <div class="panel-body pad-lt-0 pad-rt-0 pad-bt-5 pad-up-5">
                                         <div class="col-md-3 col-xs-3 col-sm-3 col-lg-2 no-padding centeralign ">
                                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 pro-img1 no-padding">
+                                                <!-- (click)="openImageModalRow(image_list_popup[0])" -->
                                                 <img [src]="search_result.fields.logo" id="profile-image1"
                                                     *ngIf="search_result.fields.logo"
-                                                    class=" img-circle img-responsive pointer-cursor"
-                                                    (click)="openImageModalRow(image_list_popup[0])">
+                                                    class=" img-circle img-responsive pointer-cursor"/>
                                                 <img src="assets/images/img-null.svg" id="profile-image1"
                                                     *ngIf="!search_result.fields.logo"
-                                                    class=" img-circle img-responsive pointer-cursor"
-                                                    (click)="openImageModalRow(image_list_popup[0])">
+                                                    class=" img-circle img-responsive pointer-cursor">
                                             </div>
                                             <div class="rating-stars col-md-12 col-xs-12 col-sm-12 centeralign">
                                                 <ng-container *ngIf="search_result.fields.rating>0">
@@ -505,7 +504,7 @@
                                             </span>
                                             <span class=" pic_align pull-left centeralign mgn-lt-20"
                                                 *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0"
-                                                (click)="!btn_clicked && openCoupons(search_result)"
+                                                (click)="!btn_clicked && openCoupons(search_result, true)"
                                                 [matTooltipClass]="tooltipcls" [matTooltip]="couponTooltip">
                                                 <img class="img1" src="./assets/images/jcoupon.png"
                                                     alt="Jaldee Coupon" />
@@ -520,12 +519,12 @@
                                                 <span style="display:block">{{claim_my_business_cap}}</span>
                                             </span>
                                         </div>
-                                        <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
+                                        <!-- <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
                                             [modalImages]="image_list_popup"
                                             [plainGalleryConfig]="customPlainGalleryRowConfig"
                                             [buttonsConfig]="customButtonsFontAwesomeConfig"
-                                            (buttonBeforeHook)="onButtonBeforeHook($event)"
-                                            (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+                                            (buttonBeforeHook)="onButtonBeforeHook()"
+                                            (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery> -->
 
                                         <!-- Book Service button start -->
                                         <div class="clearfix"></div>

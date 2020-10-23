@@ -8,7 +8,7 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2
 import { KioskRouterModule } from './kiosk-routing.module';
 
 import { PagerModule } from '../shared/modules/pager/pager.module';
-import { CheckInModule } from '../shared/modules/check-in/check-in.module';
+// import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 import { RatingStarModule } from '../shared/modules/ratingstar/ratingstart.module';
 // import { AddMemberModule } from '../shared/modules/add-member/add-member.module';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
@@ -34,7 +34,7 @@ import 'mousetrap';
         SharedModule,
         AngularMultiSelectModule,
         PagerModule,
-        CheckInModule,
+        // CheckInModule,
         RatingStarModule
     ],
     declarations: [

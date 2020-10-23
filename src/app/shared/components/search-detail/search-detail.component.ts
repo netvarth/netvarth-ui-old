@@ -17,7 +17,7 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
-import { Image, AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonType, ButtonsStrategy } from 'angular-modal-gallery';
+// import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonType, ButtonsStrategy } from 'angular-modal-gallery';
 
 @Component({
   selector: 'app-search-detail',
@@ -171,23 +171,24 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   departServiceList: any = [];
   selectedDepartment;
   appttime_arr: any = [];
-  customPlainGalleryRowConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
-  customButtonsFontAwesomeConfig: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.CUSTOM,
-    buttons: [
-      {
-        className: 'inside close-image',
-        type: ButtonType.CLOSE,
-        ariaLabel: 'custom close aria label',
-        title: 'Close',
-        fontSize: '20px'
-      }
-    ]
-  };
+  tooltipcls = '';
+  // customPlainGalleryRowConfig: PlainGalleryConfig = {
+  //   strategy: PlainGalleryStrategy.CUSTOM,
+  //   layout: new AdvancedLayout(-1, true)
+  // };
+  // customButtonsFontAwesomeConfig: ButtonsConfig = {
+  //   visible: true,
+  //   strategy: ButtonsStrategy.CUSTOM,
+  //   buttons: [
+  //     {
+  //       className: 'inside close-image',
+  //       type: ButtonType.CLOSE,
+  //       ariaLabel: 'custom close aria label',
+  //       title: 'Close',
+  //       fontSize: '20px'
+  //     }
+  //   ]
+  // };
   futureAllowed = true;
   constructor(private routerobj: Router,
     private location: Location,
@@ -783,7 +784,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       // }
       phrasestr = ' (or sub_sector_displayname:\'' + this.kw + '\'' + ' sub_sector:\'' + this.kw.toLowerCase() + '\'' + ' specialization:\'' + this.kw.toLowerCase() + '\'' +
         ' specialization_displayname:\'' + this.kw + '\''
-        + ' (or (prefix field=title \'' + this.kw + '\') (phrase field=title \'' + this.kw + '\'))' 
+        + ' (or (prefix field=title \'' + this.kw + '\') (phrase field=title \'' + this.kw + '\'))'
         + ' (or (prefix field=providers \'' + this.kw + '\') (phrase field=providers \'' + this.kw + '\'))' + ' services:\'' + this.kw + '\''
         + ' custom_id:\'' + this.kw + '\'' + ' enc_uid:\'' + this.kw + '\''
         + ' qualification:\'' + this.kw + '\' adwords:\'' + this.kw.split(' ').join(projectConstants.ADWORDSPLIT) + '\')';
@@ -2203,20 +2204,20 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
-  openImageModalRow(image: Image, galleryList) {
-    const index: number = this.getCurrentIndexCustomLayout(image, galleryList);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-  }
-  private getCurrentIndexCustomLayout(image, images): number {
-    for (let i = 0; i < images.length; i++) {
-      if (images[i].modal.img === image) {
-        return i;
-      }
-    }
-  }
-  onButtonBeforeHook() {
-  }
-  onButtonAfterHook() { }
+  // openImageModalRow(image: Image, galleryList) {
+  //   const index: number = this.getCurrentIndexCustomLayout(image, galleryList);
+  //   this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  // }
+  // private getCurrentIndexCustomLayout(image, images): number {
+  //   for (let i = 0; i < images.length; i++) {
+  //     if (images[i].modal.img === image) {
+  //       return i;
+  //     }
+  //   }
+  // }
+  // onButtonBeforeHook() {
+  // }
+  // onButtonAfterHook() { }
   showButton(searchData) {
     if (searchData.fields.online_profile === '1') {
       if (!searchData.fields.waitlist && !searchData.fields.apptAllowed

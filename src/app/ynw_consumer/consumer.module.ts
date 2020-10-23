@@ -7,7 +7,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { ConsumerRoutingModule } from './consumer-routing.module';
 import { SearchModule } from '../shared/modules/search/search.module';
 import { HeaderModule } from '../shared/modules/header/header.module';
-import { CheckInModule } from '../shared/modules/check-in/check-in.module';
+// import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
 import { AddMemberModule } from '../shared/modules/add-member/add-member.module';
 import { PagerModule } from '../shared/modules/pager/pager.module';
@@ -54,7 +54,7 @@ import { MyfavouritesComponent } from './components/myfavourites/myfavourites.co
     SearchModule,
     SharedModule,
     HeaderModule,
-    CheckInModule,
+    // CheckInModule,
     OwlModule,
     BreadCrumbModule,
     AddMemberModule,

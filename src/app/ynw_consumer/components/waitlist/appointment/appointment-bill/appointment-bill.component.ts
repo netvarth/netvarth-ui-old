@@ -22,7 +22,7 @@ import { RazorpayService } from '../../../../../shared/services/razorpay.service
 })
 export class ConsumerAppointmentBillComponent implements OnInit {
     @ViewChild('itemservicesearch') item_service_search;
-
+    tooltipcls = '';
     new_cap = Messages.NEW_CAP;
     bill_cap = Messages.BILL_CAPTION;
     date_cap = Messages.DATE_CAP;

@@ -29,6 +29,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   // pdtyp  --- 0-History, 1-Future, 2-Today
   // pdStyp --- 'all' -- Checkins, 'started' - Started, 'done' - Complete, 'cancelled' - Cancelled
   // pdq --- selected queue id
+  tooltipcls = '';
+  cloudTooltip = '';
+  filtericonTooltip = '';
   today_cap = Messages.TODAY_HOME_CAP;
   future_cap = Messages.FUTURE_HOME_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;
@@ -1421,12 +1424,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (totalAppointmentsSelected === 1) {
       this.apptSingleSelection = true;
-      for (let i in this.appointmentsChecked) {
+      // tslint:disable-next-line:forin
+      for (const i in this.appointmentsChecked) {
         this.checkin_uuid = this.appointmentsChecked[i];
         if (!this.checkin_uuid.parentUuid) {
           this.billicon = true;
-        }
-        else {
+        } else {
           this.billicon = false;
         }
       }
@@ -2908,5 +2911,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         // chekintype: 'appointment'
       }
     });
+  }
+  onButtonBeforeHook () {}
+  onButtonAfterHook () {}
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
   }
 }

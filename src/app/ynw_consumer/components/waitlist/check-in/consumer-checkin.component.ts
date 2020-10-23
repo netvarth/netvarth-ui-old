@@ -23,6 +23,7 @@ import { ServiceDetailComponent } from '../../../../shared/components/service-de
     encapsulation: ViewEncapsulation.None
 })
 export class ConsumerCheckinComponent implements OnInit {
+    tooltipcls = '';
     checkinSubscribtion: Subscription;
     select_service_cap = Messages.SELECT_SER_CAP;
     select_deptment_cap = Messages.SELECT_DEPT_CAP;
@@ -647,7 +648,7 @@ export class ConsumerCheckinComponent implements OnInit {
             this.confrmshow = true;
         }
     }
-    showPhoneInput(){
+    showPhoneInput() {
         this.showInputSection = true;
 
     }
@@ -833,7 +834,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 } else if (i === 'Phone') {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else if (i === 'VideoCall') {
-                    post_Data['virtualService'] = {'VideoCall': ''};
+                    post_Data['virtualService'] = { 'VideoCall': '' };
                 }
                 //  else {
                 //     post_Data['virtualService'] = {};
@@ -1900,7 +1901,7 @@ export class ConsumerCheckinComponent implements OnInit {
     showPreInfo() {
         this.action = 'preInfo';
     }
-    changeTime(){
+    changeTime() {
         this.action = 'timeChange';
     }
 }

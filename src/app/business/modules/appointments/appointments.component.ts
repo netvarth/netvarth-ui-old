@@ -611,7 +611,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'appointments', 'adjustdelay']);
     // }
   }
-  
+
   performActions(action) {
     if (action === 'adjustdelay') {
       this.showAdjustDelay();
@@ -3086,7 +3086,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedUser = user;
     this.getQsByProvider();
   }
-
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
   getQsByProvider() {
     const qs = [];
     if (this.selectedUser && this.selectedUser.id === 'all') {
@@ -3362,7 +3364,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.loadApiSwitch('');
     });
   }
-CreateVoiceCall(appt?) {
+  CreateVoiceCall(appt?) {
     let appmt;
     appmt = appt.uid;
     this.voicedialogRef = this.dialog.open(VoicecallDetailsSendComponent, {
@@ -3375,4 +3377,6 @@ CreateVoiceCall(appt?) {
       }
     });
   }
+  onButtonBeforeHook() { }
+  onButtonAfterHook() { }
 }

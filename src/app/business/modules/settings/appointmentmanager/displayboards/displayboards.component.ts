@@ -10,6 +10,8 @@ import { projectConstants } from '../../../../../app.component';
     templateUrl: './displayboards.component.html'
 })
 export class DisplayboardsComponent implements OnInit {
+    tooltipcls = '';
+    add_button = '';
     breadcrumb_moreoptions: any = [];
     breadcrumbs_init = [
         {

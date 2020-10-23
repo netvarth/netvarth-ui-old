@@ -14,7 +14,7 @@ import { projectConstantsLocal } from '../../constants/project-constants';
   templateUrl: './signup.component.html'
 })
 export class SignUpComponent implements OnInit {
-
+  hearus;
   mobile_no_cap = Messages.MOBILE_CAP;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   first_name_cap = Messages.F_NAME_CAP;
@@ -306,7 +306,7 @@ export class SignUpComponent implements OnInit {
         lastName: this.toCamelCase(this.data.moreOptions.dataCreateProv.lname) || null
       };
     } else {
-      
+
       userProfile = {
         countryCode: '+91',
         primaryMobileNo: this.signupForm.get('phonenumber').value || null,
@@ -316,7 +316,7 @@ export class SignUpComponent implements OnInit {
       };
     }
 
-   
+
     if (fname === '') {
       this.api_error = 'First name is required';
       if (document.getElementById('first_name')) {

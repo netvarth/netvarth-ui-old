@@ -92,13 +92,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                     <div>{{customer_data.dob}}</div>
                                 </div>
                                 <hr class="wide-separator-line" />
-                                <div *ngIf="isFrom == checkin" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
+                                <div *ngIf="isFrom == 'checkin'" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
                                     Do You want take Check-In For this
                                         {{customer_label}} &nbsp;
                                     <i class="fa fa- pointer-cursor" (click)="checkinClicked()"><u
                                             class="createcheckinstyle">Click here</u></i>
                                 </div>
-                                <div *ngIf="isFrom == appointment" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
+                                <div *ngIf="isFrom == 'appointment'" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
                                     Do You want take Appointment For this
                                         {{customer_label}} &nbsp;
                                     <i class="fa fa- pointer-cursor" (click)="appointmentClicked()"><u
@@ -178,7 +178,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                         <input class="form-control dtepicker" type="text" matInput
-                                            [matDatepicker]="picker" formControlName="dob" [max]="tday" [min]="minday"
+                                            [matDatepicker]="picker" formControlName="dob" [max]="tday"
                                             placeholder="DD/MM/YYYY">
                                     </div>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"

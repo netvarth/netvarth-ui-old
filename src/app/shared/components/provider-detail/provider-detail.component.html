@@ -150,8 +150,8 @@
                     </div>
                     <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
                         [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
-                        [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook($event)"
-                        (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+                        [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+                        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 showmoresec"
                         *ngIf="showMore">
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10">
