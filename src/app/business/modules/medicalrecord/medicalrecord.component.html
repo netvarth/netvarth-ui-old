@@ -19,14 +19,19 @@
             <span *ngIf="customerDetails.dob|| customerDetails.gender ">({{customerDetails.dob}} {{customerDetails.gender | capitalizeFirst}})</span>
           </p> -->
           <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
-          <span >Patient Id: {{display_PatientId}}</span><br *ngIf ="display_PatientId">
+          <span >Patient Id: {{display_PatientId}}</span>
           <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob  | date:display_dateFormat}}</span><br *ngIf="customerDetails.dob">
           <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span>
 
+
       </div>
+
+
+
+
       <hr>
       <div>
-        <h6>Add or view medical records for a consultation/visit</h6>
+        <h5>Add or view medical records for a consultation/visit</h5>
         <p>Patient visit date
             <button  *ngIf="dateShow" >{{visitdate | date:dateFormatSp}}   &nbsp;</button>
             <button  *ngIf="isShowList" (click) = "VisitList()">{{visitdate | date:dateFormatSp}}   &nbsp; <i class="arrow down" ></i></button>  &nbsp;
