@@ -161,7 +161,7 @@ export class JDNComponent implements OnInit {
             }
         }
     }
-    update(stat) {
+    update(stat?) {
         this.resetApiErrors();
         let put_data;
         if (this.jdnType === 'Label') {

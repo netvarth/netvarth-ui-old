@@ -692,7 +692,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      * @param qObj queue Object
      * @param event field checked status
      */
-    changeQFutureStatus(qObj, index) {
+    changeQFutureStatus(qObj) {
         let chstatusmsg = '';
         if (qObj.futureWaitlist) {
             chstatusmsg = 'disabled';

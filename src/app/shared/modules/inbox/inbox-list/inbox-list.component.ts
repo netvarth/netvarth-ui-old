@@ -35,6 +35,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   msgdialogRef;
   fileTooltip = Messages.FILE_TOOLTIP;
+  tooltipcls = '';
   showImages: any = [];
 
   @Input() messages: any;
@@ -43,7 +44,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
 
   constructor(private inbox_services: InboxServices,
     private dialog: MatDialog,
-    private shared_functions: SharedFunctions) { }
+    public shared_functions: SharedFunctions) { }
 
   ngOnInit() {
     if (this.fromsource === 'provider_checkin_detail' ||

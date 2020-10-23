@@ -10,6 +10,8 @@ import { FormMessageDisplayService } from '../../../../../../shared/modules/form
     templateUrl: './label.component.html'
 })
 export class LabelComponent implements OnInit {
+    tooltipcls = '';
+    add_button = '';
     actionparam = 'show';
     label_id = null;
     api_loading = false;

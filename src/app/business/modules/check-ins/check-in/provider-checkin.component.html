@@ -434,7 +434,7 @@
                             <mat-radio-group>
                               <li *ngFor="let memb of familymembers">
                                 <mat-radio-button
-                                  (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId, $event)"
+                                  (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                   [value]="memb.id" [checked]="isChecked(memb.id)">
                                   {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
                                 </mat-radio-button>

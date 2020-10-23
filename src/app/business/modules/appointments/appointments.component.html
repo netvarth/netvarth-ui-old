@@ -39,7 +39,7 @@
                   <ul class="dropdown-menu">
                     <li>
                       <ul class="menu">
-                        <li *ngFor="let location of locations;let i = index" [(value)]="i"
+                        <li *ngFor="let location of locations;let i = index"
                           [ngClass]="{'active': (location.place == selected_location.place)}">
                           <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
                             <h4 *ngIf="location.place.length>='27'">
@@ -116,7 +116,7 @@
                   </a>
                 </li>
                 <li class="dropdown notifications-menu">
-                  <a (click)="searchCustomer('createCustomer')"
+                  <a (click)="searchCustomer()"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
                     <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}

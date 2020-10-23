@@ -26,10 +26,6 @@ const routes: Routes = [
         path: 'consumer', loadChildren: () => import('./ynw_consumer/consumer.module').then(m => m.ConsumerModule),
         canActivate: [AuthGuardConsumer]
     },
-    {
-        path: 'kiosk', loadChildren: () => import('./ynw_kiosk/kiosk.module').then(m => m.KioskModule),
-        canActivate: [AuthGuardProvider]
-    },
     { path: '', component: HomeComponent, canActivate: [AuthGuardHome] },
     { path: 'business', loadChildren: () => import('./shared/components/phome/phome.module').then(m => m.PhomeModule) },
     { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },

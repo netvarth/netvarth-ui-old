@@ -23,7 +23,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 
 export class ConsumerCheckinHistoryComponent implements OnInit {
 
-
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   @Input() reloadapi;
   @Input() params;
   @Output() getWaitlistBillEvent = new EventEmitter<any>();

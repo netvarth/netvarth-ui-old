@@ -10,7 +10,6 @@ import { ApplyLabelComponent } from '../check-ins/apply-label/apply-label.compon
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
-import { CallingModesComponent } from '../check-ins/calling-modes/calling-modes.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -1120,7 +1119,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param action Scheduled/Started/Cancelled/Completed
    * @param type Today/Future/History
    */
-  viewStatusFilterBtnClicked(action, type) {
+  viewStatusFilterBtnClicked(action, type?) {
     this.statusAction = action;
     // this.loading = true;
     this.resetCheckList();
@@ -1748,7 +1747,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: date } });
     }
   }
-  searchCustomer(source, appttime) {
+  searchCustomer() {
     this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
   }
   /**
@@ -2577,24 +2576,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getVirtualServiceCount(virtualService) {
     return Object.keys(virtualService).length;
-  }
-  generateLink(modes) {
-    this.notedialogRef = this.dialog.open(CallingModesComponent, {
-      width: '20%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        modes: modes.virtualService,
-        uuid: modes.uid,
-        linkValue: this.gnr_link,
-        qdata: modes,
-        type: 'appt'
-      }
-    });
-    this.notedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-      }
-    });
   }
   smsAppt() {
     const _this = this;

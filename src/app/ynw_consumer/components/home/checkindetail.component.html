@@ -67,7 +67,7 @@
                                                         *ngIf="waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 {{waitlist.service.name | capitalizeFirst}} <span
-                                                    *ngIf="deptName">({{waitlist.service.deptName}}) </span></div>
+                                                    *ngIf="waitlist.service.deptName">({{waitlist.service.deptName}}) </span></div>
                                             <div class="item"><span class="ttle">{{queue_cap}}</span>
                                                 {{waitlist.queue.queueStartTime}} - {{waitlist.queue.queueEndTime}}
                                             </div>
@@ -103,7 +103,7 @@
                                         <div class="clearfix"></div>
                                         <div class="btm" *ngIf="waitlist">
                                             <button class="cs-btn bt3 communicate"
-                                                (click)="addCommonMessage(waitlistdata)">{{send_msg_cap}}</button>
+                                                (click)="addCommonMessage(waitlist)">{{send_msg_cap}}</button>
                                         </div>
                                     </div>
                                 </div>

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { GeneralSettingsComponent } from './general-settings.component';
-import { ProviderWaitlistLocationDetailComponent } from '../../../../ynw_provider/components/provider-waitlist-location-detail/provider-waitlist-location-detail.component';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../../shared/modules/common/material.module';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
@@ -33,7 +32,6 @@ import { DepartmentListComponent } from './departments/department-list/departmen
     ],
     declarations: [
         GeneralSettingsComponent,
-        ProviderWaitlistLocationDetailComponent,
         DepartmentsComponent,
         DepartmentListComponent,
         DepartmentDetailComponent

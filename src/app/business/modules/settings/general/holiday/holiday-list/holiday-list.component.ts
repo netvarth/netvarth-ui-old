@@ -92,14 +92,11 @@ export class HolidayListComponent implements OnInit, OnDestroy {
         this.isAvailableNow();
       });
   }
-  addHolidays(action) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: action }
-    };
-    this.router.navigate(['provider', 'settings', 'general', 'holidays', 'add'], navigationExtras);
+  addHolidays() {
+    this.router.navigate(['provider', 'settings', 'general', 'holidays', 'add']);
   }
 
-  editHolidays(holiday, action) {
+  editHolidays(holiday) {
     const navigationExtras: NavigationExtras = {
       queryParams: { action: 'edit' }
     };

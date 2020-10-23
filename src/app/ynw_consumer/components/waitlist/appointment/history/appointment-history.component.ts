@@ -23,6 +23,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 
 export class ConsumerAppointmentHistoryComponent implements OnInit {
 
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
 
   @Input() reloadapi;
   @Input() params;

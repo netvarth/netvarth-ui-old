@@ -533,7 +533,7 @@
                                     <!-- <button mat-button class="cs-btn bt1 backbtn mgn-rt-10" (click)="goBack('note')">
                                     Cancel
                                 </button> -->
-                                    <button mat-button class="cs-btn bt1 backtocheckin" (click)="goBack('note')">OK
+                                    <button mat-button class="cs-btn bt1 backtocheckin" (click)="goBack()">OK
                                     </button>
                                 </div>
                             </div>
@@ -734,7 +734,7 @@
                                                     <mat-radio-group>
                                                         <li *ngFor="let memb of familymembers" class="members">
                                                             <mat-radio-button
-                                                                (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName, $event)"
+                                                                (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName)"
                                                                 [value]="memb.userProfile.id"
                                                                 [checked]="isChecked(memb.userProfile.id)">
                                                                 {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
@@ -747,7 +747,7 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="!showCreateMember">
                                         <button mat-button class="cs-btn bt1 backtocheckin"
-                                            (click)="goBack('members')">OK
+                                            (click)="goBack()">OK
                                         </button>
                                     </div>
                                 </ng-container>

@@ -14,7 +14,7 @@
           <div *ngIf="locationList">
             <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname"
               (onSelectionChange)="setLocation(loc)">
-              <div [innerHTML]="highlightSelText(loc.autoname, 'search_autocompletehighlight', 'location', loc.typ)">
+              <div [innerHTML]="highlightSelText(loc.autoname, 'search_autocompletehighlight', 'location')">
               </div>
             </mat-option>
           </div>
@@ -46,7 +46,7 @@
               <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname"
                 (click)="setKeyword(kw)">
                 <span
-                  [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span><span
+                  [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword')"></span><span
                   class="item-category">{{(kw.typ === 'kwtitle'? 'Business Name/Keyword ': (kwgroup.name === 'special'? kw.subdomain: (kw.typ === 'onlineid'? 'Business ID ' : '') ))}}</span>
               </mat-option>
               <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname"

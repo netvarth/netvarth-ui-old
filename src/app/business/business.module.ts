@@ -19,7 +19,6 @@ import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { projectConstants } from '../app.component';
 import { ProviderFaqModule } from './modules/faq/provider-faq.module';
-import { KioskModule } from '../ynw_kiosk/kiosk.module';
 import { BusinessComponent } from './business.component';
 import { ProviderCustomersComponent } from '../ynw_provider/components/provider-customers/provider-customers.component';
 import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
@@ -31,7 +30,6 @@ import { PagerModule } from '../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
 import { ProviderSystemAlertComponent } from '../ynw_provider/components/provider-system-alerts/provider-system-alerts.component';
-import { AddProviderWaitlistQueuesComponent } from '../ynw_provider/components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
 import { AddProviderBprofileSearchAdwordsComponent } from '../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { InboxModule } from '../shared/modules/inbox/inbox.module';
@@ -52,8 +50,6 @@ import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
-import { CallingModesModule } from './modules/calling-modes/calling-modes.module';
-
 
 @NgModule({
     declarations: [
@@ -66,7 +62,6 @@ import { CallingModesModule } from './modules/calling-modes/calling-modes.module
         ProviderCustomersComponent,
         ProviderSystemAuditLogComponent,
         ProviderSystemAlertComponent,
-        AddProviderWaitlistQueuesComponent,
         AddProviderBprofileSearchAdwordsComponent,
         AddProviderWaitlistCheckInBillComponent,
         // ProviderWaitlistCheckInDetailComponent,
@@ -88,7 +83,6 @@ import { CallingModesModule } from './modules/calling-modes/calling-modes.module
         BusinessRoutingModule,
         RouterModule,
         ProviderFaqModule,
-        KioskModule,
         BreadCrumbModule,
         CommonModule,
         CapitalizeFirstPipeModule,
@@ -101,11 +95,9 @@ import { CallingModesModule } from './modules/calling-modes/calling-modes.module
         AddProviderSchedulesModule,
         DynamicFormModule,
         CustomerModule,
-        CallingModesModule,
         JoyrideModule.forChild()
     ],
     entryComponents: [
-        AddProviderWaitlistQueuesComponent,
         AddProviderWaitlistCheckInBillComponent,
         AddProviderBprofileSearchAdwordsComponent,
         GoogleMapComponent,

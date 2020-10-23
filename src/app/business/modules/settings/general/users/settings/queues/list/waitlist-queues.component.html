@@ -115,7 +115,6 @@
                                                                                         <mat-menu #menu="matMenu">
                                                                                                 <button mat-menu-item
                                                                                                         *ngFor="let location of locations;let i = index"
-                                                                                                        [(value)]="i"
                                                                                                         (click)="onChangeLocationSelect(i)">
                                                                                                         <strong>
                                                                                                                 {{ location.place | capitalizeFirst }}</strong>
@@ -406,7 +405,7 @@
                                                                                                                 style="padding-left: 22px;"
                                                                                                                 class="example-margin"
                                                                                                                 [checked]="queue.futureWaitlist"
-                                                                                                                (change)="changeQFutureStatus(queue, i, $event)">
+                                                                                                                (change)="changeQFutureStatus(queue)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
                                                                                                                         class="tstat">{{queue.futureWaitlist ? 'On' : 'Off'}}</label>

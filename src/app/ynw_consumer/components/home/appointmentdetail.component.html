@@ -60,7 +60,7 @@
                                                         *ngIf="appt.service.virtualCallingModes && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 {{appt.service.name | capitalizeFirst}}
-                                                <span *ngIf="deptName">({{appt.service.deptName}}) </span></div>
+                                                <span *ngIf="appt.service.deptName">({{appt.service.deptName}}) </span></div>
                                             <div class="item"><span class="ttle">Schedule:</span>
                                                 {{appt.schedule.apptSchedule.timeSlots[0].sTime}} -
                                                 {{appt.schedule.apptSchedule.timeSlots[0].eTime}}</div>

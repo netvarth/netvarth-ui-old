@@ -12,6 +12,8 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 })
 
 export class CustomViewListComponent implements OnInit {
+  tooltipcls = '';
+  add_button = '';
   api_loading: boolean;
   customViewList: any = [];
   removeitemdialogRef;
