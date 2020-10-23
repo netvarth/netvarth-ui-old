@@ -1434,7 +1434,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     timeSelected(slot) {
         this.apptTime = slot;
         this.waitlist_for[0].apptTime = this.apptTime['time'];
-        this.action = '';
+        // this.action = '';
     }
     getProfile() {
         this.sharedFunctionobj.getProfile()
