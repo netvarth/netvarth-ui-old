@@ -48,8 +48,8 @@ export class LabelsComponent implements OnInit {
         this.label_list = [];
         this.provider_services.getLabelList()
             .subscribe(
-                data => {
-                    this.label_list = data;
+                (data: any) => {
+                    this.label_list = data.filter(label => label.status === 'ACTIVE');
                     this.api_loading = false;
                 },
                 error => {
@@ -85,6 +85,9 @@ export class LabelsComponent implements OnInit {
         this.provider_services.deleteLabel(label.id).subscribe(
             () => {
                 this.getLabels();
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
     }

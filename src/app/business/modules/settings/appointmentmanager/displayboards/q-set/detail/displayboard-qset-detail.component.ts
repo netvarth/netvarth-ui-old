@@ -552,8 +552,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         for (let i = 0; i < this.defaultLabels.length; i++) {
             this.defaultLabels[i].checked = false;
         }
-        this.provider_services.getLabelList().subscribe(data => {
-            this.providerLabels = data;
+        this.provider_services.getLabelList().subscribe((data: any) => {
+            this.providerLabels = data.filter(label => label.status === 'ACTIVE');
             this.providerLabelsList = this.providerLabels;
             this.providerLabelsCount = this.providerLabels.length;
             // for (let i = 0; i < this.providerLabels.length; i++) {
