@@ -1045,7 +1045,7 @@ export class ConsumerCheckinComponent implements OnInit {
     showCheckinButtonCaption() {
         let caption = '';
         // caption = 'Confirm';
-        if (this.settingsjson['calculationMode'] === 'NoCalc') {
+        if (this.settingsjson.showTokenId) {
             caption = 'Token';
         } else {
             caption = 'Check-in';

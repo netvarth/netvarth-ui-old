@@ -381,7 +381,7 @@
                           <span [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                             *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
-                          <span [matTooltip]="cust_note_tooltip | capitalizeFirst"
+                          <span [matTooltip]="checkin.service.consumerNoteTitle | capitalizeFirst"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.consumerNote"
                             (click)="showConsumerNote(checkin)">
                             <i class="icon-note"></i>
@@ -571,7 +571,7 @@
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                             *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
-                          <span [matTooltip]="cust_note_tooltip | capitalizeFirst"
+                          <span [matTooltip]="checkin.service.consumerNoteTitle | capitalizeFirst"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.consumerNote"
                             (click)="showConsumerNote(checkin)">
                             <i class="icon-note"></i>
@@ -871,7 +871,7 @@
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                           class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                           *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
-                        <span [matTooltip]="cust_note_tooltip | capitalizeFirst"
+                        <span [matTooltip]="checkin.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.consumerNote"
                           (click)="showConsumerNote(checkin)">
                           <i class="icon-note"></i>
@@ -1228,7 +1228,7 @@
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                           class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                           *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
-                        <span [matTooltip]="cust_note_tooltip | capitalizeFirst"
+                        <span [matTooltip]="checkin.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.consumerNote"
                           (click)="showConsumerNote(checkin)">
                           <i class="icon-note"></i>
