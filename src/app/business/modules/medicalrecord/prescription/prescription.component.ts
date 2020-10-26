@@ -8,6 +8,8 @@ import { MedicalrecordService } from '../medicalrecord.service';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ImagesviewComponent } from './imagesview/imagesview.component';
+import { projectConstants } from '../..../../../../../app.component';
+import { ShareRxComponent } from './share-rx/share-rx.component';
 
 
 @Component({
@@ -39,6 +41,9 @@ export class PrescriptionComponent implements OnInit {
   dateFormatSp = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   disable = false;
   imagesviewdialogRef: any;
+  providerId;
+  digitalSign = false;
+  sharedialogRef;
   constructor(
     // private activatedRoot: ActivatedRoute,
     private router: Router,
@@ -57,6 +62,9 @@ export class PrescriptionComponent implements OnInit {
   }
 
   ngOnInit() {
+    const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+    this.providerId = user.id;
+    this.getDigitalSign();
     if (this.mrId === 0) {
       this.loading = false;
 
@@ -65,9 +73,97 @@ export class PrescriptionComponent implements OnInit {
     }
 
   }
+  deleteTempImage(index) {
+    this.selectedMessage.files.splice(index, 1);
+  }
+  filesSelected(event) {
+    const input = event.target.files;
+    if (input) {
+      for (const file of input) {
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.sharedfunctionObj.apiErrorAutoHide(this, 'Selected image type not supported');
+        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+          this.sharedfunctionObj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+        } else {
+          this.selectedMessage.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  }
+
+  getDigitalSign() {
+    if (this.providerId) {
+      this.provider_services.getDigitalSign(this.providerId)
+        .subscribe((data) => {
+          console.log(data);
+          this.digitalSign = true;
+        },
+          error => {
+            this.digitalSign = false;
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+    }
+  }
+
+  saveDigitalSignImages(index) {
+    this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
+    const submit_data: FormData = new FormData();
+    const propertiesDetob = {};
+    let i = 0;
+    for (const pic of this.selectedMessage.files) {
+      submit_data.append('files', pic, pic['name']);
+      const properties = {
+        'caption': this.selectedMessage.caption[i] || ''
+      };
+      propertiesDetob[i] = properties;
+      i++;
+    }
+    const propertiesDet = {
+      'propertiesMap': propertiesDetob
+    };
+    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+    submit_data.append('properties', blobPropdata);
+    if (this.providerId) {
+      this.uploadMrDigitalsign(this.providerId, submit_data, index);
+    }
+  }
+
+  uploadMrDigitalsign(id, submit_data, val) {
+    this.provider_services.uploadMrDigitalsign(id, submit_data)
+      .subscribe((data) => {
+        this.digitalSign = true;
+        this.deleteTempImage(val);
+        this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+
   uploadRx() {
     this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadRx']);
+  }
 
+  shareManualRx() {
+    this.sharedialogRef = this.dialog.open(ShareRxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrId: this.mrId,
+        userId: this.userId
+      }
+    });
+    this.sharedialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
 
   getMrprescription(mrId) {
