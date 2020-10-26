@@ -12598,7 +12598,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-bottom: 1px solid #183e7a;
 }
 .checkin-details .stats-bar {
-  background: #cccccc69;
+  background: #ffecbe;
   padding: 10px;
 }
 .checkin-details .status-label {
