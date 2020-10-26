@@ -308,7 +308,9 @@ export const projectConstantsLocal = {
   { title: 'Too Full', value: 'tooFull', reasonkey: 'tooFullCancel' },
   { title: 'PrePayment Pending', value: 'prePaymentPending', reasonkey: 'tooFullCancel' },
   { title: 'Queue Disabled', value: 'QueueDisabled', reasonkey: 'tooFullCancel' },
+  { title: 'Other', value: 'other', reasonkey: 'other', type: 2 },
   { title: 'Holiday', value: 'holiday', reasonkey: 'tooFullCancel' }],
+
   DOMAINLIST_APIFETCH_HOURS: 1, // hours which decides whether domain list api should be execured or not
   REFINE_ENUMLIST_DEFAULT_SHOW_CNT: 5,
   DISTANCE_STATE: 300, // in Km
@@ -806,6 +808,17 @@ export const projectConstantsLocal = {
     MANDATORY_INFO: { 'name': 'MANDATORY_INFO', 'value': 15 },
     PROFILE_PIC: { 'name': 'PROFILE_PIC', 'value': 5 }
   },
+
+  WAITLIST_CANCEL_REASON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel', type: 2 },
+  { title: 'Self', value: 'self', reasonkey: 'selfCancel' },
+  { title: 'Blocked', value: 'blocked', reasonkey: 'blockedCancel' },
+  { title: 'Closing Soon', value: 'closingSoon', reasonkey: 'closingSoonCancel', type: 2 },
+  { title: 'Too Full', value: 'tooFull', reasonkey: 'tooFullCancel' },
+  { title: 'PrePayment Pending', value: 'prePaymentPending', reasonkey: 'tooFullCancel' },
+  { title: 'Queue Disabled', value: 'QueueDisabled', reasonkey: 'tooFullCancel' },
+  { title: 'Holiday', value: 'holiday', reasonkey: 'tooFullCancel' },
+  { title: 'Other', value: 'other', reasonkey: 'other', type: 2 },
+  ],
   REQUIRED_FIELDS_JALDEE_ONLINE: [
     'SPECIALIZATION', 'PROFILE_PIC', 'BUSINESS_NAME', 'BASE_LOCATION', 'LOCATION_SCHEDULE'
   ],
