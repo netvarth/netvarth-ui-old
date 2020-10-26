@@ -11,6 +11,7 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-customer.component';
 import * as moment from 'moment';
+declare let cordova: any;
 
 @Component({
     selector: 'app-appointment-actions',
@@ -101,12 +102,12 @@ export class AppointmentActionsComponent implements OnInit {
         _this.qrCodegeneration(this.appt);
         setTimeout(() => {
             const printContent = document.getElementById('print-section');
-            const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-            ].join(',');
-            const printWindow = window.open('', '', params);
+            // const params = [
+            //     'height=' + screen.height,
+            //     'width=' + screen.width,
+            //     'fullscreen=yes'
+            // ].join(',');
+            // const printWindow = window.open('', '', params);
             let checkin_html = '';
             checkin_html += '<table style="width:100%;"><thead>';
             checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.appt.appmtDate) + '<br/>';
@@ -131,13 +132,14 @@ export class AppointmentActionsComponent implements OnInit {
             checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
             checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
             checkin_html += '</tbody></table>';
-            printWindow.document.write('<html><head><title></title>');
-            printWindow.document.write('</head><body >');
-            printWindow.document.write(checkin_html);
-            printWindow.document.write('</body></html>');
+            // printWindow.document.write('<html><head><title></title>');
+            // printWindow.document.write('</head><body >');
+            // printWindow.document.write(checkin_html);
+            // printWindow.document.write('</body></html>');
             _this.showQR = false;
-            printWindow.moveTo(0, 0);
-            printWindow.print();
+            // printWindow.moveTo(0, 0);
+            // printWindow.print();
+            cordova.plugins.printer.print(checkin_html);
         });
     }
     getSingleTime(slot) {
@@ -371,11 +373,11 @@ export class AppointmentActionsComponent implements OnInit {
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
                 // setTimeout(() => {
-                    // this.labels();
-                    this.labelMap = new Object();
-                    this.labelMap[data.label] = data.value;
-                    this.addLabel();
-                    this.getDisplayname(data.label);
+                // this.labels();
+                this.labelMap = new Object();
+                this.labelMap[data.label] = data.value;
+                this.addLabel();
+                this.getDisplayname(data.label);
                 // }, 500);
             }
             this.getLabel();
@@ -577,59 +579,59 @@ export class AppointmentActionsComponent implements OnInit {
         this.dialogRef.close();
     }
     medicalRecord() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.appt.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.appt.mrId;
-      }
-      console.log(this.appt);
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
-          'serviceId': this.appt.service.id,
-          'serviceName': this.appt.service.name,
-          'department': this.appt.service.deptName,
-          'booking_type': 'APPT',
-          'booking_date': this.appt.appmtDate,
-          'booking_time': this.appt.apptTakenTime,
-          'mr_mode': medicalrecord_mode,
-          'mrId': mrId ,
-          'booking_id': this.appt.uid,
-          'back_type': 'appt'
+        this.dialogRef.close();
+        let medicalrecord_mode = 'new';
+        let mrId = 0;
+        if (this.appt.mrId) {
+            medicalrecord_mode = 'view';
+            mrId = this.appt.mrId;
         }
-      };
+        console.log(this.appt);
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
+                'serviceId': this.appt.service.id,
+                'serviceName': this.appt.service.name,
+                'department': this.appt.service.deptName,
+                'booking_type': 'APPT',
+                'booking_date': this.appt.appmtDate,
+                'booking_time': this.appt.apptTakenTime,
+                'mr_mode': medicalrecord_mode,
+                'mrId': mrId,
+                'booking_id': this.appt.uid,
+                'back_type': 'appt'
+            }
+        };
 
-      this.router.navigate(['provider', 'customers',  'medicalrecord'], navigationExtras);
+        this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
     }
     prescription() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.appt.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.appt.mrId;
-      }
-      const navigationExtras: NavigationExtras = {
-
-        queryParams: {
-          'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
-          'serviceId': this.appt.service.id,
-          'serviceName': this.appt.service.name,
-          'department': this.appt.service.deptName,
-          'booking_type': 'APPT',
-          'booking_date': this.appt.appmtDate,
-          'booking_time': this.appt.apptTakenTime,
-          'mr_mode': medicalrecord_mode,
-          'mrId': mrId ,
-          'booking_id': this.appt.uid,
-          'back_type': 'appt'
+        this.dialogRef.close();
+        let medicalrecord_mode = 'new';
+        let mrId = 0;
+        if (this.appt.mrId) {
+            medicalrecord_mode = 'view';
+            mrId = this.appt.mrId;
         }
-      };
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+        const navigationExtras: NavigationExtras = {
+
+            queryParams: {
+                'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
+                'serviceId': this.appt.service.id,
+                'serviceName': this.appt.service.name,
+                'department': this.appt.service.deptName,
+                'booking_type': 'APPT',
+                'booking_date': this.appt.appmtDate,
+                'booking_time': this.appt.apptTakenTime,
+                'mr_mode': medicalrecord_mode,
+                'mrId': mrId,
+                'booking_id': this.appt.uid,
+                'back_type': 'appt'
+            }
+        };
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
-       addLabeltoAppt(label, event) {
+    addLabeltoAppt(label, event) {
         this.labelMap = new Object();
         if (event.checked) {
             this.labelMap[label] = true;

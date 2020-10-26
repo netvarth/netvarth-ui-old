@@ -10,6 +10,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { NavigationExtras, Router } from '@angular/router';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ApplyLabelComponent } from '../apply-label/apply-label.component';
+declare let cordova: any;
 
 @Component({
     selector: 'app-checkin-actions',
@@ -69,12 +70,12 @@ export class CheckinActionsComponent implements OnInit {
         const bname = bprof.bn;
         setTimeout(() => {
             const printContent = document.getElementById('print-section');
-            const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-            ].join(',');
-            const printWindow = window.open('', '', params);
+            // const params = [
+            //     'height=' + screen.height,
+            //     'width=' + screen.width,
+            //     'fullscreen=yes'
+            // ].join(',');
+            // const printWindow = window.open('', '', params);
             let checkin_html = '';
             checkin_html += '<table style="width:100%;"><thead>';
             checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.checkin.date) + '<br/>';
@@ -97,12 +98,14 @@ export class CheckinActionsComponent implements OnInit {
             checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
             checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
             checkin_html += '</tbody></table>';
-            printWindow.document.write('<html><head><title></title>');
-            printWindow.document.write('</head><body>');
-            printWindow.document.write(checkin_html);
-            printWindow.document.write('</body></html>');
-            printWindow.moveTo(0, 0);
-            printWindow.print();
+            // printWindow.document.write('<html><head><title></title>');
+            // printWindow.document.write('</head><body >');
+            // printWindow.document.write(checkin_html);
+            // printWindow.document.write('</body></html>');
+            this.showQR = false;
+            // printWindow.moveTo(0, 0);
+            // printWindow.print();
+            cordova.plugins.printer.print(checkin_html);
         });
     }
     qrCodegeneration(valuetogenerate) {
@@ -318,11 +321,11 @@ export class CheckinActionsComponent implements OnInit {
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
                 // setTimeout(() => {
-                    // this.labels();
-                    this.labelMap = new Object();
-                    this.labelMap[data.label] = data.value;
-                    this.addLabel();
-                    this.getDisplayname(data.label);
+                // this.labels();
+                this.labelMap = new Object();
+                this.labelMap[data.label] = data.value;
+                this.addLabel();
+                this.getDisplayname(data.label);
                 // }, 500);
             }
             this.getLabel();
@@ -401,61 +404,61 @@ export class CheckinActionsComponent implements OnInit {
         });
     }
     medicalRecord() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.checkin.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.checkin.mrId;
-      }
-      console.log(this.checkin);
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
-          'serviceId': this.checkin.service.id,
-          'serviceName': this.checkin.service.name,
-          'booking_type': 'TOKEN',
-          'booking_date': this.checkin.date,
-          'booking_time': this.checkin.checkInTime,
-          'department': this.checkin.service.deptName,
-          'consultationMode': 'OP',
-          'booking_id': this.checkin.ynwUuid,
-          'mr_mode': medicalrecord_mode,
-          'mrId': mrId,
-          'back_type': 'waitlist'
+        this.dialogRef.close();
+        let medicalrecord_mode = 'new';
+        let mrId = 0;
+        if (this.checkin.mrId) {
+            medicalrecord_mode = 'view';
+            mrId = this.checkin.mrId;
         }
-      };
+        console.log(this.checkin);
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
+                'serviceId': this.checkin.service.id,
+                'serviceName': this.checkin.service.name,
+                'booking_type': 'TOKEN',
+                'booking_date': this.checkin.date,
+                'booking_time': this.checkin.checkInTime,
+                'department': this.checkin.service.deptName,
+                'consultationMode': 'OP',
+                'booking_id': this.checkin.ynwUuid,
+                'mr_mode': medicalrecord_mode,
+                'mrId': mrId,
+                'back_type': 'waitlist'
+            }
+        };
 
-      this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+        this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
     }
     prescription() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.checkin.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.checkin.mrId;
-      }
-
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
-          'serviceId': this.checkin.service.id,
-          'serviceName': this.checkin.service.name,
-          'booking_type': 'TOKEN',
-          'booking_date': this.checkin.date,
-          'booking_time': this.checkin.checkInTime,
-          'department': this.checkin.service.deptName,
-          'consultationMode': 'OP',
-          'mrId': mrId,
-          'mr_mode': medicalrecord_mode,
-          'booking_id': this.checkin.ynwUuid,
-          'back_type': 'waitlist'
+        this.dialogRef.close();
+        let medicalrecord_mode = 'new';
+        let mrId = 0;
+        if (this.checkin.mrId) {
+            medicalrecord_mode = 'view';
+            mrId = this.checkin.mrId;
         }
-      };
-      this.router.navigate(['provider', 'customers',  'medicalrecord', 'prescription'], navigationExtras);
+
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
+                'serviceId': this.checkin.service.id,
+                'serviceName': this.checkin.service.name,
+                'booking_type': 'TOKEN',
+                'booking_date': this.checkin.date,
+                'booking_time': this.checkin.checkInTime,
+                'department': this.checkin.service.deptName,
+                'consultationMode': 'OP',
+                'mrId': mrId,
+                'mr_mode': medicalrecord_mode,
+                'booking_id': this.checkin.ynwUuid,
+                'back_type': 'waitlist'
+            }
+        };
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
-      addLabeltoAppt(label, event) {
+    addLabeltoAppt(label, event) {
         this.labelMap = new Object();
         if (event.checked) {
             this.labelMap[label] = true;
