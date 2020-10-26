@@ -323,8 +323,8 @@ export class AppointmentActionsComponent implements OnInit {
     getLabel() {
         this.loading = true;
         this.providerLabels = [];
-        this.provider_services.getLabelList().subscribe(data => {
-            this.providerLabels = data;
+        this.provider_services.getLabelList().subscribe((data: any) => {
+            this.providerLabels = data.filter(label => label.status === 'ACTIVE');
             this.loading = false;
             this.labelselection();
         });

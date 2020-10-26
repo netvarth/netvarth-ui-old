@@ -83,14 +83,16 @@
                                         <tr *ngIf="waitlist.service?.minPrePaymentAmount">
                                             <td width="48%" align="right">Pre Payment amount</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{waitlist.service.minPrePaymentAmount}}</td>
+                                            <td><span
+                                                class="rupee-font">&#8377;
+                                            </span>{{waitlist.service.minPrePaymentAmount}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div class="book-status chkntoknappt-details"> Current status </div>
                                 <table class="status-table">
                                     <tbody>
-                                        <tr>
+                                        <tr *ngIf="waitlist.personsAhead>=0">
                                             <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;Persons ahead
                                             </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>

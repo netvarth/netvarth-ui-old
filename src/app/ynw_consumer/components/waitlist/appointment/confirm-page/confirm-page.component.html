@@ -75,7 +75,9 @@
                                         <tr *ngIf="appointment.service?.minPrePaymentAmount">
                                             <td width="48%" align="right">Pre Payment amount</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{appointment.service.minPrePaymentAmount}}</td>
+                                            <td><span
+                                                class="rupee-font">&#8377;
+                                            </span> {{appointment.service.minPrePaymentAmount}}</td>
                                         </tr>
                                         <tr *ngIf="appointment.batchId">
                                             <td width="48%" align="right">Batch</td>

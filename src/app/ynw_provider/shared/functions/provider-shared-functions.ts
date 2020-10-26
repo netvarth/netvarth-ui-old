@@ -260,7 +260,7 @@ export class ProviderSharedFuctions {
   }
 
   changeWaitlistStatus(ob, waitlist, action, appt?) {
-    if (action === 'CANCEL' || action === 'Rejected') {
+    if (action === 'CANCEL' || action === 'Cancelled') {
       const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -293,7 +293,7 @@ export class ProviderSharedFuctions {
               case 'Started': status_msg = 'started'; break;
               case 'Confirmed': status_msg = 'confirmed'; break;
               case 'Completed': status_msg = 'completed'; break;
-              case 'Rejected': status_msg = 'cancelled'; break;
+              case 'Cancelled': status_msg = 'cancelled'; break;
             }
             // const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
             if (!showMessage) {

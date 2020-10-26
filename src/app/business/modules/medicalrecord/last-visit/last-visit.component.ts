@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras} from '@angular/router';
 import { DateFormatPipe } from '../../../../shared//pipes/date-format/date-format.pipe';
 import { MedicalrecordService } from '../medicalrecord.service';
 
@@ -13,6 +13,7 @@ import { MedicalrecordService } from '../medicalrecord.service';
   styleUrls: ['./last-visit.component.css']
 })
 export class LastVisitComponent implements OnInit {
+  display_PatientId: any;
   PatientId: any;
   public lastVisit_dataSource = new MatTableDataSource<any>();
   lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'userName', 'mr', 'rx'];
@@ -25,7 +26,7 @@ export class LastVisitComponent implements OnInit {
   back_type: any;
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-    private router: Router,
+
     public dateformat: DateFormatPipe,
     private medicalrecordService: MedicalrecordService,
     public dialogRef: MatDialogRef<LastVisitComponent>,
@@ -46,6 +47,11 @@ export class LastVisitComponent implements OnInit {
     // tslint:disable-next-line: no-shadowed-variable
     this.medicalrecordService.patient_data.subscribe(data => {
       this.customerDetails = JSON.parse(data.customerDetail);
+      if (this.customerDetails.memberJaldeeId) {
+        this.display_PatientId = this.customerDetails.memberJaldeeId;
+      } else if (this.customerDetails.jaldeeId) {
+        this.display_PatientId = this.customerDetails.jaldeeId;
+      }
     });
   }
 
@@ -68,6 +74,7 @@ export class LastVisitComponent implements OnInit {
     this.provider_services.getPatientVisitList(this.PatientId)
       .subscribe((data: any) => {
         this.lastVisit_dataSource = data;
+        console.log(this.lastVisit_dataSource);
         this.loading = false;
       },
         error => {
@@ -129,7 +136,7 @@ export class LastVisitComponent implements OnInit {
     if (visitDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
+          'customerDetail': JSON.stringify(visitDetails.waitlist.waitlistingFor[0]),
           'serviceId': visitDetails.waitlist.service.id,
           'serviceName': visitDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
@@ -140,19 +147,21 @@ export class LastVisitComponent implements OnInit {
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
           'visitDate': visitDetails.lastVisitedDate,
-          'back_type': this.back_type
+          'back_type': this.back_type,
         }
       };
+     console.log(navigationExtras);
       const result = {
         'navigationParams': navigationExtras,
         'type': 'clinicalnotes'
       };
       this.dialogRef.close(result);
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'] , navigationExtras);
+
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.appointmnet.providerConsumer),
+          'customerDetail': JSON.stringify(visitDetails.appointmnet.appmtFor[0]),
+          // 'customerDetail': JSON.stringify(visitDetails.appointmnet.providerConsumer),
           'serviceId': visitDetails.appointmnet.service.id,
           'serviceName': visitDetails.appointmnet.service.name,
           'department': visitDetails.appointmnet.service.deptName,
@@ -170,15 +179,17 @@ export class LastVisitComponent implements OnInit {
         'type': 'clinicalnotes'
       };
       this.dialogRef.close(result);
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'] , navigationExtras);
+
     }
   }
 
   viewMR_prescription(visitDetails) {
+
     if (visitDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
+          'customerDetail': JSON.stringify(visitDetails.waitlist.waitlistingFor[0]),
+          // 'customerDetail': JSON.stringify(visitDetails.waitlist.consumer),
           'serviceId': visitDetails.waitlist.service.id,
           'serviceName': visitDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
@@ -197,11 +208,11 @@ export class LastVisitComponent implements OnInit {
         'type': 'prescription'
       };
       this.dialogRef.close(result);
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.appointmnet.providerConsumer),
+          'customerDetail': JSON.stringify(visitDetails.appointmnet.appmtFor[0]),
           'serviceId': visitDetails.appointmnet.service.id,
           'serviceName': visitDetails.appointmnet.service.name,
           'department': visitDetails.appointmnet.service.deptName,
@@ -219,7 +230,7 @@ export class LastVisitComponent implements OnInit {
         'type': 'prescription'
       };
       this.dialogRef.close(result);
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+
     }
 
   }

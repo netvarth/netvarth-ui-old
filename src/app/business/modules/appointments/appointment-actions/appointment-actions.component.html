@@ -46,7 +46,7 @@
         </div>
 
     </div>
-    <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeWaitlistStatus('Rejected')">
+    <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeWaitlistStatus('Cancelled')">
         <div class="action-box-sub">
             <span class="cancel-icon"></span>
             <div class="icon-text">Cancel appointment</div>
@@ -195,7 +195,7 @@
         <a class="" (click)="gotoLabel()">Manage labels</a>
     </div>
 </div>
-<h1 class="mat-dialog-title" style="font-size: .877rem !important;" *ngIf="action === 'reschedule'">
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'reschedule'">
     Reschedule Appointment for {{appt.appmtFor[0].userName | capitalizeFirst}}
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>

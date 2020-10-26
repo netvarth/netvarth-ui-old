@@ -414,6 +414,7 @@ export const Messages = {
   'RATING_CAP': 'Rate *',
   'MESSAGE_CAP': 'Message',
   'RATE_BTN_CAP': 'Rate',
+  'OTHERMESSAGE_CAP' : 'Please Enter Reason For Cancellation',
 
   // App-shared-components-consumer
   'BACK_TO_CAP': 'Back to',

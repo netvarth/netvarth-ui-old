@@ -13,6 +13,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
   styleUrls: ['./general.component.css']
 })
 export class GeneralComponent implements OnInit {
+  display_PatientId: any;
   paramObject: any;
   mrId: any;
   displayTitle: any;
@@ -27,7 +28,7 @@ export class GeneralComponent implements OnInit {
   department: any;
   serviceName: any;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
-  navigationParams: any;
+  navigationParams: any = {};
   navigationExtras: NavigationExtras;
 
   constructor(
@@ -39,7 +40,10 @@ export class GeneralComponent implements OnInit {
     private medicalrecordService: MedicalrecordService
   ) {
     this.medicalrecordService.patient_data.subscribe(res => {
-        this.navigationParams = res;
+
+      this.navigationParams = res;
+      console.log(JSON.stringify(res));
+
       this.navigationExtras = this.navigationParams;
       if (res.department) {
         this.department = res.department;
@@ -49,12 +53,15 @@ export class GeneralComponent implements OnInit {
         this.serviceName = res.serviceName;
         console.log(this.serviceName);
       }
+      this.customerDetails = JSON.parse(res.customerDetail);
+      if (this.customerDetails.memberJaldeeId) {
+        this.display_PatientId = this.customerDetails.memberJaldeeId;
+      } else if (this.customerDetails.jaldeeId) {
+        this.display_PatientId = this.customerDetails.jaldeeId;
+      }
+      this.paramObject = JSON.stringify(res);
     });
-    this.medicalrecordService.patient_data.subscribe(data => {
-      this.customerDetails = JSON.parse(data.customerDetail);
-      this.paramObject = JSON.stringify(data);
 
-    });
     this.medicalrecordService._mrUid.subscribe(mrId => {
       this.mrId = mrId;
     });
@@ -72,7 +79,7 @@ export class GeneralComponent implements OnInit {
   }
 
   redirecToClinicalNotes() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord'] ,  this.navigationExtras );
+    this.router.navigate(['provider', 'customers', 'medicalrecord'],  { queryParams: this.navigationParams });
     // this.router.navigateByUrl('../clinicalnotes', { relativeTo: this.activated_route });
   }
 
@@ -89,10 +96,11 @@ export class GeneralComponent implements OnInit {
     if (this.mrId === 0) {
 
       this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
+        this.navigationParams = { ...this.navigationParams, 'mrId': res };
+
         this.medicalrecordService.setCurrentMRID(res);
         this.sharedfunctionObj.openSnackBar('Medical Record Created Successfully');
-        this.clinicalNotes=projectConstantsLocal.CLINICAL_NOTES;
-        this.router.navigate(['provider', 'customers', 'medicalrecord'] ,  this.navigationExtras );
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], { queryParams: this.navigationParams });
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -109,7 +117,7 @@ export class GeneralComponent implements OnInit {
     this.provider_services.updateMrClinicalNOtes(payload, mrId)
       .subscribe((data) => {
         this.shared_functions.openSnackBar(this.displayTitle + ' updated successfully');
-        this.router.navigate(['provider', 'customers', 'medicalrecord'] ,  this.navigationExtras );
+        this.router.navigate(['provider', 'customers', 'medicalrecord'],  { queryParams: this.navigationParams });
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

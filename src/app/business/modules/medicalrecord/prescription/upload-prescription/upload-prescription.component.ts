@@ -15,6 +15,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 })
 export class UploadPrescriptionComponent implements OnInit {
 
+  display_PatientId: any;
   today = new Date();
   patientDetails;
   userId;
@@ -23,6 +24,11 @@ export class UploadPrescriptionComponent implements OnInit {
   drugdet;
   mrId;
   selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+  temarry = {
     files: [],
     base64: [],
     caption: []
@@ -49,6 +55,11 @@ export class UploadPrescriptionComponent implements OnInit {
       });
     this.medicalrecord_service.patient_data.subscribe(data => {
       this.patientDetails = JSON.parse(data.customerDetail);
+      if (this.patientDetails.memberJaldeeId) {
+        this.display_PatientId = this.patientDetails.memberJaldeeId;
+      } else if (this.patientDetails.jaldeeId) {
+        this.display_PatientId = this.patientDetails.jaldeeId;
+      }
       this.userId = this.patientDetails.id;
     });
     this.medicalrecord_service._mrUid.subscribe(mrId => {
@@ -75,7 +86,7 @@ export class UploadPrescriptionComponent implements OnInit {
 
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , this.navigationExtras);
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
   }
 
   getMrprescription(mrId) {
@@ -121,21 +132,42 @@ export class UploadPrescriptionComponent implements OnInit {
     return imgsize;
   }
 
-  saveImages() {
-    this.disable = true;
+
+
+deletePrevUploadRx() {
+  return new Promise((resolve, reject) => {
     for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
       if (this.selectedMessage.files[ia].view === true) {
         this.selectedMessage.files.splice(ia, 1);
       }
     }
+  });
+  // for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
+  //   if (this.selectedMessage.files[ia].view === true) {
+  //     this.selectedMessage.files.splice(ia, 1);
+  //   }
+  // }
+
+}
+
+  saveImages() {
+    this.disable = true;
+
+    for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
+      if (this.selectedMessage.files[ia].view !== true) {
+        this.temarry.files.push(this.selectedMessage.files[ia]);
+
+      }
+    }
+    console.log(this.temarry.files);
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;
-    for (const pic of this.selectedMessage.files) {
+    for (const pic of this.temarry.files) {
       console.log(pic);
       submit_data.append('files', pic, pic['name']);
       const properties = {
-        'caption': this.selectedMessage.caption[i] || ''
+        'caption': this.temarry.caption[i] || ''
       };
       propertiesDetob[i] = properties;
       i++;
@@ -150,8 +182,7 @@ export class UploadPrescriptionComponent implements OnInit {
     } else {
       this.medicalrecord_service.createMRForUploadPrescription()
         .then(data => {
-          console.log(data);
-
+          this.navigationParams = { ...this.navigationParams, 'mrId': data };
           this.medicalrecord_service.setCurrentMRID(data);
           this.uploadMrPrescription(data, submit_data);
         },
@@ -160,6 +191,7 @@ export class UploadPrescriptionComponent implements OnInit {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
+
   }
   uploadMrPrescription(id, submit_data) {
     this.provider_services.uploadMRprescription(id, submit_data)
@@ -167,7 +199,7 @@ export class UploadPrescriptionComponent implements OnInit {
         this.showSave = false;
         this.upload_status = 'Uploaded';
         this.sharedfunctionObj.openSnackBar('Prescription uploaded successfully');
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , this.navigationExtras);
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
       },
         error => {
           this.disable = false;

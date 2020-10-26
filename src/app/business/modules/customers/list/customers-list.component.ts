@@ -340,17 +340,28 @@ export class CustomersListComponent implements OnInit {
         this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
     }
     lastvisits(customerDetail) {
-        this.shared_functions.removeitemfromLocalStorage('mrId');
         this.mrdialogRef = this.dialog.open(LastVisitComponent, {
-          width: '80%',
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true,
-          data: {
-            patientId: customerDetail.id,
-            customerDetail: customerDetail,
-            back_type: 'consumer'
-          }
-        });
+      width: '80%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        patientId: customerDetail.id,
+        customerDetail: customerDetail,
+        back_type: 'consumer'
+      }
+    });
+    this.mrdialogRef.afterClosed().subscribe(result => {
+      console.log(JSON.stringify(result));
+      if (result.type === 'prescription') {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], result.navigationParams);
+      } else if (result.type === 'clinicalnotes') {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
+      }
+    });
 
     }
     listMedicalrecords(customer) {

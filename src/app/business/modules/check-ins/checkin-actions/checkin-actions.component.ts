@@ -270,8 +270,8 @@ export class CheckinActionsComponent implements OnInit {
     getLabel() {
         this.loading = true;
         this.providerLabels = [];
-        this.provider_services.getLabelList().subscribe(data => {
-            this.providerLabels = data;
+        this.provider_services.getLabelList().subscribe((data: any) => {
+            this.providerLabels = data.filter(label => label.status === 'ACTIVE');
             this.labelselection();
             this.loading = false;
         });

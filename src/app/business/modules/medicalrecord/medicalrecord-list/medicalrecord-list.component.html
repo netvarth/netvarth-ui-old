@@ -7,7 +7,7 @@
     </h5>
   </div>
 
-  
+
 
 
 </section>
@@ -47,7 +47,7 @@
               <ng-container matColumnDef="bookingType">
                 <mat-header-cell *matHeaderCellDef>Booking Type</mat-header-cell>
                 <mat-cell *matCellDef="let mr">
-                  {{ mr.bookingType }}</mat-cell>
+                  {{ getBookingName(mr.bookingType) }}</mat-cell>
               </ng-container>
               <ng-container matColumnDef="medicalrecord">
                 <mat-header-cell *matHeaderCellDef>
