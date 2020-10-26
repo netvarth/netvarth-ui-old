@@ -8,6 +8,9 @@ html {
   html {
     font-size: 14px !important;
   }
+  .checkin-details .qrcode img {
+    width: 80px !important
+  }
 }
 
 body {
@@ -12483,4 +12486,89 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .mr-area textarea{
   width: 100%;
+}
+
+/* token details page styles */
+.checkin-details .head-color {
+  color: rgb(24 62 121 / 85%);
+}
+.checkin-details .loc-cls {
+  color: #1873f2;
+  font-size: 0.8rem;
+}
+.checkin-details .card .each-item {
+  margin-bottom: 20px;
+  display: grid;
+}
+.checkin-details .serv-name {
+  color: #3c5c8dbf;
+  font-weight: 600;
+}
+.checkin-details .card .each-item .item-head {
+  margin-bottom: 2px;
+  font-weight: 600;
+  color: grey;
+  font-size: 0.9rem;
+}
+.checkin-details .pad-10 {
+  padding: 10px;
+}
+.checkin-details .temp-style {
+  border-bottom: 1px solid #183e7a;
+}
+.checkin-details .stats-bar {
+  background: #cccccc69;
+  padding: 10px;
+}
+.checkin-details .status-label {
+  font-size: 0.7rem;
+  color: #183e7a;
+  font-weight: 600;
+}
+.checkin-details .stats-item {
+  display: grid;
+}
+.checkin-details .opt-viewmore {
+  margin-left: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #183e7a;
+}
+
+@media (min-width: 800px) {
+  .checkin-details .mat-tab-label {
+  min-width: 260px;
+  }
+}
+.checkin-details .mat-tab-label .mat-tab-label-content {
+  color: #183e7a;
+  font-weight: 600;
+}
+.checkin-details .item-label-val {
+  font-size: 0.88rem;
+}
+.checkin-details .qrcode img {
+  border: 1.5px solid #ecaf08;
+  width: 130px;
+  /* box-shadow: 5px 5px 5px 5px lightgrey !important; */
+  box-shadow: 5px 5px 5px 5px  #ecaf0842 !important
+}
+.checkin-details .graphics-div {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  text-align: right;
+}
+.checkin-details .graphics2-div {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+}
+.checkin-details .index-head {
+  z-index: 2;
+}
+.checkin-details .usr-name {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #3c5c8d;
 }
