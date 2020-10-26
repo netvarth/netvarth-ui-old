@@ -118,7 +118,9 @@
                   <tr *ngIf="statusInfo.service?.minPrePaymentAmount && statusInfo.waitlistMode !== 'WALK_IN_CHECKIN'">
                     <td width="48%" align="right">Pre Payment amount</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td> {{statusInfo.service.minPrePaymentAmount}}</td>
+                    <td><span
+                      class="rupee-font">&#8377;
+                  </span> {{statusInfo.service.minPrePaymentAmount}}</td>
                   </tr>
                 </tbody>
               </table>

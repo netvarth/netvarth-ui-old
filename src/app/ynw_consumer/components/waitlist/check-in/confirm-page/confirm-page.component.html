@@ -83,7 +83,9 @@
                                         <tr *ngIf="waitlist.service?.minPrePaymentAmount">
                                             <td width="48%" align="right">Pre Payment amount</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td> {{waitlist.service.minPrePaymentAmount}}</td>
+                                            <td><span
+                                                class="rupee-font">&#8377;
+                                            </span>{{waitlist.service.minPrePaymentAmount}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
