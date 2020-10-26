@@ -358,7 +358,7 @@
                                                         <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                     </div>
                                                     <div class="checkin-btn-bp pointer-cursor" *ngIf="type == 'waitlistreschedule'"
-                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === '' || disableButn()"  (click)="rescheduleWaitlist()">
+                                                        (click)="rescheduleWaitlist()">
                                                         Reschedule
                                                         <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                     </div>

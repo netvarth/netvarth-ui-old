@@ -266,7 +266,6 @@ export class ConsumerCheckinComponent implements OnInit {
                 if (params.type === 'waitlistreschedule') {
                     this.type = params.type;
                     this.rescheduleUserId = params.uuid;
-                    console.log(this.rescheduleUserId)
                     this.getRescheduleWaitlistDet();
                 }
                 this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
@@ -393,10 +392,8 @@ export class ConsumerCheckinComponent implements OnInit {
         this.shared_services.getCheckinByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
             (waitlst: any) => {
                 this.waitlist = waitlst;
-                console.log(this.waitlist)
                 if (this.type === 'waitlistreschedule') {
-                     this.waitlist_for.push({ id: this.waitlist.waitlistingFor[0].id, firstName: this.waitlist.waitlistingFor[0].firstName, lastName: this.waitlist.waitlistingFor[0].lastName, phoneNo: this.waitlist.phoneNumber });
-                     console.log(this.waitlist_for)
+                    this.waitlist_for.push({ id: this.waitlist.waitlistingFor[0].id, firstName: this.waitlist.waitlistingFor[0].firstName, lastName: this.waitlist.waitlistingFor[0].lastName, phoneNo: this.waitlist.phoneNumber });
                 }
 
                 this.sel_loc = this.waitlist.queue.location.id;
