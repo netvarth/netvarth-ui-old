@@ -1,10 +1,8 @@
 <section class="">
-  <div class="card title-gb">
-      <h3 class="mgn-up-10">
-
+  <div class="title-gb no-padding">
+    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
           Reports
-
-      </h3>
+    </div>
   </div>
 </section>
 <section>
@@ -62,7 +60,8 @@
               <mat-expansion-panel [expanded]="true">
                   <mat-expansion-panel-header>
                       <mat-panel-title class="report_title">
-                         Tokens/Check-ins
+                          <span *ngIf="showToken">Token</span>
+                          <span *ngIf="!showToken">Check-in</span>
                       </mat-panel-title>
                   </mat-expansion-panel-header>
                   <ng-container *ngIf="checkinReports.length===0">

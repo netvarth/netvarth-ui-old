@@ -31,11 +31,11 @@
                                         <h4>{{queue_data.name | capitalizeFirst}}<span
                                                 *ngIf="queue_data.provider">({{queue_data.provider.firstName}})</span>
                                         </h4>
-                                        <span class="tspace" *ngIf="!queue_data.provider">
+                                        <span class="tspace tspacepdrt" *ngIf="!queue_data.provider">
                                             <mat-slide-toggle [checked]="queue_data.queueState=='ENABLED'"
                                                 (change)="changeProviderQueueStatus(queue_data)"></mat-slide-toggle>
                                         </span>
-                                        <span class='greenc mgn-lt-5'
+                                        <span class='greenc mgn-lt-5 mgn5mgnrt'
                                             *ngIf="queue_data.queueState=='ENABLED'">{{enabled_cap}}</span>
                                         <span class='disabled mgn-lt-5'
                                             *ngIf="queue_data.queueState=='DISABLED'">{{disabled_cap}}</span>
@@ -385,7 +385,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     <mat-form-field>
                                         <input matInput [matDatepicker]="picker"
                                             (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
-                                            formControlName="startdate">
+                                            formControlName="startdate" readonly>
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
@@ -397,7 +397,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     <mat-form-field>
                                         <input matInput [matDatepicker]="picker1"
                                             (dateChange)="compareDate($event.value,1)" placeholder="End Date"
-                                            formControlName="enddate">
+                                            formControlName="enddate" readonly>
                                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                         <mat-datepicker #picker1></mat-datepicker>
                                     </mat-form-field>
@@ -407,8 +407,8 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 </div>
                             </div>
                             <div class="form-group" *ngIf="showAdvancedSettings && waitlist_manager && waitlist_manager.showTokenId">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput min="0" max="100000" type="text" class="number-ip-sm"
+                                <mat-form-field class="example-full-width qtoken">
+                                    <input matInput min="0" max="100000" type="number" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"
                                         (keypress)="isNumericforToken($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>

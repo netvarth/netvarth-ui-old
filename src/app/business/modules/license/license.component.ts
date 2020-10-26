@@ -179,6 +179,9 @@ export class LicenseComponent implements OnInit, OnDestroy {
             this.routerobj.navigate(['/provider/' + this.domain + '/license']);
         }
     }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/license']);
+    }
     getLicenseDetails(call_type = 'init') {
         this.license_message = '';
         this.provider_servicesobj.getLicenseDetails()

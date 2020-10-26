@@ -1,6 +1,14 @@
-<section>
+<!-- <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
-</section>
+</section> -->
+<section class="">
+    <div class="title-gb no-padding">
+        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+         Activity Log
+          <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </div>
+    </div>
+  </section>
 <section>
     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     <div class="content comn-cls dashboard audit" *ngIf="!api_loading">

@@ -43,7 +43,7 @@ export class ApplyLabelComponent implements OnInit {
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         @Inject(MAT_DIALOG_DATA) public checkin: any,
-        public dialogRef: MatDialogRef<ApplyLabelComponent>, ) {
+        public dialogRef: MatDialogRef<ApplyLabelComponent>,) {
         // this.activateroute.params.subscribe(data => {
         //     this.checkinId = data.id;
         // });
@@ -56,7 +56,7 @@ export class ApplyLabelComponent implements OnInit {
         if (this.source === 'newvalue') {
             this.caption = 'Create label ' + this.label.displayName;
         } else {
-            this.caption = 'Create Label';
+            this.caption = 'New Label';
         }
     }
     ngOnInit() {
@@ -67,8 +67,8 @@ export class ApplyLabelComponent implements OnInit {
         this.short_value = this.value;
     }
     getLabels() {
-        this.provider_services.getLabelList().subscribe(data => {
-            this.providerLabels = data;
+        this.provider_services.getLabelList().subscribe((data: any) => {
+            this.providerLabels = data.filter(label => label.status === 'ACTIVE');
             // const value = Object.values(this.label);
             // for (let i = 0; i < this.providerLabels.length; i++) {
             //     for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
@@ -119,27 +119,32 @@ export class ApplyLabelComponent implements OnInit {
     //     }
     // }
     createLabel() {
+        //  else if (!this.value) {
+        //     this.api_error['value'] = 'Please enter the value';
+        // } else if (!this.defaultShortValue && !this.short_value) {
+        //     this.api_error['short'] = 'Please enter the short value';
+        // } 
         this.api_error = [];
         if (this.source === 'newlabel' && !this.labelname) {
             this.api_error['label'] = 'Please enter the label';
-        } else if (!this.value) {
-            this.api_error['value'] = 'Please enter the value';
-        } else if (!this.defaultShortValue && !this.short_value) {
-            this.api_error['short'] = 'Please enter the short value';
         } else {
             if (this.source === 'newlabel') {
                 const valueSet = [];
-                const valset = {};
-                valset['value'] = this.value;
-                // valset['shortValue'] = this.value.replace(' ', '_');
-                if (this.short_value) {
-                    valset['shortValue'] = this.short_value;
-                } else {
-                    valset['shortValue'] = this.value;
-                }
-                if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
-                    valueSet.push(valset);
-                }
+                // const valset = {};
+                // valset['value'] = this.value;
+                // // valset['shortValue'] = this.value.replace(' ', '_');
+                // if (this.short_value) {
+                //     valset['shortValue'] = this.short_value;
+                // } else {
+                //     valset['shortValue'] = this.value;
+                // }
+                // if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
+                //     valueSet.push(valset);
+                // }
+                valueSet.push(
+                    { 'value': true, 'shortValue': true },
+                    { 'value': false, 'shortValue': false }
+                );
                 let label = '';
                 if (this.labelname) {
                     label = this.labelname.trim().replace(/ /g, '_');
@@ -152,7 +157,7 @@ export class ApplyLabelComponent implements OnInit {
                 this.provider_services.createLabel(post_data).subscribe(
                     () => {
                         setTimeout(() => {
-                            this.dialogRef.close({ label: label, value: this.value, message: 'newlabel' });
+                            this.dialogRef.close({ label: label, value: true, message: 'newlabel' });
                         }, 1000);
                     },
                     error => {

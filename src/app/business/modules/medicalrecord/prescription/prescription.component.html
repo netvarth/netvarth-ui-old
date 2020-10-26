@@ -1,0 +1,123 @@
+<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+<ng-container *ngIf="!loading" >
+<div class="mgn-up-30" *ngIf="drugList.length === 0 && uploadlist.length === 0">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10" >
+                    <span class="b-link" >
+                        <h5>You can create prescription in two ways :</h5>
+                        <p>1.Take a picture of paper based prescription and upload that image </p>
+                        <p>2. You can create a prescription in this software manually  </p>
+                    </span>
+            </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 " >
+      <div class="card mrcreate pointlist">
+          <span  (click)="uploadRx()">
+              <h5 style="color:#3c8dbc;"><u>I will Upload paper prescription image</u><i class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
+              <span  class="form-level-settings">You can scan or take a picture of prescription</span>
+          </span>
+      </div>
+      <div class="card mrcreate pointlist">
+          <span  (click)="addDrug()">
+              <h5 style="color:#3c8dbc;"><u>I will create a prescription manually</u><i class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
+              <span  class="form-level-settings">Create prescription manually </span>
+          </span>
+      </div>
+    </div>
+  </div>
+  <div class="mgn-up-20" *ngIf="drugList.length>0">
+  <div class="pad-20 table-responsive" >
+      <!-- <h5>  Prescription Created </h5> -->
+  <table class="table table-bordered" >
+        <thead>
+        <tr >
+          <th>
+             Medicine
+          </th>
+          <th>
+              Duration(days)
+          </th>
+           <th>
+              Dosage
+          </th>
+          <th>
+              Frequency
+          </th>
+          <th>
+              Instructions
+          </th>
+
+
+        </tr>
+      </thead>
+        <tbody>
+          <tr *ngFor="let drug of drugList; let i = index;" >
+            <td >
+              {{drug.medicine_name}}
+            </td>
+            <td >
+              {{drug.duration}}
+            </td>
+            <td >
+                  {{drug.dosage}}
+               </td>
+            <td >
+                   {{drug.frequency}}
+                </td>
+                <td  *ngIf="instrutionType(drug.instructions) === 0">
+                  <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u style="color: #3c8dbc ; font-size: smaller;cursor: pointer;">more</u></span></span>
+                 </td>
+                 <td *ngIf="instrutionType(drug.instructions) === 1">
+                   {{drug.instructions}}
+               </td>
+
+
+          </tr>
+        </tbody>
+      </table>
+      <span (click)="updatePrescription()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span>
+    </div>
+
+    <!-- <div  *ngIf="drugList.length > 0 ">
+      <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="updatePrescription()">Edit Prescription</button>
+    </div> -->
+    </div>
+    <div class="mgn-up-20" *ngIf="uploadlist.length>0">
+        <div class="pad-20 table-responsive" >
+            <!-- <h5> Prescription  Image Uploaded</h5> -->
+            <table class="table table-bordered" >
+              <thead>
+              <tr >
+                <th>
+                    File name
+                </th>
+                <th>
+                    Last modified
+                </th>
+                <th>
+                    Image size
+                </th>
+                
+
+              </tr>
+            </thead>
+              <tbody>
+                <tr *ngFor="let file of uploadlist; let i = index;" >
+                  <td (click)="showimgPopup(file)" class="pointlist">
+                      <i class="fa fa-paperclip" aria-hidden="true" ></i>&nbsp;<u style="color: #3c8dbc; ">{{file.originalName}}</u>
+                  </td>
+                  <td >
+                    {{file.date  | date:dateFormatSp}}
+                  </td>
+                  <td >
+                  {{imageSize(file.imageSize)}} KB
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <span (click)="updatePaperPrescription()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span></div>
+            <!-- <div  *ngIf="uploadlist.length > 0 ">
+              <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="updatePaperPrescription()">Edit Prescription</button>
+             
+          </div> -->
+          </div>
+        </ng-container>
+

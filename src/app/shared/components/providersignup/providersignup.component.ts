@@ -617,6 +617,8 @@ export class ProvidersignupComponent implements OnInit {
   registerClicked() {
     this.resetApiErrors();
     this.user_details = {};
+    const fname = this.signupForm.get('first_name').value.trim();
+    const lname = this.signupForm.get('last_name').value.trim();
     this.checkAccountExists().then(
       (accountExists) => {
         if (accountExists) {
@@ -640,8 +642,10 @@ export class ProvidersignupComponent implements OnInit {
             userProfile = {
               countryCode: '+91',
               primaryMobileNo: this.signupForm.get('phonenumber').value || null,
-              firstName: this.toCamelCase(this.signupForm.get('first_name').value) || null,
-              lastName: this.toCamelCase(this.signupForm.get('last_name').value) || null,
+              // firstName: this.toCamelCase(this.signupForm.get('first_name').value) || null,
+              // lastName: this.toCamelCase(this.signupForm.get('last_name').value) || null,
+              firstName: this.toCamelCase(fname) || null,
+              lastName: this.toCamelCase(lname) || null,
               // licensePackage: this.signupForm.get('package_id').value || null,
             };
           }

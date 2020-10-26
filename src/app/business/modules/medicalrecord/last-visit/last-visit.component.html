@@ -1,0 +1,59 @@
+
+   <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
+     Last visits
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button>
+  </h1>
+  <div class="mgn-up-10 style-padding">
+      <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
+      <span >Patient Id: {{display_PatientId}}</span>
+
+   </div>
+   <div *ngIf="visitcount === 0" class="mgn-up-10 style-padding">
+      <p>No Visits for this Patient</p>
+   </div>
+
+  <section class="report"  *ngIf="visitcount !== 0">
+      <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+      <ng-container *ngIf="!loading" >
+    <!-- <div class="content w-manager settings comn-cls lic-page">
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
+        <div class="box" > -->
+         <mat-table class="mat-scrool"  [dataSource]="lastVisit_dataSource">
+          <ng-container matColumnDef="consultationDate">
+            <mat-header-cell *matHeaderCellDef> <b>Date</b></mat-header-cell>
+            <mat-cell *matCellDef="let visit">
+              {{getLastVisitDate(visit)}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="serviceName">
+            <mat-header-cell *matHeaderCellDef>  <b>Service Name</b></mat-header-cell>
+            <mat-cell *matCellDef="let visit">
+              {{getServiceName(visit)}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="userName">
+            <mat-header-cell *matHeaderCellDef> <b>Doctor</b></mat-header-cell>
+            <mat-cell *matCellDef="let visit">
+               {{visit.providerName}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="mr">
+            <mat-header-cell *matHeaderCellDef> <b>MR</b></mat-header-cell>
+            <mat-cell *matCellDef="let visit"> <button (click)="viewMedicalRecord(visit)"  style="text-align:center"> <i class="medicalrecord-icon-customer"></i>{{isMRCreated(visit) === true ?'View MR':'Create MR'}}</button></mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="rx">
+            <mat-header-cell *matHeaderCellDef> <b>RX</b></mat-header-cell>
+            <mat-cell *matCellDef="let visit">  <button  (click)="viewMR_prescription(visit)"  style="text-align:center">  <i class="mr-rx-icon-customer"></i>{{isRxCreated(visit)===true?'View Rx':'Create Rx'}}</button></mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns"></mat-row>
+
+        </mat-table>
+        </ng-container>
+<!--
+    </div>
+      </div>
+    </div> -->
+    <div class="clearfix"></div>
+  </section>
+
+

@@ -111,11 +111,11 @@ onSubmit()" (keyup)="resetApiErrors()">
         errorMsg="Select one sub sector">
       </app-field-error-display>
     </div>
-    <!-- <div class="package-desc" *ngIf="signupForm.get('is_provider').value == 'true'">{{signupp_cap}}<span
+    <div class="package-desc" *ngIf="signupForm.get('is_provider').value == 'true'">{{signupp_cap}}<span
         (click)="more()" *ngIf="moreLess == 0" class="more_less">more...</span><span
         *ngIf="moreLess == 1">{{more_signup}}</span><span (click)="less()" *ngIf="moreLess == 1"
         class="more_less">less.</span>
-    </div> -->
+    </div>
     <div class="form-group agree">
       <mat-checkbox class="terms-margin" formControlName="terms_condition" [value]=true></mat-checkbox> <span
         class="terms-link">{{i_agree_cap}}

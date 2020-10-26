@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../common/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
-
 import { CheckinAddMemberComponent } from './checkin-add-member.component';
+import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 
 @NgModule({
     imports: [
@@ -14,7 +14,8 @@ import { CheckinAddMemberComponent } from './checkin-add-member.component';
         MaterialModule,
         ReactiveFormsModule,
         FormMessageDisplayModule,
-        FormsModule
+        FormsModule,
+        CapitalizeFirstPipeModule
     ],
     entryComponents: [
         CheckinAddMemberComponent

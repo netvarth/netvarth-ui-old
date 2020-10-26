@@ -20,3 +20,13 @@
     appearance : none;
     margin : 0; 
 }
+
+@media only screen and (max-width: 400px) {
+    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name {
+        text-align: left !important;
+    }
+    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .quantity {
+        flex-basis: 80% !important;
+        padding-right: 10px !important;
+    }
+}

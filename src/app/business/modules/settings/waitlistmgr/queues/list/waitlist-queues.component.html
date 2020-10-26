@@ -125,9 +125,9 @@
                                                                         </div>
                                                                         <div *ngIf="action=='edit'"
                                                                                 style="margin-top: -23px">
-                                                                                <label class="labelstyle">{{location_cap}}:
+                                                                                <label class="labelstyle">{{location_cap}}
                                                                                 </label>
-                                                                                <div>{{loc_name}}</div>
+                                                                                <div>:&nbsp;{{loc_name}}</div>
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group">
@@ -146,9 +146,9 @@
                                                                                 <div
                                                                                         *ngFor="let service of services_list; index as i ">
                                                                                         <mat-checkbox
-                                                                                                [checked]="services_list[i].checked === true"
+                                                                                                
                                                                                                 class="example-margin"
-                                                                                                [value]="service.id"
+                                                                                                [value]="service.id" [checked]="services_list[i].checked === true"
                                                                                                 (change)="handleServicechecbox(i)">
                                                                                                 {{service.name | capitalizeFirst}}
                                                                                         </mat-checkbox>

@@ -1,0 +1,7 @@
+.mat-scrool {
+  max-height: 500px;
+  overflow: auto;
+}
+.style-padding {
+  padding-left: 20px;
+}

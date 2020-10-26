@@ -5,18 +5,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../shared/modules/common/material.module';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
     declarations: [
         DynamicFormComponent,
-        DynamicFormQuestionComponent
+        DynamicFormQuestionComponent,
     ],
     imports: [
         FormsModule,
         ReactiveFormsModule,
         FormMessageDisplayModule,
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        OrderModule
     ],
     exports: [DynamicFormComponent]
 })

@@ -1,0 +1,109 @@
+
+
+      <section >
+        <div class="card title-gb">
+          <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"  (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+          {{heading}}
+         </h5>
+        </div>
+        <!-- </section>
+        <section> -->
+            <!-- <div class="content loc-list">
+                <div class="col-md-12 no-padding-small">-->
+                    <div class="card title-gb">
+                        <div class="mgn-up-10">
+
+                            <!-- <p>
+                              <b>Patient:</b>
+                              <span color="blue"> {{patientDetails.id}} &nbsp;</span>
+                              <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}}</span>
+                              <span *ngIf="patientDetails.dob|| patientDetails.gender ">({{patientDetails.dob}} {{patientDetails.gender | capitalizeFirst}})</span>
+                            </p> -->
+                            <hr>
+                            <span>Patient Name: {{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
+                            <span >Patient Id: {{display_PatientId}}</span>
+                            <span *ngIf="patientDetails.dob">DOB: {{patientDetails.dob  | date:display_dateFormat}}</span><br *ngIf="patientDetails.dob">
+                            <span *ngIf="patientDetails.gender">Gender: {{patientDetails.gender | capitalizeFirst}}</span>
+                            <hr>
+                        </div>
+  <div class="no-dta"  *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
+    <h5> By clicking upload prescription you will have choice of uploading a file or taking picture</h5>
+   <div>
+         <button  mat-button style= "margin-top: 10px;" class="cs-btn bt1 " >
+                 <a class="pointer-cursor" style= "color: whitesmoke"
+                 (click)="imagefile.click()"><input #imagefile type="file"
+                     accept="/*;capture=camera" style="display:none;" multiple
+                     (change)="filesSelected($event)">Upload
+                 Prescription</a>
+
+         </button>
+
+
+     </div>
+  </div>
+  <div class="pad-20 table-responsive"  *ngIf="selectedMessage.files && selectedMessage.files.length > 0" >
+         <h5> Files uploaded</h5>
+     <table class="table table-bordered " (change)="somethingChanged()">
+                 <thead>
+                 <tr >
+                   <th>
+                       File name
+                   </th>
+                   <th>
+                       status
+                   </th>
+                   <th>
+                       Image size
+                   </th>
+                   <th>
+
+                   </th>
+
+                 </tr>
+               </thead>
+                 <tbody>
+                   <tr *ngFor="let file of selectedMessage.files; let i = index;" >
+                     <td >
+                       {{file.name}}
+                     </td>
+                     <td >
+                       {{upload_status}}
+                     </td>
+                     <td >
+                     {{imageSize(file.size)}} KB
+                     </td>
+                      <td >
+                       <span (click)="deleteTempImage(file,i)"> <i class="fa fa-trash" aria-hidden="true"></i></span>
+                      </td>
+
+                   </tr>
+                 </tbody>
+               </table>
+<span>If you have multiple prescriptions images, <a class="lnk action pointer-cursor"
+ (click)="imagefile.click()"><input #imagefile type="file"
+     accept="/*;capture=camera" style="display:none;" multiple
+     (change)="filesSelected($event)"><u>Upload
+ another</u></a></span>
+               <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && showSave">
+                     <button type="submit" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="saveImages()" >
+
+                         Save Prescription</button>
+
+                 </div>
+                 <!-- <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && !showSave">
+                     <button type="submit" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareRximage()" >
+
+                         Share Rx</button>
+
+                 </div> -->
+     </div>
+     <!-- </div>
+    </div>-->
+  </div>
+
+
+     </section>
+
+
+

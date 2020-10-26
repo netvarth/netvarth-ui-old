@@ -262,6 +262,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                 if (q.services[j].id === this.services_list[k].id) {
                     this.services_list[k].checked = true;
                     this.services_selected.push(q.services[j].id);
+                    this.servicelist.push(q.services[j]);
                 }
             }
         }
@@ -775,7 +776,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                     server_date = res;
                     this.createForm(server_date);
                     this.showInstantQFlag = true;
-                    this.selectAllService();
+                    // this.selectAllService();
                     if (queue) {
                         this.updateForm(queue);
                     }

@@ -321,6 +321,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedLabels: any = [];
   allLabelSelected: any = [];
   customerIdTooltip = '';
+  allLabels: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -609,12 +610,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'appointments', 'adjustdelay']);
     // }
   }
+
   performActions(action) {
     if (action === 'adjustdelay') {
       this.showAdjustDelay();
     } else if (action === 'learnmore') {
       this.router.navigate(['/provider/' + this.domain + '/appointments']);
     }
+  }
+  redirecToHelp() {
+    this.router.navigate(['/provider/' + this.domain + '/appointments']);
   }
   getSchedules(date?) {
     const _this = this;
@@ -741,7 +746,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.activeSchedules = this.tempActiveSchedules = this.activeSchedules.concat(groupbyQs['DISABLED']);
       }
     }
-    this.getQsByProvider();
+    // this.getQsByProvider();
     if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
       const selQdetails = this.activeSchedules.filter(q => q.id === this.selQId);
@@ -836,6 +841,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
       }
     }
+    this.getQsByProvider();
     this.loadApiSwitch(source);
   }
   resetAll() {
@@ -1213,6 +1219,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getFutureAppointmentsCount(Mfilter = null) {
     // let no_filter = false;
+    if (this.filter.future_appt_date === null) {
+      this.getTomorrowDate();
+    }
     const queueid = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
     if (!Mfilter) {
       Mfilter = {};
@@ -1226,6 +1235,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    }
+    if (this.filter.future_appt_date !== null) {
+      const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
+      Mfilter['date-eq'] = date;
     }
     return new Promise((resolve) => {
       this.provider_services.getFutureAppointmentsCount(Mfilter)
@@ -1726,8 +1739,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           deptId = filteredService[0].department;
         }
       }
+      let date;
+      if (this.time_type === 2) {
+        date = this.filter.future_appt_date;
+      }
       this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
-        { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: this.filter.future_appt_date } });
+        { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: date } });
     }
   }
   searchCustomer(source, appttime) {
@@ -1747,13 +1764,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getLabel() {
     this.providerLabels = [];
     this.provider_services.getLabelList().subscribe(data => {
-      this.providerLabels = data;
+      this.allLabels = data;
+      this.providerLabels = this.allLabels.filter(label => label.status === 'ACTIVE');
     });
   }
   getDisplayname(label) {
-    for (let i = 0; i < this.providerLabels.length; i++) {
-      if (this.providerLabels[i].label === label) {
-        return this.providerLabels[i].displayName;
+    for (let i = 0; i < this.allLabels.length; i++) {
+      if (this.allLabels[i].label === label) {
+        return this.allLabels[i].displayName;
       }
     }
   }
@@ -2443,7 +2461,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.cancelReason || result.rejectReason) {
-        this.changeApptStatusByBatch('Rejected', appt, result);
+        this.changeApptStatusByBatch('Cancelled', appt, result);
       }
     });
   }
@@ -3242,42 +3260,70 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoSettings() {
     this.router.navigate(['/provider/settings']);
   }
-  setLabelFilter(label, value, event) {
+  // setLabelFilter(label, value, event) {
+  //   this.resetPaginationData();
+  //   if (value === 'all') {
+  //     this.selectedLabels[label.label] = [];
+  //     this.allLabelSelected[label.label] = false;
+  //     if (event.checked) {
+  //       for (const value of label.valueSet) {
+  //         if (this.selectedLabels[label.label].indexOf(value.value) === -1) {
+  //           this.selectedLabels[label.label].push(value.value);
+  //         }
+  //       }
+  //       this.allLabelSelected[label.label] = true;
+  //     }
+  //   } else {
+  //     this.allLabelSelected[label.label] = false;
+  //     if (this.selectedLabels[label.label]) {
+  //       const indx = this.selectedLabels[label.label].indexOf(value);
+  //       if (indx === -1) {
+  //         this.selectedLabels[label.label].push(value);
+  //       } else {
+  //         this.selectedLabels[label.label].splice(indx, 1);
+  //       }
+  //     } else {
+  //       this.selectedLabels[label.label] = [];
+  //       this.selectedLabels[label.label].push(value);
+  //     }
+  //     if (this.selectedLabels[label.label].length === label.valueSet.length) {
+  //       this.allLabelSelected[label.label] = true;
+  //     }
+  //   }
+  //   this.doSearch();
+  // }
+  setLabelFilter(label, event) {
     this.resetPaginationData();
-    if (value === 'all') {
-      this.selectedLabels[label.label] = [];
-      this.allLabelSelected[label.label] = false;
+    const value = event.checked;
+    if (label === 'all') {
+      this.allLabelSelected = false;
       if (event.checked) {
-        for (const value of label.valueSet) {
-          if (this.selectedLabels[label.label].indexOf(value.value) === -1) {
-            this.selectedLabels[label.label].push(value.value);
+        for (const lbl of this.providerLabels) {
+          if (!this.selectedLabels[lbl.label]) {
+            this.selectedLabels[lbl.label] = [];
+            this.selectedLabels[lbl.label].push(true);
           }
         }
-        this.allLabelSelected[label.label] = true;
+        this.allLabelSelected = true;
+      } else {
+        this.selectedLabels = [];
+        this.allLabelSelected = false;
       }
     } else {
-      this.allLabelSelected[label.label] = false;
+      this.allLabelSelected = false;
       if (this.selectedLabels[label.label]) {
-        const indx = this.selectedLabels[label.label].indexOf(value);
-        if (indx === -1) {
-          this.selectedLabels[label.label].push(value);
-        } else {
-          this.selectedLabels[label.label].splice(indx, 1);
-        }
+        delete this.selectedLabels[label.label];
       } else {
         this.selectedLabels[label.label] = [];
         this.selectedLabels[label.label].push(value);
       }
-      if (this.selectedLabels[label.label].length === label.valueSet.length) {
-        this.allLabelSelected[label.label] = true;
+      if (Object.keys(this.selectedLabels).length === this.providerLabels.length) {
+        this.allLabelSelected = true;
       }
     }
     this.doSearch();
   }
-
   showCheckinActions(checkin?) {
-    console.log(this.appointmentsChecked);
-    console.log(this.apptsChecked);
     let waitlist = [];
     if (checkin) {
       waitlist = checkin;
@@ -3314,8 +3360,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     actiondialogRef.afterClosed().subscribe(data => {
       this.chkSelectAppointments = false;
+      this.getLabel();
       this.loadApiSwitch('');
     });
   }
-
 }

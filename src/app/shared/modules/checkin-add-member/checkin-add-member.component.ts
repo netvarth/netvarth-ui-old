@@ -4,6 +4,7 @@ import { FormMessageDisplayService } from '../../../shared//modules/form-message
 // import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../functions/shared-functions';
 
 @Component({
   selector: 'app-checkin-consumer-add-member',
@@ -25,17 +26,20 @@ export class CheckinAddMemberComponent implements OnInit {
   api_success = null;
   parent_id;
   tday = new Date();
-
+  customer_label = '';
+  jaldeeid = '';
   @Input() calledFrom: any;
   @Output() returnDetails = new EventEmitter<any>();
-
+  @Input() globalsettings: any;
   constructor(
     public fed_service: FormMessageDisplayService,
-    public sharedservice: SharedServices
+    public sharedservice: SharedServices, public shared_functions: SharedFunctions
   ) {
   }
 
   ngOnInit() {
+    console.log(this.globalsettings);
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
   valuechange() {
     const retobj = {
@@ -43,7 +47,8 @@ export class CheckinAddMemberComponent implements OnInit {
       'lname': this.lastname || '',
       'mobile': this.mobile || '',
       'gender': this.gender || '',
-      'dob': this.dobholder || ''
+      'dob': this.dobholder || '',
+      'jaldeeid': this.jaldeeid || ''
     };
     this.returnDetails.emit(retobj);
   }

@@ -1,7 +1,15 @@
-<section>
+<!-- <section>
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section> -->
+<section class="">
+  <div class="card title-gb">
+      <h5 class="mgn-up-10"> 
+        <span class="fa fa-arrow-left pointer-cursor"(click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span *ngIf="showToken">Token</span>
+         <span *ngIf="!showToken">Check-in</span>
+       </h5>     
+  </div>
 </section>
-
 <section>
   <div class="content comn-cls checkin-details">
     <div class="col-md-12 no-padding-small">
@@ -86,7 +94,7 @@
                     No</span><span>{{waitlist_data.checkinEncId}}</span></div>
                 <div class="item"><span class="ttle">{{location_cap}}</span><span>{{waitlist_data.queue.location.place
                     | capitalizeFirst}}</span></div>
-                <div class="item"><span class="ttle" *ngIf="!showToken">{{waitlist_for_cap}}</span>
+                <div class="item" *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName"><span class="ttle" *ngIf="!showToken">{{waitlist_for_cap}}</span>
                   <span class="ttle" *ngIf="showToken">Token for</span>
                   <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">
                     {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}

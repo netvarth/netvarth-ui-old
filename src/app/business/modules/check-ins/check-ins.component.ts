@@ -315,6 +315,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   customerIdTooltip = '';
   endminday;
   maxday = new Date();
+  allLabels: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -488,38 +489,70 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
 
-  setLabelFilter(label, value, event) {
+  setLabelFilter(label, event) {
     this.resetPaginationData();
-    if (value === 'all') {
-      this.selectedLabels[label.label] = [];
-      this.allLabelSelected[label.label] = false;
+    const value = event.checked;
+    if (label === 'all') {
+      this.allLabelSelected = false;
       if (event.checked) {
-        for (const value of label.valueSet) {
-          if (this.selectedLabels[label.label].indexOf(value.value) === -1) {
-            this.selectedLabels[label.label].push(value.value);
+        for (const lbl of this.providerLabels) {
+          if (!this.selectedLabels[lbl.label]) {
+            this.selectedLabels[lbl.label] = [];
+            this.selectedLabels[lbl.label].push(true);
           }
         }
-        this.allLabelSelected[label.label] = true;
+        this.allLabelSelected = true;
+      } else {
+        this.selectedLabels = [];
+        this.allLabelSelected = false;
       }
     } else {
-      this.allLabelSelected[label.label] = false;
+      this.allLabelSelected = false;
       if (this.selectedLabels[label.label]) {
-        const indx = this.selectedLabels[label.label].indexOf(value);
-        if (indx === -1) {
-          this.selectedLabels[label.label].push(value);
-        } else {
-          this.selectedLabels[label.label].splice(indx, 1);
-        }
+        delete this.selectedLabels[label.label];
       } else {
         this.selectedLabels[label.label] = [];
         this.selectedLabels[label.label].push(value);
       }
-      if (this.selectedLabels[label.label].length === label.valueSet.length) {
-        this.allLabelSelected[label.label] = true;
+      if (Object.keys(this.selectedLabels).length === this.providerLabels.length) {
+        this.allLabelSelected = true;
       }
     }
     this.doSearch();
   }
+
+  // setLabelFilter(label, value, event) {
+  //   this.resetPaginationData();
+  //   if (value === 'all') {
+  //     this.selectedLabels[label.label] = [];
+  //     this.allLabelSelected[label.label] = false;
+  //     if (event.checked) {
+  //       for (const value of label.valueSet) {
+  //         if (this.selectedLabels[label.label].indexOf(value.value) === -1) {
+  //           this.selectedLabels[label.label].push(value.value);
+  //         }
+  //       }
+  //       this.allLabelSelected[label.label] = true;
+  //     }
+  //   } else {
+  //     this.allLabelSelected[label.label] = false;
+  //     if (this.selectedLabels[label.label]) {
+  //       const indx = this.selectedLabels[label.label].indexOf(value);
+  //       if (indx === -1) {
+  //         this.selectedLabels[label.label].push(value);
+  //       } else {
+  //         this.selectedLabels[label.label].splice(indx, 1);
+  //       }
+  //     } else {
+  //       this.selectedLabels[label.label] = [];
+  //       this.selectedLabels[label.label].push(value);
+  //     }
+  //     if (this.selectedLabels[label.label].length === label.valueSet.length) {
+  //       this.allLabelSelected[label.label] = true;
+  //     }
+  //   }
+  //   this.doSearch();
+  // }
 
   setFilterDataCheckbox(type, value, event) {
     this.filter[type] = value;
@@ -911,7 +944,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.activeQs = this.tempActiveQs = this.activeQs.concat(groupbyQs['DISABLED']);
       }
     }
-    this.getQsByProvider();
     if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('future_selQ')) {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('future_selQ');
     } else if (this.time_type === 1 && this.shared_functions.getitemFromGroupStorage('selQ')) {
@@ -931,6 +963,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
+    this.getQsByProvider();
     this.loadApiSwitch(source);
   }
   findCurrentActiveQueue(ques) {
@@ -1242,39 +1275,39 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.pagination.startpageval = 1;
     // this.pagination.totalCnt = 0; // no need of pagination in today
     if (this.activeQs.length > 0) {
-    const promise = this.getTodayWLCount(Mfilter);
-    promise.then(
-      result => {
-        this.chkSelectAppointments = false;
-        this.provider_services.getTodayWaitlist(Mfilter)
-          .subscribe(
-            (data: any) => {
-              this.appt_list = [];
-              this.appt_list = data;
-              this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
-              if (this.filterapplied === true) {
-                this.noFilter = false;
-              } else {
-                this.noFilter = true;
-              }
-              this.setCounts(this.appt_list);
-              this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-              this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
-              this.loading = false;
-            },
-            () => {
-              // this.load_waitlist = 1;
-              this.loading = false;
-            },
-            () => {
-              this.loading = false;
-            });
-      },
-      () => {
-        this.loading = false;
-      });
+      const promise = this.getTodayWLCount(Mfilter);
+      promise.then(
+        result => {
+          this.chkSelectAppointments = false;
+          this.provider_services.getTodayWaitlist(Mfilter)
+            .subscribe(
+              (data: any) => {
+                this.appt_list = [];
+                this.appt_list = data;
+                this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
+                if (this.filterapplied === true) {
+                  this.noFilter = false;
+                } else {
+                  this.noFilter = true;
+                }
+                this.setCounts(this.appt_list);
+                this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+                this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
+                this.loading = false;
+              },
+              () => {
+                // this.load_waitlist = 1;
+                this.loading = false;
+              },
+              () => {
+                this.loading = false;
+              });
+        },
+        () => {
+          this.loading = false;
+        });
     } else {
-       this.loading = false;
+      this.loading = false;
     }
   }
   getFutureWL() {
@@ -1923,13 +1956,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getLabel() {
     this.providerLabels = [];
     this.provider_services.getLabelList().subscribe(data => {
-      this.providerLabels = data;
+      this.allLabels = data;
+      this.providerLabels = this.allLabels.filter(label => label.status === 'ACTIVE');
     });
   }
   getDisplayname(label) {
-    for (let i = 0; i < this.providerLabels.length; i++) {
-      if (this.providerLabels[i].label === label) {
-        return this.providerLabels[i].displayName;
+    for (let i = 0; i < this.allLabels.length; i++) {
+      if (this.allLabels[i].label === label) {
+        return this.allLabels[i].displayName;
       }
     }
   }
@@ -2342,7 +2376,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getHistoryWaitlist(Mfilter)
           .subscribe(
             data => {
-              console.log(data);
               this.historyCheckins = data;
               // const params = [
               //   'height=' + screen.height,
@@ -2357,7 +2390,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               checkin_html += '<td style="padding:10px;">Name</td>';
               checkin_html += '<td style="padding:10px;">Service</td>';
               if (this.providerLabels.length > 0) {
-              checkin_html += '<td style="padding:10px;">Label</td>';
+                checkin_html += '<td style="padding:10px;">Label</td>';
               }
               checkin_html += '</thead>';
               for (let i = 0; i < this.historyCheckins.length; i++) {
@@ -2604,7 +2637,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.selectedUser = tempUser;
       }
-      this.handleUserSelection(this.selectedUser);
+      // this.handleUserSelection(this.selectedUser);
     });
   }
   handleUserSelection(user) {
@@ -2629,18 +2662,24 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = [];
     } else {
       const qids = [];
-      // for (const id of this.selQIds) {
-      //   for (const q of this.activeQs) {
-      //     if (id === q.id) {
-      //       qids.push(id);
-      //     }
-      //   }
-      // }
       for (const q of this.activeQs) {
         qids.push(q.id);
       }
+      const selQids = [];
       if (qids.length > 0) {
-        this.selQIds = qids;
+        if (this.selQIds && this.selQIds.length > 0) {
+          for (const id of this.selQIds) {
+            const qArr = qids.filter(qid => qid === id);
+            if (qArr.length > 0) {
+              selQids.push(id);
+            }
+          }
+          if (selQids.length === 0) {
+            this.selQIds = qids;
+          }
+        } else {
+          this.selQIds = qids;
+        }
       } else {
         this.selQIds.push(this.activeQs[0].id);
       }
@@ -2834,6 +2873,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     actiondialogRef.afterClosed().subscribe(data => {
       this.chkSelectAppointments = false;
       this.chkStartedSelectAppointments = false;
+      this.getLabel();
       this.loadApiSwitch('');
     });
   }

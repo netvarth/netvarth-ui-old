@@ -120,6 +120,12 @@ export class DonationsComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/donations']);
         }
     }
+    redirecToHelp() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/donations']);
+    }
+    gotoLocations() {
+        this.routerobj.navigate(['provider', 'settings', 'general', 'locations']);
+      }
     getServiceList() {
         const filter1 = { 'serviceType-eq': 'donationService' };
         this.provider_services.getServicesList(filter1)

@@ -66,7 +66,7 @@ export class CustomerDetailComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     checkin_type;
     customidFormat;
-    loading = false;
+    loading = true;
     haveMobile = true;
     viewCustomer = false;
     customerId;
@@ -86,6 +86,7 @@ export class CustomerDetailComponent implements OnInit {
     userId;
     deptId;
     type;
+    customerDetails: any = [];
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -120,6 +121,7 @@ export class CustomerDetailComponent implements OnInit {
                         this.breadcrumbs = breadcrumbs;
                         this.action = 'add';
                         this.createForm();
+                        this.getGlobalSettingsStatus();
                     } else {
                         this.activated_route.queryParams.subscribe(
                             (qParams) => {
@@ -139,6 +141,7 @@ export class CustomerDetailComponent implements OnInit {
                                             this.breadcrumbs = breadcrumbs;
                                             this.viewCustomer = false;
                                             this.createForm();
+                                            this.getGlobalSettingsStatus();
                                         } else if (this.action === 'view') {
                                             const breadcrumbs = [];
                                             this.breadcrumbs_init.map((e) => {
@@ -149,7 +152,7 @@ export class CustomerDetailComponent implements OnInit {
                                             });
                                             this.breadcrumbs = breadcrumbs;
                                             this.viewCustomer = true;
-
+                                            this.loading = false;
                                         }
                                     }
                                 );
@@ -221,7 +224,6 @@ export class CustomerDetailComponent implements OnInit {
                 .subscribe(
                     data => {
                         resolve(data);
-
                     },
                     () => {
                         reject();
@@ -237,37 +239,43 @@ export class CustomerDetailComponent implements OnInit {
                 (data: any) => {
                     if (data.length > 0) {
                         if (data[0].userProfile) {
+                            this.customerDetails = data[0].userProfile;
+                            this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
                             this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
                             this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
-                            if (data[0].userProfile.email) {
-                                this.amForm.get('email_id').setValue(data[0].userProfile.email);
+                            if (this.customerDetails.email) {
+                                this.amForm.get('email_id').setValue(this.customerDetails.email);
                             }
-                            this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
-                            if (data[0].userProfile.address) {
-                                this.amForm.get('address').setValue(data[0].userProfile.address);
+                            if (this.customerDetails.address) {
+                                this.amForm.get('address').setValue(this.customerDetails.address);
                             }
                         }
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
                         this.customerErrorMsg1 = 'The system found the record details in Jaldee.com';
                         this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + ' to create ' + this.source + '?';
+                        this.loading = false;
                     } else {
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
                         this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                        this.loading = false;
                     }
                 },
                 error => {
                     this.shared_functions.apiErrorAutoHide(this, error);
+                    this.loading = false;
                 }
             );
     }
     getJaldeeIntegrationSettings() {
+        this.loading = true;
         this.provider_services.getJaldeeIntegrationSettings().subscribe(
             (data: any) => {
                 if (data.walkinConsumerBecomesJdCons) {
                     this.getJaldeeCustomer();
                 } else {
                     this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
-                    this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    this.loading = false;
                 }
             }
         );
@@ -283,8 +291,6 @@ export class CustomerDetailComponent implements OnInit {
                 });
     }
     ngOnInit() {
-        this.loading = true;
-        this.getGlobalSettingsStatus();
         this.breadcrumbs = this.breadcrumbs_init;
         // this.breadcrumbs = [{
         //     title: this.shared_functions.firstToUpper(this.customer_label) + 's',
@@ -300,7 +306,17 @@ export class CustomerDetailComponent implements OnInit {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.customidFormat = data.jaldeeIdFormat;
-                this.createForm();
+                if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+                    if (this.thirdParty) {
+                        this.amForm.addControl('customer_id', new FormControl(''));
+                        this.customerPlaceholder = this.customer_label + ' id';
+                        this.getCustomerCount();
+                    } else {
+                        this.amForm.addControl('customer_id', new FormControl('', Validators.required));
+                        this.customerPlaceholder = this.customer_label + ' id *';
+                    }
+                }
+                // this.createForm();
             });
     }
     createForm() {
@@ -330,16 +346,6 @@ export class CustomerDetailComponent implements OnInit {
                 this.updateForm();
             }
             this.loading = false;
-        }
-        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-            if (this.thirdParty) {
-                this.amForm.addControl('customer_id', new FormControl(''));
-                this.customerPlaceholder = this.customer_label + ' id';
-                this.getCustomerCount();
-            } else {
-                this.amForm.addControl('customer_id', new FormControl('', Validators.required));
-                this.customerPlaceholder = this.customer_label + ' id *';
-            }
         }
         if (this.phoneNo) {
             this.amForm.get('mobile_number').setValue(this.phoneNo);
@@ -492,9 +498,7 @@ export class CustomerDetailComponent implements OnInit {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.disableButton = false;
                     });
-
         }
-
     }
     onCancel() {
         if (this.source === 'checkin' || this.source === 'token') {

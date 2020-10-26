@@ -18,6 +18,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         CheckinAddMemberModule,
         NgxMatSelectSearchModule,
         NgbModule,
-        OwlModule
+        OwlModule,
     ],
     declarations: [
         CustomersListComponent,
@@ -45,7 +46,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         CustomerSearchComponent
     ],
     entryComponents: [],
-    exports: [CustomersListComponent]
+    exports: [CustomersListComponent,MedicalrecordModule]
 })
 
 export class CustomersModule { }

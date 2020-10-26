@@ -30,7 +30,7 @@
   .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon, 
   .message-icon, .notes-icon, .printer-icon , .viewdetails-icon, .reschedule-icon,
   .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon,
-  .action-box .meet-icon, .action-box .phon-icon {
+  .action-box .meet-icon, .action-box .phon-icon, .medicalrecord-icon, .mr-rx-icon {
     width: 25px !important;
   }
   .action-box .zoom-icon, .action-box .wtsapaud-icon, .action-box .wtsapvid-icon {
@@ -100,4 +100,8 @@
 .reschedulebtn span {
   padding: 10px 30px !important;
   font-size: 1rem !important;
+}
+.scro {
+  max-height: 500px;
+  overflow-y: scroll;
 }

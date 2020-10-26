@@ -1,0 +1,67 @@
+
+
+
+
+
+  <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+    <section class="">
+      <div class="card title-gb">
+        <h5 class="mgn-up-10">
+           <span class="fa fa-arrow-left pointer-cursor"  (click)="redirecToClinicalNotes()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           {{displayTitle}}
+           <!-- <h2 style="text-align: center;">{{displayTitle }}</h2> -->
+        </h5>
+        <div class="mgn-up-10" class="col-md-12">
+            <hr>
+            <div class="col-md-6">
+                <label>Patient Name:</label><span> {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</span><br>
+                <span >Patient Id: {{display_PatientId}}</span>
+                <label *ngIf="customerDetails.dob">DOB:</label><span *ngIf="customerDetails.dob">  {{customerDetails.dob | date:display_dateFormat}}</span><br *ngIf="customerDetails.dob">
+                <label *ngIf="customerDetails.gender">Gender:</label><span *ngIf="customerDetails.gender"> {{customerDetails.gender | capitalizeFirst}}</span>
+            </div>
+            <div class="col-md-6">
+                <label  *ngIf="serviceName">Service/Consultation:</label><span *ngIf="serviceName">{{serviceName}}</span><br>
+                <label  *ngIf="department">Department:</label><span *ngIf="department"> {{department}}</span>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+          </div>
+
+<!--
+        <div class="mgn-up-10">
+          <hr>
+          <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
+          <span>Patient Id: {{customerDetails.jaldeeId}}</span><br>
+          <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob}}</span><br *ngIf="customerDetails.dob">
+          <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span> <br *ngIf="customerDetails.gender">
+
+          <hr>
+         </div> -->
+    <!--
+    <div>
+       <p>
+        <b>Patient:</b>
+        <span color="blue"> {{customerDetails.id}} &nbsp;</span>
+        <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</span>
+        <span *ngIf="customerDetails.dob|| customerDetails.gender ">({{customerDetails.dob}} {{customerDetails.gender | capitalizeFirst}})</span>
+      </p>
+    </div> -->
+<h6 class="mgn-lt-15">Enter {{displayTitle}}  <span class="word-hint">(250 words)</span></h6>
+<div class="col-md-12 col-sm-12 col-xs-12 mr-area">
+  <textarea  [(ngModel)]="edit_data" name="paragraph_text"  maxlength = "500" cols="30" rows="5"></textarea>
+</div>
+
+
+<div >
+  <button type="button"  style="margin: 10px" class="cs-btn bt2 sm" (click)="redirecToClinicalNotes()">cancel</button>
+  <button  type="button" mat-button (click) = "updateClinicalNotes(edit_data)" [disabled]="edit_data == ''" class="cs-btn bt1 sm">Save</button>
+</div>
+
+</div>
+</section>
+<div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+
+
+

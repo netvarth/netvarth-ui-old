@@ -6691,3 +6691,13 @@
         display: none !important;
     } */
 }
+.consumer-dash .for {
+    color:black !important;
+    font-style: initial !important;
+    margin-right: 5px;
+}
+.consumer-dash .userName {
+    color: blue;
+    font-style: italic;
+    font-size: 0.85rem !important;
+}

@@ -1,7 +1,48 @@
-<section>
+<!-- <section>
   <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" *ngIf="!apiloading"
     (performAction)="performActions($event)">
+    
   </app-breadcrumb>
+  
+</section> -->
+<section class="">
+  <div class="title-gb no-padding">
+    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+        Donations
+        <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+    </div>
+  </div>
+  <div class="pull-right">
+      <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
+        <div class="navbar-custom-menu width100pc">
+          <ul class="nav navbar-nav width100pc">
+            <li class="dropdown messages-menu loc-lst queue-menu pull-right">
+              <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
+              <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
+                *ngIf="selected_location" style="padding-top: 12px !important;">
+                <span *ngIf="!small_device_display">
+                  {{selected_location.place | capitalizeFirst}}</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <ul class="menu">
+                    <li *ngFor="let location of locations;let i = index" [(value)]="i"
+                      [ngClass]="{'active': (location.place == selected_location.place)}">
+                      <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
+                        <h4 *ngIf="location.place.length>='27'">
+                          {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
+                        <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
 </section>
 <section class="dashboard content customers p-donations" *ngIf="!apiloading">
   <div class="col-md-12 no-padding-small">
@@ -17,15 +58,15 @@
               </a>
             </li>
 
-            <li class="dropdown messages-menu loc-lst queue-menu pull-right" (click)="showFilterLocation()">
+            <!-- <li class="dropdown messages-menu loc-lst queue-menu pull-right" (click)="showFilterLocation()">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor">
                 <i class="icon-location" [matTooltipClass]="tooltipcls"
                 [matTooltip]="'Change location'">
                 </i>
                 <span *ngIf="selected_location && !small_device_display">&nbsp;&nbsp; {{selected_location.place | capitalizeFirst}}</span>
               </a>
-            </li> 
-          
+            </li>  -->
+            
           </ul>
         </div>
         <aside class="filterSidebar" *ngIf="show_loc">

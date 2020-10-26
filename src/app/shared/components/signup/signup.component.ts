@@ -291,6 +291,8 @@ export class SignUpComponent implements OnInit {
     this.actionstarted = true;
     this.resetApiErrors();
     this.user_details = {};
+    const fname = this.signupForm.get('first_name').value.trim();
+    const lname = this.signupForm.get('last_name').value.trim();
     let userProfile = {
       countryCode: '+91',
       primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
@@ -305,17 +307,17 @@ export class SignUpComponent implements OnInit {
         lastName: this.toCamelCase(this.data.moreOptions.dataCreateProv.lname) || null
       };
     } else {
+      
       userProfile = {
         countryCode: '+91',
         primaryMobileNo: this.signupForm.get('phonenumber').value || null,
-        firstName: this.toCamelCase(this.signupForm.get('first_name').value) || null,
-        lastName: this.toCamelCase(this.signupForm.get('last_name').value) || null,
+        firstName: this.toCamelCase(fname) || null,
+        lastName: this.toCamelCase(lname) || null,
         // licensePackage: this.signupForm.get('package_id').value || null,
       };
     }
 
-    const fname = userProfile.firstName.trim();
-    const lname = userProfile.lastName.trim();
+   
     if (fname === '') {
       this.api_error = 'First name is required';
       if (document.getElementById('first_name')) {
