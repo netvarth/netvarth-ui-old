@@ -15,6 +15,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
     templateUrl: './checkindetail.component.html'
 })
 export class CheckinDetailComponent implements OnInit {
+    elementType = 'url';
     waitlist: any;
     api_loading = true;
     go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;

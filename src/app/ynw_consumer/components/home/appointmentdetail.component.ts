@@ -15,6 +15,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
     templateUrl: './appointmentdetail.component.html'
 })
 export class ApptDetailComponent implements OnInit {
+    elementType = 'url';
     api_loading = true;
     go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
     bname_cap = 'Service Provider';
