@@ -37,11 +37,11 @@
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
                                             {{showCheckinButtonCaption()}} For <a
-                                                class="changeitem  pointer-cursor mgn-lt-10 pull-right"
+                                            *ngIf="type !== 'waitlistreschedule'" class="changeitem  pointer-cursor mgn-lt-10 pull-right"
                                                 (click)="changeService()">Change
                                                 Service</a></div>
                                         <div class="col-sm-12 col-xs-12 col-md-12">
-                                            <div class="card-body" *ngIf="sel_ser">
+                                            <div class="card-body" *ngIf="sel_ser || type == 'waitlistreschedule'">
                                                 <div class="service-icon pull-left"
                                                     *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
@@ -81,7 +81,7 @@
 
                                                     <div class="clearfix"></div>
                                                     <div class="callingmode mgn-lt-10 mgn-up-10"
-                                                        *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
+                                                        *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService' && type !== 'waitlistreschedule'">
                                                         <div class="mgn-bt-10 mgn-up-5">
                                                             <div class=""
                                                                 *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
@@ -277,7 +277,7 @@
                                         <div
                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">Booking
-                                                For <a class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                For <a *ngIf="type !== 'waitlistreschedule'" class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
                                                     (click)="handleSideScreen('members')">Change
                                                     <!-- <i class="fa fa-pencil"></i> -->
                                                 </a>
@@ -291,11 +291,14 @@
                                                     </h6>
                                                     <div class="">
                                                         <i class="fa fa-mobile "></i>
+                                                        <!-- <span class="mgn-lt-10 phonevallabel">
+                                                            {{waitlist_for[0].phoneNo}}
+                                                        </span> -->
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="userPhone && !changePhno">{{userPhone}}</span>
+                                                            *ngIf="userPhone && !changePhno && type !== 'waitlistreschedule'">{{userPhone}}</span>
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
-                                                            class="mgn-lt-5 lnk pointer-cursor"><i class="fa fa-pencil"
+                                                            *ngIf="currentPhone && changePhno && type !== 'waitlistreschedule'">{{currentPhone}}</span><a
+                                                            class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
                                                                 (click)="editPhone()"></i></a>
                                                     </div>
                                                     <div class=""
@@ -303,7 +306,7 @@
                                                         <i class="fa fa-envelope-o "></i>
                                                         <span
                                                             class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
-                                                        <a class="mgn-lt-5 lnk pointer-cursor"><i class="fa fa-pencil"
+                                                        <a class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
                                                                 (click)="handleEmail()"></i></a>
                                                         <!-- <span class="mgn-lt-5 emailvallabel"
                                                 *ngIf="currentPhone && changePhno">{{currentPhone}}</span>&nbsp;<a class="lnk pointer-cursor"><i
@@ -324,7 +327,7 @@
                                                                 class="fa fa-file-text-o mgn-rt-5"
                                                                 aria-hidden="true"></i>
                                                             {{sel_ser_det.consumerNoteTitle}} <span
-                                                                *ngIf="sel_ser_det.consumerNoteMandatory">*</span></a>
+                                                                *ngIf="sel_ser_det.consumerNoteMandatory && type != 'waitlistreschedule'">*</span></a>
                                                     </mat-chip>
                                                     <mat-chip (click)="gotoAttachments()"><a
                                                             class="lnk action pointer-cursor"><i
@@ -336,7 +339,7 @@
                                             </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                    <div *ngIf="sel_ser_det.isPrePayment" class=" mgn-bt-20">
+                                                    <div *ngIf="sel_ser_det.isPrePayment && type !== 'waitlistreschedule'" class=" mgn-bt-20">
                                                         <!-- <span class="bold mgn-lt-5 red">{{sel_ser_det.name}}</span> -->
                                                         This service
                                                         requires
@@ -346,12 +349,17 @@
                                                                 class="rupee-font">&#8377;
                                                             </span>{{prepaymentAmount}}</span>
                                                     </div>
-                                                    <div class="checkin-btn-bp pointer-cursor"
+                                                    <div class="checkin-btn-bp pointer-cursor" *ngIf="type !== 'waitlistreschedule'"
                                                         [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === ''"
                                                         (click)="handleCheckinClicked()">
                                                         <span *ngIf="!sel_ser_det.isPrePayment">Confirm
                                                             {{showCheckinButtonCaption()}}</span>
                                                         <span *ngIf="sel_ser_det.isPrePayment">Proceed to Payment</span>
+                                                        <i class="fa fa-long-arrow-right mgn-lt-5"></i>
+                                                    </div>
+                                                    <div class="checkin-btn-bp pointer-cursor" *ngIf="type == 'waitlistreschedule'"
+                                                        [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === '' || disableButn()"  (click)="rescheduleWaitlist()">
+                                                        Reschedule
                                                         <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                     </div>
                                                 </div>
