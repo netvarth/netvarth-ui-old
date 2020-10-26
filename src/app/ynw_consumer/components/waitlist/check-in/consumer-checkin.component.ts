@@ -416,7 +416,6 @@ export class ConsumerCheckinComponent implements OnInit {
             'date': this.sel_checkindate,
             'queue': this.sel_queue_id
         };
-        console.log(post_Data)
         this.shared_services.rescheduleConsumerWaitlist(post_Data)
             .subscribe(
                 () => {
