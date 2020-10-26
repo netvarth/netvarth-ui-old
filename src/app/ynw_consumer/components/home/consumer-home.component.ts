@@ -951,6 +951,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
+  gotoWaitlistReschedule(waitlist) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        uuid: waitlist.ynwUuid,
+        type: 'waitlistreschedule',
+        account_id: waitlist.providerAccount.id,
+        unique_id: waitlist.providerAccount.uniqueId
+      }
+    };
+    this.router.navigate(['consumer', 'checkin'], navigationExtras);
+  }
 
   openNotification(data) {
     if (!data) {
