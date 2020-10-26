@@ -221,6 +221,10 @@ export class ConsumerCheckinComponent implements OnInit {
     note_cap = 'Add Note';
     servicedialogRef: any;
     availableDates: any = [];
+    type;
+    rescheduleUserId;
+    waitlist: any = [];
+    holdselectedTime;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -256,6 +260,12 @@ export class ConsumerCheckinComponent implements OnInit {
                 if (params.service_id) {
                     // tslint:disable-next-line:radix
                     this.selectedService = parseInt(params.service_id);
+                }
+                if (params.type === 'waitlistreschedule') {
+                    this.type = params.type;
+                    this.rescheduleUserId = params.uuid;
+                    console.log(this.rescheduleUserId)
+                    this.getRescheduleWaitlistDet();
                 }
                 this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
             });
@@ -376,6 +386,49 @@ export class ConsumerCheckinComponent implements OnInit {
             Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
             first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         });
+    }
+    getRescheduleWaitlistDet() {
+        this.shared_services.getCheckinByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
+            (waitlst: any) => {
+                this.waitlist = waitlst;
+                console.log(this.waitlist)
+                if (this.type === 'waitlistreschedule') {
+                     this.waitlist_for.push({ id: this.waitlist.waitlistingFor[0].id, firstName: this.waitlist.waitlistingFor[0].firstName, lastName: this.waitlist.waitlistingFor[0].lastName, phoneNo: this.waitlist.phoneNumber });
+                     console.log(this.waitlist_for)
+                }
+
+                this.sel_loc = this.waitlist.queue.location.id;
+                this.selectedService = this.waitlist.service.id;
+                this.sel_checkindate = this.hold_sel_checkindate = this.waitlist.date;
+                this.sel_ser = this.waitlist.service.id;
+                this.holdselectedTime = this.waitlist.appmtTime;
+                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                // this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedService, this.sel_checkindate, this.account_id);
+            });
+
+    }
+    rescheduleWaitlist() {
+        // this.apptdisable = true;
+        const post_Data = {
+            'ynwUuid': this.rescheduleUserId,
+            'date': this.sel_checkindate,
+            'queue': this.sel_queue_id
+        };
+        console.log(post_Data)
+        this.shared_services.rescheduleConsumerWaitlist(post_Data)
+            .subscribe(
+                () => {
+                    // this.apptdisable = false;
+                    if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
+                        this.consumerNoteAndFileSave(this.rescheduleUserId);
+                    }
+
+                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid.uid, type: 'waitlistreschedule' } });
+                },
+                error => {
+                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    // this.apptdisable = false;
+                });
     }
     isDepartmentHaveServices(serviceIds: any, servicesjson: any) {
         let found = false;
