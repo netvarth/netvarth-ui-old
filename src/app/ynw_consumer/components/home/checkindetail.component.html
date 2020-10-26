@@ -36,7 +36,7 @@
                                                 (click)="providerDetail(waitlist.providerAccount)">
                                                 {{waitlist.providerAccount.businessName | capitalizeFirst}}
                                                 <i class="fa fa-comments-o mgn-lt-10"
-                                                    (click)="addCommonMessage(waitlistdata, $event)"></i>
+                                                    (click)="addCommonMessage($event)"></i>
 
                                             </h3>
                                             <span class="loc-cls">
@@ -55,7 +55,7 @@
                                                     [class]=iconClass></i>
                                                 <span class="serv-name">
                                                     &nbsp;{{waitlist.service.name | capitalizeFirst}} <span
-                                                        *ngIf="deptName">({{waitlist.service.deptName}}) </span>
+                                                        *ngIf="waitlist.service.deptName">({{waitlist.service.deptName}}) </span>
                                                 </span>
                                             </div>
                                         </div>
@@ -117,7 +117,7 @@
                                                 *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0">ESTIMATED
                                                 TIME</span>
                                             <span class="status-label"
-                                                *ngIf="waitlist.token && !waitlist.appxWaitingTime>=0">TOKEN NO</span>
+                                                *ngIf="waitlist.token && !(waitlist.appxWaitingTime>=0)">TOKEN NO</span>
                                             <span class="item-label-val"
                                                 *ngIf="waitlist.token">{{waitlist.token}}</span>
                                             <span class="item-label-val" *ngIf="waitlist.appxWaitingTime>=0">

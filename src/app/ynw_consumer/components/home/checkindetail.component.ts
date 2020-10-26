@@ -138,7 +138,7 @@ export class CheckinDetailComponent implements OnInit {
     gotoPrev() {
         this.locationobj.back();
     }
-    addCommonMessage(waitlist, event) {
+    addCommonMessage(event) {
         event.stopPropagation();
         const pass_ob = {};
         pass_ob['source'] = 'consumer-waitlist';
