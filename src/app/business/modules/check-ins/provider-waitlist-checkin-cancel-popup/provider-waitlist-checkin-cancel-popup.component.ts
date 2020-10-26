@@ -138,15 +138,15 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   onSubmit(form_data) {
     this.resetApiErrors();
     let post_data;
-    if (this.data.appt || this.data.type === 'appt') {
-      post_data = {
-        'rejectReason': form_data.reason
-      };
-    } else {
-      post_data = {
-        'cancelReason': form_data.reason
-      };
-    }
+    // if (this.data.appt || this.data.type === 'appt') {
+    //   post_data = {
+    //     'rejectReason': form_data.reason
+    //   };
+    // } else {
+    post_data = {
+      'cancelReason': form_data.reason
+    };
+    // }
     if (form_data.send_message) {
       if (!form_data.message.replace(/\s/g, '').length) {
         this.api_error = 'Message cannot be empty';
@@ -187,35 +187,35 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   getDefaultMessages() {
     if (this.data.appt || this.data.type === 'appt') {
-    this.provider_services.getApptProviderMessages()
-      .subscribe(
-        (data: any) => {
-          this.default_message_arr = data;
-          this.default_message = data.cancel || '';
-          /*this.cur_msg = this.replacedMessage();
-          if (this.amForm.get('reason')) {
-           this.amForm.get('reason').setValue(this.cur_msg);
-          }*/
-        },
-        () => {
+      this.provider_services.getApptProviderMessages()
+        .subscribe(
+          (data: any) => {
+            this.default_message_arr = data;
+            this.default_message = data.cancel || '';
+            /*this.cur_msg = this.replacedMessage();
+            if (this.amForm.get('reason')) {
+             this.amForm.get('reason').setValue(this.cur_msg);
+            }*/
+          },
+          () => {
 
-        }
-      );
+          }
+        );
     } else {
       this.provider_services.getProviderMessages()
-      .subscribe(
-        (data: any) => {
-          this.default_message_arr = data;
-          this.default_message = data.cancel || '';
-          /*this.cur_msg = this.replacedMessage();
-          if (this.amForm.get('reason')) {
-           this.amForm.get('reason').setValue(this.cur_msg);
-          }*/
-        },
-        () => {
+        .subscribe(
+          (data: any) => {
+            this.default_message_arr = data;
+            this.default_message = data.cancel || '';
+            /*this.cur_msg = this.replacedMessage();
+            if (this.amForm.get('reason')) {
+             this.amForm.get('reason').setValue(this.cur_msg);
+            }*/
+          },
+          () => {
 
-        }
-      );
+          }
+        );
     }
   }
   replacedMessage() {

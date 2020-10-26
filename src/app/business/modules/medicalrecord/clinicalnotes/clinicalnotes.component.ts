@@ -40,6 +40,9 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
     this.medicalrecordService._mrUid.subscribe(mrId => {
       this.mrId = mrId;
+ console.log(this.mrId);
+
+
     });
 
   }

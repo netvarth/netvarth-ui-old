@@ -15,6 +15,11 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 })
 export class MedicalrecordComponent implements OnInit {
 
+  isShowList = false;
+  dateShow = true;
+  isShow: boolean;
+  showVisits = false;
+  display_PatientId: any;
   navigation_params: { [key: string]: any; };
   mrDate: Date;
   serviceName = 'Consultation';
@@ -83,6 +88,11 @@ export class MedicalrecordComponent implements OnInit {
           }
 
           this.customerDetails = JSON.parse(qparams.customerDetail);
+          if (this.customerDetails.memberJaldeeId) {
+            this.display_PatientId = this.customerDetails.memberJaldeeId;
+          } else if (this.customerDetails.jaldeeId) {
+            this.display_PatientId = this.customerDetails.jaldeeId;
+          }
           this.PatientId = this.customerDetails.id;
           if (qparams.department) {
             this.department = qparams.department;
@@ -90,7 +100,7 @@ export class MedicalrecordComponent implements OnInit {
           if (qparams.serviceName) {
             this.serviceName = qparams.serviceName;
           }
-       
+
           if (qparams.booking_type && qparams.booking_type === 'TOKEN' || 'APPT') {
             this.bookingType = qparams.booking_type;
             if (qparams.consultationMode) {
@@ -161,7 +171,7 @@ export class MedicalrecordComponent implements OnInit {
   ngOnInit() {
     this.medicalService.back_nav.subscribe(res => {
       this.back_type = res;
-   });
+    });
 
     this.mrDate = new Date();
     this.MrCreateddate = this.sharedfunctionObj.formatDateDisplay(this.mrDate);
@@ -177,7 +187,7 @@ export class MedicalrecordComponent implements OnInit {
       this.provider_services.getPatientVisitListCount(this.PatientId)
         .subscribe((data: any) => {
           this.visitcount = data;
-          console.log(this.visitcount);
+          this.showLastvisitorNot();
         },
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -241,5 +251,44 @@ export class MedicalrecordComponent implements OnInit {
     } else {
       this.router.navigate(['provider', 'customers']);
     }
+  }
+  showLastvisitorNot() {
+
+    switch (this.bookingType) {
+      case 'FOLLOWUP': {
+        if (this.visitcount > 0) {
+          this.isShowList = true;
+          this.dateShow = false;
+        } else if (this.visitcount === 0) {
+          this.dateShow = true;
+          this.isShowList = false;
+        }
+        break;
+      }
+      case 'APPT': {
+        if (this.visitcount > 1) {
+          this.isShowList = true;
+          this.dateShow = false;
+        } else if (this.visitcount <= 1) {
+          this.dateShow = true;
+          this.isShowList = false;
+        }
+        break;
+
+      }
+      case 'TOKEN': {
+        if (this.visitcount > 1) {
+          this.dateShow = false;
+          this.isShowList = true;
+        } else if (this.visitcount <= 1) {
+          this.dateShow = true;
+          this.isShowList = false;
+        }
+        break;
+
+      }
+    }
+
+
   }
 }

@@ -45,6 +45,7 @@ import { MeetingDetailsComponent } from './components/meeting-details/meeting-de
 import { SearchFormModule } from '../shared/components/search-form/search-form.module';
 import { ConsumerFooterModule } from './components/footer/footer.module';
 import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import { MyfavouritesComponent } from './components/myfavourites/myfavourites.co
     ConsumerAppointmentModule,
     ConsumerDonationModule,
     SearchFormModule,
-    ConsumerFooterModule
+    ConsumerFooterModule,
+    NgxQRCodeModule
   ],
   declarations: [
     ConsumerComponent,
