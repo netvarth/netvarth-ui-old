@@ -91,10 +91,10 @@ export class PhomeComponent implements OnInit {
     } else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
         this.windowScrolled = false;
     }
-}
-scrollToTop() {
-  this.handleScroll('pro_home');
-}
+  }
+  scrollToTop() {
+    this.handleScroll('pro_home');
+  }
   doForgotPassword() {
     this.resetApiErrors();
     this.api_loading = false;
@@ -121,14 +121,6 @@ scrollToTop() {
     this.step = 1;
   }
   ngOnInit() {
-
-    if (this.qParams.type) {
-      this.handleScroll(this.qParams.type);
-
-    } else {
-      this.handleScroll('pro_home');
-
-    }
     this.carouselOne = {
       dots: false,
       autoplay: true,
@@ -171,6 +163,15 @@ scrollToTop() {
       touchDrag: true,
       pullDrag: true
     };
+    setTimeout(() => {
+      if (this.qParams.type) {
+        this.handleScroll(this.qParams.type);
+
+      } else {
+        this.handleScroll('pro_home');
+
+      }
+    }, 100);
   }
   handleScroll(target) {
     this.triggerScrollTo(target);
@@ -275,7 +276,7 @@ scrollToTop() {
         error => {
           // ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
           if (error.status === 401 && error.error === 'Session already exists.') {
-            this.shared_functions.doLogout().then( () => {
+            this.shared_functions.doLogout().then(() => {
               this.onSubmit(data);
             });
           } else {

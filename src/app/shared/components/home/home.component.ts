@@ -51,7 +51,6 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.handleScroll('home');
     this.setSystemDate();
     // calling the method to get the list of domains
     this.getDomainList();
@@ -106,6 +105,9 @@ export class HomeComponent implements OnInit {
       touchDrag: true,
       pullDrag: true
     };
+    setTimeout(() => {
+      this.handleScroll('home');
+    }, 500);
   }
 
   handleScroll(target) {
