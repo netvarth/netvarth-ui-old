@@ -134,7 +134,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
             //   new FormControl(this.replacedMessage(), Validators.compose([Validators.required])));
             // this.amForm.get('message').setValue(this.replacedMessage());
           } else {
-            this.amForm.controls['message'].disable();
+            // this.amForm.controls['message'].disable();
           }
         }
       );

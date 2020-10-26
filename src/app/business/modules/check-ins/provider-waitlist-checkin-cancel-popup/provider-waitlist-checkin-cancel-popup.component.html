@@ -37,7 +37,7 @@
         </app-field-error-display>
       </div></div>
       <div *ngIf="cancel_reason_key == 'other'">
-        <div class="form-group" *ngIf="amForm.get('send_message').value">
+        <div class="form-group" *ngIf="amForm.get('send_message').value !== true">
           <!-- <mat-form-field>
             <textarea matInput class="form-control" id="message" placeholder="Message"
               formControlName="message">
