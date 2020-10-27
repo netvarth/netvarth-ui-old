@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { WaitlistServicesComponent } from './list/waitlist-services.component';
 import { WaitlistServiceDetailComponent } from './details/waitlistservice-detail.component';
 import { CommonModule } from '@angular/common';
@@ -44,6 +44,10 @@ import { OrderModule } from 'ngx-order-pipe';
     ],
     providers: [
         ServicesService
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
     ]
 })
 export class WaitlistServicesModule { }

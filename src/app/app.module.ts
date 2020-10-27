@@ -82,7 +82,6 @@ import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.c
 import { TruncateModule } from './shared/pipes/limitTo.module';
 import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
-import { QueueDataService } from './shared/services/queue-data.service';
 import { TelehealthComponent } from './shared/components/telehealth/telehealth.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -175,7 +174,6 @@ export function init_app(globalService: GlobalService) {
   ],
   providers: [
     AuthGuardConsumer,
-    QueueDataService,
     AuthGuardProvider,
     AuthGuardHome,
     AuthGuardLogin,

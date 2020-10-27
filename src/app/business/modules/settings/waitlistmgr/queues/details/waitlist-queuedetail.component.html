@@ -262,7 +262,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             </div>
                             <!-- Old UI -->
                             <div class="form-group" *ngIf="filterbyDept">
-                                <!-- <label class="labelstyle">{{service_cap}}</label>
+                                <label class="labelstyle">{{service_cap}}</label>
                                 <div class="schselectall">
                                     <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectdept()">
                                         {{select_All}}</i>
@@ -283,14 +283,14 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             </mat-checkbox>
                                         </div>
                                     </section>
-                                </div> -->
+                                </div>
 
-                                <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                                <!-- <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
                                     [(ngModel)]="token_service">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary " type="button"
                                         (click)="goToSelectionPage()">Change</button>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="form-group" *ngIf="!filterbyDept">
@@ -299,15 +299,15 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     None <span style="color: red;"> (Enable/Add services) </span>
                                 </div>
 
-                                <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly placeholder="{{token_service}}"
+                                <!-- <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly placeholder="{{token_service}}"
                                     [(ngModel)]="token_service">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary " type="button"
                                         (click)="goToSelectionPage(token_service_id)">Change </button>
-                                </div>
+                                </div> -->
 
                                 <!-- Old service UI -->
-                                <!-- <div class="schselectall" *ngIf="services_list.length > 0">
+                                <div class="schselectall" *ngIf="services_list.length > 0">
                                     <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectAllService()">
                                         {{select_All}}</i>
                                     <i class="fa fa-check-square-o" *ngIf="SelServcall" (click)="deselectAllService()">
@@ -327,7 +327,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             {{service.name | capitalizeFirst}}
                                             </mat-checkbox>
                                     </div>
-                                </section> -->
+                                </section>
 
                                 <!-- <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
                                     [(ngModel)]="token_service">

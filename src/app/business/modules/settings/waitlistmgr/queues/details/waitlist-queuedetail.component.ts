@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
+import { SelectionService } from '../../../../../../shared/services/selectionService';
 
 import { projectConstants } from '../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
@@ -13,8 +14,6 @@ import {
 } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { ReportDataService } from '../../../../reports/reports-data.service';
-import { QueueDataService } from '../../../../../../shared/services/queue-data.service';
 
 
 @Component({
@@ -120,8 +119,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private activated_route: ActivatedRoute,
-    private report_data_service: ReportDataService,
-    private queue_data_service: QueueDataService,
+    private selectionService: SelectionService,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_shared_functions: ProviderSharedFuctions) {
@@ -136,7 +134,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.action = qparams.action;
       }
     });
-    this.queue_data_service._service_data.subscribe((res: any) => {
+    this.selectionService._service_data.subscribe((res: any) => {
       console.log(res);
       this.setServiceData(res);
     });
@@ -953,9 +951,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
   }
 
   goToSelectionPage(selected_id?) {
+    const _this = this;
+    alert(selected_id);
     this.setSelectedData().then(res => {
-      this.report_data_service.storeSelectedValues(res);
-        this.router.navigate(['provider', 'reports', 'service'], { queryParams: { report_type: this.report_type, data: selected_id, source: 'queueDetail' } });
+      console.log(res);
+      _this.selectionService.serviceSelected(res);
+      // this.report_data_service.storeSelectedValues(res);
+      _this.router.navigate(['provider', 'settings', 'selectservice'], { queryParams: { data: selected_id, type: 'wl_appt' } });
     });
   }
 
@@ -979,13 +981,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
           'dateRange': this.waitlist_timePeriod,
           'startDate': this.waitlist_startDate,
           'endDate': this.waitlist_endDate
-
-
         };
       resolve(selectedValues);
     });
 
   }
-
-
 }

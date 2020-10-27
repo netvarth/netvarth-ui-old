@@ -17,7 +17,9 @@ const routes: Routes = [
       { path: 'comm', loadChildren: () => import('../../../business/modules/settings/comm/comm-settings.module').then(m => m.CommSettingsModule) },
       { path: 'appointmentmanager', loadChildren: () => import('../../../business/modules/settings/appointmentmanager/appointmentmanager.module').then(m => m.AppointmentmanagerModule) },
       { path: 'users', loadChildren: () => import('../../../business/modules/settings/general/users/users.module').then(m => m.UsersModule) },
-      { path: 'q-manager', loadChildren: () => import('../../../business/modules/settings/waitlistmgr/waitlistmgr.module').then(m => m.WaitlistMgrModule) }
+      { path: 'q-manager', loadChildren: () => import('../../../business/modules/settings/waitlistmgr/waitlistmgr.module').then(m => m.WaitlistMgrModule) },
+      { path: 'selectservice', loadChildren: () => import('../../../business/modules/settings/service-selection/service-selection.module').then(m => m.ServiceSelectionModule)}
+
     ]
   },
 ];

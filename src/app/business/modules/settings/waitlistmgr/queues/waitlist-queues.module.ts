@@ -11,7 +11,6 @@ import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { ReportDataService } from '../../../reports/reports-data.service';
-import { QueueDataService } from '../../../../../shared/services/queue-data.service';
 
 @NgModule({
     imports: [
@@ -32,8 +31,7 @@ import { QueueDataService } from '../../../../../shared/services/queue-data.serv
     ],
     exports: [WaitlistQueuesComponent],
     providers: [
-        ReportDataService,
-        QueueDataService
+        ReportDataService
     ]
 })
 export class WaitlistQueuesModule { }

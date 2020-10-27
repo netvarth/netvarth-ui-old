@@ -8,7 +8,6 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ReportDataService } from '../reports-data.service';
-import { QueueDataService } from '../../../../shared/services/queue-data.service';
 
 
 @Component({
@@ -51,8 +50,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
     private router: Router,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private report_data_service: ReportDataService,
-    private queue_data_service: QueueDataService
+    private report_data_service: ReportDataService
   ) {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
@@ -229,13 +227,8 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
       }
 
       console.log(this.services_selected);
-      if (this.queueDetail) {
-        this.queue_data_service.updatedServiceDataSelection(this.services_selected);
-        this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add']);
-      } else {
         this.report_data_service.updatedServiceDataSelection(this.services_selected);
         this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
-      }
     }
 
 
