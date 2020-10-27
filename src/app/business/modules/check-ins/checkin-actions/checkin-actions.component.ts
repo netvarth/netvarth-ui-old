@@ -290,6 +290,7 @@ export class CheckinActionsComponent implements OnInit {
         // }
     }
     rescheduleWaitlist() {
+        // this.checkin_date = moment(this.checkin_date).format('DD-MM-YYYY')
                const data = {
             'ynwUuid': this.ynwUuid,
             'queue': this.sel_queue_id,
@@ -298,8 +299,9 @@ export class CheckinActionsComponent implements OnInit {
         this.provider_services.rescheduleConsumerWaitlist(data)
             .subscribe(
                 () => {
-                    if(this.showToken === 'true'){
-                        this.shared_functions.openSnackBar('Token rescheduled to '+ this.checkin_date, this.sel_queue_timecaption);
+                    console.log(this.showToken)
+                    if(this.showToken){
+                        this.shared_functions.openSnackBar('Token rescheduled to '+ moment(this.checkin_date).format('DD-MM-YYYY'));
                     } else {
                         this.shared_functions.openSnackBar('Check-in rescheduled to '+ this.checkin_date, this.sel_queue_timecaption);
                     }
