@@ -230,39 +230,36 @@ export class CheckinActionsComponent implements OnInit {
     handleFuturetoggle() {
         // this.showfuturediv = !this.showfuturediv;
     }
-    calculateDate(days) {
+
+    calculateDate(days, type) {
         const dte = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
         const newdate = new Date(date);
+        const newdate1 = new Date(date);
         newdate.setDate(newdate.getDate() + days);
         const dd = newdate.getDate();
         const mm = newdate.getMonth() + 1;
         const y = newdate.getFullYear();
+        const dd1 = newdate1.getDate();
+        const mm1 = newdate1.getMonth() + 1;
+        const y1 = newdate1.getFullYear();
         const ndate1 = y + '-' + mm + '-' + dd;
+        const ndate2 = y1 + '-' + mm1 + '-' + dd1;
         const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
-        const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
-        const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
+        const ndate3 = moment(ndate2, 'YYYY-MM-DD HH:mm').format();
+        const strtDt = new Date(ndate3);
         const nDt = new Date(ndate);
-        if (nDt.getTime() >= strtDt.getTime()) {
-            this.checkin_date = ndate;
+        if (type === 'pre') {
+            if (strtDt.getTime() >= nDt.getTime()) {
+                this.checkin_date = ndate;
             this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
-        }
-        const dt = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
-        const date1 = new Date(dt1);
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
-        const date2 = new Date(dt2);
-        // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-        if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
+            }
         } else {
-            this.isFuturedate = false;
+            if (nDt.getTime() >= strtDt.getTime()) {
+                this.checkin_date = ndate;
+            this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
+            }
         }
-        const day1 = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
-        const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
     }
     disableMinus() {
         const seldate1 = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
