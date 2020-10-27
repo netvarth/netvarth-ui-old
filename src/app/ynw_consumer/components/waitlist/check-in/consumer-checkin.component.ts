@@ -422,7 +422,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                         this.consumerNoteAndFileSave(this.rescheduleUserId);
                     }
-                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId } });
                 },
                 error => {
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
