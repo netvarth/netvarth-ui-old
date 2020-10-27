@@ -105,7 +105,7 @@ export class PrescriptionComponent implements OnInit {
         },
           error => {
             this.digitalSign = false;
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            //this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -178,6 +178,7 @@ export class PrescriptionComponent implements OnInit {
           console.log(this.uploadlist);
         } else {
           this.drugList = data;
+          this.getDigitalSign();
         }
         this.loading = false;
       },

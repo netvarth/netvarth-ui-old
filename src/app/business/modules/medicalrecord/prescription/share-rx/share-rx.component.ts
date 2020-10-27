@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
+import { MedicalrecordService } from '../../medicalrecord.service';
 
 
 @Component({
@@ -12,9 +13,9 @@ import { FormMessageDisplayService } from '../../../../../shared/modules/form-me
   styleUrls: ['./share-rx.component.css']
 })
 export class ShareRxComponent implements OnInit {
-  email_id;
-  msgreceivers: any = [{'id': 0, 'name': 'patient'}, { 'id': 0, 'name': 'sp'} ];
-  patientId: any;
+  email_id = '';
+  msgreceivers: any = [];
+  spId: any;
   mrId;
   amForm: FormGroup;
   deptName;
@@ -41,13 +42,19 @@ export class ShareRxComponent implements OnInit {
   time: any;
   consumer_email: any;
   api_loading = false;
-  phone: any;
+  phone = '';
   SEND_MESSAGE = '';
   settings: any = [];
   showToken = false;
-  pushnotify;
+  pushnotify = true;
   disableButton;
-iconClass: string;
+  sharewith;
+  showcustomId = false;
+  iconClass: string;
+  customid = '';
+  api_error = null;
+  api_success = null;
+  customerDetail: any;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
@@ -55,31 +62,71 @@ iconClass: string;
       public fed_service: FormMessageDisplayService,
       private shared_functions: SharedFunctions,
       private fb: FormBuilder,
+      private medicalService: MedicalrecordService
       ) {
-          this.patientId = this.data.userId;
+          this.spId = this.data.userId;
+          console.log(this.spId);
           this.chekintype = this.data.chekintype;
+          this.medicalService.patient_data.subscribe(res => {
+            this.customerDetail = JSON.parse(res.customerDetail);
+            console.log(this.customerDetail.email);
+            console.log(this.customerDetail.phoneNo);
+            // if (this.customerDetail.email) {
+            //   this.email_id = this.customerDetail.email;
+            // }
+            // if (this.customerDetail.phoneNo) {
+            //   this.phone = this.customerDetail.phoneNo;
+            // }
+
+          });
       }
  ngOnInit() {
+  this.msgreceivers = [{'id': 0, 'name': 'patient'}, { 'id': this.spId, 'name': 'sp'} ];
   this.createForm();
-  // this.msgreceivers = [{'id': 0, 'name': 'patient'}, { 'id': this.patientId, 'name': 'sp'} ];
-
   this.mrId = this.shared_functions.getitemfromLocalStorage('mrId');
+  console.log(this.mrId);
  }
  createForm() {
-
+  this.sharewith = 0;
   this.amForm = this.fb.group({
-     // selectedForwhom: [''],
       message: ['', Validators.compose([Validators.required])]
   });
- // this.getMessageReceviers();
 
  }
   back() {
       this.dialogRef.close();
   }
   onSubmit(formdata) {
+    this.resetApiErrors();
       console.log(formdata);
-      // const providerid = 78055;
+      console.log(this.sharewith);
+      console.log(this.customid);
+      if (this.sharewith !== 0 && this.customid === '') {
+           this.api_error = 'Custom id cannot be empty';
+            return;
+         }
+         if (this.sharewith !== 0  && this.customid !== '') {
+         const passData = {
+            'customId': this.customid,
+            'providerId': this.sharewith,
+            'message': formdata.message,
+            'medium': {
+              'email': this.email,
+              'sms': this.phone,
+              'pushNotification': this.pushnotify
+            }
+          };
+         } else if (this.sharewith === 0) {
+          const passData = {
+            'message': formdata.message,
+            'medium': {
+              'email': this.email,
+              'sms': this.phone,
+              'pushNotification': this.pushnotify
+            }
+          };
+         }
+          // const providerid = 78055;
       // this.provider_services.shareRx(this.mrId, providerid, formdata.message)
       //       .subscribe((data) => {
       //         this.shared_functions.openSnackBar('Prescription shared successfully');
@@ -89,7 +136,25 @@ iconClass: string;
       //           });
 
   }
-  getMessageReceviers() {
-    this.msgreceivers = [{'id': 0, 'name': 'patient'}, { 'id': this.patientId, 'name': 'sp'} ];
-  }
+  onUserSelect(event) {
+    this.customid = '';
+    console.log(event);
+    console.log(this.sharewith);
+    if (event.value !== 0) {
+        this.showcustomId = true;
+    } else {
+        this.showcustomId = false;
+        // if (this.customerDetail.email) {
+        //   this.email_id = this.customerDetail.email;
+        // }
+        // if (this.customerDetail.phoneNo) {
+        //   this.phone = this.customerDetail.phoneNo;
+        // }
+    }
+
+}
+resetApiErrors() {
+  this.api_error = null;
+  this.api_success = null;
+}
 }
