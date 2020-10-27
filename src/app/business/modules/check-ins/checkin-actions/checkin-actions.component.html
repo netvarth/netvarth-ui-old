@@ -205,7 +205,7 @@
     </div>
 </div>
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'reschedule'">
-    Reschedule Checkin for
+    Reschedule {{(showToken) ? 'Token' : 'Check-in'}} for
     {{checkin.waitlistingFor[0].firstName | capitalizeFirst}}{{checkin.waitlistingFor[0].lastName | capitalizeFirst}}
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
@@ -233,7 +233,7 @@
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"
                     class="fa wtsapvid-icon"></i>
                 {{checkin.service.name}} </p>
-            <p>Checkin Time: {{checkin.date | date: dateFormat}}, {{checkin.checkInTime}}
+            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: dateFormat}}, {{checkin.checkInTime}}
             </p>
         </div>
         <div class="clearfix"></div>
@@ -246,8 +246,8 @@
 <div class="reschedule p-checkin" *ngIf="action === 'slotChange'">
     <div class="mainouter">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 ">
-            <div class="date-outer">
-                <div class="date-head">Checkin Date</div>
+            <div class="date-outer" style="border: none;">
+                <div class="date-head">{{(showToken) ? 'Token' : 'Check-in'}} Date</div>
                 <div class="date-body">
                     <span class="selected-date">
                         <span class="icon-minus"
@@ -256,13 +256,13 @@
                     </span>
                     <div class="form-group dt">
                         <div class="pickerouter">
-                          <mat-datepicker-toggle matSuffix [for]="picker">
-                          </mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker>
-                          <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
-                            [max]="maxDate" (dateChange)="handleFutureDateChange($event)">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
+                                [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">Choose Queue

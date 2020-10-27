@@ -74,6 +74,7 @@ export class CheckinActionsComponent implements OnInit {
     ddate;
     activeDate;
     ynwUuid;
+    showToken;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -90,6 +91,8 @@ export class CheckinActionsComponent implements OnInit {
         this.serv_id = this.checkin.service.id;
         this.checkin_date = this.checkin.date;
         this.accountid = this.checkin.providerAccount.id;
+        this.showToken = this.checkin.showToken;
+        console.log(this.showToken)
         this.getPos();
         this.getLabel();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -298,7 +301,11 @@ export class CheckinActionsComponent implements OnInit {
         this.provider_services.rescheduleConsumerWaitlist(data)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Appointment rescheduled to ');
+                    if(this.showToken === 'true'){
+                        this.shared_functions.openSnackBar('Token rescheduled to '+ this.checkin_date, this.sel_queue_timecaption);
+                    } else {
+                        this.shared_functions.openSnackBar('Check-in rescheduled to '+ this.checkin_date, this.sel_queue_timecaption);
+                    }
                     this.dialogRef.close();
                 },
                 error => {
