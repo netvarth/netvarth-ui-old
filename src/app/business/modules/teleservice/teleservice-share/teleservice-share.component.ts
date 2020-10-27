@@ -49,7 +49,7 @@ export class TeleServiceShareComponent implements OnInit {
   aloJoin: string;
   providr_msg: string;
   provider_msgJV: string;
-
+  disableButton = false;
 
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
@@ -173,6 +173,7 @@ export class TeleServiceShareComponent implements OnInit {
 
   // Mass communication
   sendMessage() {
+    this.disableButton = true;
     const post_data = {
       medium: {
         email: this.email,
@@ -186,6 +187,7 @@ export class TeleServiceShareComponent implements OnInit {
       this.shared_services.consumerMassCommunication(post_data).
         subscribe(() => {
           this.api_success = this.shared_functions.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+          this.disableButton = false;
           setTimeout(() => {
             this.dialogRef.close();
           }, 2000);
@@ -195,6 +197,7 @@ export class TeleServiceShareComponent implements OnInit {
       this.shared_services.consumerMassCommunicationAppt(post_data).
         subscribe(() => {
           this.api_success = this.shared_functions.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+          this.disableButton = false;
           setTimeout(() => {
             this.dialogRef.close();
           }, 2000);

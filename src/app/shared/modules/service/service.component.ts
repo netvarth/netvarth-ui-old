@@ -93,8 +93,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     teleCallingModes = {
         'callingMode': '',
         'status': 'ACTIVE',
-        'value': null,
-        'instructions': null
+        'value': '',
+        'instructions': ''
     };
     vcallmodes;
     modeselected = false;
@@ -421,10 +421,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
         if (form_data.serviceType === 'virtualService') {
             //  this.tool_id = this.tool_id.trim();
             this.teleCallingModes = {
-                'callingMode': this.tool_name,
-                'value': this.tool_id,
+                'callingMode': this.tool_name || '',
+                'value': this.tool_id || '',
                 'status': 'ACTIVE',
-                'instructions': this.tool_instruct
+                'instructions': this.tool_instruct || ''
             };
         }
         if (this.is_donation) {

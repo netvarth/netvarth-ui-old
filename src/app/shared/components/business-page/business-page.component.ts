@@ -1427,7 +1427,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         source: 'consumer-common',
         type: 'send',
         terminologies: this.terminologiesjson,
-        name: this.businessjson.businessName
+        name: this.businessjson.businessName,
+        // typeOfMsg: 'single'
       }
     });
     this.commdialogRef.afterClosed().subscribe(() => {

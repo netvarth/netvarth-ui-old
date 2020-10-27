@@ -5,7 +5,7 @@
   </button>
 </h1>
 <mat-dialog-content style="padding-top: 0px;">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 no-padding" *ngIf="type === 'checkin'">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding no-margin" *ngIf="type === 'checkin'">
     <p *ngIf="checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">Token
       for : {{checkin.waitlistingFor[0].firstName}}
       {{checkin.waitlistingFor[0].lastName}}</p>
@@ -15,9 +15,10 @@
     <p *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName">
       {{consumer_label | capitalizeFirst}} id : {{checkin.consumer.jaldeeId}}</p>
     <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
+
     <p>Service : {{checkin.service.name}}</p>
   </div>
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 no-padding" *ngIf="type === 'appt'">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding no-margin" *ngIf="type === 'appt'">
     <p *ngIf="checkin.appmtFor[0].firstName != '' || checkin.appmtFor[0].lastName != ''">Appointment for :
       {{checkin.appmtFor[0].firstName}} {{checkin.appmtFor[0].lastName}} </p>
     <p *ngIf="checkin.appmtFor[0].firstName == '' && checkin.appmtFor[0].lastName == ''">
