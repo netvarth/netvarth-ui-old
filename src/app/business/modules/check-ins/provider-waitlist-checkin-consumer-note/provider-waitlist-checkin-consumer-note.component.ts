@@ -14,6 +14,7 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
   cancel_btn_cap = Messages.CANCEL_BTN;
   checkin;
   consumer_label = '';
+  type;
 
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInConsumerNoteComponent>,
@@ -22,6 +23,7 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
 
   ) {
     this.checkin = data.checkin;
+    this.type = data.type;
     this.consumer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
   }
 
@@ -29,5 +31,9 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
     if (!this.checkin.consumerNote) {
       this.dialogRef.close();
     }
+  }
+  getSingleTime(slot) {
+    const slots = slot.split('-');
+    return this.sharedfunctionObj.convert24HourtoAmPm(slots[0]);
   }
 }

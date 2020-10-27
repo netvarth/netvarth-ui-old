@@ -1,13 +1,34 @@
-<h1 class="mat-dialog-title">{{checkin.service.consumerNoteTitle}}
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">{{checkin.service.consumerNoteTitle}}
   <!-- {{consumer_label |capitalizeFirst}} {{note_cap}} -->
-  <!-- <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+  <button #queue mat-dialog-close class="modal_close" tabindex="-1">
     <i class="fa fa-window-close" aria-hidden="true"></i>
-  </button> -->
+  </button>
 </h1>
-<mat-dialog-content>
+<mat-dialog-content style="padding-top: 0px;">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 no-padding" *ngIf="type === 'checkin'">
+    <p *ngIf="checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">Token
+      for : {{checkin.waitlistingFor[0].firstName}}
+      {{checkin.waitlistingFor[0].lastName}}</p>
+    <p *ngIf="!checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">
+      Check-in for : {{checkin.waitlistingFor[0].firstName}}
+      {{checkin.waitlistingFor[0].lastName}}</p>
+    <p *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName">
+      {{consumer_label | capitalizeFirst}} id : {{checkin.consumer.jaldeeId}}</p>
+    <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
+    <p>Service : {{checkin.service.name}}</p>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 no-padding" *ngIf="type === 'appt'">
+    <p *ngIf="checkin.appmtFor[0].firstName != '' || checkin.appmtFor[0].lastName != ''">Appointment for :
+      {{checkin.appmtFor[0].firstName}} {{checkin.appmtFor[0].lastName}} </p>
+    <p *ngIf="checkin.appmtFor[0].firstName == '' && checkin.appmtFor[0].lastName == ''">
+      {{consumer_label | capitalizeFirst}} id : {{checkin.providerConsumer.jaldeeId}} </p>
+    <p>Appointment Time : {{getSingleTime(checkin.appmtTime)}}
+    </p>
+    <p>Service : {{checkin.service.name}}</p>
+  </div>
   <div class="result" [innerHTML]="checkin.consumerNote | nl2br | capitalizeFirst">
   </div>
 </mat-dialog-content>
-<mat-dialog-actions>
+<!-- <mat-dialog-actions>
   <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->

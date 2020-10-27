@@ -2405,7 +2405,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        checkin: checkin
+        checkin: checkin,
+        type: 'appt'
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
