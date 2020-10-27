@@ -1599,4 +1599,8 @@ export class ProviderServices {
     const url = 'provider/mr';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  shareRx(id,data) {
+   const url = 'provider/mr/sharePrescription/' + id;
+   return this.servicemeta.httpPost(url, data);
+  }
 }

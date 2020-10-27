@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
-//import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { MedicalrecordService } from '../../medicalrecord.service';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 
 
 @Component({
@@ -62,10 +62,12 @@ export class ShareRxComponent implements OnInit {
       public fed_service: FormMessageDisplayService,
       private shared_functions: SharedFunctions,
       private fb: FormBuilder,
+      public provider_services: ProviderServices,
       private medicalService: MedicalrecordService
       ) {
           this.spId = this.data.userId;
           console.log(this.spId);
+          this.mrId = this.data.mrId;
           this.chekintype = this.data.chekintype;
           this.medicalService.patient_data.subscribe(res => {
             this.customerDetail = JSON.parse(res.customerDetail);
@@ -83,7 +85,6 @@ export class ShareRxComponent implements OnInit {
  ngOnInit() {
   this.msgreceivers = [{'id': 0, 'name': 'patient'}, { 'id': this.spId, 'name': 'sp'} ];
   this.createForm();
-  this.mrId = this.shared_functions.getitemfromLocalStorage('mrId');
   console.log(this.mrId);
  }
  createForm() {
@@ -98,6 +99,10 @@ export class ShareRxComponent implements OnInit {
   }
   onSubmit(formdata) {
     this.resetApiErrors();
+    let rxview = '';
+    rxview += '<html><head><style></style>';
+    rxview += '</head><body>';
+    rxview += '</body></html>';
       console.log(formdata);
       console.log(this.sharewith);
       console.log(this.customid);
@@ -110,31 +115,40 @@ export class ShareRxComponent implements OnInit {
             'customId': this.customid,
             'providerId': this.sharewith,
             'message': formdata.message,
+            'html': rxview,
             'medium': {
               'email': this.email,
-              'sms': this.phone,
+              'sms': this.sms,
               'pushNotification': this.pushnotify
             }
           };
+           this.provider_services.shareRx(this.mrId, passData)
+            .subscribe((data) => {
+              this.shared_functions.openSnackBar('Prescription shared successfully');
+            },
+                error => {
+                    this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
+
          } else if (this.sharewith === 0) {
           const passData = {
             'message': formdata.message,
+            'html': rxview,
             'medium': {
               'email': this.email,
-              'sms': this.phone,
+              'sms': this.sms,
               'pushNotification': this.pushnotify
             }
           };
-         }
-          // const providerid = 78055;
-      // this.provider_services.shareRx(this.mrId, providerid, formdata.message)
-      //       .subscribe((data) => {
-      //         this.shared_functions.openSnackBar('Prescription shared successfully');
-      //       },
-      //           error => {
-      //               this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      //           });
+          this.provider_services.shareRx(this.mrId, passData)
+            .subscribe((data) => {
+              this.shared_functions.openSnackBar('Prescription shared successfully');
+            },
+                error => {
+                    this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
 
+         }
   }
   onUserSelect(event) {
     this.customid = '';
