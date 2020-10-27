@@ -64,7 +64,7 @@ export class PrescriptionComponent implements OnInit {
   ngOnInit() {
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.providerId = user.id;
-    this.getDigitalSign();
+   // this.getDigitalSign();
     if (this.mrId === 0) {
       this.loading = false;
 
