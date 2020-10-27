@@ -72,6 +72,8 @@ export class CheckinActionsComponent implements OnInit {
     todaydate;
     isFuturedate;
     ddate;
+    activeDate;
+    ynwUuid;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -83,13 +85,11 @@ export class CheckinActionsComponent implements OnInit {
     ngOnInit() {
         console.log(this.data);
         this.checkin = this.data.checkinData;
-        console.log(this.checkin)
+        this.ynwUuid = this.checkin.ynwUuid;
         this.location_id = this.checkin.queue.location.id;
         this.serv_id = this.checkin.service.id;
         this.checkin_date = this.checkin.date;
-        console.log(this.checkin_date)
         this.accountid = this.checkin.providerAccount.id;
-        console.log(this.accountid)
         this.getPos();
         this.getLabel();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -158,9 +158,11 @@ export class CheckinActionsComponent implements OnInit {
     changeSlot() {
         this.action = 'slotChange';
         // this.selectedTime = '';
+        this.activeDate = this.checkin_date;
         console.log(this.checkin_date)
         this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
     }
+    
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
         this.queuejson = [];
         this.queueQryExecuted = false;
@@ -197,8 +199,36 @@ export class CheckinActionsComponent implements OnInit {
                 });
         }
     }
+    handleFutureDateChange(e) {
+        const tdate = e.targetElement.value;
+        const newdate = tdate.split('/').reverse().join('-');
+        const futrDte = new Date(newdate);
+        const obtmonth = (futrDte.getMonth() + 1);
+        let cmonth = '' + obtmonth;
+        if (obtmonth < 10) {
+            cmonth = '0' + obtmonth;
+        }
+        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+        this.checkin_date = seldate;
+        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
+        const date2 = new Date(dt2);
+        const dte0 = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
+        const datee2 = new Date(dte2);
+        if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+            this.isFuturedate = true;
+        } else {
+            this.isFuturedate = false;
+        }
+        this.handleFuturetoggle();
+        this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
+    }
+    handleFuturetoggle() {
+        // this.showfuturediv = !this.showfuturediv;
+    }
     calculateDate(days) {
-        const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
         const newdate = new Date(date);
         newdate.setDate(newdate.getDate() + days);
@@ -211,10 +241,10 @@ export class CheckinActionsComponent implements OnInit {
         const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
         const nDt = new Date(ndate);
         if (nDt.getTime() >= strtDt.getTime()) {
-            this.sel_checkindate = ndate;
-            // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+            this.checkin_date = ndate;
+            this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
         }
-        const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
         const date1 = new Date(dt1);
         const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -226,13 +256,13 @@ export class CheckinActionsComponent implements OnInit {
         } else {
             this.isFuturedate = false;
         }
-        const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const day1 = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
     }
     disableMinus() {
-        const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const seldate1 = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
         const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
@@ -246,13 +276,26 @@ export class CheckinActionsComponent implements OnInit {
             return false;
         }
     }
-    rescheduleAppointment() {
+    handleQueueSelection(queue, index) {
+        this.sel_queue_indx = index;
+        this.sel_queue_id = queue.id;
+        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
+        this.sel_queue_servicetime = queue.serviceTime || '';
+        this.sel_queue_name = queue.name;
+        this.sel_queue_timecaption = queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'];
+        this.sel_queue_personaahead = queue.queueSize;
+        // this.queueReloaded = true;
+        // if (this.calc_mode === 'Fixed' && queue.timeInterval && queue.timeInterval !== 0) {
+        //     this.getAvailableTimeSlots(queue.queueSchedule.timeSlots[0]['sTime'], queue.queueSchedule.timeSlots[0]['eTime'], queue.timeInterval);
+        // }
+    }
+    rescheduleWaitlist() {
                const data = {
-            'ynwUuid': "",
-            'queue': "",
-            'date':""
+            'ynwUuid': this.ynwUuid,
+            'queue': this.sel_queue_id,
+            'date': this.checkin_date
         };
-        this.provider_services.rescheduleProviderAppointment(data)
+        this.provider_services.rescheduleConsumerWaitlist(data)
             .subscribe(
                 () => {
                     this.shared_functions.openSnackBar('Appointment rescheduled to ');

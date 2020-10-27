@@ -272,7 +272,7 @@
             </div>
             <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
                 <mat-chip-list>
-                    <mat-chip *ngFor="let queue of queuejson, let i= index" (click)="handleQueueSelection(queue, i);">
+                    <mat-chip *ngFor="let queue of queuejson, let i= index" (click)="handleQueueSelection(queue, i);" [selected]="queue.id === queuejson[this.sel_queue_indx].id">
                         <span>{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
                         </span>
                     </mat-chip>
@@ -285,7 +285,7 @@
                 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding reschedulebtn">
                 <button type="button" class="cs-btn bt2 mgn-rt-5" (click)="close()">Cancel</button>
                 <button class="cs-btn bt1" [class.disabled]="disableButn() || freeSlots.length === 0"
-                    (click)="rescheduleAppointment()">Reschedule</button>
+                    (click)="rescheduleWaitlist()">Reschedule</button>
             </div>
         </div>
     </div>
