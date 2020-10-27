@@ -9,6 +9,7 @@ import { DOCUMENT } from '@angular/common';
 import { Location } from '@angular/common';
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
+import { ActionPopupComponent } from './action-popup/action-popup.component';
 
 @Component({
     selector: 'app-checkindetail',
@@ -52,6 +53,7 @@ export class CheckinDetailComponent implements OnInit {
     view_more = false;
     path = projectConstants.PATH;
     qr_value: string;
+    actiondialogRef: any;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -196,4 +198,15 @@ export class CheckinDetailComponent implements OnInit {
       viewMore() {
           this.view_more = !this.view_more;
       }
+
+      gotoActions(booking) {
+        this.actiondialogRef = this.dialog.open(ActionPopupComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: { booking }
+          });
+          this.actiondialogRef.afterClosed().subscribe(data => {
+          });
+    }
 }

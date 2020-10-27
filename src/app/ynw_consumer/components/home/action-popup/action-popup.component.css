@@ -1,0 +1,33 @@
+.consumer-action .mat-grid-tile {
+    box-shadow: 5px 5px 5px 5px  #ecaf0842 !important
+}
+
+@media only screen and (max-width: 475px){
+    .consumer-action .action-big {
+        display: none !important;
+    }
+}
+@media (min-width: 476px) {
+    .consumer-action .action-small {
+        display: none !important;
+    }
+}
+
+.consumer-action .width-60 {
+    width: 60px;
+}
+.consumer-action .width-30 {
+    width: 30px;
+}
+.consumer-action .width-70 {
+    width: 70px;
+}
+.consumer-action .width-50 {
+    width: 50px;
+}
+.consumer-action .pad-30 {
+    padding:30px;
+}
+.consumer-action .mat-grid-tile img {
+    cursor:  pointer !important;
+}

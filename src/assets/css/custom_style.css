@@ -12585,7 +12585,7 @@ input[type=number]::-webkit-outer-spin-button {
   color: #3c5c8dbf;
   font-weight: 600;
 }
-.checkin-details .card .each-item .item-head {
+.checkin-details .card .item-head {
   margin-bottom: 2px;
   font-weight: 600;
   color: grey;
@@ -12611,6 +12611,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .checkin-details .opt-viewmore {
   margin-left: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #183e7a;
+}
+.checkin-details .opt-actions {
+  /* margin-left: 20px; */
   font-weight: 600;
   font-size: 0.9rem;
   color: #183e7a;

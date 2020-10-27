@@ -36,8 +36,7 @@
                                             <h3 class="custId-cursor head-color"
                                                 (click)="providerDetail(appt.providerAccount)">
                                                 {{appt.providerAccount.businessName | capitalizeFirst}}
-                                                <i class="fa fa-comments-o mgn-lt-10"
-                                                    (click)="addCommonMessage(appt, $event)"></i>
+                                                <!-- <span class="icon-favourite-filled"></span> -->
                                             </h3>
                                             <span class="loc-cls">
                                                 <i class="fa fa-map-marker"></i>
@@ -55,7 +54,8 @@
                                                     [class]=iconClass></i>
                                                 <span class="serv-name">
                                                     &nbsp;{{appt.service.name | capitalizeFirst}} <span
-                                                        *ngIf="appt.service.deptName">({{appt.service.deptName}}) </span>
+                                                        *ngIf="appt.service.deptName">({{appt.service.deptName}})
+                                                    </span>
                                                 </span>
                                             </div>
                                         </div>
@@ -65,23 +65,26 @@
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-8">
                                             <div class="each-item">
-                                                <span class="item-head">Confirmation No</span>
-                                                <span class="item-label-val">{{appt.appointmentEncId}}</span>
-                                            </div>
-                                            <div class="each-item">
                                                 <span class="item-head">Booking for</span>
                                                 <span
                                                     class="item-label-val">{{appt.appmtFor[0].firstName | capitalizeFirst}}
                                                     {{appt.appmtFor[0].lastName | capitalizeFirst}}</span>
+                                            </div>
+                                            <div class="each-item">
+                                                <span class="item-head">Confirmation No</span>
+                                                <span class="item-label-val">{{appt.appointmentEncId}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="appt.phoneNumber">
                                                 <span class="item-head">Phone No</span>
                                                 <span class="item-label-val">{{appt.phoneNumber}}</span>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-4">
-                                            <div class="txt-align-center">
-                                                <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
+                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-4 txt-align-center">
+                                            <span class="item-head chk-stats">Check your status <i
+                                                    class="fa fa-hand-o-down"></i></span>
+                                            <div class="mgn-up-10">
+                                                <ngx-qrcode id="print-section" [elementType]="elementType"
+                                                    [value]="qr_value">
                                                 </ngx-qrcode>
                                             </div>
                                         </div>
@@ -99,7 +102,7 @@
                                             </span>
                                         </div>
                                         <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item">
-                                            <span class="status-label">DATE & SCHEDULE</span>
+                                            <span class="status-label">DATE & TIME-WINDOW</span>
                                             <span class="item-label-val">{{appt.appmtDate | date:dateFormatSp}}</span>
                                             <span
                                                 class="item-label-val">{{appt.schedule.apptSchedule.timeSlots[0].sTime}}
@@ -124,7 +127,8 @@
                                                 class="fl-left">VIEW MORE</a></span>
                                         <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a
                                                 class="fl-left">VIEW LESS</a></span>
-                                    </div>
+                                        <span class="opt-actions" (click)="gotoActions(appt)"><a>ACTIONS</a></span>
+                                        </div>
 
                                     <!-- Instructions,messages,notes -->
                                     <div *ngIf="view_more" class="mgn-up-30">

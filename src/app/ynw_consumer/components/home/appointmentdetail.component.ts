@@ -9,6 +9,7 @@ import { DOCUMENT } from '@angular/common';
 import { Location } from '@angular/common';
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
+import { ActionPopupComponent } from './action-popup/action-popup.component';
 
 @Component({
     selector: 'app-appointmentdetail',
@@ -48,6 +49,7 @@ export class ApptDetailComponent implements OnInit {
     path = projectConstants.PATH;
     iconClass: string;
     view_more = false;
+    actiondialogRef;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -174,5 +176,15 @@ export class ApptDetailComponent implements OnInit {
 
       viewMore() {
         this.view_more = !this.view_more;
+    }
+    gotoActions(booking) {
+        this.actiondialogRef = this.dialog.open(ActionPopupComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: { booking }
+          });
+          this.actiondialogRef.afterClosed().subscribe(data => {
+          });
     }
 }

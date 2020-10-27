@@ -1,0 +1,35 @@
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
+    Select an action to perform
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button></h1>
+<div class="action-section consumer-action col-md-12 no-padding">
+    <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-30">
+        <!-- For large devices -->
+        <mat-grid-list cols="4" rowHeight="110px" [gutterSize]="'30px'" class="action-big">
+            <mat-grid-tile *ngIf="bookingDetails.appointmentEncId && showReschedule" (click)="gotoAptmtReschedule()">
+                <img src="assets/images/myjaldee/Appoinment-01.svg" class="width-50">
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="showcheckinCancel || showapptCancel" (click)="doCancelWaitlist()"><img
+                    src="assets/images/error.svg" class="width-50"></mat-grid-tile>
+            <mat-grid-tile (click)="addWaitlistMessage()"><img src="assets/images/myjaldee/icon-chat.svg"
+                    class="width-70"></mat-grid-tile>
+            <mat-grid-tile *ngIf="showcheckinMeet || showapptMeet" (click)="getMeetingDetails()">
+                <img src="assets/images/myjaldee/sticky-notes.svg" class="width-50">
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <!-- For small devices -->
+        <mat-grid-list cols="3" rowHeight="60px" [gutterSize]="'20px'" class="action-small">
+            <mat-grid-tile *ngIf="bookingDetails.appointmentEncId && showReschedule" (click)="gotoAptmtReschedule()">
+                <img src="assets/images/myjaldee/Appoinment-01.svg" class="width-30">
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="showcheckinCancel || showapptCancel" (click)="doCancelWaitlist()"><img
+                    src="assets/images/error.svg" class="width-30"></mat-grid-tile>
+            <mat-grid-tile (click)="addWaitlistMessage()"><img src="assets/images/myjaldee/icon-chat.svg"
+                    class="width-50"></mat-grid-tile>
+            <mat-grid-tile *ngIf="showcheckinMeet || showapptMeet" (click)="getMeetingDetails()">
+                <img src="assets/images/myjaldee/sticky-notes.svg" class="width-30">
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>

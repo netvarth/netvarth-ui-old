@@ -1,6 +1,6 @@
 
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { SharedModule } from '../shared/modules/common/shared.module';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -46,6 +46,7 @@ import { SearchFormModule } from '../shared/components/search-form/search-form.m
 import { ConsumerFooterModule } from './components/footer/footer.module';
 import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { ActionPopupComponent } from './components/home/action-popup/action-popup.component';
 
 @NgModule({
   imports: [
@@ -85,15 +86,21 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     AddMembersHolderComponent,
     AddManagePrivacyComponent,
     MeetingDetailsComponent,
-    MyfavouritesComponent
+    MyfavouritesComponent,
+    ActionPopupComponent
   ],
   exports: [ConfirmBoxComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ],
   entryComponents: [
     ConfirmBoxComponent,
     NotificationListBoxComponent,
     AddMembersHolderComponent,
     AddManagePrivacyComponent,
-    MeetingDetailsComponent
+    MeetingDetailsComponent,
+    ActionPopupComponent
   ],
   providers: [
     SharedServices,
