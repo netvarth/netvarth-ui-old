@@ -295,9 +295,9 @@
                                                             {{waitlist_for[0].phoneNo}}
                                                         </span> -->
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="userPhone && !changePhno && type !== 'waitlistreschedule'">{{userPhone}}</span>
+                                                            *ngIf="userPhone && !changePhno">{{userPhone}}</span>
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="currentPhone && changePhno && type !== 'waitlistreschedule'">{{currentPhone}}</span><a
+                                                            *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
                                                             class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
                                                                 (click)="editPhone()"></i></a>
                                                     </div>

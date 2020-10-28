@@ -95,7 +95,10 @@
                           <a class="pointer-cursor" (click)="handleUserSelection(user)">
                             <h4 *ngIf="user.firstName.length>='27'">
                               {{ user.firstName.substring(0,24) }}...</h4>
-                            <h4 *ngIf="user.firstName.length<'27'">{{user.firstName}}</h4>
+                            <h4 *ngIf="user.firstName.length<'27'">
+                              <!-- {{user.firstName}} -->
+                              {{user.businessName}}
+                            </h4>
                           </a>
                         </li>
                       </ul>

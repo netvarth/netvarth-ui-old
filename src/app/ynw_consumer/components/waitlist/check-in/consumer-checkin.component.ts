@@ -413,15 +413,14 @@ export class ConsumerCheckinComponent implements OnInit {
             'date': this.sel_checkindate,
             'queue': this.sel_queue_id
         };
-        this.shared_services.rescheduleConsumerWaitlist(post_Data)
+        this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
                 () => {
                     // this.apptdisable = false;
                     if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                         this.consumerNoteAndFileSave(this.rescheduleUserId);
                     }
-
-                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid.uid, type: 'waitlistreschedule' } });
+                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId } });
                 },
                 error => {
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });

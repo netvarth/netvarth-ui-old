@@ -1533,6 +1533,10 @@ export class ProviderServices {
    const url = 'provider/appointment/reschedule';
     return this.servicemeta.httpPut(url, data);
 }
+rescheduleConsumerWaitlist(data){
+    const url = 'provider/waitlist/reschedule';
+    return this.servicemeta.httpPut(url, data);
+  }
 // medical record
   createMedicalRecordForFollowUp(data, patientId) {
     const url = 'provider/mr/patient/' + patientId;

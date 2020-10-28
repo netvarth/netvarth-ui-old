@@ -24,16 +24,18 @@
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad" *ngIf="!source">
 														<span class="dynamic"
 															*ngFor="let user of checkin.waitlistingFor">
-															{{user.firstName | capitalizeFirst}}
-															{{user.lastName | capitalizeFirst}}
+															<!-- {{user.firstName | capitalizeFirst}}
+															{{user.lastName | capitalizeFirst}} -->
+															{{user.businessName}}
 														</span>
 														<span class="dynamic fl-right">{{billdate}}
 															{{billtime}}</span>
 													</div>
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad" *ngIf="source">
 														<span class="dynamic" *ngFor="let user of checkin.appmtFor">
-															{{user.firstName | capitalizeFirst}}
-															{{user.lastName | capitalizeFirst}}
+															<!-- {{user.firstName | capitalizeFirst}}
+															{{user.lastName | capitalizeFirst}} -->
+															{{user.businessName}}
 														</span>
 														<span class="dynamic fl-right">{{billdate}}
 															{{billtime}}</span>

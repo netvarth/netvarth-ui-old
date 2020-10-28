@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, Output } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, HostListener } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
@@ -23,7 +23,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 
 export class ConsumerCheckinHistoryComponent implements OnInit {
 
-  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+
   @Input() reloadapi;
   @Input() params;
   @Output() getWaitlistBillEvent = new EventEmitter<any>();
@@ -53,7 +53,9 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   wtlist_count: any = [];
   appt_count: any = [];
   entire_count: any = [];
-
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  small_device_display = false;
+  screenWidth;
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router,
     public route: ActivatedRoute,
@@ -63,7 +65,15 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     public shared_functions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
-
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
   ngOnInit() {
     this.getHistoryCount();
     this.getHistroy();
@@ -91,7 +101,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
 
   // Getting Appointment History
   getAppointmentHistory() {
-  //  const params = this.setPaginationFilter();
+    //  const params = this.setPaginationFilter();
     this.consumer_services.getAppointmentHistory()
       .subscribe(
         data => {
@@ -114,8 +124,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
         data => {
           console.log(data);
           this.wtlist_count = data;
-         // this.getHistroy();
-         this.getAppointmentHistoryCount();
+          // this.getHistroy();
+          this.getAppointmentHistoryCount();
         });
   }
   // Get Appointment history count
