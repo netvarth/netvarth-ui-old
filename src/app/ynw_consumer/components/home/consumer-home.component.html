@@ -624,6 +624,10 @@
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
+                                                    <button mat-menu-item  
+                                                    *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'" (click)="gotoWaitlistReschedule(booking)">
+                                                    <i class="consumer-reschedule-icon"></i>
+                                                    Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'checkin')">
@@ -874,6 +878,10 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
+                                                <button mat-menu-item  
+                                                    *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'" (click)="gotoWaitlistReschedule(booking)">
+                                                    <i class="consumer-reschedule-icon"></i>
+                                                    Reschedule</button>
                                                 <button mat-menu-item
                                                     *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                     (click)="doCancelWaitlist(booking,'checkin')">
@@ -1107,6 +1115,10 @@
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
+                                                    <button mat-menu-item  
+                                                    *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'" (click)="gotoWaitlistReschedule(booking)">
+                                                    <i class="consumer-reschedule-icon"></i>
+                                                    Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived' || booking.waitlistStatus=='prepaymentPending'"
                                                         (click)="doCancelWaitlist(booking,'checkin')"><i class="fa cross-icon"></i>Cancel</button>
