@@ -61,6 +61,8 @@ export class ShareRxComponent implements OnInit {
   blogo: any = [];
   profimg_exists = false;
   cacheavoider = '';
+  signurl = '';
+  imagedetails:any;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
@@ -120,7 +122,6 @@ export class ShareRxComponent implements OnInit {
          if (this.sharewith !== 0  && this.customid !== '') {
          const passData = {
             'customId': this.customid,
-            'providerId': this.sharewith,
             'message': formdata.message,
             'html': rxview,
             'medium': {
@@ -184,6 +185,8 @@ getMrprescription() {
       .subscribe((data: any) => {
         if (data && data.length !== 0) {
           this.drugList = data;
+          this.getProviderLogo();
+          this.getDigitalSign();
           console.log(this.drugList);
        }
       },
@@ -206,6 +209,21 @@ getProviderLogo() {
       }
     );
 }
+getDigitalSign() {
+  if (this.spId) {
+    this.provider_services.getDigitalSign(this.spId)
+      .subscribe(data => {
+        console.log(data);
+        this.imagedetails = data;
+        console.log(this.imagedetails);
+        this.signurl = this.imagedetails.url;
+        console.log(this.signurl);
+      },
+        error => {
+          //this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+}
 showimg() {
   let logourl = '';
   this.profimg_exists = false;
@@ -215,4 +233,5 @@ showimg() {
     }
     return this.shared_functions.showlogoicon(logourl);
 }
+
 }
