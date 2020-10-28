@@ -285,9 +285,15 @@
                                             <div class="clearfix"></div>
                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                 <div class="card-body">
-                                                    <h6 class="card-title service" *ngFor="let member of waitlist_for">
-                                                        {{member.firstName | capitalizeFirst}}
-                                                        {{member.lastName | capitalizeFirst}}
+                                                    <div *ngIf = "type !== 'waitlistreschedule'">
+                                                        <h6 class="card-title service" *ngFor="let member of waitlist_for">
+                                                            {{member.firstName | capitalizeFirst}}
+                                                            {{member.lastName | capitalizeFirst}}
+                                                        </h6>
+                                                    </div>
+                                                    
+                                                    <h6 class="card-title service" *ngIf = "type === 'waitlistreschedule'">
+                                                        {{waitlist_for[0].firstName}} {{waitlist_for[0].lastName}}
                                                     </h6>
                                                     <div class="">
                                                         <i class="fa fa-mobile "></i>
@@ -327,7 +333,7 @@
                                                                 class="fa fa-file-text-o mgn-rt-5"
                                                                 aria-hidden="true"></i>
                                                             {{sel_ser_det.consumerNoteTitle}} <span
-                                                                *ngIf="sel_ser_det.consumerNoteMandatory && type != 'waitlistreschedule'">*</span></a>
+                                                                *ngIf="sel_ser_det.consumerNoteMandatory">*</span></a>
                                                     </mat-chip>
                                                     <mat-chip (click)="gotoAttachments()"><a
                                                             class="lnk action pointer-cursor"><i

@@ -131,8 +131,8 @@
                                 </div>
                                 <div *ngIf="user.userType === 'PROVIDER' " class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
                                 (click)="manageSettings(user.id)">
-                                <!-- {{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}} -->
-                                {{user.businessName}}
+                                {{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}
+                               
                             </div>
                             </td>
                             <td>

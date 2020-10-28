@@ -131,7 +131,7 @@ export class LastVisitComponent implements OnInit {
           'serviceId': visitDetails.waitlist.service.id,
           'serviceName': visitDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': visitDetails.waitlist.date,
+          'booking_date': visitDetails.consLastVisitedDate,
           'booking_time': visitDetails.waitlist.checkInTime,
           'department': visitDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
@@ -158,7 +158,7 @@ export class LastVisitComponent implements OnInit {
           'serviceName': visitDetails.appointmnet.service.name,
           'department': visitDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': visitDetails.appointmnet.appmtDate,
+          'booking_date': visitDetails.consLastVisitedDate,
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
@@ -179,6 +179,7 @@ export class LastVisitComponent implements OnInit {
           'serviceName': 'Consultation',
           'booking_type': 'FOLLOWUP',
           'mrId': visitDetails.id,
+          'booking_date': visitDetails.consLastVisitedDate,
           'visitDate': visitDetails.consLastVisitedDate,
           'back_type': 'consumer'
         }

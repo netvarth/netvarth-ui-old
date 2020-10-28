@@ -4,9 +4,9 @@
             aria-hidden="true"></i></button></h1>
 <div class="action-section col-md-12 no-padding" *ngIf=" action===''">
     <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-10 mgn-up-10" *ngIf="!data.multiSelection">
-    <p *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''">Appointment for : {{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}} </p>
-    <p *ngIf="appt.appmtFor[0].firstName == '' && appt.appmtFor[0].lastName == ''">{{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
-    <p>Appointment Time : {{getSingleTime(appt.appmtTime)}}
+    <p *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''" style="font-weight: bold;">Appointment for : {{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}} </p>
+    <p *ngIf="appt.appmtFor[0].firstName == '' && appt.appmtFor[0].lastName == ''" style="font-weight: bold;;">{{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
+    <p style="font-weight: bold;">Appointment Time : {{getSingleTime(appt.appmtTime)}}
     </p>
 </div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
