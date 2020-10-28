@@ -7,6 +7,7 @@ import { LastVisitComponent } from './last-visit/last-visit.component';
 import { MedicalrecordService } from './medicalrecord.service';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
   selector: 'app-medicalrecord',
@@ -40,7 +41,7 @@ export class MedicalrecordComponent implements OnInit {
   mrlist;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   MrCreateddate: string;
-  visitdate = new Date();
+  visitdate :Date;
   consultationMode: any;
   bookingType: any;
   patientConsultationType = 'OP';
@@ -55,8 +56,10 @@ export class MedicalrecordComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private dialog: MatDialog,
-    private medicalService: MedicalrecordService
+    private medicalService: MedicalrecordService,
+    private datePipe: DateFormatPipe
   ) {
+    this.visitdate = this.datePipe.transformToDateWithTime(new Date());
     this.routeLinks = [
       {
         label: 'Clinical Notes',
