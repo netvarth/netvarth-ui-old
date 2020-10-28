@@ -19,6 +19,10 @@ export class ActionPopupComponent implements OnInit {
   showReschedule = false;
   showapptMeet = false;
   showcheckinMeet = false;
+  apptLvTrackon = false;
+  apptLvTrackoff = false;
+  chekinLvTrackoff = false;
+  chekinLvTrackon = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   private router: Router,
@@ -29,6 +33,7 @@ export class ActionPopupComponent implements OnInit {
   ngOnInit() {
     this.bookingDetails = this.data.booking;
     console.log(this.bookingDetails);
+    this.checkLvTrack();
     if (this.bookingDetails.apptStatus === 'Confirmed' || this.bookingDetails.apptStatus === 'Arrived') {
       this.showReschedule = true;
     }
@@ -139,6 +144,48 @@ export class ActionPopupComponent implements OnInit {
     });
     this.addnotedialogRef.afterClosed().subscribe(result => {
     });
+  }
+
+  checkLvTrack() {
+    if (this.bookingDetails.appointmentEncId) {
+      if ((this.bookingDetails.apptStatus === 'Confirmed' || 'prepaymentPending') && (this.bookingDetails.jaldeeApptDistanceTime && this.bookingDetails.service.livetrack && this.bookingDetails.apptStatus === 'Confirmed')) {
+        this.apptLvTrackon = true;
+        this.apptLvTrackoff = false;
+      } else if (!this.bookingDetails.jaldeeApptDistanceTime && this.bookingDetails.service.livetrack && this.bookingDetails.apptStatus === 'Confirmed') {
+        this.apptLvTrackoff = true;
+        this.apptLvTrackon = false;
+      }
+    } else {
+      if ((this.bookingDetails.waitlistStatus === 'checkedIn' || 'prepaymentPending') && (this.bookingDetails.jaldeeWaitlistDistanceTime && this.bookingDetails.service.livetrack && this.bookingDetails.waitlistStatus === 'checkedIn')) {
+        this.chekinLvTrackon = true;
+        this.chekinLvTrackoff = false;
+      } else if (!this.bookingDetails.jaldeeWaitlistDistanceTime && this.bookingDetails.service.livetrack && this.bookingDetails.waitlistStatus === 'checkedIn') {
+        this.chekinLvTrackon = false;
+        this.chekinLvTrackoff = true;
+      }
+    }
+  }
+
+  gotoLivetrack(stat) {
+    let uid;
+    if (this.bookingDetails.appointmentEncId) {
+      uid = this.bookingDetails.uid;
+    } else {
+      uid = this.bookingDetails.ynwUuid;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        account_id: this.bookingDetails.providerAccount.id,
+        status: stat
+      }
+    };
+    this.dialogRef.close();
+    if (this.bookingDetails.appointmentEncId) {
+      this.router.navigate(['consumer', 'appointment', 'track', uid], navigationExtras);
+    } else {
+      this.router.navigate(['consumer', 'checkin', 'track', uid], navigationExtras);
+    }
+
   }
 
 }

@@ -31,3 +31,15 @@
 .consumer-action .mat-grid-tile img {
     cursor:  pointer !important;
 }
+.consumer-action .mat-grid-tile .mat-grid-tile-header, .mat-grid-tile .mat-grid-tile-footer {
+    height:18px !important;
+    padding-left: 5px;
+}
+.consumer-action .footer-text {
+    width: 100%;
+    font-size: 0.7rem;
+    text-align: center;
+}
+.consumer-action .action-small .mat-grid-tile-footer {
+    display: none !important;
+}
