@@ -22,12 +22,11 @@
                                 <table class="table" *ngIf="entire_history && entire_history.length > 0">
                                     <thead>
                                         <tr>
-
+                                            <th class="th3">{{date_cap}} & Time</th>
                                             <th class="th1">{{service_provider_cap}}</th>
+                                            <th class="th2">{{location_cap}}</th>
                                             <th> Service for</th>
                                             <th class="th6">{{service_cap}}</th>
-                                            <th class="th2">{{location_cap}}</th>
-                                            <th class="th3">{{date_cap}}</th>
                                             <th class="th4">{{status_cap}}</th>
                                             <th class="th5"></th>
                                         </tr>
@@ -36,18 +35,24 @@
                                         <!-- Checkin + Appointment -->
                                         <tr *ngFor="let his_wait of entire_history">
                                             <ng-container *ngIf="his_wait.waitlistStatus">
+                                                <td data-title="Date & Time" class="td3">
+                                                    <div class="disp-flex">
+                                                        <div class="circle-htokens" *ngIf="!small_device_display">
+                                                            <i *ngIf="his_wait.token" class="fa token-icon"></i>
+                                                            <i *ngIf="!his_wait.token" class="fa chckn-icon"></i>
+                                                        </div> <span>&nbsp;{{his_wait.date | date: dateFormat }},
+                                                            {{his_wait.queue.queueStartTime}} -
+                                                            {{his_wait.queue.queueEndTime}}</span>
+                                                    </div>
+                                                </td>
                                                 <td data-title="Service Provider"
                                                     (click)="providerDetail(his_wait.providerAccount)"
                                                     class="td1 provider-name pointer-cursor">
-                                                    <div class="disp-flex">
-                                                        <div class="circle-htokens">
-                                                            <i *ngIf="his_wait.token" class="fa token-icon"></i>
-                                                            <i *ngIf="!his_wait.token" class="fa chckn-icon"></i>
-                                                        </div> &nbsp;
-                                                        <span
+                                                    <span
                                                         class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
-                                                    </div>
                                                 </td>
+                                                <td data-title="Location" class="td2">
+                                                    {{his_wait.queue.location.place || '' | capitalizeFirst}}</td>
                                                 <td data-title="Service for">
                                                     {{his_wait.waitlistingFor[0].firstName || '' | capitalizeFirst}}
                                                     {{his_wait.waitlistingFor[0].lastName || '' | capitalizeFirst}}</td>
@@ -65,19 +70,14 @@
                                                         <i class="fa wtsapvid-icon"
                                                             *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'WhatsApp' && his_wait.service.virtualServiceType ==='videoService'"></i>
                                                     </span>
-                                                    <span>
-                                                        {{his_wait.service.name || '' | capitalizeFirst}}
+                                                    <span>{{his_wait.service.name || '' | capitalizeFirst}}
                                                     </span>
                                                 </td>
-                                                <td data-title="Location" class="td2">
-                                                    {{his_wait.queue.location.place || '' | capitalizeFirst}}</td>
-                                                <td data-title="Date" class="td3">{{his_wait.date | date: dateFormat }}
-                                                </td>
                                                 <td data-title="Status" class="td4">
-                                                    <span
-                                                        class="{{his_wait.waitlistStatus}}">
+                                                    <span class="{{his_wait.waitlistStatus}}">
                                                         <span *ngIf="his_wait.waitlistStatus == 'done'">Completed</span>
-                                                        <span *ngIf="his_wait.waitlistStatus !== 'done'">{{getStatusLabel(his_wait.waitlistStatus)}}</span>
+                                                        <span
+                                                            *ngIf="his_wait.waitlistStatus !== 'done'">{{getStatusLabel(his_wait.waitlistStatus)}}</span>
                                                         <span></span>
                                                     </span>
                                                 </td>
@@ -97,18 +97,24 @@
                                                 </td>
                                             </ng-container>
                                             <ng-container *ngIf="his_wait.apptStatus">
+                                                <td data-title="Date & Time" class="td3">
+                                                    <div class="disp-flex">
+                                                        <div class="circle-htokens" *ngIf="!small_device_display">
+                                                            <i class="fa appt-icon"></i>
+                                                        </div>
+                                                        <span> &nbsp;{{his_wait.appmtDate | date: dateFormat }},
+                                                            {{his_wait.schedule.apptSchedule.timeSlots[0].sTime}} -
+                                                            {{his_wait.schedule.apptSchedule.timeSlots[0].eTime}}</span>
+                                                    </div>
+                                                </td>
                                                 <td data-title="Service Provider"
                                                     (click)="providerDetail(his_wait.providerAccount)"
                                                     class="td1 provider-name pointer-cursor">
-                                                    <div class="disp-flex">
-                                                        <div class="circle-htokens">
-                                                            <i class="fa appt-icon"></i>
-                                                        </div> &nbsp;
-                                                        <span
-                                                            class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
-                                                    </div>
-                                                    
+                                                    <span
+                                                        class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
                                                 </td>
+                                                <td data-title="Location" class="td2">
+                                                    {{his_wait.location.place || '' | capitalizeFirst}}</td>
                                                 <td data-title="Service for">
                                                     {{his_wait.appmtFor[0].firstName || '' | capitalizeFirst}}
                                                     {{his_wait.appmtFor[0].lastName || '' | capitalizeFirst}}</td>
@@ -127,11 +133,6 @@
                                                             *ngIf="his_wait.service.virtualCallingModes && his_wait.service.virtualCallingModes[0].callingMode === 'WhatsApp' && his_wait.service.virtualServiceType ==='videoService'"></i>
                                                     </span>
                                                     <span>{{his_wait.service.name || '' | capitalizeFirst}}</span>
-                                                </td>
-                                                <td data-title="Location" class="td2">
-                                                    {{his_wait.location.place || '' | capitalizeFirst}}</td>
-                                                <td data-title="Date" class="td3">
-                                                    {{his_wait.appmtDate | date: dateFormat }}
                                                 </td>
                                                 <td data-title="Status" class="td4">
                                                     <span
@@ -156,9 +157,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
                             </div>
-
                         </div>
                         <!-- <div class="search_paging" *ngIf="pagination.totalCnt >= pagination.perPage">
                             <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"

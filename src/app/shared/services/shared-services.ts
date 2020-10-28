@@ -667,8 +667,8 @@ export class SharedServices {
   rescheduleConsumerApptmnt(accountid, postData) {
     return this.servicemeta.httpPut('consumer/appointment/reschedule?account=' + accountid, postData);
   }
-  rescheduleConsumerWaitlist(postData){
-    return this.servicemeta.httpPut('consumer/waitlist/reschedule', postData);
+  rescheduleConsumerWaitlist(accountid, postData){
+    return this.servicemeta.httpPut('consumer/waitlist/reschedule?account=' +accountid, postData);
   }
   getSlotsByLocationServiceandDate(locid, servid, pdate?, accountid?) {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;

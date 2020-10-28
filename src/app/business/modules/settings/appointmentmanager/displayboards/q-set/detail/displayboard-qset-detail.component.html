@@ -154,7 +154,8 @@
                                 placeholderLabel="Search {{provider_label}}s"
                                 noEntriesFoundLabel="no matching {{provider_label}} found"></ngx-mat-select-search>
                             <mat-option *ngFor="let user of userList" [value]="user" (click)="setUsersIds(user.id)">
-                                {{user.firstName}} {{user.lastName}}
+                                <!-- {{user.firstName}} {{user.lastName}} -->
+                                {{user.businessName}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -168,7 +169,8 @@
                     </p>
                     <ul *ngFor="let user of userMultiCtrl">
                         <li>
-                            {{user.firstName}} {{user.lastName}}
+                            <!-- {{user.firstName}} {{user.lastName}} -->
+                            {{user.businessName}}
                         </li>
                     </ul>
                 </div>
