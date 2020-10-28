@@ -6704,3 +6704,8 @@
     font-style: italic;
     font-size: 0.85rem !important;
 }
+.checkin-details .est-tok-time {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: blue;
+}

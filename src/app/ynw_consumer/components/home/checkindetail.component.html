@@ -110,10 +110,9 @@
                                             <span class="item-label-val">{{waitlist.queue.queueStartTime}} -
                                                 {{waitlist.queue.queueEndTime}}</span>
                                         </div>
-                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item">
+                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item txt-align-center">
                                             <span class="status-label"
-                                                *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">ESTIMATED
-                                                TIME</span>
+                                                *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
                                             <span class="status-label"
                                                 *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0">ESTIMATED
                                                 TIME</span>
@@ -121,7 +120,10 @@
                                                 *ngIf="waitlist.token && !(waitlist.appxWaitingTime>=0)">TOKEN NO</span>
                                             <span class="item-label-val"
                                                 *ngIf="waitlist.token">{{waitlist.token}}</span>
-                                            <span class="item-label-val" *ngIf="waitlist.appxWaitingTime>=0">
+                                            <span class="est-tok-time" *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">
+                                                  Est Wait Time: {{waitlist.appxWaitingTime}} min
+                                                </span>    
+                                            <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0">
                                                 {{waitlist.appxWaitingTime}} min
                                             </span>
                                         </div>
