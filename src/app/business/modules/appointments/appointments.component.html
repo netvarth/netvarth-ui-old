@@ -93,7 +93,7 @@
                             {{ user.firstName.substring(0,24) }}...</h4>
                           <h4 *ngIf="user.firstName.length<'27'">
                             <!-- {{user.firstName}} -->
-                            {{user.businessName}}
+                            {{(user.businessName) ? user.businessName : user.firstName}}
                           </h4>
                         </a>
                       </li>

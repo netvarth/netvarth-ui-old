@@ -233,7 +233,7 @@
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"
                     class="fa wtsapvid-icon"></i>
                 {{checkin.service.name}} </p>
-            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: dateFormat}}, [{{checkin.queue.queueStartTime}}-{{checkin.queue.queueEndTime}}]
+            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: dateformat}}, [{{checkin.queue.queueStartTime}}-{{checkin.queue.queueEndTime}}]
             </p>
         </div>
         <div class="clearfix"></div>
@@ -251,7 +251,7 @@
                 <div class="date-body">
                     <span class="selected-date">
                         <span class="icon-minus" (click)="calculateDate(-1, 'pre')" 
-                        [class.disable]="disableMinus()"></span>{{checkin_date | date: dateFormat}}
+                        [class.disable]="disableMinus()"></span>{{checkin_date | date: dateformat}}
                         <span class="icon-add" (click)="calculateDate(1, 'post')"></span>
                     </span>
                     <div class="form-group dt">

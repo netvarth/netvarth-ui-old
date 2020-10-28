@@ -50,7 +50,7 @@
                             (selectionChange)="handleUserSelection(usersel.value)">
                             <mat-option *ngFor="let user of users" [value]="user">
                               <!-- {{user.firstName}} {{user.lastName}} -->
-                              {{user.businessName}}
+                              {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
                             </mat-option>
                           </mat-select>
                         </mat-form-field>
