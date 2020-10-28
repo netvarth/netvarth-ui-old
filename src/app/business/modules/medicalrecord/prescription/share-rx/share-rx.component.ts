@@ -5,6 +5,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { MedicalrecordService } from '../../medicalrecord.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 
 @Component({
@@ -55,6 +56,11 @@ export class ShareRxComponent implements OnInit {
   api_error = null;
   api_success = null;
   customerDetail: any;
+  display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  drugList: any = [];
+  blogo: any = [];
+  profimg_exists = false;
+  cacheavoider = '';
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
@@ -71,7 +77,7 @@ export class ShareRxComponent implements OnInit {
           this.chekintype = this.data.chekintype;
           this.medicalService.patient_data.subscribe(res => {
             this.customerDetail = JSON.parse(res.customerDetail);
-            console.log(this.customerDetail.email);
+            console.log(this.customerDetail);
             console.log(this.customerDetail.phoneNo);
             // if (this.customerDetail.email) {
             //   this.email_id = this.customerDetail.email;
@@ -86,6 +92,7 @@ export class ShareRxComponent implements OnInit {
   this.msgreceivers = [{'id': 0, 'name': 'patient'}, { 'id': this.spId, 'name': 'sp'} ];
   this.createForm();
   console.log(this.mrId);
+  this.getMrprescription();
  }
  createForm() {
   this.sharewith = 0;
@@ -170,5 +177,42 @@ export class ShareRxComponent implements OnInit {
 resetApiErrors() {
   this.api_error = null;
   this.api_success = null;
+}
+getMrprescription() {
+  if (this.mrId) {
+    this.provider_services.getMRprescription(this.mrId)
+      .subscribe((data: any) => {
+        if (data && data.length !== 0) {
+          this.drugList = data;
+          console.log(this.drugList);
+       }
+      },
+        error => {
+          this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+}
+getProviderLogo() {
+  this.provider_services.getProviderLogo()
+    .subscribe(
+      data => {
+        this.blogo = data;
+        const cnow = new Date();
+        const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+        this.cacheavoider = dd;
+      },
+      () => {
+
+      }
+    );
+}
+showimg() {
+  let logourl = '';
+  this.profimg_exists = false;
+    if (this.blogo[0]) {
+      this.profimg_exists = true;
+      logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
+    }
+    return this.shared_functions.showlogoicon(logourl);
 }
 }

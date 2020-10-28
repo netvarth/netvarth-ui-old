@@ -75,4 +75,68 @@
 </app-form-success-display>
 </form>
 
+<!-- <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+    <section class=""> 
+      <div class="card title-gb">
+          <div style="float:left;">
+              <img  style="width: 10px;" [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url">
+            </div>
+                  <h2 style="text-align: center; padding-top: 30px;">Amma Hospital </h2>
+                  <div>
+                    <p>Dr.shiva Reddy <sub>M.B.B.S ,MS(Ortho)</sub> <span style="float: right;" >9959962001</span> </p>
+                    <p>Hi-tech city,hydebar </p>
+                  </div>
+                  <hr>
+                  <div>
+                      <label>Patient Name:</label><span>{{customerDetail.firstName | capitalizeFirst}} {{customerDetail.lastName}} </span>
+                      <p style="float: right;"> <label >Date:</label><span>25/02/2020</span> </p>
+                  </div>
+                  <div>
+                      <label *ngIf="customerDetail.dob" >DOB:</label><span *ngIf="customerDetail.dob" >{{customerDetail.dob  | date:display_dateFormat}}</span>
+                      <p style="float: right;" *ngIf="customerDetail.gender"> <label >Gender:</label><span>{{customerDetail.gender | capitalizeFirst}}</span> </p>
+                  </div>          
+                   <table class="table table-bordered" >
+                      <thead>
+                      <tr >
+                        <th>
+                           Medicine
+                        </th>
+                        <th>
+                            Duration(days)
+                        </th>
+                         <th>
+                            Dosage
+                        </th>
+                        <th>
+                            Frequency
+                        </th>
+                        <th>
+                            Instructions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let drug of drugList; let i = index;" >
+                        <td >
+                          {{drug.medicine_name}}
+                        </td>
+                        <td >
+                          {{drug.duration}}
+                        </td>
+                        <td>
+                              {{drug.dosage}}
+                           </td>
+                        <td>
+                               {{drug.frequency}}
+                        </td>  
+                        <td>
+                               {{drug.instructions}}
+                        </td>               
+                      </tr>
+                    </tbody>     
+                    </table>
+      </div>
+   </section>
+</div> -->
+
 
