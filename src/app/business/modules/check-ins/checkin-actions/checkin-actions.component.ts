@@ -166,7 +166,7 @@ export class CheckinActionsComponent implements OnInit {
         console.log(this.checkin_date)
         this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
     }
-    
+
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
         this.queuejson = [];
         this.queueQryExecuted = false;
@@ -190,7 +190,7 @@ export class CheckinActionsComponent implements OnInit {
                         this.sel_queue_name = this.queuejson[selindx].name;
                         this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
                         this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
-                       
+
                     } else {
                         this.sel_queue_indx = -1;
                         this.sel_queue_id = 0;
@@ -622,7 +622,7 @@ export class CheckinActionsComponent implements OnInit {
           'serviceId': this.checkin.service.id,
           'serviceName': this.checkin.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': this.checkin.date,
+          'booking_date': this.checkin.consLastVisitedDate,
           'booking_time': this.checkin.checkInTime,
           'department': this.checkin.service.deptName,
           'consultationMode': 'OP',
@@ -650,7 +650,7 @@ export class CheckinActionsComponent implements OnInit {
           'serviceId': this.checkin.service.id,
           'serviceName': this.checkin.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': this.checkin.date,
+          'booking_date': this.checkin.consLastVisitedDate,
           'booking_time': this.checkin.checkInTime,
           'department': this.checkin.service.deptName,
           'consultationMode': 'OP',

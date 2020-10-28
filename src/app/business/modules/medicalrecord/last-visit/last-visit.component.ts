@@ -2,9 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { NavigationExtras} from '@angular/router';
+import { NavigationExtras } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared//pipes/date-format/date-format.pipe';
-import { MedicalrecordService } from '../medicalrecord.service';
+// import { MedicalrecordService } from '../medicalrecord.service';
 
 @Component({
   selector: 'app-last-visit',
@@ -27,7 +27,7 @@ export class LastVisitComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
 
     public dateformat: DateFormatPipe,
-    private medicalrecordService: MedicalrecordService,
+    // private medicalrecordService: MedicalrecordService,
     public dialogRef: MatDialogRef<LastVisitComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.PatientId = this.data.patientId;
@@ -37,6 +37,11 @@ export class LastVisitComponent implements OnInit {
     }
     if (this.data.customerDetail) {
       this.customerDetails = this.data.customerDetail;
+      if (this.customerDetails.memberJaldeeId) {
+        this.display_PatientId = this.customerDetails.memberJaldeeId;
+      } else if (this.customerDetails.jaldeeId) {
+        this.display_PatientId = this.customerDetails.jaldeeId;
+      }
     }
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
@@ -44,14 +49,14 @@ export class LastVisitComponent implements OnInit {
       this.lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'mr', 'rx'];
     }
     // tslint:disable-next-line: no-shadowed-variable
-    this.medicalrecordService.patient_data.subscribe(data => {
-      this.customerDetails = JSON.parse(data.customerDetail);
-      if (this.customerDetails.memberJaldeeId) {
-        this.display_PatientId = this.customerDetails.memberJaldeeId;
-      } else if (this.customerDetails.jaldeeId) {
-        this.display_PatientId = this.customerDetails.jaldeeId;
-      }
-    });
+    // this.medicalrecordService.patient_data.subscribe(data => {
+    //   this.customerDetails = JSON.parse(data.customerDetail);
+    //   if (this.customerDetails.memberJaldeeId) {
+    //     this.display_PatientId = this.customerDetails.memberJaldeeId;
+    //   } else if (this.customerDetails.jaldeeId) {
+    //     this.display_PatientId = this.customerDetails.jaldeeId;
+    //   }
+    // });
   }
 
   ngOnInit() {
@@ -61,13 +66,13 @@ export class LastVisitComponent implements OnInit {
   }
   getPatientVisitListCount() {
     this.provider_services.getPatientVisitListCount(this.PatientId)
-    .subscribe((data: any) => {
-      this.visitcount = data;
-      console.log(this.visitcount);
-    },
-      error => {
-        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      });
+      .subscribe((data: any) => {
+        this.visitcount = data;
+        console.log(this.visitcount);
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
   }
   getPatientVisitList() {
     this.provider_services.getPatientVisitList(this.PatientId)
@@ -99,7 +104,7 @@ export class LastVisitComponent implements OnInit {
   //   return  this.dateformat.transformToDIsplayFormat(date);
   // }
   getLastVisitDate(visit) {
-    return  this.dateformat.transformToDIsplayFormat(visit.lastVisitedDate);
+    return this.dateformat.transformToDIsplayFormat(visit.lastVisitedDate);
   }
   isMRCreated(visit) {
     let mrCreated = '';
@@ -122,7 +127,7 @@ export class LastVisitComponent implements OnInit {
 
   }
   getServiceName(visit) {
-    let serviceName = '';
+    let serviceName = 'Consultation';
     if (visit.waitlist) {
       serviceName = visit.waitlist.service.name;
     } else if (visit.appointmnet) {
@@ -139,24 +144,24 @@ export class LastVisitComponent implements OnInit {
           'serviceId': visitDetails.waitlist.service.id,
           'serviceName': visitDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': visitDetails.waitlist.date,
+          'booking_date': visitDetails.consLastVisitedDate,
           'booking_time': visitDetails.waitlist.checkInTime,
           'department': visitDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
-          'visitDate': visitDetails.lastVisitedDate,
+          'visitDate': visitDetails.consLastVisitedDate,
           'back_type': this.back_type,
         }
       };
-     console.log(navigationExtras);
+      console.log(navigationExtras);
       const result = {
         'navigationParams': navigationExtras,
         'type': 'clinicalnotes'
       };
       this.dialogRef.close(result);
 
-    } else {
+    } else if (visitDetails.appointmnet) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           'customerDetail': JSON.stringify(visitDetails.appointmnet.appmtFor[0]),
@@ -165,11 +170,11 @@ export class LastVisitComponent implements OnInit {
           'serviceName': visitDetails.appointmnet.service.name,
           'department': visitDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': visitDetails.appointmnet.appmtDate,
+          'booking_date': visitDetails.consLastVisitedDate,
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
-          'visitDate': visitDetails.lastVisitedDate,
+          'visitDate': visitDetails.consLastVisitedDate,
           'back_type': this.back_type
         }
       };
@@ -179,6 +184,23 @@ export class LastVisitComponent implements OnInit {
       };
       this.dialogRef.close(result);
 
+    } else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(visitDetails.providerConsumer),
+          'serviceName': 'Consultation',
+          'booking_type': 'FOLLOWUP',
+          'mrId': visitDetails.id,
+          'booking_date': visitDetails.consLastVisitedDate,
+          'visitDate': visitDetails.consLastVisitedDate,
+          'back_type': 'consumer'
+        }
+      };
+      const result = {
+        'navigationParams': navigationExtras,
+        'type': 'clinicalnotes'
+      };
+      this.dialogRef.close(result);
     }
   }
 
@@ -192,13 +214,13 @@ export class LastVisitComponent implements OnInit {
           'serviceId': visitDetails.waitlist.service.id,
           'serviceName': visitDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': visitDetails.waitlist.date,
+          'booking_date': visitDetails.consLastVisitedDate,
           'booking_time': visitDetails.waitlist.checkInTime,
           'department': visitDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
-          'visitDate': visitDetails.lastVisitedDate,
+          'visitDate': visitDetails.consLastVisitedDate,
           'back_type': this.back_type
         }
       };
@@ -208,7 +230,7 @@ export class LastVisitComponent implements OnInit {
       };
       this.dialogRef.close(result);
 
-    } else {
+    } else if (visitDetails.appointmnet) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           'customerDetail': JSON.stringify(visitDetails.appointmnet.appmtFor[0]),
@@ -216,7 +238,7 @@ export class LastVisitComponent implements OnInit {
           'serviceName': visitDetails.appointmnet.service.name,
           'department': visitDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': visitDetails.appointmnet.appmtDate,
+          'booking_date': visitDetails.consLastVisitedDate,
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
@@ -230,6 +252,23 @@ export class LastVisitComponent implements OnInit {
       };
       this.dialogRef.close(result);
 
+    } else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(visitDetails.providerConsumer),
+          'serviceName': 'Consultation',
+          'booking_type': 'FOLLOWUP',
+          'mrId': visitDetails.id,
+          'booking_date': visitDetails.consLastVisitedDate,
+          'visitDate': visitDetails.consLastVisitedDate,
+          'back_type': 'consumer'
+        }
+      };
+      const result = {
+        'navigationParams': navigationExtras,
+        'type': 'prescription'
+      };
+      this.dialogRef.close(result);
     }
 
   }

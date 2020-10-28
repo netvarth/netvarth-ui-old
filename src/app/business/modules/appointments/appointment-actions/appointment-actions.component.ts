@@ -592,12 +592,13 @@ export class AppointmentActionsComponent implements OnInit {
           'serviceName': this.appt.service.name,
           'department': this.appt.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': this.appt.appmtDate,
+          'booking_date': this.appt.consLastVisitedDate,
           'booking_time': this.appt.apptTakenTime,
           'mr_mode': medicalrecord_mode,
           'mrId': mrId ,
           'booking_id': this.appt.uid,
-          'back_type': 'appt'
+          'back_type': 'appt',
+          'visitDate': this.appt.consLastVisitedDate
         }
       };
 
@@ -619,12 +620,13 @@ export class AppointmentActionsComponent implements OnInit {
           'serviceName': this.appt.service.name,
           'department': this.appt.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': this.appt.appmtDate,
+          'booking_date': this.appt.consLastVisitedDate,
           'booking_time': this.appt.apptTakenTime,
           'mr_mode': medicalrecord_mode,
           'mrId': mrId ,
           'booking_id': this.appt.uid,
-          'back_type': 'appt'
+          'back_type': 'appt',
+          'visitDate': this.appt.consLastVisitedDate,
         }
       };
       this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);

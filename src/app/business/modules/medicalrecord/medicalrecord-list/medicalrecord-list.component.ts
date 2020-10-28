@@ -100,13 +100,13 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceId': mrDetails.waitlist.service.id,
           'serviceName': mrDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': mrDetails.waitlist.date,
+          'booking_date': mrDetails.consLastVisitedDate,
           'booking_time': mrDetails.waitlist.checkInTime,
           'department': mrDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': mrDetails.waitlist.ynwUuid,
           'mrId': mrDetails.mrId,
-          'visitDate': mrDetails.lastVisitedDate,
+          'visitDate': mrDetails.consLastVisitedDate,
           'back_type': 'consumer'
 
         }
@@ -122,11 +122,11 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': mrDetails.appointmnet.service.name,
           'department': mrDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': mrDetails.appointmnet.appmtDate,
+          'booking_date': mrDetails.consLastVisitedDate,
           'booking_time': mrDetails.appointmnet.apptTakenTime,
           'mrId': mrDetails.mrId,
           'booking_id': mrDetails.appointmnet.uid,
-          'visitDate': mrDetails.lastVisitedDate,
+          'visitDate': mrDetails.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
@@ -138,7 +138,8 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': 'Consultation',
           'booking_type': 'FOLLOWUP',
           'mrId': mrDetails.id,
-          'visitDate': mrDetails.mrConsultationDate,
+          'visitDate': mrDetails.consLastVisitedDate,
+          'booking_date': mrDetails.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
@@ -154,13 +155,13 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceId': mrDetails.waitlist.service.id,
           'serviceName': mrDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': mrDetails.waitlist.date,
+          'booking_date': mrDetails.consLastVisitedDate,
           'booking_time': mrDetails.waitlist.checkInTime,
           'department': mrDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': mrDetails.waitlist.ynwUuid,
           'mrId': mrDetails.mrId,
-          'visitDate': mrDetails.date,
+          'visitDate': mrDetails.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
@@ -175,11 +176,11 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': mrDetails.appointmnet.service.name,
           'department': mrDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': mrDetails.appointmnet.appmtDate,
+          'booking_date': mrDetails.consLastVisitedDate,
           'booking_time': mrDetails.appointmnet.apptTakenTime,
           'mrId': mrDetails.mrId,
           'booking_id': mrDetails.appointmnet.uid,
-          'visitDate': mrDetails.date,
+          'visitDate': mrDetails.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
@@ -192,8 +193,9 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': 'Consultation',
           'booking_type': 'FOLLOWUP',
           'mrId': mrDetails.id,
-          'visitDate': mrDetails.mrConsultationDate,
-          'back_type': 'consumer'
+          'visitDate': mrDetails.consLastVisitedDate,
+          'back_type': 'consumer',
+          'booking_date': mrDetails.consLastVisitedDate
         }
       };
       this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);

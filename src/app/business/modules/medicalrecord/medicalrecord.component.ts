@@ -93,6 +93,7 @@ export class MedicalrecordComponent implements OnInit {
           } else if (this.customerDetails.jaldeeId) {
             this.display_PatientId = this.customerDetails.jaldeeId;
           }
+
           this.PatientId = this.customerDetails.id;
           if (qparams.department) {
             this.department = qparams.department;
@@ -107,6 +108,8 @@ export class MedicalrecordComponent implements OnInit {
               this.consultationMode = qparams.consultationMode;
             }
           }
+
+
           if (qparams.mrId) {
             // tslint:disable-next-line:radix
             this.mrId = parseInt(qparams.mrId);
@@ -223,7 +226,8 @@ export class MedicalrecordComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        patientId: this.PatientId
+        patientId: this.PatientId,
+        customerDetail: this.customerDetails
 
       }
     });
