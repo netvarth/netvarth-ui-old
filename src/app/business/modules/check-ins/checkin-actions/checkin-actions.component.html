@@ -250,8 +250,8 @@
                 <div class="date-head">{{(showToken) ? 'Token' : 'Check-in'}} Date</div>
                 <div class="date-body">
                     <span class="selected-date">
-                        <span class="icon-minus"
-                            (click)="calculateDate(-1, 'pre')"></span>{{checkin_date | date: dateFormat}}
+                        <span class="icon-minus" (click)="calculateDate(-1, 'pre')" 
+                        [class.disable]="disableMinus()"></span>{{checkin_date | date: dateFormat}}
                         <span class="icon-add" (click)="calculateDate(1, 'post')"></span>
                     </span>
                     <div class="form-group dt">
