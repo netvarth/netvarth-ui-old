@@ -44,6 +44,8 @@ export class PrescriptionComponent implements OnInit {
   providerId;
   digitalSign = false;
   sharedialogRef;
+  navigations: any;
+  provider_user_Id: any;
   constructor(
     // private activatedRoot: ActivatedRoute,
     private router: Router,
@@ -52,6 +54,12 @@ export class PrescriptionComponent implements OnInit {
     public provider_services: ProviderServices,
     private medicalrecord_service: MedicalrecordService,
   ) {
+     this.medicalrecord_service.patient_data.subscribe(res => {
+      this.navigations = res;
+      this.provider_user_Id = res.provider_id;
+      console.log(this.provider_user_Id);
+     
+    });
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       this.mrId = mrId;
       console.log(this.mrId);
@@ -156,7 +164,8 @@ export class PrescriptionComponent implements OnInit {
       disableClose: true,
       data: {
         mrId: this.mrId,
-        userId: this.providerId
+        userId: this.providerId,
+        provider_user_Id: this.provider_user_Id
       }
     });
     this.sharedialogRef.afterClosed().subscribe(result => {

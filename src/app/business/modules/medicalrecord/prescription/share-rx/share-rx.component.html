@@ -83,13 +83,13 @@
             </div>
                   <h2 style="text-align: center; padding-top: 30px;">Amma Hospital </h2>
                   <div>
-                    <p>Dr.shiva Reddy <sub>M.B.B.S ,MS(Ortho)</sub> <span style="float: right;" >9959962001</span> </p>
-                    <p>Hi-tech city,hydebar </p>
+                    <p>{{userdata.businessName}} <sub>{{userdata.businessDes}}</sub> <span style="float: right;" >{{mobile}}</span> </p>
+                    <p>{{address}} </p>
                   </div>
                   <hr>
                   <div>
                       <label>Patient Name:</label><span>{{customerDetail.firstName | capitalizeFirst}} {{customerDetail.lastName}} </span>
-                      <p style="float: right;"> <label >Date:</label><span>25/02/2020</span> </p>
+                      <!-- <p style="float: right;"> <label >Date:</label><span>25/02/2020</span> </p> -->
                   </div>
                   <div>
                       <label *ngIf="customerDetail.dob" >DOB:</label><span *ngIf="customerDetail.dob" >{{customerDetail.dob  | date:display_dateFormat}}</span>

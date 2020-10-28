@@ -63,6 +63,11 @@ export class ShareRxComponent implements OnInit {
   cacheavoider = '';
   signurl = '';
   imagedetails:any;
+  provider_user_Id: any;
+  userdata: any;
+  bdata: any;
+  address: any;
+  mobile: any;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
@@ -74,6 +79,7 @@ export class ShareRxComponent implements OnInit {
       private medicalService: MedicalrecordService
       ) {
           this.spId = this.data.userId;
+          this.provider_user_Id = this.data.provider_user_Id;
           console.log(this.spId);
           this.mrId = this.data.mrId;
           this.chekintype = this.data.chekintype;
@@ -95,6 +101,9 @@ export class ShareRxComponent implements OnInit {
   this.createForm();
   console.log(this.mrId);
   this.getMrprescription();
+  this.getBusinessProfile();
+  this.getBussinessProfileApi();
+  
  }
  createForm() {
   this.sharewith = 0;
@@ -234,6 +243,27 @@ showimg() {
       logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
     }
     return this.shared_functions.showlogoicon(logourl);
+}
+getBusinessProfile() {
+  if (this.provider_user_Id){
+      this.provider_services.getUserBussinessProfile(this.provider_user_Id)
+          .subscribe((data: any) => {
+            this.userdata = data;
+              },
+          );
+  }
+}
+getBussinessProfileApi() {
+    this.provider_services.getBussinessProfile()
+      .subscribe(
+        data => {
+          this.bdata = data;
+          console.log(this.bdata);
+          this.address = this.bdata.baseLocation.address;
+          this.mobile = this.bdata.accountLinkedPhNo;
+          console.log(this.mobile);
+        });
+
 }
 
 }
