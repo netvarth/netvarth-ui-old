@@ -969,7 +969,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    this.getQsByProvider(source);
+    this.getQsByProvider();
     this.loadApiSwitch(source);
   }
   findCurrentActiveQueue(ques) {
@@ -2651,16 +2651,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.selectedUser = tempUser;
       }
-      this.handleUserSelection(this.selectedUser);
+      // this.handleUserSelection(this.selectedUser);
     });
   }
   handleUserSelection(user) {
     this.resetFields();
     this.shared_functions.setitemToGroupStorage('selectedUser', user);
     this.selectedUser = user;
-    this.getQsByProvider('reloadAPIs');
+    this.getQsByProvider();
   }
-  getQsByProvider(source) {
+  getQsByProvider() {
     const qs = [];
     if (this.selectedUser.id === 'all') {
       this.activeQs = this.tempActiveQs;
@@ -2705,7 +2705,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
     }
-    this.loadApiSwitch(source);
+    this.loadApiSwitch('reloadAPIs');
   }
 
   openAttachmentGallery(checkin) {
