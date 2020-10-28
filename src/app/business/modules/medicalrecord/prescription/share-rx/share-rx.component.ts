@@ -108,9 +108,11 @@ export class ShareRxComponent implements OnInit {
   }
   onSubmit(formdata) {
     this.resetApiErrors();
+    const vwofrx = document.getElementById('sharerxview');
     let rxview = '';
-    rxview += '<html><head><style></style>';
-    rxview += '</head><body>';
+    rxview += '<html><head><title></title>';
+    rxview += '</head><body >';
+    rxview += vwofrx.innerHTML;
     rxview += '</body></html>';
       console.log(formdata);
       console.log(this.sharewith);
@@ -212,9 +214,9 @@ getProviderLogo() {
 getDigitalSign() {
   if (this.spId) {
     this.provider_services.getDigitalSign(this.spId)
-      .subscribe(data => {
+      .subscribe((data: any) => {
         console.log(data);
-        this.imagedetails = data;
+        this.imagedetails = JSON.parse(data);
         console.log(this.imagedetails);
         this.signurl = this.imagedetails.url;
         console.log(this.signurl);

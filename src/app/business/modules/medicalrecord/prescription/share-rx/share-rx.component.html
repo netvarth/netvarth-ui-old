@@ -75,9 +75,9 @@
 </app-form-success-display>
 </form>
 
-<div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
-    <section class=""> 
-      <div class="card title-gb">
+<div id="sharerxview">
+    <section style="padding: 10px;"> 
+      <div >
           <div style="float:left;">
               <img  style="width: 50px;" [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url">
             </div>
@@ -136,8 +136,8 @@
                     </tbody>     
                     </table>
       </div>
-      <div >
-        <img  style="width: 50px;" [src]="imagedetails.url" alt="" >
+      <div style="height: 100px" >
+        <img  style="width: 100px;height:75px" [src]="signurl" alt="" >
       </div>
    </section>
 </div>
