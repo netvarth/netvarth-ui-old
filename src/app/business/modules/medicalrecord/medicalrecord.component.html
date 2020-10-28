@@ -33,8 +33,8 @@
       <div>
         <h5>Add or view medical records for a consultation/visit</h5>
         <p>Patient visit date
-            <button  *ngIf="dateShow" >{{visitdate | date:dateFormatSp}}   &nbsp;</button>
-            <button  *ngIf="isShowList" (click) = "VisitList()">{{visitdate | date:dateFormatSp}}   &nbsp; <i class="arrow down" ></i></button>  &nbsp;
+            <button  *ngIf="dateShow" >{{visitdate }}   &nbsp;</button>
+            <button  *ngIf="isShowList" (click) = "VisitList()">{{visitdate }}   &nbsp; <i class="arrow down" ></i></button>  &nbsp;
             <!-- <span>(Recent visit)</span> -->
         </p>
       </div>
