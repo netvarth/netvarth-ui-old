@@ -427,7 +427,7 @@
                               <mat-checkbox
                                 (change)="handleMemberSelect(memb.id, memb.firstName, memb.lastName, $event)"
                                 [value]="memb.id" [checked]="isChecked(memb.id)">
-                                {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
+                                {{memb.firstName | capitalizeFirst}} {{(memb.lastName) ? memb.lastName : ''}}
                               </mat-checkbox>
                             </li>
                           </ng-container>
@@ -550,7 +550,7 @@
                     Change
                     Member </a>
                 </mat-chip>
-                <mat-chip class="pro-action" (click)="handleSideScreen('note')"><a>{{sel_ser_det.consumerNoteTitle}}
+                <mat-chip class="pro-action" (click)="handleSideScreen('note')"><a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
                     <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
                 </mat-chip>
                 <mat-chip class="pro-action" (click)="imagefile.click()"><a>

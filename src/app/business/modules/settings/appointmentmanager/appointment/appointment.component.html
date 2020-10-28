@@ -497,7 +497,7 @@
                                                                 <mat-radio-button
                                                                     (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                                                     [value]="memb.id" [checked]="isChecked(memb.id)">
-                                                                    {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
+                                                                    {{memb.firstName | capitalizeFirst}} {{(memb.lastName) ? memb.lastName : ''}}
                                                                 </mat-radio-button>
                                                             </li>
                                                         </mat-radio-group>
@@ -604,7 +604,7 @@
                                         Member </a>
                                 </mat-chip>
                                 <mat-chip class="pro-action" (click)="handleSideScreen('note')">
-                                    <a>{{sel_ser_det.consumerNoteTitle}}
+                                    <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
                                         <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
                                 </mat-chip>
                                 <mat-chip class="pro-action" (click)="imagefile.click()"><a>

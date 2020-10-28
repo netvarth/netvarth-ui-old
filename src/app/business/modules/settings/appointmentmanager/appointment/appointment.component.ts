@@ -1241,6 +1241,7 @@ export class AppointmentComponent implements OnInit {
                 });
         } else {
             // this.api_error = derror;
+            this.disable = false;
             this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
         }
     }
