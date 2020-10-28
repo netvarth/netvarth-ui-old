@@ -88,6 +88,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     last_name: '',
     phone_number: '',
     checkinEncId: '',
+    patientId: '',
     queue: 'all',
     location: 'all',
     service: 'all',
@@ -108,6 +109,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     last_name: false,
     phone_number: false,
     checkinEncId: false,
+    patientId: false,
     queue: false,
     location: false,
     service: false,
@@ -1279,39 +1281,39 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.pagination.startpageval = 1;
     // this.pagination.totalCnt = 0; // no need of pagination in today
     if (this.activeQs.length > 0) {
-    const promise = this.getTodayWLCount(Mfilter);
-    promise.then(
-      result => {
-        this.chkSelectAppointments = false;
-        this.provider_services.getTodayWaitlist(Mfilter)
-          .subscribe(
-            (data: any) => {
-              this.appt_list = [];
-              this.appt_list = data;
-              this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
-              if (this.filterapplied === true) {
-                this.noFilter = false;
-              } else {
-                this.noFilter = true;
-              }
-              this.setCounts(this.appt_list);
-              this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-              this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
-              this.loading = false;
-            },
-            () => {
-              // this.load_waitlist = 1;
-              this.loading = false;
-            },
-            () => {
-              this.loading = false;
-            });
-      },
-      () => {
-        this.loading = false;
-      });
-      } else {
-       this.loading = false;
+      const promise = this.getTodayWLCount(Mfilter);
+      promise.then(
+        result => {
+          this.chkSelectAppointments = false;
+          this.provider_services.getTodayWaitlist(Mfilter)
+            .subscribe(
+              (data: any) => {
+                this.appt_list = [];
+                this.appt_list = data;
+                this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
+                if (this.filterapplied === true) {
+                  this.noFilter = false;
+                } else {
+                  this.noFilter = true;
+                }
+                this.setCounts(this.appt_list);
+                this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+                this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
+                this.loading = false;
+              },
+              () => {
+                // this.load_waitlist = 1;
+                this.loading = false;
+              },
+              () => {
+                this.loading = false;
+              });
+        },
+        () => {
+          this.loading = false;
+        });
+    } else {
+      this.loading = false;
     }
   }
   getFutureWL() {
@@ -1662,7 +1664,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (appointments['checkedIn']) {
       Array.prototype.push.apply(scheduledList, appointments['checkedIn'].slice());
     }
-     if (this.time_type === 1) {
+    if (this.time_type === 1) {
       this.sortCheckins(scheduledList);
     }
     return scheduledList;
@@ -1769,6 +1771,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.setFilterdobMaxMin();
     }
   }
+  getPatientIdFilter(patientid) {
+    const idFilter = 'memberJaldeeId::' + patientid;
+    return idFilter;
+  }
   setFilterData(type, value) {
     this.filter[type] = value;
     this.resetPaginationData();
@@ -1796,6 +1802,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.checkinEncId !== '') {
       api_filter['checkinEncId-eq'] = this.filter.checkinEncId;
+    }
+    if (this.filter.patientId !== '') {
+      api_filter['waitlistingFor-eq'] = this.getPatientIdFilter(this.filter.patientId);
     }
     if (this.filterService.length > 0 && this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filterService.toString();
@@ -1883,7 +1892,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
       this.filterapplied = true;
@@ -1912,6 +1921,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       last_name: false,
       phone_number: false,
       checkinEncId: false,
+      patientId: false,
       queue: false,
       location: false,
       service: false,
@@ -1929,6 +1939,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       last_name: '',
       phone_number: '',
       checkinEncId: '',
+      patientId: '',
       queue: 'all',
       location: 'all',
       service: 'all',
@@ -2394,7 +2405,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               checkin_html += '<td style="padding:10px;">Name</td>';
               checkin_html += '<td style="padding:10px;">Service</td>';
               if (this.providerLabels.length > 0) {
-              checkin_html += '<td style="padding:10px;">Label</td>';
+                checkin_html += '<td style="padding:10px;">Label</td>';
               }
               checkin_html += '</thead>';
               for (let i = 0; i < this.historyCheckins.length; i++) {
@@ -2904,7 +2915,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   CreateVoiceCall(wtlst?) {
     let waitlist;
-      waitlist = wtlst.ynwUuid;
+    waitlist = wtlst.ynwUuid;
     this.voicedialogRef = this.dialog.open(VoicecallDetailsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -2915,8 +2926,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  onButtonBeforeHook () {}
-  onButtonAfterHook () {}
+  onButtonBeforeHook() { }
+  onButtonAfterHook() { }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }

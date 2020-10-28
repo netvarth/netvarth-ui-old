@@ -92,6 +92,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     last_name: '',
     phone_number: '',
     appointmentEncId: '',
+    patientId: '',
     appointmentMode: 'all',
     schedule: 'all',
     location: 'all',
@@ -112,6 +113,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     last_name: false,
     phone_number: false,
     appointmentEncId: false,
+    patientId: false,
     appointmentMode: false,
     schedule: false,
     location: false,
@@ -856,6 +858,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       last_name: false,
       phone_number: false,
       appointmentEncId: false,
+      patientId: false,
       appointmentMode: false,
       schedule: false,
       service: false,
@@ -873,6 +876,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       last_name: '',
       phone_number: '',
       appointmentEncId: '',
+      patientId: '',
       appointmentMode: 'all',
       schedule: 'all',
       location: 'all',
@@ -1583,6 +1587,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('appthPFil', this.filter);
     this.doSearch();
   }
+  getPatientIdFilter(patientid) {
+    const idFilter = 'memberJaldeeId::' + patientid;
+    return idFilter;
+  }
   setFilterForApi() {
     const api_filter = {};
     if (this.time_type === 1) {
@@ -1607,6 +1615,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.appointmentEncId !== '') {
       api_filter['appointmentEncId-eq'] = this.filter.appointmentEncId;
+    }
+    if (this.filter.patientId !== '') {
+      api_filter['appmtFor-eq'] = this.getPatientIdFilter(this.filter.patientId);
     }
     if (this.services.length > 0 && this.filter.service !== 'all') {
       api_filter['service-eq'] = this.services.toString();
@@ -1687,7 +1698,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   doSearch() {
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all') {
       this.filterapplied = true;
