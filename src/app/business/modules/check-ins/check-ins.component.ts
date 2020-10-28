@@ -970,7 +970,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     this.getQsByProvider(source);
-    // this.loadApiSwitch(source);
+    this.loadApiSwitch(source);
   }
   findCurrentActiveQueue(ques) {
     let selindx = 0;
