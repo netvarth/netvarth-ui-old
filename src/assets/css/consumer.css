@@ -3923,6 +3923,9 @@
     .consumer-dash .minutes {
         font-size: 0.7rem !important;
     }
+    .checkin-details .myjaldee-bg {
+        opacity: 0.6 !important;
+    }
 }
 
 .more-opt .mo-content .mat-dialog-content .more-box .refine_subheader {

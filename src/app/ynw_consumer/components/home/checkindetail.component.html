@@ -91,7 +91,7 @@
 
                                     <!-- Status and Date, Queue -->
                                     <div class="mgn-bt-20 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-bar">
-                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item">
+                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
                                             <span class="status-label">STATUS</span>
                                             <span>
                                                 <div *ngIf="waitlist.waitlistStatus == 'checkedIn'"
@@ -110,7 +110,7 @@
                                             <span class="item-label-val">{{waitlist.queue.queueStartTime}} -
                                                 {{waitlist.queue.queueEndTime}}</span>
                                         </div>
-                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item txt-align-center">
+                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-4 stats-item txt-align-center">
                                             <span class="status-label"
                                                 *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
                                             <span class="status-label"
@@ -128,7 +128,7 @@
                                             </span>
                                         </div>
                                         <div *ngIf="waitlist.batchName"
-                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item">
+                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-1 stats-item">
                                             <span class="status-label">BATCH</span>
                                             <span class="item-label-val">{{waitlist.batchName}}</span>
                                         </div>
