@@ -250,7 +250,7 @@
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
-                                [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                                [max]="maxDate" (dateChange)="handleFutureDateChange($event)">
                         </div>
                     </div>
                 </div>
