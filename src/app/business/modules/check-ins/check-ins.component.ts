@@ -967,8 +967,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    this.getQsByProvider();
-    this.loadApiSwitch(source);
+    this.getQsByProvider(source);
+    // this.loadApiSwitch(source);
   }
   findCurrentActiveQueue(ques) {
     let selindx = 0;
@@ -2616,7 +2616,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        checkin: checkin
+        checkin: checkin,
+        type: 'checkin'
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
@@ -2646,9 +2647,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetFields();
     this.shared_functions.setitemToGroupStorage('selectedUser', user);
     this.selectedUser = user;
-    this.getQsByProvider();
+    this.getQsByProvider('reloadAPIs');
   }
-  getQsByProvider() {
+  getQsByProvider(source) {
     const qs = [];
     if (this.selectedUser.id === 'all') {
       this.activeQs = this.tempActiveQs;
@@ -2693,7 +2694,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
     }
-    this.loadApiSwitch('reloadAPIs');
+    this.loadApiSwitch(source);
   }
 
   openAttachmentGallery(checkin) {
