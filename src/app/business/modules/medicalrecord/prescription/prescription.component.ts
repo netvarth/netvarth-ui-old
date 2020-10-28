@@ -105,8 +105,8 @@ export class PrescriptionComponent implements OnInit {
   }
 
   getDigitalSign() {
-    if (this.providerId) {
-      this.provider_services.getDigitalSign(this.providerId)
+    if (this.provider_user_Id) {
+      this.provider_services.getDigitalSign(this.provider_user_Id)
         .subscribe((data) => {
           console.log(data);
           this.digitalSign = true;
@@ -136,8 +136,8 @@ export class PrescriptionComponent implements OnInit {
     };
     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
     submit_data.append('properties', blobPropdata);
-    if (this.providerId) {
-      this.uploadMrDigitalsign(this.providerId, submit_data, index);
+    if (this.provider_user_Id) {
+      this.uploadMrDigitalsign(this.provider_user_Id, submit_data, index);
     }
   }
 
@@ -164,7 +164,7 @@ export class PrescriptionComponent implements OnInit {
       disableClose: true,
       data: {
         mrId: this.mrId,
-        userId: this.providerId,
+        userId: this.provider_user_Id,
         provider_user_Id: this.provider_user_Id
       }
     });

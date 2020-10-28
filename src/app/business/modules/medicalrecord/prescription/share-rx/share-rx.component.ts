@@ -97,7 +97,7 @@ export class ShareRxComponent implements OnInit {
           });
       }
  ngOnInit() {
-  this.msgreceivers = [{'id': 0, 'name': 'patient'}, { 'id': this.spId, 'name': 'sp'} ];
+  this.msgreceivers = [{'id': 0, 'name': 'patient'}, { 'id': this.provider_user_Id, 'name': 'sp'} ];
   this.createForm();
   console.log(this.mrId);
   this.getMrprescription();
@@ -144,8 +144,8 @@ export class ShareRxComponent implements OnInit {
            this.provider_services.shareRx(this.mrId, passData)
             .subscribe((data) => {
               this.shared_functions.openSnackBar('Prescription shared successfully');
-            },
-                error => {
+              this.dialogRef.close();
+            }, error => {
                     this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
 
@@ -162,11 +162,10 @@ export class ShareRxComponent implements OnInit {
           this.provider_services.shareRx(this.mrId, passData)
             .subscribe((data) => {
               this.shared_functions.openSnackBar('Prescription shared successfully');
-            },
-                error => {
+              this.dialogRef.close();
+            }, error => {
                     this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
-
          }
   }
   onUserSelect(event) {
@@ -221,8 +220,8 @@ getProviderLogo() {
     );
 }
 getDigitalSign() {
-  if (this.spId) {
-    this.provider_services.getDigitalSign(this.spId)
+  if (this.provider_user_Id) {
+    this.provider_services.getDigitalSign(this.provider_user_Id)
       .subscribe((data: any) => {
         console.log(data);
         this.imagedetails = JSON.parse(data);
