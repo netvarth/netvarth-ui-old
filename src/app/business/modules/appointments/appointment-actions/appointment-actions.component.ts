@@ -624,7 +624,8 @@ export class AppointmentActionsComponent implements OnInit {
           'mrId': mrId ,
           'booking_id': this.appt.uid,
           'back_type': 'appt',
-          'provider_id': this.appt.provider.id
+          'provider_id': this.appt.provider.id,
+          'visitDate': this.appt.consLastVisitedDate,
         }
       };
 
@@ -652,7 +653,8 @@ export class AppointmentActionsComponent implements OnInit {
           'mrId': mrId ,
           'booking_id': this.appt.uid,
           'back_type': 'appt',
-          'provider_id': this.appt.provider.id
+          'provider_id': this.appt.provider.id,
+          'visitDate': this.appt.consLastVisitedDate,
         }
       };
       this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);

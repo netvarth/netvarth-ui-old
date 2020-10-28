@@ -25,6 +25,13 @@ export class DateFormatPipe implements PipeTransform {
     value = datePipe.transform(value, 'dd/MM/y');
     return value;
   }
+  transformToDateWithTime(value: any) {
+    const datePipe = new DatePipe('en-US');
+    value = datePipe.transform(value, 'dd/MM/yyyy HH:mm a');
+    console.log(value);
+
+    return value;
+  }
   transformToMonthlyDate(value: any) {
     const datePipe = new DatePipe('en-US');
     value = datePipe.transform(value, 'MMM d, y');

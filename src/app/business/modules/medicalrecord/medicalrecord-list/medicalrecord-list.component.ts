@@ -15,7 +15,7 @@ export class MedicalrecordListComponent implements OnInit {
 
   loading = true;
   patientId: any;
-  public mr_dataSource = new MatTableDataSource<any>();
+  public mr_dataSource = new MatTableDataSource<any[]>([]);
   displayedColumns = ['consultationDate', 'serviceName', 'bookingType', 'medicalrecord', 'rx'];
   patientDetails: ArrayBuffer;
   constructor(private provider_services: ProviderServices,
@@ -106,7 +106,7 @@ export class MedicalrecordListComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': mrDetails.waitlist.ynwUuid,
           'mrId': mrDetails.mrId,
-          'visitDate': mrDetails.lastVisitedDate,
+          'visitDate': mrDetails.consLastVisitedDate,
           'back_type': 'consumer'
 
         }
@@ -126,7 +126,7 @@ export class MedicalrecordListComponent implements OnInit {
           'booking_time': mrDetails.appointmnet.apptTakenTime,
           'mrId': mrDetails.mrId,
           'booking_id': mrDetails.appointmnet.uid,
-          'visitDate': mrDetails.lastVisitedDate,
+          'visitDate': mrDetails.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
@@ -160,7 +160,7 @@ export class MedicalrecordListComponent implements OnInit {
           'consultationMode': 'OP',
           'booking_id': mrDetails.waitlist.ynwUuid,
           'mrId': mrDetails.mrId,
-          'visitDate': mrDetails.date,
+          'visitDate': mrDetails.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
@@ -179,7 +179,7 @@ export class MedicalrecordListComponent implements OnInit {
           'booking_time': mrDetails.appointmnet.apptTakenTime,
           'mrId': mrDetails.mrId,
           'booking_id': mrDetails.appointmnet.uid,
-          'visitDate': mrDetails.date,
+          'visitDate': mrDetails.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
@@ -192,7 +192,7 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': 'Consultation',
           'booking_type': 'FOLLOWUP',
           'mrId': mrDetails.id,
-          'visitDate': mrDetails.mrConsultationDate,
+          'visitDate': mrDetails.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };

@@ -23,7 +23,7 @@
           <ng-container matColumnDef="consultationDate">
             <mat-header-cell *matHeaderCellDef> <b>Date</b></mat-header-cell>
             <mat-cell *matCellDef="let visit">
-              {{getLastVisitDate(visit)}}</mat-cell>
+              {{visit.consLastVisitedDate}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="serviceName">
             <mat-header-cell *matHeaderCellDef>  <b>Service Name</b></mat-header-cell>
@@ -37,15 +37,16 @@
                {{visit.providerName}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="mr">
-            <mat-header-cell *matHeaderCellDef> <b>MR</b></mat-header-cell>
-            <mat-cell *matCellDef="let visit"> <button (click)="viewMedicalRecord(visit)"  style="text-align:center"> <i class="medicalrecord-icon-customer"></i>{{isMRCreated(visit) ?'View MR':'Create MR'}}</button></mat-cell>
+            <mat-header-cell *matHeaderCellDef> <b>MedicalRecord</b></mat-header-cell>
+            <mat-cell *matCellDef="let visit">  <i style="color:MediumSeaGreen;" [ngClass]="isMRCreated(visit) == true ? 'medicalrecord-icon-customer':'medicalrecord-icon-customer'"></i></mat-cell>
           </ng-container>
           <ng-container matColumnDef="rx">
-            <mat-header-cell *matHeaderCellDef> <b>RX</b></mat-header-cell>
-            <mat-cell *matCellDef="let visit">  <button  (click)="viewMR_prescription(visit)"  style="text-align:center">  <i class="mr-rx-icon-customer"></i>{{isRxCreated(visit) ?'View Rx':'Create Rx'}}</button></mat-cell>
+            <mat-header-cell *matHeaderCellDef> <b>Prescription</b></mat-header-cell>
+            <mat-cell *matCellDef="let visit">   <i  style="text-align:center" [ngClass]="isRxCreated(visit) == true ? 'mr-rx-icon-customer':'mr-rx-icon-customer '"class="mr-rx-icon-customer"></i></mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns"></mat-row>
+          <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns" (click)="getMedicalRecord(row)"  [ngClass]="{'highlight': selectedRowIndex == row.mrId}"
+         ></mat-row>
 
         </mat-table>
         </ng-container>

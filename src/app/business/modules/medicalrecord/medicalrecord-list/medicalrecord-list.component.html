@@ -28,11 +28,11 @@
           </div>
           <div *ngIf="!loading">
 
-            <div *ngIf="mr_dataSource.length== 0" class="mgn-up-10 style-padding">
+            <div *ngIf="!mr_dataSource" class="mgn-up-10 style-padding">
               <p>No Medical Records Found For This Patient</p>
             </div>
 
-            <mat-table *ngIf="mr_dataSource.length > 0" [dataSource]="mr_dataSource">
+            <mat-table *ngIf="mr_dataSource" [dataSource]="mr_dataSource">
 
               <ng-container matColumnDef="consultationDate">
                 <mat-header-cell *matHeaderCellDef> Consultation Date</mat-header-cell>

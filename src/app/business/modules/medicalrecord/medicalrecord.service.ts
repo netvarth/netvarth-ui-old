@@ -10,8 +10,8 @@ export class MedicalrecordService {
   patientData: any;
   mr_payload_new: any = {
     'bookingType': 'FOLLOWUP',
-    'consultationMode': 'OP',
-    'mrConsultationDate': new Date()
+    'consultationMode': 'OP'
+
   };
   private patientDetails = new BehaviorSubject<any>('');
   patient_data = this.patientDetails.asObservable();

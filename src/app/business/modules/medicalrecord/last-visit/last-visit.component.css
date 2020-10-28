@@ -5,3 +5,13 @@
 .style-padding {
   padding-left: 20px;
 }
+.highlight{
+  background: rgb(148, 198, 238); /* blue */
+}
+mat-row:hover {
+  background-color: #a7f4fa !important;
+}
+green-icon {
+  color:green;
+}
+

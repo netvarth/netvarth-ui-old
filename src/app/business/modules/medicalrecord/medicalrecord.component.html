@@ -4,7 +4,7 @@
       <h5 class="mgn-up-10">
           <span class="fa fa-arrow-left pointer-cursor"  (click)="goback()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           Medical Record
-        <!-- <h2 style="text-align: center;">Medical Record</h2> -->
+
       </h5>
     </div>
 
@@ -12,15 +12,10 @@
     <div class="card title-gb" >
       <div class="mgn-up-10">
 
-          <!-- <p>
-            <b>Patient:</b>
-            <span color="blue"> {{customerDetails.jaldeeId}} &nbsp;</span>
-            <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</span>
-            <span *ngIf="customerDetails.dob|| customerDetails.gender ">({{customerDetails.dob}} {{customerDetails.gender | capitalizeFirst}})</span>
-          </p> -->
+
           <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
           <span >Patient Id: {{display_PatientId}}</span><br>
-          <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob  | date:display_dateFormat}}</span><br *ngIf="customerDetails.dob">
+          <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob  | date:display_dateFormat}}</span><br>
           <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span>
 
 
@@ -33,8 +28,8 @@
       <div>
         <h5>Add or view medical records for a consultation/visit</h5>
         <p>Patient visit date
-            <button  *ngIf="dateShow" >{{visitdate | date:dateFormatSp}}   &nbsp;</button>
-            <button  *ngIf="isShowList" (click) = "VisitList()">{{visitdate | date:dateFormatSp}}   &nbsp; <i class="arrow down" ></i></button>  &nbsp;
+            <button  *ngIf="dateShow" >{{visitdate }}   &nbsp;</button>
+            <button  *ngIf="isShowList" (click) = "VisitList()">{{visitdate}}   &nbsp; <i class="arrow down" ></i></button>  &nbsp;
             <!-- <span>(Recent visit)</span> -->
         </p>
       </div>
@@ -43,16 +38,16 @@
         <div class="col-md-7"style="padding-left:0px;padding-right:0px;">
           <label *ngIf="department">Department:</label><span *ngIf="department"> {{department | capitalizeFirst}}</span><br *ngIf="department">
           <label *ngIf="serviceName">Service/Consultation:</label><span *ngIf="serviceName"> {{serviceName | capitalizeFirst}}</span><br *ngIf="serviceName">
-          <!-- <label *ngIf="bookingType && bookingType == ('TOKEN' || 'APPT')">Consultation Mode: </label><span  *ngIf="bookingType && bookingType == ('TOKEN' || 'APPT')"> {{consultationMode}}</span> -->
-         <!-- <span *ngIf="bookingType !== ('TOKEN' || 'APPT')"> <label>Consultation Mode: </label>&nbsp;
+       <!-- <label *ngIf="bookingType && bookingType !='FOLLOWUP'">Consultation Mode: </label><span  *ngIf="bookingType && bookingType !='FOLLOWUP'"> {{consultationMode}}</span> -->
+         <!-- <span *ngIf="bookingType === 'FOLLOWUP'"> <label>Consultation Mode: </label>&nbsp;
           <select [(ngModel)]="patientConsultationType" (ngModelChange)="modeChanged($event)">
-            <option *ngFor="let mode of patientConsultationModes" [value]="mode.name">{{mode.name}}</option>
+            <option *ngFor="let mode of patientConsultationModes" [value]="mode.name">{{mode.displayName}}</option>
           </select>
         </span> -->
         </div>
         <div *ngIf = "mrId !== 0" class="col-md-5">
-            <label>MR NO:</label><span> {{mrId}}</span><br>
-            <label>MR Created On:</label><span> {{MrCreateddate}}</span>
+            <label>MR NO:</label><span> {{mrNumber}}</span><br>
+            <label>MR Created On:</label><span> {{mrCreatedDate}}</span>
         </div>
         <div class="clearfix"></div>
       </div>
