@@ -65,11 +65,11 @@
                 </i>
                 <span *ngIf="selected_location && !small_device_display">&nbsp;&nbsp; {{selected_location.place | capitalizeFirst}}</span>
               </a>
-            </li>  -->
-            
+            </li> 
+             -->
           </ul>
         </div>
-        <aside class="filterSidebar" *ngIf="show_loc">
+        <!-- <aside class="filterSidebar" *ngIf="show_loc">
           <section class="sidebar sidebar-bottom">
             <ul class="sidebar-menu">
               <div class="filterTextinput">
@@ -83,7 +83,7 @@
               </div>
             </ul>
           </section>
-        </aside>
+        </aside> -->
 
         <aside class="filterSidebar" *ngIf="filter_sidebar">
           <section class="sidebar sidebar-bottom">
@@ -103,7 +103,7 @@
               <div class="filterTextinput">
                 <li class="filterli filterDatepicker">
                   <input type="text" [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
-                    (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date">
+                    (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date" readonly>
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
