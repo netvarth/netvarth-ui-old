@@ -251,7 +251,7 @@
                 <div class="date-body">
                     <span class="selected-date">
                         <span class="icon-minus" (click)="calculateDate(-1, 'pre')" 
-                        [class.disable]="disableMinus()"></span>{{checkin_date | date: dateformat}}
+                        [class.disable]="disableMinus()"></span>{{checkin_date | date: dateDisplayFormat}}
                         <span class="icon-add" (click)="calculateDate(1, 'post')"></span>
                     </span>
                     <div class="form-group dt">

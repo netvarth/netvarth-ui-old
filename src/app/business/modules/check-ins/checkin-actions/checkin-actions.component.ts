@@ -77,6 +77,8 @@ export class CheckinActionsComponent implements OnInit {
     activeDate;
     ynwUuid;
     showToken;
+    dateDisplayFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
