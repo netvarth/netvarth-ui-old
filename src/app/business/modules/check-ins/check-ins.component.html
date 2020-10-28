@@ -197,7 +197,7 @@
                       </div>
                       <div class="filterTextinput">
                         <li class="filterli">
-                          <input type="text" id="pid" [(ngModel)]="filter.patientId" (blur)="doSearch()"
+                          <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
                           (keyup)="keyPressed($event)" class="filterTextbox" placeholder="{{customerIdTooltip | capitalizeFirst}}">
                         </li>
                       </div>
@@ -706,7 +706,7 @@
                         </div>
                          <div class="filterTextinput">
                         <li class="filterli">
-                          <input type="text" id="pid" [(ngModel)]="filter.patientId" (blur)="doSearch()"
+                          <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
                           (keyup)="keyPressed($event)" class="filterTextbox" placeholder="{{customerIdTooltip | capitalizeFirst}}">
                         </li>
                       </div>
@@ -995,7 +995,7 @@
                         </div>
                         <div class="filterTextinput">
                           <li class="filterli">
-                            <input type="text" id="pid" [(ngModel)]="filter.patientId" (blur)="doSearch()"
+                            <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
                             (keyup)="keyPressed($event)" class="filterTextbox" placeholder="{{customerIdTooltip | capitalizeFirst}}">
                           </li>
                         </div>
