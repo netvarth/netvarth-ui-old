@@ -206,7 +206,7 @@
 </div>
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'reschedule'">
     Reschedule {{(showToken) ? 'Token' : 'Check-in'}} for
-    {{checkin.waitlistingFor[0].firstName | capitalizeFirst}}{{checkin.waitlistingFor[0].lastName | capitalizeFirst}}
+    {{checkin.waitlistingFor[0].firstName | capitalizeFirst}} {{checkin.waitlistingFor[0].lastName | capitalizeFirst}}
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'slotChange'">
@@ -233,7 +233,7 @@
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"
                     class="fa wtsapvid-icon"></i>
                 {{checkin.service.name}} </p>
-            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: dateFormat}}, {{checkin.checkInTime}}
+            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: dateFormat}}, [{{checkin.queue.queueStartTime}}-{{checkin.queue.queueEndTime}}]
             </p>
         </div>
         <div class="clearfix"></div>
