@@ -1,4 +1,4 @@
-<section class="container no-padding-small">
+<section class="container no-padding-small cust-book-details">
     <div class="content p0 comn-cls checkin-details">
         <div class="row">
             <div class="panel panel-default">
@@ -9,7 +9,7 @@
                 </div>
                 <div class="panel-body no-padding">
                     <div class="c-outer m0">
-                        <div class="c-body col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <div class="c-body booking-content col-md-12 col-xs-12 col-sm-12 no-padding">
                             <!-- graphics -->
                             <div class="graphics-div">
                                 <span>
@@ -62,7 +62,7 @@
 
                                     <!-- Content -->
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-8">
+                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6">
                                             <div class="each-item">
                                                 <span class="item-head">Booking for</span>
                                                 <span
@@ -78,7 +78,7 @@
                                                 <span class="item-label-val">{{waitlist.waitlistPhoneNumber}}</span>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-4 txt-align-center">
+                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6 txt-align-center">
                                             <span class="item-head chk-stats">Check your status <i
                                                     class="fa fa-hand-o-down"></i></span>
                                             <div class="mgn-up-10">
@@ -135,20 +135,22 @@
                                     </div>
 
                                     <!-- Show more -->
-                                    <div>
+                                    <div class="more_view">
                                         <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a
                                                 class="fl-left">View more</a></span>
                                         <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a
                                                 class="fl-left">View less</a></span>
-                                        <span class="opt-actions" (click)="gotoActions(waitlist)"><a>ACTIONS</a></span>
+                                        <span class="opt-actions" (click)="gotoActions(waitlist)"><a>Actions</a></span>
                                     </div>
 
                                     <!-- Instructions,messages,notes -->
-                                    <div *ngIf="view_more" class="mgn-up-30">
+                                    <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                                         <mat-tab-group animationDuration="10ms">
                                             <mat-tab label="Instructions">
                                                 <span *ngIf="waitlist.service && waitlist.service.postInfoEnabled">
-                                                    {{waitlist.service.postInfoTitle}}
+                                                    <h6> {{waitlist.service.postInfoTitle}} </h6>
+                                                    <span [innerHTML]="waitlist.service.postInfoText">
+                                                    </span>
                                                 </span>
                                                 <span *ngIf="waitlist.service && !waitlist.service.postInfoEnabled">No
                                                     Instructions</span>

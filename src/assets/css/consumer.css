@@ -5585,9 +5585,9 @@
     .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details {
         flex-direction: column;
     }
-    .checkin-details .chk-stats {
+    /* .checkin-details .chk-stats {
         display: none !important;
-    }
+    } */
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .lt {
@@ -6342,6 +6342,27 @@
     }
     .greeting {
         font-size : 1.7rem !important;
+    }
+    .cust-book-details .checkin-details .row {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+    }
+    .cust-book-details  .card {
+        padding: 10px !important;
+    }
+    .cust-book-details  h5 {
+        margin-left: 10px !important;
+    }
+    .booking-content .col-lg-12, .booking-content .col-md-12, .booking-content .col-sm-12, .booking-content .col-xs-12 {
+        padding-right: 3px !important;
+        padding-left: 0px !important;
+    }
+    .cust-book-details .tp-l {
+        margin-left: 10px !important;
+        padding-right: 15px !important;
+    }
+    .cust-book-details .more_view {
+        margin-left: 10px !important;
     }
 }
 
