@@ -47,10 +47,6 @@ export class CheckinDetailComponent implements OnInit {
     titlename = 'Check-in Details';
     showtoken: any;
     provider_label;
-    iconClass: string;
-    view_more = false;
-    path = projectConstants.PATH;
-    qr_value: string;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -95,32 +91,8 @@ export class CheckinDetailComponent implements OnInit {
     ngOnInit() {
         this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
             (data) => {
+                console.log(data);
                 this.waitlist = data;
-                this.generateQR();
-                if (this.waitlist.service.serviceType === 'virtualService') {
-                    switch (this.waitlist.service.virtualCallingModes[0].callingMode) {
-                        case 'Zoom': {
-                          this.iconClass = 'fa zoom-icon';
-                          break;
-                        }
-                        case 'GoogleMeet': {
-                          this.iconClass = 'fa meet-icon';
-                          break;
-                        }
-                        case 'WhatsApp': {
-                          if (this.waitlist.service.virtualServiceType === 'audioService') {
-                            this.iconClass = 'fa wtsapaud-icon';
-                          } else {
-                            this.iconClass = 'fa wtsapvid-icon';
-                          }
-                          break;
-                        }
-                        case 'Phone': {
-                          this.iconClass = 'fa phon-icon';
-                          break;
-                        }
-                      }
-                }
                 this.showtoken = this.waitlist.showToken;
                 if (this.showtoken) {
                     this.titlename = 'Token Details';
@@ -130,15 +102,10 @@ export class CheckinDetailComponent implements OnInit {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
-
-    generateQR() {
-        this.qr_value = this.path + 'status/' + this.waitlist.checkinEncId;
-    }
     gotoPrev() {
         this.locationobj.back();
     }
-    addCommonMessage(waitlist, event) {
-        event.stopPropagation();
+    addCommonMessage(waitlist) {
         const pass_ob = {};
         pass_ob['source'] = 'consumer-waitlist';
         pass_ob['uuid'] = this.ynwUuid;
@@ -191,8 +158,5 @@ export class CheckinDetailComponent implements OnInit {
     }
     providerDetail(provider) {
         this.router.navigate(['searchdetail', provider.uniqueId]);
-      }
-      viewMore() {
-          this.view_more = !this.view_more;
       }
 }

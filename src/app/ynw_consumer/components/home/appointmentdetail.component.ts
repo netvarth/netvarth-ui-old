@@ -43,10 +43,6 @@ export class ApptDetailComponent implements OnInit {
     communication_history: any = [];
     appt;
     provider_label: any;
-    qr_value: string;
-    path = projectConstants.PATH;
-    iconClass: string;
-    view_more = false;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -72,44 +68,16 @@ export class ApptDetailComponent implements OnInit {
         this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
             (data) => {
                 this.appt = data;
-                this.generateQR();
-                if (this.appt.service.serviceType === 'virtualService') {
-                    switch (this.appt.service.virtualCallingModes[0].callingMode) {
-                        case 'Zoom': {
-                          this.iconClass = 'fa zoom-icon';
-                          break;
-                        }
-                        case 'GoogleMeet': {
-                          this.iconClass = 'fa meet-icon';
-                          break;
-                        }
-                        case 'WhatsApp': {
-                          if (this.appt.service.virtualServiceType === 'audioService') {
-                            this.iconClass = 'fa wtsapaud-icon';
-                          } else {
-                            this.iconClass = 'fa wtsapvid-icon';
-                          }
-                          break;
-                        }
-                        case 'Phone': {
-                          this.iconClass = 'fa phon-icon';
-                          break;
-                        }
-                      }
-                }
+                console.log(this.appt);
             },
             (error) => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
-    generateQR() {
-        this.qr_value = this.path + 'status/' + this.appt.appointmentEncId;
-    }
     gotoPrev() {
         this.locationobj.back();
     }
-    addCommonMessage(appt, event) {
-        event.stopPropagation();
+    addCommonMessage(appt) {
         const pass_ob = {};
         pass_ob['source'] = 'consumer-waitlist';
         pass_ob['uuid'] = this.ynwUuid;
@@ -170,8 +138,4 @@ export class ApptDetailComponent implements OnInit {
     providerDetail(provider) {
         this.router.navigate(['searchdetail', provider.uniqueId]);
       }
-
-      viewMore() {
-        this.view_more = !this.view_more;
-    }
 }
