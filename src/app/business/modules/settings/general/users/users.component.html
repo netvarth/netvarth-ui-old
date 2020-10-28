@@ -125,9 +125,15 @@
                         <tr class="grid-pad" [class.grid-disabled]="user.status=='INACTIVE'" *ngIf="!api_loading">
                             <td>
                                     <div *ngIf="user.userType === 'ASSISTANT' || user.userType === 'ADMIN'" class="bold pull-left mgn-lt-5 teli-wtsap-a"
-                                    >{{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}</div>
+                                    >
+                                    {{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}
+                                   
+                                </div>
                                 <div *ngIf="user.userType === 'PROVIDER' " class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
-                                (click)="manageSettings(user.id)">{{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}}</div>
+                                (click)="manageSettings(user.id)">
+                                <!-- {{user.firstName | capitalizeFirst}} {{user.lastName| capitalizeFirst}} -->
+                                {{user.businessName}}
+                            </div>
                             </td>
                             <td>
                                     <span class="ttle" *ngIf="user.userType === 'PROVIDER' ">{{provider_label | capitalizeFirst}}</span>

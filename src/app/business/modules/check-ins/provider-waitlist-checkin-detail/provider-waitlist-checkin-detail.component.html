@@ -21,7 +21,7 @@
           <div class="card" *ngIf="!api_loading">
             <div class="c-details">
               <div class="bk-ctrl">
-                <span class="backtodashboard" (click)="gotoPrev()"><span class="strong">{{go_back_cap}}</span></span>
+                <!-- <span class="backtodashboard" (click)="gotoPrev()"><span class="strong">{{go_back_cap}}</span></span> -->
               </div>
               <!-- <button (click)="gotoPrev()">Back</button> -->
               <h2 *ngIf="!showToken">{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
@@ -97,7 +97,8 @@
                 <div class="item" *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName"><span class="ttle" *ngIf="!showToken">{{waitlist_for_cap}}</span>
                   <span class="ttle" *ngIf="showToken">Token for</span>
                   <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">
-                    {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                    <!-- {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}} -->
+                    {{user.businessName}}
                     <span
                       *ngIf="user.primaryMobileNo && user.primaryMobileNo.length === 10">({{user.primaryMobileNo}})</span>
                   </span>

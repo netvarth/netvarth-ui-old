@@ -176,7 +176,8 @@
                                             <mat-select placeholder="Select Provider" [ngModel]="selected_user" #usersel
                                                 (selectionChange)="handleUserSelection(usersel.value)">
                                                 <mat-option *ngFor="let user of users" [value]="user">
-                                                    {{user.firstName}} {{user.lastName}}
+                                                    <!-- {{user.firstName}} {{user.lastName}} -->
+                                                    {{user.businessName}}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
