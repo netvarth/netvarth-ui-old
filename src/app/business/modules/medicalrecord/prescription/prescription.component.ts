@@ -19,6 +19,8 @@ import { ShareRxComponent } from './share-rx/share-rx.component';
 })
 export class PrescriptionComponent implements OnInit {
 
+  prescriptionSharedTimestamp: any;
+  prescriptionShared: any;
   instructiondialogRef: any;
   addDrugdialogRef;
   drugList: any = [];
@@ -54,7 +56,7 @@ export class PrescriptionComponent implements OnInit {
     public provider_services: ProviderServices,
     private medicalrecord_service: MedicalrecordService,
   ) {
-     this.medicalrecord_service.patient_data.subscribe(res => {
+    this.medicalrecord_service.patient_data.subscribe(res => {
       this.navigations = res;
       console.log(this.navigations);
       this.provider_user_Id = res.provider_id;
@@ -62,7 +64,7 @@ export class PrescriptionComponent implements OnInit {
         const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
         this.provider_user_Id = user.id;
       }
-     
+
     });
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       this.mrId = mrId;
@@ -76,14 +78,31 @@ export class PrescriptionComponent implements OnInit {
   ngOnInit() {
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.providerId = user.id;
-   // this.getDigitalSign();
+    // this.getDigitalSign();
     if (this.mrId === 0) {
       this.loading = false;
 
     } else {
       this.getMrprescription(this.mrId);
+      this.getMedicalRecord(this.mrId)
     }
 
+  }
+
+  getMedicalRecord(mrId) {
+
+
+    this.provider_services.GetMedicalRecord(mrId)
+      .subscribe((data: any) => {
+        if (data) {
+          this.prescriptionShared = data.prescShared;
+          this.prescriptionSharedTimestamp = data.lastSharedTime;
+
+        }
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
   }
   deleteTempImage(index) {
     this.selectedMessage.files.splice(index, 1);
@@ -240,7 +259,7 @@ export class PrescriptionComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: { mode: 'view' }
     };
-    this.router.navigate(['/provider/customers/medicalrecord/uploadRx'],navigationExtras);
+    this.router.navigate(['/provider/customers/medicalrecord/uploadRx'], navigationExtras);
   }
   imageSize(val) {
     let imgsize;
