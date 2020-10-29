@@ -13,7 +13,11 @@
                             <div class="info-img">
                                 <img src="assets/images/bg-01.png"></div>
                             <div class="details">
-                                <div class="book-head"> Booking Confirmed </div>
+                                <!-- <div class="book-head"> Booking Confirmed </div> -->
+                                <div class="book-head" *ngIf="type !== 'waitlistreschedule'"> Booking Confirmed </div>
+                                <div class="book-head" *ngIf="type === 'waitlistreschedule' &&  waitlist.token"> Token rescheduled </div>
+                                <div class="book-head" *ngIf="type === 'waitlistreschedule' &&  !waitlist.token"> Checkin rescheduled </div>
+
                                 <div class="book-details"> Booking details </div>
                                 <table class="book-details-sub  chkntoknappt-details">
                                     <tbody>

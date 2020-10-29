@@ -26,6 +26,7 @@ export class ConfirmPageComponent implements OnInit {
   email;
   apiloading = true;
   provider_label;
+  type;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions
@@ -35,6 +36,9 @@ export class ConfirmPageComponent implements OnInit {
       params => {
         // this.shared_functions.setitemonLocalStorage('inPostInfo', true);
         this.infoParams = params;
+        if (this.infoParams.type == 'waitlistreschedule') {
+          this.type = this.infoParams.type
+        }
         if (params.uuid && params.account_id) {
           this.shared_services.getCheckinByConsumerUUID(params.uuid, params.account_id).subscribe(
             (waitlist: any) => {
