@@ -100,13 +100,13 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceId': mrDetails.waitlist.service.id,
           'serviceName': mrDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': mrDetails.consLastVisitedDate,
+          'booking_date': mrDetails.waitlist.consLastVisitedDate,
           'booking_time': mrDetails.waitlist.checkInTime,
           'department': mrDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': mrDetails.waitlist.ynwUuid,
           'mrId': mrDetails.mrId,
-          'visitDate': mrDetails.consLastVisitedDate,
+          'visitDate': mrDetails.waitlist.consLastVisitedDate,
           'back_type': 'consumer'
 
         }
@@ -122,11 +122,11 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': mrDetails.appointmnet.service.name,
           'department': mrDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': mrDetails.consLastVisitedDate,
+          'booking_date': mrDetails.appointmnet.consLastVisitedDate,
           'booking_time': mrDetails.appointmnet.apptTakenTime,
           'mrId': mrDetails.mrId,
           'booking_id': mrDetails.appointmnet.uid,
-          'visitDate': mrDetails.consLastVisitedDate,
+          'visitDate': mrDetails.appointmnet.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
@@ -155,13 +155,13 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceId': mrDetails.waitlist.service.id,
           'serviceName': mrDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': mrDetails.consLastVisitedDate,
+          'booking_date': mrDetails.waitlist.consLastVisitedDate,
           'booking_time': mrDetails.waitlist.checkInTime,
           'department': mrDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': mrDetails.waitlist.ynwUuid,
           'mrId': mrDetails.mrId,
-          'visitDate': mrDetails.consLastVisitedDate,
+          'visitDate': mrDetails.waitlist.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
@@ -176,11 +176,11 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': mrDetails.appointmnet.service.name,
           'department': mrDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': mrDetails.consLastVisitedDate,
+          'booking_date': mrDetails.appointmnet.consLastVisitedDate,
           'booking_time': mrDetails.appointmnet.apptTakenTime,
           'mrId': mrDetails.mrId,
           'booking_id': mrDetails.appointmnet.uid,
-          'visitDate': mrDetails.consLastVisitedDate,
+          'visitDate': mrDetails.appointmnet.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
