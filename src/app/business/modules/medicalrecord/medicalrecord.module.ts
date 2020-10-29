@@ -21,6 +21,7 @@ import { DrugListComponent } from './prescription/drug-list/drug-list.component'
 import { InstructionsComponent } from './prescription/instructions/instructions.component';
 import { ImagesviewComponent } from './prescription/imagesview/imagesview.component';
 import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-list.component';
+import { UploadDigitalSignatureComponent } from './prescription/upload-digital-signature/upload-digital-signature.component';
 
 
 
@@ -38,7 +39,8 @@ import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-l
             DrugListComponent ,
              InstructionsComponent,
               ImagesviewComponent,
-              MedicalrecordListComponent
+              MedicalrecordListComponent,
+              UploadDigitalSignatureComponent
             ],
   imports: [
     SharedModule,
