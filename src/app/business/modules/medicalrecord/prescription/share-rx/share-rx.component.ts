@@ -141,7 +141,7 @@ export class ShareRxComponent implements OnInit {
               'pushNotification': this.pushnotify
             }
           };
-           this.provider_services.shareRx(this.mrId, passData)
+           this.provider_services.shareRxforProvider(this.mrId, passData)
             .subscribe((data) => {
               this.shared_functions.openSnackBar('Prescription shared successfully');
               this.dialogRef.close();
