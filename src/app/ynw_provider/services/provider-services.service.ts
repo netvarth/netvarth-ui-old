@@ -1612,7 +1612,7 @@ export class ProviderServices {
       return this.servicemeta.httpPost(url, data);
    }
    shareRxforProvider(id, data) {
-      const url = 'provider/mr/shareMedicalRecord/provider/' + id;
+      const url = 'provider/mr/sharePrescription/provider/' + id;
       return this.servicemeta.httpPost(url, data);
    }
    updateMR(data, mrId) {
