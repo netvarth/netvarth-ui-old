@@ -233,7 +233,7 @@
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"
                     class="fa wtsapvid-icon"></i>
                 {{checkin.service.name}} </p>
-            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: dateformat}}, [{{checkin.queue.queueStartTime}}-{{checkin.queue.queueEndTime}}]
+            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: dateFormat}}, [{{checkin.queue.queueStartTime}}-{{checkin.queue.queueEndTime}}]
             </p>
         </div>
         <div class="clearfix"></div>
