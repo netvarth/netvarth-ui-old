@@ -133,6 +133,12 @@ export class LastVisitComponent implements OnInit {
     this.selectedRowIndex = visitDetails.mrId;
 
     if (visitDetails.waitlist) {
+      let providerId ;
+      if (visitDetails.waitlist.provider && visitDetails.waitlist.provider.id) {
+       providerId = visitDetails.waitlist.provider.id;
+      } else {
+        providerId = '';
+      }
       const navigationExtras: NavigationExtras = {
         queryParams: {
           'customerDetail': JSON.stringify(visitDetails.waitlist.waitlistingFor[0]),
@@ -147,6 +153,7 @@ export class LastVisitComponent implements OnInit {
           'mrId': visitDetails.mrId,
           'visitDate': visitDetails.waitlist.consLastVisitedDate,
           'back_type': this.back_type,
+          'provider_id': providerId
         }
       };
       console.log(navigationExtras);
@@ -157,6 +164,12 @@ export class LastVisitComponent implements OnInit {
       this.dialogRef.close(result);
 
     } else if (visitDetails.appointmnet) {
+      let providerId ;
+      if (visitDetails.appointmnet.provider && visitDetails.appointmnet.provider.id) {
+       providerId = visitDetails.appointmnet.provider.id;
+      } else {
+        providerId = '';
+      }
 
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -171,7 +184,8 @@ export class LastVisitComponent implements OnInit {
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
           'visitDate': visitDetails.consLastVisitedDate.consLastVisitedDate,
-          'back_type': this.back_type
+          'back_type': this.back_type,
+          'provider_id': providerId
         }
       };
       const result = {
