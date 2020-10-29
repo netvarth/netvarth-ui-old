@@ -94,6 +94,8 @@ export class LastVisitComponent implements OnInit {
       visitdate = visit.waitlist.consLastVisitedDate;
     } else if (visit.appointmnet) {
       visitdate = visit.appointmnet.consLastVisitedDate;
+    } else {
+      visitdate = visit.consLastVisitedDate;
     }
     return visitdate;
   }

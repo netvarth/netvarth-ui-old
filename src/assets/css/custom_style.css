@@ -5236,11 +5236,13 @@ i.notavail {
 } */
 
 .cust-sect .custs:nth-child(odd), .qset:nth-child(odd), .dboard:nth-child(odd), .custlabl:nth-child(odd) {
-  background: rgba(0, 0, 0, .03) !important;
+  /* background: rgba(0, 0, 0, .03) !important; */
+  border-bottom: 1px solid #c7c7c7;
 }
 
 .cust-sect .custs:nth-child(even), .qset:nth-child(even), .dboard:nth-child(even), .custlabl:nth-child(even) {
-  background: transparent !important;
+  /* background: transparent !important; */
+  border-bottom: 1px solid #c7c7c7;
 }
 
 .dboarduser {

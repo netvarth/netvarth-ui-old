@@ -259,9 +259,9 @@ ul.bus-actions-horiz li {
 }
 
 .question-header {
-  color: #999;
-  font-size: 0.8rem;
-  font-weight: 500;
+  color: #999 !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
 }
 
 .question-main-outer {

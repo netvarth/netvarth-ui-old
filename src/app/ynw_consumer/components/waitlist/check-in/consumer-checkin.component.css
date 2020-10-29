@@ -746,7 +746,7 @@ ul.bus-actions li a.lnk {
 }
 
 .c-checkin-new .lnk {
-  font-size: 0.7rem !important;
+  font-size: 1rem !important;
   font-weight: 700 !important;
   /* text-transform: uppercase !important; */
 }
@@ -812,11 +812,13 @@ ul.bus-actions li a.lnk {
 .c-checkin-new .icon-minus {
   margin-top: 3px !important;
   margin-right: 5px !important;
+  font-size: 1.5rem;
 }
 
 .c-checkin-new .icon-add {
   margin-top: 3px !important;
   margin-left: 5px !important;
+  font-size: 1.5rem;
 }
 
 .brd-light {
@@ -830,8 +832,9 @@ ul.bus-actions li a.lnk {
 
 .c-checkin-new .chkindt {
   font-weight: 600;
-  font-size: 0.75rem !important;
+  font-size: 1rem !important;
   padding-top: 2px;
+  margin-top: 3px !important;
 }
 
 .c-checkin-new .caldiv {
@@ -840,11 +843,12 @@ ul.bus-actions li a.lnk {
 
 .c-checkin-new .slotdiv mat-chip {
   font-weight: 600;
-  font-size: 0.70rem !important;
+  font-size: 1rem !important;
   background-color: #fff !important;
   border: 1px solid #ccc !important;
   border-radius: 20px !important;
   min-width: 80px !important;
+  padding: 15px !important;
 }
 .c-checkin-new .slotdiv {
   max-height: 175px !important;
@@ -1170,4 +1174,12 @@ height: 150px !important;
     color: #1572a8;
     font-size: 1.2rem;
     font-weight: 300;
+   }
+   .c-checkin-new .caldiv mat-datepicker-toggle button.mat-icon-button {
+    width: 50px !important;
+    height: 50px !important;
+   }
+   .c-checkin-new .caldiv mat-datepicker-toggle button.mat-icon-button svg{
+    height: 40px;
+    width: 40px;
    }
