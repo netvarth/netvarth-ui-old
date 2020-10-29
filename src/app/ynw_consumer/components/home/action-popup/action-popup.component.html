@@ -6,48 +6,68 @@
     <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-30">
         <!-- For large devices -->
         <mat-grid-list cols="4" rowHeight="120px" [gutterSize]="'30px'" class="action-big">
-            <mat-grid-tile *ngIf="bookingDetails.appointmentEncId && showReschedule" (click)="gotoAptmtReschedule()">
-                <img src="assets/images/myjaldee/Appoinment-01.svg" class="width-50">
+            <mat-grid-tile *ngIf="showRescheduleAppt" (click)="gotoAptmtReschedule()">
+                <img src="assets/images/Reschedule-01-01.svg" class="width-45">
+                <mat-grid-tile-footer>
+                    <div class="footer-text">Reschedule</div>
+                </mat-grid-tile-footer>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="showRescheduleWtlist" (click)="gotoWaitlistReschedule()">
+                <img src="assets/images/Reschedule-01-01.svg" class="width-45">
                 <mat-grid-tile-footer>
                     <div class="footer-text">Reschedule</div>
                 </mat-grid-tile-footer>
             </mat-grid-tile>
             <mat-grid-tile *ngIf="showcheckinCancel || showapptCancel" (click)="doCancelWaitlist()"><img
-                    src="assets/images/error.svg" class="width-50">
-                    <mat-grid-tile-footer><div class="footer-text">Cancel</div></mat-grid-tile-footer>
+                    src="assets/images/error.svg" class="width-45">
+                    <mat-grid-tile-footer><div class="footer-text">Cancel
+                        <span *ngIf="showapptCancel">Appointment</span>
+                        <span *ngIf="showcheckinCancel && !bookingDetails.token">Checkin</span>
+                        <span *ngIf="showcheckinCancel && bookingDetails.token">Token</span>
+                    </div></mat-grid-tile-footer>
                 </mat-grid-tile>
             <mat-grid-tile (click)="addWaitlistMessage()"><img src="assets/images/myjaldee/icon-chat.svg"
                     class="width-70">
                     <mat-grid-tile-footer><div class="footer-text">Send Message</div></mat-grid-tile-footer>
                 </mat-grid-tile>
             <mat-grid-tile *ngIf="showcheckinMeet || showapptMeet" (click)="getMeetingDetails()">
-                <img src="assets/images/myjaldee/sticky-notes.svg" class="width-50">
+                <img src="assets/images/myjaldee/sticky-notes.svg" class="width-45">
                 <mat-grid-tile-footer>
                     <div class="footer-text">Meeting Details</div>
                 </mat-grid-tile-footer>
             </mat-grid-tile>
             <mat-grid-tile *ngIf="apptLvTrackoff || chekinLvTrackoff" (click)="gotoLivetrack('false')">
-                <img src="assets/images/myjaldee/location.svg" class="width-50">
-                <mat-grid-tile-footer><div class="footer-text">Tracking off</div></mat-grid-tile-footer>
+                <img src="assets/images/myjaldee/location.svg" class="width-45">
+                <mat-grid-tile-footer><div class="footer-text">Tracking Off</div></mat-grid-tile-footer>
             </mat-grid-tile>
             <mat-grid-tile *ngIf="apptLvTrackon || chekinLvTrackon" (click)="gotoLivetrack('true')">
-                <img src="assets/images/myjaldee/placeholder.svg" class="width-50">
-                <mat-grid-tile-footer><div class="footer-text">Tracking on</div></mat-grid-tile-footer>
+                <img src="assets/images/myjaldee/placeholder.svg" class="width-45">
+                <mat-grid-tile-footer><div class="footer-text">Tracking On</div></mat-grid-tile-footer>
             </mat-grid-tile>
         </mat-grid-list>
 
         <!-- For small devices -->
-        <mat-grid-list cols="3" rowHeight="60px" [gutterSize]="'20px'" class="action-small">
-            <mat-grid-tile *ngIf="bookingDetails.appointmentEncId && showReschedule" (click)="gotoAptmtReschedule()">
-                <img src="assets/images/myjaldee/Appoinment-01.svg" class="width-30">
+        <mat-grid-list cols="3" rowHeight="100px" [gutterSize]="'10px'" class="action-small">
+            <mat-grid-tile *ngIf="showRescheduleAppt" (click)="gotoAptmtReschedule()">
+                <img src="assets/images/Reschedule-01-01.svg" class="width-30">
                 <mat-grid-tile-footer><div class="footer-text">Reschedule</div></mat-grid-tile-footer>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="showRescheduleWtlist" (click)="gotoWaitlistReschedule()">
+                <img src="assets/images/Reschedule-01-01.svg" class="width-30">
+                <mat-grid-tile-footer>
+                    <div class="footer-text">Reschedule</div>
+                </mat-grid-tile-footer>
             </mat-grid-tile>
             <mat-grid-tile *ngIf="showcheckinCancel || showapptCancel" (click)="doCancelWaitlist()"><img
                     src="assets/images/error.svg" class="width-30">
-                    <mat-grid-tile-footer><div class="footer-text">Cancel</div></mat-grid-tile-footer>
+                    <mat-grid-tile-footer><div class="footer-text">Cancel 
+                        <span *ngIf="showapptCancel">Appointment</span>
+                        <span *ngIf="showcheckinCancel && !bookingDetails.token">Checkin</span>
+                        <span *ngIf="showcheckinCancel && bookingDetails.token">Token</span>
+                    </div></mat-grid-tile-footer>
                 </mat-grid-tile>
             <mat-grid-tile (click)="addWaitlistMessage()"><img src="assets/images/myjaldee/icon-chat.svg"
-                    class="width-50">
+                    class="width-45">
                     <mat-grid-tile-footer><div class="footer-text">Send Message</div></mat-grid-tile-footer>
                 </mat-grid-tile>
             <mat-grid-tile *ngIf="showcheckinMeet || showapptMeet" (click)="getMeetingDetails()">
@@ -56,11 +76,11 @@
             </mat-grid-tile>
             <mat-grid-tile *ngIf="apptLvTrackoff || chekinLvTrackoff" (click)="gotoLivetrack('false')">
                 <img src="assets/images/myjaldee/location.svg" class="width-30">
-                <mat-grid-tile-footer><div class="footer-text">Tracking off</div></mat-grid-tile-footer>
+                <mat-grid-tile-footer><div class="footer-text">Tracking Off</div></mat-grid-tile-footer>
             </mat-grid-tile>
             <mat-grid-tile *ngIf="apptLvTrackon || chekinLvTrackon" (click)="gotoLivetrack('true')">
                 <img src="assets/images/myjaldee/placeholder.svg" class="width-30">
-                <mat-grid-tile-footer><div class="footer-text">Tracking on</div></mat-grid-tile-footer>
+                <mat-grid-tile-footer><div class="footer-text">Tracking On</div></mat-grid-tile-footer>
             </mat-grid-tile>
         </mat-grid-list>
     </div>

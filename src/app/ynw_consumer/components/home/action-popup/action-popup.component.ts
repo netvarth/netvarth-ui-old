@@ -16,13 +16,14 @@ export class ActionPopupComponent implements OnInit {
   addnotedialogRef: any;
   showapptCancel = false;
   showcheckinCancel = false;
-  showReschedule = false;
+  showRescheduleAppt = false;
   showapptMeet = false;
   showcheckinMeet = false;
   apptLvTrackon = false;
   apptLvTrackoff = false;
   chekinLvTrackoff = false;
   chekinLvTrackon = false;
+  showRescheduleWtlist = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   private router: Router,
@@ -35,7 +36,10 @@ export class ActionPopupComponent implements OnInit {
     console.log(this.bookingDetails);
     this.checkLvTrack();
     if (this.bookingDetails.apptStatus === 'Confirmed' || this.bookingDetails.apptStatus === 'Arrived') {
-      this.showReschedule = true;
+      this.showRescheduleAppt = true;
+    }
+    if (this.bookingDetails.waitlistStatus === 'checkedIn' || this.bookingDetails.waitlistStatus === 'arrived') {
+      this.showRescheduleWtlist = true;
     }
     if (this.bookingDetails.service.serviceType === 'virtualService' && this.bookingDetails.waitlistStatus !== 'done'
     && this.bookingDetails.waitlistStatus !== 'cancelled') {
