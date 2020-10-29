@@ -23,7 +23,7 @@
           <ng-container matColumnDef="consultationDate">
             <mat-header-cell *matHeaderCellDef> <b>Date</b></mat-header-cell>
             <mat-cell *matCellDef="let visit">
-              {{visit.consLastVisitedDate}}</mat-cell>
+              {{getLastVistDate(visit)}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="serviceName">
             <mat-header-cell *matHeaderCellDef>  <b>Service Name</b></mat-header-cell>

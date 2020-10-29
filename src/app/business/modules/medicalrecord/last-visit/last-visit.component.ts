@@ -88,9 +88,15 @@ export class LastVisitComponent implements OnInit {
         });
   }
 
-  // getLastVisitDate(date) {
-  //   return this.dateformat.transformToDateWithTime(new Date(date));
-  // }
+  getLastVisitDate(visit) {
+    let visitdate = '';
+    if (visit.waitlist) {
+      visitdate = visit.waitlist.consLastVisitedDate;
+    } else if (visit.appointmnet) {
+      visitdate = visit.appointmnet.consLastVisitedDate;
+    }
+    return visitdate;
+  }
   isMRCreated(visit) {
     let mrCreated = false;
     if (visit.waitlist) {
@@ -131,13 +137,13 @@ export class LastVisitComponent implements OnInit {
           'serviceId': visitDetails.waitlist.service.id,
           'serviceName': visitDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': visitDetails.consLastVisitedDate,
+          'booking_date': visitDetails.waitlist.consLastVisitedDate,
           'booking_time': visitDetails.waitlist.checkInTime,
           'department': visitDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': visitDetails.waitlist.ynwUuid,
           'mrId': visitDetails.mrId,
-          'visitDate': visitDetails.consLastVisitedDate,
+          'visitDate': visitDetails.waitlist.consLastVisitedDate,
           'back_type': this.back_type,
         }
       };
@@ -158,11 +164,11 @@ export class LastVisitComponent implements OnInit {
           'serviceName': visitDetails.appointmnet.service.name,
           'department': visitDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': visitDetails.consLastVisitedDate,
+          'booking_date': visitDetails.appointment.consLastVisitedDate,
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
-          'visitDate': visitDetails.consLastVisitedDate,
+          'visitDate': visitDetails.consLastVisitedDate.consLastVisitedDate,
           'back_type': this.back_type
         }
       };
