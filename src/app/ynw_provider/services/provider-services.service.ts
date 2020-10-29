@@ -1607,6 +1607,10 @@ rescheduleConsumerWaitlist(data){
    const url = 'provider/mr/sharePrescription/' + id;
    return this.servicemeta.httpPost(url, data);
   }
+  shareRxforProvider(id,data) {
+   const url = 'provider/mr/shareMedicalRecord/provider/' + id;
+   return this.servicemeta.httpPost(url, data);
+  }
   updateMR(data, mrId) {
     const url = 'provider/mr/' + mrId;
     return this.servicemeta.httpPut(url, data);
