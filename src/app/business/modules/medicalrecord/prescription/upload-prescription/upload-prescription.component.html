@@ -33,7 +33,7 @@
          <button  mat-button style= "margin-top: 10px;" class="cs-btn bt1 " >
                  <a class="pointer-cursor" style= "color: whitesmoke"
                  (click)="imagefile.click()"><input #imagefile type="file"
-                     accept="/*;capture=camera" style="display:none;" multiple
+                     accept="/*;capture=camera" style="display:none;" 
                      (change)="filesSelected($event)">Upload
                  Prescription</a>
 
@@ -80,11 +80,11 @@
                    </tr>
                  </tbody>
                </table>
-<span>If you have multiple prescriptions images, <a class="lnk action pointer-cursor"
+<!-- <span>If you have multiple prescriptions images, <a class="lnk action pointer-cursor"
  (click)="imagefile.click()"><input #imagefile type="file"
-     accept="/*;capture=camera" style="display:none;" multiple
+     accept="/*;capture=camera" style="display:none;" 
      (change)="filesSelected($event)"><u>Upload
- another</u></a></span>
+ another</u></a></span> -->
                <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && showSave">
                      <button type="submit" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="saveImages()" >
 
