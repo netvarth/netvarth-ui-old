@@ -62,7 +62,7 @@ export class PrescriptionComponent implements OnInit {
         const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
         this.provider_user_Id = user.id;
       }
-     
+
     });
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       this.mrId = mrId;
@@ -123,7 +123,6 @@ export class PrescriptionComponent implements OnInit {
   }
 
   saveDigitalSignImages(index) {
-    this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;

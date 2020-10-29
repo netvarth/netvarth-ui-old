@@ -1,8 +1,7 @@
 <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor"  (click)="back()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-      Medical records of {{patientDetails[0].firstName}} {{patientDetails[0].lastName}}
+      <span class="fa fa-arrow-left pointer-cursor" (click)="back()"></span>&nbsp;&nbsp;&nbsp;&nbsp; Medical records of {{patientDetails[0].firstName}} {{patientDetails[0].lastName}}
 
     </h5>
   </div>
@@ -34,10 +33,15 @@
 
             <mat-table *ngIf="mr_dataSource" [dataSource]="mr_dataSource">
 
-              <ng-container matColumnDef="consultationDate">
-                <mat-header-cell *matHeaderCellDef> Consultation Date</mat-header-cell>
+              <ng-container matColumnDef="createdDate">
+                <mat-header-cell *matHeaderCellDef> Created On </mat-header-cell>
                 <mat-cell *matCellDef=" let mr">
-                  {{ mr.consLastVisitedDate }}</mat-cell>
+                  {{ mr.mrCreatedDate }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="mrNo">
+                <mat-header-cell *matHeaderCellDef> MR # </mat-header-cell>
+                <mat-cell *matCellDef=" let mr">
+                  {{ mr.mrNumber }}</mat-cell>
               </ng-container>
               <ng-container matColumnDef="serviceName">
                 <mat-header-cell *matHeaderCellDef> Service/Consultation</mat-header-cell>
@@ -51,27 +55,26 @@
               </ng-container>
               <ng-container matColumnDef="medicalrecord">
                 <mat-header-cell *matHeaderCellDef>
-                  <b>MR</b>
+                  <b>MedicalRecord</b>
                 </mat-header-cell>
                 <mat-cell *matCellDef="let mr">
-                  <button (click)="viewMedicalRecord(mr)" style="text-align:center">
-                    <i class="medicalrecord-icon-customer"></i>View MR</button>
+                    <i class="medicalrecord-green-icon-customer"></i>
                 </mat-cell>
               </ng-container>
               <ng-container matColumnDef="rx">
                 <mat-header-cell *matHeaderCellDef>
-                  <b>RX</b>
+                  <b>Prescription</b>
                 </mat-header-cell>
                 <mat-cell *matCellDef="let mr">
-                  <button (click)="viewMR_prescription(mr)" style="text-align:center">
-                    <i class="mr-rx-icon-customer"></i>{{mr.prescriptionCreated===true?'View Rx':'Create Rx'}}</button>
+                  <i style="text-align:center" [ngClass]="mr.prescriptionCreated == true ? 'mr-rx-green-icon-customer':'mr-rx-icon-customer '"></i>
                 </mat-cell>
+
               </ng-container>
 
 
 
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row;columns:displayedColumns"></mat-row>
+              <mat-row *matRowDef="let row;columns:displayedColumns" (click)="getMedicalRecord(row)" [ngClass]="{'highlight': selectedRowIndex == row.mrId}"></mat-row>
 
             </mat-table>
 
