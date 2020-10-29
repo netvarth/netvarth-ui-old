@@ -461,7 +461,7 @@
                                                     </span>
                                                     <span class="pull-right hidden-xs" *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0">
                                                         <a class="search-action"
-                                                        (click)="!btn_clicked && openCoupons(search_result,true)">
+                                                        (click)="!btn_clicked && openCoupons(search_result)">
                                                         <img class="img" src="./assets/images/jcoupon.png"
                                                         alt="Jaldee Coupon" [matTooltip]="'Jaldee Coupons'"/>
                                                             <!-- <span style="display:block">{{jaldee_coupon}}</span> -->
@@ -504,7 +504,7 @@
                                             </span>
                                             <span class=" pic_align pull-left centeralign mgn-lt-20"
                                                 *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0"
-                                                (click)="!btn_clicked && openCoupons(search_result, true)"
+                                                (click)="!btn_clicked && openCoupons(search_result)"
                                                 [matTooltipClass]="tooltipcls" [matTooltip]="couponTooltip">
                                                 <img class="img1" src="./assets/images/jcoupon.png"
                                                     alt="Jaldee Coupon" />

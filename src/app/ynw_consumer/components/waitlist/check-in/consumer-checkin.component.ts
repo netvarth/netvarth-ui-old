@@ -1813,6 +1813,8 @@ export class ConsumerCheckinComponent implements OnInit {
             }
             if (found) {
                 this.couponvalid = true;
+                this.sharedFunctionobj.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+                this.action = '';
             } else {
                 this.api_cp_error = 'Coupon invalid';
             }

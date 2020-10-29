@@ -15,6 +15,7 @@ export class CouponsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
   ngOnInit() {
+    console.log(this.data);
     this.tempCouponList = this.data.couponsList;
     if (this.data.type) {
       this.type = this.data.type;
@@ -34,6 +35,7 @@ export class CouponsComponent implements OnInit {
         }
       }
     }
+    console.log(this.couponsList);
   }
 
   formatDateDisplay(dateStr) {

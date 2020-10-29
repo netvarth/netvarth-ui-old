@@ -323,9 +323,14 @@
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding"
-                                                *ngIf="(s3CouponsList.length > 0)"> <a class="lnk pointer-cursor action"
+                                                *ngIf="(s3CouponsList.length > 0)"> 
+                                                <a class="lnk pointer-cursor action" *ngIf="selected_coupons.length === 0"
                                                     (click)="applyPromocode()">Apply
-                                                    Promocode</a></div>
+                                                    Promocode</a>
+                                                    <a class="lnk pointer-cursor action" *ngIf="selected_coupons.length > 0"
+                                                    (click)="applyPromocode()">
+                                                    Promocode applied {{selected_coupons.toString()}}</a>
+                                                    </div>
                                             <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
                                                 <mat-chip-list class="btns">
                                                     <mat-chip (click)="handleSideScreen('note')"><a
