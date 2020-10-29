@@ -643,6 +643,12 @@ export class CheckinActionsComponent implements OnInit {
         medicalrecord_mode = 'view';
         mrId = this.checkin.mrId;
       }
+      let providerId ;
+      if (this.checkin.provider && this.checkin.provider.id) {
+       providerId = this.checkin.provider.id;
+      } else {
+        providerId = '';
+      }
       console.log(this.checkin);
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -658,7 +664,7 @@ export class CheckinActionsComponent implements OnInit {
           'mr_mode': medicalrecord_mode,
           'mrId': mrId,
           'back_type': 'waitlist',
-          'provider_id': this.checkin.provider.id
+          'provider_id': providerId
         }
       };
 
@@ -672,7 +678,12 @@ export class CheckinActionsComponent implements OnInit {
         medicalrecord_mode = 'view';
         mrId = this.checkin.mrId;
       }
-
+      let providerId ;
+      if (this.checkin.provider && this.checkin.provider.id) {
+       providerId = this.checkin.provider.id;
+      } else {
+        providerId = '';
+      }
       const navigationExtras: NavigationExtras = {
         queryParams: {
           'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
@@ -687,7 +698,7 @@ export class CheckinActionsComponent implements OnInit {
           'mr_mode': medicalrecord_mode,
           'booking_id': this.checkin.ynwUuid,
           'back_type': 'waitlist',
-          'provider_id': this.checkin.provider.id
+          'provider_id': providerId
         }
       };
       this.router.navigate(['provider', 'customers',  'medicalrecord', 'prescription'], navigationExtras);

@@ -610,6 +610,12 @@ export class AppointmentActionsComponent implements OnInit {
         medicalrecord_mode = 'view';
         mrId = this.appt.mrId;
       }
+      let providerId ;
+      if (this.appt.provider && this.appt.provider.id) {
+       providerId = this.appt.provider.id;
+      } else {
+        providerId = '';
+      }
       console.log(this.appt);
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -624,7 +630,7 @@ export class AppointmentActionsComponent implements OnInit {
           'mrId': mrId ,
           'booking_id': this.appt.uid,
           'back_type': 'appt',
-          'provider_id': this.appt.provider.id,
+          'provider_id': providerId,
           'visitDate': this.appt.consLastVisitedDate,
         }
       };
@@ -638,6 +644,12 @@ export class AppointmentActionsComponent implements OnInit {
       if (this.appt.mrId) {
         medicalrecord_mode = 'view';
         mrId = this.appt.mrId;
+      }
+       let providerId ;
+      if (this.appt.provider && this.appt.provider.id) {
+       providerId = this.appt.provider.id;
+      } else {
+        providerId = '';
       }
       const navigationExtras: NavigationExtras = {
 
@@ -653,7 +665,7 @@ export class AppointmentActionsComponent implements OnInit {
           'mrId': mrId ,
           'booking_id': this.appt.uid,
           'back_type': 'appt',
-          'provider_id': this.appt.provider.id,
+          'provider_id': providerId,
           'visitDate': this.appt.consLastVisitedDate,
         }
       };
