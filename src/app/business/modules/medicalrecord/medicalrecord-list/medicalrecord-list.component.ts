@@ -92,7 +92,7 @@ export class MedicalrecordListComponent implements OnInit {
 
   }
   getMedicalRecord(mrDetails) {
-    this.selectedRowIndex = mrDetails.mrId;
+   //  this.selectedRowIndex = mrDetails.mrId;
     if (mrDetails.waitlist) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -100,13 +100,13 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceId': mrDetails.waitlist.service.id,
           'serviceName': mrDetails.waitlist.service.name,
           'booking_type': 'TOKEN',
-          'booking_date': mrDetails.waitlist.consLastVisitedDate,
+          'booking_date': mrDetails.mrConsultationDate,
           'booking_time': mrDetails.waitlist.checkInTime,
           'department': mrDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': mrDetails.waitlist.ynwUuid,
           'mrId': mrDetails.mrId,
-          'visitDate': mrDetails.waitlist.consLastVisitedDate,
+          'visitDate': mrDetails.mrConsultationDate,
           'back_type': 'consumer'
 
         }
@@ -122,11 +122,11 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': mrDetails.appointmnet.service.name,
           'department': mrDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': mrDetails.appointmnet.consLastVisitedDate,
+          'booking_date': mrDetails.mrConsultationDate,
           'booking_time': mrDetails.appointmnet.apptTakenTime,
           'mrId': mrDetails.mrId,
           'booking_id': mrDetails.appointmnet.uid,
-          'visitDate': mrDetails.appointmnet.consLastVisitedDate,
+          'visitDate': mrDetails.mrConsultationDate,
           'back_type': 'consumer'
         }
       };
@@ -138,8 +138,8 @@ export class MedicalrecordListComponent implements OnInit {
           'serviceName': 'Consultation',
           'booking_type': 'FOLLOWUP',
           'mrId': mrDetails.id,
-          'visitDate': mrDetails.consLastVisitedDate,
-          'booking_date': mrDetails.consLastVisitedDate,
+          'visitDate': mrDetails.mrConsultationDate,
+          'booking_date': mrDetails.mrConsultationDate,
           'back_type': 'consumer'
         }
       };

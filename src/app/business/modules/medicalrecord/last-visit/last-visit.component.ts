@@ -130,7 +130,7 @@ export class LastVisitComponent implements OnInit {
 
   }
   getMedicalRecord(visitDetails) {
-    this.selectedRowIndex = visitDetails.mrId;
+    // this.selectedRowIndex = visitDetails.mrId;
 
     if (visitDetails.waitlist) {
       let providerId ;

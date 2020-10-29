@@ -74,7 +74,7 @@
 
 
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row;columns:displayedColumns" (click)="getMedicalRecord(row)" [ngClass]="{'highlight': selectedRowIndex == row.mrId}"></mat-row>
+              <mat-row *matRowDef="let row;columns:displayedColumns" (click)="getMedicalRecord(row)" class="pointlist" ></mat-row>
 
             </mat-table>
 

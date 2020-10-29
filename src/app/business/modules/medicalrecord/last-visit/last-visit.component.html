@@ -38,14 +38,14 @@
           </ng-container>
           <ng-container matColumnDef="mr">
             <mat-header-cell *matHeaderCellDef> <b>MedicalRecord</b></mat-header-cell>
-            <mat-cell *matCellDef="let visit">  <i style="color:MediumSeaGreen;" [ngClass]="isMRCreated(visit) == true ? 'medicalrecord-green-icon-customer':'medicalrecord-icon-customer'"></i></mat-cell>
+            <mat-cell *matCellDef="let visit">  <i [ngClass]="isMRCreated(visit) == true ? 'medicalrecord-green-icon-customer':'medicalrecord-icon-customer'"></i></mat-cell>
           </ng-container>
           <ng-container matColumnDef="rx">
             <mat-header-cell *matHeaderCellDef> <b>Prescription</b></mat-header-cell>
             <mat-cell *matCellDef="let visit">   <i  style="text-align:center" [ngClass]="isRxCreated(visit) == true ? 'mr-rx-green-icon-customer':'mr-rx-icon-customer '"></i></mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns" (click)="getMedicalRecord(row)"  [ngClass]="{'highlight': selectedRowIndex == row.mrId}"
+          <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns" (click)="getMedicalRecord(row)" class="pointlist"
          ></mat-row>
 
         </mat-table>
