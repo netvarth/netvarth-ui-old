@@ -68,6 +68,7 @@ export class ShareRxComponent implements OnInit {
   bdata: any;
   address: any;
   mobile: any;
+  type;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
@@ -82,6 +83,8 @@ export class ShareRxComponent implements OnInit {
           this.provider_user_Id = this.data.provider_user_Id;
           console.log(this.spId);
           this.mrId = this.data.mrId;
+          this.type = this.data.type;
+          console.log(this.type);
           this.chekintype = this.data.chekintype;
           this.medicalService.patient_data.subscribe(res => {
             this.customerDetail = JSON.parse(res.customerDetail);
@@ -103,7 +106,6 @@ export class ShareRxComponent implements OnInit {
   this.getMrprescription();
   this.getBusinessProfile();
   this.getBussinessProfileApi();
-  
  }
  createForm() {
   this.sharewith = 0;
@@ -130,43 +132,83 @@ export class ShareRxComponent implements OnInit {
            this.api_error = 'Custom id cannot be empty';
             return;
          }
-         if (this.sharewith !== 0  && this.customid !== '') {
-         const passData = {
-            'customId': this.customid,
-            'message': formdata.message,
-            'html': rxview,
-            'medium': {
-              'email': this.email,
-              'sms': this.sms,
-              'pushNotification': this.pushnotify
-            }
-          };
-           this.provider_services.shareRxforProvider(this.mrId, passData)
-            .subscribe((data) => {
-              this.shared_functions.openSnackBar('Prescription shared successfully');
-              this.dialogRef.close();
-            }, error => {
-                    this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                });
+     if (this.type === 'adddrug') {
+              if (this.sharewith !== 0  && this.customid !== '') {
+              const passData = {
+                  'customId': this.customid,
+                  'message': formdata.message,
+                  'html': rxview,
+                  'medium': {
+                    'email': this.email,
+                    'sms': this.sms,
+                    'pushNotification': this.pushnotify
+                  }
+                };
+                this.provider_services.shareRxforProvider(this.mrId, passData)
+                  .subscribe((data) => {
+                    this.shared_functions.openSnackBar('Prescription shared successfully');
+                    this.dialogRef.close();
+                  }, error => {
+                          this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      });
 
-         } else if (this.sharewith === 0) {
-          const passData = {
-            'message': formdata.message,
-            'html': rxview,
-            'medium': {
-              'email': this.email,
-              'sms': this.sms,
-              'pushNotification': this.pushnotify
+              } else if (this.sharewith === 0) {
+                const passData = {
+                  'message': formdata.message,
+                  'html': rxview,
+                  'medium': {
+                    'email': this.email,
+                    'sms': this.sms,
+                    'pushNotification': this.pushnotify
+                  }
+                };
+                this.provider_services.shareRx(this.mrId, passData)
+                  .subscribe((data) => {
+                    this.shared_functions.openSnackBar('Prescription shared successfully');
+                    this.dialogRef.close();
+                  }, error => {
+                          this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      });
+              }
+        } else {
+          if (this.sharewith !== 0  && this.customid !== '') {
+            const passData = {
+               'customId': this.customid,
+               'message': formdata.message,
+               'html': '',
+               'medium': {
+                 'email': this.email,
+                 'sms': this.sms,
+                 'pushNotification': this.pushnotify
+               }
+             };
+              this.provider_services.shareRxforProvider(this.mrId, passData)
+               .subscribe((data) => {
+                 this.shared_functions.openSnackBar('Prescription shared successfully');
+                 this.dialogRef.close();
+               }, error => {
+                       this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                   });
+   
+            } else if (this.sharewith === 0) {
+             const passData = {
+               'message': formdata.message,
+               'html': '',
+               'medium': {
+                 'email': this.email,
+                 'sms': this.sms,
+                 'pushNotification': this.pushnotify
+               }
+             };
+             this.provider_services.shareRx(this.mrId, passData)
+               .subscribe((data) => {
+                 this.shared_functions.openSnackBar('Prescription shared successfully');
+                 this.dialogRef.close();
+               }, error => {
+                       this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                   });
             }
-          };
-          this.provider_services.shareRx(this.mrId, passData)
-            .subscribe((data) => {
-              this.shared_functions.openSnackBar('Prescription shared successfully');
-              this.dialogRef.close();
-            }, error => {
-                    this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                });
-         }
+        }
   }
   onUserSelect(event) {
     this.customid = '';

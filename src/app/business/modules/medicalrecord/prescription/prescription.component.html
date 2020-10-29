@@ -112,7 +112,7 @@
   </div>
 
      <div *ngIf="digitalSign">
-          <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx()" >
+          <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx('adddrug')" >
 
               <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
 
@@ -162,6 +162,12 @@
               <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="updatePaperPrescription()">Edit Prescription</button>
              
           </div> -->
+          <div >
+            <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx('uploadrx')" >
+  
+                <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
+  
+        </div>
           </div>
         </ng-container>
 

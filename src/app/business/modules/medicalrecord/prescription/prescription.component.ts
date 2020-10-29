@@ -161,7 +161,7 @@ export class PrescriptionComponent implements OnInit {
     this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadRx']);
   }
 
-  shareManualRx() {
+  shareManualRx(type) {
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -169,7 +169,8 @@ export class PrescriptionComponent implements OnInit {
       data: {
         mrId: this.mrId,
         userId: this.provider_user_Id,
-        provider_user_Id: this.provider_user_Id
+        provider_user_Id: this.provider_user_Id,
+        type: type
       }
     });
     this.sharedialogRef.afterClosed().subscribe(result => {
