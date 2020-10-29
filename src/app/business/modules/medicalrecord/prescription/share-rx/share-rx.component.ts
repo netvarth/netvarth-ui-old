@@ -100,7 +100,7 @@ export class ShareRxComponent implements OnInit {
           });
       }
  ngOnInit() {
-  this.msgreceivers = [{'id': 0, 'name': 'patient'}, { 'id': this.provider_user_Id, 'name': 'sp'} ];
+  this.msgreceivers = [{'id': 0, 'name': 'Patient'}, { 'id': this.provider_user_Id, 'name': 'Doctor'} ];
   this.createForm();
   console.log(this.mrId);
   this.getMrprescription();

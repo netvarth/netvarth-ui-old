@@ -4,14 +4,14 @@
 
 
 <form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
-<h1 class="mat-dialog-title">share
+<h1 class="mat-dialog-title">Share Prescription
     <button #queue mat-dialog-close class="modal_close">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
 
 <mat-dialog-content>
-       
+
         <div class="form-group" >
   <mat-form-field>
         <mat-select name="item"   [(ngModel)]="sharewith"  placeholder="Share with whom" [ngModelOptions]="{standalone: true}"  (selectionChange)="onUserSelect($event)">
@@ -20,16 +20,16 @@
       </mat-form-field>
     </div>
 
-       
+
                 <div class="form-group" *ngIf="showcustomId">
                         <mat-form-field>
                             <input matInput type="text" class="form-control" id="customid"
                                 placeholder="Custome Id *" [(ngModel)]="customid" [ngModelOptions]="{standalone: true}"
                                 autocomplete="off">
                         </mat-form-field>
-                       
+
                     </div>
-               
+
 
     <div class="form-group" >
         <mat-form-field>
@@ -76,7 +76,7 @@
 </form>
 
 <div id="sharerxview" hidden>
-    <section style="padding: 10px;"> 
+    <section style="padding: 10px;">
       <div >
           <div style="float:left;">
               <img  style="width: 50px;" [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url">
@@ -95,7 +95,7 @@
                   <div>
                       <label *ngIf="customerDetail.dob" >DOB:</label><span *ngIf="customerDetail.dob" >{{customerDetail.dob  | date:display_dateFormat}}</span>
                       <p style="float: right;" *ngIf="customerDetail.gender"> <label >Gender:</label><span>{{customerDetail.gender | capitalizeFirst}}</span> </p>
-                  </div>          
+                  </div>
                    <table class="table table-bordered" >
                       <thead>
                       <tr >
@@ -129,12 +129,12 @@
                            </td>
                         <td>
                                {{drug.frequency}}
-                        </td>  
+                        </td>
                         <td>
                                {{drug.instructions}}
-                        </td>               
+                        </td>
                       </tr>
-                    </tbody>     
+                    </tbody>
                     </table>
       </div>
       <div style="height: 100px" >
