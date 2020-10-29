@@ -912,3 +912,7 @@ ul.details.badges li {
   position: absolute !important;
   right: 0 !important;
 }
+.serv-head {
+  background: rgba(0, 0, 0, 0.04);
+  padding: 10px 0 3px 10px !important;
+}
