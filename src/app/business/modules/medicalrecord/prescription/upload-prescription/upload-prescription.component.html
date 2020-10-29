@@ -22,9 +22,9 @@
                             </p> -->
                             <hr>
                             <span>Patient Name: {{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
-                            <span >Patient Id: {{display_PatientId}}</span><br>
-                            <span *ngIf="patientDetails.dob">DOB: {{patientDetails.dob  | date:display_dateFormat}}</span><br>
-                            <span *ngIf="patientDetails.gender">Gender: {{patientDetails.gender | capitalizeFirst}}</span><br>
+                            <span >Patient Id: {{display_PatientId}}</span><br  *ngIf="display_PatientId">
+                            <span *ngIf="patientDetails.dob">DOB: {{patientDetails.dob  | date:display_dateFormat}}</span><br *ngIf="patientDetails.dob">
+                            <span *ngIf="patientDetails.gender">Gender: {{patientDetails.gender | capitalizeFirst}}</span>
                             <hr>
                         </div>
   <div class="no-dta"  *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
