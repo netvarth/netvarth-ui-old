@@ -227,6 +227,10 @@ export class ConsumerCheckinComponent implements OnInit {
     rescheduleUserId;
     waitlist: any = [];
     holdselectedTime;
+    sel_ser_title;
+    checkin_date;
+    wtlst_for_fname;
+    wtlst_for_lname;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -394,6 +398,12 @@ export class ConsumerCheckinComponent implements OnInit {
                 this.waitlist = waitlst;
                 if (this.type === 'waitlistreschedule') {
                     this.waitlist_for.push({ id: this.waitlist.waitlistingFor[0].id, firstName: this.waitlist.waitlistingFor[0].firstName, lastName: this.waitlist.waitlistingFor[0].lastName, phoneNo: this.waitlist.phoneNumber });
+                    this.wtlst_for_fname = this.waitlist.waitlistingFor[0].firstName;
+                    this.wtlst_for_lname = this.waitlist.waitlistingFor[0].lastName;
+                    }
+                this.checkin_date = this.waitlist.date;
+                if (this.checkin_date !== this.todaydate){
+                    this.isFuturedate = true;
                 }
 
                 this.sel_loc = this.waitlist.queue.location.id;
