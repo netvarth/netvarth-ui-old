@@ -2,13 +2,12 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { Router, NavigationExtras, RoutesRecognized, ActivatedRoute } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
-import { filter, pairwise } from 'rxjs/operators';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -418,10 +417,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.pagination.startpageval = this.shared_functions.getitemFromGroupStorage('paginationStart') || 1;
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
-    this.breadcrumb_moreoptions = {
-      'show_learnmore': true, 'scrollKey': 'appointments',
-      'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-    };
+    // this.breadcrumb_moreoptions = {
+    //   'show_learnmore': true, 'scrollKey': 'appointments',
+    //   'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
+    // };
+    const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
+    if (savedtype !== undefined && savedtype !== null) {
+      this.time_type = savedtype;
+    }
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     if (this.server_date) {
@@ -436,24 +439,25 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getPos();
     this.getLabel();
     this.getDepartments();
+    this.getLocationList();
     this.getProviders();
     this.getServiceList();
     this.image_list_popup_temp = [];
-    const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
-    if (savedtype !== undefined && savedtype !== null) {
-      this.time_type = savedtype;
-    }
-    this.getLocationList().then(
-      () => {
-        this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
-        this.router.events
-          .pipe(filter((e: any) => e instanceof RoutesRecognized),
-            pairwise()
-          ).subscribe((e: any) => {
-            this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/check-ins/'));
-          });
-      }
-    );
+    // const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
+    // if (savedtype !== undefined && savedtype !== null) {
+    //   this.time_type = savedtype;
+    // }
+    // this.getLocationList().then(
+    //   () => {
+    //     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+    //     // this.router.events
+    //     //   .pipe(filter((e: any) => e instanceof RoutesRecognized),
+    //     //     pairwise()
+    //     //   ).subscribe((e: any) => {
+    //     //     this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/check-ins/'));
+    //     //   });
+    //   }
+    // );
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
@@ -1264,6 +1268,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setApptSelections();
   }
   getTodayWL() {
+    const _this = this;
     this.loading = true;
     const Mfilter = this.setFilterForApi();
     if (this.shared_functions.getitemFromGroupStorage('selQ')) {
@@ -1284,36 +1289,36 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const promise = this.getTodayWLCount(Mfilter);
       promise.then(
         result => {
-          this.chkSelectAppointments = false;
-          this.provider_services.getTodayWaitlist(Mfilter)
+          _this.chkSelectAppointments = false;
+          _this.provider_services.getTodayWaitlist(Mfilter)
             .subscribe(
               (data: any) => {
-                this.appt_list = [];
-                this.appt_list = data;
-                this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
-                if (this.filterapplied === true) {
-                  this.noFilter = false;
+                _this.appt_list = [];
+                _this.appt_list = data;
+                _this.todayAppointments = _this.shared_functions.groupBy(_this.appt_list, 'waitlistStatus');
+                if (_this.filterapplied === true) {
+                  _this.noFilter = false;
                 } else {
-                  this.noFilter = true;
+                  _this.noFilter = true;
                 }
-                this.setCounts(this.appt_list);
-                this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-                this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
-                this.loading = false;
+                _this.setCounts(this.appt_list);
+                _this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+                _this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
+                _this.loading = false;
               },
               () => {
                 // this.load_waitlist = 1;
-                this.loading = false;
+                _this.loading = false;
               },
               () => {
-                this.loading = false;
+                _this.loading = false;
               });
         },
         () => {
-          this.loading = false;
+          _this.loading = false;
         });
     } else {
-      this.loading = false;
+      _this.loading = false;
     }
   }
   getFutureWL() {

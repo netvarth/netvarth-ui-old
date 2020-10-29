@@ -1,14 +1,10 @@
-<!-- <section #apptSection>
-  <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
-    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
 <section class="">
-  <div class="title-gb no-padding">
-      <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-       Appointments
+    <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        Appointments
         <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
-      </div>
-  </div>
+       </h5>   
+    </div>
 </section>
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">

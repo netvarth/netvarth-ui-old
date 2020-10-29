@@ -86,10 +86,9 @@ export class CheckinActionsComponent implements OnInit {
         public dateformat: DateFormatPipe, private dialog: MatDialog,
         private provider_shared_functions: ProviderSharedFuctions,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
-            this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+        this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
-        console.log(this.data);
         this.checkin = this.data.checkinData;
         this.ynwUuid = this.checkin.ynwUuid;
         this.location_id = this.checkin.queue.location.id;
@@ -97,7 +96,6 @@ export class CheckinActionsComponent implements OnInit {
         this.checkin_date = this.checkin.date;
         this.accountid = this.checkin.providerAccount.id;
         this.showToken = this.checkin.showToken;
-        console.log(this.showToken)
         this.getPos();
         this.getLabel();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -167,10 +165,9 @@ export class CheckinActionsComponent implements OnInit {
         this.action = 'slotChange';
         // this.selectedTime = '';
         this.activeDate = this.checkin_date;
-        console.log(this.checkin_date)
         this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
     }
-    
+
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
         this.queuejson = [];
         this.queueQryExecuted = false;
@@ -178,7 +175,6 @@ export class CheckinActionsComponent implements OnInit {
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
-                    console.log(this.queuejson)
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
@@ -194,7 +190,7 @@ export class CheckinActionsComponent implements OnInit {
                         this.sel_queue_name = this.queuejson[selindx].name;
                         this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
                         this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
-                       
+
                     } else {
                         this.sel_queue_indx = -1;
                         this.sel_queue_id = 0;
@@ -257,12 +253,12 @@ export class CheckinActionsComponent implements OnInit {
         if (type === 'pre') {
             if (strtDt.getTime() >= nDt.getTime()) {
                 this.checkin_date = ndate;
-            this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
+                this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
             }
         } else {
             if (nDt.getTime() >= strtDt.getTime()) {
                 this.checkin_date = ndate;
-            this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
+                this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
             }
         }
     }
@@ -296,7 +292,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     rescheduleWaitlist() {
         // this.checkin_date = moment(this.checkin_date).format('DD-MM-YYYY')
-               const data = {
+        const data = {
             'ynwUuid': this.ynwUuid,
             'queue': this.sel_queue_id,
             'date': this.checkin_date
@@ -304,11 +300,10 @@ export class CheckinActionsComponent implements OnInit {
         this.provider_services.rescheduleConsumerWaitlist(data)
             .subscribe(
                 () => {
-                    console.log(this.showToken)
-                    if(this.showToken){
-                        this.shared_functions.openSnackBar('Token rescheduled to '+ moment(this.checkin_date).format('DD-MM-YYYY'));
+                    if (this.showToken) {
+                        this.shared_functions.openSnackBar('Token rescheduled to ' + moment(this.checkin_date).format('DD-MM-YYYY'));
                     } else {
-                        this.shared_functions.openSnackBar('Check-in rescheduled to '+ this.checkin_date, this.sel_queue_timecaption);
+                        this.shared_functions.openSnackBar('Check-in rescheduled to ' + this.checkin_date, this.sel_queue_timecaption);
                     }
                     this.dialogRef.close();
                 },
@@ -530,10 +525,10 @@ export class CheckinActionsComponent implements OnInit {
             if (data) {
                 // setTimeout(() => {
                 // this.labels();
-                    this.labelMap = new Object();
-                    this.labelMap[data.label] = data.value;
-                    this.addLabel();
-                    this.getDisplayname(data.label);
+                this.labelMap = new Object();
+                this.labelMap[data.label] = data.value;
+                this.addLabel();
+                this.getDisplayname(data.label);
                 // }, 500);
             }
             this.getLabel();
@@ -636,71 +631,71 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     medicalRecord() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.checkin.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.checkin.mrId;
-      }
-      let providerId ;
-      if (this.checkin.provider && this.checkin.provider.id) {
-       providerId = this.checkin.provider.id;
-      } else {
-        providerId = '';
-      }
-      console.log(this.checkin);
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
-          'serviceId': this.checkin.service.id,
-          'serviceName': this.checkin.service.name,
-          'booking_type': 'TOKEN',
-          'booking_date': this.checkin.consLastVisitedDate,
-          'booking_time': this.checkin.checkInTime,
-          'department': this.checkin.service.deptName,
-          'consultationMode': 'OP',
-          'booking_id': this.checkin.ynwUuid,
-          'mr_mode': medicalrecord_mode,
-          'mrId': mrId,
-          'back_type': 'waitlist',
-          'provider_id': providerId
+        this.dialogRef.close();
+        let medicalrecord_mode = 'new';
+        let mrId = 0;
+        if (this.checkin.mrId) {
+            medicalrecord_mode = 'view';
+            mrId = this.checkin.mrId;
         }
-      };
+        let providerId;
+        if (this.checkin.provider && this.checkin.provider.id) {
+            providerId = this.checkin.provider.id;
+        } else {
+            providerId = '';
+        }
+        console.log(this.checkin);
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
+                'serviceId': this.checkin.service.id,
+                'serviceName': this.checkin.service.name,
+                'booking_type': 'TOKEN',
+                'booking_date': this.checkin.consLastVisitedDate,
+                'booking_time': this.checkin.checkInTime,
+                'department': this.checkin.service.deptName,
+                'consultationMode': 'OP',
+                'booking_id': this.checkin.ynwUuid,
+                'mr_mode': medicalrecord_mode,
+                'mrId': mrId,
+                'back_type': 'waitlist',
+                'provider_id': providerId
+            }
+        };
 
-      this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+        this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
     }
     prescription() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.checkin.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.checkin.mrId;
-      }
-      let providerId ;
-      if (this.checkin.provider && this.checkin.provider.id) {
-       providerId = this.checkin.provider.id;
-      } else {
-        providerId = '';
-      }
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
-          'serviceId': this.checkin.service.id,
-          'serviceName': this.checkin.service.name,
-          'booking_type': 'TOKEN',
-          'booking_date': this.checkin.consLastVisitedDate,
-          'booking_time': this.checkin.checkInTime,
-          'department': this.checkin.service.deptName,
-          'consultationMode': 'OP',
-          'mrId': mrId,
-          'mr_mode': medicalrecord_mode,
-          'booking_id': this.checkin.ynwUuid,
-          'back_type': 'waitlist',
-          'provider_id': providerId
+        this.dialogRef.close();
+        let medicalrecord_mode = 'new';
+        let mrId = 0;
+        if (this.checkin.mrId) {
+            medicalrecord_mode = 'view';
+            mrId = this.checkin.mrId;
         }
-      };
-      this.router.navigate(['provider', 'customers',  'medicalrecord', 'prescription'], navigationExtras);
+        let providerId;
+        if (this.checkin.provider && this.checkin.provider.id) {
+            providerId = this.checkin.provider.id;
+        } else {
+            providerId = '';
+        }
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
+                'serviceId': this.checkin.service.id,
+                'serviceName': this.checkin.service.name,
+                'booking_type': 'TOKEN',
+                'booking_date': this.checkin.consLastVisitedDate,
+                'booking_time': this.checkin.checkInTime,
+                'department': this.checkin.service.deptName,
+                'consultationMode': 'OP',
+                'mrId': mrId,
+                'mr_mode': medicalrecord_mode,
+                'booking_id': this.checkin.ynwUuid,
+                'back_type': 'waitlist',
+                'provider_id': providerId
+            }
+        };
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
 }

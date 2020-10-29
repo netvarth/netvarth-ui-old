@@ -1196,7 +1196,7 @@ export class ProviderServices {
    getSlotsByLocationServiceandDate(locid, servid, pdate) {
       const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid;
       return this.servicemeta.httpGet(url);
-    }
+   }
    getAppointmentSlotsByDate(scheduleid, date) {
       const url = 'provider/appointment/schedule/' + scheduleid + '/' + date;
       return this.servicemeta.httpGet(url);
@@ -1518,13 +1518,13 @@ export class ProviderServices {
       return this.servicemeta.httpPut(url, data);
    }
    generateReport(data) {
-    const url = 'provider/report';
-    return this.servicemeta.httpPut(url, data);
-  }
-  getJaldeeCustomer(data) {
-   const url = 'consumer';
-   return this.servicemeta.httpGet(url, null, data);
-}
+      const url = 'provider/report';
+      return this.servicemeta.httpPut(url, data);
+   }
+   getJaldeeCustomer(data) {
+      const url = 'consumer';
+      return this.servicemeta.httpGet(url, null, data);
+   }
    createVoiceCall(data) {
       const url = 'provider/appointment/createJaldeeMeetingrequest';
       return this.servicemeta.httpPost(url, data);
@@ -1534,89 +1534,89 @@ export class ProviderServices {
       return this.servicemeta.httpPost(url, data);
    }
    rescheduleProviderAppointment(data) {
-   const url = 'provider/appointment/reschedule';
-    return this.servicemeta.httpPut(url, data);
-}
-rescheduleConsumerWaitlist(data){
-    const url = 'provider/waitlist/reschedule';
-    return this.servicemeta.httpPut(url, data);
-  }
-// medical record
-  createMedicalRecordForFollowUp(data, patientId) {
-    const url = 'provider/mr/patient/' + patientId;
-    return this.servicemeta.httpPost(url, data);
-  }
+      const url = 'provider/appointment/reschedule';
+      return this.servicemeta.httpPut(url, data);
+   }
+   rescheduleConsumerWaitlist(data) {
+      const url = 'provider/waitlist/reschedule';
+      return this.servicemeta.httpPut(url, data);
+   }
+   // medical record
+   createMedicalRecordForFollowUp(data, patientId) {
+      const url = 'provider/mr/patient/' + patientId;
+      return this.servicemeta.httpPost(url, data);
+   }
 
-  createMedicalRecord(data, bookingId) {
-    const url = 'provider/mr/' + bookingId;
-    return this.servicemeta.httpPost(url, data);
-  }
-  updateMRprescription(data, mrId) {
-    const url = 'provider/mr/prescription/' + mrId;
-    return this.servicemeta.httpPut(url, data);
-  }
-  getMRprescription(id) {
-    const url = 'provider/mr/prescription/' + id;
-    return this.servicemeta.httpGet(url);
-  }
-  GetMedicalRecordList(filter = {}) {
-    const url = 'provider/mr';
-    return this.servicemeta.httpGet(url, null, filter);
-  }
-  uploadMRprescription(mrId, data) {
-    const url = 'provider/mr/uploadPrescription/' + mrId;
-    return this.servicemeta.httpPost(url, data);
-  }
-  getClinicalRecordOfMRById(mrId) {
-    const url = 'provider/mr/clinicalNotes/' + mrId;
-    return this.servicemeta.httpGet(url, null);
-  }
-  getDigitalSign(providerId) {
-    const url = 'provider/user/digitalSign/' + providerId;
-    return this.servicemeta.httpGet(url);
-  }
-  GetMedicalRecord(mrId) {
-    const url = 'provider/mr/' + mrId;
-    return this.servicemeta.httpGet(url);
-  }
-  uploadMrDigitalsign(id, data) {
-    const url = 'provider/user/digitalSign/' + id;
-    return this.servicemeta.httpPost(url, data);
-  }
-  updateMrClinicalNOtes(data, mrId) {
-    const url = 'provider/mr/clinicalNotes/' + mrId;
-    return this.servicemeta.httpPut(url, data);
-  }
-  getPatientVisitList(patientId) {
-    const url = 'provider/mr/patientPreviousVisit/' + patientId;
-    return this.servicemeta.httpGet(url);
-  }
-  getproviderprofile(id) {
-    const url = 'provider/profile/' + id;
-    return this.servicemeta.httpGet(url);
-  }
-  deleteUplodedprescription(name, id) {
-    return this.servicemeta.httpDelete('provider/mr/prescription/' + id + '/' + name);
-  }
-  getPatientVisitListCount(patientId) {
-    const url = 'provider/mr/patientPreviousVisit/count/' + patientId;
-    return this.servicemeta.httpGet(url);
-  }
-  getPatientMedicalRecords(patientId) {
-    const filter = { 'patientId-eq': patientId };
-    const url = 'provider/mr';
-    return this.servicemeta.httpGet(url, null, filter);
-  }
-  shareRx(id,data) {
-   const url = 'provider/mr/sharePrescription/' + id;
-   return this.servicemeta.httpPost(url, data);
-  }
-  shareRxforProvider(id,data) {
-   const url = 'provider/mr/shareMedicalRecord/provider/' + id;
-   return this.servicemeta.httpPost(url, data);
-  }
-  updateMR(data, mrId) {
-    const url = 'provider/mr/' + mrId;
-    return this.servicemeta.httpPut(url, data);
-  }
+   createMedicalRecord(data, bookingId) {
+      const url = 'provider/mr/' + bookingId;
+      return this.servicemeta.httpPost(url, data);
+   }
+   updateMRprescription(data, mrId) {
+      const url = 'provider/mr/prescription/' + mrId;
+      return this.servicemeta.httpPut(url, data);
+   }
+   getMRprescription(id) {
+      const url = 'provider/mr/prescription/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   GetMedicalRecordList(filter = {}) {
+      const url = 'provider/mr';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   uploadMRprescription(mrId, data) {
+      const url = 'provider/mr/uploadPrescription/' + mrId;
+      return this.servicemeta.httpPost(url, data);
+   }
+   getClinicalRecordOfMRById(mrId) {
+      const url = 'provider/mr/clinicalNotes/' + mrId;
+      return this.servicemeta.httpGet(url, null);
+   }
+   getDigitalSign(providerId) {
+      const url = 'provider/user/digitalSign/' + providerId;
+      return this.servicemeta.httpGet(url);
+   }
+   GetMedicalRecord(mrId) {
+      const url = 'provider/mr/' + mrId;
+      return this.servicemeta.httpGet(url);
+   }
+   uploadMrDigitalsign(id, data) {
+      const url = 'provider/user/digitalSign/' + id;
+      return this.servicemeta.httpPost(url, data);
+   }
+   updateMrClinicalNOtes(data, mrId) {
+      const url = 'provider/mr/clinicalNotes/' + mrId;
+      return this.servicemeta.httpPut(url, data);
+   }
+   getPatientVisitList(patientId) {
+      const url = 'provider/mr/patientPreviousVisit/' + patientId;
+      return this.servicemeta.httpGet(url);
+   }
+   getproviderprofile(id) {
+      const url = 'provider/profile/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   deleteUplodedprescription(name, id) {
+      return this.servicemeta.httpDelete('provider/mr/prescription/' + id + '/' + name);
+   }
+   getPatientVisitListCount(patientId) {
+      const url = 'provider/mr/patientPreviousVisit/count/' + patientId;
+      return this.servicemeta.httpGet(url);
+   }
+   getPatientMedicalRecords(patientId) {
+      const filter = { 'patientId-eq': patientId };
+      const url = 'provider/mr';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   shareRx(id, data) {
+      const url = 'provider/mr/sharePrescription/' + id;
+      return this.servicemeta.httpPost(url, data);
+   }
+   shareRxforProvider(id, data) {
+      const url = 'provider/mr/shareMedicalRecord/provider/' + id;
+      return this.servicemeta.httpPost(url, data);
+   }
+   updateMR(data, mrId) {
+      const url = 'provider/mr/' + mrId;
+      return this.servicemeta.httpPut(url, data);
+   }
 }

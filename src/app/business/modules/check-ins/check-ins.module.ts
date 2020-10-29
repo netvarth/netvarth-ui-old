@@ -30,6 +30,7 @@ import { CheckinActionsComponent } from './checkin-actions/checkin-actions.compo
 // import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
 import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { VoicecallDetailsModule } from './voicecall-details/voicecall-details.modules';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { VoicecallDetailsModule } from './voicecall-details/voicecall-details.mo
         CheckinsRoutingModule,
         BreadCrumbModule,
         CommonModule,
+        MatTabsModule,
         SharedModule,
         CapitalizeFirstPipeModule,
         PagerModule,
