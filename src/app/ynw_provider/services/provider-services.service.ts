@@ -760,6 +760,10 @@ export class ProviderServices {
       const url = 'provider/waitlist/label';
       return this.servicemeta.httpPut(url, data);
    }
+   updateLabelStatus(id, status) {
+      const url = 'provider/waitlist/label/' + id + '/' + status;
+      return this.servicemeta.httpPut(url);
+   }
    createLabel(label) {
       const url = 'provider/waitlist/label';
       return this.servicemeta.httpPost(url, label);

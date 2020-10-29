@@ -51,7 +51,8 @@ export class LabelsComponent implements OnInit {
         this.provider_services.getLabelList()
             .subscribe(
                 (data: any) => {
-                    this.label_list = data.filter(label => label.status === 'ACTIVE');
+                    // this.label_list = data.filter(label => label.status === 'ACTIVE');
+                    this.label_list = data;
                     this.api_loading = false;
                 },
                 error => {
@@ -92,6 +93,17 @@ export class LabelsComponent implements OnInit {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
+    }
+    changeLabelStatus(label) {
+        const status = (label.status === 'ACTIVE') ? 'DISABLED' : 'ENABLED';
+        const statusmsg = (label.status === 'ACTIVE') ? 'disabled' : 'enabled';
+        this.provider_services.updateLabelStatus(label.id, status).subscribe(data => {
+            this.shared_functions.openSnackBar(label.displayName + statusmsg + ' successfully');
+            this.getLabels();
+        },
+            error => {
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
     }
     redirecToGeneral() {
         this.router.navigate(['provider', 'settings' , 'general']);

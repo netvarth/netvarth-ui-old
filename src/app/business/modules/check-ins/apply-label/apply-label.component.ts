@@ -68,7 +68,7 @@ export class ApplyLabelComponent implements OnInit {
     }
     getLabels() {
         this.provider_services.getLabelList().subscribe((data: any) => {
-            this.providerLabels = data.filter(label => label.status === 'ACTIVE');
+            this.providerLabels = data.filter(label => label.status === 'ENABLED');
             // const value = Object.values(this.label);
             // for (let i = 0; i < this.providerLabels.length; i++) {
             //     for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
