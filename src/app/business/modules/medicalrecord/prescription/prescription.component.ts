@@ -62,7 +62,7 @@ export class PrescriptionComponent implements OnInit {
         const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
         this.provider_user_Id = user.id;
       }
-
+     
     });
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       this.mrId = mrId;
@@ -107,7 +107,12 @@ export class PrescriptionComponent implements OnInit {
       }
     }
   }
-
+  uploadSign() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: { providerId: this.provider_user_Id }
+    };
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadsign'], navigationExtras);
+  }
   getDigitalSign() {
     if (this.provider_user_Id) {
       this.provider_services.getDigitalSign(this.provider_user_Id)
@@ -122,39 +127,40 @@ export class PrescriptionComponent implements OnInit {
     }
   }
 
-  saveDigitalSignImages(index) {
-    const submit_data: FormData = new FormData();
-    const propertiesDetob = {};
-    let i = 0;
-    for (const pic of this.selectedMessage.files) {
-      submit_data.append('files', pic, pic['name']);
-      const properties = {
-        'caption': this.selectedMessage.caption[i] || ''
-      };
-      propertiesDetob[i] = properties;
-      i++;
-    }
-    const propertiesDet = {
-      'propertiesMap': propertiesDetob
-    };
-    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-    submit_data.append('properties', blobPropdata);
-    if (this.provider_user_Id) {
-      this.uploadMrDigitalsign(this.provider_user_Id, submit_data, index);
-    }
-  }
+  // saveDigitalSignImages(index) {
+  //   this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
+  //   const submit_data: FormData = new FormData();
+  //   const propertiesDetob = {};
+  //   let i = 0;
+  //   for (const pic of this.selectedMessage.files) {
+  //     submit_data.append('files', pic, pic['name']);
+  //     const properties = {
+  //       'caption': this.selectedMessage.caption[i] || ''
+  //     };
+  //     propertiesDetob[i] = properties;
+  //     i++;
+  //   }
+  //   const propertiesDet = {
+  //     'propertiesMap': propertiesDetob
+  //   };
+  //   const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+  //   submit_data.append('properties', blobPropdata);
+  //   if (this.provider_user_Id) {
+  //     this.uploadMrDigitalsign(this.provider_user_Id, submit_data, index);
+  //   }
+  // }
 
-  uploadMrDigitalsign(id, submit_data, val) {
-    this.provider_services.uploadMrDigitalsign(id, submit_data)
-      .subscribe((data) => {
-        this.digitalSign = true;
-        this.deleteTempImage(val);
-        this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
-      },
-        error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
-  }
+  // uploadMrDigitalsign(id, submit_data, val) {
+  //   this.provider_services.uploadMrDigitalsign(id, submit_data)
+  //     .subscribe((data) => {
+  //       this.digitalSign = true;
+  //       this.deleteTempImage(val);
+  //       this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
+  //     },
+  //       error => {
+  //         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+  //       });
+  // }
 
   uploadRx() {
     this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadRx']);
