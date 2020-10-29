@@ -56,8 +56,12 @@ export class PrescriptionComponent implements OnInit {
   ) {
      this.medicalrecord_service.patient_data.subscribe(res => {
       this.navigations = res;
+      console.log(this.navigations);
       this.provider_user_Id = res.provider_id;
-      console.log(this.provider_user_Id);
+      if (!this.provider_user_Id) {
+        const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        this.provider_user_Id = user.id;
+      }
      
     });
     this.medicalrecord_service._mrUid.subscribe(mrId => {
