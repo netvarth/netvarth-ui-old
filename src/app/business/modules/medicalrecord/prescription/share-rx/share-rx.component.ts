@@ -189,7 +189,7 @@ export class ShareRxComponent implements OnInit {
                }, error => {
                        this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                    });
-   
+
             } else if (this.sharewith === 0) {
              const passData = {
                'message': formdata.message,

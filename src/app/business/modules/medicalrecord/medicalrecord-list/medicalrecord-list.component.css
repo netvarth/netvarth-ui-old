@@ -1,3 +1,9 @@
 .mat-column-createdDate {
   flex: 0 0 150px;
 }
+.highlight{
+  background: rgb(84, 171, 241); /* blue */
+}
+mat-row:hover {
+  background-color: #398af3 !important;
+}
