@@ -258,6 +258,7 @@ getBussinessProfileApi() {
         data => {
           this.bdata = data;
           console.log(this.bdata);
+          this.bname = this.bdata.businessName;
           this.address = this.bdata.baseLocation.address;
           this.mobile = this.bdata.accountLinkedPhNo;
           console.log(this.mobile);

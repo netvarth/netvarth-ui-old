@@ -81,9 +81,10 @@
           <div style="float:left;">
               <img  style="width: 50px;" [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url">
             </div>
-                  <h2 style="text-align: center; padding-top: 30px;">Amma Hospital </h2>
+                  <h2 style="text-align: center; padding-top: 30px;">{{bname}} </h2>
                   <div>
-                    <p>{{userdata.businessName}} <sub>{{userdata.businessDes}}</sub> <span style="float: right;" >{{mobile}}</span> </p>
+                    <p *ngIf= "userdata.businessName">{{userdata.businessName}} <sub *ngIf= "userdata.businessDes">{{userdata.businessDes}}</sub> <span style="float: right;" >{{mobile}}</span> </p>
+                    <p *ngIf = "bname && !userdata.businessName">{{bname}} <sub>{{userdata.businessDes}}</sub> <span style="float: right;" >{{mobile}}</span> </p>
                     <p>{{address}} </p>
                   </div>
                   <hr>
