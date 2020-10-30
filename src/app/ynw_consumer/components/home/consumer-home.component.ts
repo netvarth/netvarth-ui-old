@@ -177,6 +177,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   appointmentslist: any = [];
   tdyDate: string;
   loading = true;
+  provider_label: any;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -200,6 +201,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.usr_details = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     this.locationholder = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
     this.breadcrumbs = [
       {
