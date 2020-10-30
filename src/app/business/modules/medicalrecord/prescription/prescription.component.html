@@ -57,8 +57,8 @@
         style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span>
     </div>
     <div class="mgn-up-10">
-      <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0"><span class="red">You
-          never uploaded digital signature,</span><u class="lnk action pointlist" (click)="uploadSign()"
+      <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0"> 
+         <u class="lnk action pointlist" (click)="uploadSign()"
           style="color: #3c8dbc;"> create or Upload digital signature for sharing Rx</u>
       </span>
       <!-- <ng-container class="attachment" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">

@@ -81,8 +81,8 @@
             </div>
                   <h2 style="text-align: center; padding-top: 30px;">{{bname}} </h2>
                   <div>
-                    <p *ngIf= "userdata.businessName">{{userdata.businessName}} <sub *ngIf= "userdata.businessDes">{{userdata.businessDes}}</sub> <span style="float: right;" >{{mobile}}</span> </p>
-                    <p *ngIf = "bname && !userdata.businessName">{{bname}} <sub>{{userdata.businessDes}}</sub> <span style="float: right;" >{{mobile}}</span> </p>
+                    <p *ngIf= "userdata.businessName">{{userdata.businessName}} <sub *ngIf= "userdata.businessDes">{{userdata.businessDes}}</sub> <span style="float: right;" >+91{{mobile}}</span> </p>
+                    <p *ngIf = "bname && !userdata.businessName">{{bname}} <sub>{{userdata.businessDes}}</sub> <span style="float: right;" >+91{{mobile}}</span> </p>
                     <p>{{address}} </p>
                   </div>
                   <hr>
@@ -91,8 +91,8 @@
                       <!-- <p style="float: right;"> <label >Date:</label><span>25/02/2020</span> </p> -->
                   </div>
                   <div>
-                      <label *ngIf="customerDetail.dob" >DOB:</label><span *ngIf="customerDetail.dob" >{{customerDetail.dob  | date:display_dateFormat}}</span>
-                      <p style="float: right;" *ngIf="customerDetail.gender"> <label >Gender:</label><span>{{customerDetail.gender | capitalizeFirst}}</span> </p>
+                     <label *ngIf="customerDetail.dob" >DOB:</label><span *ngIf="customerDetail.dob" >{{customerDetail.dob  | date:display_dateFormat}}</span><br *ngIf="customerDetail.dob">
+                      <label *ngIf="customerDetail.gender" >Gender:</label><span *ngIf="customerDetail.gender">{{customerDetail.gender | capitalizeFirst}}</span>
                   </div>
                    <table class="table table-bordered" >
                       <thead>
