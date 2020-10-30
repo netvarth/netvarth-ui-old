@@ -100,10 +100,10 @@ export class UploadDigitalSignatureComponent implements OnInit {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.sharedfunctionObj.apiErrorAutoHide(this, 'Selected image type not supported');
+       if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
         } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-          this.sharedfunctionObj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+          this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedMessage.files.push(file);
           const reader = new FileReader();
