@@ -369,7 +369,10 @@ export class CustomerDetailComponent implements OnInit {
     }
     onSubmit(form_data) {
         this.disableButton = true;
-        const datebirth = this.shared_functions.transformToYMDFormat(form_data.dob);
+        let datebirth;
+        if (form_data.dob) {
+            datebirth = this.shared_functions.transformToYMDFormat(form_data.dob);
+        }
         if (this.action === 'add') {
             const post_data = {
                 //   'userProfile': {
