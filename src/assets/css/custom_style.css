@@ -12875,3 +12875,7 @@ hr {
 .join_phone_label{
   color: #5f75bc;
 }
+.customer-action-btn {
+  padding: 10px;
+  border: 1px solid;
+}
