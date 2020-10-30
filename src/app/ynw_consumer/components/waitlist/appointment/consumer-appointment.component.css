@@ -1184,3 +1184,13 @@ height: 150px !important;
   height: 40px;
   width: 40px;
  }
+ .mode-hint {
+  margin-bottom: 5px;
+  color: #919090;
+  font-style: italic;
+  font-size: 0.75rem !important;
+ }
+ .contact-section .wtsapaud-icon{
+  width: 25px !important;
+  top: 4px !important;
+ }

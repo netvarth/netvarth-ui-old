@@ -535,6 +535,7 @@ export class ConsumerCheckinComponent implements OnInit {
             this.userPhone = this.selected_phone;
             this.edit = true;
             this.changePhno = true;
+            this.callingModes = this.selected_phone;
             this.action = '';
         }
     }
@@ -605,6 +606,7 @@ export class ConsumerCheckinComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
+        console.log(this.sel_ser_det);
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {

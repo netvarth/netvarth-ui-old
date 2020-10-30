@@ -144,7 +144,7 @@
         *ngIf="activeSchedules && activeSchedules.length > 0 && time_type !==3">
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
           <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
-            <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="activeSchedules">
+            <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
               <button class="item cust-button-3"
                 [ngClass]="{active: isQueueSelected(schedule.id)?true:false, disabled: schedule.apptState === 'ENABLED'?false:true}"
                 (click)="viewQClicked(schedule)" *ngFor="let schedule of activeSchedules;let i = index">

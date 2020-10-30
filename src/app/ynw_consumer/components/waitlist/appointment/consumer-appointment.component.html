@@ -95,7 +95,7 @@
                                                                     *ngIf="mode.callingMode">
                                                                     {{mode.instructions}}
                                                                 </div>
-                                                                <div class="input-section mgn-bt-5 desfont"
+                                                                <!-- <div class="input-section mgn-bt-5 desfont"
                                                                     *ngIf="mode.callingMode === 'WhatsApp' || mode.callingMode === 'Phone'">
                                                                     <span> <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                                             class="fa wtsapaud-icon wtsap-cal"></i>
@@ -108,7 +108,7 @@
                                                                             (keypress)="isNumeric($event)"
                                                                             class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" style="width:150px!important;"
                                                                             placeholder="" [(ngModel)]="callingModes"
-                                                                            autocomplete="off" maxlength="10"></span>
+                                                                            autocomplete="off" maxlength="10"></span> -->
                                                                     <!-- <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                                         *ngIf="showInputSection">
                                                                         {{callingModes}}</span>
@@ -128,7 +128,7 @@
                                                                 <span class="editbt mgn-lt-20"
                                                                     (click)="editCallingmodes(i)"></span>
                                                             </div> -->
-                                                                </div>
+                                                                <!-- </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -263,8 +263,10 @@
                                                         {{waitlist_for[0].firstName | capitalizeFirst}}
                                                         {{waitlist_for[0].lastName | capitalizeFirst}}
                                                     </h6>
-                                                    <div class="">
+                                                    <div class="contact-section">
                                                         <i class="fa fa-mobile "></i>
+                                                        <i *ngIf="sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"
+                                                        class="fa wtsapaud-icon wtsap-cal"></i>
                                                         <span class="mgn-lt-10 phonevallabel">
                                                             {{waitlist_for[0].phoneNo}}
                                                         </span>
@@ -274,6 +276,9 @@
                                                             *ngIf="currentPhone && changePhno && type !== 'reschedule'">{{currentPhone}}</span><a
                                                             class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'reschedule'" class="fa fa-pencil"
                                                                 (click)="editPhone()"></i></a>
+                                                                <div class="mode-hint mgn-bt-5" *ngIf="sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'">
+                                                                    The provider will contact you in this number
+                                                                </div>
                                                     </div>
                                                     <div class=""
                                                         *ngIf="userData && userData.userProfile && userData.userProfile.email">
