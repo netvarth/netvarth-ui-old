@@ -137,7 +137,7 @@ export class MedicalrecordListComponent implements OnInit {
           'customerDetail': JSON.stringify(mrDetails.providerConsumer),
           'serviceName': 'Consultation',
           'booking_type': 'FOLLOWUP',
-          'mrId': mrDetails.id,
+          'mrId': mrDetails.mrId,
           'visitDate': mrDetails.mrConsultationDate,
           'booking_date': mrDetails.mrConsultationDate,
           'back_type': 'consumer'

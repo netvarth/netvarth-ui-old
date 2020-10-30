@@ -200,12 +200,13 @@ export class LastVisitComponent implements OnInit {
           'customerDetail': JSON.stringify(visitDetails.providerConsumer),
           'serviceName': 'Consultation',
           'booking_type': 'FOLLOWUP',
-          'mrId': visitDetails.id,
+          'mrId': visitDetails.mrId,
           'booking_date': visitDetails.consLastVisitedDate,
           'visitDate': visitDetails.consLastVisitedDate,
           'back_type': 'consumer'
         }
       };
+      console.log(navigationExtras);
       const result = {
         'navigationParams': navigationExtras,
         'type': 'clinicalnotes'
