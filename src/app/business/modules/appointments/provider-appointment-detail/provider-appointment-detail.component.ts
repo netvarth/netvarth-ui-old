@@ -287,6 +287,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       );
   }
 
+
   addConsumerInboxMessage() {
     const waitlist = [];
     waitlist.push(this.waitlist_data);
