@@ -26,29 +26,31 @@ export class ActionPopupComponent implements OnInit {
   showRescheduleWtlist = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-  private router: Router,
-  private dialog: MatDialog,
-  public shared_functions: SharedFunctions,
-  public dialogRef: MatDialogRef<ActionPopupComponent>) { }
+    private router: Router,
+    private dialog: MatDialog,
+    public shared_functions: SharedFunctions,
+    public dialogRef: MatDialogRef<ActionPopupComponent>) { }
 
   ngOnInit() {
     this.bookingDetails = this.data.booking;
     console.log(this.bookingDetails);
     this.checkLvTrack();
-    if (this.bookingDetails.apptStatus === 'Confirmed' || this.bookingDetails.apptStatus === 'Arrived') {
+    if (this.bookingDetails.apptStatus === 'Confirmed' || this.bookingDetails.apptStatus === 'Arrived') {
       this.showRescheduleAppt = true;
     }
     if (this.bookingDetails.waitlistStatus === 'checkedIn' || this.bookingDetails.waitlistStatus === 'arrived') {
       this.showRescheduleWtlist = true;
     }
-    if (this.bookingDetails.service.serviceType === 'virtualService' && this.bookingDetails.waitlistStatus !== 'done'
-    && this.bookingDetails.waitlistStatus !== 'cancelled') {
-      this.showcheckinMeet = true;
-      this.showapptMeet = false;
-    } else if (this.bookingDetails.service.serviceType === 'virtualService' && this.bookingDetails.apptStatus !== 'Completed'
-    && this.bookingDetails.apptStatus !== 'Cancelled') {
-      this.showcheckinMeet = false;
-      this.showapptMeet = true;
+    if (this.bookingDetails.waitlistStatus) {
+      if (this.bookingDetails.service.serviceType === 'virtualService' && this.bookingDetails.waitlistStatus !== 'done'
+        && this.bookingDetails.waitlistStatus !== 'cancelled') {
+        this.showcheckinMeet = true;
+      }
+    } else {
+      if (this.bookingDetails.service.serviceType === 'virtualService' && this.bookingDetails.apptStatus !== 'Completed'
+        && this.bookingDetails.apptStatus !== 'Cancelled') {
+        this.showapptMeet = true;
+      }
     }
     if (this.bookingDetails.apptStatus === 'Confirmed' || this.bookingDetails.apptStatus === 'Arrived' || this.bookingDetails.apptStatus === 'prepaymentPending') {
       this.showapptCancel = true;
