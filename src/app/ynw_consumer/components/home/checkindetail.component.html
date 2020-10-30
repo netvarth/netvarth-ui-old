@@ -52,7 +52,7 @@
                                                 <i *ngIf="waitlist.service.serviceType === 'virtualService'"
                                                     [class]=iconClass></i>
                                                 <span class="serv-name">
-                                                    &nbsp;{{waitlist.service.name | capitalizeFirst}} <span
+                                                    {{waitlist.service.name | capitalizeFirst}} <span
                                                         *ngIf="waitlist.service.deptName">({{waitlist.service.deptName}})
                                                     </span>
                                                 </span>
