@@ -33,10 +33,12 @@
                                     <!-- Header -->
                                     <div class="mgn-bt-20 temp-style index-head">
                                         <div class="pad-10">
-                                            <h3 class="custId-cursor head-color"
+                                            <h3 class="custId-cursor head-color disp-flex"
                                                 (click)="providerDetail(appt.providerAccount)">
                                                 {{appt.providerAccount.businessName | capitalizeFirst}}
-                                                <!-- <span class="icon-favourite-filled"></span> -->
+                                                &nbsp;<div *ngIf="checkIfFav(appt.providerAccount.id)" class="icon-favourite-filled" (click)="doDeleteFavProvider(appt.providerAccount, $event)"></div>
+                                                <div *ngIf="!checkIfFav(appt.providerAccount.id)" class="icon-favourite"
+                                                (click)="addFavProvider(appt.providerAccount.id, $event)"></div>
                                             </h3>
                                             <span class="loc-cls">
                                                 <i class="fa fa-map-marker"></i>
