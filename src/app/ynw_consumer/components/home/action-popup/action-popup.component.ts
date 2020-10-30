@@ -191,5 +191,7 @@ export class ActionPopupComponent implements OnInit {
     }
 
   }
+  gotoWaitlistReschedule () {
 
+  }
 }

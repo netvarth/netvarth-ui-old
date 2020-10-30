@@ -1,171 +1,133 @@
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-<ng-container *ngIf="!loading" >
-<div class="mgn-up-30" *ngIf="drugList.length === 0 && uploadlist.length === 0">
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10" >
-                    <span class="b-link" >
-                        <h5>You can create prescription in two ways :</h5>
-                        <p>1.Take a picture of paper based prescription and upload that image </p>
-                        <p>2. You can create a prescription in this software manually  </p>
-                    </span>
-            </div>
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 " >
+<ng-container *ngIf="!loading">
+  <div class="mgn-up-30" *ngIf="drugList.length === 0 && uploadlist.length === 0">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10">
+      <span class="b-link">
+        <h5 class="heading3b">You can create prescription in two ways:</h5>
+        <p>1.Take a picture of paper based prescription and upload that image </p>
+        <p>2. You can create a prescription in this software manually </p>
+      </span>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
       <div class="card mrcreate pointlist">
-          <span  (click)="uploadRx()">
-              <h5 style="color:#3c8dbc;"><u>I will Upload paper prescription image</u><i class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
-              <span  class="form-level-settings">You can scan or take a picture of prescription</span>
-          </span>
+        <span (click)="uploadRx()">
+          <h5 class="heading3b" style="color:#3c8dbc;"><u>I will Upload paper prescription image</u><i
+              class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
+          <span class="form-level-settings">You can scan or take a picture of prescription</span>
+        </span>
       </div>
       <div class="card mrcreate pointlist">
-          <span  (click)="addDrug()">
-              <h5 style="color:#3c8dbc;"><u>I will create a prescription manually</u><i class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
-              <span  class="form-level-settings">Create prescription manually </span>
-          </span>
+        <span (click)="addDrug()">
+          <h5 class="heading3b" style="color:#3c8dbc;"><u>I will create a prescription manually</u><i
+              class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
+          <span class="form-level-settings">Create prescription manually </span>
+        </span>
       </div>
     </div>
   </div>
   <div class="mgn-up-20" *ngIf="drugList.length>0">
-  <div class="pad-20 table-responsive" >
-      <!-- <h5>  Prescription Created </h5> -->
-  <table class="table table-bordered" >
+    <div class="pad-10 table-responsive">
+      <table class="table table-bordered">
         <thead>
-        <tr >
-          <th>
-             Medicine
-          </th>
-          <th>
-              Duration(days)
-          </th>
-           <th>
-              Dosage
-          </th>
-          <th>
-              Frequency
-          </th>
-          <th>
-              Instructions
-          </th>
-
-
-        </tr>
-      </thead>
+          <tr>
+            <th>Medicine</th>
+            <th>Duration(days)</th>
+            <th>Dosage</th>
+            <th>Frequency</th>
+            <th>Instructions</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr *ngFor="let drug of drugList; let i = index;" >
-            <td >
-              {{drug.medicine_name}}
+          <tr *ngFor="let drug of drugList; let i = index;">
+            <td>{{drug.medicine_name}}</td>
+            <td>{{drug.duration}}</td>
+            <td>{{drug.dosage}}</td>
+            <td>{{drug.frequency}}</td>
+            <td *ngIf="instrutionType(drug.instructions) === 0">
+              <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u
+                    style="color: #3c8dbc ; font-size: smaller;cursor: pointer;">more</u></span></span>
             </td>
-            <td >
-              {{drug.duration}}
+            <td *ngIf="instrutionType(drug.instructions) === 1">
+              {{drug.instructions}}
             </td>
-            <td >
-                  {{drug.dosage}}
-               </td>
-            <td >
-                   {{drug.frequency}}
-                </td>
-                <td  *ngIf="instrutionType(drug.instructions) === 0">
-                  <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u style="color: #3c8dbc ; font-size: smaller;cursor: pointer;">more</u></span></span>
-                 </td>
-                 <td *ngIf="instrutionType(drug.instructions) === 1">
-                   {{drug.instructions}}
-               </td>
-
-
           </tr>
         </tbody>
       </table>
-      <span (click)="updatePrescription()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span>
+      <span (click)="updatePrescription()" class="lnk action pointlist"
+        style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span>
     </div>
     <div class="mgn-up-10">
-      <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0"><span class="red">You never uploaded digital signature,</span><u class="lnk action pointlist" (click)="uploadSign()" style="color: #3c8dbc;"> create or Upload digital signature for sharing Rx</u>
-         </span>
-
-         <!-- <ng-container class="attachment"
-    *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-    <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
-        *ngFor="let item of selectedMessage.files; let i = index">
-        <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
+      <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0"><span class="red">You
+          never uploaded digital signature,</span><u class="lnk action pointlist" (click)="uploadSign()"
+          style="color: #3c8dbc;"> create or Upload digital signature for sharing Rx</u>
+      </span>
+      <ng-container class="attachment" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+        <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
+          *ngFor="let item of selectedMessage.files; let i = index">
+          <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
             <span class="ln-hgt-40">{{item.name}}</span>
-        </div>
-        <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
-            <span class="">
-                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                    <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                        <i class="icon-delete"></i>
-                        <span>delete</span>
-                    </button>
-                </mat-menu>
-            </span>
-        </div>
-        <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
-              <button type="button"  class="cs-btn bt2"  (click)="deleteTempImage(i)">cancel</button>
-            <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages(i)">OK</button>
-        </div>
-    </div>
-
-</ng-container> -->
-  </div>
-
-     <div *ngIf="digitalSign">
-          <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx('adddrug')" >
-
-              Share Rx</button>
-
-      </div>
-      <div *ngIf="!digitalSign">
-          <button type="button"   style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt2"  >
-
-              Share Rx</button>
-
-      </div>
-      <span *ngIf="prescriptionShared" style="font-size: smaller;margin-left: 20px;"><i class="fa fa-lightbulb-o" aria-hidden="true"></i>&nbsp;Prescription shared on {{prescriptionSharedTimestamp}}</span>
-    </div>
-    <div class="mgn-up-20" *ngIf="uploadlist.length>0">
-        <div class="pad-20 table-responsive" >
-            <!-- <h5> Prescription  Image Uploaded</h5> -->
-            <table class="table table-bordered" >
-              <thead>
-              <tr >
-                <th>
-                    File name
-                </th>
-                <th>
-                    Last modified
-                </th>
-                <th>
-                    Image size
-                </th>
-
-              </tr>
-            </thead>
-              <tbody>
-                <tr *ngFor="let file of uploadlist; let i = index;" >
-                  <td (click)="showimgPopup(file)" class="pointlist">
-                      <i class="fa fa-paperclip" aria-hidden="true" ></i>&nbsp;<u style="color: #3c8dbc; ">{{file.originalName}}</u>
-                  </td>
-                  <td >
-                    {{file.date  | date:dateFormatSp}}
-                  </td>
-                  <td >
-                  {{imageSize(file.imageSize)}} KB
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <span (click)="updatePaperPrescription()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span></div>
-            <!-- <div  *ngIf="uploadlist.length > 0 ">
-              <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="updatePaperPrescription()">Edit Prescription</button>
-             
-          </div> -->
-          <div >
-            <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx('uploadrx')" >
-  
-                Share Rx</button>
-  
-        </div>
-        <span *ngIf="prescriptionShared" style="font-size: smaller;margin-left: 20px;"><i class="fa fa-lightbulb-o" aria-hidden="true"></i>&nbsp;Prescription shared on {{prescriptionSharedTimestamp}}</span>
           </div>
-        </ng-container>
-
+          <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
+            <span class="">
+              <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                  <i class="icon-delete"></i>
+                  <span>delete</span>
+                </button>
+              </mat-menu>
+            </span>
+          </div>
+          <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
+            <button type="button" class="cs-btn bt2" (click)="deleteTempImage(i)">cancel</button>
+            <button mat-button class="cs-btn bt1 savemember mgn-lt-5">OK</button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div *ngIf="digitalSign">
+      <button type="button" mat-button style="margin-left: 40%; margin-top: 4%;" class="cs-btn bt1"
+        (click)="shareManualRx('adddrug')">
+        Share Rx</button>
+    </div>
+    <div *ngIf="!digitalSign">
+      <button type="button" style="margin-left: 40%; margin-top: 4%;" class="cs-btn bt2">
+        Share Rx</button>
+    </div>
+  </div>
+  <div class="mgn-up-20" *ngIf="uploadlist.length>0">
+    <div class="pad-10 table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>File name</th>
+            <th>Last modified</th>
+            <th>Image size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of uploadlist; let i = index;">
+            <td (click)="showimgPopup(file)" class="pointlist">
+              <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;<u
+                style="color: #3c8dbc; ">{{file.originalName}}</u>
+            </td>
+            <td>
+              {{file.date  | date:dateFormatSp}}
+            </td>
+            <td>
+              {{imageSize(file.imageSize)}} KB
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div (click)="updatePaperPrescription()" class="lnk action pointlist normal-sz pad-10" style="color: #3c8dbc;">
+        <u>Edit Prescription</u></div>
+    </div>
+    <div class="mgn-up-10">
+      <button type="button" mat-button class="cs-btn bt1" (click)="shareManualRx('uploadrx')">
+        Share Rx</button>
+    </div>
+  </div>
+</ng-container>

@@ -22,6 +22,8 @@ import { InstructionsComponent } from './prescription/instructions/instructions.
 import { ImagesviewComponent } from './prescription/imagesview/imagesview.component';
 import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-list.component';
 import { UploadDigitalSignatureComponent } from './prescription/upload-digital-signature/upload-digital-signature.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -50,7 +52,9 @@ import { UploadDigitalSignatureComponent } from './prescription/upload-digital-s
     CapitalizeFirstPipeModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatIconModule,
+    MatMenuModule
   ],
   entryComponents: [
   LastVisitComponent,

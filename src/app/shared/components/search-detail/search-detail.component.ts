@@ -2128,7 +2128,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.btn_clicked = false;
     });
   }
-  openCoupons(obj, type) {
+  openCoupons(obj, type?) {
     this.btn_clicked = true;
     const s3id = obj.fields.unique_id;
     // const busname = obj.fields.title;

@@ -1,82 +1,71 @@
-<div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
-  <section class="">
-    <div class="card title-gb">
-      <h5 class="mgn-up-10">
-          <span class="fa fa-arrow-left pointer-cursor"  (click)="goback()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          Medical Record
-
-      </h5>
-    </div>
-
-
-    <div class="card title-gb" >
-      <div class="mgn-up-10">
-
-
-          <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
-          <span >Patient Id: {{display_PatientId}}</span><br  *ngIf="display_PatientId">
-          <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob  | date:display_dateFormat}}</span><br  *ngIf="customerDetails.dob">
-          <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span>
-
-
+<section>
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goback()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Medical Record
+    </h5>
+  </div>
+</section>
+<section class="medical-record">
+  <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 mgn-up-10 no-padding-small">
+    <div class="card title-gb no-padding">
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10">
+        <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
+        <span>Patient Id: {{display_PatientId}}</span><br *ngIf="display_PatientId">
+        <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob  | date:display_dateFormat}}</span><br
+          *ngIf="customerDetails.dob">
+        <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span>
+        <hr>
       </div>
-
-
-
-
-      <hr>
-      <div>
-        <h5>Add or view medical records for a consultation/visit</h5>
-        <p>Patient visit date
-            <button  *ngIf="dateShow" >{{visitdate }}   &nbsp;</button>
-            <button  *ngIf="isShowList" (click) = "VisitList()">{{visitdate}}   &nbsp; <i class="arrow down" ></i></button>  &nbsp;
-            <!-- <span>(Recent visit)</span> -->
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+        <h5 class="heading2b">Add or view medical records for a consultation/visit</h5>
+        <p><span class="normal-sz">Patient visit date: </span>
+          <button *ngIf="dateShow">{{visitdate }} &nbsp;</button>
+          <button *ngIf="isShowList" (click)="VisitList()">{{visitdate}} &nbsp; <i class="arrow down"></i></button>
+          &nbsp;
+          <!-- <span>(Recent visit)</span> -->
         </p>
+        <hr>
       </div>
-      <hr>
-      <div class="col-md-12">
-        <div class="col-md-7"style="padding-left:0px;padding-right:0px;">
-          <label *ngIf="department">Department:</label><span *ngIf="department"> {{department | capitalizeFirst}}</span><br *ngIf="department">
-          <label *ngIf="serviceName">Service/Consultation:</label><span *ngIf="serviceName"> {{serviceName | capitalizeFirst}}</span><br *ngIf="serviceName">
-       <!-- <label *ngIf="bookingType && bookingType !='FOLLOWUP'">Consultation Mode: </label><span  *ngIf="bookingType && bookingType !='FOLLOWUP'"> {{consultationMode}}</span> -->
-         <!-- <span *ngIf="bookingType === 'FOLLOWUP'"> <label>Consultation Mode: </label>&nbsp;
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+        <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12" style="padding-left:0px;padding-right:0px;">
+          <label *ngIf="department">Department:</label><span *ngIf="department">
+            {{department | capitalizeFirst}}</span><br *ngIf="department">
+          <label *ngIf="serviceName">Service/Consultation:</label><span *ngIf="serviceName">
+            {{serviceName | capitalizeFirst}}</span><br *ngIf="serviceName">
+          <!-- <label *ngIf="bookingType && bookingType !='FOLLOWUP'">Consultation Mode: </label><span  *ngIf="bookingType && bookingType !='FOLLOWUP'"> {{consultationMode}}</span> -->
+          <!-- <span *ngIf="bookingType === 'FOLLOWUP'"> <label>Consultation Mode: </label>&nbsp;
           <select [(ngModel)]="patientConsultationType" (ngModelChange)="modeChanged($event)">
             <option *ngFor="let mode of patientConsultationModes" [value]="mode.name">{{mode.displayName}}</option>
           </select>
         </span> -->
         </div>
-        <div *ngIf = "mrId !== 0" class="col-md-5">
-            <label>MR NO:</label><span> {{mrNumber}}</span><br>
-            <label>MR Created On:</label><span> {{mrCreatedDate}}</span>
+        <div *ngIf="mrId !== 0" class="col-md-5 col-lg-5 col-xs-12 col-sm-12 no-padding">
+          <label>MR NO:</label><span> {{mrNumber}}</span><br>
+          <div>
+            <div class="pull-left"><label>MR Created On:</label></div>
+            <div class="pull-left"><span> {{mrCreatedDate}}</span></div>
+          </div>
         </div>
         <div class="clearfix"></div>
+        <hr>
       </div>
-      <!-- <div class="col-md-12">
-          <span>
-              <button style="float: right;">Share MR </button> &nbsp;&nbsp;
-              <button style="float: right;">Share RX</button>
-            </span>
-      </div> -->
-<hr>
-
-<div class="nopadding">&nbsp;</div>
-
-        <div class="content w-manager settings comn-cls">
-          <div style="padding: 5px;">
-            <nav mat-tab-nav-bar>
-              <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link" [queryParams]="navigation_params" routerLinkActive="mat-tab-link-active"
-                #rla="routerLinkActive"  class="routerLink.active" [active]="rla.isActive"   (click)="activeLinkIndex = i"  [routerLinkActiveOptions]="{exact: true}">
-                {{routeLink.label}}
-              </a>
-            </nav>
-            <router-outlet></router-outlet>
-            <div class="clearfix"></div>
-          </div>
-
+      <div class="clearfix"></div>
+      <div class="content w-manager settings comn-cls">
+        <div style="padding: 5px;">
+          <nav mat-tab-nav-bar>
+            <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link"
+              [queryParams]="navigation_params" routerLinkActive="mat-tab-link-active" #rla="routerLinkActive"
+              class="routerLink.active heading2" [active]="rla.isActive" (click)="activeLinkIndex = i"
+              [routerLinkActiveOptions]="{exact: true}">
+              {{routeLink.label}}
+            </a>
+          </nav>
+          <router-outlet></router-outlet>
+          <div class="clearfix"></div>
         </div>
+      </div>
     </div>
-    <div class="clearfix"></div>
-  </section>
-</div>
-<div class="clearfix"></div>
-
+  </div>
+  <div class="clearfix"></div>
+</section>

@@ -5118,7 +5118,7 @@ i.notavail {
 }
 
 /* .dashboard .chkins:last-child {
-
+ 
 } */
 
 .dashboard .chkins .service, .dashboard .chkins .forwhom {
@@ -7359,9 +7359,9 @@ input.jdn_ip {
 } */
 
 .startWaitlist {
-  /* -webkit-animation: startWaitlist 1s infinite;
-  -moz-animation:    startWaitlist 1s infinite;
-  -o-animation:      startWaitlist 1s infinite;
+  /* -webkit-animation: startWaitlist 1s infinite; 
+  -moz-animation:    startWaitlist 1s infinite; 
+  -o-animation:      startWaitlist 1s infinite; 
   animation:         startWaitlist 1s infinite;  */
   background-color: #00cc96 !important;
 }
@@ -7903,7 +7903,7 @@ hr.wide-separator-line {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-/*
+/* 
 @font-face {
   font-family: 'icomoon';
   src: url('../fonts/icomoon.eot?vxnnmm');
@@ -7922,7 +7922,7 @@ hr.wide-separator-line {
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-
+ 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 } */
@@ -8283,7 +8283,7 @@ owl-carousel .bt3.active {
   top: 1px;
   margin-left: 6px;
 
-
+  
 } */
 
 .navul {
@@ -10898,7 +10898,7 @@ image-cropper img {
   }
 }
 
-/* @media screen and (max-width: 768px){
+/* @media screen and (max-width: 768px){ 
   h4{
   font-size:.7rem!important;
   }
@@ -10938,7 +10938,7 @@ image-cropper img {
   color: #f2cd61 !important
 }
 
-/*
+/*   
   .p0 .locd .lbl .prof-pic {
     width: 180px;
     height: 180px;
@@ -12205,20 +12205,12 @@ img.busN-logo {
   content: url(../images/dashboard-icons/medicalrecord-02.svg);
   width: 20px;
 }
-.medicalrecord-green-icon-customer{
-  content: url(../images/dashboard-icons/medicalrecord_green.svg);
-  width: 20px;
-}
 .mr-rx-icon{
   content: url(../images/dashboard-icons/prescription.svg);
    width: 40px;
 }
 .mr-rx-icon-customer{
   content: url(../images/dashboard-icons/prescription2.svg);
-  width: 20px;
-}
-.mr-rx-green-icon-customer{
-  content: url(../images/dashboard-icons/prescription_green.svg);
   width: 20px;
 }
 .medicalrecordlisticon-customer{
@@ -12233,49 +12225,49 @@ img.busN-logo {
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-observations-icon{
   content: url(../images/mr-icons/observations.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-symptoms-icon{
   content: url(../images/mr-icons/symptoms.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-diagnosis-icon{
   content: url(../images/mr-icons/diagnosis.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-misc_notes-icon{
   content: url(../images/mr-icons/misc_notes.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-vaccination_history-icon{
   content: url(../images/mr-icons/syringe.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-complaints-icon{
   content: url(../images/mr-icons/complaint.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .consumer-appthistory .appt-icon {
   content: url(../images/myjaldee/Appoinment-01.svg);
@@ -12549,12 +12541,12 @@ img.busN-logo {
   padding: 1px 3px;
   color: #106e76;
 }
-.qtoken input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+.qtoken input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin: 0;
+    margin: 0; 
 }
 .mrcreate{
   border-radius: 0px !important;
@@ -12709,7 +12701,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .prevSubMain1 {
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
   width: 100%;
 }
 .prevSub {
@@ -12735,7 +12727,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 /* @media (min-width:768px) {
   .full-height {
-
+    
   }
 } */
 .videocontainer .hide{
@@ -12792,26 +12784,6 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
-
-.heading1 {
-  font-size: 1.25rem !important;
-  font-weight: 500;
-}
-.heading1b {
-  font-size: 1.25rem !important;
-  font-weight: bold;
-}
-.heading2 {
-  font-size: 1.20rem !important;
-  font-weight: 500;
-}
-.heading2b {
-  font-size: 1.20rem !important;
-  font-weight: bold;
-}
-.heading3 {
-  font-size: 1.10rem !important;
-}
 .prov-apptDetail h2 {
   border-bottom: 1px solid #3c8dbc;
   padding-bottom: 10px;
@@ -12849,4 +12821,43 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .cust-detail {
   color: #3c8dbc;
+}
+.mricons {
+  min-width: 30px;
+}
+.p6 {
+  padding:6px !important;
+}
+.mr-clinic-notes-n p {
+  font-size: 1rem !important;
+}
+.heading1 {
+  font-size: 1.25rem !important;
+  font-weight: 500;
+}
+.heading1b {
+  font-size: 1.25rem !important;
+  font-weight: 600;
+}
+.heading2 {
+  font-size: 1.20rem !important;
+  font-weight: 500;
+}
+.heading2b {
+  font-size: 1.20rem !important;
+  font-weight: 600;
+}
+.heading3 {
+  font-size: 1.10rem !important;
+  font-weight: 500;
+}
+.heading3b {
+  font-size: 1.10rem !important;
+  font-weight: 600;
+}
+.normal-sz {
+  font-size: 1rem !important;
+}
+hr {
+  border-top: 1px solid #ddd !important;
 }

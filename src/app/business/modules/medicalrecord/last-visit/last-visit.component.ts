@@ -179,11 +179,11 @@ export class LastVisitComponent implements OnInit {
           'serviceName': visitDetails.appointmnet.service.name,
           'department': visitDetails.appointmnet.service.deptName,
           'booking_type': 'APPT',
-          'booking_date': visitDetails.appointment.consLastVisitedDate,
+          'booking_date': visitDetails.appointmnet.consLastVisitedDate,
           'booking_time': visitDetails.appointmnet.apptTakenTime,
           'mrId': visitDetails.mrId,
           'booking_id': visitDetails.appointmnet.uid,
-          'visitDate': visitDetails.consLastVisitedDate.consLastVisitedDate,
+          'visitDate': visitDetails.appointmnet.consLastVisitedDate,
           'back_type': this.back_type,
           'provider_id': providerId
         }
@@ -206,7 +206,6 @@ export class LastVisitComponent implements OnInit {
           'back_type': 'consumer'
         }
       };
-      console.log(navigationExtras);
       const result = {
         'navigationParams': navigationExtras,
         'type': 'clinicalnotes'

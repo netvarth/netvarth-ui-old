@@ -47,10 +47,10 @@ export class UploadDigitalSignatureComponent implements OnInit {
     private router: Router,
     private activatedRoot: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
-      this.medicalrecord_service.patient_data.subscribe(res => {
-        this.navigationParams = res;
-        this.navigationExtras = this.navigationParams;
-      });
+    this.medicalrecord_service.patient_data.subscribe(res => {
+      this.navigationParams = res;
+      this.navigationExtras = this.navigationParams;
+    });
     this.medicalrecord_service.patient_data.subscribe(data => {
       this.patientDetails = JSON.parse(data.customerDetail);
       if (this.patientDetails.memberJaldeeId) {
@@ -66,20 +66,17 @@ export class UploadDigitalSignatureComponent implements OnInit {
       }
     });
     this.activatedRoot.queryParams.subscribe(queryParams => {
-    if (queryParams.providerId) {
-      this.providerId = queryParams.providerId;
-     }
+      if (queryParams.providerId) {
+        this.providerId = queryParams.providerId;
+      }
     });
 
   }
 
   ngOnInit() {
-    
-
-
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
   }
 
   getMrprescription(mrId) {
@@ -88,7 +85,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
         this.uploadImages = data;
         console.log(data);
         for (const pic of this.uploadImages) {
-          const imgdet = {'name': pic.originalName, 'keyName': pic.keyName , 'size': pic.imageSize, 'view': true};
+          const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true };
           this.selectedMessage.files.push(imgdet);
         }
         console.log(this.selectedMessage.files);
@@ -154,12 +151,10 @@ export class UploadDigitalSignatureComponent implements OnInit {
       .subscribe((data) => {
         this.deleteTempImage(val);
         this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  
-
 }
