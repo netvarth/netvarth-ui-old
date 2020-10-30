@@ -110,7 +110,7 @@
                                             <span class="item-label-val">{{waitlist.queue.queueStartTime}} -
                                                 {{waitlist.queue.queueEndTime}}</span>
                                         </div>
-                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-4 stats-item txt-align-center">
+                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center">
                                             <span class="status-label"
                                                 *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
                                             <span class="status-label"
@@ -128,7 +128,7 @@
                                             </span>
                                         </div>
                                         <div *ngIf="waitlist.batchName"
-                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-1 stats-item">
+                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item">
                                             <span class="status-label">BATCH</span>
                                             <span class="item-label-val">{{waitlist.batchName}}</span>
                                         </div>

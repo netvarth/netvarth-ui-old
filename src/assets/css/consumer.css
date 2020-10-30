@@ -3924,7 +3924,8 @@
         font-size: 0.7rem !important;
     }
     .checkin-details .myjaldee-bg {
-        opacity: 0.6 !important;
+        /* opacity: 0.6 !important; */
+        display: none;
     }
 }
 
