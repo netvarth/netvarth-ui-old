@@ -71,7 +71,7 @@ export class ConsumerJoinComponent implements OnInit {
     this.createForm();
     this.api_loading = false;
     if (this.data.type === 'consumer') {
-      this.heading = 'Welcome to Jaldee';
+      this.heading = 'Please enter your phone number';
       this.phOrem_error = 'Invalid mobile number';
     }
   }

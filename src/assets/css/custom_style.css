@@ -12872,3 +12872,6 @@ input[type=number]::-webkit-outer-spin-button {
 hr {
   border-top: 1px solid #ddd !important;
 }
+.join_phone_label{
+  color: #5f75bc;
+}
