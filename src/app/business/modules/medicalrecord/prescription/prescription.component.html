@@ -96,7 +96,7 @@
       <button type="button" style="margin-left: 40%; margin-top: 4%;" class="cs-btn bt2">
         Share Rx</button>
     </div>
-    <span *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o" aria-hidden="true"></i>&nbsp;Prescription shared on {{prescriptionSharedTimestamp}}</span>
+    <span *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o" aria-hidden="true"></i>&nbsp;Prescription last shared on {{prescriptionSharedTimestamp}}</span>
   </div>
   <div class="mgn-up-20" *ngIf="uploadlist.length>0">
     <div class="pad-10 table-responsive">
@@ -130,6 +130,6 @@
       <button type="button" mat-button class="cs-btn bt1" (click)="shareManualRx('uploadrx')">
         Share Rx</button>
     </div>
-    <span *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o" aria-hidden="true"></i>&nbsp;Prescription shared on {{prescriptionSharedTimestamp}}</span>
+    <span *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o" aria-hidden="true"></i>&nbsp;Prescription last shared on {{prescriptionSharedTimestamp}}</span>
   </div>
 </ng-container>
