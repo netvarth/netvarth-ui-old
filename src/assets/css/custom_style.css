@@ -12785,6 +12785,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .result {
   font-weight: bold !important;
+}
+.customer-note {
+  font-weight: bold !important;
   font-style: italic !important;
 }
 

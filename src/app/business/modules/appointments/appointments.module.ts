@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppointmentsComponent } from './appointments.component';
 import { AppointmentsRoutingModule } from './appointments.routing.module';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
@@ -55,6 +55,10 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
     entryComponents: [
         AppointmentActionsComponent
     ],
-    exports: [AppointmentsComponent]
+    exports: [AppointmentsComponent],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ],
 })
 export class AppointmentsModule { }

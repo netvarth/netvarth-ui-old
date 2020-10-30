@@ -61,7 +61,7 @@
           never uploaded digital signature,</span><u class="lnk action pointlist" (click)="uploadSign()"
           style="color: #3c8dbc;"> create or Upload digital signature for sharing Rx</u>
       </span>
-      <ng-container class="attachment" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+      <!-- <ng-container class="attachment" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
           *ngFor="let item of selectedMessage.files; let i = index">
           <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
@@ -85,7 +85,7 @@
             <button mat-button class="cs-btn bt1 savemember mgn-lt-5">OK</button>
           </div>
         </div>
-      </ng-container>
+      </ng-container> -->
     </div>
     <div *ngIf="digitalSign">
       <button type="button" mat-button style="margin-left: 40%; margin-top: 4%;" class="cs-btn bt1"
@@ -96,6 +96,7 @@
       <button type="button" style="margin-left: 40%; margin-top: 4%;" class="cs-btn bt2">
         Share Rx</button>
     </div>
+    <span *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o" aria-hidden="true"></i>&nbsp;Prescription shared on {{prescriptionSharedTimestamp}}</span>
   </div>
   <div class="mgn-up-20" *ngIf="uploadlist.length>0">
     <div class="pad-10 table-responsive">
@@ -129,5 +130,6 @@
       <button type="button" mat-button class="cs-btn bt1" (click)="shareManualRx('uploadrx')">
         Share Rx</button>
     </div>
+    <span *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o" aria-hidden="true"></i>&nbsp;Prescription shared on {{prescriptionSharedTimestamp}}</span>
   </div>
 </ng-container>
