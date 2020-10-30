@@ -275,7 +275,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
 
   changeWaitlistStatus() {
-    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'Rejected', 'appt');
+    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'Cancelled', 'appt');
   }
 
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
