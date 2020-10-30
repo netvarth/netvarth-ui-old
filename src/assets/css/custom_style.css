@@ -5118,7 +5118,7 @@ i.notavail {
 }
 
 /* .dashboard .chkins:last-child {
- 
+
 } */
 
 .dashboard .chkins .service, .dashboard .chkins .forwhom {
@@ -7359,9 +7359,9 @@ input.jdn_ip {
 } */
 
 .startWaitlist {
-  /* -webkit-animation: startWaitlist 1s infinite; 
-  -moz-animation:    startWaitlist 1s infinite; 
-  -o-animation:      startWaitlist 1s infinite; 
+  /* -webkit-animation: startWaitlist 1s infinite;
+  -moz-animation:    startWaitlist 1s infinite;
+  -o-animation:      startWaitlist 1s infinite;
   animation:         startWaitlist 1s infinite;  */
   background-color: #00cc96 !important;
 }
@@ -7903,7 +7903,7 @@ hr.wide-separator-line {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-/* 
+/*
 @font-face {
   font-family: 'icomoon';
   src: url('../fonts/icomoon.eot?vxnnmm');
@@ -7922,7 +7922,7 @@ hr.wide-separator-line {
   font-variant: normal;
   text-transform: none;
   line-height: 1;
- 
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 } */
@@ -8283,7 +8283,7 @@ owl-carousel .bt3.active {
   top: 1px;
   margin-left: 6px;
 
-  
+
 } */
 
 .navul {
@@ -10898,7 +10898,7 @@ image-cropper img {
   }
 }
 
-/* @media screen and (max-width: 768px){ 
+/* @media screen and (max-width: 768px){
   h4{
   font-size:.7rem!important;
   }
@@ -10938,7 +10938,7 @@ image-cropper img {
   color: #f2cd61 !important
 }
 
-/*   
+/*
   .p0 .locd .lbl .prof-pic {
     width: 180px;
     height: 180px;
@@ -12205,12 +12205,20 @@ img.busN-logo {
   content: url(../images/dashboard-icons/medicalrecord-02.svg);
   width: 20px;
 }
+.medicalrecord-green-icon-customer{
+  content: url(../images/dashboard-icons/medicalrecord_green.svg);
+  width: 20px;
+}
 .mr-rx-icon{
   content: url(../images/dashboard-icons/prescription.svg);
    width: 40px;
 }
 .mr-rx-icon-customer{
   content: url(../images/dashboard-icons/prescription2.svg);
+  width: 20px;
+}
+.mr-rx-green-icon-customer{
+  content: url(../images/dashboard-icons/prescription_green.svg);
   width: 20px;
 }
 .medicalrecordlisticon-customer{
@@ -12541,12 +12549,12 @@ img.busN-logo {
   padding: 1px 3px;
   color: #106e76;
 }
-.qtoken input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
+.qtoken input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin: 0; 
+    margin: 0;
 }
 .mrcreate{
   border-radius: 0px !important;
@@ -12701,7 +12709,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .prevSubMain1 {
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   width: 100%;
 }
 .prevSub {
@@ -12727,7 +12735,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 /* @media (min-width:768px) {
   .full-height {
-    
+
   }
 } */
 .videocontainer .hide{
