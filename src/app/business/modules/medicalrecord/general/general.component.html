@@ -15,7 +15,7 @@
             <hr>
             <div class="col-md-6">
                 <label>Patient Name:</label><span> {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</span><br>
-                <span >Patient Id: {{display_PatientId}}</span><br **ngIf="display_PatientId">
+                <label>Patient Id:</label> <span> {{display_PatientId}}</span><br **ngIf="display_PatientId">
                 <label *ngIf="customerDetails.dob">DOB:</label><span >  {{customerDetails.dob | date:display_dateFormat}}</span><br *ngIf="customerDetails.dob">
                 <label *ngIf="customerDetails.gender">Gender:</label><span > {{customerDetails.gender | capitalizeFirst}}</span>
             </div>
