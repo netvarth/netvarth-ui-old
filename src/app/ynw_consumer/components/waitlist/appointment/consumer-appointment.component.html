@@ -265,7 +265,7 @@
                                                     </h6>
                                                     <div class="contact-section">
                                                         <i class="fa fa-mobile "></i>
-                                                        <i *ngIf="sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"
+                                                        <i *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"
                                                         class="fa wtsapaud-icon wtsap-cal"></i>
                                                         <span class="mgn-lt-10 phonevallabel">
                                                             {{waitlist_for[0].phoneNo}}
@@ -276,7 +276,7 @@
                                                             *ngIf="currentPhone && changePhno && type !== 'reschedule'">{{currentPhone}}</span><a
                                                             class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'reschedule'" class="fa fa-pencil"
                                                                 (click)="editPhone()"></i></a>
-                                                                <div class="mode-hint mgn-bt-5" *ngIf="sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'">
+                                                                <div class="mode-hint mgn-bt-5" *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && (sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone')">
                                                                     The provider will contact you in this number
                                                                 </div>
                                                     </div>
