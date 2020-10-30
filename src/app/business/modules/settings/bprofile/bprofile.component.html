@@ -82,12 +82,7 @@
                   <br>
                   <div class="cd-b" *ngIf="!showIncompleteButton">
                     <div class="div-outline">
-                      <!-- <span class="fontstyl">Jaldee Online &nbsp;&nbsp;</span>
-                      <span class="head-level-settings"><span class="inactive " *ngIf="!onlinepresence_status">
-                          <i class="fa fa-times"></i> Inactive</span>
-                        <span class="active " *ngIf="onlinepresence_status">
-                          <i class="fa fa-check"></i> Active</span></span> -->
-                      Here is your QR code and Link
+                          Here is your QR code and Link 
 
                       <p class="head-level-settings">
 
@@ -98,47 +93,28 @@
                       </p>
                       <div class="bus-prof-qr-sec">
                         <!-- <ul class="sbl"> -->
-                        <div class="mgn-up-10">
-                          <span *ngIf="!bProfile.customId">
-                            <div class="bprof-qr-border disp-flex">
-                              <div>
-                                <ngx-qrcode [elementType]="elementType" [value]="qr_value">
+                          <div class="mgn-up-10">
+                            <span *ngIf="!bProfile.customId">
+                              <div class="bprof-qr-border mgn-bt-10 disp-flex">
+                                <div>
+                                <ngx-qrcode  [elementType]="elementType" [value]="qr_value">
                                 </ngx-qrcode>
                               </div>
-                              <div class="trackSlide bprof-icons">
-                                <i class="fa fa-share-alt fa-lg teli-wtsap-a  custId-cursor"
-                                  (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"></i>
-                              </div>
-                              <div class="trackSlide bprof-icons"><i
-                                  class="fa fa-cogs teli-wtsap-a fa-lg  custId-cursor"
-                                  (click)="reDirectToJaldeeOnline()"></i></div>
-                            </div>
-                            <div class="custid jld-link mgn-up-10 custId-cursor">
-                              <a href="{{wndw_path}}{{bProfile.accEncUid}}" target="_blank">
+                              <a class="custid jld-link mgn-up-10 custId-cursor" href="{{wndw_path}}{{bProfile.accEncUid}}" target="blank">
                                 {{wndw_path}}{{bProfile.accEncUid}}
                               </a>
-                            </div>
-                          </span>
-                          <span *ngIf="bProfile.customId">
-                            <div class="bprof-qr-border">
-                              <div>
-                                <ngx-qrcode [elementType]="elementType" [value]="qr_value">
+                            </span>
+                            <span *ngIf="bProfile.customId">
+                              <div class="bprof-qr-border mgn-bt-10">
+                                <div>
+                                <ngx-qrcode  [elementType]="elementType" [value]="qr_value">
                                 </ngx-qrcode>
                               </div>
-                              <div class="trackSlide bprof-icons">
-                                <i class="fa fa-share-alt teli-wtsap-a fa-lg  custId-cursor"
-                                  (click)="qrCodegeneraterOnlineID(bProfile.customId)"></i>
-                              </div>
-                              <div class="trackSlide bprof-icons" (click)="reDirectToJaldeeOnline()">
-                                <i class="fa fa-cogs teli-wtsap-a fa-lg  custId-cursor"></i>
-                              </div>
-                            </div>
-                            <div class="custid jld-link mgn-up-10 custId-cursor">
-                              <a href="{{wndw_path}}{{bProfile.customId}}"
-                                target="_blank">{{wndw_path}}{{bProfile.customId}}</a>
-                            </div>
-                          </span>
-                        </div>
+                              <a class="custid jld-link mgn-up-10 custId-cursor" href="{{wndw_path}}{{bProfile.customId}}" target="blank">
+                                {{wndw_path}}{{bProfile.customId}}
+                              </a>
+                            </span>
+                          </div>
                         <!-- </ul> -->
                       </div>
                     </div>

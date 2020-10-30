@@ -191,7 +191,17 @@ export class ActionPopupComponent implements OnInit {
     }
 
   }
-  gotoWaitlistReschedule () {
-
+  gotoWaitlistReschedule() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        uuid: this.bookingDetails.ynwUuid,
+        type: 'waitlistreschedule',
+        account_id: this.bookingDetails.providerAccount.id,
+        unique_id: this.bookingDetails.providerAccount.uniqueId
+      }
+    };
+    this.router.navigate(['consumer', 'checkin'], navigationExtras);
+    this.dialogRef.close();
   }
+
 }
