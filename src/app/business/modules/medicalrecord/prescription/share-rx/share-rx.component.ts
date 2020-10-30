@@ -69,6 +69,7 @@ export class ShareRxComponent implements OnInit {
   address: any;
   mobile: any;
   type;
+  disable = false;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
@@ -100,7 +101,7 @@ export class ShareRxComponent implements OnInit {
           });
       }
  ngOnInit() {
-  this.msgreceivers = [{'id': 0, 'name': 'Patient'}, { 'id': this.provider_user_Id, 'name': 'Doctor'} ];
+  this.msgreceivers = [{'id': 0, 'name': 'Patient'} ];
   this.createForm();
   console.log(this.mrId);
   this.getMrprescription();
@@ -118,6 +119,7 @@ export class ShareRxComponent implements OnInit {
       this.dialogRef.close();
   }
   onSubmit(formdata) {
+    this.disable = true;
     this.resetApiErrors();
     const vwofrx = document.getElementById('sharerxview');
     let rxview = '';
@@ -150,6 +152,7 @@ export class ShareRxComponent implements OnInit {
                     this.dialogRef.close();
                   }, error => {
                           this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                          this.disable = false;
                       });
 
               } else if (this.sharewith === 0) {
@@ -168,6 +171,7 @@ export class ShareRxComponent implements OnInit {
                     this.dialogRef.close();
                   }, error => {
                           this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                          this.disable = false;
                       });
               }
         } else {
@@ -188,6 +192,7 @@ export class ShareRxComponent implements OnInit {
                  this.dialogRef.close();
                }, error => {
                        this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                       this.disable = false;
                    });
 
             } else if (this.sharewith === 0) {
@@ -206,6 +211,7 @@ export class ShareRxComponent implements OnInit {
                  this.dialogRef.close();
                }, error => {
                        this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                       this.disable = false;
                    });
             }
         }
