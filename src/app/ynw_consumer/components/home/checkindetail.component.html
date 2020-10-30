@@ -34,17 +34,17 @@
                                         <div class="pad-10">
                                             <h3 class="custId-cursor head-color disp-flex"
                                                 (click)="providerDetail(waitlist.providerAccount)">
-                                                {{waitlist.providerAccount.businessName | capitalizeFirst}}
+                                                {{waitlist.providerAccount.businessName | capitalizeFirst}} 
                                                 &nbsp;<div *ngIf="checkIfFav(waitlist.providerAccount.id)" class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.providerAccount, $event)"></div>
                                                 <div *ngIf="!checkIfFav(waitlist.providerAccount.id)" class="icon-favourite"
                                                 (click)="addFavProvider(waitlist.providerAccount.id, $event)"></div>
                                             </h3>
                                             <span class="loc-cls">
                                                 <i class="fa fa-map-marker"></i>
-                                                {{waitlist.queue.location.place | capitalizeFirst}}
+                                                {{waitlist.queue.location.place | capitalizeFirst}} 
                                             </span>
                                             <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
-                                                <!-- <span>{{provider_label | capitalizeFirst}}</span> -->
+                                                <span>{{provider_label | capitalizeFirst}} : </span>
                                                 <span>
                                                     {{waitlist.provider.firstName | capitalizeFirst}}
                                                     {{waitlist.provider.lastName | capitalizeFirst}}
