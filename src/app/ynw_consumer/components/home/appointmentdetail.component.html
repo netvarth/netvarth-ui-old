@@ -109,13 +109,13 @@
                                                 -
                                                 {{appt.schedule.apptSchedule.timeSlots[0].eTime}}</span>
                                         </div>
-                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-4 stats-item">
+                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item">
                                             <span class="status-label" *ngIf="appt.appmtTime">TIME</span>
                                             <span class="item-label-val"
                                                 *ngIf="appt.appmtTime">{{getSingleTime(appt.appmtTime)}}</span>
                                         </div>
                                         <div *ngIf="appt.batchId"
-                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-1 stats-item">
+                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item">
                                             <span class="status-label">BATCH</span>
                                             <span class="item-label-val">{{appt.batchId}}</span>
                                         </div>
