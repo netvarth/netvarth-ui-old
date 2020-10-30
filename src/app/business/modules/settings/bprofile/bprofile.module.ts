@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BProfileRoutingModule } from './bprofile.routing.module';
 import { BProfileComponent } from './bprofile.component';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
@@ -60,6 +60,10 @@ import { JaldeeOnlineComponent } from './jaldee-online/jaldee-online.component';
     ],
     exports: [
         BProfileComponent
-    ]
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+    ],
 })
 export class BProfileModule {}
