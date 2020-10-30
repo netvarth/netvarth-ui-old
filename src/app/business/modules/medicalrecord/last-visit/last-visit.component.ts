@@ -203,7 +203,7 @@ export class LastVisitComponent implements OnInit {
           'mrId': visitDetails.mrId,
           'booking_date': visitDetails.consLastVisitedDate,
           'visitDate': visitDetails.consLastVisitedDate,
-          'back_type': 'consumer'
+          'back_type': this.back_type
         }
       };
       const result = {

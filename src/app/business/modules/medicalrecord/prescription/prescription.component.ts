@@ -68,9 +68,7 @@ export class PrescriptionComponent implements OnInit {
     });
   }
   ngOnInit() {
-    const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
-    this.providerId = user.id;
-    // this.getDigitalSign();
+
     if (this.mrId === 0) {
       this.loading = false;
     } else {
@@ -134,40 +132,6 @@ export class PrescriptionComponent implements OnInit {
     }
   }
 
-  // saveDigitalSignImages(index) {
-  //   this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
-  //   const submit_data: FormData = new FormData();
-  //   const propertiesDetob = {};
-  //   let i = 0;
-  //   for (const pic of this.selectedMessage.files) {
-  //     submit_data.append('files', pic, pic['name']);
-  //     const properties = {
-  //       'caption': this.selectedMessage.caption[i] || ''
-  //     };
-  //     propertiesDetob[i] = properties;
-  //     i++;
-  //   }
-  //   const propertiesDet = {
-  //     'propertiesMap': propertiesDetob
-  //   };
-  //   const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-  //   submit_data.append('properties', blobPropdata);
-  //   if (this.provider_user_Id) {
-  //     this.uploadMrDigitalsign(this.provider_user_Id, submit_data, index);
-  //   }
-  // }
-
-  // uploadMrDigitalsign(id, submit_data, val) {
-  //   this.provider_services.uploadMrDigitalsign(id, submit_data)
-  //     .subscribe((data) => {
-  //       this.digitalSign = true;
-  //       this.deleteTempImage(val);
-  //       this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
-  //     },
-  //       error => {
-  //         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-  //       });
-  // }
 
   uploadRx() {
     this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadRx']);
