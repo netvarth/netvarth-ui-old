@@ -11,14 +11,12 @@ import { ImagesviewComponent } from './imagesview/imagesview.component';
 import { projectConstants } from '../..../../../../../app.component';
 import { ShareRxComponent } from './share-rx/share-rx.component';
 
-
 @Component({
   selector: 'app-prescription',
   templateUrl: './prescription.component.html',
   styleUrls: ['./prescription.component.css']
 })
 export class PrescriptionComponent implements OnInit {
-
   prescriptionSharedTimestamp: any;
   prescriptionShared: any;
   instructiondialogRef: any;
@@ -64,34 +62,24 @@ export class PrescriptionComponent implements OnInit {
         const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
         this.provider_user_Id = user.id;
       }
-
     });
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       this.mrId = mrId;
-      console.log(this.mrId);
-
     });
-
-
   }
-
   ngOnInit() {
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.providerId = user.id;
     // this.getDigitalSign();
     if (this.mrId === 0) {
       this.loading = false;
-
     } else {
       this.getMrprescription(this.mrId);
-      this.getMedicalRecord(this.mrId)
+      this.getMedicalRecord(this.mrId);
     }
-
   }
 
   getMedicalRecord(mrId) {
-
-
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
@@ -141,7 +129,7 @@ export class PrescriptionComponent implements OnInit {
         },
           error => {
             this.digitalSign = false;
-            //this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -224,7 +212,6 @@ export class PrescriptionComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-
 
   addDrug() {
     this.addDrugdialogRef = this.dialog.open(AddDrugComponent, {
