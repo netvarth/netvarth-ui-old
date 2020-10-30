@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { Observable } from 'rxjs';
+import { Location } from '@angular/common';
 import { startWith, map } from 'rxjs/operators';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
@@ -217,6 +218,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     public provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     public sharedfunctionObj: SharedFunctions,
+    private locationobj: Location,
     private activated_route: ActivatedRoute,
     @Inject(DOCUMENT) public document
   ) {
@@ -317,7 +319,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       }, () => {
     });
   }
-
+  gotoPrev() {
+    this.locationobj.back();
+  }
   getJaldeeActiveCoupons() {
     this.jCouponsList = [];
     let couponList: any = [];
