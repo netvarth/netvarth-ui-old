@@ -95,8 +95,8 @@ export class LabelsComponent implements OnInit {
         );
     }
     changeLabelStatus(label) {
-        const status = (label.status === 'ACTIVE') ? 'DISABLED' : 'ENABLED';
-        const statusmsg = (label.status === 'ACTIVE') ? 'disabled' : 'enabled';
+        const status = (label.status === 'ENABLED') ? 'DISABLED' : 'ENABLED';
+        const statusmsg = (label.status === 'ENABLED') ? ' disabled' : ' enabled';
         this.provider_services.updateLabelStatus(label.id, status).subscribe(data => {
             this.shared_functions.openSnackBar(label.displayName + statusmsg + ' successfully');
             this.getLabels();

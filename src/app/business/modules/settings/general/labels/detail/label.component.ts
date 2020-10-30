@@ -63,6 +63,7 @@ export class LabelComponent implements OnInit {
     waitlist_label = '';
     exceedLimit = false;
     labelcaption = 'Create Label';
+    labelStatus = false;
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -116,6 +117,7 @@ export class LabelComponent implements OnInit {
             this.description = this.labelData.description;
             this.displayName = this.labelData.displayName;
             this.valueSet = this.labelData.valueSet;
+            this.labelStatus = this.labelData.status;
         });
     }
     onSubmit() {
@@ -165,7 +167,17 @@ export class LabelComponent implements OnInit {
                 });
         }
     }
-
+    changeLabelStatus(label) {
+        const status = (label.status === 'ENABLED') ? 'DISABLED' : 'ENABLED';
+        const statusmsg = (label.status === 'ENABLED') ? 'disabled' : 'enabled';
+        this.provider_services.updateLabelStatus(label.id, status).subscribe(data => {
+            this.shared_functions.openSnackBar(label.displayName + statusmsg + ' successfully');
+            this.editLabelbyId(label.id);
+        },
+            error => {
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+    }
     setDescFocus() {
         this.isfocused = true;
         if (this.labelInfo.description) {
