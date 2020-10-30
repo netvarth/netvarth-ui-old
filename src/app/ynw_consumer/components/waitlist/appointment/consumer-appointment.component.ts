@@ -467,6 +467,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         } else {
             this.userPhone = this.selected_phone;
             this.currentPhone = this.selected_phone;
+            this.callingModes = this.selected_phone;
             this.action = '';
             this.changePhno = true;
         }

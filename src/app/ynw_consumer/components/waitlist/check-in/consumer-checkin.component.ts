@@ -606,7 +606,6 @@ export class ConsumerCheckinComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
-        console.log(this.sel_ser_det);
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
