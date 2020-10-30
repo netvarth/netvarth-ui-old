@@ -12840,3 +12840,13 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: auto;
   margin-bottom: auto;
 }
+.customer-detail-box {
+  box-shadow: 10px 10px 15px 0px #cccccc9c;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  font-size: 1rem;
+  padding: 10px 0;
+}
+.cust-detail {
+  color: #3c8dbc;
+}
