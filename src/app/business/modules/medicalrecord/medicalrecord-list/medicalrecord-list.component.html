@@ -1,38 +1,24 @@
 <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor" (click)="back()"></span>&nbsp;&nbsp;&nbsp;&nbsp; Medical records of {{patientDetails[0].firstName}} {{patientDetails[0].lastName}}
-
+      <span class="fa fa-arrow-left pointer-cursor" (click)="back()"></span>&nbsp;&nbsp;&nbsp;&nbsp; Medical records of
+      {{patientDetails[0].firstName}} {{patientDetails[0].lastName}}
     </h5>
   </div>
-
-
-
-
 </section>
 <section class="report">
   <div class="content w-manager settings comn-cls lic-page">
     <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
-
-
-
       <div class="box">
-
-
         <div class="box-body table-container table-responsive mat-elevation-z8">
           <div class="spinner-container" *ngIf="loading ">
-
             <mat-spinner></mat-spinner>
-
           </div>
           <div *ngIf="!loading">
-
             <div *ngIf="!mr_dataSource" class="mgn-up-10 style-padding">
               <p>No Medical Records Found For This Patient</p>
             </div>
-
             <mat-table *ngIf="mr_dataSource" [dataSource]="mr_dataSource">
-
               <ng-container matColumnDef="createdDate">
                 <mat-header-cell *matHeaderCellDef> Created On </mat-header-cell>
                 <mat-cell *matCellDef=" let mr">
@@ -58,7 +44,7 @@
                   <b>MedicalRecord</b>
                 </mat-header-cell>
                 <mat-cell *matCellDef="let mr">
-                    <i class="medicalrecord-green-icon-customer"></i>
+                  <i class="medicalrecord-green-icon-customer"></i>
                 </mat-cell>
               </ng-container>
               <ng-container matColumnDef="rx">
@@ -66,19 +52,14 @@
                   <b>Prescription</b>
                 </mat-header-cell>
                 <mat-cell *matCellDef="let mr">
-                  <i style="text-align:center" [ngClass]="mr.prescriptionCreated == true ? 'mr-rx-green-icon-customer':'mr-rx-icon-customer '"></i>
+                  <i style="text-align:center"
+                    [ngClass]="mr.prescriptionCreated == true ? 'mr-rx-green-icon-customer':'mr-rx-icon-customer '"></i>
                 </mat-cell>
-
               </ng-container>
-
-
-
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row;columns:displayedColumns" (click)="getMedicalRecord(row)" class="pointlist" ></mat-row>
-
+              <mat-row *matRowDef="let row;columns:displayedColumns" (click)="getMedicalRecord(row)" class="pointlist">
+              </mat-row>
             </mat-table>
-
-
           </div>
         </div>
       </div>

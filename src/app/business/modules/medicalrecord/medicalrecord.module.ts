@@ -24,10 +24,7 @@ import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-l
 import { UploadDigitalSignatureComponent } from './prescription/upload-digital-signature/upload-digital-signature.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-
-
-
-
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [MedicalrecordComponent,
@@ -54,7 +51,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatInputModule,
     MatDatepickerModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTableModule
   ],
   entryComponents: [
   LastVisitComponent,

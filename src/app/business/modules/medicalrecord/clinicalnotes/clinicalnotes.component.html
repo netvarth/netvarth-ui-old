@@ -3,10 +3,8 @@
     <div class="row no-padding-small">
       <div class="copy one col-xs-12 col-sm-12 no-padding">
         <div class="col-a col-b cd-b pl0 col-md-12 col-lg-12 col-xs-12 col-md-12 ">
-
           <div class="card p0 w-dta active no-padding mgn-up-10">
             <div class="mgn-bt-10" *ngFor="let entry of clinicalNotes">
-              <!-- [ngClass]="{'div-grn-outline':specializeFilled,'div-red-outline':!specializeFilled }" -->
               <div class="div-outline custId-cursor" (click)="addOrEditClinicalNotes(entry)">
                 <div>
                   <div>
@@ -23,22 +21,8 @@
                   <p>{{entry.value}}</p>
                 </div>
                 <div class="clearfix"></div>
-                <!-- <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
-          aria-hidden="true"></i> -->
-                <!-- <i *ngIf="!specializeFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
-          aria-hidden="true"></i> -->
               </div>              
             </div>
-            <!-- <div class="card mrcreate pointlist" >
-           <span >
-             <h5> 
-             <button type="button" mat-button style="float: right;"class="cs-btn bt1" >{{ entry.value == '' ? 'Add' : 'Edit' }}</button></h5>
-             <div *ngIf= "entry.value" >
-               <p>{{entry.value}}</p>
-             </div>
-           </span>
-    </div> -->
-            <!-- <div class="clearfix"></div> -->
           </div>
         </div>
       </div>
