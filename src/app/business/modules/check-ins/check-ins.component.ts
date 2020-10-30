@@ -1977,7 +1977,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.providerLabels = [];
     this.provider_services.getLabelList().subscribe(data => {
       this.allLabels = data;
-      this.providerLabels = this.allLabels.filter(label => label.status === 'ACTIVE');
+      this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
     });
   }
   getDisplayname(label) {
