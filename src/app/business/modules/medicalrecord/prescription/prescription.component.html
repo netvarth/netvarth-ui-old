@@ -75,11 +75,11 @@
       </table>
       <span (click)="updatePrescription()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span>
     </div>
-    <!-- <div class="mgn-up-10">
+    <div class="mgn-up-10">
       <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0"><span class="red">You never uploaded digital signature,</span><u class="lnk action pointlist" (click)="uploadSign()" style="color: #3c8dbc;"> create or Upload digital signature for sharing Rx</u>
          </span>
 
-         <ng-container class="attachment"
+         <!-- <ng-container class="attachment"
     *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
     <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
         *ngFor="let item of selectedMessage.files; let i = index">
@@ -105,8 +105,8 @@
         </div>
     </div>
 
-</ng-container>
-  </div> -->
+</ng-container> -->
+  </div>
 
      <div *ngIf="digitalSign">
           <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx('adddrug')" >
