@@ -6733,3 +6733,6 @@
     font-weight: 600;
     color: blue;
 }
+.cust-book-details .mat-tab-labels {
+    background: #ffecbe;
+}

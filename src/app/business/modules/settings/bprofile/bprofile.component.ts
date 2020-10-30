@@ -409,7 +409,6 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
     this.getBusinessConfiguration();
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
-
     this.getGalleryImages();
 
 
@@ -615,6 +614,11 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
       .then(
         data => {
           this.bProfile = data;
+          if (this.bProfile.customId) {
+            this.generateQR(this.bProfile.customId);
+          } else {
+            this.generateQR(this.bProfile.accEncUid);
+          }
           if (this.bProfile.businessName && this.bProfile.businessDesc) {
             this.domainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfDomain();
             this.subdomainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfSubDomain();
@@ -1231,5 +1235,9 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
         this.getBusinessProfile();
       }
     });
+  }
+
+  generateQR(id) {
+    this.qr_value = projectConstants.PATH + id;
   }
 }

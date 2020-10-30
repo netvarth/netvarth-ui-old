@@ -12812,3 +12812,31 @@ input[type=number]::-webkit-outer-spin-button {
 .heading3 {
   font-size: 1.10rem !important;
 }
+.prov-apptDetail h2 {
+  border-bottom: 1px solid #3c8dbc;
+  padding-bottom: 10px;
+}
+.prov-apptDetail .stats-item {
+  display: grid;
+}
+.prov-apptDetail .stats-item .itemHead {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #3c8dbc;
+}
+.prov-apptDetail .stats-item .itemVal {
+  font-size: 0.85rem;
+  line-height: 30px;
+}
+.prov-apptDetail .stat-bar {
+  background: #3c8dbc45;
+  padding: 10px;
+}
+.bprof-qr-border img{
+  border: 1px solid #222223;
+  width: 90px;
+}
+.bprof-icons {
+  margin-top: auto;
+  margin-bottom: auto;
+}
