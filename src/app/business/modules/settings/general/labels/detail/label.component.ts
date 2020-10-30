@@ -117,7 +117,7 @@ export class LabelComponent implements OnInit {
             this.description = this.labelData.description;
             this.displayName = this.labelData.displayName;
             this.valueSet = this.labelData.valueSet;
-            this.labelStatus = this.labelData.status;
+            this.labelStatus = (this.labelData.status === 'ENABLED') ? true : false;
         });
     }
     onSubmit() {
