@@ -90,14 +90,13 @@ export class CheckinActionsComponent implements OnInit {
     }
     ngOnInit() {
         this.checkin = this.data.checkinData;
-        console.log(this.checkin);
         if (!this.data.multiSelection) {
-        this.ynwUuid = this.checkin.ynwUuid;
-        this.location_id = this.checkin.queue.location.id;
-        this.serv_id = this.checkin.service.id;
-        this.checkin_date = this.checkin.date;
-        this.accountid = this.checkin.providerAccount.id;
-        this.showToken = this.checkin.showToken;
+            this.ynwUuid = this.checkin.ynwUuid;
+            this.location_id = this.checkin.queue.location.id;
+            this.serv_id = this.checkin.service.id;
+            this.checkin_date = this.checkin.date;
+            this.accountid = this.checkin.providerAccount.id;
+            this.showToken = this.checkin.showToken;
         }
         this.getPos();
         this.getLabel();
@@ -647,7 +646,6 @@ export class CheckinActionsComponent implements OnInit {
         } else {
             providerId = '';
         }
-        console.log(this.checkin);
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
