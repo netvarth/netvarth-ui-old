@@ -208,10 +208,10 @@ export class CheckinDetailComponent implements OnInit {
     }
 
     setWaitlistTimeDetails() {
-        let k = 0;
+        // let k = 0;
         for (const x of this.fav_providers) {
           this.fav_providers_id_list.push(x.id);
-          k++;
+        // k++;
         }
     }
 
