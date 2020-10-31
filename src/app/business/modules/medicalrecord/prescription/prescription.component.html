@@ -62,11 +62,10 @@
          <u class="lnk action pointlist" (click)="uploadSign()"
           style="color: #3c8dbc;"> Upload digital signature for sharing Prescription</u>
       </span>
-        <!-- <span *ngIf="digitalSign">
+      <span *ngIf="digitalSign">
           <u class="lnk action pointlist" (click)="uploadSign()"
-           style="color: #3c8dbc;"> Update digital signature for sharing Rx</u>
-       </span> -->
-
+           style="color: #3c8dbc;"> Update digital signature</u>
+       </span>
       <!-- <ng-container class="attachment" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
           *ngFor="let item of selectedMessage.files; let i = index">
