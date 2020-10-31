@@ -44,7 +44,6 @@ export class RazorpayService {
     });
   }
   payWithRazor(razorModel, usertype, checkin_type?, livetrack?, account_id?, uuid?, prepayment?) {
-    console.log(prepayment);
     let razorInterval;
     razorModel.retry = false;
     //   theme: {
@@ -54,7 +53,7 @@ export class RazorpayService {
     razorModel.retry = false;
     razorModel.modal = {
       escape: false
-      };
+    };
     const options = razorModel;
     options.handler = ((response, error) => {
       options.response = response;
@@ -77,7 +76,7 @@ export class RazorpayService {
         } else if (checkin_type === 'appt_historybill') {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'history'], navigationExtras));
-        }  else if (checkin_type === 'checkin_historybill') {
+        } else if (checkin_type === 'checkin_historybill') {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras));
         } else if (checkin_type === 'donations') {

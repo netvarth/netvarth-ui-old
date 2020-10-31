@@ -15,28 +15,34 @@
                             <div class="details">
                                 <!-- <div class="book-head"> Booking Confirmed </div> -->
                                 <div class="book-head" *ngIf="type !== 'waitlistreschedule'"> Booking Confirmed </div>
-                                <div class="book-head" *ngIf="type === 'waitlistreschedule' &&  waitlist.token"> Token rescheduled </div>
-                                <div class="book-head" *ngIf="type === 'waitlistreschedule' &&  !waitlist.token"> Checkin rescheduled </div>
+                                <div class="book-head" *ngIf="type === 'waitlistreschedule' &&  waitlist.token"> Token
+                                    rescheduled </div>
+                                <div class="book-head" *ngIf="type === 'waitlistreschedule' &&  !waitlist.token">
+                                    Checkin rescheduled </div>
 
                                 <div class="book-details"> Booking details </div>
                                 <table class="book-details-sub  chkntoknappt-details">
                                     <tbody>
                                         <tr *ngIf="!waitlist.provider">
-                                            <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
+                                            <td width="48%" align="right">Name of the
+                                                {{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{waitlist.providerAccount?.businessName}}</td>
                                         </tr>
                                         <tr *ngIf="waitlist.provider">
-                                            <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
+                                            <td width="48%" align="right">Name of the
+                                                {{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{waitlist.provider.firstName}} {{waitlist.provider.lastName}}, {{waitlist.providerAccount?.businessName}}</td>
+                                            <td>{{waitlist.provider.firstName}} {{waitlist.provider.lastName}},
+                                                {{waitlist.providerAccount?.businessName}}</td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td > {{waitlist.queue?.location.place}}<a [href]="waitlist.queue.location.googleMapUrl"
-                                                target="_blank" class="icon-location" matTooltip="Click to navigate">
-                                              </a></td>
+                                            <td> {{waitlist.queue?.location.place}}<a
+                                                    [href]="waitlist.queue.location.googleMapUrl" target="_blank"
+                                                    class="icon-location" matTooltip="Click to navigate">
+                                                </a></td>
                                         </tr>
                                         <tr *ngIf="waitlist.token">
                                             <td width="48%" align="right">Token No </td>
@@ -46,12 +52,14 @@
                                         <tr *ngIf="waitlist.token">
                                             <td width="48%" align="right">Token for</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{waitlist.waitlistingFor[0].firstName}} {{waitlist.waitlistingFor[0].lastName}}</td>
+                                            <td>{{waitlist.waitlistingFor[0].firstName}}
+                                                {{waitlist.waitlistingFor[0].lastName}}</td>
                                         </tr>
                                         <tr *ngIf="!waitlist.token">
                                             <td width="48%" align="right">Check-in for</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{waitlist.waitlistingFor[0].firstName}} {{waitlist.waitlistingFor[0].lastName}}</td>
+                                            <td>{{waitlist.waitlistingFor[0].firstName}}
+                                                {{waitlist.waitlistingFor[0].lastName}}</td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Service</td>
@@ -87,11 +95,10 @@
                                         <tr *ngIf="waitlist.service?.minPrePaymentAmount">
                                             <td width="48%" align="right">Advance Payment</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><span
-                                                class="rupee-font">&#8377;
-                                            </span>{{infoParams.prepayment}}
-                                            <!-- {{waitlist.service.minPrePaymentAmount}} -->
-                                        </td>
+                                            <td><span class="rupee-font">&#8377;
+                                                </span>{{infoParams.prepayment}}
+                                                <!-- {{waitlist.service.minPrePaymentAmount}} -->
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -123,7 +130,8 @@
                             <input placeholder="Email" [(ngModel)]="email"><span class="email-btn"
                                 (click)="updateEmail()">Ok</span>
                         </div> -->
-                                <div class="notes" *ngIf="waitlist.service && waitlist.service.postInfoEnabled && waitlist.service.postInfoTitle">
+                                <div class="notes"
+                                    *ngIf="waitlist.service && waitlist.service.postInfoEnabled && waitlist.service.postInfoTitle">
                                     <div class="preinfo-title">{{waitlist.service.postInfoTitle}} </div>
                                     <div [innerHTML]="waitlist.service.postInfoText">
                                     </div>

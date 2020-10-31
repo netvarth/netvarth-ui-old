@@ -19,29 +19,34 @@
                                 <table class="book-details-sub chkntoknappt-details">
                                     <tbody>
                                         <tr *ngIf="!appointment.provider">
-                                            <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td> 
+                                            <td width="48%" align="right">Name of the
+                                                {{provider_label | capitalizeFirst}}</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{appointment.providerAccount?.businessName}}</td>
                                         </tr>
                                         <tr *ngIf="appointment.provider">
-                                            <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
+                                            <td width="48%" align="right">Name of the
+                                                {{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{appointment.provider.firstName}} {{appointment.provider.lastName}}, {{appointment.providerAccount?.businessName}}
+                                            <td>{{appointment.provider.firstName}} {{appointment.provider.lastName}},
+                                                {{appointment.providerAccount?.businessName}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{appointment.location?.place}}<a [href]="appointment.location.googleMapUrl"
-                                                target="_blank" class="icon-location" matTooltip="Click to navigate">
-                                              </a></td>
+                                            <td>{{appointment.location?.place}}<a
+                                                    [href]="appointment.location.googleMapUrl" target="_blank"
+                                                    class="icon-location" matTooltip="Click to navigate">
+                                                </a></td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Appointment for</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{appointment.appmtFor[0].firstName}} {{appointment.appmtFor[0].lastName}}</td>
+                                            <td>{{appointment.appmtFor[0].firstName}}
+                                                {{appointment.appmtFor[0].lastName}}</td>
                                         </tr>
-                                        
+
                                         <tr>
                                             <td width="48%" align="right">Service</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
@@ -75,9 +80,8 @@
                                         <tr *ngIf="appointment.service?.minPrePaymentAmount">
                                             <td width="48%" align="right">Advance Payment</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><span
-                                                class="rupee-font">&#8377;
-                                            </span> {{appointment.service.minPrePaymentAmount}}</td>
+                                            <td><span class="rupee-font">&#8377;
+                                                </span> {{infoParams.prepayment}}</td>
                                         </tr>
                                         <tr *ngIf="appointment.batchId">
                                             <td width="48%" align="right">Batch</td>
@@ -99,7 +103,8 @@
                             <input placeholder="Email" [(ngModel)]="email"><span class="email-btn"
                                 (click)="updateEmail()">Ok</span>
                         </div> -->
-                                <div class="notes" *ngIf="appointment.service && appointment.service.postInfoEnabled && appointment.service.postInfoTitle">
+                                <div class="notes"
+                                    *ngIf="appointment.service && appointment.service.postInfoEnabled && appointment.service.postInfoTitle">
                                     <div class="preinfo-title">{{appointment.service.postInfoTitle}} </div>
                                     <div [innerHTML]="appointment.service.postInfoText">
                                     </div>
