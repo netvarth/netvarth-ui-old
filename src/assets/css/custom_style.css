@@ -12814,7 +12814,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .bprof-qr-border img{
   border: 1px solid #222223;
-  width: 90px;
+  width: 150px;
 }
 .bprof-icons {
   margin-top: auto;
@@ -12881,4 +12881,10 @@ hr {
 }
 .recentactivity {
   border: 1px solid;
+}
+.head-level-settings .btn {
+  padding: 3px 6px !important;
+}
+.trackSlide .fa-share-alt{
+  font-size: 2rem;
 }
