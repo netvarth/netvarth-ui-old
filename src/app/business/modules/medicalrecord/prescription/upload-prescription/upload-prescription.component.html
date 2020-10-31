@@ -29,7 +29,7 @@
       <h5 class="heading3b ln-hgt-24"> By clicking upload prescription you will have choice of uploading a file or
         taking picture</h5>
       <div class="mgn-bt-10">
-        <button mat-button style="margin-top: 10px;" class="cs-btn bt1 ">
+        <button mat-button  class="cs-btn bt1 ">
           <a class="pointer-cursor" style="color: whitesmoke" (click)="imagefile.click()"><input #imagefile type="file"
               accept="/*;capture=camera" style="display:none;" (change)="filesSelected($event)">Upload
             Prescription</a>
@@ -73,11 +73,11 @@
       </table>
       <!-- <span>If you have multiple prescriptions images, <a class="lnk action pointer-cursor"
  (click)="imagefile.click()"><input #imagefile type="file"
-     accept="/*;capture=camera" style="display:none;" 
+     accept="/*;capture=camera" style="display:none;"
      (change)="filesSelected($event)"><u>Upload
  another</u></a></span> -->
-      <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && showSave">
-        <button type="submit" mat-button style="margin-top: 4%;" class="cs-btn bt1" [disabled]="disable"
+      <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && showSave" class="mgn-up-10">
+        <button type="submit" mat-button  class="cs-btn bt1" [disabled]="disable"
           (click)="saveImages()">
           Save Prescription</button>
       </div>

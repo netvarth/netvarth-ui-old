@@ -12783,9 +12783,6 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 20px;
   color: #fff;
 }
-.result {
-  font-weight: bold !important;
-}
 .customer-note {
   font-weight: bold !important;
   font-style: italic !important;
@@ -12881,4 +12878,7 @@ hr {
   border: 1px solid;
   border-radius: 20px;
   float: right;
+}
+.recentactivity {
+  border: 1px solid;
 }

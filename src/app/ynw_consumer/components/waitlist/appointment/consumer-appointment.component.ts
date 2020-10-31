@@ -837,9 +837,14 @@ export class ConsumerAppointmentComponent implements OnInit {
                     }
                 }
                 let retUUID;
+                let prepayAmount;
                 Object.keys(retData).forEach(key => {
-                    retUUID = retData[key];
-                    this.trackUuid = retData[key];
+                    if (key === '_prepaymentAmount') {
+                        prepayAmount = retData['_prepaymentAmount'];
+                    } else {
+                        retUUID = retData[key];
+                        this.trackUuid = retData[key];
+                    }
                 });
                 if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUUID);
@@ -847,7 +852,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                 const navigationExtras: NavigationExtras = {
                     queryParams: {
                         account_id: this.account_id,
-                        type_check: 'appt_prepayment'
+                        type_check: 'appt_prepayment',
+                        prepayment: prepayAmount
                     }
                 };
                 if (this.sel_ser_det.isPrePayment) {
@@ -1649,7 +1655,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 }
             }
             if (found) {
-                this.couponvalid = true; 
+                this.couponvalid = true;
                 this.sharedFunctionobj.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
                 this.action = '';
             } else {

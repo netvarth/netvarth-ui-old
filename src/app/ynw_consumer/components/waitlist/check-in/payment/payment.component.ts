@@ -41,6 +41,7 @@ export class ConsumerPaymentComponent implements OnInit {
     checkIn_type: any;
     members;
     iconClass: string;
+    prepayment;
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
@@ -62,6 +63,7 @@ export class ConsumerPaymentComponent implements OnInit {
                 this.accountId = params.account_id;
                 this.pid = params.pid;
                 this.members = params.members;
+                this.prepayment = params.prepayment;
             });
     }
 
@@ -71,30 +73,31 @@ export class ConsumerPaymentComponent implements OnInit {
                 this.activeWt = wailist;
                 if (this.activeWt.service.serviceType === 'virtualService') {
                     switch (this.activeWt.service.virtualCallingModes[0].callingMode) {
-                      case 'Zoom': {
-                        this.iconClass = 'fa zoom-icon';
-                        break;
-                      }
-                      case 'GoogleMeet': {
-                        this.iconClass = 'fa meet-icon';
-                        break;
-                      }
-                      case 'WhatsApp': {
-                        if (this.activeWt.service.virtualServiceType === 'audioService') {
-                          this.iconClass = 'fa wtsapaud-icon';
-                        } else {
-                          this.iconClass = 'fa wtsapvid-icon';
+                        case 'Zoom': {
+                            this.iconClass = 'fa zoom-icon';
+                            break;
                         }
-                        break;
-                      }
-                      case 'Phone': {
-                        this.iconClass = 'fa phon-icon';
-                        break;
-                      }
+                        case 'GoogleMeet': {
+                            this.iconClass = 'fa meet-icon';
+                            break;
+                        }
+                        case 'WhatsApp': {
+                            if (this.activeWt.service.virtualServiceType === 'audioService') {
+                                this.iconClass = 'fa wtsapaud-icon';
+                            } else {
+                                this.iconClass = 'fa wtsapvid-icon';
+                            }
+                            break;
+                        }
+                        case 'Phone': {
+                            this.iconClass = 'fa phon-icon';
+                            break;
+                        }
                     }
-                  }
+                }
                 this.livetrack = this.activeWt.service.livetrack;
-                this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.members.length;
+                // this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.members.length;
+                this.prepaymentAmount = this.prepayment;
                 this.waitlistDetails = {
                     'amount': this.prepaymentAmount,
                     'paymentMode': null,
@@ -145,7 +148,7 @@ export class ConsumerPaymentComponent implements OnInit {
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
     }
-    goBack () {
+    goBack() {
         this.router.navigate(['/']);
     }
     paytmPayment() {
