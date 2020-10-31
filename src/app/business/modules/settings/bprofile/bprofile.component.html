@@ -79,10 +79,16 @@
                   <div  *ngIf="!showIncompleteButton">
                     <div>
                       <h6>Here is your QR code and Link</h6>
-                      <p class="head-level-settings">
+                      <p class="head-level-settings disp-flex">
                         <span class="inactive" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </span>
                         <span class="active" *ngIf="onlinepresence_status">By scanning this code your
                           {{customer_label}}s can see you online</span>
+                          <!-- <div class="col-md-5 col-sm-12 col-xs-12 no-padding-small"> -->
+                            <button (click)="reDirectToJaldeeOnline()" type="button"
+                            class="wght-btn btn btn-info" *ngIf="!onlinepresence_status">Enable Jaldee Online</button>
+                            <button (click)="reDirectToJaldeeOnline()" type="button"
+                            class="wght-btn btn btn-info" *ngIf="onlinepresence_status">Manage Jaldee Online</button>
+                          <!-- </div> -->
                       </p>
                       <div class="bus-prof-qr-sec">
                         <div class="mgn-up-10">
@@ -93,12 +99,12 @@
                                 </ngx-qrcode>
                               </div>
                               <div class="trackSlide bprof-icons">
-                                <i class="fa fa-share-alt fa-lg teli-wtsap-a  custId-cursor"
+                                <i class="fa fa-share-alt custId-cursor"
                                   (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"></i>
                               </div>
-                              <div class="trackSlide bprof-icons"><i
+                              <!-- <div class="trackSlide bprof-icons"><i
                                   class="fa fa-cogs teli-wtsap-a fa-lg  custId-cursor"
-                                  (click)="reDirectToJaldeeOnline()"></i></div>
+                                  (click)="reDirectToJaldeeOnline()"></i></div> -->
                             </div>
                             <a class="custid jld-link mgn-up-10 custId-cursor"
                               href="{{wndw_path}}{{bProfile.accEncUid}}" target="blank">
@@ -112,12 +118,12 @@
                                 </ngx-qrcode>
                               </div>
                               <div class="trackSlide bprof-icons">
-                                <i class="fa fa-share-alt fa-lg teli-wtsap-a  custId-cursor"
+                                <i class="fa fa-share-alt custId-cursor"
                                   (click)="qrCodegeneraterOnlineID(bProfile.customId)"></i>
                               </div>
-                              <div class="trackSlide bprof-icons"><i
+                              <!-- <div class="trackSlide bprof-icons"><i
                                   class="fa fa-cogs teli-wtsap-a fa-lg  custId-cursor"
-                                  (click)="reDirectToJaldeeOnline()"></i></div>
+                                  (click)="reDirectToJaldeeOnline()"></i></div> -->
                             </div>
                             <a class="custid jld-link mgn-up-10 custId-cursor" href="{{wndw_path}}{{bProfile.customId}}"
                               target="blank">
