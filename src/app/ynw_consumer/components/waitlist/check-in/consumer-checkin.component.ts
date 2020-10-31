@@ -400,9 +400,9 @@ export class ConsumerCheckinComponent implements OnInit {
                     this.waitlist_for.push({ id: this.waitlist.waitlistingFor[0].id, firstName: this.waitlist.waitlistingFor[0].firstName, lastName: this.waitlist.waitlistingFor[0].lastName, phoneNo: this.waitlist.phoneNumber });
                     this.wtlst_for_fname = this.waitlist.waitlistingFor[0].firstName;
                     this.wtlst_for_lname = this.waitlist.waitlistingFor[0].lastName;
-                    }
+                }
                 this.checkin_date = this.waitlist.date;
-                if (this.checkin_date !== this.todaydate){
+                if (this.checkin_date !== this.todaydate) {
                     this.isFuturedate = true;
                 }
 
@@ -929,9 +929,14 @@ export class ConsumerCheckinComponent implements OnInit {
             .subscribe(data => {
                 const retData = data;
                 let retUUID;
+                let prepayAmount;
                 Object.keys(retData).forEach(key => {
-                    retUUID = retData[key];
-                    this.trackUuid = retData[key];
+                    if (key === '_prepaymentAmount') {
+                        prepayAmount = retData['_prepaymentAmount'];
+                    } else {
+                        retUUID = retData[key];
+                        this.trackUuid = retData[key];
+                    }
                 });
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUUID);
@@ -945,7 +950,8 @@ export class ConsumerCheckinComponent implements OnInit {
                     queryParams: {
                         account_id: this.account_id,
                         type_check: 'checkin_prepayment',
-                        members: member
+                        members: member,
+                        prepayment: prepayAmount
                     }
                 };
                 if (this.sel_ser_det.isPrePayment) {
