@@ -88,12 +88,12 @@
       </ng-container> -->
     </div>
     <div *ngIf="digitalSign">
-      <button type="button" mat-button style="margin-left: 40%; margin-top: 4%;" class="cs-btn bt1"
+      <button type="button" mat-button class="cs-btn bt1"
         (click)="shareManualRx('adddrug')">
         Share Rx</button>
     </div>
     <div *ngIf="!digitalSign">
-      <button type="button" style="margin-left: 40%; margin-top: 4%;" class="cs-btn bt2">
+      <button type="button" class="cs-btn bt2">
         Share Rx</button>
     </div>
     <span *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o" aria-hidden="true"></i>&nbsp;Prescription last shared on {{prescriptionSharedTimestamp}}</span>

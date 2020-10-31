@@ -70,6 +70,7 @@ export class ShareRxComponent implements OnInit {
   mobile: any;
   type;
   disable = false;
+  curDate = new Date();
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -124,10 +125,11 @@ export class ShareRxComponent implements OnInit {
     this.resetApiErrors();
     const vwofrx = document.getElementById('sharerxview');
     let rxview = '';
-    rxview += '<html><head><title></title>';
+    rxview += '<html style="width: 210mm; height: 297mm; font-size: 1rem; font-family: \'Poppins\', sans-serif !important;"><head><title></title>';
     rxview += '</head><body >';
     rxview += vwofrx.innerHTML;
     rxview += '</body></html>';
+    console.log(rxview);
     console.log(formdata);
     console.log(this.sharewith);
     console.log(this.customid);
@@ -298,7 +300,7 @@ export class ShareRxComponent implements OnInit {
         .subscribe((data: any) => {
           this.userdata = data;
         },
-      );
+        );
     }
   }
   getBussinessProfileApi() {
@@ -312,7 +314,5 @@ export class ShareRxComponent implements OnInit {
           this.mobile = this.bdata.accountLinkedPhNo;
           console.log(this.mobile);
         });
-
   }
-
 }
