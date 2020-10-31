@@ -291,13 +291,13 @@
 																							<span class="number">
 																								<mat-form-field
 																									class="example-full-width">
-																									<input type="text"
+																									<input type="number"
 																										matInput
 																										#billdiscvalue
 																										aria-label="Number"
 																										max="{{price_limit}}"
 																										min="0" matInput
-																										value="1"
+																										value="1" autocomplete="off"
 																										size="3"
 																										(keypress)="isNumeric($event)"
 																										(keyup)="isvalid($event)"
