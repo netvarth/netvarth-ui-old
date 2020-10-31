@@ -86,7 +86,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
         .subscribe((data) => {
           console.log(data);
           this.digitalSign = true;
-                  this.selectedMessage.files.push(data);
+                  this.selectedMessage.files.push(JSON.parse(data));
           console.log(this.selectedMessage.files);
         },
           error => {
@@ -96,7 +96,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
     }
   }
   deleteTempImagefrmdb(img, index) {
-      this.provider_services.deleteUplodedsign(img.keyName , this.mrId)
+      this.provider_services.deleteUplodedsign(img.keyName , this.providerId)
       .subscribe((data) => {
         this.selectedMessage.files.splice(index, 1);
         this. getDigitalSign();

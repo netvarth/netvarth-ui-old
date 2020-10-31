@@ -31,7 +31,7 @@
      <button  mat-button style= "margin-top: 10px;" class="cs-btn bt1 " >
              <a class="pointer-cursor" style= "color: whitesmoke"
              (click)="imagefile.click()"><input #imagefile type="file"
-                 accept="/*;capture=camera" style="display:none;" 
+                 accept="/*;capture=camera" style="display:none;"
                  (change)="filesSelected($event)">Upload Sign</a>
 
      </button>
@@ -43,7 +43,7 @@
 <ng-container class="attachment">
 <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
     *ngFor="let item of selectedMessage.files; let i = index">
-    <h4>Selected signature</h4>
+    <h4>Selected Digital Signature</h4>
     <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
         <span class="ln-hgt-40">{{item.name}}</span>
     </div>
@@ -61,7 +61,7 @@
         </span>
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
-          <button type="button"  class="cs-btn bt2"  (click)="deleteTempImage(i)">cancel</button>
+          <button type="button"  class="cs-btn bt2"  (click)="deleteTempImage(i)">Cancel</button>
         <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages(i)">OK</button>
     </div>
 </div>
@@ -73,9 +73,9 @@
     <ng-container class="attachment">
     <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
         *ngFor="let item of selectedMessage.files; let i = index">
-        <h4>Selected signature</h4>
+        <h4>Uploaded Digital Signature</h4>
         <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
-            <span class="ln-hgt-40">{{item.keyName}}</span>
+            <span class="ln-hgt-40">{{item.originalName}}</span>
         </div>
         <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
             <span class="">
@@ -90,9 +90,9 @@
                 </mat-menu>
             </span>
         </div>
-        
+
     </div>
-    
+
     </ng-container>
     </div>
 
