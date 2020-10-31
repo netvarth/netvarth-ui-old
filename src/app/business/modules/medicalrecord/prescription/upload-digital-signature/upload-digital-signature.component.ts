@@ -83,7 +83,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
   getDigitalSign() {
     if (this.providerId) {
       this.provider_services.getDigitalSign(this.providerId)
-        .subscribe((data) => {
+        .subscribe((data: any) => {
           console.log(data);
           this.digitalSign = true;
                   this.selectedMessage.files.push(JSON.parse(data));
