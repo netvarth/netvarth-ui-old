@@ -12874,8 +12874,11 @@ hr {
 }
 .join_phone_label{
   color: #5f75bc;
+  font-size: 1rem !important;
 }
 .customer-action-btn {
-  padding: 10px;
+  padding: 5px 25px;
   border: 1px solid;
+  border-radius: 20px;
+  float: right;
 }
