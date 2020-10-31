@@ -120,8 +120,8 @@
 </ng-container>
   </div> -->
 
-  <div  *ngIf="drugList.length > 0 && showSave">
-      <button type="button" mat-button style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" [disabled]="disable" (click)="saveRx()">Save Prescription </button>
+  <div  *ngIf="drugList.length > 0 && showSave" class="mgn-up-10">
+      <button type="button" mat-button  class="cs-btn bt1" [disabled]="disable" (click)="saveRx()">Save Prescription </button>
   </div>
   <!-- <div *ngIf="drugList.length > 0 && !showSave && digitalSign">
           <button type="button" mat-button  style= "margin-left: 40%; margin-top: 4%;" class="cs-btn bt1" (click)="shareManualRx()" >

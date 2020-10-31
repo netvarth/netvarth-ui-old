@@ -18,7 +18,7 @@ import { ShareRxComponent } from './share-rx/share-rx.component';
 })
 export class PrescriptionComponent implements OnInit {
   prescriptionSharedTimestamp: any;
-  prescriptionShared: any;
+  prescriptionShared = false;
   instructiondialogRef: any;
   addDrugdialogRef;
   drugList: any = [];
@@ -82,6 +82,7 @@ export class PrescriptionComponent implements OnInit {
       .subscribe((data: any) => {
         if (data) {
           this.prescriptionShared = data.prescShared;
+
           this.prescriptionSharedTimestamp = data.lastSharedTime;
 
         }
