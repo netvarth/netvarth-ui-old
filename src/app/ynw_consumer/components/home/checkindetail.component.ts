@@ -54,6 +54,8 @@ export class CheckinDetailComponent implements OnInit {
     path = projectConstants.PATH;
     qr_value: string;
     actiondialogRef: any;
+    fav_providers: any;
+    fav_providers_id_list: any[];
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -69,25 +71,6 @@ export class CheckinDetailComponent implements OnInit {
                 this.ynwUuid = qParams.uuid;
                 this.providerId = qParams.providerId;
             });
-        // this.waitlist = this.waitlistdata.waitlist || null;
-        // const waitlistjson = JSON.parse(this.waitlist);
-        // this.BusinessName = waitlistjson.providerAccount.businessName;
-        // this.ProviderId = waitlistjson.providerAccount.id;
-        // this.ynwUuid = waitlistjson.ynwUuid;
-        // this.date = waitlistjson.date;
-        // this.locn = waitlistjson.queue.location.place;
-        // this.firstname = waitlistjson.waitlistingFor[0].firstName;
-        // this.lastname = waitlistjson.waitlistingFor[0].lastName;
-        // this.service = waitlistjson.service.name;
-        // this.deptName = waitlistjson.service.deptName;
-        // this.queueStart = waitlistjson.queue.queueStartTime;
-        // this.queueEnd = waitlistjson.queue.queueEndTime;
-        // this.paymntstats = waitlistjson.paymentStatus;
-        // this.batchname = waitlistjson.batchName;
-        // this.status = waitlistjson.waitlistStatus;
-        // this.statusUpdatedTime = waitlistjson.statusUpdatedTime;
-        // this.consumerNote = waitlistjson.consumerNote;
-        // this.callingModes = waitlistjson.virtualService;
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
         this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
@@ -132,7 +115,8 @@ export class CheckinDetailComponent implements OnInit {
             (error) => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
-    }
+        this.getFavouriteProvider();
+        }
 
     generateQR() {
         this.qr_value = this.path + 'status/' + this.waitlist.checkinEncId;
@@ -208,5 +192,68 @@ export class CheckinDetailComponent implements OnInit {
           });
           this.actiondialogRef.afterClosed().subscribe(data => {
           });
+    }
+
+    getFavouriteProvider() {
+        this.sharedServices.getFavProvider()
+          .subscribe(
+            data => {
+              this.fav_providers = data;
+              this.fav_providers_id_list = [];
+              this.setWaitlistTimeDetails();
+            },
+            error => {
+            }
+          );
+    }
+
+    setWaitlistTimeDetails() {
+        let k = 0;
+        for (const x of this.fav_providers) {
+          this.fav_providers_id_list.push(x.id);
+          k++;
+        }
+    }
+
+    checkIfFav(id) {
+        let fav = false;
+        this.fav_providers_id_list.map((e) => {
+          if (e === id) {
+            fav = true;
+          }
+        });
+        return fav;
+    }
+
+    doDeleteFavProvider(fav, event) {
+        event.stopPropagation();
+        if (!fav.id) {
+          return false;
+        }
+        this.shared_functions.doDeleteFavProvider(fav, this)
+          .then(
+            data => {
+              if (data === 'reloadlist') {
+                this.getFavouriteProvider();
+              }
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+    }
+
+    addFavProvider(id, event) {
+        event.stopPropagation();
+        if (!id) {
+          return false;
+        }
+        this.sharedServices.addProvidertoFavourite(id)
+          .subscribe(
+            data => {
+              this.getFavouriteProvider();
+            },
+            error => {
+            }
+          );
     }
 }

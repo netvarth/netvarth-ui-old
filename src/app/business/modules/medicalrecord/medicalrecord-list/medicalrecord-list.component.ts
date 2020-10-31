@@ -105,7 +105,7 @@ export class MedicalrecordListComponent implements OnInit {
           'department': mrDetails.waitlist.service.deptName,
           'consultationMode': 'OP',
           'booking_id': mrDetails.waitlist.ynwUuid,
-          'mrId': mrDetails.mrId,
+          'mrId': mrDetails.id,
           'visitDate': mrDetails.mrConsultationDate,
           'back_type': 'consumer'
 
@@ -124,7 +124,7 @@ export class MedicalrecordListComponent implements OnInit {
           'booking_type': 'APPT',
           'booking_date': mrDetails.mrConsultationDate,
           'booking_time': mrDetails.appointmnet.apptTakenTime,
-          'mrId': mrDetails.mrId,
+          'mrId': mrDetails.id,
           'booking_id': mrDetails.appointmnet.uid,
           'visitDate': mrDetails.mrConsultationDate,
           'back_type': 'consumer'
@@ -137,7 +137,7 @@ export class MedicalrecordListComponent implements OnInit {
           'customerDetail': JSON.stringify(mrDetails.providerConsumer),
           'serviceName': 'Consultation',
           'booking_type': 'FOLLOWUP',
-          'mrId': mrDetails.mrId,
+          'mrId': mrDetails.id,
           'visitDate': mrDetails.mrConsultationDate,
           'booking_date': mrDetails.mrConsultationDate,
           'back_type': 'consumer'

@@ -1,16 +1,17 @@
 <!-- join Section starts -->
 <form [formGroup]="loginForm" class="login-form" novalidate (ngSubmit)="loginForm.valid &&
 onSubmit(loginForm.value)">
-    <div class="mat-dialog-title" style="text-align: center;color: #3c8dbc !important;">{{heading}} <button
+    <div class="mat-dialog-title" style="text-align: center;color: #3c8dbc !important;"><button
             mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1"><i class="fa fa-window-close"
                 aria-hidden="true"></i></button></div>
     <!-- step 1 for mobile number entering  -->
     <div *ngIf="step==1" class="cust-loginpge-color">
         <div class="mat-dialog-content">
             <div class="form-group">
+                <h6 class="join_phone_label">Please enter your phone number</h6>
                 <mat-form-field>
                     <input type="text" matInput class="form-control" id="emailId" maxlength="10"
-                        placeholder="Enter your mobile number" formControlName="emailId" autocomplete="off"
+                         formControlName="emailId" autocomplete="off"
                         (keyup)="handlekeyup($event)">
                 </mat-form-field>
                 <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
@@ -39,13 +40,13 @@ onSubmit(loginForm.value)">
             <button class="cust-logpg-submt" *ngIf="!phoneExists" type="submit" mat-button
                 [disabled]="api_loading || !loginForm.get('emailId').valid" (click)="checkAccountExists()"
                 (keyup)="clearPhoneExists()">
-                <span *ngIf="!api_loading">Ok</span>
+                <span *ngIf="!api_loading">Continue</span>
                 <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                 </app-common-innerloading-spinner>
             </button>
             <button class="cust-logpg-submt" *ngIf="phoneExists" type="button" mat-button [disabled]="api_loading"
                 (click)="onSubmit(loginForm.value)">
-                <span *ngIf="!api_loading">Ok</span>
+                <span *ngIf="!api_loading">sign in</span>
                 <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                 </app-common-innerloading-spinner>
             </button>

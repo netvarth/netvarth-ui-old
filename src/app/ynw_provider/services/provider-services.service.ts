@@ -1619,4 +1619,8 @@ export class ProviderServices {
       const url = 'provider/mr/' + mrId;
       return this.servicemeta.httpPut(url, data);
    }
+   getCustomerLastVisit(id) {
+      const url = 'provider/mr/patientPreviousVisit/' + id;
+      return this.servicemeta.httpGet(url);
+   }
 }

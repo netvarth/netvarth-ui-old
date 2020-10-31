@@ -50,6 +50,8 @@ export class ApptDetailComponent implements OnInit {
     iconClass: string;
     view_more = false;
     actiondialogRef;
+    fav_providers;
+    fav_providers_id_list: any[];
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -104,6 +106,7 @@ export class ApptDetailComponent implements OnInit {
             (error) => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
+        this.getFavouriteProvider();
     }
     generateQR() {
         this.qr_value = this.path + 'status/' + this.appt.appointmentEncId;
@@ -186,5 +189,68 @@ export class ApptDetailComponent implements OnInit {
           });
           this.actiondialogRef.afterClosed().subscribe(data => {
           });
+    }
+
+    getFavouriteProvider() {
+        this.sharedServices.getFavProvider()
+          .subscribe(
+            data => {
+              this.fav_providers = data;
+              this.fav_providers_id_list = [];
+              this.setWaitlistTimeDetails();
+            },
+            error => {
+            }
+          );
+    }
+
+    setWaitlistTimeDetails() {
+        let k = 0;
+        for (const x of this.fav_providers) {
+          this.fav_providers_id_list.push(x.id);
+          k++;
+        }
+    }
+
+    checkIfFav(id) {
+        let fav = false;
+        this.fav_providers_id_list.map((e) => {
+          if (e === id) {
+            fav = true;
+          }
+        });
+        return fav;
+    }
+
+    doDeleteFavProvider(fav, event) {
+        event.stopPropagation();
+        if (!fav.id) {
+          return false;
+        }
+        this.shared_functions.doDeleteFavProvider(fav, this)
+          .then(
+            data => {
+              if (data === 'reloadlist') {
+                this.getFavouriteProvider();
+              }
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+    }
+
+    addFavProvider(id, event) {
+        event.stopPropagation();
+        if (!id) {
+          return false;
+        }
+        this.sharedServices.addProvidertoFavourite(id)
+          .subscribe(
+            data => {
+              this.getFavouriteProvider();
+            },
+            error => {
+            }
+          );
     }
 }

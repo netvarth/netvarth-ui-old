@@ -670,7 +670,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   getFavouriteProvider() {
     this.loadcomplete.fav_provider = false;
-    // const k = 0;
     this.shared_services.getFavProvider()
       .subscribe(
         data => {
@@ -678,11 +677,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.fav_providers = data;
           this.fav_providers_id_list = [];
           this.setWaitlistTimeDetails();
-          // for (const x of this.fav_providers) {
-          //   this.fav_providers_id_list.push(x.id);
-          //   this.setWaitlistTimeDetailsProvider(x, k);
-          //   k++;
-          // }
         },
         error => {
           this.loadcomplete.fav_provider = true;
