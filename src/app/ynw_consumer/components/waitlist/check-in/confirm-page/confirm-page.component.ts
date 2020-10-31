@@ -36,8 +36,8 @@ export class ConfirmPageComponent implements OnInit {
       params => {
         // this.shared_functions.setitemonLocalStorage('inPostInfo', true);
         this.infoParams = params;
-        if (this.infoParams.type == 'waitlistreschedule') {
-          this.type = this.infoParams.type
+        if (this.infoParams.type === 'waitlistreschedule') {
+          this.type = this.infoParams.type;
         }
         if (params.uuid && params.account_id) {
           this.shared_services.getCheckinByConsumerUUID(params.uuid, params.account_id).subscribe(
