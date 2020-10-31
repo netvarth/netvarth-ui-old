@@ -62,7 +62,7 @@ export class ShareRxComponent implements OnInit {
   profimg_exists = false;
   cacheavoider = '';
   signurl = '';
-  imagedetails:any;
+  imagedetails: any;
   provider_user_Id: any;
   userdata: any;
   bdata: any;
@@ -72,51 +72,52 @@ export class ShareRxComponent implements OnInit {
   disable = false;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: any,
-      public dialog: MatDialog,
-      public fed_service: FormMessageDisplayService,
-      private shared_functions: SharedFunctions,
-      private fb: FormBuilder,
-      public provider_services: ProviderServices,
-      private medicalService: MedicalrecordService
-      ) {
-          this.spId = this.data.userId;
-          this.provider_user_Id = this.data.provider_user_Id;
-          console.log(this.spId);
-          this.mrId = this.data.mrId;
-          this.type = this.data.type;
-          console.log(this.type);
-          this.chekintype = this.data.chekintype;
-          this.medicalService.patient_data.subscribe(res => {
-            this.customerDetail = JSON.parse(res.customerDetail);
-            console.log(this.customerDetail);
-            console.log(this.customerDetail.phoneNo);
-            // if (this.customerDetail.email) {
-            //   this.email_id = this.customerDetail.email;
-            // }
-            // if (this.customerDetail.phoneNo) {
-            //   this.phone = this.customerDetail.phoneNo;
-            // }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialog: MatDialog,
+    public fed_service: FormMessageDisplayService,
+    private shared_functions: SharedFunctions,
+    private fb: FormBuilder,
+    public provider_services: ProviderServices,
+    private medicalService: MedicalrecordService
+  ) {
+    this.spId = this.data.userId;
+    this.provider_user_Id = this.data.provider_user_Id;
+    console.log(this.spId);
+    this.mrId = this.data.mrId;
+    this.type = this.data.type;
+    console.log(this.type);
+    this.chekintype = this.data.chekintype;
+    this.medicalService.patient_data.subscribe(res => {
+      this.customerDetail = JSON.parse(res.customerDetail);
+      console.log(this.customerDetail);
+      console.log(this.customerDetail.phoneNo);
+      // if (this.customerDetail.email) {
+      //   this.email_id = this.customerDetail.email;
+      // }
+      // if (this.customerDetail.phoneNo) {
+      //   this.phone = this.customerDetail.phoneNo;
+      // }
 
-          });
-      }
- ngOnInit() {
-  this.msgreceivers = [{'id': 0, 'name': 'Patient'} ];
-  this.createForm();
-  console.log(this.mrId);
-  this.getMrprescription();
-  this.getBusinessProfile();
-  this.getBussinessProfileApi();
- }
- createForm() {
-  this.sharewith = 0;
-  this.amForm = this.fb.group({
+    });
+  }
+  ngOnInit() {
+    this.sharewith = 0;
+    this.msgreceivers = [{ 'id': 0, 'name': 'Patient' }];
+    this.createForm();
+    console.log(this.mrId);
+    this.getMrprescription();
+    this.getBusinessProfile();
+    this.getBussinessProfileApi();
+  }
+  createForm() {
+    this.sharewith = 0;
+    this.amForm = this.fb.group({
       message: ['', Validators.compose([Validators.required])]
-  });
+    });
 
- }
+  }
   back() {
-      this.dialogRef.close();
+    this.dialogRef.close();
   }
   onSubmit(formdata) {
     this.disable = true;
@@ -127,180 +128,180 @@ export class ShareRxComponent implements OnInit {
     rxview += '</head><body >';
     rxview += vwofrx.innerHTML;
     rxview += '</body></html>';
-      console.log(formdata);
-      console.log(this.sharewith);
-      console.log(this.customid);
-      if (this.sharewith !== 0 && this.customid === '') {
-           this.api_error = 'Custom id cannot be empty';
-            return;
-         }
-     if (this.type === 'adddrug') {
-              if (this.sharewith !== 0  && this.customid !== '') {
-              const passData = {
-                  'customId': this.customid,
-                  'message': formdata.message,
-                  'html': rxview,
-                  'medium': {
-                    'email': this.email,
-                    'sms': this.sms,
-                    'pushNotification': this.pushnotify
-                  }
-                };
-                this.provider_services.shareRxforProvider(this.mrId, passData)
-                  .subscribe((data) => {
-                    this.shared_functions.openSnackBar('Prescription shared successfully');
-                    this.dialogRef.close();
-                  }, error => {
-                          this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                          this.disable = false;
-                      });
+    console.log(formdata);
+    console.log(this.sharewith);
+    console.log(this.customid);
+    if (this.sharewith !== 0 && this.customid === '') {
+      this.api_error = 'Custom id cannot be empty';
+      return;
+    }
+    if (this.type === 'adddrug') {
+      if (this.sharewith !== 0 && this.customid !== '') {
+        const passData = {
+          'customId': this.customid,
+          'message': formdata.message,
+          'html': rxview,
+          'medium': {
+            'email': this.email,
+            'sms': this.sms,
+            'pushNotification': this.pushnotify
+          }
+        };
+        this.provider_services.shareRxforProvider(this.mrId, passData)
+          .subscribe((data) => {
+            this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.dialogRef.close();
+          }, error => {
+            this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.disable = false;
+          });
 
-              } else if (this.sharewith === 0) {
-                const passData = {
-                  'message': formdata.message,
-                  'html': rxview,
-                  'medium': {
-                    'email': this.email,
-                    'sms': this.sms,
-                    'pushNotification': this.pushnotify
-                  }
-                };
-                this.provider_services.shareRx(this.mrId, passData)
-                  .subscribe((data) => {
-                    this.shared_functions.openSnackBar('Prescription shared successfully');
-                    this.dialogRef.close();
-                  }, error => {
-                          this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                          this.disable = false;
-                      });
-              }
-        } else {
-          if (this.sharewith !== 0  && this.customid !== '') {
-            const passData = {
-               'customId': this.customid,
-               'message': formdata.message,
-               'html': '',
-               'medium': {
-                 'email': this.email,
-                 'sms': this.sms,
-                 'pushNotification': this.pushnotify
-               }
-             };
-              this.provider_services.shareRxforProvider(this.mrId, passData)
-               .subscribe((data) => {
-                 this.shared_functions.openSnackBar('Prescription shared successfully');
-                 this.dialogRef.close();
-               }, error => {
-                       this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                       this.disable = false;
-                   });
+      } else if (this.sharewith === 0) {
+        const passData = {
+          'message': formdata.message,
+          'html': rxview,
+          'medium': {
+            'email': this.email,
+            'sms': this.sms,
+            'pushNotification': this.pushnotify
+          }
+        };
+        this.provider_services.shareRx(this.mrId, passData)
+          .subscribe((data) => {
+            this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.dialogRef.close();
+          }, error => {
+            this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.disable = false;
+          });
+      }
+    } else {
+      if (this.sharewith !== 0 && this.customid !== '') {
+        const passData = {
+          'customId': this.customid,
+          'message': formdata.message,
+          'html': '',
+          'medium': {
+            'email': this.email,
+            'sms': this.sms,
+            'pushNotification': this.pushnotify
+          }
+        };
+        this.provider_services.shareRxforProvider(this.mrId, passData)
+          .subscribe((data) => {
+            this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.dialogRef.close();
+          }, error => {
+            this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.disable = false;
+          });
 
-            } else if (this.sharewith === 0) {
-             const passData = {
-               'message': formdata.message,
-               'html': '',
-               'medium': {
-                 'email': this.email,
-                 'sms': this.sms,
-                 'pushNotification': this.pushnotify
-               }
-             };
-             this.provider_services.shareRx(this.mrId, passData)
-               .subscribe((data) => {
-                 this.shared_functions.openSnackBar('Prescription shared successfully');
-                 this.dialogRef.close();
-               }, error => {
-                       this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                       this.disable = false;
-                   });
-            }
-        }
+      } else if (this.sharewith === 0) {
+        const passData = {
+          'message': formdata.message,
+          'html': '',
+          'medium': {
+            'email': this.email,
+            'sms': this.sms,
+            'pushNotification': this.pushnotify
+          }
+        };
+        this.provider_services.shareRx(this.mrId, passData)
+          .subscribe((data) => {
+            this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.dialogRef.close();
+          }, error => {
+            this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.disable = false;
+          });
+      }
+    }
   }
   onUserSelect(event) {
     this.customid = '';
     console.log(event);
     console.log(this.sharewith);
     if (event.value !== 0) {
-        this.showcustomId = true;
+      this.showcustomId = true;
     } else {
-        this.showcustomId = false;
-        // if (this.customerDetail.email) {
-        //   this.email_id = this.customerDetail.email;
-        // }
-        // if (this.customerDetail.phoneNo) {
-        //   this.phone = this.customerDetail.phoneNo;
-        // }
+      this.showcustomId = false;
+      // if (this.customerDetail.email) {
+      //   this.email_id = this.customerDetail.email;
+      // }
+      // if (this.customerDetail.phoneNo) {
+      //   this.phone = this.customerDetail.phoneNo;
+      // }
     }
 
-}
-resetApiErrors() {
-  this.api_error = null;
-  this.api_success = null;
-}
-getMrprescription() {
-  if (this.mrId) {
-    this.provider_services.getMRprescription(this.mrId)
-      .subscribe((data: any) => {
-        if (data && data.length !== 0) {
-          this.drugList = data;
-          this.getProviderLogo();
-          this.getDigitalSign();
-          console.log(this.drugList);
-       }
-      },
-        error => {
-          this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
   }
-}
-getProviderLogo() {
-  this.provider_services.getProviderLogo()
-    .subscribe(
-      data => {
-        this.blogo = data;
-        const cnow = new Date();
-        const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
-        this.cacheavoider = dd;
-      },
-      () => {
+  resetApiErrors() {
+    this.api_error = null;
+    this.api_success = null;
+  }
+  getMrprescription() {
+    if (this.mrId) {
+      this.provider_services.getMRprescription(this.mrId)
+        .subscribe((data: any) => {
+          if (data && data.length !== 0) {
+            this.drugList = data;
+            this.getProviderLogo();
+            this.getDigitalSign();
+            console.log(this.drugList);
+          }
+        },
+          error => {
+            this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+    }
+  }
+  getProviderLogo() {
+    this.provider_services.getProviderLogo()
+      .subscribe(
+        data => {
+          this.blogo = data;
+          const cnow = new Date();
+          const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+          this.cacheavoider = dd;
+        },
+        () => {
 
-      }
-    );
-}
-getDigitalSign() {
-  if (this.provider_user_Id) {
-    this.provider_services.getDigitalSign(this.provider_user_Id)
-      .subscribe((data: any) => {
-        console.log(data);
-        this.imagedetails = JSON.parse(data);
-        console.log(this.imagedetails);
-        this.signurl = this.imagedetails.url;
-        console.log(this.signurl);
-      },
-        error => {
-          //this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
+        }
+      );
   }
-}
-showimg() {
-  let logourl = '';
-  this.profimg_exists = false;
+  getDigitalSign() {
+    if (this.provider_user_Id) {
+      this.provider_services.getDigitalSign(this.provider_user_Id)
+        .subscribe((data: any) => {
+          console.log(data);
+          this.imagedetails = JSON.parse(data);
+          console.log(this.imagedetails);
+          this.signurl = this.imagedetails.url;
+          console.log(this.signurl);
+        },
+          error => {
+            // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+    }
+  }
+  showimg() {
+    let logourl = '';
+    this.profimg_exists = false;
     if (this.blogo[0]) {
       this.profimg_exists = true;
       logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
     }
     return this.shared_functions.showlogoicon(logourl);
-}
-getBusinessProfile() {
-  if (this.provider_user_Id){
-      this.provider_services.getUserBussinessProfile(this.provider_user_Id)
-          .subscribe((data: any) => {
-            this.userdata = data;
-              },
-          );
   }
-}
-getBussinessProfileApi() {
+  getBusinessProfile() {
+    if (this.provider_user_Id) {
+      this.provider_services.getUserBussinessProfile(this.provider_user_Id)
+        .subscribe((data: any) => {
+          this.userdata = data;
+        },
+      );
+    }
+  }
+  getBussinessProfileApi() {
     this.provider_services.getBussinessProfile()
       .subscribe(
         data => {
@@ -312,6 +313,6 @@ getBussinessProfileApi() {
           console.log(this.mobile);
         });
 
-}
+  }
 
 }
