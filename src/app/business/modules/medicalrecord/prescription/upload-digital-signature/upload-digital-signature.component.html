@@ -25,7 +25,7 @@
                         <span *ngIf="patientDetails.gender">Gender: {{patientDetails.gender | capitalizeFirst}}</span><br *ngIf="patientDetails.gender">
                         <hr>
                     </div>
-<div class="no-dta"  *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
+<div class="no-dta"  *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
 <h5> By clicking upload Sign you will have choice of uploading a file or taking picture</h5>
 <div>
      <button  mat-button style= "margin-top: 10px;" class="cs-btn bt1 " >
@@ -39,7 +39,7 @@
 
  </div>
 </div>
-<div class="no-dta" style="height: 200px;" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+<div class="no-dta" style="height: 200px;" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length > 0">
 <ng-container class="attachment">
 <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
     *ngFor="let item of selectedMessage.files; let i = index">
@@ -68,5 +68,32 @@
 
 </ng-container>
 </div>
+
+<div class="no-dta" style="height: 200px;" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">
+    <ng-container class="attachment">
+    <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
+        *ngFor="let item of selectedMessage.files; let i = index">
+        <h4>Selected signature</h4>
+        <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
+            <span class="ln-hgt-40">{{item.keyName}}</span>
+        </div>
+        <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
+            <span class="">
+                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button type="button" (click)="deleteTempImagefrmdb(item,i)" mat-menu-item>
+                        <i class="icon-delete"></i>
+                        <span>delete</span>
+                    </button>
+                </mat-menu>
+            </span>
+        </div>
+        
+    </div>
+    
+    </ng-container>
+    </div>
 
 </div></section>

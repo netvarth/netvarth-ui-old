@@ -33,7 +33,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
   };
   showSave = true;
   sharedialogRef;
-  uploadImages: any = [];
+  uploadImages: any =[] ;
 
   upload_status = 'Added to list';
   disable = false;
@@ -42,6 +42,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
   navigationParams: any;
   navigationExtras: NavigationExtras;
   providerId;
+  digitalSign = false;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
@@ -74,27 +75,52 @@ export class UploadDigitalSignatureComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getDigitalSign();
   }
   goBack() {
     this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
   }
-
-  getMrprescription(mrId) {
-    this.provider_services.getMRprescription(mrId)
-      .subscribe((data) => {
-        this.uploadImages = data;
-        console.log(data);
-        for (const pic of this.uploadImages) {
-          const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true };
-          this.selectedMessage.files.push(imgdet);
-        }
-        console.log(this.selectedMessage.files);
-      },
-        error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
-
+  getDigitalSign() {
+    if (this.providerId) {
+      this.provider_services.getDigitalSign(this.providerId)
+        .subscribe((data) => {
+          console.log(data);
+          this.digitalSign = true;
+                  this.selectedMessage.files.push(data);
+          console.log(this.selectedMessage.files);
+        },
+          error => {
+            this.digitalSign = false;
+            // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+    }
   }
+  deleteTempImagefrmdb(img, index) {
+      this.provider_services.deleteUplodedsign(img.keyName , this.mrId)
+      .subscribe((data) => {
+        this.selectedMessage.files.splice(index, 1);
+        this. getDigitalSign();
+       },
+      error => {
+        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      });
+    }
+  // getMrprescription(mrId) {
+  //   this.provider_services.getMRprescription(mrId)
+  //     .subscribe((data) => {
+  //       this.uploadImages = data;
+  //       console.log(data);
+  //       for (const pic of this.uploadImages) {
+  //         const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true };
+  //         this.selectedMessage.files.push(imgdet);
+  //       }
+  //       console.log(this.selectedMessage.files);
+  //     },
+  //       error => {
+  //         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+  //       });
+
+  // }
 
   filesSelected(event) {
     const input = event.target.files;
@@ -149,7 +175,6 @@ export class UploadDigitalSignatureComponent implements OnInit {
   uploadMrDigitalsign(id, submit_data, val) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
-        this.deleteTempImage(val);
         this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
         this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
       },

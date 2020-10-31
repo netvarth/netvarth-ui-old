@@ -1623,4 +1623,7 @@ export class ProviderServices {
       const url = 'provider/mr/patientPreviousVisit/' + id;
       return this.servicemeta.httpGet(url);
    }
+   deleteUplodedsign(name, id) {
+      return this.servicemeta.httpDelete('provider/user/digitalSign/' + id + '/' + name);
+   }
 }
