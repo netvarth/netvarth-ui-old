@@ -1,143 +1,143 @@
 <form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
-<h1 class="mat-dialog-title">Share Prescription
-    <button #queue mat-dialog-close class="modal_close">
-        <i class="fa fa-window-close" aria-hidden="true"></i>
-    </button>
-</h1>
+  <h1 class="mat-dialog-title">Share Prescription
+      <button #queue mat-dialog-close class="modal_close">
+          <i class="fa fa-window-close" aria-hidden="true"></i>
+      </button>
+  </h1>
 
-<mat-dialog-content>
+  <mat-dialog-content>
 
-        <div class="form-group" >
-            <div> Share with {{customerDetail.firstName | capitalizeFirst}}  {{customerDetail.lastName}}</div>
-  <!-- <mat-form-field>
-        <mat-select name="item"   [(ngModel)]="sharewith"  placeholder="Share with whom" [ngModelOptions]="{standalone: true}"  (selectionChange)="onUserSelect($event)">
-          <mat-option *ngFor="let item of msgreceivers" [value]="item.id">{{item.name}}</mat-option>
-        </mat-select>
-      </mat-form-field> -->
-    </div>
-
-
-                <!-- <div class="form-group" *ngIf="showcustomId">
-                        <mat-form-field>
-                            <input matInput type="text" class="form-control" id="customid"
-                                placeholder="Custome Id *" [(ngModel)]="customid" [ngModelOptions]="{standalone: true}"
-                                autocomplete="off">
-                        </mat-form-field>
-
-                    </div> -->
+          <div class="form-group" >
+              <div> Share with {{customerDetail.firstName | capitalizeFirst}}  {{customerDetail.lastName}}</div>
+    <!-- <mat-form-field>
+          <mat-select name="item"   [(ngModel)]="sharewith"  placeholder="Share with whom" [ngModelOptions]="{standalone: true}"  (selectionChange)="onUserSelect($event)">
+            <mat-option *ngFor="let item of msgreceivers" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+      </div>
 
 
-    <div class="form-group" >
-        <mat-form-field>
-            <textarea matInput class="form-control" id="message" placeholder="Please Enter Message * "
-                formControlName="message" maxlength="1000">
-        </textarea>
-       </mat-form-field>
-        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
-            errorMsg="Please enter a message.">
-        </app-field-error-display>
-    </div>
+                  <div class="form-group" *ngIf="showcustomId">
+                          <mat-form-field>
+                              <input matInput type="text" class="form-control" id="customid"
+                                  placeholder="Custome Id *" [(ngModel)]="customid" [ngModelOptions]="{standalone: true}"
+                                  autocomplete="off">
+                          </mat-form-field>
 
-    <div class="mgtop40 form-group" >
-            We will create a PDF of your prescription and will share Via
-        <div class="coupon-outer">
-            <mat-checkbox    class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
-                SMS
-            </mat-checkbox>
-            <mat-checkbox  class="mgright50 example-margin" [(ngModel)]="email"
-                [ngModelOptions]="{standalone: true}">Email
-            </mat-checkbox>
-            <mat-checkbox  class="mgright50 example-margin"  [(ngModel)]="pushnotify"
-                [ngModelOptions]="{standalone: true}">App
-                notification
-            </mat-checkbox>
-        </div>
-    </div>
+                      </div>
 
-</mat-dialog-content>
-<mat-dialog-actions>
 
-    <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
-        <button type="button" mat-dialog-close class="cs-btn bt2"
-            [disabled]="disableButton">Cancel</button>
-        <button type="submit" mat-button [disabled]="!amForm.valid || disable"
-            class="cs-btn bt1 mr10">Share</button>
+      <div class="form-group" >
+          <mat-form-field>
+              <textarea matInput class="form-control" id="message" placeholder="Please Enter Message * "
+                  formControlName="message" maxlength="1000">
+          </textarea>
+         </mat-form-field>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
+              errorMsg="Please enter a message.">
+          </app-field-error-display>
+      </div>
 
-    </div>
-</mat-dialog-actions>
-<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+      <div class="mgtop40 form-group" >
+              We will create a PDF of your prescription and will share Via
+          <div class="coupon-outer">
+              <mat-checkbox    class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+                  SMS
+              </mat-checkbox>
+              <mat-checkbox  class="mgright50 example-margin" [(ngModel)]="email"
+                  [ngModelOptions]="{standalone: true}">Email
+              </mat-checkbox>
+              <mat-checkbox  class="mgright50 example-margin" [(ngModel)]="pushnotify"
+                  [ngModelOptions]="{standalone: true}">App
+                  notification
+              </mat-checkbox>
+          </div>
+      </div>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-</app-form-success-display>
-</form>
-<!-- <div id="sharerxview" hidden>
-    <div class="shareview" style="width: 190mm; height: 260mm">
-        <div style="height:35mm; border-bottom: 1px solid #ddd;">
-            <div style="width: 35mm;height: 35mm; float: left;"><img alt="" [src]="showimg()" style="width: 100px;
-    height: 100px"/></div>
-            <div style="width:155mm; float: left;">
-                <h2 *ngIf="bname" style="margin: 0; padding: 4px 0 4px 0;">{{bname}} </h2>
-                <div *ngIf="userdata.businessName" style="margin: 0; padding: 0px 0 4px 0;">{{userdata.businessName}}
-                </div>
-                <div  *ngIf="address" style="margin: 0; padding: 0px 0 4px 0;">{{address}}</div>
-                <div  *ngIf="mobile">Ph: +91{{mobile}}</div>
-            </div>
-        </div>
-        <div style=" width:100%; height: 195mm; margin-bottom:10px ;margin-top:10px " class="content">
-            <table class="sign-table" style="width: 100%; margin: auto;margin-bottom: 20px">
-                <tr>
-                    <td style="padding-right: 10px; width: 60%">
-                        <label>Patient Name:&nbsp;</label>
-                        <span>{{customerDetail.firstName | capitalizeFirst}}
-                            {{customerDetail.lastName}}</span>
-                    </td>
-                    <td><label>Gender:&nbsp;</label>
-                        <span *ngIf="customerDetail.gender">{{customerDetail.gender}}</span>
-                        <span *ngIf="!customerDetail.gender">......</span>
-                    </td>
-                    <td><label>Dob:&nbsp;</label>
-                        <span *ngIf="customerDetail.dob">{{customerDetail.dob  | date:display_dateFormat}}</span>
-                        <span *ngIf="!customerDetail.dob">..........</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td >&nbsp;</td>
-                    <td >&nbsp;</td>
-                    <td style="padding-top: 10px"><label >Date:&nbsp;</label>
-                        <span >{{curDate  | date:display_dateFormat}}</span></td>
-                </tr>
-            </table>
-            <div style="width: 100%">
-                <table style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse; width: 100%;margin: auto; ">
-                    <thead>
-                        <tr>
-                            <th style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse; width: 55mm; " class="medicine">Medicine</th>
-                            <th style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;  width: 23mm" class="duration">Duration(days)</th>
-                            <th style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;  width: 23mm" class="dosage">Dosage</th>
-                            <th style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;  width: 24mm" class="frequency">Frequency</th>
-                            <th style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse; width: 55mm" >Instructions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <tr *ngFor="let drug of drugList; let i = index;">
-                            <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;overflow-wrap: break-word;white-space: break-spaces;">{{drug.medicine_name}}</td>
-                            <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;text-align: center;overflow-wrap: break-word;white-space: break-spaces;" class="centeralign">{{drug.duration}}</td>
-                            <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;text-align: center;overflow-wrap: break-word;white-space: break-spaces;" class="centeralign">{{drug.dosage}}</td>
-                            <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;text-align: center;overflow-wrap: break-word;white-space: break-spaces;" class="centeralign">{{drug.frequency}}</td>
-                            <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;overflow-wrap: break-word;white-space: break-spaces;">{{drug.instructions}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="footer" style="height: 30mm;width: 100%;border-top: 1px solid #ddd;margin: auto">
-            <table class="sign-table" style="width: 100%; margin: auto;margin-top: 20px">
-                <tr>
-                    <td style="text-align: right; padding-right: 10px; width: 20%">Signature</td>
-                    <td><img alt="" style="width: 100px; height: 75px;" [src]="signurl"/></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</div> -->
+  </mat-dialog-content>
+  <mat-dialog-actions>
+
+      <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+          <button type="button" mat-dialog-close class="cs-btn bt2"
+              [disabled]="disableButton">Cancel</button>
+          <button type="submit" mat-button [disabled]="!amForm.valid || disable"
+              class="cs-btn bt1 mr10">Share</button>
+
+      </div>
+  </mat-dialog-actions>
+  <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+
+  <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+  </app-form-success-display>
+  </form>
+  <div id="sharerxview" hidden>
+      <div class="shareview" style="width: 190mm; height: 260mm">
+          <div style="height:35mm; border-bottom: 1px solid #ddd;">
+              <div style="width: 35mm;height: 35mm; float: left;"><img alt="" [src]="showimg()" style="width: 100px;
+      height: 100px"/></div>
+              <div style="width:155mm; float: left;">
+                  <h2 style="margin: 0; padding: 4px 0 4px 0;">{{bname}} </h2>
+                  <div *ngIf="userbname" style="margin: 0; padding: 0px 0 4px 0;">{{userbname}}
+                  </div>
+                  <div style="margin: 0; padding: 0px 0 4px 0;">{{address}}</div>
+                  <div>Ph: +91{{mobile}}</div>
+              </div>
+          </div>
+          <div style=" width:100%; height: 195mm; margin-bottom:10px ;margin-top:10px " class="content">
+              <table class="sign-table" style="width: 100%; margin: auto;margin-bottom: 20px">
+                  <tr>
+                      <td style="padding-right: 10px; width: 60%">
+                          <label>Patient Name:&nbsp;</label>
+                          <span>{{customerDetail.firstName | capitalizeFirst}}
+                              {{customerDetail.lastName}}</span>
+                      </td>
+                      <td><label>Gender:&nbsp;</label>
+                          <span *ngIf="customerDetail.gender">{{customerDetail.gender}}</span>
+                          <span *ngIf="!customerDetail.gender">......</span>
+                      </td>
+                      <td><label>Dob:&nbsp;</label>
+                          <span *ngIf="customerDetail.dob">{{customerDetail.dob  | date:display_dateFormat}}</span>
+                          <span *ngIf="!customerDetail.dob">..........</span>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td >&nbsp;</td>
+                      <td >&nbsp;</td>
+                      <td style="padding-top: 10px"><label >Date:&nbsp;</label>
+                          <span >{{curDate  | date:display_dateFormat}}</span></td>
+                  </tr>
+              </table>
+              <div style="width: 100%">
+                  <table style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse; width: 100%;margin: auto; ">
+                      <thead>
+                          <tr>
+                              <th style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse; width: 55mm; " class="medicine">Medicine</th>
+                              <th style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;  width: 23mm" class="duration">Duration(days)</th>
+                              <th style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;  width: 23mm" class="dosage">Dosage</th>
+                              <th style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;  width: 24mm" class="frequency">Frequency</th>
+                              <th style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse; width: 55mm" >Instructions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                          <tr *ngFor="let drug of drugList; let i = index;">
+                              <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;overflow-wrap: break-word;white-space: break-spaces;">{{drug.medicine_name}}</td>
+                              <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;text-align: center;overflow-wrap: break-word;white-space: break-spaces;" class="centeralign">{{drug.duration}}</td>
+                              <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;text-align: center;overflow-wrap: break-word;white-space: break-spaces;" class="centeralign">{{drug.dosage}}</td>
+                              <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;text-align: center;overflow-wrap: break-word;white-space: break-spaces;" class="centeralign">{{drug.frequency}}</td>
+                              <td style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse;overflow-wrap: break-word;white-space: break-spaces;">{{drug.instructions}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          <div class="footer" style="height: 30mm;width: 100%;border-top: 1px solid #ddd;margin: auto">
+              <table class="sign-table" style="width: 100%; margin: auto;margin-top: 20px">
+                  <tr>
+                      <td style="text-align: right; padding-right: 10px; width: 20%">Signature</td>
+                      <td><img alt="" style="width: 100px; height: 75px;" [src]="signurl"/></td>
+                  </tr>
+              </table>
+          </div>
+      </div>
+  </div>
