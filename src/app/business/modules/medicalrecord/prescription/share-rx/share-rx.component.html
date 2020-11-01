@@ -17,14 +17,14 @@
     </div>
 
 
-                <div class="form-group" *ngIf="showcustomId">
+                <!-- <div class="form-group" *ngIf="showcustomId">
                         <mat-form-field>
                             <input matInput type="text" class="form-control" id="customid"
                                 placeholder="Custome Id *" [(ngModel)]="customid" [ngModelOptions]="{standalone: true}"
                                 autocomplete="off">
                         </mat-form-field>
 
-                    </div>
+                    </div> -->
 
 
     <div class="form-group" >
@@ -47,7 +47,7 @@
             <mat-checkbox  class="mgright50 example-margin" [(ngModel)]="email"
                 [ngModelOptions]="{standalone: true}">Email
             </mat-checkbox>
-            <mat-checkbox  class="mgright50 example-margin" [(ngModel)]="pushnotify"
+            <mat-checkbox  class="mgright50 example-margin"  [(ngModel)]="pushnotify"
                 [ngModelOptions]="{standalone: true}">App
                 notification
             </mat-checkbox>
@@ -70,17 +70,17 @@
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
 </app-form-success-display>
 </form>
-<div id="sharerxview" hidden>
+<!-- <div id="sharerxview" hidden>
     <div class="shareview" style="width: 190mm; height: 260mm">
         <div style="height:35mm; border-bottom: 1px solid #ddd;">
             <div style="width: 35mm;height: 35mm; float: left;"><img alt="" [src]="showimg()" style="width: 100px;
     height: 100px"/></div>
             <div style="width:155mm; float: left;">
-                <h2 style="margin: 0; padding: 4px 0 4px 0;">{{bname}} </h2>
+                <h2 *ngIf="bname" style="margin: 0; padding: 4px 0 4px 0;">{{bname}} </h2>
                 <div *ngIf="userdata.businessName" style="margin: 0; padding: 0px 0 4px 0;">{{userdata.businessName}}
                 </div>
-                <div style="margin: 0; padding: 0px 0 4px 0;">{{address}}</div>
-                <div>Ph: +91{{mobile}}</div>
+                <div  *ngIf="address" style="margin: 0; padding: 0px 0 4px 0;">{{address}}</div>
+                <div  *ngIf="mobile">Ph: +91{{mobile}}</div>
             </div>
         </div>
         <div style=" width:100%; height: 195mm; margin-bottom:10px ;margin-top:10px " class="content">
@@ -106,7 +106,7 @@
                     <td style="padding-top: 10px"><label >Date:&nbsp;</label>
                         <span >{{curDate  | date:display_dateFormat}}</span></td>
                 </tr>
-            </table>          
+            </table>
             <div style="width: 100%">
                 <table style="border: 1px solid #ddd; padding: 10px; border-collapse: collapse; width: 100%;margin: auto; ">
                     <thead>
@@ -140,4 +140,4 @@
             </table>
         </div>
     </div>
-</div>
+</div> -->

@@ -14,6 +14,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
   styleUrls: ['./share-rx.component.css']
 })
 export class ShareRxComponent implements OnInit {
+  accountType: any;
   email_id = '';
   msgreceivers: any = [];
   spId: any;
@@ -90,25 +91,23 @@ export class ShareRxComponent implements OnInit {
     this.chekintype = this.data.chekintype;
     this.medicalService.patient_data.subscribe(res => {
       this.customerDetail = JSON.parse(res.customerDetail);
-      console.log(this.customerDetail);
-      console.log(this.customerDetail.phoneNo);
-      // if (this.customerDetail.email) {
-      //   this.email_id = this.customerDetail.email;
-      // }
-      // if (this.customerDetail.phoneNo) {
-      //   this.phone = this.customerDetail.phoneNo;
-      // }
 
     });
   }
   ngOnInit() {
-    this.sharewith = 0;
     this.msgreceivers = [{ 'id': 0, 'name': 'Patient' }];
     this.createForm();
     console.log(this.mrId);
     this.getMrprescription();
-    this.getBusinessProfile();
-    this.getBussinessProfileApi();
+
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
+    if (this.accountType !== 'BRANCH') {
+      this.getBussinessProfileApi();
+    } else {
+      this.getBusinessProfile();
+    }
+
   }
   createForm() {
     this.sharewith = 0;
@@ -285,6 +284,7 @@ export class ShareRxComponent implements OnInit {
           });
     }
   }
+
   showimg() {
     let logourl = '';
     this.profimg_exists = false;
@@ -300,7 +300,7 @@ export class ShareRxComponent implements OnInit {
         .subscribe((data: any) => {
           this.userdata = data;
         },
-        );
+      );
     }
   }
   getBussinessProfileApi() {
