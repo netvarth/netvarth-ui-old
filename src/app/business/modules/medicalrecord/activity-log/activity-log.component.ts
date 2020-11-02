@@ -11,11 +11,13 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./activity-log.component.css']
 })
 export class ActivityLogComponent implements OnInit {
+  activity_log: any = [];
+  auditlogs: any;
   mrId;
   // loading = true;
   public lastVisit_dataSource = new MatTableDataSource<any>([]);
   auditlogs_displayedColumns = ['Action', 'Description',  'Date/Time', 'userName' ];
-  aditlogs: any;
+  aditlogs: any = {};
 
   constructor(
   public dialogRef: MatDialogRef<ActivityLogComponent>,
@@ -23,30 +25,16 @@ export class ActivityLogComponent implements OnInit {
   public sharedfunctionObj: SharedFunctions,
   public provider_services: ProviderServices,
   ) {
-    this.mrId = this.data.mrId;
-    console.log(this.mrId);
-    
+    this.auditlogs = this.data.activity_log;
+   // IF CONDITION
+    this.activity_log.push(JSON.parse(this.auditlogs.clinicalNotes));
+    this.activity_log.push(JSON.parse(this.auditlogs.medicalRecord));
+    this.activity_log.push(JSON.parse(this.auditlogs.prescription));
+    console.log(this.auditlogs);
+
   }
 
   ngOnInit() {
-    if (this.mrId !== 0) {
-      this.getMedicalRecordUsingMR(this.mrId);
-    }
-  }
-  getMedicalRecordUsingMR(mrId: any) {
-    this.provider_services.GetMedicalRecord(mrId)
-    .subscribe((data: any) => {
-      this.aditlogs = data;
-      console.log(this.aditlogs);
-      const mraditlogs = [];
-      mraditlogs.push(this.aditlogs.auditLogs);
-      // console.log(JSON.stringify(data.auditLogs.medicalRecord));
-      // console.log(mraditlogs.Actions);
 
-      // this.loading = false;
-    },
-      error => {
-        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      });
-  }
+
 }

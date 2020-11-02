@@ -17,6 +17,7 @@ import { ActivityLogComponent } from './activity-log/activity-log.component';
 })
 export class MedicalrecordComponent implements OnInit {
 
+  activityLogs: any;
   mrNumber: any;
   visitdate: Date;
   isShowList = false;
@@ -239,6 +240,7 @@ export class MedicalrecordComponent implements OnInit {
           console.log(data.mrNumber);
           this.mrNumber = data.mrNumber;
           this.mrCreatedDate = data.mrCreatedDate;
+          this.activityLogs = data.auditLogs;
           if (this.data.consultationMode === 'Out Patient') {
             this.patientConsultationType = 'OP';
 
@@ -284,7 +286,7 @@ export class MedicalrecordComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        mrId: this.mrId,
+        'activity_log': this.activityLogs
       }
     });
 
