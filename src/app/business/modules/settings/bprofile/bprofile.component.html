@@ -76,23 +76,25 @@
                     </div>
                   </div>
                   <br>
-                  <div  *ngIf="!showIncompleteButton">
-                    <div> 
+                  <div *ngIf="!showIncompleteButton">
+                    <div>
                       <h6>Here is your QR code and Link</h6>
-                      <p class="head-level-settings disp-flex">
-                        <span class="inactive" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </span>
-                        <span class="active" *ngIf="onlinepresence_status">By scanning this code your
-                          {{customer_label}}s can see you online</span>
-                          <!-- <div class="col-md-5 col-sm-12 col-xs-12 no-padding-small"> -->
-                            <button (click)="reDirectToJaldeeOnline()" type="button"
-                            class="wght-btn btn btn-info" *ngIf="!onlinepresence_status">Enable Jaldee Online</button>
-                            <button (click)="reDirectToJaldeeOnline()" type="button"
-                            class="wght-btn btn btn-info" *ngIf="onlinepresence_status">Manage Jaldee Online</button>
-                          <!-- </div> -->
-                      </p>
+                      <div class="head-level-settings col-md-12 col-sm-12 col-xs-12 no-padding">
+                        <div class="col-md-7 col-sm-12 col-xs-12 no-padding">
+                          <span class="inactive" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </span>
+                          <span class="active" *ngIf="onlinepresence_status">By scanning this code your
+                            {{customer_label}}s can see you online</span></div>
+                        <div class="col-md-5 col-sm-12 col-xs-12 no-padding bus-bprof-strength">
+                          <button (click)="reDirectToJaldeeOnline()" type="button" class="wght-btn btn btn-info"
+                            *ngIf="!onlinepresence_status">Enable Jaldee Online</button>
+                          <button (click)="reDirectToJaldeeOnline()" type="button" class="wght-btn btn btn-info"
+                            *ngIf="onlinepresence_status">Manage Jaldee Online</button>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
                       <div class="bus-prof-qr-sec">
                         <div class="mgn-up-10">
-                          <span *ngIf="!bProfile.customId">
+                          <div *ngIf="!bProfile.customId">
                             <div class="bprof-qr-border mgn-bt-10 disp-flex">
                               <div>
                                 <ngx-qrcode [elementType]="elementType" [value]="qr_value">
@@ -110,9 +112,9 @@
                               href="{{wndw_path}}{{bProfile.accEncUid}}" target="blank">
                               {{wndw_path}}{{bProfile.accEncUid}}
                             </a>
-                          </span>
-                          <span *ngIf="bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10">
+                          </div>
+                          <div *ngIf="bProfile.customId">
+                            <div class="bprof-qr-border mgn-bt-10 disp-flex">
                               <div>
                                 <ngx-qrcode [elementType]="elementType" [value]="qr_value">
                                 </ngx-qrcode>
@@ -129,7 +131,7 @@
                               target="blank">
                               {{wndw_path}}{{bProfile.customId}}
                             </a>
-                          </span>
+                          </div>
                         </div>
                       </div>
                     </div>

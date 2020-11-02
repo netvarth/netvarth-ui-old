@@ -20,11 +20,18 @@ const routes: Routes = [
         path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
         canActivate: [AuthGuardProvider]
     },
+    // { path: 'client', component: LiveChatClientComponent},
+    // {path: 'video/:id',  component: LiveChatComponent},
     { path: 'maintenance', component: MaintenanceComponent }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, {
+        // preloadingStrategy: PreloadAllModules
+    })],
+    providers: [
+        // TwilioService
+    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -83,6 +83,7 @@ export function init_app(globalService: GlobalService) {
     LoginComponent,
     ConfirmBoxComponent,
     AddInboxMessagesComponent,
+    // VoicecallDetailsSendComponent,
     CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
