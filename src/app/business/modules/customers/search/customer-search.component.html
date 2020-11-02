@@ -79,16 +79,16 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                     <div><b>Name:</b></div>
                                     <div>{{customer_data.firstName}} {{customer_data.lastName}}</div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"  *ngIf="customer_data[0].email">
                                     <div><b>Email:</b></div>
-                                    <div>{{customer_data.email}}</div>
+                                    <div>{{customer_data.email}}</div> 
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data[0].phoneNo">
                                     <div><b>PhoneNo:</b></div>
                                     <div>{{customer_data.phoneNo}}</div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
-                                    <div><b>DOB</b></div>
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data[0].dob">
+                                    <div *ngIf="customer_data.dob"><b>DOB</b></div>
                                     <div>{{customer_data.dob}}</div>
                                 </div>
                                 <hr class="wide-separator-line" />
@@ -214,15 +214,15 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                     <div><b>Name:</b></div>
                                     <div>{{customer_data.firstName}} {{customer_data.lastName}}</div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"  *ngIf="customer_data[0].email">
                                     <div><b>Email:</b></div>
                                     <div>{{customer_data.email}}</div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"  *ngIf="customer_data[0].phoneNo">
                                     <div><b>PhoneNo:</b></div>
                                     <div>{{customer_data.phoneNo}}</div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data[0].phoneNo">
                                     <div><b>DOB</b></div>
                                     <div>{{customer_data.dob}}</div>
                                 </div>
