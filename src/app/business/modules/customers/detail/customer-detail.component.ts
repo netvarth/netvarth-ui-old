@@ -683,7 +683,7 @@ export class CustomerDetailComponent implements OnInit {
             data: {
                 patientId: customerDetail.id,
                 customerDetail: customerDetail,
-                back_type: 'consumer'
+                back_type: 'consumer-detail'
             }
         });
         mrdialogRef.afterClosed().subscribe(result => {
@@ -735,7 +735,7 @@ export class CustomerDetailComponent implements OnInit {
                     'booking_id': visitDetail.waitlist.ynwUuid,
                     'mr_mode': medicalrecord_mode,
                     'mrId': mrId,
-                    'back_type': 'waitlist',
+                    'back_type': 'consumer-detail',
                     'provider_id': providerId
                 }
             };
@@ -761,7 +761,7 @@ export class CustomerDetailComponent implements OnInit {
                     'mr_mode': medicalrecord_mode,
                     'mrId': mrId,
                     'booking_id': visitDetail.appointmnet.uid,
-                    'back_type': 'appt',
+                    'back_type': 'consumer-detail',
                     'provider_id': providerId,
                     'visitDate': visitDetail.appointmnet.consLastVisitedDate,
                 }
@@ -797,7 +797,7 @@ export class CustomerDetailComponent implements OnInit {
                     'mrId': mrId,
                     'mr_mode': medicalrecord_mode,
                     'booking_id': visitDetail.waitlist.ynwUuid,
-                    'back_type': 'waitlist',
+                    'back_type': 'consumer-detail',
                     'provider_id': providerId
                 }
             };
@@ -821,7 +821,7 @@ export class CustomerDetailComponent implements OnInit {
                     'mr_mode': medicalrecord_mode,
                     'mrId': mrId,
                     'booking_id': visitDetail.appointmnet.uid,
-                    'back_type': 'appt',
+                    'back_type': 'consumer-detail',
                     'provider_id': providerId,
                     'visitDate': visitDetail.appointmnet.consLastVisitedDate,
                 }

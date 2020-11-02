@@ -9,6 +9,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ActivityLogComponent } from './activity-log/activity-log.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-medicalrecord',
@@ -61,7 +62,7 @@ export class MedicalrecordComponent implements OnInit {
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-    private dialog: MatDialog,
+    private dialog: MatDialog, private location: Location,
     private medicalService: MedicalrecordService,
     private datePipe: DateFormatPipe
   ) {
@@ -300,7 +301,8 @@ export class MedicalrecordComponent implements OnInit {
     } else if (this.back_type === 'consumer') {
       this.router.navigate(['provider', 'customers']);
     } else {
-      this.router.navigate(['provider', 'customers']);
+      // this.router.navigate(['provider', 'customers']);
+      this.location.back();
     }
   }
   showLastvisitorNot() {
