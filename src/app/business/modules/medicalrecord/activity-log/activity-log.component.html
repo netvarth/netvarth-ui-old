@@ -1,7 +1,54 @@
-<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
-  Aditlogs 
-      <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
-        aria-hidden="true"></i></button>
-  </h1>
+<!-- <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
+Activity Logs
+  <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+      aria-hidden="true"></i></button>
+</h1> -->
 
-  
+<!-- <div *ngIf="activity_log_count === 0" class="mgn-up-10 style-padding">
+  <p>No activity logs found</p>
+</div> -->
+
+<!-- <section class="report" *ngIf="activity_log_count !== 0">
+  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+  <ng-container *ngIf="!loading">
+ <div class="content w-manager settings comn-cls lic-page">
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
+        <div class="box" >
+    <mat-table class="mat-scrool visit-tbl" [dataSource]="lastVisit_dataSource">
+      <ng-container matColumnDef="consultationDate">
+        <mat-header-cell *matHeaderCellDef class="visit-dt-cl"> <b>Date</b></mat-header-cell>
+        <mat-cell *matCellDef="let visit">
+          {{getLastVisitDate(visit)}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="serviceName" >
+        <mat-header-cell *matHeaderCellDef class="visit-sr-cl"> <b>Service Name</b></mat-header-cell>
+        <mat-cell *matCellDef="let visit">
+          {{getServiceName(visit)}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="userName">
+        <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>Doctor</b></mat-header-cell>
+        <mat-cell *matCellDef="let visit">
+          {{visit.providerName}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="mr">
+        <mat-header-cell *matHeaderCellDef class="visit-mr-cl"> <b>Medical Record</b></mat-header-cell>
+        <mat-cell *matCellDef="let visit"> <i
+            [ngClass]="isMRCreated(visit) == true ? 'medicalrecord-green-icon-customer':'medicalrecord-icon-customer'"></i>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="rx">
+        <mat-header-cell *matHeaderCellDef class="visit-rx-cl"> <b>Prescription</b></mat-header-cell>
+        <mat-cell *matCellDef="let visit"> <i style="text-align:center"
+            [ngClass]="isRxCreated(visit) == true ? 'mr-rx-green-icon-customer':'mr-rx-icon-customer '"></i></mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns" (click)="getMedicalRecord(row)"
+        class="pointlist"></mat-row>
+    </mat-table>
+  </ng-container>
+
+    </div>
+      </div>
+    </div>
+  <div class="clearfix"></div>
+</section> -->
