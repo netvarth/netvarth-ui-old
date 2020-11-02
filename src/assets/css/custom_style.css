@@ -12825,7 +12825,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin-bottom: 20px;
   margin-top: 10px;
   font-size: 1.1rem;
-  padding: 10px 0;
+  padding: 10px;
 }
 .cust-detail {
   color: #3c8dbc;
@@ -12874,7 +12874,7 @@ hr {
   font-size: 1rem !important;
 }
 .customer-action-btn {
-  padding: 5px 25px;
+  padding: 3px 25px;
   border: 1px solid;
   border-radius: 20px;
   float: right;

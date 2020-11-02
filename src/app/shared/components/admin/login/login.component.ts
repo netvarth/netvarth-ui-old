@@ -26,6 +26,7 @@ export class AdminLoginComponent implements OnInit {
   loginId = null;
   accountId: string;
   password = null;
+  type;
   constructor(
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -33,7 +34,7 @@ export class AdminLoginComponent implements OnInit {
     public shared_functions: SharedFunctions,
     public activaterouterobj: ActivatedRoute,
     private provider_dataStorage: ProviderDataStorageService,
-    public router: Router
+    public router: Router, private activated_route: ActivatedRoute,
   ) {
     this.activaterouterobj.paramMap
       .subscribe(params => {
@@ -43,6 +44,10 @@ export class AdminLoginComponent implements OnInit {
           this.shared_functions.logoutNoRedirect();
         }
       });
+      this.activated_route.queryParams.subscribe(
+        params => {
+          this.type = params.type;
+        });
   }
   ngOnInit() {
     this.createForm();
@@ -63,7 +68,7 @@ export class AdminLoginComponent implements OnInit {
       accountId: this.accountId
     };
     this.api_loading = true;
-    this.shared_functions.adminLogin(post_data)
+    this.shared_functions.adminLogin(post_data, this.type)
       .then(
         () => {
           const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
