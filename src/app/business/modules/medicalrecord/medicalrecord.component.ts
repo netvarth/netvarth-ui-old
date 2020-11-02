@@ -8,6 +8,7 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
+import { ActivityLogComponent } from './activity-log/activity-log.component';
 
 @Component({
   selector: 'app-medicalrecord',
@@ -54,6 +55,7 @@ export class MedicalrecordComponent implements OnInit {
   selectedTab = 0;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   back_type: any;
+  logsdialogRef: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -274,6 +276,18 @@ export class MedicalrecordComponent implements OnInit {
         this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
       }
     });
+  }
+  activitylogs() {
+    console.log(this.PatientId);
+    this.logsdialogRef = this.dialog.open(ActivityLogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrId: this.mrId,
+      }
+    });
+
   }
   goback() {
 

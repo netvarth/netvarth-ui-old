@@ -25,6 +25,7 @@ import { UploadDigitalSignatureComponent } from './prescription/upload-digital-s
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
+import { ActivityLogComponent } from './activity-log/activity-log.component';
 
 @NgModule({
   declarations: [MedicalrecordComponent,
@@ -39,7 +40,8 @@ import { MatTableModule } from '@angular/material/table';
              InstructionsComponent,
               ImagesviewComponent,
               MedicalrecordListComponent,
-              UploadDigitalSignatureComponent
+              UploadDigitalSignatureComponent,
+              ActivityLogComponent
             ],
   imports: [
     SharedModule,
