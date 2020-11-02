@@ -30,7 +30,8 @@ export class CustomerSelectionComponent implements OnInit {
 
   ngOnInit() {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    const placeholder = 'Enter customer id seperated by comm;Ex 1,2,3';
+    // const placeholder = 'Enter customer id seperated by comm;Ex 1,2,3';
+    const placeholder = 'Enter customer id';
     this.placeHolder_msg = placeholder.replace('customer', this.customer_label);
   }
   passCustomersToReports() {

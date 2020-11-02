@@ -528,7 +528,7 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'providerOwnConsumerId': this.appointment_customerId
+          'appmtFor': this.getCustomerFilter(this.appointment_customerId)
 
         };
         if (this.appointment_schedule_id === 0) {
@@ -583,7 +583,7 @@ export class NewReportComponent implements OnInit {
           'service': this.token_service_id,
           'waitlistStatus': this.waitlist_status,
           'waitlistMode': this.waitlist_mode,
-          'providerOwnConsumerId': this.waitlist_customerId
+          'waitlistingFor': this.getCustomerFilter(this.waitlist_customerId)
 
         };
 
@@ -665,6 +665,9 @@ export class NewReportComponent implements OnInit {
       }
 
     }
+  }
+  getCustomerFilter(id) {
+return 'memberJaldeeId::' + id;
   }
   changeTimePeriod(event) {
 

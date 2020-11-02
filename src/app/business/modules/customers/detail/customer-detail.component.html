@@ -257,7 +257,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                         </div> -->
                         <div class="col-sm-12 col-md-12 col-lg-12 no-padding-small">
                             <div class="customer-detail-box" *ngIf="!showMoreActivity">
-                                <span class="customer-action-btn pointer-cursor">Actions</span>
+                                <span class="customer-action-btn pointer-cursor"
+                                (click)="showCustomerAction()">Actions</span>
                                 <div>{{customer_label | capitalizeFirst}} ID: <span
                                         class="cust-detail">{{customer[0].jaldeeId}} </span>
                                 </div>
@@ -272,7 +273,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 </div>
                             </div>
                             <div>
-                                <div class="rece-act mgn-bt-20" *ngIf="!showMoreActivity">Recent activity</div>
+                                <div class="rece-act mgn-bt-20 mgn-lt-10" *ngIf="!showMoreActivity">Recent activity</div>
                                 <div class="mgn-bt-10 mgn-lt-10" *ngIf="visitDetails.length === 0 && !loading">
                                     No recent activity
                                 </div>
