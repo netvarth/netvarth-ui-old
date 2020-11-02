@@ -5,6 +5,8 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { ImagesviewComponent } from '../imagesview/imagesview.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-upload-digital-signature',
@@ -43,10 +45,12 @@ export class UploadDigitalSignatureComponent implements OnInit {
   navigationExtras: NavigationExtras;
   providerId;
   digitalSign = false;
+  signatureviewdialogRef;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
     private activatedRoot: ActivatedRoute,
+    public dialog: MatDialog,
     private medicalrecord_service: MedicalrecordService) {
     this.medicalrecord_service.patient_data.subscribe(res => {
       this.navigationParams = res;
@@ -181,5 +185,20 @@ export class UploadDigitalSignatureComponent implements OnInit {
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
+  }
+
+
+  showimgPopup(file) {
+    this.signatureviewdialogRef = this.dialog.open(ImagesviewComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: file,
+    });
+    this.signatureviewdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
 }
