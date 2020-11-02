@@ -164,10 +164,10 @@ export class SharedFunctions {
     return promise;
   }
 
-  adminLogin(post_data) {
+  adminLogin(post_data, type) {
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
-      this.shared_service.adminLogin(post_data)
+      this.shared_service.adminLogin(post_data, type)
         .subscribe(
           data => {
             resolve(data);
