@@ -680,6 +680,12 @@
                           (keyup)="keyPressed($event)" class="filterTextbox" placeholder="{{customerIdTooltip | capitalizeFirst}}">
                         </li>
                       </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId" [ngModelOptions]="{standalone: true}" (blur)="doSearch()"
+                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
+                        </li>
+                      </div>
                         <div *ngIf="services.length > 1">
                           <label class="filterHeaders">Services</label>
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -946,6 +952,12 @@
                           <li class="filterli">
                             <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" [ngModelOptions]="{standalone: true}" (blur)="doSearch()"
                             (keyup)="keyPressed($event)" class="filterTextbox" placeholder="{{customerIdTooltip | capitalizeFirst}}">
+                          </li>
+                        </div>
+                        <div class="filterTextinput">
+                          <li class="filterli">
+                            <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId" [ngModelOptions]="{standalone: true}" (blur)="doSearch()"
+                              (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
                           </li>
                         </div>
                         <div class="filterTextinput" *ngIf="time_type == 3">
