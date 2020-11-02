@@ -6,49 +6,44 @@ Activity Logs
 
 <!-- <div *ngIf="activity_log_count === 0" class="mgn-up-10 style-padding">
   <p>No activity logs found</p>
-</div> -->
+</div>
 
-<!-- <section class="report" *ngIf="activity_log_count !== 0">
+<section class="report">
   <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-  <ng-container *ngIf="!loading">
+  <ng-container>
  <div class="content w-manager settings comn-cls lic-page">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
         <div class="box" >
-    <mat-table class="mat-scrool visit-tbl" [dataSource]="lastVisit_dataSource">
-      <ng-container matColumnDef="consultationDate">
-        <mat-header-cell *matHeaderCellDef class="visit-dt-cl"> <b>Date</b></mat-header-cell>
-        <mat-cell *matCellDef="let visit">
-          {{getLastVisitDate(visit)}}</mat-cell>
+    <mat-table class="mat-scrool visit-tbl" [dataSource]="auditlogs_dataSource">
+      <ng-container matColumnDef="Action">
+        <mat-header-cell *matHeaderCellDef class="visit-dt-cl"> <b>Action</b></mat-header-cell>
+        <mat-cell *matCellDef="let auditlogs">
+          {{auditlogs.Action}}</mat-cell>
+          
       </ng-container>
-      <ng-container matColumnDef="serviceName" >
-        <mat-header-cell *matHeaderCellDef class="visit-sr-cl"> <b>Service Name</b></mat-header-cell>
-        <mat-cell *matCellDef="let visit">
-          {{getServiceName(visit)}}</mat-cell>
+      <ng-container matColumnDef="Description" >
+        <mat-header-cell *matHeaderCellDef class="visit-sr-cl"> <b>Description</b></mat-header-cell>
+        <mat-cell *matCellDef="let auditlogs">
+          {{auditlogs.Description}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Date/Time">
+        <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>Date/Time</b></mat-header-cell>
+        <mat-cell *matCellDef="let auditlogs">
+          {{auditlogs.Description}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="userName">
-        <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>Doctor</b></mat-header-cell>
-        <mat-cell *matCellDef="let visit">
-          {{visit.providerName}}</mat-cell>
+        <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>userName</b></mat-header-cell>
+        <mat-cell *matCellDef="let auditlogs">
+          {{auditlogs.User}}</mat-cell>
       </ng-container>
-      <ng-container matColumnDef="mr">
-        <mat-header-cell *matHeaderCellDef class="visit-mr-cl"> <b>Medical Record</b></mat-header-cell>
-        <mat-cell *matCellDef="let visit"> <i
-            [ngClass]="isMRCreated(visit) == true ? 'medicalrecord-green-icon-customer':'medicalrecord-icon-customer'"></i>
-        </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="rx">
-        <mat-header-cell *matHeaderCellDef class="visit-rx-cl"> <b>Prescription</b></mat-header-cell>
-        <mat-cell *matCellDef="let visit"> <i style="text-align:center"
-            [ngClass]="isRxCreated(visit) == true ? 'mr-rx-green-icon-customer':'mr-rx-icon-customer '"></i></mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns" (click)="getMedicalRecord(row)"
-        class="pointlist"></mat-row>
+      <mat-header-row *matHeaderRowDef="auditlogs_displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row;columns:auditlogs_displayedColumns"  ></mat-row>
     </mat-table>
+
+  </div>
+</div>
+</div>
   </ng-container>
 
-    </div>
-      </div>
-    </div>
   <div class="clearfix"></div>
 </section> -->

@@ -16,9 +16,11 @@ export class ActivityLogComponent implements OnInit {
   auditlogs: any;
   mrId;
   // loading = true;
-  public log_dataSource = new MatTableDataSource<any>([]);
-  auditlogs_displayedColumns = ['Action', 'Description', 'Date/Time', 'userName'];
+  public auditlogs_dataSource = new MatTableDataSource<any>([]);
+  // auditlogs_displayedColumns = ['Action'];
+  auditlogs_displayedColumns = ['Action',  'Description', 'Date/Time', 'userName'];
   aditlogs: any = {};
+  action: any;
 
   constructor(
     public dialogRef: MatDialogRef<ActivityLogComponent>,
@@ -32,6 +34,11 @@ export class ActivityLogComponent implements OnInit {
     this.activity_log.push(JSON.parse(this.auditlogs.medicalRecord));
     this.activity_log.push(JSON.parse(this.auditlogs.prescription));
     this.activity_log_count = this.activity_log.length;
+    this.auditlogs_dataSource = this.activity_log;
+    console.log(this.auditlogs_dataSource);
+    // this.action = this.auditlogs_dataSource[0][0].Action;
+    // console.log(this.action);
+
 
   }
 
