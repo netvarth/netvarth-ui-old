@@ -353,7 +353,7 @@
                                     maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                 </li>
                               </div>
-                              <div class="filterTextinput" *ngIf="time_type != 3">
+                              <div class="filterTextinput">
                                 <li class="filterli">
                                   <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
                                     (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox"
@@ -879,7 +879,7 @@
                                     maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                 </li>
                               </div>
-                              <div class="filterTextinput" *ngIf="time_type != 3">
+                              <div class="filterTextinput">
                                 <li class="filterli">
                                   <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
                                     (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox"
