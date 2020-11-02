@@ -45,6 +45,17 @@
                 <span class="itemHead">Phone No</span>
                 <span class="itemVal">{{waitlist_data.phoneNumber}}</span>
               </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.service.deptName">
+                <span class="itemHead">Department</span>
+                <span class="itemVal">{{waitlist_data.service.deptName}}</span>
+              </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.batchId">
+                <span class="status-label">Batch</span>
+                <span>
+                  {{waitlist_data.batchId}}
+                </span>
+              </div>
+              
 
               <!-- Status,Date,Time bar -->
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar">
@@ -54,7 +65,7 @@
                     {{waitlist_data.apptStatus}}
                   </span>
                 </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
+                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-5 stats-item">
                   <span class="status-label">DATE & TIME-WINDOW</span>
                   <span>
                     {{waitlist_data.appmtDate | date:dateFormatSp}}<br>
@@ -62,16 +73,10 @@
                     {{waitlist_data.schedule.apptSchedule.timeSlots[0].eTime}}
                   </span>
                 </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
+                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item">
                   <span class="status-label">TIME</span>
                   <span>
                     {{getSingleTime(waitlist_data.appmtTime)}}
-                  </span>
-                </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" *ngIf="waitlist_data.batchId">
-                  <span class="status-label">BATCH</span>
-                  <span>
-                    {{waitlist_data.batchId}}
                   </span>
                 </div>
               </div>
