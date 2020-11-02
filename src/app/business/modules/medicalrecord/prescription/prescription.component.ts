@@ -191,12 +191,37 @@ export class PrescriptionComponent implements OnInit {
 
     this.addDrugdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const navigationExtras: NavigationExtras = {
-          queryParams: { details: JSON.stringify(result) }
-        };
-        this.router.navigate(['/provider/customers/medicalrecord/addrxlist'], navigationExtras);
+        // const navigationExtras: NavigationExtras = {
+        //   queryParams: { details: JSON.stringify(result) }
+        // };
+       // this.router.navigate(['/provider/customers/medicalrecord/addrxlist'], navigationExtras);
+       this.saveRx(result);
       }
     });
+  }
+
+  saveRx(result) {
+    if (this.mrId) {
+      this.provider_services.updateMRprescription(result, this.mrId).
+        subscribe(res => {
+          console.log(res);
+          this.getMrprescription(this.mrId);
+          this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+    } else {
+      this.medicalrecord_service.createMR('prescriptions', result)
+        .then(data => {
+          this.medicalrecord_service.setCurrentMRID(data);
+          this.getMrprescription(data);
+          this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
+        },
+          error => {
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+    }
   }
 
   updatePrescription() {
