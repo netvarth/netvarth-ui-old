@@ -9,6 +9,7 @@ import { projectConstants } from '../../../../app.component';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import * as moment from 'moment';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
+import { AppointmentActionsComponent } from '../appointment-actions/appointment-actions.component';
 @Component({
   selector: 'app-provider-appointment-detail',
   templateUrl: './provider-appointment-detail.component.html'
@@ -85,6 +86,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   iconClass: string;
   spfname: any;
   splname: any;
+  view_more = false;
+  actiondialogRef: any;
+  apptMultiSelection = false;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -449,4 +453,29 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       this.pos = data['enablepos'];
     });
   }
+
+  viewMore() {
+    this.view_more = !this.view_more;
+}
+
+gotoActions(checkin?) {
+  let waitlist = [];
+  if (checkin) {
+    waitlist = checkin;
+  }
+  const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+    width: '50%',
+    panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+    disableClose: true,
+    data: {
+      checkinData: waitlist,
+      multiSelection: this.apptMultiSelection,
+      NoViewDetail: 'true'
+    }
+  });
+  actiondialogRef.afterClosed().subscribe(data => {
+    this.getProviderSettings();
+  });
+}
+
 }

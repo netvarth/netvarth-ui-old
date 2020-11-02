@@ -12896,3 +12896,17 @@ hr {
 .rece-act table tr {
   box-shadow:  10px 15px 0px #cccccc9c;
 }
+
+.checkin-details .act-span {
+  float: right;
+  background: #cae0ed;
+  padding: 9px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #1e4079;
+}
+.checkin-details .sub-user-name {
+  font-size: 0.92rem;
+  color: #3c8dbc;
+}
