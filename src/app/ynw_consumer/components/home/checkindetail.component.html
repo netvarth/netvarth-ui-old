@@ -39,10 +39,11 @@
                                                 <div *ngIf="!checkIfFav(waitlist.providerAccount.id)" class="icon-favourite"
                                                 (click)="addFavProvider(waitlist.providerAccount.id, $event)"></div>
                                             </h3>
-                                            <span class="loc-cls">
+                                            <a class="loc-cls" [href]="waitlist.queue.location.googleMapUrl"
+                                            target="_blank">
                                                 <i class="fa fa-map-marker"></i>
                                                 {{waitlist.queue.location.place | capitalizeFirst}} 
-                                            </span>
+                                            </a>
                                             <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
                                                 <span>{{provider_label | capitalizeFirst}} : </span>
                                                 <span>

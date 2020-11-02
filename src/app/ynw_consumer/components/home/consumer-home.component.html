@@ -115,10 +115,10 @@
                                                 [ngClass]="{'colr-confrm':(booking.apptStatus == 'Confirmed'),'colr-arrived':(booking.apptStatus == 'Arrived'),'colr-started':(booking.apptStatus == 'Started'),'colr-canceld':(booking.apptStatus == 'Cancelled'),'colr-completed':(booking.apptStatus == 'Completed')}">
                                                 {{booking.apptStatus}}
                                             </h6>
-                                            <span *ngIf="booking.apptStatus == 'Confirmed'">
+                                            <!-- <span *ngIf="booking.apptStatus == 'Confirmed'">
                                                 <a href="{{path}}status/{{booking.appointmentEncId}}"
                                                     (click)="stopprop($event)" target="blank"><u class="font-smalr">VIEW
-                                                        STATUS</u></a></span>
+                                                        STATUS</u></a></span> -->
                                         </td>
                                         <td class="pay-wdth">
                                             <span
@@ -287,10 +287,10 @@
                                                 <span
                                                     *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                             </h6>
-                                            <span *ngIf="booking.waitlistStatus == 'checkedIn'">
+                                            <!-- <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                 <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
-                                                        STATUS</u></a></span>
+                                                        STATUS</u></a></span> -->
                                         </td>
                                         <td class="pay-wdth">
                                             <span
@@ -416,10 +416,10 @@
                                                     [ngClass]="{'colr-confrm':(booking.apptStatus == 'Confirmed'),'colr-arrived':(booking.apptStatus == 'Arrived'),'colr-started':(booking.apptStatus == 'Started'),'colr-canceld':(booking.apptStatus == 'Cancelled'),'colr-completed':(booking.apptStatus == 'Completed')}">
                                                     {{booking.apptStatus}}
                                                 </h6>
-                                                <span *ngIf="booking.apptStatus == 'Confirmed'">
+                                                <!-- <span *ngIf="booking.apptStatus == 'Confirmed'">
                                                     <a href="{{path}}status/{{booking.appointmentEncId}}" target="blank"
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
-                                                            STATUS</u></a></span>
+                                                            STATUS</u></a></span> -->
                                             </td>
                                             <td class="pay-wdth">
                                                 <span
@@ -590,10 +590,10 @@
                                                     <span
                                                         *ngIf="booking.waitlistStatus!=='done'  && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                 </h6>
-                                                <span *ngIf="booking.waitlistStatus == 'checkedIn'">
+                                                <!-- <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                     <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
-                                                            STATUS</u></a></span>
+                                                            STATUS</u></a></span> -->
                                             </td>
                                             <td class="pay-wdth">
                                                 <span
@@ -725,10 +725,10 @@
                                                 [ngClass]="{'colr-confrm':(booking.apptStatus == 'Confirmed'),'colr-arrived':(booking.apptStatus == 'Arrived'),'colr-started':(booking.apptStatus == 'Started'),'colr-canceld':(booking.apptStatus == 'Cancelled'),'colr-completed':(booking.apptStatus == 'Completed')}">
                                                 {{booking.apptStatus}}
                                             </h6>
-                                            <span *ngIf="booking.apptStatus == 'Confirmed'"><a
+                                            <!-- <span *ngIf="booking.apptStatus == 'Confirmed'"><a
                                                     href="{{path}}status/{{booking.appointmentEncId}}" target="blank"
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
-                                                        STATUS</u></a></span>
+                                                        STATUS</u></a></span> -->
                                         </td>
                                         <td class="pay-wdth">
                                             <span
@@ -846,10 +846,10 @@
                                                 <span
                                                     *ngIf="booking.waitlistStatus!=='done'  && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                             </h6>
-                                            <span *ngIf="booking.waitlistStatus == 'checkedIn'">
+                                            <!-- <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                 <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
-                                                        STATUS</u></a></span>
+                                                        STATUS</u></a></span> -->
                                         </td>
                                         <td class="pay-wdth">
                                             <span
@@ -962,10 +962,10 @@
                                                     [ngClass]="{'colr-confrm':(booking.apptStatus == 'Confirmed'),'colr-arrived':(booking.apptStatus == 'Arrived'),'colr-started':(booking.apptStatus == 'Started'),'colr-canceld':(booking.apptStatus == 'Cancelled'),'colr-completed':(booking.apptStatus == 'Completed')}">
                                                     {{booking.apptStatus}}
                                                 </h6>
-                                                <span *ngIf="booking.apptStatus == 'Confirmed'"><a
+                                                <!-- <span *ngIf="booking.apptStatus == 'Confirmed'"><a
                                                         href="{{path}}status/{{booking.appointmentEncId}}"
                                                         target="blank" (click)="stopprop($event)"><u
-                                                            class="font-smalr">VIEW STATUS</u></a></span>
+                                                            class="font-smalr">VIEW STATUS</u></a></span> -->
                                             </td>
                                             <td class="pay-wdth">
                                                 <span
@@ -1081,10 +1081,10 @@
                                                     <span
                                                         *ngIf="booking.waitlistStatus!=='done'  && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                 </h6>
-                                                <span *ngIf="booking.waitlistStatus == 'checkedIn'">
+                                                <!-- <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                     <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
-                                                            STATUS</u></a></span>
+                                                            STATUS</u></a></span> -->
                                             </td>
                                             <td class="pay-wdth">
                                                 <span
