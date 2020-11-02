@@ -12824,7 +12824,7 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: 10px 10px 15px 0px #cccccc9c;
   margin-bottom: 20px;
   margin-top: 10px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   padding: 10px 0;
 }
 .cust-detail {
@@ -12888,4 +12888,11 @@ hr {
 }
 .trackSlide .fa-share-alt{
   font-size: 2rem;
+}
+.rece-act {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.rece-act table tr {
+  box-shadow:  10px 15px 0px #cccccc9c;
 }

@@ -1,5 +1,28 @@
-<section *ngIf="source !=='token' && source !=='checkin' && source !=='appointment'">
+<section *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && !viewCustomer">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section *ngIf="viewCustomer && customerAction === '' && !showMoreActivity">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{customer_label | capitalizeFirst}} details
+            <!-- <span class="customer-action-btn pointer-cursor" (click)="showCustomerAction()">Actions</span> -->
+        </h5>
+    </div>
+</section>
+<section *ngIf="customerAction === 'inbox' || showMoreActivity">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10" *ngIf="customerAction === 'inbox'">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="goBackfromAction()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Communication history
+        </h5>
+        <h5 class="mgn-up-10" *ngIf="showMoreActivity">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="goBackfromAction('recent')"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Recent activity
+        </h5>
+    </div>
 </section>
 <section class="" *ngIf="source ==='token' || source ==='checkin' || source ==='appointment'">
     <div class="card title-gb">
@@ -7,9 +30,9 @@
             <!-- <button type="button" class="btn default profile-back" (click)="onCancel()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
             Create {{customer_label}} -->
-            <span class="fa fa-arrow-left pointer-cursor"  (click)="onCancel()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Create {{customer_label}}
-            
+
         </h5>
     </div>
 </section>
@@ -17,11 +40,10 @@
     <div class="content loc-list p-checkin ynw-common-form-nm">
         <div class="col-md-12 no-padding-small ">
             <div class="row">
-                <div class="card p0">
+                <div class="card p0" *ngIf="customerAction === ''">
                     <div class="col-md-12 no-padding"
-                        *ngIf="source !=='token' && source !=='checkin' && source !=='appointment'">
+                        *ngIf="!loading && source !=='token' && source !=='checkin' && source !=='appointment' && !viewCustomer">
                         <ul class="nav cust-dash jd-custom-nav">
-
                             <li class="dropdown notifications-menu">
                                 <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown"
                                     (click)="findCustomer()">
@@ -29,27 +51,26 @@
                                     {{customer_label | capitalizeFirst}}
                                 </a>
                             </li>
-                            <li *ngIf="viewCustomer" class="dropdown notifications-menu">
+                            <!-- <li *ngIf="viewCustomer" class="dropdown notifications-menu">
                                 <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown"
                                     (click)="editCustomer()">
                                     <i class="fa fa-pencil"></i> Edit
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
-
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
-                            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                            <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
                             <div class="mgn-up-20 mgn-bt-10 red" *ngIf="customerErrorMsg !== '' && !loading">
                                 <i class="fa fa-info-circle" aria-hidden="true"></i> {{customerErrorMsg}}
                             </div>
                             <div class="mgn-bt-20" *ngIf="customerErrorMsg1 !== '' && !loading">
                                 {{customerErrorMsg1}}
                             </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20 mgn-bt-20"
-                                *ngIf="viewCustomer">
-                                <div *ngIf="customer[0].firstName" class="col-md-6 col-xs-12 col-sm-6"
+                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20 mgn-bt-20"
+                                *ngIf="viewCustomer"> -->
+                            <!-- <div *ngIf="customer[0].firstName" class="col-md-6 col-xs-12 col-sm-6"
                                     class="createcheckin">
                                     <div><b>Name:</b></div>
                                     <div>{{customer[0].firstName}} {{customer[0].lastName}}</div>
@@ -82,8 +103,8 @@
                                     class="createcheckin">
                                     <div><b>Address:</b></div>
                                     <div>{{customer[0].address}}</div>
-                                </div>
-                            </div>
+                                </div> -->
+                            <!-- </div> -->
 
                             <form *ngIf="!loading && !viewCustomer" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
@@ -190,9 +211,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     <div class="pickerouter">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
-                                        <input class="form-control dtepicker" type="text" matInput (click)="picker.open()"
-                                            [matDatepicker]="picker" formControlName="dob" [max]="tday" [min]="minday"
-                                            placeholder="DD/MM/YYYY" readonly>
+                                        <input class="form-control dtepicker" type="text" matInput
+                                            (click)="picker.open()" [matDatepicker]="picker" formControlName="dob"
+                                            [max]="tday" [min]="minday" placeholder="DD/MM/YYYY" readonly>
                                     </div>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
                                         errorMsg="Please select the date of birth.">
@@ -218,7 +239,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 </div>
                             </form>
                         </div>
-                        <div class="class = lbr col-sm-12 col-md-4 col-lg-4">
+                        <div class="class = lbr col-sm-12 col-md-12 col-lg-12">
                             <!-- <div class="col-md-12  mgn-up-20 ">
                                 <button class="cs-btn bt3 width-100 mgn-up-20" (click)="findCustomer()">Find {{customer_label}}</button>
                             </div>
@@ -227,8 +248,149 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                             </div> -->
                         </div>
                     </div>
+
+
+                    <div class="copy locd block-level" *ngIf="viewCustomer">
+                        <div class="mgn-up-10 mgn-rt-15" *ngIf="!showMoreActivity">
+                            <span class="customer-action-btn pointer-cursor"
+                                (click)="showCustomerAction()">Actions</span>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="customer-detail-box" *ngIf="!showMoreActivity">
+                                <div>{{customer_label | capitalizeFirst}} ID: <span
+                                        class="cust-detail">{{customer[0].jaldeeId}} </span>
+                                </div>
+                                <div class="cust-detail">{{customer[0].firstName}} {{customer[0].lastName}}</div>
+                                <div class="cust-detail" *ngIf="customer[0].phoneNo">+91 {{customer[0].phoneNo}}</div>
+                                <div class="cust-detail" *ngIf="customer[0].email">{{customer[0].email}}</div>
+                                <div><span class="mgn-rt-30" *ngIf="customer[0].gender"> Gender:
+                                        {{customer[0].gender | capitalizeFirst}}</span>
+                                    <span *ngIf="customer[0].dob">DOB: {{customer[0].dob | date: dateFormat}} </span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="rece-act mgn-bt-20" *ngIf="!showMoreActivity">Recent activity</div>
+                                <div class="mgn-bt-10" *ngIf="visitDetails.length === 0 && !loading">
+                                    No recent activity
+                                </div>
+                                <div class="recentactivity" *ngIf="visitDetails.length > 0">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr class="pointer-cursor" *ngFor="let visit of visitDetails"
+                                                (click)="gettoCustomerDetail(visit)">
+                                                <ng-container *ngIf="visit.waitlist">
+                                                    <td class="consumer-dash"> <i *ngIf="!visit.waitlist.showToken"
+                                                            class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
+                                                        <i *ngIf="visit.waitlist.showToken" class="fa token-icon"
+                                                            [matTooltip]="'Token'"></i></td>
+                                                    <td> {{visit.waitlist.date | date: dateFormat}}
+                                                        <div *ngIf="visit.waitlist.token">Token#
+                                                            {{visit.waitlist.token}} </div>
+                                                    </td>
+                                                    <td> {{visit.waitlist.service.name}}</td>
+                                                    <td> {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
+                                                    <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0"> {{visit.waitlist.amountPaid |
+                                                        currency:'&#8377;' }} Paid</span> </td>
+                                                    <td>
+                                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                            (click)="stopprop($event)">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #visitMenu="matMenu">
+                                                            <button *ngIf="domain === 'healthCare'" mat-menu-item
+                                                                (click)="medicalRecord(visit)">
+                                                                <i class="medicalrecord-icon-customer"></i>
+                                                                <span *ngIf="visit.waitlist.mrId === 0"> Create
+                                                                    MedicalRecord </span>
+                                                                <span *ngIf="visit.waitlist.mrId !== 0"> View
+                                                                    MedicalRecord </span>
+                                                            </button>
+                                                            <button *ngIf="domain === 'healthCare'" mat-menu-item
+                                                                (click)="prescription(visit)">
+                                                                <i class="mr-rx-icon-customer"></i>
+                                                                <span *ngIf="visit.waitlist.prescriptionCreated"> View
+                                                                    RX</span>
+                                                                <span *ngIf="!visit.waitlist.prescriptionCreated">
+                                                                    Create RX</span>
+                                                            </button>
+                                                            <button mat-menu-item (click)="showCommHistory(visit)">
+                                                                <i class="mr-rx-icon-customer"></i>
+                                                                Communication history
+                                                            </button>
+                                                            <button *ngIf="visit.waitlist.consumerNote" mat-menu-item
+                                                                (click)="showConsumerNote(visit)">
+                                                                <i class="icon-note"></i>
+                                                                {{customer_label | capitalizeFirst}} note
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container *ngIf="visit.appointmnet">
+                                                    <td class="consumer-dash"> <i class="fa appt-icon"
+                                                            [matTooltip]="'Appointment'"></i> </td>
+                                                    <td>{{visit.appointmnet.appmtDate | date: dateFormat}}
+                                                        <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
+                                                    </td>
+                                                    <td> {{visit.appointmnet.service.name}}</td>
+                                                    <td> {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
+                                                    <td><span class="rupee-font"
+                                                            *ngIf="visit.appointmnet.amountPaid > 0"> {{visit.appointmnet.amountPaid |
+                                                        currency:'&#8377;' }} Paid</span></td>
+                                                    <td>
+                                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                            (click)="stopprop($event)">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #visitMenu="matMenu">
+                                                            <button *ngIf="domain === 'healthCare'" mat-menu-item
+                                                                (click)="medicalRecord(visit)">
+                                                                <i class="medicalrecord-icon-customer"></i>
+                                                                <span *ngIf="visit.appointmnet.mrId === 0"> Create
+                                                                    MedicalRecord </span>
+                                                                <span *ngIf="visit.appointmnet.mrId !== 0"> View
+                                                                    MedicalRecord </span>
+                                                            </button>
+                                                            <button *ngIf="domain === 'healthCare'" mat-menu-item
+                                                                (click)="prescription(visit)">
+                                                                <i class="mr-rx-icon-customer"></i>
+                                                                <span *ngIf="visit.appointmnet.prescriptionCreated">
+                                                                    View RX</span>
+                                                                <span *ngIf="!visit.appointmnet.prescriptionCreated">
+                                                                    Create RX</span>
+                                                            </button>
+                                                            <button mat-menu-item (click)="showCommHistory(visit)">
+                                                                <i class="mr-rx-icon-customer"></i>
+                                                                Communication history
+                                                            </button>
+                                                            <button *ngIf="visit.appointmnet.consumerNote" mat-menu-item
+                                                                (click)="showConsumerNote(visit)">
+                                                                <i class="icon-note"></i>
+                                                                {{customer_label | capitalizeFirst}} note
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div *ngIf="visitDetailsArray.length > 5 && !showMoreActivity">
+                                        <a (click)="showMore()">Show more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
+                <div class="card" *ngIf="customerAction === 'inbox' && !loading">
+                    <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
+                        (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
+                </div>
+
+
+                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
 </section>

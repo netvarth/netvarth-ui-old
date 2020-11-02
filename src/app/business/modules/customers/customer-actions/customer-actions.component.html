@@ -1,0 +1,43 @@
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
+    Select an action to perform
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button></h1>
+<div class="action-section col-md-12 no-padding">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
+        <div class="action-box pointer-cursor" (click)="editCustomer()">
+            <div class="action-box-sub">
+                <span class="icon-edit"></span>
+                <div class="icon-text">Edit
+                </div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" (click)="listMedicalrecords()" *ngIf="domain === 'healthCare'">
+            <div class="action-box-sub">
+                <span class="medicalrecordlisticon-customer"></span>
+                <div class="icon-text">List MedicalRecords
+                </div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" (click)="lastvisits()" *ngIf="domain === 'healthCare'">
+            <div class="action-box-sub">
+                <span class="viewdetails-icon-customer"></span>
+                <div class="icon-text">Last visits
+                </div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" (click)="medicalRecord()" *ngIf="domain === 'healthCare'">
+            <div class="action-box-sub">
+                <span class="medicalrecord-icon"></span>
+                <div class="icon-text"> Create MedicalRecord
+                </div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" (click)="prescription()" *ngIf="domain === 'healthCare'">
+            <div class="action-box-sub">
+                <span class="mr-rx-icon"></span>
+                <div class="icon-text"> Create RX
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

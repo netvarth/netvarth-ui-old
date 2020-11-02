@@ -7,6 +7,10 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+import { CustomerActionsComponent } from '../customer-actions/customer-actions.component';
 
 @Component({
     selector: 'app-customer-detail',
@@ -87,6 +91,20 @@ export class CustomerDetailComponent implements OnInit {
     deptId;
     type;
     customerDetails: any = [];
+    visitDetails: any = [];
+    customerAction = '';
+    waitlistModes = {
+        WALK_IN_CHECKIN: 'Walk in Check-in',
+        PHONE_CHECKIN: 'Phone in Check-in',
+        ONLINE_CHECKIN: 'Online Check-in',
+        WALK_IN_APPOINTMENT: 'Walk in Appointment',
+        PHONE_IN_APPOINTMENT: 'Phone in Appointment',
+        ONLINE_APPOINTMENT: 'Online Appointment'
+    };
+    domain;
+    communication_history: any = [];
+    visitDetailsArray = [];
+    showMoreActivity = false;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -95,11 +113,13 @@ export class CustomerDetailComponent implements OnInit {
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         private activated_route: ActivatedRoute,
-        private _location: Location,
+        private _location: Location, public dialog: MatDialog,
         private router: Router) {
         // this.search_data = this.data.search_data;
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
+            const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+            this.domain = user.sector;
             this.source = qparams.source;
             if (qparams.type) {
                 this.type = qparams.type;
@@ -205,6 +225,10 @@ export class CustomerDetailComponent implements OnInit {
                                             this.breadcrumbs = breadcrumbs;
                                             this.viewCustomer = true;
                                             this.loading = false;
+                                            console.log(this.viewCustomer);
+                                            if (this.customerId) {
+                                                this.getCustomerLastVisit();
+                                            }
                                         }
                                     }
                                 );
@@ -634,4 +658,283 @@ export class CustomerDetailComponent implements OnInit {
         };
         this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
     }
+    getCustomerLastVisit() {
+        this.loading = true;
+        this.provider_services.getCustomerLastVisit(this.customerId).subscribe(
+            (data: any) => {
+                this.visitDetailsArray = data;
+                this.visitDetails = this.visitDetailsArray.slice(0, 5);
+                this.loading = false;
+                console.log(this.visitDetails);
+            }
+        );
+    }
+    stopprop(event) {
+        event.stopPropagation();
+    }
+
+
+
+    lastvisits(customerDetail) {
+        const mrdialogRef = this.dialog.open(LastVisitComponent, {
+            width: '80%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                patientId: customerDetail.id,
+                customerDetail: customerDetail,
+                back_type: 'consumer'
+            }
+        });
+        mrdialogRef.afterClosed().subscribe(result => {
+            console.log(JSON.stringify(result));
+            if (result.type === 'prescription') {
+                this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+                this.router.onSameUrlNavigation = 'reload';
+                this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], result.navigationParams);
+            } else if (result.type === 'clinicalnotes') {
+                this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+                this.router.onSameUrlNavigation = 'reload';
+                this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
+            }
+        });
+
+    }
+    listMedicalrecords(customer) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { 'id': customer.id }
+        };
+
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
+    }
+    medicalRecord(visitDetail) {
+        let medicalrecord_mode = 'new';
+        let mrId = 0;
+        if (visitDetail.mrId) {
+            medicalrecord_mode = 'view';
+            mrId = visitDetail.mrId;
+        }
+        console.log(visitDetail);
+        if (visitDetail.waitlist) {
+            let providerId;
+            if (visitDetail.waitlist.provider && visitDetail.waitlist.provider.id) {
+                providerId = visitDetail.waitlist.provider.id;
+            } else {
+                providerId = '';
+            }
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                    'customerDetail': JSON.stringify(visitDetail.waitlist.waitlistingFor[0]),
+                    'serviceId': visitDetail.waitlist.service.id,
+                    'serviceName': visitDetail.waitlist.service.name,
+                    'booking_type': 'TOKEN',
+                    'booking_date': visitDetail.waitlist.consLastVisitedDate,
+                    'booking_time': visitDetail.waitlist.checkInTime,
+                    'department': visitDetail.waitlist.service.deptName,
+                    'consultationMode': 'OP',
+                    'booking_id': visitDetail.waitlist.ynwUuid,
+                    'mr_mode': medicalrecord_mode,
+                    'mrId': mrId,
+                    'back_type': 'waitlist',
+                    'provider_id': providerId
+                }
+            };
+            console.log(navigationExtras);
+            this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+        } else {
+            let providerId;
+            if (visitDetail.appointmnet.provider && visitDetail.appointmnet.provider.id) {
+                providerId = visitDetail.appointmnet.provider.id;
+            } else {
+                providerId = '';
+            }
+            console.log(visitDetail);
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                    'customerDetail': JSON.stringify(visitDetail.appointmnet.appmtFor[0]),
+                    'serviceId': visitDetail.appointmnet.service.id,
+                    'serviceName': visitDetail.appointmnet.service.name,
+                    'department': visitDetail.appointmnet.service.deptName,
+                    'booking_type': 'APPT',
+                    'booking_date': visitDetail.appointmnet.consLastVisitedDate,
+                    'booking_time': visitDetail.appointmnet.apptTakenTime,
+                    'mr_mode': medicalrecord_mode,
+                    'mrId': mrId,
+                    'booking_id': visitDetail.appointmnet.uid,
+                    'back_type': 'appt',
+                    'provider_id': providerId,
+                    'visitDate': visitDetail.appointmnet.consLastVisitedDate,
+                }
+            };
+            console.log(navigationExtras);
+            this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+        }
+    }
+    prescription(visitDetail) {
+        let medicalrecord_mode = 'new';
+        let mrId = 0;
+        if (visitDetail.mrId) {
+            medicalrecord_mode = 'view';
+            mrId = visitDetail.mrId;
+        }
+        if (visitDetail.waitlist) {
+            let providerId;
+            if (visitDetail.waitlist.provider && visitDetail.waitlist.provider.id) {
+                providerId = visitDetail.waitlist.provider.id;
+            } else {
+                providerId = '';
+            }
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                    'customerDetail': JSON.stringify(visitDetail.waitlist.waitlistingFor[0]),
+                    'serviceId': visitDetail.waitlist.service.id,
+                    'serviceName': visitDetail.waitlist.service.name,
+                    'booking_type': 'TOKEN',
+                    'booking_date': visitDetail.waitlist.consLastVisitedDate,
+                    'booking_time': visitDetail.waitlist.checkInTime,
+                    'department': visitDetail.waitlist.service.deptName,
+                    'consultationMode': 'OP',
+                    'mrId': mrId,
+                    'mr_mode': medicalrecord_mode,
+                    'booking_id': visitDetail.waitlist.ynwUuid,
+                    'back_type': 'waitlist',
+                    'provider_id': providerId
+                }
+            };
+            this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+        } else {
+            let providerId;
+            if (visitDetail.appointmnet.provider && visitDetail.appointmnet.provider.id) {
+                providerId = visitDetail.appointmnet.provider.id;
+            } else {
+                providerId = '';
+            }
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                    'customerDetail': JSON.stringify(visitDetail.appointmnet.appmtFor[0]),
+                    'serviceId': visitDetail.appointmnet.service.id,
+                    'serviceName': visitDetail.appointmnet.service.name,
+                    'department': visitDetail.appointmnet.service.deptName,
+                    'booking_type': 'APPT',
+                    'booking_date': visitDetail.appointmnet.consLastVisitedDate,
+                    'booking_time': visitDetail.appointmnet.apptTakenTime,
+                    'mr_mode': medicalrecord_mode,
+                    'mrId': mrId,
+                    'booking_id': visitDetail.appointmnet.uid,
+                    'back_type': 'appt',
+                    'provider_id': providerId,
+                    'visitDate': visitDetail.appointmnet.consLastVisitedDate,
+                }
+            };
+            this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+        }
+    }
+    gettoCustomerDetail(visit) {
+        if (visit.waitlist) {
+            this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid]);
+        } else {
+            this.router.navigate(['provider', 'appointments', visit.appointmnet.uid]);
+        }
+    }
+    goBack() {
+        this._location.back();
+    }
+    showConsumerNote(visitDetail) {
+        let type;
+        let checkin;
+        if (visitDetail.waitlist) {
+            type = 'checkin';
+            checkin = visitDetail.waitlist;
+        } else {
+            type = 'appt';
+            checkin = visitDetail.appointmnet;
+        }
+        const notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                checkin: checkin,
+                type: type
+            }
+        });
+        notedialogRef.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+            }
+        });
+    }
+    showCustomerAction() {
+        const notedialogRef = this.dialog.open(CustomerActionsComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                customer: this.customer,
+                // type: type
+            }
+        });
+        notedialogRef.afterClosed().subscribe(result => {
+            if (result === 'edit') {
+                this.editCustomer();
+            }
+        });
+    }
+    showCommHistory(visitdetails) {
+        this.loading = true;
+        this.customerAction = 'inbox';
+        this.getCommunicationHistory(visitdetails);
+    }
+    getCommunicationHistory(visitdetails) {
+        let uuid;
+        if (visitdetails.waitlist) {
+            uuid = visitdetails.waitlist.ynwUuid;
+        } else {
+            uuid = visitdetails.appointmnet.uid;
+        }
+        this.provider_services.getProviderInbox()
+            .subscribe(
+                data => {
+                    const history: any = data;
+                    this.communication_history = [];
+                    for (const his of history) {
+                        if (his.waitlistId === uuid || his.waitlistId === uuid.replace('h_', '')) {
+                            this.communication_history.push(his);
+                        }
+                    }
+                    console.log(this.communication_history);
+                    this.sortMessages();
+                    this.loading = false;
+                    this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
+                },
+                () => {
+                    //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+                }
+            );
+    }
+    sortMessages() {
+        this.communication_history.sort(function (message1, message2) {
+            if (message1.timeStamp < message2.timeStamp) {
+                return 11;
+            } else if (message1.timeStamp > message2.timeStamp) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+    }
+    goBackfromAction(source) {
+        this.customerAction = '';
+        if (source === 'recent') {
+        this.visitDetails = this.visitDetailsArray.slice(0, 5);
+        this.showMoreActivity = false;
+        }
+    }
+    showMore() {
+        this.showMoreActivity = true;
+        this.visitDetails = this.visitDetailsArray;
+    }
+    getSingleTime(slot) {
+        const slots = slot.split('-');
+        return this.shared_functions.convert24HourtoAmPm(slots[0]);
+      }
 }
