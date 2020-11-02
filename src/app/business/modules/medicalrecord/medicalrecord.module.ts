@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { ActivityLogComponent } from './activity-log/activity-log.component';
-import { SignaturePadModule } from '@ng-plus/signature-pad';
+// import { SignaturePadModule } from '@ng-plus/signature-pad';
 
 
 @NgModule({
@@ -44,7 +44,7 @@ import { SignaturePadModule } from '@ng-plus/signature-pad';
               MedicalrecordListComponent,
               UploadDigitalSignatureComponent,
               ActivityLogComponent,
-              SignaturePadModule
+              // SignaturePadModule
             ],
   imports: [
     SharedModule,
