@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppointmentsComponent } from './appointments.component';
 import { AppointmentsRoutingModule } from './appointments.routing.module';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
@@ -15,7 +15,6 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { AddProviderWaitlistCheckInProviderNoteModule } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module';
 import { LocateCustomerModule } from '../check-ins/locate-customer/locate-customer.module';
 import { ProviderWaitlistCheckInConsumerNoteModule } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module';
-import { CallingModesModule } from '../check-ins/calling-modes/calling-modes.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { AdjustscheduleDelayComponent } from './schedule-delay/adjust-schedule-delay.component';
 import { CheckinDetailsSendModule } from '../check-ins/checkin-details-send/checkin-details-send.modules';
@@ -41,7 +40,6 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
         Nl2BrPipeModule,
         AddProviderWaitlistCheckInProviderNoteModule,
         ProviderWaitlistCheckInConsumerNoteModule,
-        CallingModesModule,
         CheckinDetailsSendModule,
         NgxQRCodeModule,
         CustomerModule,
@@ -57,6 +55,10 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
     entryComponents: [
         AppointmentActionsComponent
     ],
-    exports: [AppointmentsComponent]
+    exports: [AppointmentsComponent],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ],
 })
 export class AppointmentsModule { }

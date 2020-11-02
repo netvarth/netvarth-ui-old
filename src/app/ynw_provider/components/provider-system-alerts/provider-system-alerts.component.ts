@@ -12,7 +12,8 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
   templateUrl: './provider-system-alerts.component.html'
 })
 export class ProviderSystemAlertComponent implements OnInit {
-
+  tooltipcls = '';
+  filtericonTooltip = '';
   acknow_status_cap = Messages.SYS_ALERTS_ACKNOWLEDGEMENT_STATUS;
   any_cap = Messages.SYS_ALERTS_ANY_CAP;
   acknowledged_cap = Messages.SYS_ALERTS_ACKNOWLEDGED_CAP;

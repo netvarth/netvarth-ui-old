@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../app.component';
+// import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-cancel-popup',
@@ -39,7 +40,10 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   rep_time: string;
   settings: any = [];
   showToken = false;
-
+  max_char_count = 500;
+  char_count = 0;
+  messgae_cap = Messages.OTHERMESSAGE_CAP;
+  isfocused = false;
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInCancelPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -60,7 +64,8 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   ngOnInit() {
     const reasons_list = [];
     const type = this.sharedfunctionObj.getitemFromGroupStorage('pdtyp');
-    const reasons = projectConstants.WAITLIST_CANCEL_RESON;
+    // const reasons = projectConstants.WAITLIST_CANCEL_RESON;
+    const reasons = projectConstantsLocal.WAITLIST_CANCEL_REASON;
     for (let i = 0; i < reasons.length; i++) {
       if (type !== reasons[i].type) {
         reasons_list.push(reasons[i]);
@@ -129,7 +134,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
             //   new FormControl(this.replacedMessage(), Validators.compose([Validators.required])));
             // this.amForm.get('message').setValue(this.replacedMessage());
           } else {
-            this.amForm.controls['message'].disable();
+            // this.amForm.controls['message'].disable();
           }
         }
       );
@@ -208,9 +213,9 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
             this.default_message_arr = data;
             this.default_message = data.cancel || '';
             /*this.cur_msg = this.replacedMessage();
-            if (this.amForm.get('reason')) {
-             this.amForm.get('reason').setValue(this.cur_msg);
-            }*/
+            // if (this.amForm.get('reason')) {
+            //  this.amForm.get('reason').setValue(this.cur_msg);
+            // }*/
           },
           () => {
 
@@ -237,5 +242,15 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   titleCaseWord(word: string) {
     if (!word) { return word; }
     return word[0].toUpperCase() + word.substr(1);
+  }
+  setDescFocus() {
+    this.isfocused = true;
+    this.char_count = this.max_char_count - this.amForm.get('message').value.length;
+  }
+  lostDescFocus() {
+    this.isfocused = false;
+  }
+  setCharCount() {
+    this.char_count = this.max_char_count - this.amForm.get('message').value.length;
   }
 }

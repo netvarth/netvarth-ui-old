@@ -16,7 +16,7 @@
                 <div class="card p0">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-10 col-lg-10">
-                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
+                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()">
                                 <div class="form-group col-md-12 mgn-up-10 sc-frm no-padding">
                                     <div class="col-md-9 col-xs-10 col-sm-10 no-padding glbl-seting-heder">
                                         <div class="col-md-10 col-sm-10 col-xs-10 no-padding">
@@ -92,13 +92,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                     <div>{{customer_data.dob}}</div>
                                 </div>
                                 <hr class="wide-separator-line" />
-                                <div *ngIf="isFrom == checkin" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
+                                <div *ngIf="isFrom == 'checkin'" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
                                     Do You want take Check-In For this
                                         {{customer_label}} &nbsp;
                                     <i class="fa fa- pointer-cursor" (click)="checkinClicked()"><u
                                             class="createcheckinstyle">Click here</u></i>
                                 </div>
-                                <div *ngIf="isFrom == appointment" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
+                                <div *ngIf="isFrom == 'appointment'" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
                                     Do You want take Appointment For this
                                         {{customer_label}} &nbsp;
                                     <i class="fa fa- pointer-cursor" (click)="appointmentClicked()"><u
@@ -177,9 +177,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                     <div class="pickerouter">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
-                                        <input class="form-control dtepicker" type="text" matInput
-                                            [matDatepicker]="picker" formControlName="dob" [max]="tday" [min]="minday"
-                                            placeholder="DD/MM/YYYY">
+                                        <input class="form-control dtepicker" type="text" matInput readonly
+                                            [matDatepicker]="picker" formControlName="dob" [max]="tday"
+                                            placeholder="DD/MM/YYYY" (click)="picker.open()">
                                     </div>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
                                         errorMsg="Please select the date of birth.">

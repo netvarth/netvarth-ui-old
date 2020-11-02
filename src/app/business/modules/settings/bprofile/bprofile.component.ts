@@ -7,7 +7,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -26,7 +26,7 @@ import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.comp
 
 
 export class BProfileComponent implements OnInit,  AfterViewChecked {
-
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   listmyprofile_status: boolean;
   onlinepresence_status_str: string;
   subdomainVirtualFieldFilledStatus: any;
@@ -136,6 +136,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
   // add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
   to_turn_search = Messages.BPROFILE_TURN_ON_PUBLIC_SEARCH;
   change_cap = Messages.BPROFILE_CHANGE_CAP;
+  additional_cap = Messages.BPROFILE_ADDITIONAL_CAP;
   pic_cap = Messages.BPROFILE_PICTURE_CAP;
   delete_pic = Messages.BPROFILE_DELETE_PICTURE_CAP;
   info_cap = Messages.BPROFILE_INFORMATION_CAP;
@@ -319,7 +320,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
   licenseMetrics: any = [];
   parkingType: any;
   park_type: any;
-  @ViewChild('logofile', { static: false }) myInputVariable: ElementRef;
+  @ViewChild('logofile') myInputVariable: ElementRef;
   show_passcode = false;
   onlinepresence_status = false;
   onlinepresence_statusstr = '';
@@ -408,7 +409,6 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
     this.getBusinessConfiguration();
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
-
     this.getGalleryImages();
 
 
@@ -614,6 +614,11 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
       .then(
         data => {
           this.bProfile = data;
+          if (this.bProfile.customId) {
+            this.generateQR(this.bProfile.customId);
+          } else {
+            this.generateQR(this.bProfile.accEncUid);
+          }
           if (this.bProfile.businessName && this.bProfile.businessDesc) {
             this.domainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfDomain();
             this.subdomainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfSubDomain();
@@ -1230,5 +1235,9 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
         this.getBusinessProfile();
       }
     });
+  }
+
+  generateQR(id) {
+    this.qr_value = projectConstants.PATH + id;
   }
 }

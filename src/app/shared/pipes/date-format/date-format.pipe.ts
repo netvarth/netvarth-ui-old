@@ -31,4 +31,9 @@ export class DateFormatPipe implements PipeTransform {
     return value;
 
   }
+  transformToDateWithTime(value: any) {
+    const datePipe = new DatePipe('en-US');
+    value = datePipe.transform(value, 'dd/MM/yyyy HH:mm a');
+    return value;
+  }
 }

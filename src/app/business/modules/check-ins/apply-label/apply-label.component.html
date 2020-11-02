@@ -4,7 +4,7 @@
     <div class="form-group col-md-12" *ngIf="source === 'newlabel'">
         <mat-form-field>
             <input matInput type="text" class="form-control" id="displayName" placeholder="Label"
-                [(ngModel)]="labelname" autocomplete="off">
+                [(ngModel)]="labelname" [ngModelOptions]="{standalone: true}" autocomplete="off">
             <app-field-error-display [displayError]="true" *ngIf="api_error['label']" errorMsg="{{api_error['label']}}">
             </app-field-error-display>
         </mat-form-field>

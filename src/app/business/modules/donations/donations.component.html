@@ -26,9 +26,11 @@
               <ul class="dropdown-menu">
                 <li>
                   <ul class="menu">
-                    <li *ngFor="let location of locations;let i = index" [(value)]="i"
+                    <!-- let i = index [(value)]="i" -->
+                    <li *ngFor="let location of locations" 
                       [ngClass]="{'active': (location.place == selected_location.place)}">
-                      <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
+                      <!-- (click)="onChangeLocationSelect(i)" -->
+                      <a class="pointer-cursor">
                         <h4 *ngIf="location.place.length>='27'">
                           {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
                         <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
@@ -65,16 +67,16 @@
                 </i>
                 <span *ngIf="selected_location && !small_device_display">&nbsp;&nbsp; {{selected_location.place | capitalizeFirst}}</span>
               </a>
-            </li>  -->
-            
+            </li> 
+             -->
           </ul>
         </div>
-        <aside class="filterSidebar" *ngIf="show_loc">
+        <!-- <aside class="filterSidebar" *ngIf="show_loc">
           <section class="sidebar sidebar-bottom">
             <ul class="sidebar-menu">
               <div class="filterTextinput">
-                  <li class="filterli" *ngFor="let location of locations;let i = index" [(value)]="i">
-                    <a class="pointer-cursor" (click)="getDonationsList('true',location)">
+                  <li class="filterli" *ngFor="let location of locations">
+                    <a class="pointer-cursor" (click)="getDonationsList(true ,location)">
                       <span class="donate-loc" [ngClass]="{'donate-sel-loc': (selected_loc_id === location.id)}" *ngIf="location.place.length>='27'">
                         {{ location.place.substring(0,24) | capitalizeFirst }}...</span>
                       <span class="donate-loc" [ngClass]="{'donate-sel-loc': (selected_loc_id === location.id)}" *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</span>
@@ -83,7 +85,7 @@
               </div>
             </ul>
           </section>
-        </aside>
+        </aside> -->
 
         <aside class="filterSidebar" *ngIf="filter_sidebar">
           <section class="sidebar sidebar-bottom">
@@ -96,14 +98,15 @@
             <ul class="sidebar-menu">
               <div class="filterTextinput">
                 <li class="filterli">
-                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                  <!-- (keyup)="focusInput($event,Fmobile)" -->
+                  <input type="text" #Ffname (blur)="doSearch()" 
                     class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="Name">
                 </li>
               </div>
               <div class="filterTextinput">
                 <li class="filterli filterDatepicker">
                   <input type="text" [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
-                    (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date">
+                    (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date" readonly>
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>

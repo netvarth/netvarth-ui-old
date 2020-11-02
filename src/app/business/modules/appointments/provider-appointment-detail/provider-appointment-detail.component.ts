@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -275,7 +275,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
 
   changeWaitlistStatus() {
-    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'Rejected', 'appt');
+    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'Cancelled', 'appt');
   }
 
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
@@ -286,6 +286,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         }
       );
   }
+
 
   addConsumerInboxMessage() {
     const waitlist = [];

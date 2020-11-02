@@ -212,9 +212,9 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         </div>
                                         <mat-dialog-actions>
                                             <div class="resendouter" *ngIf="resetCounterVal==0">
-                                                <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}}
+                                                <!-- <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}}
                                                     <ng-container *ngIf="type=='change_email'">
-                                                        Email</ng-container></span>
+                                                        Email</ng-container></span> -->
                                                 <ul class="info-lst">
                                                     <span class="black">Having a problem with your phone? &nbsp;<span
                                                             (click)="setResendViaEmail()"
@@ -276,7 +276,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                             <div class="form-group">
                                 <label for="re-enter"></label>
                                 <input type="password" formControlName="confirm_password" name="passsword" id="password"
-                                    placeholder="Re-enter password*" (keyup)="keyPressed($event)" />
+                                    placeholder="Re-enter password*" (keyup)="keyPressed()" />
                                 <app-field-error-display
                                     [displayError]="fed_service.isFieldValid(spForm,'confirm_password')" [errorMsgs]="fed_service.getErrorMessage(spForm,'confirm_password',
                                     {'required' : 'Re-enter Password'})">
@@ -319,7 +319,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                             (resetApiErrors)="resetApiErrors()">
                                         </app-saleschannel> -->
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                            <div class="form-group mgn-up-10" *ngIf="action!='view'">
+                                            <div class="form-group mgn-up-10">
                                                 <div class="col-md-9 col-xs-10 col-sm-10">
                                                     <mat-form-field>
                                                         <input matInput placeholder="Sales Partner Id/ Phone"

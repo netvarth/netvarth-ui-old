@@ -3,7 +3,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 
@@ -161,7 +161,7 @@ export class JDNComponent implements OnInit {
             }
         }
     }
-    update(stat) {
+    update(stat?) {
         this.resetApiErrors();
         let put_data;
         if (this.jdnType === 'Label') {
@@ -222,8 +222,8 @@ export class JDNComponent implements OnInit {
         this.rewrite = stat;
         this.getJdnDetails();
     }
-    cancel(stat) {
-        this.rewrite = stat;
+    cancel() {
+        this.rewrite = '';
         this.getJdnDetails();
     }
     handlejdn_status(status) {

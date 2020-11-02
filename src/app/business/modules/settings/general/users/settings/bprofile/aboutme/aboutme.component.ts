@@ -9,9 +9,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserDataStorageService } from '../../user-datastorage.service';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../../../shared//modules/form-message-display/form-message-display.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProviderUserBprofileSearchDynamicComponent } from './../additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { QuestionService } from '../../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderSharedFuctions } from '../../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { UserBprofileSearchPrimaryComponent } from './../user-bprofile-search-primary/user-bprofile-search-primary.component';
@@ -22,6 +22,7 @@ import { ProPicPopupComponent } from '../../../../../bprofile/pro-pic-popup/pro-
 })
 
 export class AboutmeComponent implements OnInit, OnDestroy {
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   logoDetails = null;
   showVirtualFields = false;
   notedialogRef: MatDialogRef<ProPicPopupComponent, any>;

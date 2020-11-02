@@ -1,7 +1,7 @@
 
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
@@ -34,6 +34,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   msgdialogRef;
   fileTooltip = Messages.FILE_TOOLTIP;
+  tooltipcls = '';
   showImages: any = [];
   messages: any = [];
   users: any = [];
@@ -46,7 +47,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   ];
   constructor(private inbox_services: InboxServices,
     private dialog: MatDialog, private provider_services: ProviderServices,
-    private shared_functions: SharedFunctions, private routerobj: Router) { }
+    public shared_functions: SharedFunctions, private routerobj: Router) { }
 
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -139,7 +140,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     return retdate;
   }
-  showImagesection(index, message) {
+  showImagesection(index) {
     (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
   }
   getThumbUrl(attachment) {

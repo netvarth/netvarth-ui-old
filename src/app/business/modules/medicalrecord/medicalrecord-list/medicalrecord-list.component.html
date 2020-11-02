@@ -1,81 +1,67 @@
 <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor"  (click)="back()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-      Medical records of {{patientDetails[0].firstName}} {{patientDetails[0].lastName}}
-
+      <span class="fa fa-arrow-left pointer-cursor" (click)="back()"></span>&nbsp;&nbsp;&nbsp;&nbsp; Medical records of
+      {{patientDetails[0].firstName}} {{patientDetails[0].lastName}}
     </h5>
   </div>
-
-
-
-
 </section>
 <section class="report">
   <div class="content w-manager settings comn-cls lic-page">
-    <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
-
-
-
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
       <div class="box">
-
-
         <div class="box-body table-container table-responsive mat-elevation-z8">
-          <div class="spinner-container" *ngIf="loading ">
-
+          <div class="spinner-container" *ngIf="loading">
             <mat-spinner></mat-spinner>
-
           </div>
           <div *ngIf="!loading">
-
-            <div *ngIf="mr_dataSource.length== 0" class="mgn-up-10 style-padding">
+            <!-- <div *ngIf="mr_dataSource.length === 0" class="mgn-up-10 style-padding">
               <p>No Medical Records Found For This Patient</p>
-            </div>
-
-            <mat-table *ngIf="mr_dataSource.length > 0" [dataSource]="mr_dataSource">
-
-              <ng-container matColumnDef="consultationDate">
-                <mat-header-cell *matHeaderCellDef> Consultation Date</mat-header-cell>
-                <mat-cell *matCellDef=" let mr">
-                  {{ mr.mrConsultationDate }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="serviceName">
-                <mat-header-cell *matHeaderCellDef> Service/Consultation</mat-header-cell>
-                <mat-cell *matCellDef="let mr">
-                  {{ getServiceName(mr) }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="bookingType">
-                <mat-header-cell *matHeaderCellDef>Booking Type</mat-header-cell>
-                <mat-cell *matCellDef="let mr">
-                  {{ getBookingName(mr.bookingType) }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="medicalrecord">
-                <mat-header-cell *matHeaderCellDef>
-                  <b>MR</b>
-                </mat-header-cell>
-                <mat-cell *matCellDef="let mr">
-                  <button (click)="viewMedicalRecord(mr)" style="text-align:center">
-                    <i class="medicalrecord-icon-customer"></i>View MR</button>
-                </mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="rx">
-                <mat-header-cell *matHeaderCellDef>
-                  <b>RX</b>
-                </mat-header-cell>
-                <mat-cell *matCellDef="let mr">
-                  <button (click)="viewMR_prescription(mr)" style="text-align:center">
-                    <i class="mr-rx-icon-customer"></i>{{mr.prescriptionCreated===true?'View Rx':'Create Rx'}}</button>
-                </mat-cell>
-              </ng-container>
-
-
-
-              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row;columns:displayedColumns"></mat-row>
-
+            </div> -->
+            <mat-table [dataSource]="mr_dataSource">
+              
+                <ng-container matColumnDef="createdDate">
+                  <mat-header-cell *matHeaderCellDef> Created On </mat-header-cell>
+                  <mat-cell *matCellDef=" let mr">
+                    {{ mr.mrCreatedDate }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="mrNo">
+                  <mat-header-cell *matHeaderCellDef> MR # </mat-header-cell>
+                  <mat-cell *matCellDef=" let mr">
+                    {{ mr.mrNumber }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="serviceName">
+                  <mat-header-cell *matHeaderCellDef> Service/Consultation</mat-header-cell>
+                  <mat-cell *matCellDef="let mr">
+                    {{ getServiceName(mr) }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="bookingType">
+                  <mat-header-cell *matHeaderCellDef>Booking Type</mat-header-cell>
+                  <mat-cell *matCellDef="let mr">
+                    {{ getBookingName(mr.bookingType) }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="medicalrecord">
+                  <mat-header-cell *matHeaderCellDef>
+                    <span>Medical Record</span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let mr">
+                    <i class="medicalrecord-green-icon-customer"></i>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="rx">
+                  <mat-header-cell *matHeaderCellDef>
+                    <span>Prescription</span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let mr">
+                    <i style="text-align:center"
+                      [ngClass]="mr.prescriptionCreated == true ? 'mr-rx-green-icon-customer':'mr-rx-icon-customer '"></i>
+                  </mat-cell>
+                </ng-container>
+              <thead class="rolegroup">
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row></thead>
+              <mat-row *matRowDef="let row;columns:displayedColumns" (click)="getMedicalRecord(row)" class="pointlist">
+              </mat-row>
             </mat-table>
-
-
           </div>
         </div>
       </div>

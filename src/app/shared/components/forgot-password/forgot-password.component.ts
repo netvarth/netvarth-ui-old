@@ -1,5 +1,5 @@
 import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

@@ -93,8 +93,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     teleCallingModes = {
         'callingMode': '',
         'status': 'ACTIVE',
-        'value': null,
-        'instructions': null
+        'value': '',
+        'instructions': ''
     };
     vcallmodes;
     modeselected = false;
@@ -421,10 +421,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
         if (form_data.serviceType === 'virtualService') {
             //  this.tool_id = this.tool_id.trim();
             this.teleCallingModes = {
-                'callingMode': this.tool_name,
-                'value': this.tool_id,
+                'callingMode': this.tool_name || '',
+                'value': this.tool_id || '',
                 'status': 'ACTIVE',
-                'instructions': this.tool_instruct
+                'instructions': this.tool_instruct || ''
             };
         }
         if (this.is_donation) {
@@ -680,7 +680,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.telemodes = ['Phone', 'WhatsApp'];
 
                 } else if (this.serv_mode && this.serv_mode === 'videoService') {
-                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp'];
+                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp', 'VideoCall'];
                 } else {
                     this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp'];
                 }
@@ -735,7 +735,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     changeConsumerNoteStatus(ev) {
         this.showConsumerNote = ev.checked;
     }
-    editClicked(type) {
+    editClicked(type?) {
         this.showNoteError = '';
         if (type && type === 'save') {
             if (this.consumerNote === '' || this.consumerNote.trim() === '') {

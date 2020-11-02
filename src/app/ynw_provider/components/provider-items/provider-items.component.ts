@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -14,7 +14,7 @@ import { projectConstants } from '../../../app.component';
   styleUrls: ['./provider-items.component.css']
 })
 export class ProviderItemsComponent implements OnInit, OnDestroy {
-
+  tooltipcls = '';
   name_cap = Messages.ITEM_NAME_CAP;
   price_cap = Messages.PRICES_CAP;
   taxable_cap = Messages.TAXABLE_CAP;
@@ -64,7 +64,6 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    
     this.getitems();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');

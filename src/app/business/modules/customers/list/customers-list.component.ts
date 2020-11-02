@@ -3,7 +3,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Router, NavigationExtras } from '@angular/router';
@@ -80,7 +80,10 @@ export class CustomersListComponent implements OnInit {
   selectedIndex: any = [];
   hide_msgicon = false;
   mrdialogRef: any;
-
+  selectedcustomersforcall: any[];
+  customerlist: any;
+  customerDetails: any;
+  voicedialogRef: any;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -264,6 +267,7 @@ export class CustomersListComponent implements OnInit {
   selectcustomers(index, detail) {
     this.hide_msgicon = false;
     this.selectedcustomersformsg = [];
+    this.selectedcustomersforcall = [];
     if (this.customerSelected[index]) {
       delete this.customerSelected[index];
       this.customerselection--;
@@ -283,6 +287,13 @@ export class CustomersListComponent implements OnInit {
         this.hide_msgicon = true;
       }
     }
+    for (let i = 0; i < this.customerSelected.length; i++) {
+      if (this.customerSelected[i]) {
+        if (this.selectedcustomersforcall.indexOf(this.customers[i]) === -1) {
+          this.selectedcustomersforcall.push(this.customers[i]);
+        }
+      }
+    }
   }
   CustomersInboxMessage() {
     let customerlist = [];
@@ -293,7 +304,6 @@ export class CustomersListComponent implements OnInit {
         () => { }
       );
   }
-
   editCustomer(customer) {
     const navigationExtras: NavigationExtras = {
       queryParams: { action: 'edit' }
@@ -356,10 +366,11 @@ export class CustomersListComponent implements OnInit {
   }
   prescription(customerDetail) {
     const navigationExtras: NavigationExtras = {
-      queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP'  }
+      queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
     };
 
-    this.shared_functions.removeitemfromLocalStorage('mrId');
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
-  }
+  this.shared_functions.removeitemfromLocalStorage('mrId');
+this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+    }
 }
+

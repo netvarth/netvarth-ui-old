@@ -156,8 +156,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         <mat-form-field>
           <textarea matInput class="form-control" id="description"
             placeholder="{{is_donation ? 'Briefly describe cause' : 'Briefly describe service'}}"
-            formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()"
-            (blur)="lostDescFocus()" maxlength="500"> </textarea>
+            formControlName="description" (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+            maxlength="500"> </textarea>
         </mat-form-field>
 
         <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'description')" [errorMsg]="fed_service.getErrorMessage(serviceForm,'description',
@@ -212,8 +212,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <mat-label>Select
             <span *ngIf="serv_mode === 'videoService'">Video</span>
             <span *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
-          <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name"
-            name="toolname" [ngModelOptions]="{standalone: true}">
+          <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name" name="toolname"
+            [ngModelOptions]="{standalone: true}">
             <mat-option *ngFor="let mode of telemodes" [value]="mode">
               <span *ngIf="(mode == 'GoogleMeet'||mode == 'Phone')">&nbsp;</span>
               <i *ngIf="mode === 'WhatsApp'"
@@ -542,13 +542,13 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="mode=='afteradd'">
+    <!-- <ng-container *ngIf="mode=='afteradd'">
       <div class="message-one">
         <p class="p1">{{normaladd_msg1}}</p>
         <p class="p2">{{normaladd_msg2}}</p>
       </div>
       <div class="message-two" (click)="gotoManageQueue()">{{go_to_service_cap}}</div>
-    </ng-container>
+    </ng-container> -->
   </form>
 
   <div class="ynw-common-form-nm pre-post" *ngIf="showInfo">

@@ -2,15 +2,14 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { Router, NavigationExtras, RoutesRecognized, ActivatedRoute } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
-import { filter, pairwise } from 'rxjs/operators';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { KeyValue } from '@angular/common';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
@@ -21,6 +20,7 @@ import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, P
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { CheckinActionsComponent } from './checkin-actions/checkin-actions.component';
 declare let cordova: any;
+import { VoicecallDetailsComponent } from './voicecall-details/voicecall-details.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -29,6 +29,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   // pdtyp  --- 0-History, 1-Future, 2-Today
   // pdStyp --- 'all' -- Checkins, 'started' - Started, 'done' - Complete, 'cancelled' - Cancelled
   // pdq --- selected queue id
+  tooltipcls = '';
+  cloudTooltip = '';
+  filtericonTooltip = '';
   today_cap = Messages.TODAY_HOME_CAP;
   future_cap = Messages.FUTURE_HOME_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;
@@ -85,6 +88,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     last_name: '',
     phone_number: '',
     checkinEncId: '',
+    patientId: '',
     queue: 'all',
     location: 'all',
     service: 'all',
@@ -105,6 +109,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     last_name: false,
     phone_number: false,
     checkinEncId: false,
+    patientId: false,
     queue: false,
     location: false,
     service: false,
@@ -267,7 +272,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   trackDetail: any = [];
   consumerTrackstatus = false;
   labeldialogRef;
-  @ViewChild('chekinSection', { static: false }) chekinSection: ElementRef<HTMLElement>;
+  @ViewChild('chekinSection') chekinSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   topHeight = 0;
   smsdialogRef: any;
@@ -316,6 +321,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   endminday;
   maxday = new Date();
   allLabels: any = [];
+  voicedialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -412,10 +418,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.pagination.startpageval = this.shared_functions.getitemFromGroupStorage('paginationStart') || 1;
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
-    this.breadcrumb_moreoptions = {
-      'show_learnmore': true, 'scrollKey': 'appointments',
-      'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-    };
+    // this.breadcrumb_moreoptions = {
+    //   'show_learnmore': true, 'scrollKey': 'appointments',
+    //   'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
+    // };
+    const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
+    if (savedtype !== undefined && savedtype !== null) {
+      this.time_type = savedtype;
+    }
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     if (this.server_date) {
@@ -430,24 +440,25 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getPos();
     this.getLabel();
     this.getDepartments();
+    this.getLocationList();
     this.getProviders();
     this.getServiceList();
     this.image_list_popup_temp = [];
-    const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
-    if (savedtype !== undefined && savedtype !== null) {
-      this.time_type = savedtype;
-    }
-    this.getLocationList().then(
-      () => {
-        this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
-        this.router.events
-          .pipe(filter((e: any) => e instanceof RoutesRecognized),
-            pairwise()
-          ).subscribe((e: any) => {
-            this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/check-ins/'));
-          });
-      }
-    );
+    // const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
+    // if (savedtype !== undefined && savedtype !== null) {
+    //   this.time_type = savedtype;
+    // }
+    // this.getLocationList().then(
+    //   () => {
+    //     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+    //     // this.router.events
+    //     //   .pipe(filter((e: any) => e instanceof RoutesRecognized),
+    //     //     pairwise()
+    //     //   ).subscribe((e: any) => {
+    //     //     this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/check-ins/'));
+    //     //   });
+    //   }
+    // );
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
@@ -1258,6 +1269,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setApptSelections();
   }
   getTodayWL() {
+    const _this = this;
     this.loading = true;
     const Mfilter = this.setFilterForApi();
     if (this.shared_functions.getitemFromGroupStorage('selQ')) {
@@ -1278,36 +1290,36 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const promise = this.getTodayWLCount(Mfilter);
       promise.then(
         result => {
-          this.chkSelectAppointments = false;
-          this.provider_services.getTodayWaitlist(Mfilter)
+          _this.chkSelectAppointments = false;
+          _this.provider_services.getTodayWaitlist(Mfilter)
             .subscribe(
               (data: any) => {
-                this.appt_list = [];
-                this.appt_list = data;
-                this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'waitlistStatus');
-                if (this.filterapplied === true) {
-                  this.noFilter = false;
+                _this.appt_list = [];
+                _this.appt_list = data;
+                _this.todayAppointments = _this.shared_functions.groupBy(_this.appt_list, 'waitlistStatus');
+                if (_this.filterapplied === true) {
+                  _this.noFilter = false;
                 } else {
-                  this.noFilter = true;
+                  _this.noFilter = true;
                 }
-                this.setCounts(this.appt_list);
-                this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-                this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
-                this.loading = false;
+                _this.setCounts(this.appt_list);
+                _this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+                _this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
+                _this.loading = false;
               },
               () => {
                 // this.load_waitlist = 1;
-                this.loading = false;
+                _this.loading = false;
               },
               () => {
-                this.loading = false;
+                _this.loading = false;
               });
         },
         () => {
-          this.loading = false;
+          _this.loading = false;
         });
     } else {
-      this.loading = false;
+      _this.loading = false;
     }
   }
   getFutureWL() {
@@ -1421,12 +1433,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (totalAppointmentsSelected === 1) {
       this.apptSingleSelection = true;
-      for (let i in this.appointmentsChecked) {
+      // tslint:disable-next-line:forin
+      for (const i in this.appointmentsChecked) {
         this.checkin_uuid = this.appointmentsChecked[i];
         if (!this.checkin_uuid.parentUuid) {
           this.billicon = true;
-        }
-        else {
+        } else {
           this.billicon = false;
         }
       }
@@ -1765,6 +1777,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.setFilterdobMaxMin();
     }
   }
+  getPatientIdFilter(patientid) {
+    const idFilter = 'memberJaldeeId::' + patientid;
+    return idFilter;
+  }
   setFilterData(type, value) {
     this.filter[type] = value;
     this.resetPaginationData();
@@ -1792,6 +1808,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.checkinEncId !== '') {
       api_filter['checkinEncId-eq'] = this.filter.checkinEncId;
+    }
+    if (this.filter.patientId !== '') {
+      api_filter['waitlistingFor-eq'] = this.getPatientIdFilter(this.filter.patientId);
     }
     if (this.filterService.length > 0 && this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filterService.toString();
@@ -1879,7 +1898,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
       this.filterapplied = true;
@@ -1908,6 +1927,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       last_name: false,
       phone_number: false,
       checkinEncId: false,
+      patientId: false,
       queue: false,
       location: false,
       service: false,
@@ -1925,6 +1945,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       last_name: '',
       phone_number: '',
       checkinEncId: '',
+      patientId: '',
       queue: 'all',
       location: 'all',
       service: 'all',
@@ -1957,7 +1978,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.providerLabels = [];
     this.provider_services.getLabelList().subscribe(data => {
       this.allLabels = data;
-      this.providerLabels = this.allLabels.filter(label => label.status === 'ACTIVE');
+      this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
     });
   }
   getDisplayname(label) {
@@ -2614,7 +2635,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        checkin: checkin
+        checkin: checkin,
+        type: 'checkin'
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
@@ -2898,5 +2920,23 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loading = true;
     this.hideFilterSidebar();
     this.setTimeType(event.index + 1);
+  }
+  CreateVoiceCall(wtlst?) {
+    let waitlist;
+    waitlist = wtlst.ynwUuid;
+    this.voicedialogRef = this.dialog.open(VoicecallDetailsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        checkin_id: waitlist
+        // chekintype: 'appointment'
+      }
+    });
+  }
+  onButtonBeforeHook() { }
+  onButtonAfterHook() { }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
   }
 }

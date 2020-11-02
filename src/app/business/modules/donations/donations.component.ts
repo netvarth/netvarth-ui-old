@@ -48,8 +48,9 @@ export class DonationsComponent implements OnInit {
     filters: any = {
         'first_name': false,
         'date': false,
-        'mobile': false,
-        'email': false
+        // 'mobile': false,
+        // 'email': false
+        'service' : false
     };
     selected = 0;
     donationSelection = 0;
@@ -176,39 +177,64 @@ export class DonationsComponent implements OnInit {
         }
         this.doSearch();
     }
-    getDonationsList(from_oninit = false, loc?) {
+    // getDonationsList(from_oninit = false, loc?) {
+    //     let filter = this.setFilterForApi();
+    //     filter['donationStatus-eq'] = 'SUCCESS';
+    //     if (loc && loc.id) {
+    //         filter['location-eq'] = loc.id;
+    //         this.show_loc = false;
+    //     }
+    //     this.locationSelected(loc);
+    //     this.getDonationsCount(filter)
+    //         .then(
+    //             result => {
+    //                 if (from_oninit) { this.donations_count = result; }
+    //                 filter = this.setPaginationFilter(filter);
+    //                 this.provider_services.getDonations(filter)
+    //                     .subscribe(
+    //                         data => {
+    //                             console.log(data);
+    //                             this.donations = data;
+    //                             if (loc && loc.id) {
+    //                                 this.selected_loc_id = loc.id;
+    //                             }
+    //                             this.loadComplete = true;
+    //                         },
+    //                         error => {
+    //                             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //                             this.loadComplete = true;
+    //                         }
+    //                     );
+    //             },
+    //             error => {
+    //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //             }
+    //         );
+    // }
+    getDonationsList(from_oninit = true) {
         let filter = this.setFilterForApi();
-        filter['donationStatus-eq'] = 'SUCCESS';
-        if (loc && loc.id) {
-            filter['location-eq'] = loc.id;
-            this.show_loc = false;
-        }
-        this.locationSelected(loc);
-        this.getDonationsCount(filter)
-            .then(
-                result => {
-                    if (from_oninit) { this.donations_count = result; }
-                    filter = this.setPaginationFilter(filter);
-                    this.provider_services.getDonations(filter)
-                        .subscribe(
-                            data => {
-                                this.donations = data;
-                                if (loc && loc.id) {
-                                    this.selected_loc_id = loc.id;
-                                }
-                                this.loadComplete = true;
-                            },
-                            error => {
-                                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                                this.loadComplete = true;
-                            }
-                        );
-                },
-                error => {
+        this. getDonationsCount(filter)
+          .then(
+            result => {
+              if (from_oninit) { this.donations_count = result; }
+              filter = this.setPaginationFilter(filter);
+              this.provider_services.getDonations(filter)
+                .subscribe(
+                  data => {
+                    this.donations = data;
+                    this.loadComplete = true;
+                  },
+                  error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                }
-            );
-    }
+                    this.loadComplete = true;
+                  }
+                );
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      }
     clearFilter() {
         this.services = [];
         this.resetFilter();

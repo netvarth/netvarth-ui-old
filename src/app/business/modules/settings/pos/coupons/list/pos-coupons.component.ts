@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
@@ -13,7 +13,7 @@ import { Router, NavigationExtras } from '@angular/router';
   styleUrls: ['./pos-coupons.component.css']
 })
 export class PosCouponsComponent implements OnInit, OnDestroy {
-
+  tooltipcls = '';
   desc_cap = Messages.DESCRIPTION_CAP;
   name_cap = Messages.CUPN_NAME_CAP;
   jCouponCode_Cap = Messages.JCOUPON_CODE;

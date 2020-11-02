@@ -5,3 +5,30 @@
 .style-padding {
   padding-left: 20px;
 }
+.highlight{
+  background: rgb(148, 198, 238); /* blue */
+}
+mat-row:hover {
+  background-color: #c8e9f3 !important;
+}
+mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+  padding-left: 10px !important;
+}
+.mat-column-consultationDate {
+  flex: 0 0 165px;
+}
+.mat-column-serviceName {
+  flex: 0 0 140px;
+}
+.mat-column-userName {
+  flex: 0 0 140px;
+}
+.mat-column-mr {
+  flex: 0 0 100px;
+}
+.mat-column-rx {
+  flex: 0 0 100px;
+}
+.mat-column-rx i, .mat-column-mr i {
+  margin: auto;
+}

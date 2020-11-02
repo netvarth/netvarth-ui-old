@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { Observable } from 'rxjs';
+import { Location } from '@angular/common';
 import { startWith, map } from 'rxjs/operators';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
@@ -28,6 +29,8 @@ declare let cordova: any;
 })
 
 export class AddProviderWaitlistCheckInBillComponent implements OnInit {
+  paynot = '';
+  tooltipcls = '';
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;
   date_cap = Messages.SYS_ALERTS_DATE_CAP;
@@ -96,8 +99,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   update_display_note = Messages.UPDATE_DISPLAY_NOTE;
   update_private_note = Messages.UPDATE_PRIVATE_NOTE;
   update_note_btn = Messages.UPDATE_NOTE;
-  @ViewChild('itemservicesearch', { static: false }) item_service_search;
-  @ViewChild('itemserviceqty', { static: false }) item_service_qty;
+  @ViewChild('itemservicesearch') item_service_search;
+  @ViewChild('itemserviceqty') item_service_qty;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -215,6 +218,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     public provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     public sharedfunctionObj: SharedFunctions,
+    private locationobj: Location,
     private activated_route: ActivatedRoute,
     @Inject(DOCUMENT) public document
   ) {
@@ -315,7 +319,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       }, () => {
     });
   }
-
+  gotoPrev() {
+    this.locationobj.back();
+  }
   getJaldeeActiveCoupons() {
     this.jCouponsList = [];
     let couponList: any = [];
@@ -1240,7 +1246,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   hidePayWorkBench() {
     this.showPayWorkBench = false;
   }
-  makePayment(mode, amount, paynot, status?) {
+  makePayment(mode, amount, paynot?, status?) {
     if (this.source) {
       this.pay_data.uuid = this.checkin.uid;
     } else {

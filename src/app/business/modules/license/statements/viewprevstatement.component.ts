@@ -5,13 +5,20 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-viewprevstatement',
     templateUrl: './viewprevstatement.component.html'
 })
 export class ViewPrevStatementComponent implements OnInit {
+    amount_cap = Messages.AMOUNT_CAP;
+    gateway_cap = Messages.GATEWAY_CAP;
+    payment_cap = Messages.PAYMENT_CAP;
+    mode_cap = Messages.MODE_CAP;
+    date_cap = Messages.DATE_COL_CAP;
+    ref_id_cap = Messages.REF_ID_CAP;
+    status_cap = Messages.COUPONS_STATUS_CAP;
     apiloading = false;
     invoice;
     jaldeeegst_data: any = [];

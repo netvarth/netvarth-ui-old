@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AddDrugComponent } from './add-drug/add-drug.component';
 import { NavigationExtras, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ImagesviewComponent } from './imagesview/imagesview.component';
-
+import { projectConstants } from '../..../../../../../app.component';
+import { ShareRxComponent } from './share-rx/share-rx.component';
 
 @Component({
   selector: 'app-prescription',
@@ -16,7 +17,8 @@ import { ImagesviewComponent } from './imagesview/imagesview.component';
   styleUrls: ['./prescription.component.css']
 })
 export class PrescriptionComponent implements OnInit {
-
+  prescriptionSharedTimestamp: any;
+  prescriptionShared = false;
   instructiondialogRef: any;
   addDrugdialogRef;
   drugList: any = [];
@@ -39,6 +41,11 @@ export class PrescriptionComponent implements OnInit {
   dateFormatSp = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   disable = false;
   imagesviewdialogRef: any;
+  providerId;
+  digitalSign = false;
+  sharedialogRef;
+  navigations: any;
+  provider_user_Id: any;
   constructor(
     // private activatedRoot: ActivatedRoute,
     private router: Router,
@@ -47,27 +54,107 @@ export class PrescriptionComponent implements OnInit {
     public provider_services: ProviderServices,
     private medicalrecord_service: MedicalrecordService,
   ) {
+    this.medicalrecord_service.patient_data.subscribe(res => {
+      this.navigations = res;
+      console.log(this.navigations);
+      this.provider_user_Id = res.provider_id;
+      if (!this.provider_user_Id) {
+        const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        this.provider_user_Id = user.id;
+      }
+    });
     this.medicalrecord_service._mrUid.subscribe(mrId => {
       this.mrId = mrId;
-      console.log(this.mrId);
-
     });
-
-
   }
-
   ngOnInit() {
+
     if (this.mrId === 0) {
       this.loading = false;
-
     } else {
       this.getMrprescription(this.mrId);
+      this.getMedicalRecord(this.mrId);
     }
-
   }
+
+  getMedicalRecord(mrId) {
+    this.provider_services.GetMedicalRecord(mrId)
+      .subscribe((data: any) => {
+        if (data) {
+          this.prescriptionShared = data.prescShared;
+
+          this.prescriptionSharedTimestamp = data.lastSharedTime;
+
+        }
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+  deleteTempImage(index) {
+    this.selectedMessage.files.splice(index, 1);
+  }
+  filesSelected(event) {
+    const input = event.target.files;
+    if (input) {
+      for (const file of input) {
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.sharedfunctionObj.apiErrorAutoHide(this, 'Selected image type not supported');
+        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+          this.sharedfunctionObj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+        } else {
+          this.selectedMessage.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  }
+  uploadSign() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: { providerId: this.provider_user_Id }
+    };
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadsign'], navigationExtras);
+  }
+  getDigitalSign() {
+    if (this.provider_user_Id) {
+      this.provider_services.getDigitalSign(this.provider_user_Id)
+        .subscribe((data) => {
+          console.log(data);
+          this.digitalSign = true;
+        },
+          error => {
+            this.digitalSign = false;
+            // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+    }
+  }
+
+
   uploadRx() {
     this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadRx']);
+  }
 
+  shareManualRx(type) {
+    this.sharedialogRef = this.dialog.open(ShareRxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrId: this.mrId,
+        userId: this.provider_user_Id,
+        provider_user_Id: this.provider_user_Id,
+        type: type
+      }
+    });
+    this.sharedialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
 
   getMrprescription(mrId) {
@@ -82,6 +169,7 @@ export class PrescriptionComponent implements OnInit {
           console.log(this.uploadlist);
         } else {
           this.drugList = data;
+          this.getDigitalSign();
         }
         this.loading = false;
       },
@@ -89,7 +177,6 @@ export class PrescriptionComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-
 
   addDrug() {
     this.addDrugdialogRef = this.dialog.open(AddDrugComponent, {
@@ -124,7 +211,7 @@ export class PrescriptionComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: { mode: 'view' }
     };
-    this.router.navigate(['/provider/customers/medicalrecord/uploadRx'],navigationExtras);
+    this.router.navigate(['/provider/customers/medicalrecord/uploadRx'], navigationExtras);
   }
   imageSize(val) {
     let imgsize;

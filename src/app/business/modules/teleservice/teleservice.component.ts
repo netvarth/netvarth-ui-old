@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { TeleServiceConfirmBoxComponent } from './teleservice-confirm-box/teleservice-confirm-box.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { TeleServiceShareComponent } from './teleservice-share/teleservice-share.component';
@@ -156,10 +156,11 @@ export class TeleServiceComponent implements OnInit {
                   //  this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
                     this.servDetails = this.data.service;
+                    console.log(this.servDetails);
+                    this.getMeetingDetails();
                     if (this.data.providerConsumer.email) {
                         this.emailPresent = true;
                     }
-                    this.getMeetingDetails();
                     // this.apptTeleserviceJoinLink();
                     this.consumer_fname = this.data.appmtFor[0].userName;
                 });
@@ -245,7 +246,6 @@ export class TeleServiceComponent implements OnInit {
                 subscribe((meetingdata) => {
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
-
                 });
         }
     }
@@ -271,8 +271,14 @@ export class TeleServiceComponent implements OnInit {
                         } else {
                             console.log(this.starting_url);
                             this.chkinTeleserviceJoinLink();
-                            const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
-                            window.open(path, '_blank');
+                            if (this.callingModes !== 'VideoCall') {
+                                const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
+                                window.open(path, '_blank');
+                            } else {
+                                const startIndex = this.starting_url.lastIndexOf('/');
+                                const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
+                                this.router.navigate(['video', videoId]);
+                            }
                             this.getProviderWaitlstById();
                         }
                     }
@@ -288,13 +294,23 @@ export class TeleServiceComponent implements OnInit {
                             this.router.navigate(['provider', 'appointments']);
                         } else {
                             this.apptTeleserviceJoinLink();
-                            const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
-                            window.open(path, '_blank');
+                            if (this.callingModes !== 'VideoCall') {
+                                const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
+                                window.open(path, '_blank');
+                            } else {
+                                const startIndex = this.starting_url.lastIndexOf('/');
+                                const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
+                                this.router.navigate(['video', videoId]);
+                                // this.shared_services.getVideoIdForService(waitlist.uid, 'provider').subscribe(
+                                //     (videoId: any) => {
+                                //         this.router.navigate(['provider', 'video', videoId]);
+                                //     }
+                                // );
+                            }
                             this.getProviderApptById();
                         }
                     }
-                }
-                );
+                });
         }
     }
 
@@ -327,7 +343,11 @@ export class TeleServiceComponent implements OnInit {
             }
         });
     }
-
+    relauchMeeting (startingUrl) {
+        const startIndex = startingUrl.lastIndexOf('/');
+        const videoId = startingUrl.substring((startIndex + 1), startingUrl.length);
+        this.router.navigate(['video', videoId]);
+    }
     // Sending rest API to consumer and provider about service starting
     chkinTeleserviceJoinLink() {
         const uuid_data = {

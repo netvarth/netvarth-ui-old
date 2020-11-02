@@ -15,7 +15,7 @@ import { QuestionService } from '../ynw_provider/components/dynamicforms/dynamic
 import { MessageService } from '../ynw_provider/services/provider-message.service';
 import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
 import { ProviderResolver } from '../ynw_provider/services/provider-resolver.service';
-import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { projectConstants } from '../app.component';
 import { ProviderFaqModule } from './modules/faq/provider-faq.module';
@@ -30,7 +30,6 @@ import { PagerModule } from '../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
 import { ProviderSystemAlertComponent } from '../ynw_provider/components/provider-system-alerts/provider-system-alerts.component';
-import { AddProviderWaitlistQueuesComponent } from '../ynw_provider/components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
 import { AddProviderBprofileSearchAdwordsComponent } from '../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { InboxModule } from '../shared/modules/inbox/inbox.module';
@@ -51,7 +50,6 @@ import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
-import { CallingModesModule } from './modules/calling-modes/calling-modes.module';
 
 @NgModule({
     declarations: [
@@ -64,7 +62,6 @@ import { CallingModesModule } from './modules/calling-modes/calling-modes.module
         ProviderCustomersComponent,
         ProviderSystemAuditLogComponent,
         ProviderSystemAlertComponent,
-        AddProviderWaitlistQueuesComponent,
         AddProviderBprofileSearchAdwordsComponent,
         AddProviderWaitlistCheckInBillComponent,
         // ProviderWaitlistCheckInDetailComponent,
@@ -79,7 +76,8 @@ import { CallingModesModule } from './modules/calling-modes/calling-modes.module
         ShowMessageComponent,
         ProviderStartTourComponent,
         UpdateEmailComponent,
-        InboxListComponent
+        InboxListComponent,
+
     ],
     imports: [
         BusinessRoutingModule,
@@ -97,11 +95,9 @@ import { CallingModesModule } from './modules/calling-modes/calling-modes.module
         AddProviderSchedulesModule,
         DynamicFormModule,
         CustomerModule,
-        CallingModesModule,
         JoyrideModule.forChild()
     ],
     entryComponents: [
-        AddProviderWaitlistQueuesComponent,
         AddProviderWaitlistCheckInBillComponent,
         AddProviderBprofileSearchAdwordsComponent,
         GoogleMapComponent,

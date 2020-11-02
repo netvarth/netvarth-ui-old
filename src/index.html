@@ -57,6 +57,7 @@
 
   }
   function onDeviceReady() {
+    localStorage.setItem('deviceName', device.name);
     if (typeof FCMPlugin != 'undefined') {
       FCMPlugin.getToken(function (token) {
         console.log(token);

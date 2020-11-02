@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
 import { QRCodeGeneratorComponent } from '../qrcodegenerator/qrcodegenerator.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 @Component({
   selector: 'app-jaldeeonline',

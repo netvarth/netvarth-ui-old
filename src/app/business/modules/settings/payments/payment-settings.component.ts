@@ -18,6 +18,7 @@ export class PaymentSettingsComponent implements OnInit {
             title: 'Jaldee Pay'
         }
     ];
+    frm_public_self_cap = '';
     jaldee_pay_cap: string;
     payment_statusstr = 'Off';
     accountActiveMsg = '';
@@ -36,6 +37,7 @@ export class PaymentSettingsComponent implements OnInit {
     }
     ngOnInit() {
         this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
+        this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };

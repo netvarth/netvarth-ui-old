@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../app.component';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
@@ -19,6 +19,8 @@ declare let cordova: any;
     styleUrls: ['./appointment-actions.component.css']
 })
 export class AppointmentActionsComponent implements OnInit {
+    tooltipcls = '';
+    elementType = 'url';
     appt;
     provider_label = '';
     qr_value;
@@ -324,7 +326,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.loading = true;
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe((data: any) => {
-            this.providerLabels = data.filter(label => label.status === 'ACTIVE');
+            this.providerLabels = data.filter(label => label.status === 'ENABLED');
             this.loading = false;
             this.labelselection();
         });
@@ -578,59 +580,6 @@ export class AppointmentActionsComponent implements OnInit {
     close() {
         this.dialogRef.close();
     }
-    medicalRecord() {
-        this.dialogRef.close();
-        let medicalrecord_mode = 'new';
-        let mrId = 0;
-        if (this.appt.mrId) {
-            medicalrecord_mode = 'view';
-            mrId = this.appt.mrId;
-        }
-        console.log(this.appt);
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
-                'serviceId': this.appt.service.id,
-                'serviceName': this.appt.service.name,
-                'department': this.appt.service.deptName,
-                'booking_type': 'APPT',
-                'booking_date': this.appt.appmtDate,
-                'booking_time': this.appt.apptTakenTime,
-                'mr_mode': medicalrecord_mode,
-                'mrId': mrId,
-                'booking_id': this.appt.uid,
-                'back_type': 'appt'
-            }
-        };
-
-        this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
-    }
-    prescription() {
-        this.dialogRef.close();
-        let medicalrecord_mode = 'new';
-        let mrId = 0;
-        if (this.appt.mrId) {
-            medicalrecord_mode = 'view';
-            mrId = this.appt.mrId;
-        }
-        const navigationExtras: NavigationExtras = {
-
-            queryParams: {
-                'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
-                'serviceId': this.appt.service.id,
-                'serviceName': this.appt.service.name,
-                'department': this.appt.service.deptName,
-                'booking_type': 'APPT',
-                'booking_date': this.appt.appmtDate,
-                'booking_time': this.appt.apptTakenTime,
-                'mr_mode': medicalrecord_mode,
-                'mrId': mrId,
-                'booking_id': this.appt.uid,
-                'back_type': 'appt'
-            }
-        };
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
-    }
     addLabeltoAppt(label, event) {
         this.labelMap = new Object();
         if (event.checked) {
@@ -654,5 +603,74 @@ export class AppointmentActionsComponent implements OnInit {
                 }
             }
         }
+    }
+    medicalRecord() {
+      this.dialogRef.close();
+      let medicalrecord_mode = 'new';
+      let mrId = 0;
+      if (this.appt.mrId) {
+        medicalrecord_mode = 'view';
+        mrId = this.appt.mrId;
+      }
+      let providerId ;
+      if (this.appt.provider && this.appt.provider.id) {
+       providerId = this.appt.provider.id;
+      } else {
+        providerId = '';
+      }
+      console.log(this.appt);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
+          'serviceId': this.appt.service.id,
+          'serviceName': this.appt.service.name,
+          'department': this.appt.service.deptName,
+          'booking_type': 'APPT',
+          'booking_date': this.appt.consLastVisitedDate,
+          'booking_time': this.appt.apptTakenTime,
+          'mr_mode': medicalrecord_mode,
+          'mrId': mrId ,
+          'booking_id': this.appt.uid,
+          'back_type': 'appt',
+          'provider_id': providerId,
+          'visitDate': this.appt.consLastVisitedDate,
+        }
+      };
+
+      this.router.navigate(['provider', 'customers',  'medicalrecord'], navigationExtras);
+    }
+    prescription() {
+      this.dialogRef.close();
+      let medicalrecord_mode = 'new';
+      let mrId = 0;
+      if (this.appt.mrId) {
+        medicalrecord_mode = 'view';
+        mrId = this.appt.mrId;
+      }
+       let providerId ;
+      if (this.appt.provider && this.appt.provider.id) {
+       providerId = this.appt.provider.id;
+      } else {
+        providerId = '';
+      }
+      const navigationExtras: NavigationExtras = {
+
+        queryParams: {
+          'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
+          'serviceId': this.appt.service.id,
+          'serviceName': this.appt.service.name,
+          'department': this.appt.service.deptName,
+          'booking_type': 'APPT',
+          'booking_date': this.appt.consLastVisitedDate,
+          'booking_time': this.appt.apptTakenTime,
+          'mr_mode': medicalrecord_mode,
+          'mrId': mrId ,
+          'booking_id': this.appt.uid,
+          'back_type': 'appt',
+          'provider_id': providerId,
+          'visitDate': this.appt.consLastVisitedDate,
+        }
+      };
+      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
 }

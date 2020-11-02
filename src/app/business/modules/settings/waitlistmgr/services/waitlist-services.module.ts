@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { WaitlistServicesComponent } from './list/waitlist-services.component';
 import { WaitlistServiceDetailComponent } from './details/waitlistservice-detail.component';
 import { CommonModule } from '@angular/common';
 import { WaitlistServicesRoutingModule } from './waitlist-services.routing.module';
-import { MatSlideToggleModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
@@ -44,6 +44,10 @@ import { OrderModule } from 'ngx-order-pipe';
     ],
     providers: [
         ServicesService
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
     ]
 })
 export class WaitlistServicesModule { }

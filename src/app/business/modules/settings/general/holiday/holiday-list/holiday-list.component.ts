@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
@@ -92,14 +92,11 @@ export class HolidayListComponent implements OnInit, OnDestroy {
         this.isAvailableNow();
       });
   }
-  addHolidays(action) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: action }
-    };
-    this.router.navigate(['provider', 'settings', 'general', 'holidays', 'add'], navigationExtras);
+  addHolidays() {
+    this.router.navigate(['provider', 'settings', 'general', 'holidays', 'add']);
   }
 
-  editHolidays(holiday, action) {
+  editHolidays(holiday) {
     const navigationExtras: NavigationExtras = {
       queryParams: { action: 'edit' }
     };

@@ -8,7 +8,9 @@ import { ClinicalnotesComponent } from './clinicalnotes/clinicalnotes.component'
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { MedicalrecordService } from './medicalrecord.service';
 import { LastVisitComponent } from './last-visit/last-visit.component';
-import { MatFormFieldModule, MatInputModule, MatDatepickerModule } from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
@@ -19,10 +21,10 @@ import { DrugListComponent } from './prescription/drug-list/drug-list.component'
 import { InstructionsComponent } from './prescription/instructions/instructions.component';
 import { ImagesviewComponent } from './prescription/imagesview/imagesview.component';
 import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-list.component';
-
-
-
-
+import { UploadDigitalSignatureComponent } from './prescription/upload-digital-signature/upload-digital-signature.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [MedicalrecordComponent,
@@ -36,7 +38,8 @@ import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-l
             DrugListComponent ,
              InstructionsComponent,
               ImagesviewComponent,
-              MedicalrecordListComponent
+              MedicalrecordListComponent,
+              UploadDigitalSignatureComponent
             ],
   imports: [
     SharedModule,
@@ -46,7 +49,10 @@ import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-l
     CapitalizeFirstPipeModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTableModule
   ],
   entryComponents: [
   LastVisitComponent,

@@ -141,7 +141,7 @@
                                                     <div class="pro-pic-img"><img [src]="showimg()" alt=""
                                                             *ngIf="blogo[0] && blogo[0].url"></div>
                                                     <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
-                                                        (change)="imageSelect(logofile,$event)">
+                                                        (change)="imageSelect(logofile)">
                                                     <div class="add"><span (click)="logofile.click()">{{add_cap}} <br />
                                                             {{profile_pic_cap}}</span></div>
                                                     <div class="change">

@@ -12,6 +12,7 @@ import { NavigationExtras, Router } from '@angular/router';
   templateUrl: './invoicestatus.component.html'
 })
 export class InvoiceStatusComponent {
+  tooltipcls = '';
   api_loading;
   statusDetail: any;
   breadcrumb_moreoptions: any = [];

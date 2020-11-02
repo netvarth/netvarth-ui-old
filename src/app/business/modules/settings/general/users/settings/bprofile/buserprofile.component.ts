@@ -5,14 +5,14 @@ import { projectConstants } from '../../../../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../../../../shared/services/shared-services';
 import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
 import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout } from 'angular-modal-gallery';
 import { ProviderSharedFuctions } from '../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { QuestionService } from '../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
@@ -29,7 +29,7 @@ import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic
 })
 
 export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
-
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   jaldeeonline_on_cap: string;
   jaldeeonline_off_cap: string;
   onlinepresence_status_str: string;
@@ -43,7 +43,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   progress_bar_one: number;
   weightageClass = 'danger';
   weightageObjectOfDomainAndSubDomain: any;
-
+  additional_cap = Messages.BPROFILE_ADDITIONAL_CAP;
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
   add_cap = Messages.ADD_BTN;

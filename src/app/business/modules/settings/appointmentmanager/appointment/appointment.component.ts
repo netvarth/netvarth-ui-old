@@ -979,6 +979,8 @@ export class AppointmentComponent implements OnInit {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else if (i === 'Phone') {
                     post_Data['virtualService'] = this.virtualServiceArray;
+                } else {
+                    post_Data['virtualService'] = {'VideoCall' : ''};
                 }
                 //  else {
                 //     post_Data['virtualService'] = {};
@@ -1239,6 +1241,7 @@ export class AppointmentComponent implements OnInit {
                 });
         } else {
             // this.api_error = derror;
+            this.disable = false;
             this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
         }
     }
@@ -1713,7 +1716,7 @@ export class AppointmentComponent implements OnInit {
         const slots = slot.split('-');
         return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
     }
-    showOtherSection(value) {
+    showOtherSection(value?) {
         if (value) {
             if (this.otherThirdParty.trim() === '') {
                 this.thirdparty_error = 'Third party listing site required';

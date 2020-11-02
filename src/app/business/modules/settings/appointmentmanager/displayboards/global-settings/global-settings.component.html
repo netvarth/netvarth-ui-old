@@ -54,7 +54,7 @@
                                                 aria-hidden="true"></i>
                                         </div>
                                     </div>
-                                    <input type="file" class="glbl-seting-btn" (change)="imageSelect(fileInput,$event)"
+                                    <input type="file" class="glbl-seting-btn" (change)="imageSelect(fileInput)"
                                     accept="/*;capture=camera" #fileInput>
                                 </div>
                                 <div class="lbl col-sm-12 col-md-8 col-lg-8 ynw-common-form-nm">
@@ -115,7 +115,7 @@
                             </div>
                             <div>
                                 <div>
-                                    <div [innerHTML]="headerContent"></div>
+                                    <!-- <div [innerHTML]="headerContent"></div> -->
                                     <div *ngIf="is_image" [ngStyle]="{ 'text-align' : position }"> <img
                                             [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}"
                                             [src]="item_pic.base64" style="width: 50%;height: auto;"></div>

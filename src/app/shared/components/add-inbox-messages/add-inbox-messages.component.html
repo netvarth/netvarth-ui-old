@@ -65,8 +65,8 @@
                         <input placeholder="Enter image caption" type="text" class="form-control"
                             [(ngModel)]="activeImageCaption[i]" [ngModelOptions]="{standalone: true}">
                         <span class="input-group-btn">
-                            <button class="btn bt3 btn-default coupon-apply-btn"
-                                (click)="addCaption(activeImageCaption, i)" type="button">Add</button>&nbsp;
+                            <!-- <button class="btn bt3 btn-default coupon-apply-btn"
+                                (click)="addCaption(activeImageCaption, i)" type="button">Add</button>&nbsp; -->
                             <button class="btn bt3 btn-default coupon-apply-btn" (click)="closeCaptionMenu(i)"
                                 type="button">Cancel</button>
                         </span>
@@ -82,7 +82,8 @@
             <button type="button"
                 *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist' || source == 'provider-waitlist-inbox')"
                 class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Upload files'">
-                <!-- accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" -->
+                <!-- <button type="button" *ngIf="typeOfMsg === 'single'"
+                class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Upload files'"> -->
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event)">
                 <span><i class="material-icons">attach_file</i></span>

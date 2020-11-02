@@ -212,9 +212,9 @@
                                                                 <mat-expansion-panel-header>
                                                                     <mat-panel-title>
                                                                         <span> {{cc_dc_netbanking_cap}} <span
-                                                                                *ngIf="payuverified ||razorpayVerified"
+                                                                                *ngIf="payuverified || razorpayVerified"
                                                                                 class="verified">{{verified_cap}}</span><span
-                                                                                *ngIf="!payuverified && razorpayVerfied==false"
+                                                                                *ngIf="!payuverified && !razorpayVerified"
                                                                                 class="not-verified">{{not_verified_cap}}</span>
                                                                         </span>
                                                                     </mat-panel-title>

@@ -3,7 +3,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../../../../shared/constants/project-messages';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { RequestForComponent } from '../request-for/request-for.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';

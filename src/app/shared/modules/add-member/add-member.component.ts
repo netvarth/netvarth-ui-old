@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, Input, Output, EventEmitter, } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 // import { ConsumerServices } from '../../services/consumer-services.service';

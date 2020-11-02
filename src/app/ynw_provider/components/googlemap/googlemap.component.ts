@@ -1,6 +1,6 @@
 /// <reference types="@types/googlemaps" />
 import { Component, Inject, OnInit, NgZone, ElementRef } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';

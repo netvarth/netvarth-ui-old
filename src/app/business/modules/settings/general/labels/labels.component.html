@@ -50,7 +50,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-md-12 pt10 mt5 custlabl" *ngFor="let label of label_list">
+                            <div class="col-md-12 pt10 mt5 custlabl" *ngFor="let label of label_list" [class.grid-disabled]="label.status=='DISABLED'">
                                 <div>
                                     <div class="copy">
                                         <span class="mbt">
@@ -74,13 +74,19 @@
                                             </div>
                                         </div> -->
                                         <mat-menu #appMenu="matMenu">
-                                            <button mat-menu-item (click)="editLabel(label)">
+                                            <button mat-menu-item (click)="editLabel(label)" *ngIf="label.status=='ENABLED'">
                                                 <i class="icon-edit"></i>
                                                 Edit
                                             </button>
-                                            <button mat-menu-item (click)="deleteLabel(label)">
+                                            <!-- <button mat-menu-item (click)="deleteLabel(label)">
                                                 <i class="icon-delete"></i>
                                                 Delete
+                                            </button> -->
+                                            <button mat-menu-item (click)="changeLabelStatus(label)">
+                                                <i *ngIf="label.status=='DISABLED'"
+                                                    class="icon-enable phone-in-icon"></i>
+                                                <i *ngIf="label.status=='ENABLED'" class="icon-disable phone-in-icon"></i>
+                                                {{(label.status=='ENABLED') ? 'Disable' :'Enable'}}
                                             </button>
                                         </mat-menu>
                                     </div>

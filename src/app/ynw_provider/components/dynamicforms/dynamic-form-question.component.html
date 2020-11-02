@@ -12,12 +12,12 @@
         placeholder="{{placeholder}}" autocomplete="off" (blur)="onFieldBlur(question)">
     </mat-form-field> -->
       <div class="form-group">
-        <mat-form-field *ngIf="question.type != 'checkbox'">
+        <mat-form-field *ngIf="question['type'] != 'checkbox'">
           <input matInput class="form-control" [formControlName]="question.key" [id]="question.key"
-            [type]="question.type" [min]="question.min" [max]="question.max" placeholder="{{placeholder}}"
+            [type]="question['type']" [min]="question['min']" [max]="question['max']" placeholder="{{placeholder}}"
             autocomplete="off" (blur)="onFieldBlur(question)" (keyup)="isNumberField($event)">
         </mat-form-field>
-        <mat-slide-toggle [id]="question.key" *ngIf="question.type === 'checkbox'" labelPosition="before"
+        <mat-slide-toggle [id]="question.key" *ngIf="question['type'] === 'checkbox'" labelPosition="before"
           [checked]="(question.value == 'true') ? 'true' : 'false'" (change)="setCheckBoxValue()">
           {{question.label}}
         </mat-slide-toggle>
@@ -42,7 +42,7 @@
     <div *ngSwitchCase="'datagrid'" [formArrayName]="question.key">
       <div class="form-group">
         <div *ngFor="let control of form['controls'][question.key]['controls']; let i = index;">
-          <div *ngFor="let col of question.columns[0]">
+          <div *ngFor="let col of question['columns'][0]">
             <app-question class="width-100" [showlabel]="'true'" [question]="col"
               [form]="form['controls'][question.key]['controls'][i]" [messages]="messages"></app-question>
           </div>
@@ -55,7 +55,7 @@
         <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key"
           [formControlName]="question.key">
           <!-- <mat-option [value]="''">- Select One-</mat-option> -->
-          <mat-option *ngFor="let opt of question.options;first as isFirst" [value]="opt.name">
+          <mat-option *ngFor="let opt of question['options'];first as isFirst" [value]="opt.name">
             {{opt.displayName}}
           </mat-option>
         </mat-select>
@@ -72,7 +72,7 @@
         <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key"
           [formControlName]="question.key">
           <!-- <mat-option [value]="''">- Select One-</mat-option> -->
-          <mat-option *ngFor="let opt of question.options;first as isFirst" [value]="opt.name">
+          <mat-option *ngFor="let opt of question['options'];first as isFirst" [value]="opt.name">
             {{opt.displayName}}
           </mat-option>
         </mat-select>
@@ -89,7 +89,7 @@
         <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key"
           [formControlName]="question.key">
           <!-- <mat-option [value]="''">- Select One-</mat-option> -->
-          <mat-option *ngFor="let opt of question.options | orderBy: 'displayName' : 'descending'" [value]="opt.name">
+          <mat-option *ngFor="let opt of question['options'] | orderBy: 'displayName' : true" [value]="opt.name">
             {{opt.displayName}}
           </mat-option>
         </mat-select>
@@ -104,7 +104,7 @@
       <div class="form-group">
         <mat-radio-group [formControlName]="question.key">
           <mat-radio-button [class.radio-style]="origins=='bwizard'" [value]="option.name"
-            *ngFor="let option of question.options;">
+            *ngFor="let option of question['options'];">
             {{option.displayName}}
           </mat-radio-button>
         </mat-radio-group>
@@ -119,7 +119,7 @@
       <div class="form-group">
         <div [formGroup]="form['controls'][question.key]['controls'][0]">
 
-          <div *ngFor="let option of question.options;let i = index; ">
+          <div *ngFor="let option of question['options'];let i = index; ">
             <mat-checkbox [value]="option.name" [formControlName]="option.name">
               {{option.displayName}}
             </mat-checkbox>
@@ -134,7 +134,7 @@
     <div class="form-group col-md-4 no-padding nonworking" *ngSwitchCase="'date'">
       <mat-form-field class="selctDte">
         <input type="text" #date matInput [matDatepicker]="picker"
-          [formControlName]="question.key" [min]="minDate" [max]="maxDate" autocomplete="off"
+          [formControlName]="question.key" autocomplete="off"
           tabindex="-1" placeholder="Choose your date" readonly>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker [disabled]="false"></mat-datepicker>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../../../../../ynw_provider/services/provider-services.service';
 import { QuestionService } from '../../../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSlideToggleModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
@@ -19,6 +19,7 @@ import { ProviderWaitlistOnlineCheckinModule } from '../../../../ynw_provider/co
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 // import { DepartmentModule } from '../../../ynw_provider/shared/modules/department/department.module';
 import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
+import { SelectionService } from '../../../../shared/services/selectionService';
 @NgModule({
     imports: [
         CommonModule,
@@ -47,6 +48,9 @@ import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
     ],
     exports: [
         WaitlistMgrComponent
+    ],
+    providers: [
+        SelectionService
     ]
 })
 export class WaitlistMgrModule { }

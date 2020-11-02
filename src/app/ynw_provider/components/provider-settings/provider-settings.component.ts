@@ -11,7 +11,7 @@ import { ProviderDataStorageService } from '../../services/provider-datastorage.
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
 import { JoyrideService } from 'ngx-joyride';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { UpdateEmailComponent } from '../../../business/modules/update-email/update-email.component';
 

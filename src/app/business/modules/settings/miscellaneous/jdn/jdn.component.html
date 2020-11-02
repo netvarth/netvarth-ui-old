@@ -95,8 +95,7 @@
                                 class="cs-btn bt1" style="margin-right: 10px;">Enable JDN
                             </button>
                             <button type="button" style="margin-right: 10px;" (click)="cancel()"
-                                *ngIf="status != 'DISABLED' && rewrite ==='edit'" class="cs-btn bt2"
-                                [disabled]="disableButton">cancel</button>
+                                *ngIf="status != 'DISABLED' && rewrite ==='edit'" class="cs-btn bt2">cancel</button>
                             <button mat-button *ngIf="status === 'ENABLED' && rewrite ==='edit'" (click)="update()"
                                 class="cs-btn bt1">update
                             </button>

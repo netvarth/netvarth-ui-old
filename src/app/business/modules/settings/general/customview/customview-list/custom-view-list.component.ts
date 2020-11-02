@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { Router } from '@angular/router';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -12,6 +12,8 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 })
 
 export class CustomViewListComponent implements OnInit {
+  tooltipcls = '';
+  add_button = '';
   api_loading: boolean;
   customViewList: any = [];
   removeitemdialogRef;

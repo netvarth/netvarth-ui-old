@@ -6,7 +6,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 import { ProviderBprofileSearchSocialMediaComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProviderBprofileSearchGalleryComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
 import { Router } from '@angular/router';
 import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
@@ -275,7 +275,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         }
         return false;
     }
-    handleSocialmedia(key) {
+    handleSocialmedia(key?) {
         this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
             width: '50%',
             // panelClass: 'socialmediamainclass',

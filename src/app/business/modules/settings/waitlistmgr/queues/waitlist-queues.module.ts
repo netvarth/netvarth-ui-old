@@ -10,6 +10,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
+import { ReportDataService } from '../../../reports/reports-data.service';
 
 @NgModule({
     imports: [
@@ -28,6 +29,9 @@ import { FormMessageDisplayModule } from '../../../../../shared/modules/form-mes
         WaitlistQueuesComponent,
         WaitlistQueueDetailComponent
     ],
-    exports: [WaitlistQueuesComponent]
+    exports: [WaitlistQueuesComponent],
+    providers: [
+        ReportDataService
+    ]
 })
 export class WaitlistQueuesModule { }

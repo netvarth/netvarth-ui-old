@@ -5,7 +5,8 @@ import { projectConstants } from '../../app.component';
 import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
 import { Observable, Subject } from 'rxjs';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
 import * as moment from 'moment';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
@@ -213,7 +214,7 @@ export class SharedFunctions {
     }
     if (uniqueId) {
       localStorage.setItem('mUniqueId', uniqueId);
-    }   
+    }
     if (devicename) {
       localStorage.setItem('deviceName', devicename);
     }

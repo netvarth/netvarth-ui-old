@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../services/provider-services.service';
 import { AddProviderMemberComponent } from '../add-provider-member/add-provider-member.component';
 import { Messages } from '../../../shared/constants/project-messages';

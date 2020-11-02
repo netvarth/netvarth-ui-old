@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { projectConstants } from '../../../../app.component';
 
 @Component({
@@ -68,7 +68,7 @@ export class ApplyLabelComponent implements OnInit {
     }
     getLabels() {
         this.provider_services.getLabelList().subscribe((data: any) => {
-            this.providerLabels = data.filter(label => label.status === 'ACTIVE');
+            this.providerLabels = data.filter(label => label.status === 'ENABLED');
             // const value = Object.values(this.label);
             // for (let i = 0; i < this.providerLabels.length; i++) {
             //     for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {

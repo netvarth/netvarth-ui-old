@@ -3,9 +3,18 @@
 <i class="fa fa-window-close" aria-hidden="true"></i>
 </button>
 </h1> -->
-<section>
-	<!-- Subheader section -->
+<!-- <section>
+	
 	<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section> -->
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+        <span class="fa fa-arrow-left pointer-cursor"  (click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           Bill
+            
+</h5>
+    </div>
 </section>
 <section class="">
 	<div class="content comn-cls">
@@ -26,6 +35,7 @@
 															*ngFor="let user of checkin.waitlistingFor">
 															{{user.firstName | capitalizeFirst}}
 															{{user.lastName | capitalizeFirst}}
+															
 														</span>
 														<span class="dynamic fl-right">{{billdate}}
 															{{billtime}}</span>
@@ -34,6 +44,7 @@
 														<span class="dynamic" *ngFor="let user of checkin.appmtFor">
 															{{user.firstName | capitalizeFirst}}
 															{{user.lastName | capitalizeFirst}}
+															
 														</span>
 														<span class="dynamic fl-right">{{billdate}}
 															{{billtime}}</span>
@@ -160,7 +171,7 @@
 																					(keypress)="isNumeric($event)"
 																					(keyup)="isvalid($event)" matInput
 																					value="1" size="3"
-																					[(ngModel)]="curSelItm.qty"
+																					[(ngModel)]="curSelItm.qty" [ngModelOptions]="{standalone: true}"
 																					(blur)="blurQty($event.target.value, curSelItm)">
 																			</mat-form-field>
 																		</span>
@@ -176,7 +187,7 @@
 																					(keypress)="isNumeric($event)"
 																					max="100000"
 																					(keyup)="isvalid($event)" matInput
-																					[(ngModel)]="curSelItm.price">
+																					[(ngModel)]="curSelItm.price" [ngModelOptions]="{standalone: true}">
 																			</mat-form-field>
 																		</span>
 																	</div>
@@ -280,17 +291,17 @@
 																							<span class="number">
 																								<mat-form-field
 																									class="example-full-width">
-																									<input type="text"
+																									<input type="number"
 																										matInput
 																										#billdiscvalue
 																										aria-label="Number"
 																										max="{{price_limit}}"
 																										min="0" matInput
-																										value="1"
+																										value="1" autocomplete="off"
 																										size="3"
 																										(keypress)="isNumeric($event)"
 																										(keyup)="isvalid($event)"
-																										[(ngModel)]="discAmount">
+																										[(ngModel)]="discAmount" [ngModelOptions]="{standalone: true}">
 																								</mat-form-field>
 																							</span>
 
@@ -303,7 +314,7 @@
 																						class="col-md-12 col-lg-12 col-sm-12 no-padding">
 																						<div class="form-group ">
 																							<mat-checkbox
-																								[(ngModel)]="isProvNote">
+																								[(ngModel)]="isProvNote" [ngModelOptions]="{standalone: true}">
 																								{{privatenote_cap}}
 																							</mat-checkbox>
 																						</div>
@@ -313,7 +324,7 @@
 																								class="form-control"
 																								id="message"
 																								placeholder="Message"
-																								[(ngModel)]="discProvNote">
+																								[(ngModel)]="discProvNote" [ngModelOptions]="{standalone: true}">
 																								</textarea>
 																						</div>
 																					</div>
@@ -321,7 +332,7 @@
 																						class="col-md-12 col-lg-12 col-sm-12 no-padding">
 																						<div class="form-group ">
 																							<mat-checkbox
-																								[(ngModel)]="isConsNote">
+																								[(ngModel)]="isConsNote" [ngModelOptions]="{standalone: true}">
 																								{{notesfor_cap}}{{customer_label}}
 																							</mat-checkbox>
 																						</div>
@@ -331,7 +342,7 @@
 																								class="form-control"
 																								id="message"
 																								placeholder="Message"
-																								[(ngModel)]="discConsNote">
+																								[(ngModel)]="discConsNote" [ngModelOptions]="{standalone: true}">
 																								</textarea>
 																						</div>
 																					</div>
@@ -380,7 +391,7 @@
 																								class="form-control"
 																								id="message"
 																								placeholder="Message"
-																								[(ngModel)]="billDisplayNote"
+																								[(ngModel)]="billDisplayNote" [ngModelOptions]="{standalone: true}"
 																								(keyup)="handledisplaykeyup()">
 																</textarea>
 																						</div>
@@ -390,7 +401,7 @@
 																								class="form-control"
 																								id="message"
 																								placeholder="Message"
-																								[(ngModel)]="billPrivateNote"
+																								[(ngModel)]="billPrivateNote" [ngModelOptions]="{standalone: true}"
 																								(keyup)="handleprivatekeyup()">
 																</textarea>
 																						</div>
@@ -523,7 +534,7 @@
 																								value="1" size="3"
 																								(keypress)="isNumeric($event)"
 																								(keyup)="isvalid($event)"
-																								[(ngModel)]="bill_data.service[i].serviceDiscount.discAmount"
+																								[(ngModel)]="bill_data.service[i].serviceDiscount.discAmount" [ngModelOptions]="{standalone: true}"
 																								(blur)="blurQty($event.target.value, bill_data.service[i].serviceDiscount.discAmount)">
 																						</mat-form-field>
 																					</span>
@@ -951,7 +962,7 @@
 																			<input type="number" matInput #payamounttxt
 																				aria-label="Number" matInput value="1"
 																				size="5" max="{{price_limit}}" min="0"
-																				[(ngModel)]="amountpay"
+																				[(ngModel)]="amountpay" [ngModelOptions]="{standalone: true}"
 																				(keyup)="isvalid($event)"
 																				autocomplete="off">
 																		</mat-form-field>

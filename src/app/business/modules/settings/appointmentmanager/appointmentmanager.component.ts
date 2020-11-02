@@ -5,7 +5,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ShowMessageComponent } from '../../show-messages/show-messages.component';
 
 @Component({

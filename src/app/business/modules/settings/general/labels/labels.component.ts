@@ -9,6 +9,8 @@ import { Messages } from '../../../../../shared/constants/project-messages';
     templateUrl: './labels.component.html'
 })
 export class LabelsComponent implements OnInit {
+    tooltipcls = '';
+    add_button = '';
     breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         {
@@ -44,12 +46,13 @@ export class LabelsComponent implements OnInit {
         this.domain = user.sector;
     }
     getLabels() {
-        this.api_loading = true;
+       this.api_loading = true;
         this.label_list = [];
         this.provider_services.getLabelList()
             .subscribe(
                 (data: any) => {
-                    this.label_list = data.filter(label => label.status === 'ACTIVE');
+                    // this.label_list = data.filter(label => label.status === 'ACTIVE');
+                    this.label_list = data;
                     this.api_loading = false;
                 },
                 error => {
@@ -91,8 +94,19 @@ export class LabelsComponent implements OnInit {
             }
         );
     }
+    changeLabelStatus(label) {
+        const status = (label.status === 'ENABLED') ? 'DISABLED' : 'ENABLED';
+        const statusmsg = (label.status === 'ENABLED') ? ' disabled' : ' enabled';
+        this.provider_services.updateLabelStatus(label.id, status).subscribe(data => {
+            this.shared_functions.openSnackBar(label.displayName + statusmsg + ' successfully');
+            this.getLabels();
+        },
+            error => {
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+    }
     redirecToGeneral() {
-        this.router.navigate(['provider', 'settings', 'general']);
+        this.router.navigate(['provider', 'settings' , 'general']);
     }
     redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/general->labels']);

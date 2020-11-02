@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { ReportDataService } from '../reports-data.service';
 import { Router } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';

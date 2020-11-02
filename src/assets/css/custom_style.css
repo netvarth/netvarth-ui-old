@@ -8,6 +8,9 @@ html {
   html {
     font-size: 14px !important;
   }
+  .checkin-details .qrcode img {
+    width: 80px !important
+  }
 }
 
 body {
@@ -3317,11 +3320,6 @@ body {
   font-size: smaller !important;
 }
 
-.labelstyle {
-  color: #3f51b5 !important;
-  font-size: smaller !important;
-}
-
 .exstschdlesze {
   font-size: smaller !important;
 }
@@ -5238,11 +5236,13 @@ i.notavail {
 } */
 
 .cust-sect .custs:nth-child(odd), .qset:nth-child(odd), .dboard:nth-child(odd), .custlabl:nth-child(odd) {
-  background: rgba(0, 0, 0, .03) !important;
+  /* background: rgba(0, 0, 0, .03) !important; */
+  border-bottom: 1px solid #c7c7c7;
 }
 
 .cust-sect .custs:nth-child(even), .qset:nth-child(even), .dboard:nth-child(even), .custlabl:nth-child(even) {
-  background: transparent !important;
+  /* background: transparent !important; */
+  border-bottom: 1px solid #c7c7c7;
 }
 
 .dboarduser {
@@ -6203,11 +6203,13 @@ li.separator.setsplit {
     width: 180px !important;
   }
 }
+
 @media (max-width: 784px) {
   .prov-bill-disc1 {
     width: 150px !important;
   }
 }
+
 .jdn-pg i.editbt {
   margin-left: 20px !important;
 }
@@ -11893,10 +11895,11 @@ img.busN-logo {
     margin-bottom: 0;
   }
 }
+
 @media only screen and (max-width: 992px) {
-.content.search-details-list .left-pane {
-  width: 32% !important;
-}
+  .content.search-details-list .left-pane {
+    width: 32% !important;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -11904,11 +11907,13 @@ img.busN-logo {
     width: 60% !important;
   }
 }
+
 @media only screen and (max-width: 575px) {
-.content.search-details-list .left-pane {
-  width: 75% !important;
+  .content.search-details-list .left-pane {
+    width: 75% !important;
+  }
 }
-}
+
 .history-tbl .provider-name .name {
   color: #3c8dbc!important;
 }
@@ -11953,89 +11958,110 @@ img.busN-logo {
   background: #f8f8f8 !important;
   height: 50px !important;
 }
-.panel-heading.top-row img{
+
+.panel-heading.top-row img {
   height: 50px !important;
 }
+
 @media(max-width:575px) {
-  .panel-heading.top-row img{
+  .panel-heading.top-row img {
     width: 50px !important;
   }
 }
-@media only screen and (max-width: 767px){
-.content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme {
+
+@media only screen and (max-width: 767px) {
+  .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme {
     border-bottom: none !important;
+  }
 }
-}
-.pre-post .preinfo,
-.pre-post .postinfo {
+
+.pre-post .preinfo, .pre-post .postinfo {
   display: flex;
   margin: 0 !important;
 }
+
 .prepost-check {
   color: green;
   margin-left: 5px;
   margin-top: 5px;
   font-size: small;
 }
+
 .pre-post-info .ck.ck-editor__editable_inline {
   min-height: 200px;
 }
+
 .preinfo-text {
   max-height: 50px;
   overflow: hidden;
 }
+
 .box-style {
   border: 1px solid;
   padding: 10px;
   width: 100%;
 }
+
 .disp-flex {
   display: flex !important;
 }
+
 .wtsap-cal {
   width: 36px;
 }
+
 .ph-cal {
   width: 25px;
 }
+
 .annualpopup .jaldee-icon {
   content: url(../images/home/logo-icon.png);
   top: 10px;
   position: relative;
   width: 35px;
 }
+
 .comma-list {
   list-style: none;
   padding: 0px;
   margin-bottom: 0 !important;
 }
+
 .comma-list li {
   display: inline-block;
   padding-right: 5px;
 }
+
 .comma-list li::after {
   content: ",";
 }
+
 .comma-list li:nth-last-child(1)::after {
   content: "" !important;
 }
+
 .content .c-outer .c-body .srlst .bottom-sect {
   padding-bottom: 0 !important;
 }
+
 .btn-selected {
   background: #00aef2;
   color: white;
 }
+
 .avail-slot {
   color: #006cab !important;
 }
+
 .or-style {
   font-weight: 600;
   margin-bottom: 5px;
 }
+
 .font-9 {
   font-size: .9rem;
 }
+
 .pro-action {
   font-weight: 600 !important;
   font-size: .75rem!important;
@@ -12043,87 +12069,108 @@ img.busN-logo {
   border: 1px solid #ccc!important;
   border-radius: 20px!important;
 }
-.chkntoknappt-details{
+
+.chkntoknappt-details {
   font-weight: bold;
-  font-size: medium ;
+  font-size: medium;
 }
+
 .example-custom-date-class {
-  background:rgb(133,233,133);
+  background: rgb(133, 233, 133);
   border-radius: 100%;
- }
- .report_title{
-   font-weight:bold;
- }
- .pad-10 {
+}
+
+.report_title {
+  font-weight: bold;
+}
+
+.pad-10 {
   padding: 10px;
 }
+
 .inpro .inprogress {
   font-size: 1rem;
   font-weight: 600;
   color: green;
 }
+
 .check-status a {
   font-size: 1rem;
 }
+
 .act-icons a {
   color: black;
 }
+
 .dash-head {
   font-weight: 600;
   font-size: 1.2rem;
 }
+
 .selectedStatus {
   color: orange;
   font-weight: 600;
 }
+
 .inpro-box {
   border: 1px solid #ccc;
   border-radius: 20px;
 }
+
 .checkinlist .mat-tab-label .mat-tab-label-content {
   font-size: 1.1rem;
 }
+
 .selectall {
   color: black;
   margin-left: 5px;
   margin-top: 5px;
   font-weight: normal;
 }
+
 .check-table-head {
   padding-left: 5px !important;
 }
+
 .checkfilter {
   overflow: auto;
   height: 664px;
 }
+
 .checkinactionclass {
   width: 750px !important;
-  min-height: 300px !important;
 }
+
 .bill-icon {
   content: url(../images/dashboard-icons/Bill-01-01.svg);
   width: 40px;
 }
+
 .cancel-icon {
   content: url(../images/dashboard-icons/Canacel-01.svg);
   width: 40px;
 }
+
 .changestatus-icon {
   content: url(../images/dashboard-icons/Changestatus.svg);
   width: 40px;
 }
+
 .label-icon {
   content: url(../images/dashboard-icons/Label-01.svg);
   width: 40px;
 }
+
 .mail-icon {
   content: url(../images/dashboard-icons/mail-01.svg);
   width: 40px;
 }
+
 .message-icon {
   content: url(../images/dashboard-icons/Message-01.svg);
   width: 40px;
 }
+
 .notes-icon {
   content: url(../images/dashboard-icons/Notes-01.svg);
   width: 40px;
@@ -12136,10 +12183,12 @@ img.busN-logo {
   content: url(../images/dashboard-icons/printer-01.svg);
   width: 40px;
 }
+
 .viewdetails-icon {
   content: url(../images/dashboard-icons/viewdetails-01.svg);
   width: 40px;
 }
+
 .reschedule-icon {
   content: url(../images/dashboard-icons/Reschedule-01.svg);
   width: 40px;
@@ -12156,6 +12205,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/medicalrecord-02.svg);
   width: 20px;
 }
+.medicalrecord-green-icon-customer {
+  content: url(../images/dashboard-icons/medicalrecord_green.svg);
+  width: 20px;
+}
 .mr-rx-icon{
   content: url(../images/dashboard-icons/prescription.svg);
    width: 40px;
@@ -12164,11 +12217,14 @@ img.busN-logo {
   content: url(../images/dashboard-icons/prescription2.svg);
   width: 20px;
 }
+.mr-rx-green-icon-customer {
+  content: url(../images/dashboard-icons/prescription_green.svg);
+  width: 20px;
+}
 .medicalrecordlisticon-customer{
   content: url(../images/dashboard-icons/medicalrecord-list.svg);
   width: 20px;
 }
-
 .act-icons .printer-icon {
   width: 17px !important;
 }
@@ -12177,49 +12233,49 @@ img.busN-logo {
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-observations-icon{
   content: url(../images/mr-icons/observations.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-symptoms-icon{
   content: url(../images/mr-icons/symptoms.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-diagnosis-icon{
   content: url(../images/mr-icons/diagnosis.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-misc_notes-icon{
   content: url(../images/mr-icons/misc_notes.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-vaccination_history-icon{
   content: url(../images/mr-icons/syringe.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .mr-complaints-icon{
   content: url(../images/mr-icons/complaint.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 .consumer-appthistory .appt-icon {
   content: url(../images/myjaldee/Appoinment-01.svg);
@@ -12228,20 +12284,23 @@ img.busN-logo {
   width: 25px;
   margin-top: 7px;
 }
+
 .consumer-appthistory .chckn-icon {
-    content: url(../images/myjaldee/Checkin-01.svg);
-    position: relative;
-    padding-right: 1px;
-    width: 29px;
-    margin-top: 5px;
+  content: url(../images/myjaldee/Checkin-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 29px;
+  margin-top: 5px;
 }
+
 .consumer-appthistory .token-icon {
-    content: url(../images/myjaldee/token-01.svg);
-    position: relative;
-    padding-right: 1px;
-    width: 25px;
-    margin-top: 7px;
+  content: url(../images/myjaldee/token-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
 }
+
 .consumer-appthistory .circle-htokens {
   background: #25498121;
   width: 40px;
@@ -12250,80 +12309,99 @@ img.busN-logo {
   /* border-radius: 50px; */
   font-size: 15px;
 }
+
 .consumer-appthistory .disp-flex {
   display: flex !important;
 }
+
 .locate-icon {
   content: url(../images/dashboard-icons/arrivedaction-01.svg);
   width: 40px;
 }
+
 .complete-icon {
   content: url(../images/dashboard-icons/Complete.svg);
   width: 40px;
 }
+
 .waitlistcall-icon {
   content: url(../images/dashboard-icons/Call.svg);
   width: 40px;
 }
+
 .start-icon {
   content: url(../images/dashboard-icons/startaction-01.svg);
   width: 40px;
 }
+
 .callstop-icon {
   content: url(../images/dashboard-icons/callcancel.svg);
   width: 40px;
 }
+
 .dashboardstart-icon {
   content: url(../images/dashboard-icons/start.svg);
   width: 15px;
 }
+
 .dashboardcomplete-icon {
   content: url(../images/dashboard-icons/Complete2.svg);
   width: 15px;
 }
+
 .dashboardarrived-icon {
   content: url(../images/dashboard-icons/arrivved2.svg);
   width: 15px;
 }
+
 .dashboardcallstop-icon {
   content: url(../images/dashboard-icons/callcancel.svg);
   width: 15px;
 }
+
 .dashboardcall-icon {
   content: url(../images/dashboard-icons/bell.svg);
   width: 15px;
 }
+
 .dashaction-icon {
   content: url(../images/dashboard-icons/gears-set.svg);
   width: 15px;
 }
+
 .arrived-icon {
   content: url(../images/dashboard-icons/arrivved2.svg);
   width: 40px;
 }
-.pro-dash .mat-tab-body-wrapper,
-.pro-dash .mat-tab-group,
-.pro-dash .mat-tab-label-container {
+
+.pro-dash .mat-tab-body-wrapper, .pro-dash .mat-tab-group, .pro-dash .mat-tab-label-container {
   z-index: 0;
 }
+
 .act-btn {
   border: 1px solid orange;
 }
+
 .done-btn {
   border: 1px solid green;
 }
+
 .start-btn {
   border: 1px solid purple;
 }
+
 .call-btn {
   border: 1px solid green;
 }
+
 .stopcall-btn {
   border: 1px solid red !important;
 }
+
 .cancel-btn {
   border: 1px solid red;
 }
+
 @media (max-width: 490px) {
   .single-action {
     display: flex;
@@ -12333,6 +12411,7 @@ img.busN-logo {
     padding-left: 2px;
   }
 }
+
 .cons-payments .appt-icon {
   content: url(../images/myjaldee/Appoinment-01.svg);
   position: relative;
@@ -12340,27 +12419,32 @@ img.busN-logo {
   width: 25px;
   margin-top: 7px;
 }
+
 .cons-payments .chckn-icon {
-    content: url(../images/myjaldee/Checkin-01.svg);
-    position: relative;
-    padding-right: 1px;
-    width: 29px;
-    margin-top: 5px;
+  content: url(../images/myjaldee/Checkin-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 29px;
+  margin-top: 5px;
 }
+
 .cons-payments .donate-icon {
-    content: url(../images/donation2.svg);
-    position: relative;
-    padding-right: 1px;
-    width: 25px;
-    margin-top: 7px;
+  content: url(../images/donation2.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  margin-top: 7px;
 }
+
 .apptdate-slot {
   font-weight: bold;
   font-size: 1rem;
 }
+
 .index-zero {
-  z-index: 0  !important;
+  z-index: 0 !important;
 }
+
 @media only screen and (min-width: 991px) {
   .font1 {
     font-size: 1rem !important;
@@ -12369,43 +12453,53 @@ img.busN-logo {
     font-size: 1.1rem !important;
   }
 }
-@media only screen and (max-width: 400px){
-  .divlftrt{
-  padding-left: 0px!important;
-  padding-right: 0px!important;
+
+@media only screen and (max-width: 400px) {
+  .divlftrt {
+    padding-left: 0px!important;
+    padding-right: 0px!important;
   }
+}
+
+@media only screen and (max-width: 400px) {
+  .lablresponssive {
+    font-size: .7rem;
   }
-  @media only screen and (max-width: 400px){
-  .lablresponssive{
-  font-size: .7rem;
-  }
-  }
-  @media (max-width: 350px){
+}
+
+@media (max-width: 350px) {
   .drop-width {
     width: 25px;
   }
 }
+
 .c-checkin-new .changeitem {
   font-size: 0.8rem !important;
   font-weight: 700 !important;
 }
+
 .back-btn i {
   color: black !important;
 }
+
 .email-txt-pad {
   padding: 10px 30px 10px;
 }
+
 .bg-whitesmoke {
   background: whitesmoke;
 }
+
 .email-smal-btn {
   font-size: .80rem !important;
   height: 35px !important;
 }
+
 .email-img {
   width: 150px;
   height: 140px;
 }
+
 .font-bold {
   font-weight: 600 !important;
 }
@@ -12414,19 +12508,20 @@ img.busN-logo {
   font-size: 0.90rem !important;
   font-weight: normal !important;
   color: #3f51b5 !important;
-  }
+}
 
 .mat-form-field-label:not(.mat-empty) {
-  font-size: 1.2rem  !important;
+  font-size: 1.2rem !important;
   overflow: visible !important;
 }
 
 @media (max-width: 375px) {
   .mat-form-field-label:not(.mat-empty) {
-    font-size: 0.95rem  !important;
+    font-size: 0.95rem !important;
     overflow: visible !important;
   }
 }
+
 .cons-payments .no-payment {
   padding: 50px;
   text-align: center;
@@ -12445,8 +12540,8 @@ img.busN-logo {
   .mgn5mgnrt{
     margin-right: 15px !important;
   }
-
 }
+
 .extra-count {
   border: 1px solid #106e76;
   border-radius: 50px;
@@ -12454,12 +12549,12 @@ img.busN-logo {
   padding: 1px 3px;
   color: #106e76;
 }
-.qtoken input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
+.qtoken input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin: 0; 
+    margin: 0;
 }
 .mrcreate{
   border-radius: 0px !important;
@@ -12483,4 +12578,314 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .mr-area textarea{
   width: 100%;
+}
+/* token details page styles */
+.checkin-details .head-color {
+  color: rgb(24 62 121 / 85%);
+}
+.checkin-details .loc-cls {
+  color: #1873f2;
+  font-size: 0.8rem;
+}
+.checkin-details .card .each-item {
+  margin-bottom: 20px;
+  display: grid;
+}
+.checkin-details .serv-name {
+  color: #3c5c8dbf;
+  font-weight: 600;
+}
+.checkin-details .card .item-head {
+  margin-bottom: 2px;
+  font-weight: 600;
+  color: grey;
+  font-size: 0.9rem;
+}
+.checkin-details .pad-10 {
+  padding: 10px;
+}
+.checkin-details .temp-style {
+  border-bottom: 1px solid #183e7a;
+}
+.checkin-details .stats-bar {
+  background: #ffecbe;
+  padding: 10px;
+}
+.checkin-details .status-label {
+  font-size: 0.7rem;
+  color: #183e7a;
+  font-weight: 600;
+}
+.checkin-details .stats-item {
+  display: grid;
+}
+.checkin-details .opt-viewmore {
+  margin-left: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #183e7a;
+}
+.checkin-details .opt-actions {
+  /* margin-left: 20px; */
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #183e7a;
+}
+
+@media (min-width: 800px) {
+  .checkin-details .mat-tab-label {
+  min-width: 260px;
+  }
+}
+.checkin-details .mat-tab-label .mat-tab-label-content {
+  color: #183e7a;
+  font-weight: 600;
+}
+.checkin-details .item-label-val {
+  font-size: 0.88rem;
+}
+.checkin-details .qrcode img {
+  border: 1.5px solid #ecaf08;
+  width: 130px;
+  /* box-shadow: 5px 5px 5px 5px lightgrey !important; */
+  box-shadow: 5px 5px 5px 5px  #ecaf0842 !important
+}
+.checkin-details .graphics-div {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  text-align: right;
+}
+.checkin-details .graphics2-div {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+}
+.checkin-details .index-head {
+  z-index: 2;
+}
+.checkin-details .usr-name {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #3c5c8d;
+}
+/* @media (max-width: 963px) {
+  .rem-video {
+    height: 100% !important;
+  }
+} */
+
+/* @media (min-width: 963px) {
+  .rem-video {
+    width: 100% !important;
+    height: 100% !important;
+  }
+} */
+
+.rem-video {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.video-container, .local, .remote, .local-zeroPs {
+  background: #000 !important;
+}
+
+
+
+.videocontainer {
+  width: 100% !important;
+}
+
+.prevMain {
+  overflow: auto;
+}
+
+.prevSubMain {
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  width: 100%;
+}
+.prevSubMain1 {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.prevSub {
+  /* display: flex; */
+  flex-direction: column;
+  align-items: center;
+}
+.prevSubsec {
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15);
+  /* flex: 0 1 740px; */
+  margin: 16px 8px 16px 16px;
+  min-width: 448px;
+  overflow: hidden;
+  position: relative;
+}
+.full-height {
+  width: 100% !important;
+  background: black;
+  /* display: table-cell;
+  vertical-align: middle; */
+  height:100vh;
+}
+/* @media (min-width:768px) {
+  .full-height {
+
+  }
+} */
+.videocontainer .hide{
+  display: none;
+}
+.previewContainer {
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border: 2px solid #000 !important;
+  border-radius: 20px;
+  background: #000;
+}
+
+@media (min-width: 575px) {
+  .videohgt {
+    min-height: 400px;
+  }
+  }
+@media (max-width: 575px) {
+  .previewContainer, .videohgt {
+    min-height: 400px;
+  }
+  .previewContainer video {
+    height: 380px;
+  }
+  }
+@media (max-width: 320px) {
+  .previewContainer, .videohgt {
+  min-height: 310px;
+}
+.previewContainer video {
+  height: 290px;
+}
+}
+.previewContainer video {
+  width:100%;
+}
+.local video, .local-zeroPs video, .previewContainer video {
+  transform: scaleX(-1);
+}
+.videocontainer .join-vid-btn button {
+  background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
+  padding: 5px 20px;
+  border-radius: 20px;
+  color: #fff;
+}
+.customer-note {
+  font-weight: bold !important;
+  font-style: italic !important;
+}
+
+.medical-record hr {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+.prov-apptDetail h2 {
+  border-bottom: 1px solid #3c8dbc;
+  padding-bottom: 10px;
+}
+.prov-apptDetail .stats-item {
+  display: grid;
+}
+.prov-apptDetail .stats-item .itemHead {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #3c8dbc;
+}
+.prov-apptDetail .stats-item .itemVal {
+  font-size: 0.85rem;
+  line-height: 30px;
+}
+.prov-apptDetail .stat-bar {
+  background: #3c8dbc45;
+  padding: 10px;
+}
+.bprof-qr-border img{
+  border: 1px solid #222223;
+  width: 150px;
+}
+.bprof-icons {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.customer-detail-box {
+  box-shadow: 10px 10px 15px 0px #cccccc9c;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  font-size: 1rem;
+  padding: 10px 0;
+}
+.cust-detail {
+  color: #3c8dbc;
+}
+.mricons {
+  min-width: 30px;
+}
+.p6 {
+  padding:6px !important;
+}
+.mr-clinic-notes-n p {
+  font-size: 1rem !important;
+}
+.heading1 {
+  font-size: 1.25rem !important;
+  font-weight: 500;
+}
+.heading1b {
+  font-size: 1.25rem !important;
+  font-weight: 600;
+}
+.heading2 {
+  font-size: 1.20rem !important;
+  font-weight: 500;
+}
+.heading2b {
+  font-size: 1.20rem !important;
+  font-weight: 600;
+}
+.heading3 {
+  font-size: 1.10rem !important;
+  font-weight: 500;
+}
+.heading3b {
+  font-size: 1.10rem !important;
+  font-weight: 600;
+}
+.normal-sz {
+  font-size: 1rem !important;
+}
+hr {
+  border-top: 1px solid #ddd !important;
+}
+.join_phone_label{
+  color: #5f75bc;
+  font-size: 1rem !important;
+}
+.customer-action-btn {
+  padding: 5px 25px;
+  border: 1px solid;
+  border-radius: 20px;
+  float: right;
+}
+.recentactivity {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.head-level-settings .btn {
+  padding: 3px 6px !important;
+}
+.trackSlide .fa-share-alt{
+  font-size: 2rem;
 }

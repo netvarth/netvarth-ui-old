@@ -15,7 +15,7 @@
                 <div class="card p0" *ngIf="!showCheckin">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
-                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
+                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()">
                                 <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 sc-frm">
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding mgn-bt-50 apptdate-slot"
@@ -44,7 +44,7 @@
                                                 <!-- <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
                                         searchCustomer(searchForm.value,selectedMode)"></i> -->
                                                 <button class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
-                                        searchCustomer(searchForm.value,selectedMode)">Find</button>
+                                        searchCustomer(searchForm.value)">Find</button>
                                             </div>
                                         </div>
                                     </div>
@@ -67,8 +67,9 @@
                             <div class="create_new mgn-bt-20 font-9">
                                 <div class="or-style">OR</div>
                                 <span>
-                                    Create an appointment for the {{customer_label}} who booked for your services on a
-                                    third party listing site, choose the listing site/app
+                                    Choose the third party listing site/app through which the {{customer_label}} came.
+                                    <!-- Create an appointment for the {{customer_label}} who booked for your services on a
+                                    third party listing site, choose the listing site/app -->
                                 </span>
                                 <div class="mgn-up-10">
                                     <button *ngIf="domain === 'healthCare'"
@@ -175,7 +176,8 @@
                                             <mat-select placeholder="Select Provider" [ngModel]="selected_user" #usersel
                                                 (selectionChange)="handleUserSelection(usersel.value)">
                                                 <mat-option *ngFor="let user of users" [value]="user">
-                                                    {{user.firstName}} {{user.lastName}}
+                                                    <!-- {{user.firstName}} {{user.lastName}} -->
+                                                    {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -277,7 +279,7 @@
                                     <div class="date-body">
                                         <span class="selected-date">
                                             <span class="icon-minus" *ngIf="!slotTime" [class.disable]="disableMinus()"
-                                                (click)="calculateDate(-1)"></span>{{sel_day}}
+                                                (click)="calculateDate(-1)"></span>
                                             {{sel_checkindate | date: dateFormat}}
                                             <span *ngIf="!slotTime" class="icon-add"
                                                 (click)="calculateDate(1)"></span></span>
@@ -494,9 +496,9 @@
                                                         <mat-radio-group>
                                                             <li *ngFor="let memb of familymembers">
                                                                 <mat-radio-button
-                                                                    (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId, $event)"
+                                                                    (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                                                     [value]="memb.id" [checked]="isChecked(memb.id)">
-                                                                    {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
+                                                                    {{memb.firstName | capitalizeFirst}} {{(memb.lastName) ? memb.lastName : ''}}
                                                                 </mat-radio-button>
                                                             </li>
                                                         </mat-radio-group>
@@ -603,7 +605,7 @@
                                         Member </a>
                                 </mat-chip>
                                 <mat-chip class="pro-action" (click)="handleSideScreen('note')">
-                                    <a>{{sel_ser_det.consumerNoteTitle}}
+                                    <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
                                         <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
                                 </mat-chip>
                                 <mat-chip class="pro-action" (click)="imagefile.click()"><a>

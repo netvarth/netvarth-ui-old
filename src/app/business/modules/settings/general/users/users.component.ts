@@ -3,7 +3,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../../app.component';
 import { Router, NavigationExtras } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { LinkProfileComponent } from './linkProfile/linkProfile.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
@@ -17,6 +17,9 @@ import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-bo
 })
 
 export class BranchUsersComponent implements OnInit {
+    tooltipcls = '';
+    filtericonTooltip = '';
+    add_button = '';
     users_list: any = [];
     breadcrumb_moreoptions: any = [];
     domain;

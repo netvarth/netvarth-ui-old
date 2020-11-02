@@ -47,7 +47,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   settings_not_found_cap = Messages.SETTINGS_NOT_FOUND_CAP;
   accept_online_checkin_cap = Messages.ACC_ONLINE_CHECKIN_CAP;
   legal_cap = Messages.LEGALCAP;
-
+  tooltipcls = '';
   curyear;
   ctype;
   auditlog: any = [];

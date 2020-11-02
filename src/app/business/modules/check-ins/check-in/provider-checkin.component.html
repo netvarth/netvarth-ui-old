@@ -15,7 +15,7 @@
         <div class="card p0" *ngIf="!showCheckin">
           <div class="copy locd">
             <div class="lbl col-sm-12 col-md-8 col-lg-8">
-              <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
+              <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()">
                 <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 sc-frm">
                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                     <div class="mgn-up-10"> Find an existing {{customer_label}} and create {{(showtoken? 'token' :
@@ -30,7 +30,7 @@
                       </div>
                       <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
                         <button class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
-                    searchCustomer(searchForm.value,selectedMode)">Find</button>
+                    searchCustomer(searchForm.value)">Find</button>
                       </div>
                     </div>
                   </div>
@@ -47,8 +47,9 @@
               <div class="create_new mgn-bt-20 font-9">
                 <div class="or-style">OR</div>
                 <span>
-                  Create a {{(showtoken) ? 'token' : 'check-in'}} for the {{customer_label}} who booked for your
-                  services on a third party listing site, choose the listing site/app
+                  Choose the third party listing site/app through which the {{customer_label}} came.
+                  <!-- Create a {{(showtoken) ? 'token' : 'check-in'}} for the {{customer_label}} who booked for your
+                  services on a third party listing site, choose the listing site/app -->
                 </span>
                 <div class="mgn-up-10">
                   <button *ngIf="domain === 'healthCare'" class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
@@ -144,7 +145,8 @@
                       <mat-select placeholder="Select Provider" [ngModel]="selected_user" #usersel
                         (selectionChange)="handleUserSelection(usersel.value)">
                         <mat-option *ngFor="let user of users" [value]="user">
-                          {{user.firstName}} {{user.lastName}}
+                          <!-- {{user.firstName}} {{user.lastName}} -->
+                          {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -238,7 +240,7 @@
                   <div class="date-body">
                     <span class="selected-date">
                       <span class="icon-minus" [class.disable]="disableMinus()"
-                        (click)="calculateDate(-1)"></span>{{sel_day}} {{sel_checkindate | date: dateFormat}}
+                        (click)="calculateDate(-1)"></span>{{sel_checkindate | date: dateFormat}}
                       <span class="icon-add" (click)="calculateDate(1)"></span>
                     </span>
                     <div class="form-group dt">
@@ -280,7 +282,7 @@
                               </strong>
                             </span>
                             <span *ngIf="isFuturedate">
-                              <strong>{{sel_day}} {{sel_checkindate | date: dateFormat}}</strong>
+                              <strong>{{sel_checkindate | date: dateFormat}}</strong>
                             </span>
                           </span>
                         </div>
@@ -302,7 +304,7 @@
                             <ng-container *ngIf="isFuturedate">
                               <span class="checkin-footer-date">
                                 <strong>{{nextavailableCaption}}
-                                  <span class="queue-avail-date">{{sel_day}} {{sel_checkindate | date: dateFormat}},
+                                  <span class="queue-avail-date">{{sel_checkindate | date: dateFormat}},
                                     {{sel_queue_servicetime}}
                                   </span>
                                 </strong>
@@ -426,7 +428,7 @@
                               <mat-checkbox
                                 (change)="handleMemberSelect(memb.id, memb.firstName, memb.lastName, $event)"
                                 [value]="memb.id" [checked]="isChecked(memb.id)">
-                                {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
+                                {{memb.firstName | capitalizeFirst}} {{(memb.lastName) ? memb.lastName : ''}}
                               </mat-checkbox>
                             </li>
                           </ng-container>
@@ -434,7 +436,7 @@
                             <mat-radio-group>
                               <li *ngFor="let memb of familymembers">
                                 <mat-radio-button
-                                  (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId, $event)"
+                                  (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                   [value]="memb.id" [checked]="isChecked(memb.id)">
                                   {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
                                 </mat-radio-button>
@@ -549,7 +551,7 @@
                     Change
                     Member </a>
                 </mat-chip>
-                <mat-chip class="pro-action" (click)="handleSideScreen('note')"><a>{{sel_ser_det.consumerNoteTitle}}
+                <mat-chip class="pro-action" (click)="handleSideScreen('note')"><a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
                     <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
                 </mat-chip>
                 <mat-chip class="pro-action" (click)="imagefile.click()"><a>

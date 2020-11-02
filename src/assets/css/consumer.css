@@ -3923,6 +3923,10 @@
     .consumer-dash .minutes {
         font-size: 0.7rem !important;
     }
+    .checkin-details .myjaldee-bg {
+        /* opacity: 0.6 !important; */
+        display: none;
+    }
 }
 
 .more-opt .mo-content .mat-dialog-content .more-box .refine_subheader {
@@ -5585,6 +5589,9 @@
     .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details {
         flex-direction: column;
     }
+    /* .checkin-details .chk-stats {
+        display: none !important;
+    } */
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .lt {
@@ -6340,6 +6347,27 @@
     .greeting {
         font-size : 1.7rem !important;
     }
+    .cust-book-details .checkin-details .row {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+    }
+    .cust-book-details  .card {
+        padding: 10px !important;
+    }
+    .cust-book-details  h5 {
+        margin-left: 10px !important;
+    }
+    .booking-content .col-lg-12, .booking-content .col-md-12, .booking-content .col-sm-12, .booking-content .col-xs-12 {
+        padding-right: 3px !important;
+        padding-left: 0px !important;
+    }
+    .cust-book-details .tp-l {
+        margin-left: 10px !important;
+        padding-right: 15px !important;
+    }
+    .cust-book-details .more_view {
+        margin-left: 10px !important;
+    }
 }
 
 .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .details .rt .controls li span:before {
@@ -6700,4 +6728,12 @@
     color: blue;
     font-style: italic;
     font-size: 0.85rem !important;
+}
+.checkin-details .est-tok-time {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: blue;
+}
+.cust-book-details .mat-tab-labels {
+    background: #ffecbe;
 }

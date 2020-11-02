@@ -77,7 +77,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="form-group">
                 <mat-form-field>
                     <textarea matInput class="form-control" id="description" placeholder="Briefly describe service"
-                        formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()"
+                        formControlName="description" (keyup)="setCharCount()" (focus)="setDescFocus()"
                         (blur)="lostDescFocus()" maxlength="500"> </textarea>
                 </mat-form-field>
 
@@ -184,7 +184,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="actiondiv" style="margin-top: 10px;">
                 <div style="margin-bottom:30px;display: inline-flex;">
                     <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;
-                    <button type="submit" mat-button [disabled]="!serviceForm.valid || savedisabled"
+                    <button type="submit" mat-button [disabled]="!serviceForm.valid"
                         class="cs-btn bt1">{{button_title}}</button>
                 </div>
                 <div *ngIf="action == 'add'">
@@ -196,12 +196,12 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <br />
         </ng-container>
-        <ng-container *ngIf="mode=='afteradd'">
+        <!-- <ng-container *ngIf="mode=='afteradd'">
             <div class="message-one">
                 <p class="p1">{{normaladd_msg1}}</p>
                 <p class="p2">{{normaladd_msg2}}</p>
             </div>
             <div class="message-two" (click)="gotoManageQueue()">{{go_to_service_cap}}</div>
-        </ng-container>
+        </ng-container> -->
     </form>
 </div>

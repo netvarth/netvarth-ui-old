@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { projectConstants } from '../../../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
@@ -125,11 +125,11 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
       });
   }
 
-  addHolidays(action) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: action }
-    };
-    this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'holidays', 'add'], navigationExtras);
+  addHolidays() {
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: { action: action }
+    // };
+    this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'holidays', 'add']);
   }
 
   editHolidays(holiday, ) {

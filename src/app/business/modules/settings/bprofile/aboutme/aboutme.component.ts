@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -10,7 +10,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProPicPopupComponent } from '../../bprofile/pro-pic-popup/pro-pic-popup.component';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QuestionService } from '../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
@@ -22,13 +22,13 @@ import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/funct
 })
 export class AboutMeComponent implements OnInit {
 
-
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   showVirtualFields = false;
   showMandatory: boolean;
   subdomain_fields_mandatory = [];
   domain_fields_mandatory = [];
   dynamicdialogRef: MatDialogRef<ProviderBprofileSearchDynamicComponent, any>;
-
+  change_cap = Messages.BPROFILE_CHANGE_CAP;
   profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
   business_name_cap = Messages.SEARCH_PRI_BUISINESS_NAME_CAP;
   profile_summary_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;

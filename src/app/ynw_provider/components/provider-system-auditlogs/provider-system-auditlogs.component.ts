@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./provider-auditlogs.component.css']*/
 })
 export class ProviderSystemAuditLogComponent implements OnInit {
-
+  tooltipcls = '';
   select_cap = Messages.SELECT_CAP;
   search_cap = Messages.SEARCH_CAP;
   date_time_cap = Messages.DATE_TIME_CAP;

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { AddProviderWaitlistQueuesComponent } from '../../components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
@@ -258,26 +257,6 @@ export class ProviderSharedFuctions {
     } else {
       ob.enableService(service, msg);
     }
-  }
-
-  addEditQueuePopup(ob, type, source, obj = null, schedules = null) {
-    ob.queuedialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: false,
-      data: {
-        queue: obj,
-        source: source,
-        type: type,
-        schedules: schedules
-      },
-    });
-    ob.queuedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.queueReloadApi(ob, source);
-      }
-    });
   }
 
   changeWaitlistStatus(ob, waitlist, action, appt?) {

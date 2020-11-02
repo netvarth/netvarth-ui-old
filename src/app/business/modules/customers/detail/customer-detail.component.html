@@ -4,9 +4,12 @@
 <section class="" *ngIf="source ==='token' || source ==='checkin' || source ==='appointment'">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-            <button type="button" class="btn default profile-back" (click)="onCancel()">
+            <!-- <button type="button" class="btn default profile-back" (click)="onCancel()">
                 <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp;
+            Create {{customer_label}} -->
+            <span class="fa fa-arrow-left pointer-cursor"  (click)="onCancel()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Create {{customer_label}}
+            
         </h5>
     </div>
 </section>
@@ -15,7 +18,6 @@
         <div class="col-md-12 no-padding-small ">
             <div class="row">
                 <div class="card p0">
-
                     <div class="col-md-12 no-padding"
                         *ngIf="source !=='token' && source !=='checkin' && source !=='appointment'">
                         <ul class="nav cust-dash jd-custom-nav">
@@ -74,7 +76,7 @@
                                 </div>
                                 <div *ngIf="customer[0].dob" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
                                     <div><b>DOB</b></div>
-                                    <div>{{customer[0].dob | date:dateFormat}}</div>
+                                    <div>{{customer[0].dob | date: dateFormat}}</div>
                                 </div>
                                 <div *ngIf="customer[0].address" class="col-md-6 col-xs-12 col-sm-6"
                                     class="createcheckin">
@@ -116,34 +118,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20"
-                                    *ngIf="searchClicked && foundCustomer">
-                                    <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
-                                        <div><b>Name:</b></div>
-                                        <div>{{customer_data.firstName}} {{customer_data.lastName}}</div>
-                                    </div>
-                                    <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
-                                        <div><b>Email:</b></div>
-                                        <div>{{customer_data.email}}</div>
-                                    </div>
-                                    <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
-                                        <div><b>PhoneNo:</b></div>
-                                        <div>{{customer_data.phoneNo}}</div>
-                                    </div>
-                                    <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
-                                        <div><b>DOB</b></div>
-                                        <div>{{customer_data.dob}}</div>
-                                    </div>
-                                    <hr class="wide-separator-line" />
-                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
-                                        Do You want take Check-In For this
-                                        {{customer_label}} &nbsp;
-                                        <i class="fa fa- pointer-cursor" (click)="checkinClicked()"><u
-                                                class="createcheckinstyle">Click here</u></i>
-                                    </div>
-                                </div>
-
-
                                 <div class="form-group"
                                     *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
                                     <mat-form-field>
@@ -216,9 +190,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     <div class="pickerouter">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
-                                        <input class="form-control dtepicker" type="text" matInput
+                                        <input class="form-control dtepicker" type="text" matInput (click)="picker.open()"
                                             [matDatepicker]="picker" formControlName="dob" [max]="tday" [min]="minday"
-                                            placeholder="DD/MM/YYYY">
+                                            placeholder="DD/MM/YYYY" readonly>
                                     </div>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
                                         errorMsg="Please select the date of birth.">

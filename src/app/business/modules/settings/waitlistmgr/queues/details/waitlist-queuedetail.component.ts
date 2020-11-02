@@ -1,15 +1,19 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Messages } from '../../../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
+import { SelectionService } from '../../../../../../shared/services/selectionService';
+
 import { projectConstants } from '../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
-import { Location } from '@angular/common';
+import { Messages } from '../../../../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
+import {
+  FormMessageDisplayService,
+} from '../../../../../../shared/modules/form-message-display/form-message-display.service';
+import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 
 
 @Component({
@@ -99,12 +103,23 @@ export class WaitlistQueueDetailComponent implements OnInit {
   minDate;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   queuecaption = 'Add Queue';
+  whole_service;
+  report_type = 'token';
+  token_service;
+  token_service_id: number;
+  waitlist_billpaymentstatus = 0;
+  waitlist_status = 0;
+  waitlist_mode = 0;
+  waitlist_timePeriod: any;
+  waitlist_startDate: any;
+  waitlist_endDate: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
     private router: Router,
     private _location: Location,
     private activated_route: ActivatedRoute,
+    private selectionService: SelectionService,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_shared_functions: ProviderSharedFuctions) {
@@ -118,6 +133,10 @@ export class WaitlistQueueDetailComponent implements OnInit {
       } else {
         this.action = qparams.action;
       }
+    });
+    this.selectionService._service_data.subscribe((res: any) => {
+      console.log(res);
+      this.setServiceData(res);
     });
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     this.customer_label_upper = this.shared_Functionsobj.firstToUpper(this. customer_label);
@@ -147,6 +166,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
       }
     }, 100);
   }
+
   getWaitlistMgr() {
     this.api_loading = true;
     this.waitlist_manager = null;
@@ -347,7 +367,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
               this.departments.splice(j, 1);
             }
           }
-          // console.log(this.departments);
           this.api_loading1 = false;
         },
         error => {
@@ -620,7 +639,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
       if (!this.shared_Functionsobj.checkIsInteger(form_data.qserveonce)) {
         const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
         // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' }); 
+        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         return;
       } else {
         if (JSON.parse(form_data.qserveonce) === 0 || (JSON.parse(form_data.qserveonce) > JSON.parse(form_data.qcapacity))) {
@@ -929,5 +948,42 @@ export class WaitlistQueueDetailComponent implements OnInit {
   }
   redirecToQueues() {
     this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
+  }
+
+  goToSelectionPage(selected_id?) {
+    const _this = this;
+    alert(selected_id);
+    this.setSelectedData().then(res => {
+      console.log(res);
+      _this.selectionService.serviceSelected(res);
+      // this.report_data_service.storeSelectedValues(res);
+      _this.router.navigate(['provider', 'settings', 'selectservice'], { queryParams: { data: selected_id, type: 'wl_appt' } });
+    });
+  }
+
+  setServiceData(res) {
+    if (res === 'All') {
+      this.token_service = 'All';
+      this.token_service_id = 0;
+    } else {
+      this.token_service = res.split(',').length - 1 + ' services selected';
+      this.token_service_id = res.replace(/,\s*$/, '');
+    }
+  }
+
+  setSelectedData() {
+    let selectedValues = {};
+    return new Promise((resolve) => {
+        selectedValues = {
+          'billPaymentStatus': this.waitlist_billpaymentstatus,
+          'waitlistStatus': this.waitlist_status,
+          'waitlistMode': this.waitlist_mode,
+          'dateRange': this.waitlist_timePeriod,
+          'startDate': this.waitlist_startDate,
+          'endDate': this.waitlist_endDate
+        };
+      resolve(selectedValues);
+    });
+
   }
 }

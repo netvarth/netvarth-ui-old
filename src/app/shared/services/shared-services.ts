@@ -664,9 +664,12 @@ export class SharedServices {
     // const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid + '/date/' + pdate;
     return this.servicemeta.httpGet(url);
   }
-  rescheduleConsumerApptmnt(accountid, postData){
-        return this.servicemeta.httpPut('consumer/appointment/reschedule?account=' + accountid, postData);
-      }
+  rescheduleConsumerApptmnt(accountid, postData) {
+    return this.servicemeta.httpPut('consumer/appointment/reschedule?account=' + accountid, postData);
+  }
+  rescheduleConsumerWaitlist(accountid, postData){
+    return this.servicemeta.httpPut('consumer/waitlist/reschedule?account=' +accountid, postData);
+  }
   getSlotsByLocationServiceandDate(locid, servid, pdate?, accountid?) {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
@@ -771,6 +774,14 @@ export class SharedServices {
   consumerApptTeleserviceWithId(postdata, uuid) {
     return this.servicemeta.httpPost('provider/appointment/' + uuid + '/createmeetingrequest', postdata);
   }
+  getVideoIdForService(uuid, usertype) {
+    const path = usertype + '/appointment/videoid/link/' + uuid;
+    return this.servicemeta.httpGet(path);
+  }
+  getJaldeeVideoAccessToken(videoId) {
+    const path = 'provider/appointment/video/link/' + videoId;
+    return this.servicemeta.httpGet(path);
+  }
   getWaitlstMeetingDetails(mode, uuid) {
     const path = 'provider/waitlist/' + uuid + '/meetingDetails/' + mode;
     return this.servicemeta.httpGet(path);
@@ -814,7 +825,7 @@ export class SharedServices {
     const url = 'consumer/appointment/' + uuid + '/meetingDetails/' + mode + '?account=' + accountId;
     return this.servicemeta.httpGet(url);
   }
-  getQueuesbyLocationandServiceIdAvailableDates(locid, servid , accountid) {
+  getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid) {
     const url = 'consumer/waitlist/queues/available/' + locid + '/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }

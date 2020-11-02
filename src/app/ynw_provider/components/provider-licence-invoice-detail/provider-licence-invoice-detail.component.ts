@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -31,7 +31,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   subsc_pack_cap = Messages.SUBSC_PACKAGE;
   id_cap = Messages.ID_CAP;
   ref_id_cap = Messages.REF_ID_CAP;
-  @ViewChild('div', { static: false }) div: ElementRef;
+  @ViewChild('div') div: ElementRef;
   api_error = null;
   api_success = null;
   invoice: any = null;

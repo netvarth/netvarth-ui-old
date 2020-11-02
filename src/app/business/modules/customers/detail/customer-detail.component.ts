@@ -13,7 +13,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
     templateUrl: './customer-detail.component.html'
 })
 export class CustomerDetailComponent implements OnInit {
-
+    dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
     create_cap = Messages.CREATE_CAP;
     mobile_cap = Messages.MOBILE_CAP;
     f_name_cap = Messages.FIRST_NAME_CAP;
@@ -97,6 +97,58 @@ export class CustomerDetailComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private _location: Location,
         private router: Router) {
+        // this.search_data = this.data.search_data;
+        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.activated_route.queryParams.subscribe(qparams => {
+            this.source = qparams.source;
+            if (qparams.type) {
+                this.type = qparams.type;
+            }
+            if (qparams.phone) {
+                this.phoneNo = qparams.phone;
+                if (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
+                    this.getJaldeeIntegrationSettings();
+                    this.save_btn = 'Proceed';
+                }
+            } else {
+                if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment')) {
+                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
+                    this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    this.save_btn = 'Proceed';
+                }
+            }
+            if (qparams.email) {
+                this.email = qparams.email;
+            }
+            if (qparams.checkinType) {
+                this.checkin_type = qparams.checkinType;
+            }
+            if (qparams.noMobile) {
+                this.haveMobile = false;
+            }
+            if (qparams.serviceId) {
+                this.serviceIdParam = qparams.serviceId;
+            }
+            if (qparams.userId) {
+                this.userId = qparams.userId;
+            }
+            if (qparams.deptId) {
+                this.deptId = qparams.deptId;
+            }
+            if (qparams.timeslot) {
+                this.timeslot = qparams.timeslot;
+            }
+            if (qparams.date) {
+                this.date = qparams.date;
+            }
+            if (qparams.scheduleId) {
+                this.comingSchduleId = qparams.scheduleId;
+            }
+            if (qparams.thirdParty) {
+                this.thirdParty = qparams.thirdParty;
+            }
+        });
+
         this.activated_route.params.subscribe(
             (params) => {
                 this.customerId = params.id;
@@ -164,57 +216,6 @@ export class CustomerDetailComponent implements OnInit {
             }
         );
 
-        // this.search_data = this.data.search_data;
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-        this.activated_route.queryParams.subscribe(qparams => {
-            this.source = qparams.source;
-            if (qparams.type) {
-                this.type = qparams.type;
-            }
-            if (qparams.phone) {
-                this.phoneNo = qparams.phone;
-                if (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
-                    this.getJaldeeIntegrationSettings();
-                    this.save_btn = 'Proceed';
-                }
-            } else {
-                if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment')) {
-                    this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
-                    this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
-                    this.save_btn = 'Proceed';
-                }
-            }
-            if (qparams.email) {
-                this.email = qparams.email;
-            }
-            if (qparams.checkinType) {
-                this.checkin_type = qparams.checkinType;
-            }
-            if (qparams.noMobile) {
-                this.haveMobile = false;
-            }
-            if (qparams.serviceId) {
-                this.serviceIdParam = qparams.serviceId;
-            }
-            if (qparams.userId) {
-                this.userId = qparams.userId;
-            }
-            if (qparams.deptId) {
-                this.deptId = qparams.deptId;
-            }
-            if (qparams.timeslot) {
-                this.timeslot = qparams.timeslot;
-            }
-            if (qparams.date) {
-                this.date = qparams.date;
-            }
-            if (qparams.scheduleId) {
-                this.comingSchduleId = qparams.scheduleId;
-            }
-            if (qparams.thirdParty) {
-                this.thirdParty = qparams.thirdParty;
-            }
-        });
     }
     getCustomers(customerId) {
         const _this = this;
@@ -368,12 +369,16 @@ export class CustomerDetailComponent implements OnInit {
     }
     onSubmit(form_data) {
         this.disableButton = true;
+        let datebirth;
+        if (form_data.dob) {
+            datebirth = this.shared_functions.transformToYMDFormat(form_data.dob);
+        }
         if (this.action === 'add') {
             const post_data = {
                 //   'userProfile': {
                 'firstName': form_data.first_name,
                 'lastName': form_data.last_name,
-                'dob': form_data.dob,
+                'dob': datebirth,
                 'gender': form_data.gender,
                 'phoneNo': form_data.mobile_number,
                 'address': form_data.address,

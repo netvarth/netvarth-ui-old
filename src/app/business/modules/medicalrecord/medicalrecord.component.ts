@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { LastVisitComponent } from './last-visit/last-visit.component';
 import { MedicalrecordService } from './medicalrecord.service';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { MatDialog } from '@angular/material/dialog';
+import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
   selector: 'app-medicalrecord',
@@ -15,6 +16,8 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 })
 export class MedicalrecordComponent implements OnInit {
 
+  mrNumber: any;
+  visitdate: Date;
   isShowList = false;
   dateShow = true;
   isShow: boolean;
@@ -39,12 +42,13 @@ export class MedicalrecordComponent implements OnInit {
   PatientDob: any;
   mrlist;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
-  MrCreateddate: string;
-  visitdate = new Date();
-  consultationMode: any;
+  mrCreatedDate: string;
+  consultationMode = 'Out Patient';
   bookingType: any;
   patientConsultationType = 'OP';
-  patientConsultationModes: any = [{ 'name': 'OP' }, { 'name': 'PHONE' }, { 'name': 'EMAIL' }, { 'name': 'VIDEO' }];
+  // patientConsultationModes: any = [{ 'name': 'OP' }, { 'name': 'PHONE' }, { 'name': 'EMAIL' }, { 'name': 'VIDEO' }];
+  patientConsultationModes: any = [{ 'displayName': 'Out Patient', 'name': 'OP' }, { 'displayName': 'Phone', 'name': 'PHONE' }, { 'displayName': 'E-mail', 'name': 'EMAIL' }, { 'displayName': 'Tele-Service', 'name': 'VIDEO' }];
+
   visitTime = new Date().toLocaleTimeString();
   visitcount: any;
   selectedTab = 0;
@@ -55,8 +59,10 @@ export class MedicalrecordComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private dialog: MatDialog,
-    private medicalService: MedicalrecordService
+    private medicalService: MedicalrecordService,
+    private datePipe: DateFormatPipe
   ) {
+    this.visitdate = this.datePipe.transformToDateWithTime(new Date());
     this.routeLinks = [
       {
         label: 'Clinical Notes',
@@ -76,7 +82,6 @@ export class MedicalrecordComponent implements OnInit {
       (qparams) => {
         if (qparams['customerDetail']) {
           console.log(qparams);
-          this.visitdate = new Date();
           this.navigation_params = qparams;
           // tslint:disable-next-line:radix
 
@@ -93,6 +98,7 @@ export class MedicalrecordComponent implements OnInit {
           } else if (this.customerDetails.jaldeeId) {
             this.display_PatientId = this.customerDetails.jaldeeId;
           }
+
           this.PatientId = this.customerDetails.id;
           if (qparams.department) {
             this.department = qparams.department;
@@ -107,6 +113,8 @@ export class MedicalrecordComponent implements OnInit {
               this.consultationMode = qparams.consultationMode;
             }
           }
+
+
           if (qparams.mrId) {
             // tslint:disable-next-line:radix
             this.mrId = parseInt(qparams.mrId);
@@ -126,10 +134,10 @@ export class MedicalrecordComponent implements OnInit {
             this.navigation_params = {
               'clone_params': res
             };
-            console.log('else' + JSON.stringify(this.navigation_params));
+
 
             this.customerDetails = JSON.parse(res.customerDetail);
-            console.log(JSON.stringify(this.customerDetails));
+
             if (res.booking_date) {
               this.visitdate = res.booking_date;
             }
@@ -154,27 +162,16 @@ export class MedicalrecordComponent implements OnInit {
       });
 
   }
-  // navigate(routeLink) {
-  //   switch (routeLink.id) {
-  //     case 'clinicalnotes': {
-  //       this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], { queryParams: this.navigation_params });
-  //       break;
-  //     }
-  //     case 'prescription': {
-  //       this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigation_params });
-  //       break;
-  //     }
-  //   }
 
-  // }
 
   ngOnInit() {
+    if (this.mrId !== 0) {
+      this.getMedicalRecordUsingMR(this.mrId);
+    }
     this.medicalService.back_nav.subscribe(res => {
       this.back_type = res;
     });
 
-    this.mrDate = new Date();
-    this.MrCreateddate = this.sharedfunctionObj.formatDateDisplay(this.mrDate);
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
     });
@@ -195,9 +192,40 @@ export class MedicalrecordComponent implements OnInit {
     }
   }
   modeChanged(event) {
-    const mode = [];
-    mode['consultationMode'] = event;
-    this.medicalService.setPatientDetailsForMR(mode);
+
+    const object = {
+      'consultationMode': event
+    };
+    if (this.mrId === 0) {
+
+      this.medicalService.createMR('consultationMode', event).then(res => {
+        this.getMedicalRecordUsingMR(res);
+        this.navigation_params = { ...this.navigation_params, 'mrId': res };
+        this.medicalService.setPatientDetailsForMR(this.navigation_params);
+        this.medicalService.setCurrentMRID(res);
+
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+    } else {
+      this.updateMR(object, this.mrId);
+
+    }
+  }
+
+  updateMR(payload, mrId) {
+    this.provider_services.updateMR(payload, mrId)
+      .subscribe((data) => {
+        this.getMedicalRecordUsingMR(data);
+
+        this.sharedfunctionObj.openSnackBar('Medical Record updated successfully');
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+
+
   }
   getMedicalRecordUsingMR(mrId) {
 
@@ -205,11 +233,17 @@ export class MedicalrecordComponent implements OnInit {
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
-          this.mrDate = data.mrConsultationDate;
-          this.MrCreateddate = this.sharedfunctionObj.formatDateDisplay(this.mrDate);
-          this.customerDetails = data.providerConsumer;
-          this.medicalService.setPatientDetailsForMR(data);
-          this.medicalService.setCurrentMRID(data.mrId);
+          console.log(data);
+          console.log(data.mrNumber);
+          this.mrNumber = data.mrNumber;
+          this.mrCreatedDate = data.mrCreatedDate;
+          if (this.data.consultationMode === 'Out Patient') {
+            this.patientConsultationType = 'OP';
+
+          } else {
+            this.patientConsultationType = data.consultationMode.toUpperCase();
+          }
+
         }
       },
         error => {
@@ -219,11 +253,12 @@ export class MedicalrecordComponent implements OnInit {
   VisitList() {
     console.log(this.PatientId);
     this.mrdialogRef = this.dialog.open(LastVisitComponent, {
-      width: '80%',
+      width: '800px;',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        patientId: this.PatientId
+        patientId: this.PatientId,
+        customerDetail: this.customerDetails
 
       }
     });
@@ -241,7 +276,7 @@ export class MedicalrecordComponent implements OnInit {
     });
   }
   goback() {
-    console.log(this.back_type);
+
     if (this.back_type === 'waitlist') {
       this.router.navigate(['provider', 'check-ins']);
     } else if (this.back_type === 'appt') {

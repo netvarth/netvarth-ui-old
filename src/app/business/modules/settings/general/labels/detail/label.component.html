@@ -20,7 +20,7 @@
                     <div class="copy locd">
                         <div class="lbl col-md-12">
                             <div class="cl1" *ngIf="actionparam === 'view' && labelData">
-                                <span class="editbt" (click)="editLabel()"></span>
+                                <span class="editbt" *ngIf="labelData.status=='ENABLED'" (click)="editLabel()"></span>
                                 <div class="ot-it">
                                     <h3>{{ labelData.displayName | capitalizeFirst}} </h3>
                                     <div class="c-ot m0">
@@ -35,6 +35,17 @@
                                             <span>Text</span>
                                         </div> -->
                                     </div>
+                                    <div class="btm-ctrl">
+                                        <div class="ctrl enable-disable">
+                                          <span class="ttle">Label Status</span>
+                                          <span>
+                                            <mat-slide-toggle [(ngModel)]="labelStatus"
+                                              (change)="changeLabelStatus(labelData)"></mat-slide-toggle>
+                                          </span>
+                                          <span class='enabled' *ngIf="labelData.status=='ENABLED'">Enabled</span>
+                                          <span class='disabled' *ngIf="labelData.status=='DISABLED'">Disabled</span>
+                                        </div>
+                                      </div>
                                     <!-- <div class="c-ot m0 mgn-up-20">
                                         <div class="item desfont"
                                             *ngIf="labelData && labelData.valueSet && labelData.valueSet.length > 0">
@@ -77,7 +88,7 @@
                                             <mat-form-field>
                                                 <textarea matInput class="form-control" id="description"
                                                     placeholder="Briefly describe label" [(ngModel)]="description"
-                                                    [ngModelOptions]="{standalone: true}" (keyup)="setCharCount($event)"
+                                                    [ngModelOptions]="{standalone: true}" (keyup)="setCharCount()"
                                                     (focus)="setDescFocus()" (blur)="lostDescFocus()"
                                                     maxlength="255"> </textarea>
                                             </mat-form-field>
@@ -143,7 +154,7 @@
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;
-                                            <button (click)="onSubmit()" type="button" [disabled]="savedisabled"
+                                            <button (click)="onSubmit()" type="button"
                                                 class="cs-btn bt2 jd_btn">{{button_title}}</button>
                                         </div>
                                         <br />

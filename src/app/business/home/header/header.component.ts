@@ -11,7 +11,7 @@ import { Title } from '@angular/platform-browser';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
 import { JoyrideService } from 'ngx-joyride';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProviderStartTourComponent } from '../../../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 
 @Component({

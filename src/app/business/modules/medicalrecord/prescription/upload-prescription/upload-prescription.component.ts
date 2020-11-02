@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
 import { projectConstants } from '../../../../../app.component';
 import { MedicalrecordService } from '../../medicalrecord.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -39,7 +39,7 @@ export class UploadPrescriptionComponent implements OnInit {
 
   upload_status = 'Added to list';
   disable = false;
-  heading = 'Create prescription';
+  heading = 'Create Prescription';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any;
   navigationExtras: NavigationExtras;
@@ -111,9 +111,9 @@ export class UploadPrescriptionComponent implements OnInit {
     if (input) {
       for (const file of input) {
         if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.sharedfunctionObj.apiErrorAutoHide(this, 'Selected image type not supported');
+          this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
         } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-          this.sharedfunctionObj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+          this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedMessage.files.push(file);
           const reader = new FileReader();

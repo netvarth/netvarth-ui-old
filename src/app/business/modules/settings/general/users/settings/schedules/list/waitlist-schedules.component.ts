@@ -17,6 +17,7 @@ import { projectConstantsLocal } from '../../../../../../../../shared/constants/
     styleUrls: ['./waitlist-schedules.component.css']
 })
 export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
+    tooltipcls = '';
     loc_name;
     new_serv_cap = Messages.ADD_SCHEDULE_CAP;
     work_hours = Messages.SERVICE_TIME_CAP;
@@ -669,7 +670,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
      * @param qObj queue object
      * @param event field checked status
      */
-    changeScheduleSameDayOnlineStatus(qObj, index) {
+    changeScheduleSameDayOnlineStatus(qObj) {
         let chstatusmsg = '';
         if (qObj.todayAppt) {
             chstatusmsg = 'disabled';
@@ -691,7 +692,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
      * @param qObj queue Object
      * @param event field checked status
      */
-    changeScheduleFutureStatus(qObj, index) {
+    changeScheduleFutureStatus(qObj) {
         let chstatusmsg = '';
         if (qObj.futureAppt) {
             chstatusmsg = 'disabled';

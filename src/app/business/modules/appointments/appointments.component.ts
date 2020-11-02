@@ -7,10 +7,9 @@ import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ApplyLabelComponent } from '../check-ins/apply-label/apply-label.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
-import { CallingModesComponent } from '../check-ins/calling-modes/calling-modes.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -26,6 +25,7 @@ declare let cordova: any;
   templateUrl: './appointments.component.html'
 })
 export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
+  elementType = 'url';
   today_cap = Messages.TODAY_HOME_CAP;
   future_cap = Messages.FUTURE_HOME_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;
@@ -92,6 +92,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     last_name: '',
     phone_number: '',
     appointmentEncId: '',
+    patientId: '',
     appointmentMode: 'all',
     schedule: 'all',
     location: 'all',
@@ -112,6 +113,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     last_name: false,
     phone_number: false,
     appointmentEncId: false,
+    patientId: false,
     appointmentMode: false,
     schedule: false,
     location: false,
@@ -322,6 +324,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   allLabelSelected: any = [];
   customerIdTooltip = '';
   allLabels: any = [];
+  voicedialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -855,6 +858,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       last_name: false,
       phone_number: false,
       appointmentEncId: false,
+      patientId: false,
       appointmentMode: false,
       schedule: false,
       service: false,
@@ -872,6 +876,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       last_name: '',
       phone_number: '',
       appointmentEncId: '',
+      patientId: '',
       appointmentMode: 'all',
       schedule: 'all',
       location: 'all',
@@ -1119,7 +1124,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param action Scheduled/Started/Cancelled/Completed
    * @param type Today/Future/History
    */
-  viewStatusFilterBtnClicked(action, type) {
+  viewStatusFilterBtnClicked(action, type?) {
     this.statusAction = action;
     // this.loading = true;
     this.resetCheckList();
@@ -1582,6 +1587,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('appthPFil', this.filter);
     this.doSearch();
   }
+  getPatientIdFilter(patientid) {
+    const idFilter = 'memberJaldeeId::' + patientid;
+    return idFilter;
+  }
   setFilterForApi() {
     const api_filter = {};
     if (this.time_type === 1) {
@@ -1606,6 +1615,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.appointmentEncId !== '') {
       api_filter['appointmentEncId-eq'] = this.filter.appointmentEncId;
+    }
+    if (this.filter.patientId !== '') {
+      api_filter['appmtFor-eq'] = this.getPatientIdFilter(this.filter.patientId);
     }
     if (this.services.length > 0 && this.filter.service !== 'all') {
       api_filter['service-eq'] = this.services.toString();
@@ -1686,7 +1698,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   doSearch() {
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all') {
       this.filterapplied = true;
@@ -1747,7 +1759,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: date } });
     }
   }
-  searchCustomer(source, appttime) {
+  searchCustomer() {
     this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
   }
   /**
@@ -1765,7 +1777,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.providerLabels = [];
     this.provider_services.getLabelList().subscribe(data => {
       this.allLabels = data;
-      this.providerLabels = this.allLabels.filter(label => label.status === 'ACTIVE');
+      this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
     });
   }
   getDisplayname(label) {
@@ -2404,7 +2416,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        checkin: checkin
+        checkin: checkin,
+        type: 'appt'
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
@@ -2577,24 +2590,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getVirtualServiceCount(virtualService) {
     return Object.keys(virtualService).length;
-  }
-  generateLink(modes) {
-    this.notedialogRef = this.dialog.open(CallingModesComponent, {
-      width: '20%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        modes: modes.virtualService,
-        uuid: modes.uid,
-        linkValue: this.gnr_link,
-        qdata: modes,
-        type: 'appt'
-      }
-    });
-    this.notedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-      }
-    });
   }
   smsAppt() {
     const _this = this;
@@ -3088,7 +3083,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedUser = user;
     this.getQsByProvider();
   }
-
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
   getQsByProvider() {
     const qs = [];
     if (this.selectedUser && this.selectedUser.id === 'all') {
@@ -3364,4 +3361,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.loadApiSwitch('');
     });
   }
+  onButtonBeforeHook() { }
+  onButtonAfterHook() { }
 }
