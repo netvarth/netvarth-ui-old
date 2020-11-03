@@ -278,7 +278,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   services: any = [];
   consumr_id: any;
   topHeight = 0;
-  admin = true;
+  admin = false;
   @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
   @ViewChild('apptSection') apptSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
