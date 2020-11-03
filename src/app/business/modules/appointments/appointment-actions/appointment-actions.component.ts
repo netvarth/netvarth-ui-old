@@ -671,4 +671,11 @@ export class AppointmentActionsComponent implements OnInit {
       };
       this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
+    gotoCustomerDetails() {
+        this.dialogRef.close();
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'view' }
+          };
+          this.router.navigate(['/provider/customers/' + this.appt.appmtFor[0].id], navigationExtras);
+    }
 }

@@ -6,21 +6,28 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
         <div class="action-box pointer-cursor" (click)="editCustomer()">
             <div class="action-box-sub">
-                <span class="icon-edit"></span>
+                <span class="edit-customer-icon"></span>
                 <div class="icon-text">Edit
+                </div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" (click)="CustomersInboxMessage()">
+            <div class="action-box-sub">
+                <span class="message-icon"></span>
+                <div class="icon-text">Send Message
                 </div>
             </div>
         </div>
         <div class="action-box pointer-cursor" (click)="listMedicalrecords()" *ngIf="domain === 'healthCare'">
             <div class="action-box-sub">
-                <span class="medicalrecordlisticon-customer"></span>
+                <span class="medical-list-icon"></span>
                 <div class="icon-text">List MedicalRecords
                 </div>
             </div>
         </div>
         <div class="action-box pointer-cursor" (click)="lastvisits()" *ngIf="domain === 'healthCare'">
             <div class="action-box-sub">
-                <span class="viewdetails-icon-customer"></span>
+                <span class="last-visit-icon"></span>
                 <div class="icon-text">Last visits
                 </div>
             </div>

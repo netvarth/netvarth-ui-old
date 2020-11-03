@@ -12918,3 +12918,28 @@ hr {
     padding: 5px !important;
   }
 }
+.edit-customer-icon {
+  content: url(../images/edit-customer.svg);
+  width: 40px;
+}
+.comm-history-icon {
+  content: url(../images/communication.svg);
+  width: 20px;
+}
+.last-visit-icon {
+  content: url(../images/lastvisits.svg);
+  width: 40px;
+}
+.medical-list-icon {
+  content: url(../images/medicallists.svg);
+  width: 40px;
+}
+.customerlist-grid tr:hover {
+  background: #d8e2f1 !important;
+}
+.recent .mr-rx-icon { 
+  width: 20px !important;
+}
+.recent .medicalrecord-icon { 
+  width: 20px !important;
+}

@@ -2993,4 +2993,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }
+  gotoCustomerDetails(waitlist) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: { action: 'view' }
+    };
+    this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id], navigationExtras);
+  }
+  stopprop(event) {
+    event.stopPropagation();
+}
 }

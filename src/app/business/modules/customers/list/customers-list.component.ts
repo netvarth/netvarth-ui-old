@@ -384,8 +384,11 @@ export class CustomersListComponent implements OnInit {
       queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
     };
 
-  this.shared_functions.removeitemfromLocalStorage('mrId');
-this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
-    }
+    this.shared_functions.removeitemfromLocalStorage('mrId');
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+  }
+  stopprop(event) {
+    event.stopPropagation();
+  }
 }
 

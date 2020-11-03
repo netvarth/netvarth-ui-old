@@ -283,7 +283,7 @@
                   <thead id="childActionBar" *ngIf="startedCheckins.length > 1 || apptStartedMultiSelection">
                     <tr>
                       <th class="chkWth check-table-head" *ngIf="startedCheckins.length > 1" colspan="3">
-                        <input type="checkbox" class="ckbx pull-left" [checked]="chkStartedSelectAppointments"
+                        <input type="checkbox" class="ckbx pull-left" [checked]="chkStartedSelectAppointments" (click)="stopprop($event)"
                           (change)="selectAllStarted()" [(ngModel)]="chkStartedSelectAppointments" [ngModelOptions]="{standalone: true}"/>
                         <label class="selectall"> Select all</label>
                         <a *ngIf="apptStartedMultiSelection" class="statusText btn-play pointer-cursor act-btn"
@@ -308,9 +308,9 @@
                     </tr>
                   </tbody>
                   <tbody *ngIf="startedCheckins.length > 0 && activeQs.length > 0">
-                    <tr *ngFor="let checkin of startedCheckins, let i=index">
+                    <tr class="pointer-cursor" *ngFor="let checkin of startedCheckins, let i=index" (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="startedCheckins.length > 1">
-                        <input type="checkbox" class="ckbx pull-left" [checked]="startedChkAppointments[i]"
+                        <input type="checkbox" class="ckbx pull-left" [checked]="startedChkAppointments[i]" (click)="stopprop($event)"
                           (change)="chkStartedAptHistoryClicked(i, checkin)" />
                       </td>
                       <td class="parent-selection parent-title td-one">
@@ -324,14 +324,14 @@
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                          (click)="goCheckinDetail(checkin)">
+                          (click)="gotoCustomerDetails(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                          (click)="goCheckinDetail(checkin)">
+                          (click)="gotoCustomerDetails(checkin)">
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
@@ -371,10 +371,10 @@
                             *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
                           <span [matTooltip]="checkin.service.consumerNoteTitle | capitalizeFirst"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.consumerNote"
-                            (click)="showConsumerNote(checkin)">
+                            (click)="stopprop($event);showConsumerNote(checkin)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'"
+                          <span (click)="stopprop($event);openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.hasAttachment"><i
                               style="font-size: 20px;" class="material-icons">attach_file</i></span>
                         </div>
@@ -394,7 +394,7 @@
                       </td>
                       <td class="q-actions td-four">
                         <a class="statusText btn-play pointer-cursor start-btn"
-                          (click)="changeWaitlistStatus('started', 'STARTED', checkin)"
+                          (click)="stopprop($event);changeWaitlistStatus('started', 'STARTED', checkin)"
                           *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -402,7 +402,7 @@
                         <a class="statusText btn-play pointer-cursor start-btn" style="padding: 3px 5px 5px 2px;"
                           *ngIf="(time_type==1||time_type==3) && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
-                          (click)="showCallingModes(checkin, 'STARTED')">
+                          (click)="stopprop($event);showCallingModes(checkin, 'STARTED')">
                           <span
                             *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -422,14 +422,14 @@
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
-                          (click)="changeWaitlistStatus('started', 'DONE', checkin)" [matTooltipClass]="tooltipcls"
+                          (click)="stopprop($event);changeWaitlistStatus('started', 'DONE', checkin)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Complete'" *ngIf="checkin.waitlistStatus == 'started'">
                           <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                             *ngIf="!small_device_display">
                             {{done_cap}}</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor act-btn single-action"
-                          (click)="showCheckinActions('started', checkin)" [matTooltipClass]="tooltipcls"
+                          (click)="stopprop($event);showCheckinActions('started', checkin)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
                           Actions <i class="fa fa-caret-down"></i>
                         </a>
@@ -461,7 +461,7 @@
                   <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                     <tr>
                       <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
-                        <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
+                        <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments" (click)="stopprop($event)"
                           (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments" [ngModelOptions]="{standalone: true}"/>
                         <label class="selectall"> Select all</label>
                         <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
@@ -489,9 +489,9 @@
                     </tr>
                   </tbody>
                   <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0">
-                    <tr *ngFor="let checkin of check_in_filtered_list, let i=index">
+                    <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index" (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                        <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
+                        <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]" (click)="stopprop($event)"
                           (change)="chkAptHistoryClicked(i, checkin)" />
                       </td>
                       <td class="parent-selection parent-title td-one">
@@ -505,14 +505,14 @@
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                          (click)="goCheckinDetail(checkin)">
+                          (click)="gotoCustomerDetails(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                          (click)="goCheckinDetail(checkin)">
+                          (click)="gotoCustomerDetails(checkin)">
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
@@ -553,10 +553,10 @@
                             *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
                           <span [matTooltip]="checkin.service.consumerNoteTitle | capitalizeFirst"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.consumerNote"
-                            (click)="showConsumerNote(checkin)">
+                            (click)="stopprop($event);showConsumerNote(checkin)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'"
+                          <span (click)="stopprop($event);openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.hasAttachment"><i
                               style="font-size: 20px;" class="material-icons">attach_file</i></span>
                         </div>
@@ -578,7 +578,7 @@
                         <a class="statusText btn-play pointer-cursor call-btn"
                           [class.stopcall-btn]="checkin.callingStatus"
                           *ngIf="!small_device_display && board_count > 0 && time_type == 1 && !checkin.virtualService && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
-                          (click)="callingWaitlist(checkin)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
+                          (click)="stopprop($event);callingWaitlist(checkin)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                           <i class="dashboardcallstop-icon" *ngIf="checkin.callingStatus"></i> <span
                             *ngIf="!small_device_display && checkin.callingStatus">&nbsp; Stop
                           </span>
@@ -587,7 +587,7 @@
                             &nbsp;Call</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
-                          (click)="changeWaitlistStatus(statusAction, 'STARTED', checkin)"
+                          (click)="stopprop($event);changeWaitlistStatus(statusAction, 'STARTED', checkin)"
                           *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -595,7 +595,7 @@
                         <a class="statusText btn-play pointer-cursor start-btn" style="padding: 3px 5px 5px 2px;"
                           *ngIf="(time_type==1||time_type==3) && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
-                          (click)="showCallingModes(checkin, 'STARTED')">
+                          (click)="stopprop($event);showCallingModes(checkin, 'STARTED')">
                           <span
                             *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -615,14 +615,14 @@
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
-                          (click)="changeWaitlistStatus(statusAction, 'DONE', checkin)" [matTooltipClass]="tooltipcls"
+                          (click)="stopprop($event);changeWaitlistStatus(statusAction, 'DONE', checkin)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Complete'" *ngIf="checkin.waitlistStatus == 'started'">
                           <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                             *ngIf="!small_device_display">
                             {{done_cap}}</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor act-btn single-action"
-                          (click)="showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
+                          (click)="stopprop($event);showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
                           Actions <i class="fa fa-caret-down"></i>
                         </a>
@@ -753,7 +753,7 @@
                 <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                   <tr>
                     <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
-                      <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
+                      <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments" (click)="stopprop($event)"
                         (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments" [ngModelOptions]="{standalone: true}" />
                       <label class="selectall"> Select all</label>
                       <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
@@ -778,9 +778,9 @@
                   </tr>
                 </tbody>
                 <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0">
-                  <tr *ngFor="let checkin of check_in_filtered_list, let i=index">
+                  <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index" (click)="goCheckinDetail(checkin)">
                     <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                      <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
+                      <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]" (click)="stopprop($event)"
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </td>
                     <td class="parent-selection parent-title td-one">
@@ -794,14 +794,14 @@
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                        (click)="goCheckinDetail(checkin)">
+                        (click)="gotoCustomerDetails(checkin)">
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                        (click)="goCheckinDetail(checkin)">
+                        (click)="gotoCustomerDetails(checkin)">
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
@@ -842,10 +842,10 @@
                           *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
                         <span [matTooltip]="checkin.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.consumerNote"
-                          (click)="showConsumerNote(checkin)">
+                          (click)="stopprop($event);showConsumerNote(checkin)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'"
+                        <span (click)="stopprop($event);openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.hasAttachment"><i
                             style="font-size: 20px;" class="material-icons">attach_file</i></span>
                       </div>
@@ -865,7 +865,7 @@
                     </td>
                     <td class="q-actions td-four">
                       <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="changeWaitlistStatus(statusAction, 'STARTED', checkin)"
+                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'STARTED', checkin)"
                         *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -873,7 +873,7 @@
                       <a class="statusText btn-play pointer-cursor start-btn" style="padding: 3px 5px 5px 2px;"
                         *ngIf="(time_type==1||time_type==3) && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
-                        (click)="showCallingModes(checkin, 'STARTED')">
+                        (click)="stopprop($event);showCallingModes(checkin, 'STARTED')">
                         <span
                           *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -893,14 +893,14 @@
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
-                        (click)="changeWaitlistStatus(statusAction, 'DONE', checkin)" [matTooltipClass]="tooltipcls"
+                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'DONE', checkin)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Complete'" *ngIf="checkin.waitlistStatus == 'started'">
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                           *ngIf="!small_device_display">
                           {{done_cap}}</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor act-btn single-action"
-                        (click)="showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
+                        (click)="stopprop($event);showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
                         Actions <i class="fa fa-caret-down"></i>
                       </a>
@@ -1111,7 +1111,7 @@
                 <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                   <tr>
                     <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
-                      <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
+                      <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments" (click)="stopprop($event)"
                         (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments" [ngModelOptions]="{standalone: true}" />
                       <label class="selectall"> Select all</label>
                       <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
@@ -1136,9 +1136,9 @@
                   </tr>
                 </tbody>
                 <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0">
-                  <tr *ngFor="let checkin of check_in_filtered_list, let i=index">
+                  <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index" (click)="goCheckinDetail(checkin)">
                     <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                      <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
+                      <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]" (click)="stopprop($event)"
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </td>
                     <td class="parent-selection parent-title td-one">
@@ -1152,14 +1152,14 @@
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                        (click)="goCheckinDetail(checkin)">
+                        (click)="gotoCustomerDetails(checkin)">
                         {{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                        (click)="goCheckinDetail(checkin)">
+                        (click)="gotoCustomerDetails(checkin)">
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
@@ -1199,10 +1199,10 @@
                           *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
                         <span [matTooltip]="checkin.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.consumerNote"
-                          (click)="showConsumerNote(checkin)">
+                          (click)="stopprop($event);showConsumerNote(checkin)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'"
+                        <span (click)="stopprop($event);openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.hasAttachment"><i
                             style="font-size: 20px;" class="material-icons">attach_file</i></span>
                       </div>
@@ -1227,7 +1227,7 @@
                     </td>
                     <td class="q-actions td-four">
                       <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="changeWaitlistStatus(statusAction, 'STARTED', checkin)"
+                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'STARTED', checkin)"
                         *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -1235,7 +1235,7 @@
                       <a class="statusText btn-play pointer-cursor start-btn" style="padding: 3px 5px 5px 2px;"
                         *ngIf="(time_type==1||time_type==3) && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
-                        (click)="showCallingModes(checkin, 'STARTED')">
+                        (click)="stopprop($event);showCallingModes(checkin, 'STARTED')">
                         <span
                           *ngIf="checkin.service.serviceType === 'virtualService' && (checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'||checkin.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1255,14 +1255,14 @@
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
-                        (click)="changeWaitlistStatus(statusAction, 'DONE', checkin)" [matTooltipClass]="tooltipcls"
+                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'DONE', checkin)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Complete'" *ngIf="checkin.waitlistStatus == 'started'">
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                           *ngIf="!small_device_display">
                           {{done_cap}}</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor act-btn single-action"
-                        (click)="showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
+                        (click)="stopprop($event);showCheckinActions(statusAction, checkin)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
                         Actions <i class="fa fa-caret-down"></i>
                       </a>

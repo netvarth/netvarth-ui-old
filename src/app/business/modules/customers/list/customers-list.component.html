@@ -138,7 +138,7 @@
             </div>
           </div> -->
 
-          <table class="table">
+          <table class="table customerlist-grid">
             <!-- <thead>
             <tr>
               <th>
@@ -147,9 +147,9 @@
             </tr>
           </thead> -->
             <tbody>
-              <tr *ngFor="let customer of customers let i=index" [class.selected-customer]="customerSelected[i]">
+              <tr class="pointer-cursor" *ngFor="let customer of customers let i=index" [class.selected-customer]="customerSelected[i]" (click)="viewCustomer(customer)">
                 <td class="one">
-                  <input [checked]="customerSelected[i]" type="checkbox" class="ckbx pull-left"
+                  <input [checked]="customerSelected[i]" type="checkbox" class="ckbx pull-left" (click)="stopprop($event)"
                     (change)="selectcustomers(i, customer)" />
                   <span *ngIf="customer.jaldeeId" class="pad-rt-5 mgn-lt-10"><b>{{customer_label | capitalizeFirst}}
                       Id:</b> {{customer.jaldeeId}}</span></td>
@@ -171,7 +171,7 @@
                 </td>
                 <td class="four pull-right">
                   <span>
-                    <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                    <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)"> 
                       <mat-icon>more_vert</mat-icon>
                     </button>
                   </span>

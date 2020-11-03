@@ -559,19 +559,19 @@
                       <div class="table-responsive width100pc">
                         <table class="table tbl-qboard childDetails child-tbl-color">
                           <tbody *ngFor="let appt of timeSlotAppts[slot.time], let apptIndex=index">
-                            <tr>
+                            <tr class="pointer-cursor" (click)="goCheckinDetail(appt)">
                               <td class="chkWth"><input
                                   [checked]="apptsChecked && apptsChecked[slotIndex] && apptsChecked[slotIndex][apptIndex]"
                                   type="checkbox" class="ckbx pull-left"
                                   (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
                               <td class="parent-selection parent-title td-one">
                                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                                  class="bold pull-left pointer-cursor font11" (click)="goCheckinDetail(appt)"
+                                  class="bold pull-left pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
                                   *ngIf="appt.appmtFor[0].firstName">
                                   {{appt.appmtFor[0].firstName}}
                                   {{appt.appmtFor[0].lastName}}</div>
                                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                                  class="bold pull-left pointer-cursor font11" (click)="goCheckinDetail(appt)"
+                                  class="bold pull-left pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
                                   *ngIf="!appt.appmtFor[0].firstName">
                                   {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}
                                 </div>
@@ -1139,7 +1139,7 @@
                   </tr>
                 </tbody>
                 <tbody class="dynamic-content" *ngFor="let appt of check_in_filtered_list, let i=index">
-                  <tr>
+                  <tr class="pointer-cursor" (click)="goCheckinDetail(appt)">
                     <td class="chkWth">
                       <input [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left"
                         (change)="chkAptHistoryClicked(i, appt)" />
@@ -1151,12 +1151,12 @@
                       <div class="pull-left mgn-lt-5 date greenc bold" *ngIf="time_type!=3">
                         {{getSingleTime(appt.appmtTime)}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                        class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="goCheckinDetail(appt)"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
                         *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">
                         {{appt.appmtFor[0].firstName}}
                         {{appt.appmtFor[0].lastName}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                        class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="goCheckinDetail(appt)"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
                         *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>

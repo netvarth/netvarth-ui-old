@@ -672,9 +672,6 @@ export class CustomerDetailComponent implements OnInit {
     stopprop(event) {
         event.stopPropagation();
     }
-
-
-
     lastvisits(customerDetail) {
         const mrdialogRef = this.dialog.open(LastVisitComponent, {
             width: '80%',

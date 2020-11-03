@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
+import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 
@@ -14,7 +15,7 @@ export class CustomerActionsComponent implements OnInit {
     customerDetails: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         private shared_functions: SharedFunctions, private router: Router,
-        public dialog: MatDialog,
+        public dialog: MatDialog, private provider_shared_functions: ProviderSharedFuctions,
         public dialogRef: MatDialogRef<CustomerActionsComponent>) {
     }
     ngOnInit() {
@@ -76,5 +77,13 @@ export class CustomerActionsComponent implements OnInit {
     }
     closeDialog() {
         this.dialogRef.close();
+    }
+    CustomersInboxMessage() {
+        this.closeDialog();
+        this.provider_shared_functions.ConsumerInboxMessage(this.customerDetails, 'customer-list')
+            .then(
+                () => { },
+                () => { }
+            );
     }
 }

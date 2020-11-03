@@ -251,10 +251,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
 
 
                     <div class="copy locd block-level" *ngIf="viewCustomer">
-                        <!-- <div class="mgn-up-10 mgn-rt-15" *ngIf="!showMoreActivity">
-                            <span class="customer-action-btn pointer-cursor"
-                                (click)="showCustomerAction()">Actions</span>
-                        </div> -->
                         <div class="col-sm-12 col-md-12 col-lg-12 no-padding-small">
                             <div class="customer-detail-box" *ngIf="!showMoreActivity">
                                 <span class="customer-action-btn pointer-cursor"
@@ -301,24 +297,18 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #visitMenu="matMenu">
-                                                            <button *ngIf="domain === 'healthCare'" mat-menu-item
+                                                            <button class="recent" *ngIf="domain === 'healthCare'" mat-menu-item
                                                                 (click)="medicalRecord(visit)">
-                                                                <i class="medicalrecord-icon-customer"></i>
-                                                                <span *ngIf="visit.waitlist.mrId === 0"> Create
-                                                                    MedicalRecord </span>
-                                                                <span *ngIf="visit.waitlist.mrId !== 0"> View
-                                                                    MedicalRecord </span>
+                                                                <i class="medicalrecord-icon"></i>
+                                                                    MedicalRecord
                                                             </button>
-                                                            <button *ngIf="domain === 'healthCare'" mat-menu-item
+                                                            <button class="recent" *ngIf="domain === 'healthCare'" mat-menu-item
                                                                 (click)="prescription(visit)">
-                                                                <i class="mr-rx-icon-customer"></i>
-                                                                <span *ngIf="visit.waitlist.prescriptionCreated"> View
-                                                                    RX</span>
-                                                                <span *ngIf="!visit.waitlist.prescriptionCreated">
-                                                                    Create RX</span>
+                                                                <i class="mr-rx-icon"></i>
+                                                                     RX
                                                             </button>
                                                             <button mat-menu-item (click)="showCommHistory(visit)">
-                                                                <i class="mr-rx-icon-customer"></i>
+                                                                <i class="comm-history-icon"></i>
                                                                 Communication history
                                                             </button>
                                                             <button *ngIf="visit.waitlist.consumerNote" mat-menu-item
@@ -346,24 +336,18 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #visitMenu="matMenu">
-                                                            <button *ngIf="domain === 'healthCare'" mat-menu-item
+                                                            <button class="recent" *ngIf="domain === 'healthCare'" mat-menu-item
                                                                 (click)="medicalRecord(visit)">
-                                                                <i class="medicalrecord-icon-customer"></i>
-                                                                <span *ngIf="visit.appointmnet.mrId === 0"> Create
-                                                                    MedicalRecord </span>
-                                                                <span *ngIf="visit.appointmnet.mrId !== 0"> View
-                                                                    MedicalRecord </span>
+                                                                <i class="medicalrecord-icon"></i>
+                                                                    MedicalRecord 
                                                             </button>
-                                                            <button *ngIf="domain === 'healthCare'" mat-menu-item
+                                                            <button class="recent" *ngIf="domain === 'healthCare'" mat-menu-item
                                                                 (click)="prescription(visit)">
-                                                                <i class="mr-rx-icon-customer"></i>
-                                                                <span *ngIf="visit.appointmnet.prescriptionCreated">
-                                                                    View RX</span>
-                                                                <span *ngIf="!visit.appointmnet.prescriptionCreated">
-                                                                    Create RX</span>
+                                                                <i class="mr-rx-icon"></i>
+                                                                RX
                                                             </button>
                                                             <button mat-menu-item (click)="showCommHistory(visit)">
-                                                                <i class="mr-rx-icon-customer"></i>
+                                                                <i class="comm-history-icon"></i>
                                                                 Communication history
                                                             </button>
                                                             <button *ngIf="visit.appointmnet.consumerNote" mat-menu-item

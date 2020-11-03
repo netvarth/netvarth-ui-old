@@ -699,4 +699,11 @@ export class CheckinActionsComponent implements OnInit {
         };
         this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
+    gotoCustomerDetails() {
+        this.dialogRef.close();
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'view' }
+          };
+          this.router.navigate(['/provider/customers/' + this.checkin.waitlistingFor[0].id], navigationExtras);
+    }
 }

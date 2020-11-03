@@ -75,6 +75,12 @@
                 <div class="icon-text">Status change</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="gotoCustomerDetails()">
+            <div class="action-box-sub">
+                <span class="changestatus-icon"></span>
+                <div class="icon-text">{{customer_label}} details</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()" *ngIf="showMsg">
             <div class="action-box-sub">
                 <span class="message-icon"></span>
