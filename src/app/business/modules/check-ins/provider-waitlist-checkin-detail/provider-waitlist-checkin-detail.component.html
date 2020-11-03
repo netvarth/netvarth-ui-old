@@ -83,9 +83,9 @@
                     </span>
                   </div>
                   <div *ngIf="settings['calculationMode']!='NoCalc' && (waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived') && (waitlist_data && !waitlist_data.appointmentTime)">
-                    <span class="ttle" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==1">Est Wait
+                    <span class="status-label" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==1">Est Wait
                       Time</span>
-                    <span class="ttle" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==2"> Est Service Time</span>
+                    <span class="status-label" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==2"> Est Service Time</span><br>
                     <span *ngIf="getAppxTime(waitlist_data) != -1 && !showEditView">
                       {{getAppxTime(waitlist_data)}}</span>
                   </div>
