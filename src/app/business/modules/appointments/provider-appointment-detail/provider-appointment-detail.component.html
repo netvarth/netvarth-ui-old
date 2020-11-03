@@ -45,9 +45,9 @@
                 <span class="itemHead">Phone No</span>
                 <span class="itemVal">{{waitlist_data.phoneNumber}}</span>
               </div>
-              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.providerConsumer.jaldeeId">
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].memberJaldeeId">
                 <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>
-                <span class="itemVal">{{waitlist_data.providerConsumer.jaldeeId}}</span>
+                <span class="itemVal">{{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.service.deptName">
                 <span class="itemHead">Department</span>
