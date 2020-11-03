@@ -74,11 +74,14 @@ export class AppointmentActionsComponent implements OnInit {
         this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
-        console.log(this.data);
         this.appt = this.data.checkinData;
-        this.getPos();
-        this.getLabel();
-        this.setData();
+        if (!this.data.multiSelection) {
+            this.getPos();
+            this.getLabel();
+            this.setData();
+        } else {
+            this.showMsg = true;
+        }
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
@@ -279,45 +282,44 @@ export class AppointmentActionsComponent implements OnInit {
                     layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
                     this.board_count = layout_list.length;
                     this.setActions();
+                },
+                error => {
+                    this.setActions();
                 });
     }
     setActions() {
-        if (!this.data.multiSelection) {
-            if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed') {
-                this.showUndo = true;
-            }
-            if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && !this.appt.virtualService) {
-                this.showArrived = true;
-            }
-            if (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') {
-                this.showCancel = true;
-            }
-            if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeWaitlistDistanceTime && this.appt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
-                this.trackStatus = true;
-            }
-            if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected' && (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo)) {
-                this.showSendDetails = true;
-            }
-            if (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo) {
-                this.showMsg = true;
-            }
-            if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService)) {
-                this.showStart = true;
-            }
-            if ((this.data.timetype === 1 || this.data.timetype === 3) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started')) {
-                this.showTeleserviceStart = true;
-            }
-            if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived')) {
-                this.showCall = true;
-            }
-            if (this.pos && ((this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') || ((this.appt.apptStatus === 'cancelled' || this.appt.apptStatus === 'Rejected') && this.appt.paymentStatus !== 'NotPaid'))) {
-                this.showBill = true;
-            }
-            if (this.data.timetype !== 2 && (this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected')) {
-                this.showmrrx = true;
-            }
-        } else {
+        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed') {
+            this.showUndo = true;
+        }
+        if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && !this.appt.virtualService) {
+            this.showArrived = true;
+        }
+        if (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') {
+            this.showCancel = true;
+        }
+        if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeWaitlistDistanceTime && this.appt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
+            this.trackStatus = true;
+        }
+        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected' && (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo)) {
+            this.showSendDetails = true;
+        }
+        if (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo) {
             this.showMsg = true;
+        }
+        if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService)) {
+            this.showStart = true;
+        }
+        if ((this.data.timetype === 1 || this.data.timetype === 3) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started')) {
+            this.showTeleserviceStart = true;
+        }
+        if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived')) {
+            this.showCall = true;
+        }
+        if (this.pos && ((this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') || ((this.appt.apptStatus === 'cancelled' || this.appt.apptStatus === 'Rejected') && this.appt.paymentStatus !== 'NotPaid'))) {
+            this.showBill = true;
+        }
+        if (this.data.timetype !== 2 && (this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected')) {
+            this.showmrrx = true;
         }
     }
     getLabel() {
@@ -373,11 +375,11 @@ export class AppointmentActionsComponent implements OnInit {
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
                 // setTimeout(() => {
-                    // this.labels();
-                    this.labelMap = new Object();
-                    this.labelMap[data.label] = data.value;
-                    this.addLabel();
-                    this.getDisplayname(data.label);
+                // this.labels();
+                this.labelMap = new Object();
+                this.labelMap[data.label] = data.value;
+                this.addLabel();
+                this.getDisplayname(data.label);
                 // }, 500);
             }
             this.getLabel();
@@ -453,7 +455,10 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.getProviderPOSStatus().subscribe(data => {
             this.pos = data['enablepos'];
             this.getDisplayboardCount();
-        });
+        },
+            error => {
+                this.getDisplayboardCount();
+            });
     }
     rescheduleAppointment() {
         if (moment(this.sel_checkindate).format('YYYY-MM-DD') === moment(this.server_date).format('YYYY-MM-DD')) {
@@ -603,79 +608,78 @@ export class AppointmentActionsComponent implements OnInit {
         }
     }
     medicalRecord() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.appt.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.appt.mrId;
-      }
-      let providerId ;
-      if (this.appt.provider && this.appt.provider.id) {
-       providerId = this.appt.provider.id;
-      } else {
-        providerId = '';
-      }
-      console.log(this.appt);
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
-          'serviceId': this.appt.service.id,
-          'serviceName': this.appt.service.name,
-          'department': this.appt.service.deptName,
-          'booking_type': 'APPT',
-          'booking_date': this.appt.consLastVisitedDate,
-          'booking_time': this.appt.apptTakenTime,
-          'mr_mode': medicalrecord_mode,
-          'mrId': mrId ,
-          'booking_id': this.appt.uid,
-          'back_type': 'appt',
-          'provider_id': providerId,
-          'visitDate': this.appt.consLastVisitedDate,
+        this.dialogRef.close();
+        let medicalrecord_mode = 'new';
+        let mrId = 0;
+        if (this.appt.mrId) {
+            medicalrecord_mode = 'view';
+            mrId = this.appt.mrId;
         }
-      };
+        let providerId;
+        if (this.appt.provider && this.appt.provider.id) {
+            providerId = this.appt.provider.id;
+        } else {
+            providerId = '';
+        }
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
+                'serviceId': this.appt.service.id,
+                'serviceName': this.appt.service.name,
+                'department': this.appt.service.deptName,
+                'booking_type': 'APPT',
+                'booking_date': this.appt.consLastVisitedDate,
+                'booking_time': this.appt.apptTakenTime,
+                'mr_mode': medicalrecord_mode,
+                'mrId': mrId,
+                'booking_id': this.appt.uid,
+                'back_type': 'appt',
+                'provider_id': providerId,
+                'visitDate': this.appt.consLastVisitedDate,
+            }
+        };
 
-      this.router.navigate(['provider', 'customers',  'medicalrecord'], navigationExtras);
+        this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
     }
     prescription() {
-      this.dialogRef.close();
-      let medicalrecord_mode = 'new';
-      let mrId = 0;
-      if (this.appt.mrId) {
-        medicalrecord_mode = 'view';
-        mrId = this.appt.mrId;
-      }
-       let providerId ;
-      if (this.appt.provider && this.appt.provider.id) {
-       providerId = this.appt.provider.id;
-      } else {
-        providerId = '';
-      }
-      const navigationExtras: NavigationExtras = {
-
-        queryParams: {
-          'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
-          'serviceId': this.appt.service.id,
-          'serviceName': this.appt.service.name,
-          'department': this.appt.service.deptName,
-          'booking_type': 'APPT',
-          'booking_date': this.appt.consLastVisitedDate,
-          'booking_time': this.appt.apptTakenTime,
-          'mr_mode': medicalrecord_mode,
-          'mrId': mrId ,
-          'booking_id': this.appt.uid,
-          'back_type': 'appt',
-          'provider_id': providerId,
-          'visitDate': this.appt.consLastVisitedDate,
+        this.dialogRef.close();
+        let medicalrecord_mode = 'new';
+        let mrId = 0;
+        if (this.appt.mrId) {
+            medicalrecord_mode = 'view';
+            mrId = this.appt.mrId;
         }
-      };
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+        let providerId;
+        if (this.appt.provider && this.appt.provider.id) {
+            providerId = this.appt.provider.id;
+        } else {
+            providerId = '';
+        }
+        const navigationExtras: NavigationExtras = {
+
+            queryParams: {
+                'customerDetail': JSON.stringify(this.appt.appmtFor[0]),
+                'serviceId': this.appt.service.id,
+                'serviceName': this.appt.service.name,
+                'department': this.appt.service.deptName,
+                'booking_type': 'APPT',
+                'booking_date': this.appt.consLastVisitedDate,
+                'booking_time': this.appt.apptTakenTime,
+                'mr_mode': medicalrecord_mode,
+                'mrId': mrId,
+                'booking_id': this.appt.uid,
+                'back_type': 'appt',
+                'provider_id': providerId,
+                'visitDate': this.appt.consLastVisitedDate,
+            }
+        };
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
     gotoCustomerDetails() {
         this.dialogRef.close();
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'view' }
-          };
-          this.router.navigate(['/provider/customers/' + this.appt.appmtFor[0].id], navigationExtras);
+        };
+        this.router.navigate(['/provider/customers/' + this.appt.appmtFor[0].id], navigationExtras);
     }
 }

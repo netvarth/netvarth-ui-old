@@ -225,7 +225,6 @@ export class CustomerDetailComponent implements OnInit {
                                             this.breadcrumbs = breadcrumbs;
                                             this.viewCustomer = true;
                                             this.loading = false;
-                                            console.log(this.viewCustomer);
                                             if (this.customerId) {
                                                 this.getCustomerLastVisit();
                                             }
@@ -665,7 +664,6 @@ export class CustomerDetailComponent implements OnInit {
                 this.visitDetailsArray = data;
                 this.visitDetails = this.visitDetailsArray.slice(0, 5);
                 this.loading = false;
-                console.log(this.visitDetails);
             }
         );
     }
@@ -711,7 +709,6 @@ export class CustomerDetailComponent implements OnInit {
             medicalrecord_mode = 'view';
             mrId = visitDetail.mrId;
         }
-        console.log(visitDetail);
         if (visitDetail.waitlist) {
             let providerId;
             if (visitDetail.waitlist.provider && visitDetail.waitlist.provider.id) {
@@ -736,7 +733,6 @@ export class CustomerDetailComponent implements OnInit {
                     'provider_id': providerId
                 }
             };
-            console.log(navigationExtras);
             this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
         } else {
             let providerId;
@@ -745,7 +741,6 @@ export class CustomerDetailComponent implements OnInit {
             } else {
                 providerId = '';
             }
-            console.log(visitDetail);
             const navigationExtras: NavigationExtras = {
                 queryParams: {
                     'customerDetail': JSON.stringify(visitDetail.appointmnet.appmtFor[0]),
@@ -763,7 +758,6 @@ export class CustomerDetailComponent implements OnInit {
                     'visitDate': visitDetail.appointmnet.consLastVisitedDate,
                 }
             };
-            console.log(navigationExtras);
             this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
         }
     }
@@ -898,7 +892,6 @@ export class CustomerDetailComponent implements OnInit {
                             this.communication_history.push(his);
                         }
                     }
-                    console.log(this.communication_history);
                     this.sortMessages();
                     this.loading = false;
                     this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
@@ -922,8 +915,8 @@ export class CustomerDetailComponent implements OnInit {
     goBackfromAction(source) {
         this.customerAction = '';
         if (source === 'recent') {
-        this.visitDetails = this.visitDetailsArray.slice(0, 5);
-        this.showMoreActivity = false;
+            this.visitDetails = this.visitDetailsArray.slice(0, 5);
+            this.showMoreActivity = false;
         }
     }
     showMore() {
@@ -933,5 +926,5 @@ export class CustomerDetailComponent implements OnInit {
     getSingleTime(slot) {
         const slots = slot.split('-');
         return this.shared_functions.convert24HourtoAmPm(slots[0]);
-      }
+    }
 }

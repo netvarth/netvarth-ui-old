@@ -97,9 +97,11 @@ export class CheckinActionsComponent implements OnInit {
             this.checkin_date = this.checkin.date;
             this.accountid = this.checkin.providerAccount.id;
             this.showToken = this.checkin.showToken;
+            this.getPos();
+            this.getLabel();
+        } else {
+            this.showMsg = true;
         }
-        this.getPos();
-        this.getLabel();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
@@ -432,45 +434,44 @@ export class CheckinActionsComponent implements OnInit {
                     layout_list = data;
                     this.board_count = layout_list.length;
                     this.setActions();
+                },
+                error => {
+                    this.setActions();
                 });
     }
     setActions() {
-        if (!this.data.multiSelection) {
-            if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn') {
-                this.showUndo = true;
-            }
-            if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && !this.checkin.virtualService) {
-                this.showArrived = true;
-            }
-            if (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') {
-                this.showCancel = true;
-            }
-            if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.jaldeeWaitlistDistanceTime && this.checkin.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.checkin.jaldeeStartTimeType === 'ONEHOUR' || this.checkin.jaldeeStartTimeType === 'AFTERSTART')) {
-                this.trackStatus = true;
-            }
-            if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled' && ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email)) {
-                this.showSendDetails = true;
-            }
-            if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
-                this.showMsg = true;
-            }
-            if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (!this.checkin.virtualService)) {
-                this.showStart = true;
-            }
-            if ((this.data.timetype === 1 || this.data.timetype === 3) && this.checkin.virtualService && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started')) {
-                this.showTeleserviceStart = true;
-            }
-            if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
-                this.showCall = true;
-            }
-            if (this.pos && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
-                this.showBill = true;
-            }
-            if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled') {
-                this.showmrrx = true;
-            }
-        } else {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn') {
+            this.showUndo = true;
+        }
+        if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && !this.checkin.virtualService) {
+            this.showArrived = true;
+        }
+        if (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') {
+            this.showCancel = true;
+        }
+        if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.jaldeeWaitlistDistanceTime && this.checkin.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.checkin.jaldeeStartTimeType === 'ONEHOUR' || this.checkin.jaldeeStartTimeType === 'AFTERSTART')) {
+            this.trackStatus = true;
+        }
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled' && ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email)) {
+            this.showSendDetails = true;
+        }
+        if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
             this.showMsg = true;
+        }
+        if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (!this.checkin.virtualService)) {
+            this.showStart = true;
+        }
+        if ((this.data.timetype === 1 || this.data.timetype === 3) && this.checkin.virtualService && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started')) {
+            this.showTeleserviceStart = true;
+        }
+        if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
+            this.showCall = true;
+        }
+        if (this.pos && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
+            this.showBill = true;
+        }
+        if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled') {
+            this.showmrrx = true;
         }
     }
     getLabel() {
@@ -606,7 +607,10 @@ export class CheckinActionsComponent implements OnInit {
         this.provider_services.getProviderPOSStatus().subscribe(data => {
             this.pos = data['enablepos'];
             this.getDisplayboardCount();
-        });
+        },
+            error => {
+                this.getDisplayboardCount();
+            });
     }
     addLabeltoAppt(label, event) {
         this.labelMap = new Object();
@@ -703,7 +707,7 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'view' }
-          };
-          this.router.navigate(['/provider/customers/' + this.checkin.waitlistingFor[0].id], navigationExtras);
+        };
+        this.router.navigate(['/provider/customers/' + this.checkin.waitlistingFor[0].id], navigationExtras);
     }
 }

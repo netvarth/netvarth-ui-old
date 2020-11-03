@@ -663,7 +663,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           // } else {
           //   _this.scheduleExist = false;
           // }
-          resolve(schedules);
+          const qList = schedules.filter(sch => sch.apptState !== 'EXPIRED');
+          resolve(qList);
         });
     });
   }

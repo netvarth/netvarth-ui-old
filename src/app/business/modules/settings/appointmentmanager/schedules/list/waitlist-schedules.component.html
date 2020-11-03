@@ -250,12 +250,10 @@
                                                                                                 user level
                                                                                         </button>
                                                                                         <button mat-menu-item
-                                                                                                *ngIf="queue.showDisableBtn && !queue.provider"
+                                                                                                *ngIf="queue.showDisableBtn && !queue.provider && queue.apptState !== 'EXPIRED'"
                                                                                                 (click)="changeProviderScheduleStatus(queue)">
-                                                                                                <i *ngIf="queue.apptState=='DISABLED'"
-                                                                                                        class="icon-enable"></i>
-                                                                                                <i *ngIf="queue.apptState=='ENABLED'"
-                                                                                                        class="icon-enable"></i>{{(queue.apptState=='DISABLED') ? 'Enable' : 'Disable'}}
+                                                                                                <i
+                                                                                                        class="icon-enable"></i>Enable
                                                                                         </button>
                                                                                         <button mat-menu-item
                                                                                                 *ngIf="!queue.provider"

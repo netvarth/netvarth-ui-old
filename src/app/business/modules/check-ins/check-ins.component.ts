@@ -1135,7 +1135,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             // } else {
             //   _this.qExist = false;
             // }
-            resolve(queues);
+            const qList = queues.filter(sch => sch.queueState !== 'EXPIRED');
+            resolve(qList);
           });
       });
     }

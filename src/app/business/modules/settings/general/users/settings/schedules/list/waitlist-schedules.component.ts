@@ -346,7 +346,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
                             if (!allQs[ii].instantQueue && allQs[ii].apptState === 'ENABLED') {
                                 this.scheduledQs.push(allQs[ii]);
                             }
-                            if (allQs[ii].apptState === 'DISABLED') {
+                            if (allQs[ii].apptState === 'DISABLED' || allQs[ii].apptState === 'EXPIRED') {
                                 this.disabledQs.push(allQs[ii]);
                             }
                             if (allQs[ii].apptState === 'ENABLED') {
@@ -971,7 +971,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
         });
     }
     redirecToUserSettings() {
-        this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings']);
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings']);
     }
     adduserschedules() {
         this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'schedules', 'add']);

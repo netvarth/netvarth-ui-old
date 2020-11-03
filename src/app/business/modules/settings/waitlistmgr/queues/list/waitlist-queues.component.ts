@@ -331,7 +331,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                                 if (!allQs[ii].instantQueue && allQs[ii].queueState === 'ENABLED') {
                                     this.scheduledQs.push(allQs[ii]);
                                 }
-                                if (allQs[ii].queueState === 'DISABLED') {
+                                if (allQs[ii].queueState === 'DISABLED' || allQs[ii].queueState === 'EXPIRED') {
                                     this.disabledQs.push(allQs[ii]);
                                 }
                                 if (allQs[ii].queueState === 'ENABLED') {

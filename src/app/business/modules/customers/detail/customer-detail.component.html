@@ -248,13 +248,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                             </div> -->
                         </div>
                     </div>
-
-
                     <div class="copy locd block-level" *ngIf="viewCustomer">
                         <div class="col-sm-12 col-md-12 col-lg-12 no-padding-small">
                             <div class="customer-detail-box" *ngIf="!showMoreActivity">
                                 <span class="customer-action-btn pointer-cursor"
-                                (click)="showCustomerAction()">Actions</span>
+                                    (click)="showCustomerAction()">Actions</span>
                                 <div>{{customer_label | capitalizeFirst}} ID: <span
                                         class="cust-detail">{{customer[0].jaldeeId}} </span>
                                 </div>
@@ -262,14 +260,15 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 <div class="cust-detail" *ngIf="customer[0].phoneNo">+91 {{customer[0].phoneNo}}</div>
                                 <div class="cust-detail" *ngIf="customer[0].email">{{customer[0].email}}</div>
                                 <div><span class="mgn-rt-30" *ngIf="customer[0].gender"> Gender:
-                                    <span
-                                    class="cust-detail"> {{customer[0].gender | capitalizeFirst}}</span></span>
-                                    <span *ngIf="customer[0].dob">DOB: <span
-                                        class="cust-detail"> {{customer[0].dob | date: dateFormat}} </span></span>
+                                        <span class="cust-detail">
+                                            {{customer[0].gender | capitalizeFirst}}</span></span>
+                                    <span *ngIf="customer[0].dob">DOB: <span class="cust-detail">
+                                            {{customer[0].dob | date: dateFormat}} </span></span>
                                 </div>
                             </div>
                             <div>
-                                <div class="rece-act mgn-bt-20 mgn-lt-10" *ngIf="!showMoreActivity">Recent activity</div>
+                                <div class="rece-act mgn-bt-20 mgn-lt-10" *ngIf="!showMoreActivity">Recent activity
+                                </div>
                                 <div class="mgn-bt-10 mgn-lt-10" *ngIf="visitDetails.length === 0 && !loading">
                                     No recent activity
                                 </div>
@@ -288,7 +287,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             {{visit.waitlist.token}} </div>
                                                     </td>
                                                     <td> {{visit.waitlist.service.name}}</td>
-                                                    <td class="hidden-xs"> {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
+                                                    <td class="hidden-xs">
+                                                        {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
                                                     <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0"> {{visit.waitlist.amountPaid |
                                                         currency:'&#8377;' }} Paid</span> </td>
                                                     <td>
@@ -297,15 +297,15 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #visitMenu="matMenu">
-                                                            <button class="recent" *ngIf="domain === 'healthCare'" mat-menu-item
-                                                                (click)="medicalRecord(visit)">
+                                                            <button class="recent" *ngIf="domain === 'healthCare'"
+                                                                mat-menu-item (click)="medicalRecord(visit)">
                                                                 <i class="medicalrecord-icon"></i>
-                                                                    MedicalRecord
+                                                                MedicalRecord
                                                             </button>
-                                                            <button class="recent" *ngIf="domain === 'healthCare'" mat-menu-item
-                                                                (click)="prescription(visit)">
+                                                            <button class="recent" *ngIf="domain === 'healthCare'"
+                                                                mat-menu-item (click)="prescription(visit)">
                                                                 <i class="mr-rx-icon"></i>
-                                                                     RX
+                                                                RX
                                                             </button>
                                                             <button mat-menu-item (click)="showCommHistory(visit)">
                                                                 <i class="comm-history-icon"></i>
@@ -326,7 +326,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
                                                     </td>
                                                     <td> {{visit.appointmnet.service.name}}</td>
-                                                    <td class="hidden-xs"> {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
+                                                    <td class="hidden-xs">
+                                                        {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
                                                     <td><span class="rupee-font"
                                                             *ngIf="visit.appointmnet.amountPaid > 0"> {{visit.appointmnet.amountPaid |
                                                         currency:'&#8377;' }} Paid</span></td>
@@ -336,13 +337,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #visitMenu="matMenu">
-                                                            <button class="recent" *ngIf="domain === 'healthCare'" mat-menu-item
-                                                                (click)="medicalRecord(visit)">
+                                                            <button class="recent" *ngIf="domain === 'healthCare'"
+                                                                mat-menu-item (click)="medicalRecord(visit)">
                                                                 <i class="medicalrecord-icon"></i>
-                                                                    MedicalRecord 
+                                                                MedicalRecord
                                                             </button>
-                                                            <button class="recent" *ngIf="domain === 'healthCare'" mat-menu-item
-                                                                (click)="prescription(visit)">
+                                                            <button class="recent" *ngIf="domain === 'healthCare'"
+                                                                mat-menu-item (click)="prescription(visit)">
                                                                 <i class="mr-rx-icon"></i>
                                                                 RX
                                                             </button>
@@ -374,8 +375,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                     <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
                         (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
                 </div>
-
-
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             </div>
         </div>

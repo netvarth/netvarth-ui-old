@@ -971,13 +971,13 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         });
     }
     redirecToApptmanager() {
-        this.routerobj.navigate(['provider', 'settings' , 'appointmentmanager' ]);
-      }
-      redirecToHelp() {
+        this.routerobj.navigate(['provider', 'settings', 'appointmentmanager']);
+    }
+    redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->schedules']);
-      }
-      addschedules() {
+    }
+    addschedules() {
         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', 'add']);
-      }
+    }
 }
 
