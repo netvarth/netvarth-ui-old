@@ -205,7 +205,10 @@ export class PrescriptionComponent implements OnInit {
       this.provider_services.updateMRprescription(result, this.mrId).
         subscribe(res => {
           console.log(res);
-          this.getMrprescription(this.mrId);
+          //this.getMrprescription(this.mrId);
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigations });
           this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
         },
         error => {
@@ -215,7 +218,11 @@ export class PrescriptionComponent implements OnInit {
       this.medicalrecord_service.createMR('prescriptions', result)
         .then(data => {
           this.medicalrecord_service.setCurrentMRID(data);
-          this.getMrprescription(data);
+         // this.getMrprescription(data);
+          this.navigations = { ...this.navigations, 'mrId': data };
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigations });
           this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
         },
           error => {
