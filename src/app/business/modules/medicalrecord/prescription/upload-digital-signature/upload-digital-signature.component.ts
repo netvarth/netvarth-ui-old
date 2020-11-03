@@ -99,6 +99,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
           });
     }
   }
+  
   deleteTempImagefrmdb(img, index) {
       this.provider_services.deleteUplodedsign(img.keyName , this.providerId)
       .subscribe((data) => {
@@ -159,6 +160,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
     const propertiesDetob = {};
     let i = 0;
     for (const pic of this.selectedMessage.files) {
+      console.log(pic);
       submit_data.append('files', pic, pic['name']);
       const properties = {
         'caption': this.selectedMessage.caption[i] || ''
@@ -186,7 +188,6 @@ export class UploadDigitalSignatureComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-
 
   showimgPopup(file) {
     this.signatureviewdialogRef = this.dialog.open(ImagesviewComponent, {

@@ -104,6 +104,9 @@ export class ShareRxComponent implements OnInit {
     });
   }
   ngOnInit() {
+    const cnow = new Date();
+    const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+    this.cacheavoider = dd;
     this.sharewith = 0;
     this.msgreceivers = [{ 'id': 0, 'name': 'Patient' }];
     this.createForm();
@@ -270,9 +273,6 @@ export class ShareRxComponent implements OnInit {
       .subscribe(
         data => {
           this.blogo = data;
-          const cnow = new Date();
-          const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
-          this.cacheavoider = dd;
         },
         () => {
 
@@ -293,6 +293,14 @@ export class ShareRxComponent implements OnInit {
             // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
+  }
+  showdigitalsign() {
+    let logourl = '';
+    if (this.signurl) {
+      logourl = (this.signurl) ? this.signurl + '?' + this.cacheavoider : '';
+    }
+    return this.shared_functions.showlogoicon(logourl);
+  
   }
   showimg() {
     let logourl = '';
