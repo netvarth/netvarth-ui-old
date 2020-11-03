@@ -105,6 +105,7 @@ export class CustomerDetailComponent implements OnInit {
     communication_history: any = [];
     visitDetailsArray = [];
     showMoreActivity = false;
+    selectedDetailsforMsg: any = [];
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -662,7 +663,7 @@ export class CustomerDetailComponent implements OnInit {
         this.provider_services.getCustomerLastVisit(this.customerId).subscribe(
             (data: any) => {
                 this.visitDetailsArray = data;
-                this.visitDetails = this.visitDetailsArray.slice(0, 5);
+                this.visitDetails = this.visitDetailsArray.slice(0, 10);
                 this.loading = false;
             }
         );
@@ -873,14 +874,15 @@ export class CustomerDetailComponent implements OnInit {
     showCommHistory(visitdetails) {
         this.loading = true;
         this.customerAction = 'inbox';
-        this.getCommunicationHistory(visitdetails);
+        this.selectedDetailsforMsg = visitdetails;
+        this.getCommunicationHistory();
     }
-    getCommunicationHistory(visitdetails) {
+    getCommunicationHistory() {
         let uuid;
-        if (visitdetails.waitlist) {
-            uuid = visitdetails.waitlist.ynwUuid;
+        if (this.selectedDetailsforMsg.waitlist) {
+            uuid = this.selectedDetailsforMsg.waitlist.ynwUuid;
         } else {
-            uuid = visitdetails.appointmnet.uid;
+            uuid = this.selectedDetailsforMsg.appointmnet.uid;
         }
         this.provider_services.getProviderInbox()
             .subscribe(
@@ -912,10 +914,10 @@ export class CustomerDetailComponent implements OnInit {
             }
         });
     }
-    goBackfromAction(source) {
+    goBackfromAction(source?) {
         this.customerAction = '';
         if (source === 'recent') {
-            this.visitDetails = this.visitDetailsArray.slice(0, 5);
+            this.visitDetails = this.visitDetailsArray.slice(0, 10);
             this.showMoreActivity = false;
         }
     }

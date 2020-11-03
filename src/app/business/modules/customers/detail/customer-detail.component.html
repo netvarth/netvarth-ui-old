@@ -265,6 +265,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     <span *ngIf="customer[0].dob">DOB: <span class="cust-detail">
                                             {{customer[0].dob | date: dateFormat}} </span></span>
                                 </div>
+                                 <div class="cust-detail" *ngIf="customer[0].address">Address: <span class="cust-detail">{{customer[0].address}}</span></div>
                             </div>
                             <div>
                                 <div class="rece-act mgn-bt-20 mgn-lt-10" *ngIf="!showMoreActivity">Recent activity
@@ -362,7 +363,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div *ngIf="visitDetailsArray.length > 5 && !showMoreActivity">
+                                    <div *ngIf="visitDetailsArray.length > 10 && !showMoreActivity">
                                         <a (click)="showMore()">Show more</a>
                                     </div>
                                 </div>
@@ -373,7 +374,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                 </div>
                 <div class="card" *ngIf="customerAction === 'inbox' && !loading">
                     <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
-                        (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
+                        (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             </div>
