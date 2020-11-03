@@ -12947,5 +12947,5 @@ hr {
   width: 20px;
 }
 .recentactivity .cellhover:hover {
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
 }
