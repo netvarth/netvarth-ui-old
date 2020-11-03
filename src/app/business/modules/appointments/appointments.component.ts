@@ -446,7 +446,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!loggedUser.adminPrivilege) {
       const userQs = [];
       console.log(allSchedules.length);
-      for (let qIndex = 0 ; qIndex < allSchedules.length; qIndex++) {
+      for (let qIndex = 0; qIndex < allSchedules.length; qIndex++) {
         console.log(allSchedules[qIndex]);
         console.log(loggedUser.id);
         if (allSchedules[qIndex].provider && (allSchedules[qIndex].provider.id === loggedUser.id)) {
@@ -681,7 +681,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
       console.log(loggedUser);
       if (!loggedUser.adminPrivilege) {
-        for (let qIndex = 0 ; qIndex < schedules.length; qIndex++) {
+        for (let qIndex = 0; qIndex < schedules.length; qIndex++) {
           console.log(schedules[qIndex]);
           console.log(loggedUser.id);
           if (schedules[qIndex].provider && (schedules[qIndex].provider.id === loggedUser.id)) {
@@ -3410,7 +3410,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onButtonBeforeHook() { }
   onButtonAfterHook() { }
-    gotoCustomerDetails(appt) {
+  gotoCustomerDetails(appt) {
     const navigationExtras: NavigationExtras = {
       queryParams: { action: 'view' }
     };
@@ -3418,5 +3418,5 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   stopprop(event) {
     event.stopPropagation();
-}
+  }
 }

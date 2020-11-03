@@ -855,7 +855,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!loggedUser.adminPrivilege) {
       const userQs = [];
       console.log(allQueues.length);
-      for (let qIndex = 0 ; qIndex < allQueues.length; qIndex++) {
+      for (let qIndex = 0; qIndex < allQueues.length; qIndex++) {
         console.log(allQueues[qIndex]);
         console.log(loggedUser.id);
         if (allQueues[qIndex].provider && (allQueues[qIndex].provider.id === loggedUser.id)) {
@@ -868,7 +868,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       return allQueues;
     }
   }
-  getUserType () {
+  getUserType() {
 
   }
   initViews(queues, source?) {
@@ -948,7 +948,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
       console.log(loggedUser);
       if (!loggedUser.adminPrivilege) {
-        for (let qIndex = 0 ; qIndex < queues.length; qIndex++) {
+        for (let qIndex = 0; qIndex < queues.length; qIndex++) {
           console.log(queues[qIndex]);
           console.log(loggedUser.id);
           if (queues[qIndex].provider && (queues[qIndex].provider.id === loggedUser.id)) {
@@ -2694,25 +2694,25 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getProviders() {
     const _this = this;
     return new Promise(function (resolve) {
-    const apiFilter = {};
-    apiFilter['userType-eq'] = 'PROVIDER';
-    // let filter = 'userType-neq :"assistant"'
-    _this.provider_services.getUsers(apiFilter).subscribe(data => {
-      _this.users = data;
-      const tempUser = {};
-      tempUser['firstName'] = 'All';
-      tempUser['id'] = 'all';
-      _this.users.push(tempUser);
-      if (_this.shared_functions.getitemFromGroupStorage('selectedUser')) {
-        _this.selectedUser = _this.shared_functions.getitemFromGroupStorage('selectedUser');
-      } else {
-        _this.selectedUser = tempUser;
-      }
-      resolve();
-    },
-    () => {
-      resolve();
-    });
+      const apiFilter = {};
+      apiFilter['userType-eq'] = 'PROVIDER';
+      // let filter = 'userType-neq :"assistant"'
+      _this.provider_services.getUsers(apiFilter).subscribe(data => {
+        _this.users = data;
+        const tempUser = {};
+        tempUser['firstName'] = 'All';
+        tempUser['id'] = 'all';
+        _this.users.push(tempUser);
+        if (_this.shared_functions.getitemFromGroupStorage('selectedUser')) {
+          _this.selectedUser = _this.shared_functions.getitemFromGroupStorage('selectedUser');
+        } else {
+          _this.selectedUser = tempUser;
+        }
+        resolve();
+      },
+        () => {
+          resolve();
+        });
       // this.handleUserSelection(this.selectedUser);
     });
   }
@@ -3001,5 +3001,5 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   stopprop(event) {
     event.stopPropagation();
-}
+  }
 }
