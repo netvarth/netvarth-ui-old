@@ -276,7 +276,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 <div class="recentactivity" *ngIf="visitDetails.length > 0">
                                     <table class="table">
                                         <tbody>
-                                            <tr class="pointer-cursor" *ngFor="let visit of visitDetails"
+                                            <tr class="pointer-cursor cellhover" *ngFor="let visit of visitDetails"
                                                 (click)="gettoCustomerDetail(visit)">
                                                 <ng-container *ngIf="visit.waitlist">
                                                     <td class="consumer-dash"> <i *ngIf="!visit.waitlist.showToken"

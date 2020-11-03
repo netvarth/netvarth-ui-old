@@ -96,7 +96,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       this.waitlist_id = params.id;
     });
     this.activated_route.queryParams.subscribe(params => {
-      console.log(params);
       this.timetype = JSON.parse(params.timetype);
     });
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');

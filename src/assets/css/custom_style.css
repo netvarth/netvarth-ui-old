@@ -12946,3 +12946,6 @@ hr {
   content: url(../images/patientnote.svg);
   width: 20px;
 }
+.recentactivity .cellhover:hover {
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+}
