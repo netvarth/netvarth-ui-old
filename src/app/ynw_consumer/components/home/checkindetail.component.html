@@ -169,7 +169,8 @@
                                                 <span
                                                     *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">{{no_cus_notes_cap}}</span>
                                             </mat-tab>
-                                            <mat-tab label="{{titlename}} History">
+
+                                            <!-- <mat-tab label="{{titlename}} History">
                                                 <span *ngIf="wthistory.length > 0">
                                                     <ul *ngFor="let stat of wthistory" class="histry-font mgn-up-10">
                                                         <li>
@@ -178,7 +179,7 @@
                                                     </ul>
                                                 </span>
                                                 <span *ngIf="wthistory.length == 0">No History</span>
-                                            </mat-tab>
+                                            </mat-tab> -->
                                         </mat-tab-group>
                                     </div>
                                 </div>

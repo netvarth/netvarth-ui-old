@@ -45,12 +45,16 @@
                 <span class="itemHead">Phone No</span>
                 <span class="itemVal">{{waitlist_data.phoneNumber}}</span>
               </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.providerConsumer.jaldeeId">
+                <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>
+                <span class="itemVal">{{waitlist_data.providerConsumer.jaldeeId}}</span>
+              </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.service.deptName">
                 <span class="itemHead">Department</span>
                 <span class="itemVal">{{waitlist_data.service.deptName}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.batchId">
-                <span class="status-label">Batch</span>
+                <span class="itemHead">Batch</span>
                 <span>
                   {{waitlist_data.batchId}}
                 </span>
