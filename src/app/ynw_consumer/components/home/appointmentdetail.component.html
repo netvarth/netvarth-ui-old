@@ -154,6 +154,14 @@
                                                 <span
                                                     *ngIf="appt && (appt.consumerNote == '' || !appt.consumerNote)">{{no_cus_notes_cap}}</span>
                                             </mat-tab>
+                                            <mat-tab label="Appointment History">
+                                                <span *ngIf="apptHistory.length > 0">
+                                                    <ul *ngFor="let stat of apptHistory" class="histry-font mgn-up-10">
+                                                        <li>{{stat.appointmentStatus}} on {{stat.date | date:dateFormatSp}}, {{getSingleTime(stat.time)}}</li>
+                                                    </ul>
+                                                </span>
+                                                <span *ngIf="apptHistory.length == 0">No History</span>
+                                            </mat-tab>
                                         </mat-tab-group>
                                     </div>
                                 </div>

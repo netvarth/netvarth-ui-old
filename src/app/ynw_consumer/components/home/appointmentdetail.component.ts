@@ -52,6 +52,7 @@ export class ApptDetailComponent implements OnInit {
     actiondialogRef;
     fav_providers;
     fav_providers_id_list: any[];
+  apptHistory: ArrayBuffer;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -78,6 +79,7 @@ export class ApptDetailComponent implements OnInit {
             (data) => {
                 this.appt = data;
                 this.generateQR();
+                this.getAppointmentHistory(this.appt.uid, this.appt.providerAccount.id);
                 if (this.appt.service.serviceType === 'virtualService') {
                     switch (this.appt.service.virtualCallingModes[0].callingMode) {
                         case 'Zoom': {
@@ -252,5 +254,18 @@ export class ApptDetailComponent implements OnInit {
             error => {
             }
           );
+    }
+
+    getAppointmentHistory(u_id, accid) {
+      this.consumer_services.getApptHistory(u_id, accid)
+      .subscribe(
+          data => {
+            console.log(data);
+            this.apptHistory = data;
+          },
+          error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+      );
     }
 }

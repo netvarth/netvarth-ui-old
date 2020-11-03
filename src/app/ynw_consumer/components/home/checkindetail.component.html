@@ -171,8 +171,10 @@
                                             </mat-tab>
                                             <mat-tab label="{{titlename}} History">
                                                 <span *ngIf="wthistory.length > 0">
-                                                    <ul *ngFor="let stat of wthistory">
-                                                        <li>{{stat.waitlistStatus}}</li>
+                                                    <ul *ngFor="let stat of wthistory" class="histry-font mgn-up-10">
+                                                        <li>
+                                                            {{stat.waitlistStatus}} 
+                                                        </li>
                                                     </ul>
                                                 </span>
                                                 <span *ngIf="wthistory.length == 0">No History</span>

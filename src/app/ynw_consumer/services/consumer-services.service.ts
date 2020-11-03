@@ -172,8 +172,8 @@ export class ConsumerServices {
     const path = 'consumer/appointment/' + uuid;
     return this.servicemeta.httpGet(path, null, params);
   }
-  getApptHistory(uuid) {
-    const path = 'consumer/appointment/state/' + uuid;
+  getApptHistory(uuid, accountid) {
+    const path = 'consumer/appointment/state/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(path);
   }
   getWtlistHistory(uuid, accountid) {
