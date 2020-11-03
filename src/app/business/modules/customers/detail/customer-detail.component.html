@@ -265,7 +265,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     <span *ngIf="customer[0].dob">DOB: <span class="cust-detail">
                                             {{customer[0].dob | date: dateFormat}} </span></span>
                                 </div>
-                                 <div class="cust-detail" *ngIf="customer[0].address">Address: <span class="cust-detail">{{customer[0].address}}</span></div>
+                                 <div *ngIf="customer[0].address">Address: <span class="cust-detail">{{customer[0].address}}</span></div>
                             </div>
                             <div>
                                 <div class="rece-act mgn-bt-20 mgn-lt-10" *ngIf="!showMoreActivity">Recent activity

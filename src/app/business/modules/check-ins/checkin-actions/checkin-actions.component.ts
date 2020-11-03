@@ -89,6 +89,7 @@ export class CheckinActionsComponent implements OnInit {
         this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
+        console.log(this.data);
         this.checkin = this.data.checkinData;
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;

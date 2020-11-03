@@ -83,6 +83,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   splname: any;
   view_more = false;
   multiSelection = false;
+  timetype;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -93,6 +94,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
+    });
+    this.activated_route.queryParams.subscribe(params => {
+      console.log(params);
+      this.timetype = JSON.parse(params.timetype);
     });
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
@@ -549,6 +554,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       data: {
         checkinData: waitlist,
         multiSelection: this.multiSelection,
+        timetype: this.timetype,
         NoViewDetail: 'true'
       }
     });
