@@ -12938,3 +12938,11 @@ hr {
 .drugdetail .mat-form-field-label{
   color: #3f51b5 !important;
 }
+.customerdetails-icon {
+  content: url(../images/patientdetails-01.svg);
+  width: 40px;
+}
+.customernote-icon {
+  content: url(../images/patientnote.svg);
+  width: 20px;
+}
