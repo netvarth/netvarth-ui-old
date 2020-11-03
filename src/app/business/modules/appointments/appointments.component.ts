@@ -278,7 +278,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   services: any = [];
   consumr_id: any;
   topHeight = 0;
-
+  admin = true;
   @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
   @ViewChild('apptSection') apptSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
@@ -418,6 +418,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTomorrowDate();
     }
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    if (this.active_user.adminPrivilege) {
+      this.admin = true;
+    }
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);

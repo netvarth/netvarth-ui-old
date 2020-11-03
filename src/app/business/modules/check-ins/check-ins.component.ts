@@ -271,6 +271,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   trackDetail: any = [];
   consumerTrackstatus = false;
   labeldialogRef;
+  admin = true;
   @ViewChild('chekinSection') chekinSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   topHeight = 0;
@@ -431,6 +432,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTomorrowDate();
     }
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    if (this.active_user.adminPrivilege) {
+      this.admin = true;
+    }
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
