@@ -508,14 +508,14 @@
                 <tbody *ngFor="let slot of availableSlotDetails.availableSlots, let slotIndex=index">
                   <tr class="parentRow" [ngClass]="{greenb: timeSlotAppts[slot.time]?true:false}">
                     <td class="chkWth">
-                      <input [(ngModel)]="chkSlotInput[slotIndex]" [checked]="this.slotsChecked[slotIndex]"
+                      <input [(ngModel)]="chkSlotInput[slotIndex]" [checked]="this.slotsChecked[slotIndex]" (click)="stopprop($event)"
                         type="checkbox" class="ckbx pull-left" [disabled]="!timeSlotAppts[slot.time]"
                         (change)="slotCheckSelected(slotIndex, slot)" />
                     </td>
                     <td class="parent-selection parent-title td-one">
                       <div class="parent-name pull-left"
                         [ngClass]="{'pointer-cursor': (slot.capacity-slot.noOfAvailbleSlots)!=0 || timeSlotAppts[slot.time]?true:false}"
-                        (click)="((slot.capacity-slot.noOfAvailbleSlots)!=0 || timeSlotAppts[slot.time]) && slotRowSelected(slotIndex)">
+                        (click)="stopprop($event);((slot.capacity-slot.noOfAvailbleSlots)!=0 || timeSlotAppts[slot.time]) && slotRowSelected(slotIndex)">
                         <span class="timeslot" #appSlots>{{getSingleTime(slot.time)}}</span><span
                           *ngIf="batchEnabled && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0"
                           class="slot">
@@ -524,7 +524,7 @@
                     </td>
                     <td class="title td-two-full"
                       [ngClass]="{'pointer-cursor': (slot.capacity-slot.noOfAvailbleSlots)!=0?true:false}"
-                      (click)="(slot.capacity-slot.noOfAvailbleSlots)!=0 && slotRowSelected(slotIndex)">
+                      (click)="stopprop($event);(slot.capacity-slot.noOfAvailbleSlots)!=0 && slotRowSelected(slotIndex)">
                       <div class="pull-left">
                         <span>Appointments: <span class="icon-size5"
                             [ngClass]="{greenc: (slot.capacity-slot.noOfAvailbleSlots) < slot.capacity?true:false, underline: (slot.capacity-slot.noOfAvailbleSlots) < slot.capacity?true:false, red: (slot.capacity-slot.noOfAvailbleSlots)==slot.capacity?true:false}">{{slot.capacity-slot.noOfAvailbleSlots}}</span>
@@ -534,19 +534,19 @@
                     <td class="">
                       <a class="statusText btn-play pointer-cursor start-btn"
                         *ngIf="statusAction =='new' && time_type!=2 && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0 && timeSlotAppts[slot.time][0].batchId && batchEnabled"
-                        (click)="changeApptStatusByBatch('Started', timeSlotAppts[slot.time][0])"
+                        (click)="stopprop($event);changeApptStatusByBatch('Started', timeSlotAppts[slot.time][0])"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor cancel-btn"
                         *ngIf="statusAction =='new' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0 && timeSlotAppts[slot.time][0].batchId && batchEnabled"
-                        (click)="cancelBatchAppt(timeSlotAppts[slot.time][0])" [matTooltipClass]="tooltipcls"
+                        (click)="stopprop($event);cancelBatchAppt(timeSlotAppts[slot.time][0])" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Cancel'">
                         <i class="fa fa-trash"></i> <span *ngIf="!small_device_display"> Cancel</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
                         *ngIf="statusAction =='started' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0  && timeSlotAppts[slot.time][0].batchId && batchEnabled"
-                        (click)="changeApptStatusByBatch('Completed', timeSlotAppts[slot.time][0])"
+                        (click)="stopprop($event);changeApptStatusByBatch('Completed', timeSlotAppts[slot.time][0])"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                           *ngIf="!small_device_display">
@@ -562,7 +562,7 @@
                             <tr class="pointer-cursor" (click)="goCheckinDetail(appt)">
                               <td class="chkWth"><input
                                   [checked]="apptsChecked && apptsChecked[slotIndex] && apptsChecked[slotIndex][apptIndex]"
-                                  type="checkbox" class="ckbx pull-left"
+                                  type="checkbox" class="ckbx pull-left" (click)="stopprop($event)"
                                   (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
                               <td class="parent-selection parent-title td-one">
                                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
@@ -621,10 +621,10 @@
                                     *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
                                   <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                                     class="pull-left cnote icon-btn1  pointer-cursor mgn-rt-10"
-                                    *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
+                                    *ngIf="appt.consumerNote" (click)="stopprop($event);showConsumerNote(appt)">
                                     <i class="icon-note"></i>
                                   </span>
-                                  <span (click)="openAttachmentGallery(appt)" [matTooltip]="'Attachment included'"
+                                  <span (click)="stopprop($event);openAttachmentGallery(appt)" [matTooltip]="'Attachment included'"
                                     class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.hasAttachment"><i
                                       style="font-size: 20px;" class="material-icons">attach_file</i></span>
                                 </div>
@@ -651,7 +651,7 @@
                                 <a class="statusText btn-play pointer-cursor call-btn"
                                   [class.stopcall-btn]="appt.callingStatus"
                                   *ngIf="board_count > 0 && !appt.virtualService && time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
-                                  (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
+                                  (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                                   <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                                     *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop
                                   </span>
@@ -660,7 +660,7 @@
                                     &nbsp;Call</span>
                                 </a>
                                 <a class="statusText btn-play pointer-cursor start-btn"
-                                  (click)="changeWaitlistStatus('Started', appt)"
+                                  (click)="stopprop($event);changeWaitlistStatus('Started', appt)"
                                   *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && !appt.virtualService"
                                   [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                                   <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display">
@@ -676,7 +676,7 @@
                                   [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
                                   *ngIf="time_type==1 && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
                                   [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
-                                  (click)="showCallingModes(appt, 'Started')">
+                                  (click)="stopprop($event);showCallingModes(appt, 'Started')">
                                   <span
                                     *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                                   <i class="fa meet-icon"
@@ -702,13 +702,13 @@
                                   </span>
                                 </a>
                                 <a class="btn-play pointer-cursor done-btn" *ngIf="appt.apptStatus === 'Started'"
-                                  (click)="changeWaitlistStatus('Completed',appt)" [matTooltipClass]="tooltipcls"
+                                  (click)="stopprop($event);changeWaitlistStatus('Completed',appt)" [matTooltipClass]="tooltipcls"
                                   [matTooltip]="'Complete'">
                                   <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                                     *ngIf="!small_device_display"> {{done_cap}} </span>
                                 </a>
                                 <a class="statusText btn-play pointer-cursor act-btn single-action"
-                                  (click)="showCheckinActions(appt)" [matTooltipClass]="tooltipcls"
+                                  (click)="stopprop($event);showCheckinActions(appt)" [matTooltipClass]="tooltipcls"
                                   [matTooltip]="'Actions'">
                                   <!-- <i class="dashaction-icon"></i> -->
                                   Actions <i class="fa fa-caret-down"></i>
@@ -1141,7 +1141,7 @@
                 <tbody class="dynamic-content" *ngFor="let appt of check_in_filtered_list, let i=index">
                   <tr class="pointer-cursor" (click)="goCheckinDetail(appt)">
                     <td class="chkWth">
-                      <input [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left"
+                      <input [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left" (click)="stopprop($event)"
                         (change)="chkAptHistoryClicked(i, appt)" />
                     </td>
                     <td class="parent-selection parent-title td-one">
@@ -1199,10 +1199,10 @@
                           *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
                         <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
-                          (click)="showConsumerNote(appt)">
+                          (click)="stopprop($event);showConsumerNote(appt)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="openAttachmentGallery(appt)" [matTooltip]="'Attachment included'"
+                        <span (click)="stopprop($event);openAttachmentGallery(appt)" [matTooltip]="'Attachment included'"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.hasAttachment"><i
                             style="font-size: 20px;" class="material-icons">attach_file</i></span>
                       </div>
@@ -1229,7 +1229,7 @@
                     <td class="q-actions td-four">
                       <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                         *ngIf="board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
-                        (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
+                        (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                         <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                           *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop</span>
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
@@ -1243,7 +1243,7 @@
                     </a> -->
 
                       <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="changeWaitlistStatus('Started', appt)"
+                        (click)="stopprop($event);changeWaitlistStatus('Started', appt)"
                         *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -1257,7 +1257,7 @@
                         [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
                         *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
-                        (click)="showCallingModes(appt, 'Started')">
+                        (click)="stopprop($event);showCallingModes(appt, 'Started')">
                         <span
                           *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1278,7 +1278,7 @@
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
-                        (click)="changeWaitlistStatus('Completed', appt)" [matTooltipClass]="tooltipcls"
+                        (click)="stopprop($event);changeWaitlistStatus('Completed', appt)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                           *ngIf="!small_device_display">
@@ -1292,7 +1292,7 @@
                         Confirmed</span>
                     </a> -->
                       <a class="statusText btn-play pointer-cursor act-btn single-action"
-                        (click)="showCheckinActions(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                        (click)="stopprop($event);showCheckinActions(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                         <!-- <i class="dashaction-icon"></i> -->
                         Actions <i class="fa fa-caret-down"></i>
                       </a>
