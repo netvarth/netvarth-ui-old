@@ -1,4 +1,4 @@
-<section *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && !viewCustomer">
+<section *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && !viewCustomer && !loading">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section *ngIf="viewCustomer && customerAction === '' && !showMoreActivity">
@@ -288,7 +288,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             {{visit.waitlist.token}} </div>
                                                     </td>
                                                     <td> {{visit.waitlist.service.name}}</td>
-                                                    <td> {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
+                                                    <td class="hidden-xs"> {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
                                                     <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0"> {{visit.waitlist.amountPaid |
                                                         currency:'&#8377;' }} Paid</span> </td>
                                                     <td>
@@ -326,7 +326,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
                                                     </td>
                                                     <td> {{visit.appointmnet.service.name}}</td>
-                                                    <td> {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
+                                                    <td class="hidden-xs"> {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
                                                     <td><span class="rupee-font"
                                                             *ngIf="visit.appointmnet.amountPaid > 0"> {{visit.appointmnet.amountPaid |
                                                         currency:'&#8377;' }} Paid</span></td>

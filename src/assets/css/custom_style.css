@@ -12910,14 +12910,6 @@ hr {
   font-size: 0.92rem;
   color: #3c8dbc;
 }
-@media (max-width:385px) {
-  .customer-detail-box .table>tbody>tr>td {
-    padding: 5px !important;
-  }
-  .recentactivity {
-    padding: 5px !important;
-  }
-}
 .edit-customer-icon {
   content: url(../images/edit-customer.svg);
   width: 40px;
