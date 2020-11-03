@@ -438,10 +438,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getDisplayboardCount();
     this.getPos();
     this.getLabel();
-    this.getDepartments();
-    this.getLocationList();
-    this.getProviders();
-    this.getServiceList();
+    if (this.active_user.accountType === 'BRANCH') {
+      this.getDepartments();
+      this.getProviders().then(
+        () => {
+          this.getLocationList();
+          this.getServiceList();
+        }
+      );
+    } else {
+      this.getLocationList();
+      this.getServiceList();
+    }
     this.image_list_popup_temp = [];
     // const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
     // if (savedtype !== undefined && savedtype !== null) {
@@ -840,15 +848,39 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     });
   }
+  getDefaultViewQs(allQueues) {
+    console.log(allQueues);
+    const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    console.log(loggedUser.adminPrivilege);
+    if (!loggedUser.adminPrivilege) {
+      const userQs = [];
+      console.log(allQueues.length);
+      for (let qIndex = 0 ; qIndex < allQueues.length; qIndex++) {
+        console.log(allQueues[qIndex]);
+        console.log(loggedUser.id);
+        if (allQueues[qIndex].provider && (allQueues[qIndex].provider.id === loggedUser.id)) {
+          userQs.push(allQueues[qIndex]);
+        }
+      }
+      console.log(userQs);
+      return userQs;
+    } else {
+      return allQueues;
+    }
+  }
+  getUserType () {
+
+  }
   initViews(queues, source?) {
     const _this = this;
     _this.views = [];
+    const qsActive = this.getDefaultViewQs(queues);
     return new Promise(function (resolve, reject) {
       const tempView = {};
       tempView['name'] = Messages.DEFAULTVIEWCAP;
       tempView['id'] = 0;
       tempView['customViewConditions'] = {};
-      tempView['customViewConditions'].queues = queues;
+      tempView['customViewConditions'].queues = qsActive;
       _this.selectedView = tempView;
       _this.getViews().then(
         (data: any) => {
@@ -893,6 +925,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         self.queues = queues;
         self.initViews(queues, '').then(
           (view) => {
+            console.log('view:');
+            console.log(view);
             self.initView(view, 'changeLocation');
           }
         );
@@ -901,6 +935,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsFromView(view, queues) {
     const qs = [];
+    console.log(view);
     if (view && view.name !== Messages.DEFAULTVIEWCAP) {
       for (let i = 0; i < queues.length; i++) {
         for (let j = 0; j < view.customViewConditions.queues.length; j++) {
@@ -910,7 +945,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     } else {
-      return queues;
+      const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      console.log(loggedUser);
+      if (!loggedUser.adminPrivilege) {
+        for (let qIndex = 0 ; qIndex < queues.length; qIndex++) {
+          console.log(queues[qIndex]);
+          console.log(loggedUser.id);
+          if (queues[qIndex].provider && (queues[qIndex].provider.id === loggedUser.id)) {
+            qs.push(queues[qIndex]);
+          }
+        }
+      } else {
+        return queues;
+      }
     }
     return qs;
   }
@@ -943,11 +990,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadApiSwitch('reloadAPIs');
   }
   initView(view, source?) {
+    console.log(view);
     this.activeQs = this.tempActiveQs = [];
+    console.log(this.getQsFromView(view, this.queues));
     const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
       this.activeQs = this.tempActiveQs = groupbyQs['ENABLED'];
     }
+    console.log(this.activeQs);
     const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
     if (view.name !== Messages.DEFAULTVIEWCAP) {
       if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
@@ -2642,20 +2692,27 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getProviders() {
+    const _this = this;
+    return new Promise(function (resolve) {
     const apiFilter = {};
     apiFilter['userType-eq'] = 'PROVIDER';
     // let filter = 'userType-neq :"assistant"'
-    this.provider_services.getUsers(apiFilter).subscribe(data => {
-      this.users = data;
+    _this.provider_services.getUsers(apiFilter).subscribe(data => {
+      _this.users = data;
       const tempUser = {};
       tempUser['firstName'] = 'All';
       tempUser['id'] = 'all';
-      this.users.push(tempUser);
-      if (this.shared_functions.getitemFromGroupStorage('selectedUser')) {
-        this.selectedUser = this.shared_functions.getitemFromGroupStorage('selectedUser');
+      _this.users.push(tempUser);
+      if (_this.shared_functions.getitemFromGroupStorage('selectedUser')) {
+        _this.selectedUser = _this.shared_functions.getitemFromGroupStorage('selectedUser');
       } else {
-        this.selectedUser = tempUser;
+        _this.selectedUser = tempUser;
       }
+      resolve();
+    },
+    () => {
+      resolve();
+    });
       // this.handleUserSelection(this.selectedUser);
     });
   }

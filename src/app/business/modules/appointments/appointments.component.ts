@@ -439,15 +439,36 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   hideFilterSidebar() {
     this.filter_sidebar = false;
   }
+  getDefaultViewSchedules(allSchedules) {
+    console.log(allSchedules);
+    const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    console.log(loggedUser.adminPrivilege);
+    if (!loggedUser.adminPrivilege) {
+      const userQs = [];
+      console.log(allSchedules.length);
+      for (let qIndex = 0 ; qIndex < allSchedules.length; qIndex++) {
+        console.log(allSchedules[qIndex]);
+        console.log(loggedUser.id);
+        if (allSchedules[qIndex].provider && (allSchedules[qIndex].provider.id === loggedUser.id)) {
+          userQs.push(allSchedules[qIndex]);
+        }
+      }
+      console.log(userQs);
+      return userQs;
+    } else {
+      return allSchedules;
+    }
+  }
   initViews(schedules, source?) {
     const _this = this;
+    const qsActive = this.getDefaultViewSchedules(schedules);
     this.views = [];
     return new Promise(function (resolve, reject) {
       const tempView = {};
       tempView['name'] = Messages.DEFAULTVIEWCAP;
       tempView['id'] = 0;
       tempView['customViewConditions'] = {};
-      tempView['customViewConditions'].schedules = schedules;
+      tempView['customViewConditions'].schedules = qsActive;
       _this.selectedView = tempView;
       _this.getViews().then(
         (data: any) => {
@@ -657,8 +678,23 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     } else {
-      return schedules;
+      const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      console.log(loggedUser);
+      if (!loggedUser.adminPrivilege) {
+        for (let qIndex = 0 ; qIndex < schedules.length; qIndex++) {
+          console.log(schedules[qIndex]);
+          console.log(loggedUser.id);
+          if (schedules[qIndex].provider && (schedules[qIndex].provider.id === loggedUser.id)) {
+            qs.push(schedules[qIndex]);
+          }
+        }
+      } else {
+        return schedules;
+      }
     }
+    // else {
+    //   return schedules;
+    // }
     return qs;
   }
   selectLocationFromCookie(cookie_location_id) {
