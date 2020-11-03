@@ -56,6 +56,7 @@ export class CheckinDetailComponent implements OnInit {
     actiondialogRef: any;
     fav_providers: any;
     fav_providers_id_list: any[];
+    wthistory;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -83,6 +84,7 @@ export class CheckinDetailComponent implements OnInit {
             (data) => {
                 this.waitlist = data;
                 this.generateQR();
+                this.getWtlistHistory(this.waitlist.ynwUuid, this.waitlist.providerAccount.id);
                 if (this.waitlist.service.serviceType === 'virtualService') {
                     switch (this.waitlist.service.virtualCallingModes[0].callingMode) {
                         case 'Zoom': {
@@ -255,5 +257,18 @@ export class CheckinDetailComponent implements OnInit {
             error => {
             }
           );
+    }
+
+    getWtlistHistory(uuid, accid) {
+      this.consumer_services.getWtlistHistory(uuid, accid)
+      .subscribe(
+          data => {
+            this.wthistory = data;
+            console.log(this.wthistory);
+          },
+          error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+      );
     }
 }
