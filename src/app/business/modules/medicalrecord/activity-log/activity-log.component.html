@@ -1,10 +1,10 @@
-<!-- <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
 Activity Logs
   <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
       aria-hidden="true"></i></button>
-</h1> -->
+</h1>
 
-<!-- <div *ngIf="activity_log_count === 0" class="mgn-up-10 style-padding">
+<div *ngIf="activity_log_count === 0" class="mgn-up-10 style-padding">
   <p>No activity logs found</p>
 </div>
 
@@ -18,8 +18,8 @@ Activity Logs
       <ng-container matColumnDef="Action">
         <mat-header-cell *matHeaderCellDef class="visit-dt-cl"> <b>Action</b></mat-header-cell>
         <mat-cell *matCellDef="let auditlogs">
-          {{auditlogs.Action}}</mat-cell>
-          
+          {{auditlogs.Action | capitalizeFirst}}</mat-cell>
+
       </ng-container>
       <ng-container matColumnDef="Description" >
         <mat-header-cell *matHeaderCellDef class="visit-sr-cl"> <b>Description</b></mat-header-cell>
@@ -29,10 +29,10 @@ Activity Logs
       <ng-container matColumnDef="Date/Time">
         <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>Date/Time</b></mat-header-cell>
         <mat-cell *matCellDef="let auditlogs">
-          {{auditlogs.Description}}</mat-cell>
+          {{ auditlogs['Date/Time'] }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="userName">
-        <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>userName</b></mat-header-cell>
+        <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>User</b></mat-header-cell>
         <mat-cell *matCellDef="let auditlogs">
           {{auditlogs.User}}</mat-cell>
       </ng-container>
@@ -46,4 +46,4 @@ Activity Logs
   </ng-container>
 
   <div class="clearfix"></div>
-</section> -->
+</section>

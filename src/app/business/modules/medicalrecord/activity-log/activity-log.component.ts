@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 
 
 @Component({
@@ -11,39 +12,50 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./activity-log.component.css']
 })
 export class ActivityLogComponent implements OnInit {
+  auditLogs: any = {};
   activity_log_count: any;
   activity_log: any = [];
-  auditlogs: any;
+
   mrId;
   // loading = true;
   public auditlogs_dataSource = new MatTableDataSource<any>([]);
   // auditlogs_displayedColumns = ['Action'];
-  auditlogs_displayedColumns = ['Action',  'Description', 'Date/Time', 'userName'];
+  auditlogs_displayedColumns = ['Action', 'Date/Time', 'userName'];
   aditlogs: any = {};
   action: any;
+  loading = true;
 
   constructor(
     public dialogRef: MatDialogRef<ActivityLogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
+    private datePipe: DateFormatPipe
   ) {
-    this.auditlogs = this.data.activity_log;
-    // IF CONDITION
-    this.activity_log.push(JSON.parse(this.auditlogs.clinicalNotes));
-    this.activity_log.push(JSON.parse(this.auditlogs.medicalRecord));
-    this.activity_log.push(JSON.parse(this.auditlogs.prescription));
-    this.activity_log_count = this.activity_log.length;
-    this.auditlogs_dataSource = this.activity_log;
-    console.log(this.auditlogs_dataSource);
-    // this.action = this.auditlogs_dataSource[0][0].Action;
-    // console.log(this.action);
-
+    this.mrId = this.data.mrId;
 
   }
 
   ngOnInit() {
+    this.getMedicalRecordUsingMR(this.mrId);
+
+  }
+  getDate(dateTime) {
+    return this.datePipe.transformToDateWithTime(new Date(dateTime));
+  }
+  getMedicalRecordUsingMR(mrId) {
 
 
+    this.provider_services.getMRAudits(mrId)
+      .subscribe((data: any) => {
+        this.loading = false;
+        if (data) {
+          this.auditlogs_dataSource = data;
+
+        }
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
   }
 }
