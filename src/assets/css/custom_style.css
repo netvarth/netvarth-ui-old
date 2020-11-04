@@ -10023,6 +10023,7 @@ td.chkWth, th.chkWth {
     width: 50px !important;
   }
   .jld-lnk-btn {
+    margin-top: 10px;
     margin-left: 0 !important;
     padding: 3px 6px !important;
     font-weight: 600;
