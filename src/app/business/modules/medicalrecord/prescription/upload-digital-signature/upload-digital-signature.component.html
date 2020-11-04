@@ -62,7 +62,7 @@
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
           <button type="button"  class="cs-btn bt2"  (click)="deleteTempImage(i)">Cancel</button>
-        <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages(i)">OK</button>
+        <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages()">OK</button>
     </div>
 </div>
 
@@ -94,5 +94,9 @@
 
     </ng-container>
     </div>
+
+    <!-- <div>
+        <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
+    </div> -->
 
 </div></section>

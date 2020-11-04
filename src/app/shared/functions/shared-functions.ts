@@ -1590,10 +1590,13 @@ export class SharedFunctions {
   }
 
   b64toBlob(b64Data) {
+    console.log("hj");
+    console.log(b64Data);
     const contentType = 'image/png';
     const sliceSize = 512;
 
     const byteCharacters = atob(b64Data);
+    console.log(byteCharacters);
     const byteArrays = [];
 
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -1611,6 +1614,16 @@ export class SharedFunctions {
 
     const blob = new Blob(byteArrays, { type: contentType });
     return blob;
+  }
+  b64toBlobforSign(b64Data) {
+    const byteString = atob(b64Data.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: 'image/jpeg' });
   }
 
   getNumberArray(n: number): any[] {

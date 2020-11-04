@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { projectConstants } from '../../../../../app.component';
 import { MedicalrecordService } from '../../medicalrecord.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -7,6 +7,7 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ImagesviewComponent } from '../imagesview/imagesview.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SignaturePad } from 'angular2-signaturepad';
 
 @Component({
   selector: 'app-upload-digital-signature',
@@ -14,7 +15,12 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./upload-digital-signature.component.css']
 })
 export class UploadDigitalSignatureComponent implements OnInit {
-
+  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+  signaturePadOptions: Object = {
+    'minWidth': 5,
+    'canvasWidth': 500,
+    'canvasHeight': 300
+  };
   display_PatientId: any;
   today = new Date();
   patientDetails;
@@ -46,6 +52,8 @@ export class UploadDigitalSignatureComponent implements OnInit {
   providerId;
   digitalSign = false;
   signatureviewdialogRef;
+  digitalsignature = {};
+  
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
@@ -81,6 +89,43 @@ export class UploadDigitalSignatureComponent implements OnInit {
   ngOnInit() {
     this.getDigitalSign();
   }
+
+  ngAfterViewInit() {
+    // this.signaturePad is now available
+    this.signaturePad.set('minWidth', 5); // set signature_pad options at runtime
+    this.signaturePad.clear(); // invoke functions from signature_pad API
+  }
+
+  drawComplete() {
+    // will be notified signature_pad's onEnd event
+    const signName = 'sign' + this.providerId + '.jpeg';
+    const propertiesDetob = {};
+    let i = 0;
+    const blob = this.sharedfunctionObj.b64toBlobforSign(this.signaturePad.toDataURL());
+      console.log(blob);
+       const submit_data: FormData = new FormData();
+      submit_data.append('files', blob, signName);
+      console.log(submit_data);
+      const properties = {
+        'caption': this.selectedMessage.caption[i] || ''
+      };
+      propertiesDetob[i] = properties;
+      i++;
+    const propertiesDet = {
+      'propertiesMap': propertiesDetob
+    };
+    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+    submit_data.append('properties', blobPropdata);
+    if (this.providerId) {
+      this.uploadMrDigitalsign(this.providerId, submit_data);
+    }
+ 
+  }
+
+  drawStart() {
+    // will be notified signature_pad's onBegin event
+    console.log('begin drawing');
+  }
   goBack() {
     this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
   }
@@ -104,7 +149,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
       this.provider_services.deleteUplodedsign(img.keyName , this.providerId)
       .subscribe((data) => {
         this.selectedMessage.files.splice(index, 1);
-        this. getDigitalSign();
+        this.getDigitalSign();
        },
       error => {
         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -155,7 +200,9 @@ export class UploadDigitalSignatureComponent implements OnInit {
   deleteTempImage(index) {
     this.selectedMessage.files.splice(index, 1);
   }
-  saveDigitalSignImages(index) {
+
+
+  saveDigitalSignImages() {
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;
@@ -174,11 +221,11 @@ export class UploadDigitalSignatureComponent implements OnInit {
     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
     submit_data.append('properties', blobPropdata);
     if (this.providerId) {
-      this.uploadMrDigitalsign(this.providerId, submit_data, index);
+      this.uploadMrDigitalsign(this.providerId, submit_data);
     }
   }
 
-  uploadMrDigitalsign(id, submit_data, val) {
+  uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
         this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
