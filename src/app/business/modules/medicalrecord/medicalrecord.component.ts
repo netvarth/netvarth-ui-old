@@ -287,13 +287,13 @@ export class MedicalrecordComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        'activity_log': this.activityLogs
+        'activity_log': this.activityLogs,
+        'mrId' : this.mrId
       }
     });
 
   }
   goback() {
-
     if (this.back_type === 'waitlist') {
       this.router.navigate(['provider', 'check-ins']);
     } else if (this.back_type === 'appt') {

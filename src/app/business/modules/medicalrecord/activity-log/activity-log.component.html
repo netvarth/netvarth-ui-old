@@ -29,7 +29,7 @@ Activity Logs
       <ng-container matColumnDef="Date/Time">
         <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>Date/Time</b></mat-header-cell>
         <mat-cell *matCellDef="let auditlogs">
-          {{ auditlogs['Date/Time'] }}</mat-cell>
+          {{auditlogs.DateTime}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="userName">
         <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>User</b></mat-header-cell>
