@@ -209,6 +209,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             (data: any) => {
                 this.waitlist_status = data['waitlist'];
                 this.waitlist_statusstr = this.waitlist_status ? 'On' : 'Off';
+                this.shared_functions.setitemToGroupStorage('settings', data);
                 this.shared_functions.sendMessage({ 'ttype': 'checkinStatus', checkinStatus: this.waitlist_status });
             });
     }

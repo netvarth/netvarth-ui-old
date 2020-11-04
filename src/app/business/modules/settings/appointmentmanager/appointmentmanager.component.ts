@@ -165,6 +165,7 @@ export class AppointmentmanagerComponent implements OnInit {
             (data: any) => {
                 this.createappointment_status = data.appointment;
                 this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
+                this.shared_functions.setitemToGroupStorage('settings', data);
                 this.shared_functions.sendMessage({ 'ttype': 'apptStatus', apptStatus: this.createappointment_status });
             });
     }

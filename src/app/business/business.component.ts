@@ -40,24 +40,29 @@ export class BusinessComponent implements OnInit {
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.shared_functions.isBusinessOwner()) {
-          this.provider_services.getGlobalSettings().subscribe(
-            (data: any) => {
-              if (router.url === '\/provider') {
-                setTimeout(() => {
-                  if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
-                    if (data.waitlist) {
-                      router.navigate(['provider', 'check-ins']);
-                    } else if (data.appointment) {
-                      router.navigate(['provider', 'appointments']);
-                    } else {
-                      router.navigate(['provider', 'settings']);
-                    }
-                  } else {
-                    router.navigate(['provider', 'settings']);
-                  }
-                }, 500);
+          let settings = this.shared_functions.getitemFromGroupStorage('settings');
+          if (!settings) {
+            this.provider_services.getGlobalSettings().subscribe(
+              (data: any) => {
+                settings = data;
+                this.shared_functions.setitemToGroupStorage('settings', data);
+              });
+          }
+          if (router.url === '\/provider') {
+            setTimeout(() => {
+              if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
+                if (settings.waitlist) {
+                  router.navigate(['provider', 'check-ins']);
+                } else if (settings.appointment) {
+                  router.navigate(['provider', 'appointments']);
+                } else {
+                  router.navigate(['provider', 'settings']);
+                }
+              } else {
+                router.navigate(['provider', 'settings']);
               }
-            });
+            }, 500);
+          }
         }
       }
     });
@@ -197,7 +202,7 @@ export class BusinessComponent implements OnInit {
             // this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
             //   || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
             this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
-            || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '', '');
+              || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '', '');
             this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.shared_functions.sendMessage(pdata);

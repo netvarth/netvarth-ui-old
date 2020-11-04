@@ -214,9 +214,14 @@ export class MenuComponent implements OnInit, OnDestroy {
         });
   }
   getGlobalSettings() {
-    this.provider_services.getGlobalSettings().subscribe(
-      (data: any) => {
-        this.donationstatus = data.donationFundRaising;
-      });
+    const settings = this.shared_functions.getitemFromGroupStorage('settings');
+    if (settings) {
+      this.donationstatus = settings.donationFundRaising;
+    } else {
+      this.provider_services.getGlobalSettings().subscribe(
+        (data: any) => {
+          this.donationstatus = data.donationFundRaising;
+        });
+    }
   }
 }

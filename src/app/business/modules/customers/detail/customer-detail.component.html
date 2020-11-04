@@ -1,4 +1,4 @@
-<section *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && !viewCustomer && !loading">
+<section *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && source !=='appt-block' && !viewCustomer && !loading">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section *ngIf="viewCustomer && customerAction === '' && !showMoreActivity">
@@ -24,7 +24,7 @@
         </h5>
     </div>
 </section>
-<section class="" *ngIf="source ==='token' || source ==='checkin' || source ==='appointment'">
+<section class="" *ngIf="source ==='token' || source ==='checkin' || source ==='appointment' || source === 'appt-block'">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <!-- <button type="button" class="btn default profile-back" (click)="onCancel()">
@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="card p0" *ngIf="customerAction === ''">
                     <div class="col-md-12 no-padding"
-                        *ngIf="!loading && source !=='token' && source !=='checkin' && source !=='appointment' && !viewCustomer">
+                        *ngIf="!loading && source !=='token' && source !=='checkin' && source !=='appointment' &&  source !=='appt-block' && !viewCustomer">
                         <ul class="nav cust-dash jd-custom-nav">
                             <li class="dropdown notifications-menu">
                                 <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown"
