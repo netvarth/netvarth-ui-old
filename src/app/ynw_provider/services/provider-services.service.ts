@@ -1626,4 +1626,17 @@ export class ProviderServices {
    deleteUplodedsign(name, id) {
       return this.servicemeta.httpDelete('provider/user/digitalSign/' + id + '/' + name);
    }
+   // Appointment Block
+   addAppointmentBlock(data) {
+      const url = 'provider/appointment/block';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteAppointmentBlock(uid) {
+      const url = 'provider/appointment/unblock/' + uid;
+      return this.servicemeta.httpPut(url);
+   }
+   confirmAppointmentBlock(data) {
+      const url = 'provider/appointment/confirm';
+      return this.servicemeta.httpPut(url, data);
+   }
 }

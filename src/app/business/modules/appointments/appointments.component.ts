@@ -151,6 +151,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   today_rejected_count = 0;
   today_cancelled_checkins_count = 0;
   today_checkedin_count = 0;
+  today_bloacked_count = 0;
   scheduled_count = 0;
   started_count = 0;
   cancelled_count = 0;
@@ -1083,6 +1084,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (appointments['Arrived']) {
       Array.prototype.push.apply(scheduledList, appointments['Arrived'].slice());
     }
+    if (appointments['blocked']) {
+      Array.prototype.push.apply(scheduledList, appointments['blocked'].slice());
+    }
     this.sortCheckins(scheduledList);
     return scheduledList;
   }
@@ -1223,6 +1227,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   setCounts(list) {
     this.today_arrived_count = this.getCount(list, 'Arrived');
     this.today_checkedin_count = this.getCount(list, 'Confirmed');
+    this.today_bloacked_count = this.getCount(list, 'blocked');
     this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
     this.today_started_count = this.getCount(list, 'Started');
     this.today_completed_count = this.getCount(list, 'Completed');
@@ -2571,7 +2576,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appthP', this.filter.page || 1);
       this.shared_functions.setitemToGroupStorage('appthPFil', this.filter);
     }
-    this.router.navigate(['provider', 'appointments', checkin.uid], {queryParams: {timetype: this.time_type}});
+    this.router.navigate(['provider', 'appointments', checkin.uid], { queryParams: { timetype: this.time_type } });
   }
   goToCheckinDetails() {
     const _this = this;
@@ -3126,7 +3131,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsByProvider() {
     const qs = [];
-    if (this.selectedUser && this.selectedUser.id === 'all') {
+    if (!this.selectedUser || (this.selectedUser && this.selectedUser.id === 'all')) {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
       for (let i = 0; i < this.tempActiveSchedules.length; i++) {
@@ -3422,5 +3427,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   stopprop(event) {
     event.stopPropagation();
+  }
+  unblockAppt(appt) {
+    this.provider_services.deleteAppointmentBlock(appt.uid)
+      .subscribe(
+        () => {
+          this.loadApiSwitch('reloadAPIs');
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
   }
 }

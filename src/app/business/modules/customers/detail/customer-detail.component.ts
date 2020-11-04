@@ -106,6 +106,7 @@ export class CustomerDetailComponent implements OnInit {
     visitDetailsArray = [];
     showMoreActivity = false;
     selectedDetailsforMsg: any = [];
+    uid;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -122,6 +123,9 @@ export class CustomerDetailComponent implements OnInit {
             const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
             this.domain = user.sector;
             this.source = qparams.source;
+            if (qparams.uid) {
+                this.uid = qparams.uid;
+            }
             if (qparams.type) {
                 this.type = qparams.type;
             }
@@ -457,6 +461,8 @@ export class CustomerDetailComponent implements OnInit {
                                 }
                             };
                             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+                        } else if (this.source === 'appt-block') {
+                            this.confirmApptBlock(data);
                         } else {
                             const navigationExtras: NavigationExtras = {
                                 queryParams: {
@@ -528,6 +534,22 @@ export class CustomerDetailComponent implements OnInit {
                         this.disableButton = false;
                     });
         }
+    }
+    confirmApptBlock(id) {
+        const post_data = {
+            'uid': this.uid,
+            'consumer': {
+                'id': id
+            },
+            'appmtFor': [{
+                'id': 0,
+            }],
+        };
+        this.provider_services.confirmAppointmentBlock(post_data)
+            .subscribe(
+                data => {
+                    this.router.navigate(['provider', 'appointments']);
+                });
     }
     onCancel() {
         if (this.source === 'checkin' || this.source === 'token') {

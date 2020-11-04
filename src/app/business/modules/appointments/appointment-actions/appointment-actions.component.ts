@@ -288,7 +288,7 @@ export class AppointmentActionsComponent implements OnInit {
                 });
     }
     setActions() {
-        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed') {
+        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked') {
             this.showUndo = true;
         }
         if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && !this.appt.virtualService) {
@@ -681,5 +681,19 @@ export class AppointmentActionsComponent implements OnInit {
             queryParams: { action: 'view' }
         };
         this.router.navigate(['/provider/customers/' + this.appt.appmtFor[0].id], navigationExtras);
+    }
+    addCustomerDetails() {
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: this.appt.uid } });
+    }
+    unBlockAppt() {
+        this.provider_services.deleteAppointmentBlock(this.appt.uid)
+            .subscribe(
+                () => {
+                    this.dialogRef.close();
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
     }
 }
