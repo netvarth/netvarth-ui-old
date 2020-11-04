@@ -2615,7 +2615,7 @@
 
 @media only screen and (max-width: 575px) {
     .googlemainmappopup .mat-dialog-content #pac-input {
-        top: 40px !important;
+        /* top: 40px !important; */
     }
 }
 
