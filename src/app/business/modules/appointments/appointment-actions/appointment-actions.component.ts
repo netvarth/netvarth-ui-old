@@ -196,7 +196,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     locateCustomer() {
         this.dialogRef.close();
-        this.provider_services.getCustomerTrackStatus(this.appt.uid).subscribe(data => {
+        this.provider_services.getCustomerTrackStatusforAppointment(this.appt.uid).subscribe(data => {
             this.trackDetail = data;
             this.customerMsg = this.locateCustomerMsg(this.trackDetail);
             const locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
@@ -297,7 +297,7 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') {
             this.showCancel = true;
         }
-        if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeWaitlistDistanceTime && this.appt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
+        if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeApptDistanceTime && this.appt.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
             this.trackStatus = true;
         }
         if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected' && (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo)) {

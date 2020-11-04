@@ -378,13 +378,13 @@ export class SharedServices {
       }
       param += 'action-eq=' + action;
     }*/
-    if (sdate !== '') {
+    if (sdate && sdate !== '') {
       if (param !== '') {
         param += '&';
       }
       param += 'createdDate-ge=' + sdate;
     }
-    if (edate !== '') {
+    if (edate && edate !== '') {
       if (param !== '') {
         param += '&';
       }
