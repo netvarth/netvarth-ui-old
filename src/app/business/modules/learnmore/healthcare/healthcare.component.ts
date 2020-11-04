@@ -115,7 +115,7 @@ export class HealthCareComponent implements OnInit {
   showauditlog = false;
   showalert = false;
   showprofile = false;
-  
+
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -128,10 +128,10 @@ export class HealthCareComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
-    this.subdomain =  this.active_user.subSector;
-    if((this.subdomain === 'hospital') || (this.subdomain === 'dentalHosp') || (this.subdomain === 'alternateMedicineHosp')){
+    this.subdomain = this.active_user.subSector;
+    if ((this.subdomain === 'hospital') || (this.subdomain === 'dentalHosp') || (this.subdomain === 'alternateMedicineHosp')) {
       this.show_corp_accordion = true;
       this.show_brnch_accordion = true;
     }
@@ -185,7 +185,7 @@ export class HealthCareComponent implements OnInit {
         this.showbusiness = true;
       }
       if (childContent === 'jaldee.com-integration') {
-        this.showjaldeeintegration  = true;
+        this.showjaldeeintegration = true;
       }
       if (childContent === 'verified-levels') {
         this.showverified = true;
@@ -227,10 +227,10 @@ export class HealthCareComponent implements OnInit {
         this.showgallery = true;
       }
     }
- 
-    if(parentContent === 'general'){
+
+    if (parentContent === 'general') {
       this.showgeneral = true;
-      if(childContent === 'locations'){
+      if (childContent === 'locations') {
         this.showlocations = true;
       }
       if (childContent === 'departments') {
@@ -244,7 +244,7 @@ export class HealthCareComponent implements OnInit {
       }
       if (childContent === 'customview') {
         this.showcustomview = true;
-      } 
+      }
       if (childContent === 'nonworking') {
         this.shownonworking = true;
       }
@@ -264,7 +264,7 @@ export class HealthCareComponent implements OnInit {
       if (childContent === 'settings-time_windows') {
         this.showtime = true;
       }
-     if (childContent === 'settings-q-boards') {
+      if (childContent === 'settings-q-boards') {
         this.showdisplayboard = true;
       }
     }
@@ -278,13 +278,13 @@ export class HealthCareComponent implements OnInit {
         this.showservices = true;
       }
       if (childContent === 'schedules') {
-        this.showschedules= true;
+        this.showschedules = true;
       }
       if (childContent === 'q-boards') {
-        this.showdisplayboard= true;
+        this.showdisplayboard = true;
       }
 
-    } 
+    }
 
     if (parentContent === 'payments') {
       this.showpayments = true;
@@ -299,11 +299,11 @@ export class HealthCareComponent implements OnInit {
       }
     }
 
-    
+
 
     if (parentContent === 'billing') {
       this.showbilling = true;
-       if (childContent === 'items') {
+      if (childContent === 'items') {
         this.showitem = true;
       }
       if (childContent === 'coupon') {
@@ -326,21 +326,21 @@ export class HealthCareComponent implements OnInit {
 
     if (parentContent === 'miscellaneous') {
       this.showmiscellaneous = true;
-     
-     
-       if (childContent === 'jdn') {
+
+
+      if (childContent === 'jdn') {
         this.showjdn = true;
       }
       if (childContent === 'saleschannel') {
         this.showsaleschannel = true;
       }
-     if (childContent === 'corporate') {
+      if (childContent === 'corporate') {
         this.showcorporate = true;
       }
-     
+
     }
 
-  
+
 
     if (parentContent === 'customers') {
       this.showcustomers = true;
@@ -348,20 +348,20 @@ export class HealthCareComponent implements OnInit {
         this.showcustomersid = true;
       }
     }
-    
+
     if (parentContent === 'comm') {
       this.showvirtualcallingmodes = true;
       if (childContent === 'virtualcallingmode') {
         this.showvirtualcallingmode = true;
       }
       if (childContent === 'videocall-settings') {
-        this.showvideocallmode  = true;
+        this.showvideocallmode = true;
       }
       if (childContent === 'notifications') {
         this.shownotifications = true;
       }
     }
-    
+
     if (parentContent === 'license') {
       this.showlicense = true;
       if (childContent === 'upgradelicense') {
@@ -382,59 +382,56 @@ export class HealthCareComponent implements OnInit {
       if (childContent === 'dashboard-home') {
         this.showdashbord = true;
       }
-     }
-    
-     if (parentContent === 'appointments') {
+    }
+
+    if (parentContent === 'appointments') {
       this.showdbappointments = true;
-      if(childContent === 'appointment-phonein'){
+      if (childContent === 'appointment-phonein') {
         this.showappointmentphonein = true;
       }
       if (childContent === 'schadjustdelay') {
         this.showschdelay = true;
       }
-   }
-    
-   if (parentContent === 'check-ins'){
-    this.showcheckins = true;
-    if (childContent === 'check-in') {
-      this.showcheckin = true;
-    }
-    if (childContent === 'adjustdelay') {
-      this.showdelay = true;
     }
 
-}  
-  if (parentContent === 'donations' && childContent === 'donations') {
-    this.showdbdonation = true;
- }
+    if (parentContent === 'check-ins') {
+      this.showcheckins = true;
+      if (childContent === 'check-in') {
+        this.showcheckin = true;
+      }
+      if (childContent === 'adjustdelay') {
+        this.showdelay = true;
+      }
+
+    }
+    if (parentContent === 'donations' && childContent === 'donations') {
+      this.showdbdonation = true;
+    }
     if (parentContent === 'customer' && childContent === 'customer') {
-        this.showcustomer = true;
+      this.showcustomer = true;
     }
     if (parentContent === 'auditlog' && childContent === 'auditlog') {
       this.showauditlog = true;
     }
     if (parentContent === 'alert' && childContent === 'alert') {
       this.showalert = true;
-      }
+    }
     if (parentContent === 'inbox' && childContent === 'inbox') {
       this.showinbox = true;
-   }
-   if (parentContent === 'providerprofile' && childContent === 'providerprofile') {
-    this.showprofile = true;
-  }
+    }
+    if (parentContent === 'providerprofile' && childContent === 'providerprofile') {
+      this.showprofile = true;
+    }
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
-  }
+    }
 
 
- if (parentContent === 'homeservice')
-{
-  this.showhomeservice = true;
-  if(childContent === 'serviceH')
-  {this.showserviceH = true;}
-  if(childContent === 'hourH')
-  {this.showhoursH = true;}
-}
+    if (parentContent === 'homeservice') {
+      this.showhomeservice = true;
+      if (childContent === 'serviceH') { this.showserviceH = true; }
+      if (childContent === 'hourH') { this.showhoursH = true; }
+    }
   }
   redirecToSettings() {
     this._location.back();
