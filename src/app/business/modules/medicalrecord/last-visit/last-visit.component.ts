@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared//pipes/date-format/date-format.pipe';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -27,6 +27,7 @@ export class LastVisitComponent implements OnInit {
   selectedRowIndex = -1;
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
+    private router: Router,
 
     public dateformat: DateFormatPipe,
     // private medicalrecordService: MedicalrecordService,
@@ -133,86 +134,45 @@ export class LastVisitComponent implements OnInit {
     // this.selectedRowIndex = visitDetails.mrId;
 
     if (visitDetails.waitlist) {
-      let providerId ;
-      if (visitDetails.waitlist.provider && visitDetails.waitlist.provider.id) {
-       providerId = visitDetails.waitlist.provider.id;
-      } else {
-        providerId = '';
+      let mrId = 0;
+      if (visitDetails.waitlist.mrId) {
+        mrId = visitDetails.waitlist.mrId;
       }
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.waitlist.waitlistingFor[0]),
-          'serviceId': visitDetails.waitlist.service.id,
-          'serviceName': visitDetails.waitlist.service.name,
-          'booking_type': 'TOKEN',
-          'booking_date': visitDetails.waitlist.consLastVisitedDate,
-          'booking_time': visitDetails.waitlist.checkInTime,
-          'department': visitDetails.waitlist.service.deptName,
-          'consultationMode': 'OP',
-          'booking_id': visitDetails.waitlist.ynwUuid,
-          'mrId': visitDetails.mrId,
-          'visitDate': visitDetails.waitlist.consLastVisitedDate,
-          'back_type': this.back_type,
-          'provider_id': providerId
-        }
-      };
-      console.log(navigationExtras);
-      const result = {
-        'navigationParams': navigationExtras,
-        'type': 'clinicalnotes'
-      };
-      this.dialogRef.close(result);
+
+      const customerDetails = visitDetails.waitlist.waitlistingFor[0];
+      const customerId = customerDetails.id;
+      const bookingId = visitDetails.waitlist.ynwUuid;
+       const bookingType = 'TOKEN';
+       this.dialogRef.close();
+
+       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ]);
 
     } else if (visitDetails.appointmnet) {
-      let providerId ;
-      if (visitDetails.appointmnet.provider && visitDetails.appointmnet.provider.id) {
-       providerId = visitDetails.appointmnet.provider.id;
-      } else {
-        providerId = '';
+
+      let mrId = 0;
+      if (visitDetails.appointmnet.mrId) {
+        mrId = visitDetails.appointmnet.mrId;
       }
 
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.appointmnet.appmtFor[0]),
-          // 'customerDetail': JSON.stringify(visitDetails.appointmnet.providerConsumer),
-          'serviceId': visitDetails.appointmnet.service.id,
-          'serviceName': visitDetails.appointmnet.service.name,
-          'department': visitDetails.appointmnet.service.deptName,
-          'booking_type': 'APPT',
-          'booking_date': visitDetails.appointmnet.consLastVisitedDate,
-          'booking_time': visitDetails.appointmnet.apptTakenTime,
-          'mrId': visitDetails.mrId,
-          'booking_id': visitDetails.appointmnet.uid,
-          'visitDate': visitDetails.appointmnet.consLastVisitedDate,
-          'back_type': this.back_type,
-          'provider_id': providerId
-        }
-      };
-      const result = {
-        'navigationParams': navigationExtras,
-        'type': 'clinicalnotes'
-      };
-      this.dialogRef.close(result);
+      const customerDetails = visitDetails.appointmnet.appmtFor[0];
+      const customerId = customerDetails.id;
+      const bookingId = visitDetails.appointmnet.uid;
+       const bookingType = 'APPT';
+       this.dialogRef.close();
+       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ]);
+
 
     } else {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(visitDetails.providerConsumer),
-          'serviceName': 'Consultation',
-          'booking_type': 'FOLLOWUP',
-          'mrId': visitDetails.mrId,
-          'booking_date': visitDetails.consLastVisitedDate,
-          'visitDate': visitDetails.consLastVisitedDate,
-          'back_type': this.back_type
-        }
-      };
-      const result = {
-        'navigationParams': navigationExtras,
-        'type': 'clinicalnotes'
-      };
-      this.dialogRef.close(result);
-    }
-  }
 
+      const mrId = visitDetails.mrId;
+      const customerDetails = visitDetails[0];
+      const customerId = customerDetails.id;
+      const bookingId = 0;
+      const bookingType = 'FOLLOWUP';
+      this.dialogRef.close();
+      this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ]);
+    }
+
+  }
 
 }

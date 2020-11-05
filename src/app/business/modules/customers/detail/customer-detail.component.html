@@ -14,7 +14,7 @@
     <div class="card title-gb">
         <h5 class="mgn-up-10" *ngIf="customerAction === 'inbox'">
             <span class="fa fa-arrow-left pointer-cursor"
-                (click)="goBackfromAction()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                (click)="goBackfromAction('')"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Communication history
         </h5>
         <h5 class="mgn-up-10" *ngIf="showMoreActivity">
@@ -372,8 +372,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                     <div class="clearfix"></div>
                 </div>
                 <div class="card" *ngIf="customerAction === 'inbox' && !loading">
-                    <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
-                        (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
+                    <!-- <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
+                        (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list> -->
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             </div>

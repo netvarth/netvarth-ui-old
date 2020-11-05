@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MedicalrecordService {
+  bookingType: any;
+  department: any;
+  serviceName: any;
+  patientDetails: any;
   bookingId: any;
   patientData: any;
   mr_payload_new: any = {
@@ -13,12 +16,11 @@ export class MedicalrecordService {
     'consultationMode': 'OP'
 
   };
-  private patientDetails = new BehaviorSubject<any>('');
-  patient_data = this.patientDetails.asObservable();
-  private mrId = new BehaviorSubject<any>(0);
-  private back_type = new BehaviorSubject<any>('');
-  back_nav = this.back_type.asObservable();
-  _mrUid = this.mrId.asObservable();
+  doctorId;
+
+  // private back_type = new BehaviorSubject<any>('');
+  // back_nav = this.back_type.asObservable();
+
   drugList: any = [];
 
   constructor(private provider_services: ProviderServices) {
@@ -32,30 +34,37 @@ export class MedicalrecordService {
   setDrugList(data) {
     this.drugList = data;
   }
-  setPatientDetailsForMR(data) {
-
-    this.patientData = JSON.parse(data.customerDetail);
-    if (data.booking_type) {
-      this.mr_payload_new['bookingType'] = data.booking_type;
-    } else {
-      this.mr_payload_new['bookingType'] = 'FOLLOWUP';
-    } if (data.consultationMode) {
-      this.mr_payload_new['consultationMode'] = data.consultationMode;
-    }
-    if (data.booking_id) {
-      this.bookingId = data.booking_id;
-    }
-
-    this.patientDetails.next(data);
+  setPatientDetails(data) {
+    this.patientDetails = data;
   }
-  setCurrentMRID(uid) {
-    console.log(uid);
-
-    this.mrId.next(uid);
-
+  getPatientDetails() {
+    return this.patientDetails;
   }
-  setBacknav(back) {
-    this.back_type.next(back);
+
+
+  // setBacknav(back) {
+  //   this.back_type.next(back);
+  // }
+  setDoctorId(id) {
+    this.doctorId = id;
+  }
+  getDoctorId() {
+    return this.doctorId;
+  }
+  setParams(type, id) {
+    this.bookingType = type;
+    this.bookingId = id;
+    this.mr_payload_new['bookingType'] = type;
+  }
+  setServiceDept(service, department) {
+    this.serviceName = service;
+    this.department = department;
+  }
+  getServiceName() {
+    return this.serviceName;
+  }
+  getDepartmentName() {
+    return this.department;
   }
   createMR(key, value) {
     if (key !== 'clinicalNotes') {
@@ -65,13 +74,13 @@ export class MedicalrecordService {
     }
 
     let mrObject = {};
-    const _this = this;
-    mrObject = _this.mr_payload_new;
+    const $this = this;
+    mrObject = $this.mr_payload_new;
     mrObject[key] = value;
     if (mrObject['bookingType'] === 'FOLLOWUP') {
 
       return new Promise((resolve, reject) => {
-        this.provider_services.createMedicalRecordForFollowUp(mrObject, _this.patientData.id)
+        this.provider_services.createMedicalRecordForFollowUp(mrObject, $this.patientDetails.id)
           .subscribe(
             response => {
               resolve(response);
@@ -87,7 +96,7 @@ export class MedicalrecordService {
       return new Promise((resolve, reject) => {
         console.log(JSON.stringify(mrObject));
 
-        this.provider_services.createMedicalRecord(mrObject, _this.bookingId)
+        this.provider_services.createMedicalRecord(mrObject, $this.bookingId)
           .subscribe(
             response => {
               resolve(response);
@@ -102,16 +111,16 @@ export class MedicalrecordService {
 
   }
   createMRForUploadPrescription() {
-    const _this = this;
-    console.log(_this.patientData.id);
-    delete _this.mr_payload_new['clinicalNotes'];
+    const $this = this;
+
+    delete $this.mr_payload_new['clinicalNotes'];
     delete this.mr_payload_new['prescriptions'];
 
 
-    if (_this.mr_payload_new.bookingType === 'FOLLOWUP') {
+    if ($this.bookingType === 'FOLLOWUP') {
 
       return new Promise((resolve, reject) => {
-        this.provider_services.createMedicalRecordForFollowUp(_this.mr_payload_new, _this.patientData.id)
+        this.provider_services.createMedicalRecordForFollowUp($this.mr_payload_new, $this.patientData.id)
           .subscribe(
             response => {
               resolve(response);
@@ -125,7 +134,7 @@ export class MedicalrecordService {
 
     } else {
       return new Promise((resolve, reject) => {
-        this.provider_services.createMedicalRecord(_this.mr_payload_new, _this.bookingId)
+        this.provider_services.createMedicalRecord($this.mr_payload_new, $this.bookingId)
           .subscribe(
             response => {
               resolve(response);

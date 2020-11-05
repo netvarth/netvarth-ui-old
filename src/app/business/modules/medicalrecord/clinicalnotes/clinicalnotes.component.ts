@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { Router, NavigationExtras } from '@angular/router';
-import { MedicalrecordService } from '../medicalrecord.service';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+
 
 
 @Component({
@@ -14,7 +14,7 @@ import { MedicalrecordService } from '../medicalrecord.service';
 export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
 
-  mrId: any;
+  mrId = 0;
   clinicalNotes: any[];
   allergies: any;
   currentMRId: any;
@@ -36,45 +36,44 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
-    private medicalrecordService: MedicalrecordService) {
+    private activatedRoute: ActivatedRoute
+  ) {
 
-    this.medicalrecordService._mrUid.subscribe(mrId => {
-      this.mrId = mrId;
- console.log(this.mrId);
-
-
-    });
 
   }
 
   ngOnInit() {
+    const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
+    this.mrId = parseInt(medicalrecordId, 0);
 
-    if (this.mrId === 0 || this.mrId === undefined) {
-      this.isLoaded = true;
-      for (let i = 0; i < this.clinical_constant.length; i++) {
-        this.clinical_constant[i].value = '';
-
-      }
-      this.clinicalNotes = this.clinical_constant;
-
-
-    } else {
-      for (let i = 0; i < this.clinical_constant.length; i++) {
-        this.clinical_constant[i].value = '';
-
-      }
-      this.clinicalNotes = this.clinical_constant;
-      this.getMRClinicalNotes(this.mrId).then((res: any) => {
-        this.clinicalNotes = res;
+      if (this.mrId === 0 || this.mrId === undefined) {
         this.isLoaded = true;
+        for (let i = 0; i < this.clinical_constant.length; i++) {
+          this.clinical_constant[i].value = '';
 
-      });
-    }
+        }
+        this.clinicalNotes = this.clinical_constant;
+
+
+      } else if (this.mrId !== 0) {
+        for (let i = 0; i < this.clinical_constant.length; i++) {
+          this.clinical_constant[i].value = '';
+
+        }
+        this.clinicalNotes = this.clinical_constant;
+        this.getMRClinicalNotes(this.mrId).then((res: any) => {
+          this.clinicalNotes = res;
+          this.isLoaded = true;
+
+        });
+      }
+
+
 
   }
 
   getMRClinicalNotes(mrId) {
-    const _this = this;
+    const $this = this;
     let response = '';
     for (let i = 0; i < this.clinical_constant.length; i++) {
       this.clinical_constant[i].value = '';
@@ -83,7 +82,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     const compArray = this.clinical_constant;
 
     return new Promise((resolve) => {
-      _this.provider_services.getClinicalRecordOfMRById(mrId)
+      $this.provider_services.getClinicalRecordOfMRById(mrId)
         .subscribe((res: any) => {
           if (res.clinicalNotes) {
             response = res.clinicalNotes;
@@ -99,7 +98,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
             });
         },
           error => {
-            _this.sharedfunctionObj.openSnackBar(_this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            $this.sharedfunctionObj.openSnackBar($this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
 
 
@@ -114,11 +113,12 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   addOrEditClinicalNotes(object) {
 
     const navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute,
       queryParams: {
         'data': JSON.stringify(object),
         'clinicalNotes': JSON.stringify(this.clinicalNotes)
       }
     };
-    this.router.navigate(['/provider/customers/medicalrecord/edit'], navigationExtras);
+    this.router.navigate(['../edit'], navigationExtras);
   }
 }

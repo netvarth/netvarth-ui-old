@@ -24,12 +24,11 @@ const routes: Routes = [
       }
     ]
   },
-   { path: 'list', component: MedicalrecordListComponent },
+  { path: 'list', component: MedicalrecordListComponent },
   { path: 'edit', component: GeneralComponent },
   { path: 'uploadRx', component: UploadPrescriptionComponent },
   { path: 'addrxlist', component: DrugListComponent },
-  {path: 'uploadsign', component: UploadDigitalSignatureComponent}
-
+  { path: 'uploadsign', component: UploadDigitalSignatureComponent }
 
 
 ];

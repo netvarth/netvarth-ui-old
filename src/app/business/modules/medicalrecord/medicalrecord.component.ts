@@ -18,6 +18,8 @@ import { Location } from '@angular/common';
 })
 export class MedicalrecordComponent implements OnInit {
 
+  bookingId: string;
+  patientId: string;
   activityLogs: any;
   mrNumber: any;
   visitdate: Date;
@@ -31,7 +33,7 @@ export class MedicalrecordComponent implements OnInit {
   serviceName = 'Consultation';
   department: any;
   data: any;
-  mrId: any;
+  mrId = 0;
   routeLinks: any[];
   activeLinkIndex = -1;
   userId;
@@ -44,12 +46,12 @@ export class MedicalrecordComponent implements OnInit {
   patientLastName: number;
   PatientDob: any;
   mrlist;
+  providerId;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   mrCreatedDate: string;
   consultationMode = 'Out Patient';
   bookingType: any;
   patientConsultationType = 'OP';
-  // patientConsultationModes: any = [{ 'name': 'OP' }, { 'name': 'PHONE' }, { 'name': 'EMAIL' }, { 'name': 'VIDEO' }];
   patientConsultationModes: any = [{ 'displayName': 'Out Patient', 'name': 'OP' }, { 'displayName': 'Phone', 'name': 'PHONE' }, { 'displayName': 'E-mail', 'name': 'EMAIL' }, { 'displayName': 'Tele-Service', 'name': 'VIDEO' }];
 
   visitTime = new Date().toLocaleTimeString();
@@ -67,122 +69,133 @@ export class MedicalrecordComponent implements OnInit {
     private datePipe: DateFormatPipe
   ) {
     this.visitdate = this.datePipe.transformToDateWithTime(new Date());
-    this.routeLinks = [
-      {
-        label: 'Clinical Notes',
-        link: '/provider/customers/medicalrecord/clinicalnotes',
-        id: 'clinicalnotes',
-        index: 0
-      }, {
-        label: 'Prescription',
-        link: '/provider/customers/medicalrecord/prescription',
-        id: 'prescription',
-        index: 1
-      }
-    ];
 
 
-    this.activated_route.queryParams.subscribe(
-      (qparams) => {
-        if (qparams['customerDetail']) {
-          console.log(qparams);
-          this.navigation_params = qparams;
-          // tslint:disable-next-line:radix
-
-          if (qparams.booking_date) {
-            this.visitdate = qparams.booking_date;
-          }
-          if (qparams.back_type) {
-            this.medicalService.setBacknav(qparams.back_type);
-          }
-
-          this.customerDetails = JSON.parse(qparams.customerDetail);
-          if (this.customerDetails.memberJaldeeId) {
-            this.display_PatientId = this.customerDetails.memberJaldeeId;
-          } else if (this.customerDetails.jaldeeId) {
-            this.display_PatientId = this.customerDetails.jaldeeId;
-          }
-
-          this.PatientId = this.customerDetails.id;
-          if (qparams.department) {
-            this.department = qparams.department;
-          }
-          if (qparams.serviceName) {
-            this.serviceName = qparams.serviceName;
-          }
-
-          if (qparams.booking_type && qparams.booking_type === 'TOKEN' || 'APPT') {
-            this.bookingType = qparams.booking_type;
-            if (qparams.consultationMode) {
-              this.consultationMode = qparams.consultationMode;
-            }
-          }
-
-
-          if (qparams.mrId) {
-            // tslint:disable-next-line:radix
-            this.mrId = parseInt(qparams.mrId);
-            this.medicalService.setCurrentMRID(this.mrId);
-          }
-          if (qparams.visitDate) {
-            this.visitdate = qparams.visitDate;
-          }
-          if (qparams.booking_time) {
-            this.visitTime = qparams.booking_time;
-          }
-          this.medicalService.setPatientDetailsForMR(qparams);
-
-
-        } else {
-          this.medicalService.patient_data.subscribe(res => {
-            this.navigation_params = {
-              'clone_params': res
-            };
-
-
-            this.customerDetails = JSON.parse(res.customerDetail);
-
-            if (res.booking_date) {
-              this.visitdate = res.booking_date;
-            }
-            this.PatientId = this.customerDetails.id;
-            if (res.department) {
-              this.department = res.department;
-            }
-            if (res.serviceName) {
-              this.serviceName = res.serviceName;
-            }
-
-
-
-          });
-          this.medicalService._mrUid.subscribe(mrId => {
-            this.mrId = mrId;
-          });
-
-
-        }
-
-      });
 
   }
 
 
   ngOnInit() {
-    if (this.mrId !== 0) {
-      this.getMedicalRecordUsingMR(this.mrId);
-    }
-    this.medicalService.back_nav.subscribe(res => {
-      this.back_type = res;
-    });
+    this.activated_route.paramMap.subscribe(params => {
+      this.patientId = params.get('id');
+      this.bookingType = params.get('type');
+      this.bookingId = params.get('uid');
+      const medicalrecordId = params.get('mrId');
+      this.mrId = parseInt(medicalrecordId, 0);
+      this.medicalService.setParams(this.bookingType, this.bookingId);
 
-    this.router.events.subscribe((res) => {
-      this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
+      if (this.mrId !== 0) {
+        this.getMedicalRecordUsingId(this.mrId);
+      }
+      if (this.bookingType === 'APPT') {
+        this.getAppointmentById(this.bookingId);
+      } else if (this.bookingType === 'TOKEN') {
+        this.getWaitlistDetails(this.bookingId);
+      } else if (this.bookingType === 'FOLLOWUP') {
+        this.getPatientDetails(this.patientId);
+      }
+    //  const clinical_link = 'provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/clinicalnotes';
+    // const prescription_link = 'provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/prescription';
+      this.routeLinks = [
+        {
+          label: 'Clinical Notes',
+          link: 'clinicalnotes',
+          id: 'clinicalnotes',
+          index: 0
+        }, {
+          label: 'Prescription',
+          link: 'prescription',
+          id: 'prescription',
+          index: 1
+        }
+
+      ];
+
     });
-    this.getPatientVisitListCount();
 
 
   }
+  getAppointmentById(uid) {
+    this.provider_services.getAppointmentById(uid)
+      .subscribe((data: any) => {
+        const response = data;
+        this.visitdate = response.consLastVisitedDate;
+
+        if (response.department) {
+          this.department = response.service.department;
+        } if (response.service) {
+          this.serviceName = response.service.name;
+        }
+        this.medicalService.setServiceDept(this.serviceName, this.department);
+        this.customerDetails = response.appmtFor[0];
+        this.medicalService.setPatientDetails(this.customerDetails);
+        this.providerId = response.provider.id;
+        this.medicalService.setDoctorId(this.providerId);
+        this.PatientId = this.customerDetails.id;
+        if (this.customerDetails.memberJaldeeId) {
+          this.display_PatientId = this.customerDetails.memberJaldeeId;
+        } else if (this.customerDetails.jaldeeId) {
+          this.display_PatientId = this.customerDetails.jaldeeId;
+        }
+        this.getPatientVisitListCount();
+
+
+
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+  getWaitlistDetails(uid) {
+    this.provider_services.getProviderWaitlistDetailById(uid)
+      .subscribe((data: any) => {
+        const response = data;
+        this.visitdate = response.consLastVisitedDate;
+        if (response.department) {
+          this.department = response.service.department;
+        } if (response.service) {
+          this.serviceName = response.service.name;
+        }
+        this.customerDetails = response.waitlistingFor[0];
+        this.medicalService.setPatientDetails(this.customerDetails);
+        this.PatientId = this.customerDetails.id;
+        if (this.customerDetails.memberJaldeeId) {
+          this.display_PatientId = this.customerDetails.memberJaldeeId;
+        } else if (this.customerDetails.jaldeeId) {
+          this.display_PatientId = this.customerDetails.jaldeeId;
+        }
+        this.providerId = response.provider.id;
+        this.medicalService.setDoctorId(this.providerId);
+        this.getPatientVisitListCount();
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+  getPatientDetails(uid) {
+
+    const filter = { 'id-eq': uid };
+    this.provider_services.getCustomer(filter)
+      .subscribe(
+        (data: any) => {
+          const response = data;
+          this.customerDetails = response[0];
+          this.medicalService.setPatientDetails(this.customerDetails);
+          const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+          this.medicalService.setDoctorId(user.id);
+          this.getPatientVisitListCount();
+
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+  routerNavigate(routerId) {
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, routerId]);
+
+  }
+
+
   getPatientVisitListCount() {
     if (this.PatientId !== null && this.PatientId !== undefined) {
       this.provider_services.getPatientVisitListCount(this.PatientId)
@@ -203,10 +216,7 @@ export class MedicalrecordComponent implements OnInit {
     if (this.mrId === 0) {
 
       this.medicalService.createMR('consultationMode', event).then(res => {
-        this.getMedicalRecordUsingMR(res);
-        this.navigation_params = { ...this.navigation_params, 'mrId': res };
-        this.medicalService.setPatientDetailsForMR(this.navigation_params);
-        this.medicalService.setCurrentMRID(res);
+        this.getMedicalRecordUsingId(res);
 
       },
         error => {
@@ -221,7 +231,7 @@ export class MedicalrecordComponent implements OnInit {
   updateMR(payload, mrId) {
     this.provider_services.updateMR(payload, mrId)
       .subscribe((data) => {
-        this.getMedicalRecordUsingMR(data);
+        this.getMedicalRecordUsingId(data);
 
         this.sharedfunctionObj.openSnackBar('Medical Record updated successfully');
       },
@@ -231,7 +241,7 @@ export class MedicalrecordComponent implements OnInit {
 
 
   }
-  getMedicalRecordUsingMR(mrId) {
+  getMedicalRecordUsingId(mrId) {
 
 
     this.provider_services.GetMedicalRecord(mrId)
@@ -268,16 +278,7 @@ export class MedicalrecordComponent implements OnInit {
       }
     });
     this.mrdialogRef.afterClosed().subscribe(result => {
-      console.log(JSON.stringify(result));
-      if (result.type === 'prescription') {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], result.navigationParams);
-      } else if (result.type === 'clinicalnotes') {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
-      }
+
     });
   }
   activitylogs() {

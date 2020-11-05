@@ -55,9 +55,9 @@
       <div class="content w-manager settings comn-cls">
         <div style="padding: 5px;">
           <nav mat-tab-nav-bar>
-            <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link"
-              [queryParams]="navigation_params" routerLinkActive="mat-tab-link-active" #rla="routerLinkActive"
-              class="routerLink.active heading2" [active]="rla.isActive" (click)="activeLinkIndex = i"
+            <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;"
+           routerLinkActive="mat-tab-link-active" #rla="routerLinkActive"
+              class="routerLink.active heading2" [active]="rla.isActive" (click)="routerNavigate(routeLink.id)"
               [routerLinkActiveOptions]="{exact: true}">
               {{routeLink.label}}
             </a>

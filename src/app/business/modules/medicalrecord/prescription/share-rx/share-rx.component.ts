@@ -3,9 +3,10 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
-import { MedicalrecordService } from '../../medicalrecord.service';
+// import { MedicalrecordService } from '../../medicalrecord.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { MedicalrecordService } from '../../medicalrecord.service';
 
 
 @Component({
@@ -84,24 +85,13 @@ export class ShareRxComponent implements OnInit {
     private medicalService: MedicalrecordService
   ) {
     this.spId = this.data.userId;
-    this.provider_user_Id = this.data.provider_user_Id;
+    this.provider_user_Id = this.medicalService.getDoctorId();
     console.log(this.spId);
     this.mrId = this.data.mrId;
     this.type = this.data.type;
     console.log(this.type);
     this.chekintype = this.data.chekintype;
-    this.medicalService.patient_data.subscribe(res => {
-      this.customerDetail = JSON.parse(res.customerDetail);
-      console.log(this.customerDetail);
-      console.log(this.customerDetail.phoneNo);
-      // if (this.customerDetail.email) {
-      //   this.email_id = this.customerDetail.email;
-      // }
-      // if (this.customerDetail.phoneNo) {
-      //   this.phone = this.customerDetail.phoneNo;
-      // }
 
-    });
   }
   ngOnInit() {
     const cnow = new Date();
@@ -110,9 +100,7 @@ export class ShareRxComponent implements OnInit {
     this.sharewith = 0;
     this.msgreceivers = [{ 'id': 0, 'name': 'Patient' }];
     this.createForm();
-    console.log(this.mrId);
     this.getMrprescription();
-    // this.getBusinessProfile();
     this.getBussinessProfileApi();
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
@@ -300,7 +288,7 @@ export class ShareRxComponent implements OnInit {
       logourl = (this.signurl) ? this.signurl + '?' + this.cacheavoider : '';
     }
     return this.shared_functions.showlogoicon(logourl);
-  
+
   }
   showimg() {
     let logourl = '';
@@ -319,7 +307,7 @@ export class ShareRxComponent implements OnInit {
           this.userbname = this.userdata.businessName;
           console.log(this.userdata);
         },
-        );
+      );
     }
   }
   getBussinessProfileApi() {
