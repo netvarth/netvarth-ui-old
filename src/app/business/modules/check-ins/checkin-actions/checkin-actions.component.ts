@@ -383,7 +383,7 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     goToCheckinDetails() {
-        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid]);
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid], { queryParams: { timetype: this.data.timetype }});
         this.dialogRef.close();
     }
     viewBillPage() {

@@ -228,7 +228,7 @@ export class AppointmentActionsComponent implements OnInit {
         }
     }
     goToCheckinDetails() {
-        this.router.navigate(['provider', 'appointments', this.appt.uid]);
+        this.router.navigate(['provider', 'appointments', this.appt.uid], { queryParams: { timetype: this.data.timetype }});
         this.dialogRef.close();
     }
     viewBillPage() {
