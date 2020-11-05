@@ -1,4 +1,5 @@
-<section *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && source !=='appt-block' && !viewCustomer && !loading">
+<section
+    *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && source !=='appt-block' && !viewCustomer && !loading">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section *ngIf="viewCustomer && customerAction === '' && !showMoreActivity">
@@ -24,7 +25,8 @@
         </h5>
     </div>
 </section>
-<section class="" *ngIf="source ==='token' || source ==='checkin' || source ==='appointment' || source === 'appt-block'">
+<section class=""
+    *ngIf="source ==='token' || source ==='checkin' || source ==='appointment' || source === 'appt-block'">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <!-- <button type="button" class="btn default profile-back" (click)="onCancel()">
@@ -265,7 +267,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     <span *ngIf="customer[0].dob">DOB: <span class="cust-detail">
                                             {{customer[0].dob | date: dateFormat}} </span></span>
                                 </div>
-                                 <div *ngIf="customer[0].address">Address: <span class="cust-detail">{{customer[0].address}}</span></div>
+                                <div *ngIf="customer[0].address">Address: <span
+                                        class="cust-detail">{{customer[0].address}}</span></div>
                             </div>
                             <div>
                                 <div class="rece-act mgn-bt-20 mgn-lt-10" *ngIf="!showMoreActivity">Recent activity
@@ -287,7 +290,18 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         <div *ngIf="visit.waitlist.token">Token#
                                                             {{visit.waitlist.token}} </div>
                                                     </td>
-                                                    <td> {{visit.waitlist.service.name}}</td>
+                                                    <td>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                            class="fa meet-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                            class="fa zoom-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                                            class="fa phon-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'audioService'"
+                                                            class="fa wtsapaud-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'videoService'"
+                                                            class="fa wtsapvid-icon"></i>
+                                                        {{visit.waitlist.service.name}}</td>
                                                     <td class="hidden-xs">
                                                         {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
                                                     <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0"> {{visit.waitlist.amountPaid |
@@ -326,7 +340,18 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                     <td>{{visit.appointmnet.appmtDate | date: dateFormat}}
                                                         <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
                                                     </td>
-                                                    <td> {{visit.appointmnet.service.name}}</td>
+                                                    <td>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                            class="fa meet-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                            class="fa zoom-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                                            class="fa phon-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'audioService'"
+                                                            class="fa wtsapaud-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'videoService'"
+                                                            class="fa wtsapvid-icon"></i>
+                                                        {{visit.appointmnet.service.name}}</td>
                                                     <td class="hidden-xs">
                                                         {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
                                                     <td><span class="rupee-font"
