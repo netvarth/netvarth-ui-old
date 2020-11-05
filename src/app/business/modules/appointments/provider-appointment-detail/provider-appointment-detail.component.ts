@@ -189,7 +189,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
+          if (this.waitlist_data.apptStatus !== 'blocked') {
           this.getWaitlistNotes(this.waitlist_data.uid);
+          }
           this.getCheckInHistory(this.waitlist_data.uid);
           this.getCommunicationHistory(this.waitlist_data.uid);
           if (this.waitlist_data.provider) {

@@ -117,7 +117,7 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="addProviderNote()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'" (click)="addProviderNote()">
             <div class="action-box-sub">
                 <span class="notes-icon"></span>
                 <div class="icon-text">Private Notes</div>
