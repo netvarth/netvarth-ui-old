@@ -9,17 +9,17 @@
       <div class="mgn-up-10" class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
         <hr>
         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-          <label>Patient Name:</label><span> {{customerDetails.firstName | capitalizeFirst}}
+          <label>Patient Name</label><span> {{customerDetails.firstName | capitalizeFirst}}
             {{customerDetails.lastName}}</span><br>
-          <label>Patient Id:</label> <span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
-          <label *ngIf="customerDetails.dob">DOB:</label><span>
+          <label>Patient Id</label> <span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
+          <label *ngIf="customerDetails.dob">DOB</label><span>
             {{customerDetails.dob | date:display_dateFormat}}</span><br *ngIf="customerDetails.dob">
-          <label *ngIf="customerDetails.gender">Gender:</label><span>
+          <label *ngIf="customerDetails.gender">Gender</label><span>
             {{customerDetails.gender | capitalizeFirst}}</span>
         </div>
         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-          <label *ngIf="serviceName">Service/Consultation:</label><span *ngIf="serviceName">{{serviceName}}</span><br>
-          <label *ngIf="department">Department:</label><span *ngIf="department"> {{department}}</span>
+          <label *ngIf="serviceName">Service/Consultation</label>&nbsp;<span *ngIf="serviceName">{{serviceName}}</span><br>
+          <label *ngIf="department">Department</label> &nbsp;<span *ngIf="department"> {{department}}</span>
         </div>
         <div class="clearfix"></div>
         <hr>
