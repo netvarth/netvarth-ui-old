@@ -42,7 +42,6 @@ export class ConfirmPageComponent implements OnInit {
         }
         if (params.uuid && params.account_id) {
           this.uuids = params.uuid;
-          console.log(this.uuids);
           if (params.multiple) {
             for (const uuid of this.uuids) {
               this.shared_services.getCheckinByConsumerUUID(uuid, params.account_id).subscribe(
@@ -78,7 +77,6 @@ export class ConfirmPageComponent implements OnInit {
   getWaitTime(waitlist) {
     if (waitlist.calculationMode !== 'NoCalc') {
       if (waitlist.serviceTime) {
-        console.log(waitlist.serviceTime)
         return waitlist.serviceTime;
       } else if (waitlist.appxWaitingTime === 0) {
         return 'Now';

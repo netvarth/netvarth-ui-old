@@ -960,15 +960,12 @@ export class ConsumerCheckinComponent implements OnInit {
                 if (this.sel_ser_det.isPrePayment) {
                     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
                 } else {
-                    console.log(uuidList);
-                    console.log(uuidList.length);
                     let multiple;
                     if (uuidList.length > 1) {
                         multiple = true;
                     } else {
                         multiple = false;
                     }
-                    console.log(multiple);
                     this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: uuidList, multiple: multiple } });
                 }
             },
