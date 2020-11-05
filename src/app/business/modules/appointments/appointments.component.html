@@ -664,7 +664,7 @@
                                       &nbsp;Call</span>
                                   </a>
                                   <a class="statusText btn-play pointer-cursor start-btn"
-                                    (click)="stopprop($event);unblockAppt(appt)" *ngIf="appt.apptStatus == 'blocked'"
+                                    (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                                     <i class="dashboardadd-customer-icon"></i>
                                     <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
@@ -1257,7 +1257,7 @@
                       <i class="icon-arrived"></i> <span *ngIf="!small_device_display"> Arrived</span>
                     </a> -->
                         <a class="statusText btn-play pointer-cursor start-btn"
-                          (click)="stopprop($event);unblockAppt(appt)" *ngIf="appt.apptStatus == 'blocked'"
+                          (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="dashboardadd-customer-icon"></i>
                           <span *ngIf="!small_device_display"> Add {{customer_label}}</span>

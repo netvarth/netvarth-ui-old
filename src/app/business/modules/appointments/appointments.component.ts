@@ -3428,14 +3428,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   stopprop(event) {
     event.stopPropagation();
   }
-  unblockAppt(appt) {
-    this.provider_services.deleteAppointmentBlock(appt.uid)
-      .subscribe(
-        () => {
-          this.loadApiSwitch('reloadAPIs');
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
+  addCustomerDetails(appt) {
+    this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: appt.uid } });
   }
 }

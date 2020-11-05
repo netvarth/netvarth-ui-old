@@ -11,6 +11,7 @@ import { CommonDataStorageService } from '../services/common-datastorage.service
 import * as moment from 'moment';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
 import { ProviderDataStorageService } from '../../ynw_provider/services/provider-datastorage.service';
+import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
 @Injectable()
 
 export class SharedFunctions {
@@ -20,7 +21,7 @@ export class SharedFunctions {
   private switchSubject = new Subject<any>();
   mUniqueId;
   constructor(private shared_service: SharedServices, private router: Router,
-    private dialog: MatDialog,
+    private dialog: MatDialog, public provider_services: ProviderServices,
     private snackBar: MatSnackBar,
     public dateformat: DateFormatPipe,
     private common_datastorage: CommonDataStorageService,
@@ -1630,16 +1631,18 @@ export class SharedFunctions {
     return Array(n);
   }
   getGlobalSettings() {
-    return new Promise(function (resolve) {
-      let settings = this.shared_functions.getitemFromGroupStorage('settings');
+    return new Promise((resolve) => {
+      let settings = this.getitemFromGroupStorage('settings');
       if (!settings) {
         this.provider_services.getGlobalSettings().subscribe(
           (data: any) => {
             settings = data;
-            this.shared_functions.setitemToGroupStorage('settings', data);
+            this.setitemToGroupStorage('settings', data);
+            console.log(settings);
             resolve(data);
           });
       } else {
+        console.log(settings);
         resolve(settings);
       }
     });
