@@ -40,29 +40,26 @@ export class BusinessComponent implements OnInit {
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.shared_functions.isBusinessOwner()) {
-          let settings = this.shared_functions.getitemFromGroupStorage('settings');
-          if (!settings) {
-            this.provider_services.getGlobalSettings().subscribe(
-              (data: any) => {
-                settings = data;
-                this.shared_functions.setitemToGroupStorage('settings', data);
-              });
-          }
-          if (router.url === '\/provider') {
-            setTimeout(() => {
-              if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
-                if (settings.waitlist) {
-                  router.navigate(['provider', 'check-ins']);
-                } else if (settings.appointment) {
-                  router.navigate(['provider', 'appointments']);
-                } else {
-                  router.navigate(['provider', 'settings']);
+          this.shared_functions.getGlobalSettings()
+            .then(
+              (settings: any) => {
+                console.log(settings);
+                if (router.url === '\/provider') {
+                  setTimeout(() => {
+                    if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
+                      if (settings.waitlist) {
+                        router.navigate(['provider', 'check-ins']);
+                      } else if (settings.appointment) {
+                        router.navigate(['provider', 'appointments']);
+                      } else {
+                        router.navigate(['provider', 'settings']);
+                      }
+                    } else {
+                      router.navigate(['provider', 'settings']);
+                    }
+                  }, 500);
                 }
-              } else {
-                router.navigate(['provider', 'settings']);
-              }
-            }, 500);
-          }
+              });
         }
       }
     });

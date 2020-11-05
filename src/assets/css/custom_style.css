@@ -12954,3 +12954,15 @@ hr {
   color: orange;
   font-size: 0.7rem;
 }
+.add-appt-icon {
+  content: url(../images/Addappoinment.svg);
+  width: 40px;
+}
+.unblock-appt-icon {
+  content: url(../images/Unblock.svg);
+  width: 40px;
+}
+.dashboardadd-customer-icon {
+  content: url(../images/Addappoinment.svg);
+  width: 15px;
+}

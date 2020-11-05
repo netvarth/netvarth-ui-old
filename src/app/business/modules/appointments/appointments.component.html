@@ -663,16 +663,12 @@
                                     <span *ngIf="!small_device_display && !appt.callingStatus">
                                       &nbsp;Call</span>
                                   </a>
-
-
                                   <a class="statusText btn-play pointer-cursor start-btn"
                                     (click)="stopprop($event);unblockAppt(appt)" *ngIf="appt.apptStatus == 'blocked'"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                                    <!-- <i class="dashboardstart-icon"></i>  -->
-                                    <span *ngIf="!small_device_display"> Unblock</span>
+                                    <i class="dashboardadd-customer-icon"></i>
+                                    <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                                   </a>
-
-
                                   <a class="statusText btn-play pointer-cursor start-btn"
                                     (click)="stopprop($event);changeWaitlistStatus('Started', appt)"
                                     *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && !appt.virtualService"
@@ -1260,17 +1256,12 @@
                       [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                       <i class="icon-arrived"></i> <span *ngIf="!small_device_display"> Arrived</span>
                     </a> -->
-
-
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);unblockAppt(appt)" *ngIf="appt.apptStatus == 'blocked'"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                          <!-- <i class="dashboardstart-icon"></i>  -->
-                          <span *ngIf="!small_device_display"> Unblock</span>
+                          <i class="dashboardadd-customer-icon"></i>
+                          <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                         </a>
-
-
-
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);changeWaitlistStatus('Started', appt)"
                           *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"

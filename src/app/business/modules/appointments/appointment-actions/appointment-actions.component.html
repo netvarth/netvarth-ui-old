@@ -14,13 +14,13 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus==='blocked'" (click)="addCustomerDetails()">
             <div class="action-box-sub">
-                <!-- <span class="start-icon"></span> -->
-                <div class="icon-text">Add details</div>
+                <span class="add-appt-icon"></span>
+                <div class="icon-text">Add {{customer_label}}</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus==='blocked'" (click)="unBlockAppt()">
             <div class="action-box-sub">
-                <!-- <span class="start-icon"></span> -->
+                <span class="unblock-appt-icon"></span>
                 <div class="icon-text">Unblock</div>
             </div>
         </div>

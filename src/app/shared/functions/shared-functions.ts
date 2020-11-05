@@ -1621,12 +1621,27 @@ export class SharedFunctions {
     const ia = new Uint8Array(ab);
 
     for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
+      ia[i] = byteString.charCodeAt(i);
     }
     return new Blob([ab], { type: 'image/jpeg' });
   }
 
   getNumberArray(n: number): any[] {
     return Array(n);
+  }
+  getGlobalSettings() {
+    return new Promise(function (resolve) {
+      let settings = this.shared_functions.getitemFromGroupStorage('settings');
+      if (!settings) {
+        this.provider_services.getGlobalSettings().subscribe(
+          (data: any) => {
+            settings = data;
+            this.shared_functions.setitemToGroupStorage('settings', data);
+            resolve(data);
+          });
+      } else {
+        resolve(settings);
+      }
+    });
   }
 }
