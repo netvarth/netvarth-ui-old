@@ -43,7 +43,6 @@ export class BusinessComponent implements OnInit {
           this.shared_functions.getGlobalSettings()
             .then(
               (settings: any) => {
-                console.log(settings);
                 if (router.url === '\/provider') {
                   setTimeout(() => {
                     if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {

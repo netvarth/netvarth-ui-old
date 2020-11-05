@@ -1638,11 +1638,9 @@ export class SharedFunctions {
           (data: any) => {
             settings = data;
             this.setitemToGroupStorage('settings', data);
-            console.log(settings);
             resolve(data);
           });
       } else {
-        console.log(settings);
         resolve(settings);
       }
     });

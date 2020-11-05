@@ -12966,3 +12966,7 @@ hr {
   content: url(../images/addpatientblack.svg);
   width: 15px;
 }
+.actionbtn .mat-icon-button {
+  width: 20px !important;
+  height: 30px !important;
+}
