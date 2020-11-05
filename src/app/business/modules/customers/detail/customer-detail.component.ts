@@ -542,7 +542,7 @@ export class CustomerDetailComponent implements OnInit {
                 'id': id
             },
             'appmtFor': [{
-                'id': 0,
+                'id': id,
             }],
         };
         this.provider_services.confirmAppointmentBlock(post_data)
