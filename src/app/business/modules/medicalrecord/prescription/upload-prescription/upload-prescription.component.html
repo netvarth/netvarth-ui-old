@@ -5,19 +5,8 @@
       {{heading}}
     </h5>
   </div>
-  <!-- </section>
-        <section> -->
-  <!-- <div class="content loc-list">
-                <div class="col-md-12 no-padding-small">-->
   <div class="card title-gb">
     <div class="mgn-up-10">
-
-      <!-- <p>
-                              <b>Patient:</b>
-                              <span color="blue"> {{patientDetails.id}} &nbsp;</span>
-                              <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}}</span>
-                              <span *ngIf="patientDetails.dob|| patientDetails.gender ">({{patientDetails.dob}} {{patientDetails.gender | capitalizeFirst}})</span>
-                            </p> -->
       <span>Patient Name: {{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
       <span>Patient Id: {{display_PatientId}}</span><br *ngIf="display_PatientId">
       <span *ngIf="patientDetails.dob">DOB: {{patientDetails.dob  | date:display_dateFormat}}</span><br

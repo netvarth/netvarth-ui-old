@@ -65,6 +65,12 @@ export class UploadPrescriptionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.patientDetails = this.medicalrecord_service.getPatientDetails();
+    if (this.patientDetails.memberJaldeeId) {
+      this.display_PatientId = this.patientDetails.memberJaldeeId;
+    } else if (this.patientDetails.jaldeeId) {
+      this.display_PatientId = this.patientDetails.jaldeeId;
+    }
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];

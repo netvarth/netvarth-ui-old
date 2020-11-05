@@ -94,17 +94,17 @@ export class MedicalrecordComponent implements OnInit {
       } else if (this.bookingType === 'FOLLOWUP') {
         this.getPatientDetails(this.patientId);
       }
-    //  const clinical_link = 'provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/clinicalnotes';
-    // const prescription_link = 'provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/prescription';
+      const clinical_link = '/provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/clinicalnotes';
+     const prescription_link = '/provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/prescription';
       this.routeLinks = [
         {
           label: 'Clinical Notes',
-          link: 'clinicalnotes',
+          link:clinical_link,
           id: 'clinicalnotes',
           index: 0
         }, {
           label: 'Prescription',
-          link: 'prescription',
+          link: prescription_link,
           id: 'prescription',
           index: 1
         }
@@ -190,7 +190,9 @@ export class MedicalrecordComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  routerNavigate(routerId) {
+  routerNavigate(event,routerId) {
+  console.log(event);
+  event.target.classList.add('mat-tab-link-active');
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, routerId]);
 
   }
