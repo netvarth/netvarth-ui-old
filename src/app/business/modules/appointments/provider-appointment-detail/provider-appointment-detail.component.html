@@ -69,11 +69,16 @@
 
               <!-- Status,Date,Time bar -->
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar">
-                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
+                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" *ngIf="(waitlist_data.service.serviceType === 'virtualService' && waitlist_data.apptStatus !== 'Arrived')">
                   <span class="status-label">STATUS</span>
                   <span>
                     {{check_in_statuses[waitlist_data.apptStatus | capitalizeFirst]}}
-                    <!-- {{waitlist_data.apptStatus}} -->
+                  </span>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" *ngIf="(waitlist_data.service.serviceType !== 'virtualService')">
+                  <span class="status-label">STATUS</span>
+                  <span>
+                    {{check_in_statuses[waitlist_data.apptStatus | capitalizeFirst]}}
                   </span>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-5 stats-item">
