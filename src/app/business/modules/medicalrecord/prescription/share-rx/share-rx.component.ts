@@ -94,12 +94,12 @@ export class ShareRxComponent implements OnInit {
       this.customerDetail = JSON.parse(res.customerDetail);
       console.log(this.customerDetail);
       console.log(this.customerDetail.phoneNo);
-      // if (this.customerDetail.email) {
-      //   this.email_id = this.customerDetail.email;
-      // }
-      // if (this.customerDetail.phoneNo) {
-      //   this.phone = this.customerDetail.phoneNo;
-      // }
+      if (this.customerDetail.email) {
+        this.email_id = this.customerDetail.email;
+      }
+      if (this.customerDetail.phoneNo) {
+        this.phone = this.customerDetail.phoneNo;
+      }
 
     });
   }
