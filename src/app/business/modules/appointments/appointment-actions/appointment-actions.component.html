@@ -145,7 +145,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && data.timetype !== 3 && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
+            *ngIf="!data.multiSelection && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
             (click)="rescheduleActionClicked()">
             <div class="action-box-sub">
                 <span class="reschedule-icon"></span>
