@@ -154,7 +154,7 @@
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;
-                                            <button (click)="onSubmit()" type="button"
+                                            <button mat-button [disabled]="displayName == ''" (click)="onSubmit()" type="button"
                                                 class="cs-btn bt2 jd_btn">{{button_title}}</button>
                                         </div>
                                         <br />
