@@ -3420,10 +3420,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   onButtonBeforeHook() { }
   onButtonAfterHook() { }
   gotoCustomerDetails(appt) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'view' }
-    };
-    this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id], navigationExtras);
+    if (appt.apptStatus !== 'blocked') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: { action: 'view' }
+      };
+      this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id], navigationExtras);
+    }
   }
   stopprop(event) {
     event.stopPropagation();

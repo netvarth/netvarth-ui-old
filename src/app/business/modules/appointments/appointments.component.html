@@ -435,7 +435,7 @@
                                       {{mode.value}}</mat-checkbox>
                                   </li>
                                 </div>
-                                <div *ngIf="time_type !== 3 && providerLabels.length > 0">
+                                <div *ngIf="providerLabels.length > 0">
                                   <!-- <div *ngFor="let lbl of providerLabels">
                                   <label class="filterHeaders">{{lbl.displayName}}</label>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -565,8 +565,9 @@
                                     (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
                                 <td class="parent-selection parent-title td-one">
                                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                                    class="bold pull-left pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
-                                    *ngIf="appt.appmtFor[0].firstName">
+                                    class="bold pull-left font11" [class.pointer-cursor]="appt.apptStatus!=='blocked'" 
+                                    (click)="stopprop($event);gotoCustomerDetails(appt)" *ngIf="appt.appmtFor[0].firstName"
+                                    [class.pointer-auto]="appt.apptStatus=='blocked'">
                                     {{appt.appmtFor[0].firstName}}
                                     {{appt.appmtFor[0].lastName}}
                                     <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked
@@ -1055,7 +1056,7 @@
                                       {{mode.value}}</mat-checkbox>
                                   </li>
                                 </div>
-                                <div *ngIf="time_type !== 3 && providerLabels.length > 0">
+                                <div *ngIf="providerLabels.length > 0">
                                   <!-- <div *ngFor="let lbl of providerLabels">
                                   <label class="filterHeaders">{{lbl.displayName}}</label>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -1162,8 +1163,9 @@
                         <div class="pull-left mgn-lt-5 date greenc bold" *ngIf="time_type!=3">
                           {{getSingleTime(appt.appmtTime)}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
-                          *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">
+                          class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
+                          *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName" 
+                          [class.pointer-cursor]="appt.apptStatus!=='blocked'" [class.pointer-auto]="appt.apptStatus=='blocked'">
                           {{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}
                           <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>

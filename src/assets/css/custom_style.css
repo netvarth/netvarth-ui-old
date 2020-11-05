@@ -12970,3 +12970,6 @@ hr {
   width: 20px !important;
   height: 30px !important;
 }
+.pointer-auto {
+  cursor: auto !important;
+}
