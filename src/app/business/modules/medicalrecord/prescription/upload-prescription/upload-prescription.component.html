@@ -13,8 +13,8 @@
     <div class="mgn-up-10">
      <label>Patient Name</label> &nbsp; <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
      <label>Patient Id</label> &nbsp; <span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
-     <label>DOB</label> &nbsp; <span *ngIf="patientDetails.dob"> {{patientDetails.dob  | date:display_dateFormat}}</span><br *ngIf="patientDetails.dob">
-     <label>Gender</label> &nbsp;<span *ngIf="patientDetails.gender"> {{patientDetails.gender | capitalizeFirst}}</span>
+     <label  *ngIf="patientDetails.dob">DOB</label> &nbsp; <span *ngIf="patientDetails.dob"> {{patientDetails.dob  | date:display_dateFormat}}</span><br *ngIf="patientDetails.dob">
+     <label *ngIf="patientDetails.gender">Gender</label> &nbsp;<span *ngIf="patientDetails.gender"> {{patientDetails.gender | capitalizeFirst}}</span>
       <hr>
     </div>
     <div class="no-padding" *ngIf="selectedMessage.files && selectedMessage.files.length == 0">

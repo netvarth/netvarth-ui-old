@@ -189,6 +189,7 @@ export class DrugListComponent implements OnInit {
         subscribe(res => {
           console.log(this.drugList);
           this.showSave = false;
+          this.sharedfunctionObj.openSnackBar('Prescription updated Successfully');
           this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
         },
         error => {
