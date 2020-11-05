@@ -72,7 +72,8 @@
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
                   <span class="status-label">STATUS</span>
                   <span>
-                    {{waitlist_data.apptStatus}}
+                    {{check_in_statuses[waitlist_data.apptStatus | capitalizeFirst]}}
+                    <!-- {{waitlist_data.apptStatus}} -->
                   </span>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-5 stats-item">
@@ -103,7 +104,7 @@
               <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                 <mat-tab-group animationDuration="10ms" class="index-head">
                   <mat-tab label="Private Notes">
-                    <span>
+                    <span *ngIf="waitlist_notes.length > 0">
                       <div class="pnotes" *ngFor="let note of waitlist_notes">
                         <p [innerHTML]="note.note | nl2br"></p>
                         <p>{{note.timeStamp | date: dateTimeFormat}}</p>
