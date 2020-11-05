@@ -482,7 +482,7 @@ export class CustomerDetailComponent implements OnInit {
                 'id': this.customerId,
                 'firstName': form_data.first_name,
                 'lastName': form_data.last_name,
-                'dob': form_data.dob,
+                'dob': datebirth,
                 'gender': form_data.gender,
                 'phoneNo': form_data.mobile_number,
                 'email': form_data.email_id,
