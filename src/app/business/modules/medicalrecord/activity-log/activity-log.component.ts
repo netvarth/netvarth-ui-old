@@ -4,6 +4,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
+import { projectConstants } from '../../../../app.component';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class ActivityLogComponent implements OnInit {
   aditlogs: any = {};
   action: any;
   loading = true;
+  dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
   constructor(
     public dialogRef: MatDialogRef<ActivityLogComponent>,
@@ -43,6 +45,14 @@ export class ActivityLogComponent implements OnInit {
   getDate(dateTime) {
     return this.datePipe.transformToDateWithTime(new Date(dateTime));
   }
+  // getDateTime(auditlogs) {
+  //   console.log(auditlogs);
+  //   let date = '';
+  //     date = auditlogs.DateTime;
+  //     console.log(date);
+  //   return  this.datePipe.transformToDateWithTime(date);
+  
+  // }
   getMedicalRecordUsingMR(mrId) {
 
 
