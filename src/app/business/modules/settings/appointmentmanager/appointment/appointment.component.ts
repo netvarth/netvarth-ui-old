@@ -716,6 +716,7 @@ export class AppointmentComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
+        this.note_placeholder = this.sel_ser_det.consumerNoteTitle;
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate, accountid) {
         this.queuejson = [];

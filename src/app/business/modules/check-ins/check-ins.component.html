@@ -437,10 +437,21 @@
                             {{done_cap}}</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor act-btn single-action"
+                          *ngIf="!small_device_display"
                           (click)="stopprop($event);showCheckinActions('started', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                           Actions <i class="fa fa-caret-down"></i>
                         </a>
+                        <span *ngIf="small_device_display">
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button type="button" (click)="showCheckinActions('started', checkin)" mat-menu-item>
+                              <span>Actions</span>
+                            </button>
+                          </mat-menu>
+                        </span>
                       </td>
                     </tr>
                   </tbody>
@@ -586,7 +597,7 @@
                           </span>
                         </div>
                       </td>
-                      <td class="q-actions td-four">
+                      <td class="q-actions td-four" [class.disp-flex]="small_device_display">
                         <a class="statusText btn-play pointer-cursor call-btn"
                           [class.stopcall-btn]="checkin.callingStatus"
                           *ngIf="!small_device_display && board_count > 0 && time_type == 1 && !checkin.virtualService && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
@@ -636,10 +647,21 @@
                             {{done_cap}}</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor act-btn single-action"
+                          *ngIf="!small_device_display"
                           (click)="stopprop($event);showCheckinActions(statusAction, checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                           Actions <i class="fa fa-caret-down"></i>
                         </a>
+                        <span *ngIf="small_device_display">
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button type="button" (click)="showCheckinActions(statusAction, checkin)" mat-menu-item>
+                              <span>Actions</span>
+                            </button>
+                          </mat-menu>
+                        </span>
                       </td>
                     </tr>
                   </tbody>
@@ -922,11 +944,21 @@
                           *ngIf="!small_device_display">
                           {{done_cap}}</span>
                       </a>
-                      <a class="statusText btn-play pointer-cursor act-btn single-action"
+                      <a class="statusText btn-play pointer-cursor act-btn single-action" *ngIf="!small_device_display"
                         (click)="stopprop($event);showCheckinActions(statusAction, checkin)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                         Actions <i class="fa fa-caret-down"></i>
                       </a>
+                      <span *ngIf="small_device_display">
+                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button type="button" (click)="showCheckinActions(statusAction, checkin)" mat-menu-item>
+                            <span>Actions</span>
+                          </button>
+                        </mat-menu>
+                      </span>
                     </td>
                   </tr>
                 </tbody>
@@ -1296,11 +1328,21 @@
                           *ngIf="!small_device_display">
                           {{done_cap}}</span>
                       </a>
-                      <a class="statusText btn-play pointer-cursor act-btn single-action"
+                      <a class="statusText btn-play pointer-cursor act-btn single-action" *ngIf="!small_device_display"
                         (click)="stopprop($event);showCheckinActions(statusAction, checkin)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                         Actions <i class="fa fa-caret-down"></i>
                       </a>
+                      <span *ngIf="small_device_display">
+                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button type="button" (click)="showCheckinActions(statusAction, checkin)" mat-menu-item>
+                            <span>Actions</span>
+                          </button>
+                        </mat-menu>
+                      </span>
                     </td>
                   </tr>
                 </tbody>

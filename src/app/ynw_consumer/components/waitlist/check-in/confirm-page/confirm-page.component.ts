@@ -27,6 +27,7 @@ export class ConfirmPageComponent implements OnInit {
   apiloading = true;
   provider_label;
   type;
+  uuids: any = [];
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions
@@ -40,19 +41,31 @@ export class ConfirmPageComponent implements OnInit {
           this.type = this.infoParams.type;
         }
         if (params.uuid && params.account_id) {
-          this.shared_services.getCheckinByConsumerUUID(params.uuid, params.account_id).subscribe(
-            (waitlist: any) => {
-              this.waitlist = waitlist;
-              this.apiloading = false;
-            });
+          this.uuids = params.uuid;
+          console.log(this.uuids);
+          if (params.multiple) {
+            for (const uuid of this.uuids) {
+              this.shared_services.getCheckinByConsumerUUID(uuid, params.account_id).subscribe(
+                (waitlist: any) => {
+                  this.waitlist.push(waitlist);
+                  this.apiloading = false;
+                });
+            }
+          } else {
+            this.shared_services.getCheckinByConsumerUUID(this.uuids, params.account_id).subscribe(
+              (waitlist: any) => {
+                this.waitlist.push(waitlist);
+                this.apiloading = false;
+              });
+          }
         }
       });
   }
 
   ngOnInit() {
   }
-  okClick() {
-    if (this.waitlist.service.livetrack) {
+  okClick(waitlist) {
+    if (waitlist.service.livetrack) {
       this.router.navigate(['consumer', 'checkin', 'track', this.infoParams.uuid], { queryParams: { account_id: this.infoParams.account_id } });
     } else {
       this.router.navigate(['consumer']);
@@ -66,12 +79,12 @@ export class ConfirmPageComponent implements OnInit {
     if (waitlist.calculationMode !== 'NoCalc') {
       if (waitlist.serviceTime) {
         console.log(waitlist.serviceTime)
-        return this.waitlist.serviceTime;
+        return waitlist.serviceTime;
       } else if (waitlist.appxWaitingTime === 0) {
         return 'Now';
       } else if (waitlist.appxWaitingTime !== 0) {
         return this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
-      } 
+      }
     }
   }
 }

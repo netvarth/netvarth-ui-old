@@ -930,12 +930,15 @@ export class ConsumerCheckinComponent implements OnInit {
                 const retData = data;
                 let retUUID;
                 let prepayAmount;
+                let uuidList = [];
+                console.log(this.waitlist_for.length);
                 Object.keys(retData).forEach(key => {
                     if (key === '_prepaymentAmount') {
                         prepayAmount = retData['_prepaymentAmount'];
                     } else {
                         retUUID = retData[key];
                         this.trackUuid = retData[key];
+                        uuidList.push(retData[key]);
                     }
                 });
                 if (this.selectedMessage.files.length > 0) {
@@ -957,7 +960,16 @@ export class ConsumerCheckinComponent implements OnInit {
                 if (this.sel_ser_det.isPrePayment) {
                     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
                 } else {
-                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                    console.log(uuidList);
+                    console.log(uuidList.length);
+                    let multiple;
+                    if (uuidList.length > 1) {
+                        multiple = true;
+                    } else {
+                        multiple = false;
+                    }
+                    console.log(multiple);
+                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: uuidList, multiple: multiple } });
                 }
             },
                 error => {

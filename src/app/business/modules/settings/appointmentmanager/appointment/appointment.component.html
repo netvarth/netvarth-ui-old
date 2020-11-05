@@ -407,7 +407,7 @@
                             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
                         </div>
                         <div class="col-md-12 mgn-up-20" *ngIf="consumerNote">
-                            <a class="notes pointer-cursor" (click)="toggleNotes()">Notes</a>
+                            <a class="notes pointer-cursor" (click)="toggleNotes()">{{sel_ser_det.consumerNoteTitle}}</a>
                         </div>
                         <ng-container *ngIf="consumerNote && notes" class="notes">
                             <div class="row col-md-12" style="display: flex;">
