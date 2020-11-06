@@ -139,7 +139,8 @@ export class PrescriptionComponent implements OnInit {
       disableClose: true,
       data: {
         mrId: this.mrId,
-        type: type
+        type: type,
+        patientId: this.patientId
       }
     });
     this.sharedialogRef.afterClosed().subscribe(result => {

@@ -15,6 +15,7 @@ import { MedicalrecordService } from '../../medicalrecord.service';
   styleUrls: ['./share-rx.component.css']
 })
 export class ShareRxComponent implements OnInit {
+  patientId: any;
   email_id = '';
   msgreceivers: any = [];
   spId: any;
@@ -74,6 +75,7 @@ export class ShareRxComponent implements OnInit {
   curDate = new Date();
   accountType: any;
   userbname: any;
+  loading=true;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -84,16 +86,17 @@ export class ShareRxComponent implements OnInit {
     public provider_services: ProviderServices,
     private medicalService: MedicalrecordService
   ) {
-    this.spId = this.data.userId;
+
     this.provider_user_Id = this.medicalService.getDoctorId();
-    console.log(this.spId);
     this.mrId = this.data.mrId;
     this.type = this.data.type;
-    console.log(this.type);
-    this.chekintype = this.data.chekintype;
+    this.patientId=this.data.patientId;
+    this.getPatientDetails(this.patientId);
+
 
   }
   ngOnInit() {
+
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
@@ -118,6 +121,16 @@ export class ShareRxComponent implements OnInit {
   back() {
     this.dialogRef.close();
   }
+  getPatientDetails(uid){
+    const filter = { 'id-eq': uid };
+    this.provider_services.getCustomer(filter)
+      .subscribe(
+        (data: any) => {
+          const response = data;
+          this.loading =false;
+          this.customerDetail = response[0];
+  });
+}
   onSubmit(formdata) {
     this.disable = true;
     this.resetApiErrors();
