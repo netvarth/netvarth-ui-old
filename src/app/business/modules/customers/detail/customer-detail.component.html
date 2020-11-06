@@ -276,14 +276,14 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                             </div>
                             <div *ngIf="!showMoreHistory">
                                 <div class="rece-act mgn-bt-20 mgn-lt-10">Recent activity
-                                    <span class="customer-action-btn pointer-cursor pull-right"
+                                    <span class="customer-action-btn pointer-cursor pull-right" *ngIf="historyVisitDetailsArray.length > 0"
                                     (click)="showHistory()">History</span>
                                 </div>
-                                <!-- <div class="mgn-bt-10 mgn-lt-10" *ngIf="todayvisitDetails.length === 0 && !loading">
+                                <div class="mgn-bt-10 mgn-lt-10" *ngIf="todayvisitDetails.length === 0 && futurevisitDetails.length === 0 && !loading">
                                     No recent activity
-                                </div> -->
-                                <div class="type-head">Today</div>
-                                <div class="recentactivity" *ngIf="todayvisitDetails.length > 0">
+                                </div>
+                                <div class="type-head" *ngIf="todayvisitDetails.length > 0 && !loading">Today</div>
+                                <div class="recentactivity" *ngIf="todayvisitDetails.length > 0 && !loading">
                                     <table class="table">
                                         <tbody>
                                             <tr class="pointer-cursor cellhover" *ngFor="let visit of todayvisitDetails"
@@ -400,8 +400,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         <a *ngIf="showMoreToday" (click)="showLess('today')">Show less</a>
                                     </div>
                                 </div>
-                                <div class="type-head" *ngIf="futurevisitDetails.length > 0">Future</div>
-                                <div class="recentactivity" *ngIf="futurevisitDetails.length > 0">
+                                <div class="type-head" *ngIf="futurevisitDetails.length > 0 && !loading">Future</div>
+                                <div class="recentactivity" *ngIf="futurevisitDetails.length > 0 && !loading">
                                     <table class="table">
                                         <tbody>
                                             <tr class="pointer-cursor cellhover" *ngFor="let visit of futurevisitDetails"
@@ -519,7 +519,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     </div>
                                 </div>
                             </div>
-                            <div class="recentactivity" *ngIf="historyvisitDetails.length > 0 && showMoreHistory">
+                            <div class="recentactivity" *ngIf="historyvisitDetails.length > 0 && showMoreHistory && !loading">
                                 <table class="table">
                                     <tbody>
                                         <tr class="pointer-cursor cellhover" *ngFor="let visit of historyvisitDetails"
