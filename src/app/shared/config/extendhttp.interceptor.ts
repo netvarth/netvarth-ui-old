@@ -17,7 +17,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     base_url + 'consumer/login',
     base_url + 'superadmin/login',
     base_url + 'support/login',
-    base_url + 'marketting/login',
+    base_url + 'marketing/login',
     base_url + 'provider/login',
     base_url + 'consumer/login/reset/\d{10,12}'
   ];
