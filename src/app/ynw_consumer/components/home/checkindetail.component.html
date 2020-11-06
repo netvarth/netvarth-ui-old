@@ -128,7 +128,7 @@
                                                 *ngIf="waitlist.token && !(waitlist.appxWaitingTime>=0)">TOKEN NO</span>
                                             <span class="item-label-val"
                                                 *ngIf="waitlist.token">{{waitlist.token}}</span>
-                                            <span class="est-tok-time" *ngIf="waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.waitlistStatus !== 'cancelled'">
+                                            <span class="est-tok-time" *ngIf="waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !== 'done' && !waitlist.serviceTime">
                                                   Est Wait Time: {{waitlist.appxWaitingTime}} min
                                                 </span>    
                                             <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0">

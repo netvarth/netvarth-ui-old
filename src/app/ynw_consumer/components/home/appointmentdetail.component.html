@@ -142,7 +142,9 @@
                                         <mat-tab-group animationDuration="10ms" class="index-head">
                                             <mat-tab label="Instructions">
                                                 <span *ngIf="appt.service && appt.service.postInfoEnabled">
-                                                    {{appt.service.postInfoTitle}}
+                                                    <h6> {{appt.service.postInfoTitle}} </h6>
+                                                <span [innerHTML]="appt.service.postInfoText">
+                                                </span>
                                                 </span>
                                                 <span *ngIf="appt.service && !appt.service.postInfoEnabled">No
                                                     Instructions</span>
