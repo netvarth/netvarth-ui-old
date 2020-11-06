@@ -608,6 +608,10 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         } else if (isNaN(instantQ.qserveonce)) {
             const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        } else if (JSON.parse(instantQ.qserveonce) === 0 || (JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
+            const error = this.customer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' +  this.customer_label + 's served.';
+          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          return;
         } else {
             if (this.action === 'edit') {
                 this.updateInstantQ(instantQInput);
