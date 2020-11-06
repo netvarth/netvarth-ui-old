@@ -1164,6 +1164,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.addmemberobj.mobile = obj.mobile || '';
         this.addmemberobj.gender = obj.gender || '';
         this.addmemberobj.dob = obj.dob || '';
+        this.disable = false;
     }
     handleSaveMember() {
         this.disable = true;
