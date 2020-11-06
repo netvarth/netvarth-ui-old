@@ -107,7 +107,6 @@ export class CustomerDetailComponent implements OnInit {
     communication_history: any = [];
     todayVisitDetailsArray: any = [];
     futureVisitDetailsArray: any = [];
-    historyVisitDetailsArray: any = [];
     showMoreFuture = false;
     showMoreToday = false;
     showMoreHistory = false;
@@ -712,10 +711,7 @@ export class CustomerDetailComponent implements OnInit {
         this.loading = true;
         this.provider_services.getCustomerHistoryVisit(this.customerId).subscribe(
             (data: any) => {
-                this.historyVisitDetailsArray = data;
-                // this.historyvisitDetails = this.historyVisitDetailsArray.slice(0, 5);
-                this.historyvisitDetails = this.historyVisitDetailsArray;
-                this.loading = false;
+                this.historyvisitDetails = data;
             }
         );
     }
