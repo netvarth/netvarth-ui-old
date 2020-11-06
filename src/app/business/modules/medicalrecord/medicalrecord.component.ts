@@ -290,6 +290,7 @@ export class MedicalrecordComponent implements OnInit {
           } else {
             this.patientConsultationType = data.consultationMode.toUpperCase();
           }
+          this.getPatientVisitListCount();
 
         }
       },
