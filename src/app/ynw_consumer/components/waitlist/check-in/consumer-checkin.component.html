@@ -36,8 +36,8 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
-                                            {{showCheckinButtonCaption()}} For <a
-                                            *ngIf="type !== 'waitlistreschedule'" class="changeitem  pointer-cursor mgn-lt-10 pull-right"
+                                            {{showCheckinButtonCaption()}} For <a *ngIf="type !== 'waitlistreschedule'"
+                                                class="changeitem  pointer-cursor mgn-lt-10 pull-right"
                                                 (click)="changeService()">Change
                                                 Service</a></div>
                                         <div class="col-sm-12 col-xs-12 col-md-12">
@@ -111,11 +111,11 @@
                                                                             style="width:150px!important ;"
                                                                             placeholder="" [(ngModel)]="callingModes"
                                                                             autocomplete="off" maxlength="10"></span> -->
-                                                                            
-                                                                    <!-- <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
+
+                                                                <!-- <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                                         *ngIf="editCallingmodes(i)">
                                                                         {{callingModes}}</span> -->
-                                                                    <!-- <div class="input-group-append mgn-up-6"
+                                                                <!-- <div class="input-group-append mgn-up-6"
                                                                         style="padding-left: 10px;">
                                                                         <button *ngIf="!showInputSection"
                                                                             class="btn bt3 btn-default"
@@ -125,7 +125,7 @@
                                                                             *ngIf="showInputSection"
                                                                             (click)="editCallingmodes(i)"></span>
                                                                     </div> -->
-                                                                    <!-- <div class="mgn-bt-10 cal-mod-edt custId-flex-form"
+                                                                <!-- <div class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                                 *ngIf="showInputSection">
                                                                 {{callingModes}}
                                                                 <span class="editbt mgn-lt-20"
@@ -182,10 +182,10 @@
                                                     {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
                                                 </span>
                                                 <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
-                                                    </span>
-                                                    <span *ngIf="isFuturedate">
-                                                        {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
-                                                    </span>
+                                                </span>
+                                                <span *ngIf="isFuturedate">
+                                                    {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                                </span>
 
                                                 <!-- <span class="slotdiv">
                                                     <mat-chip-list class="" *ngIf="queuejson && queuejson.length > 0">
@@ -278,7 +278,8 @@
                                         <div
                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">Booking
-                                                For <a *ngIf="type !== 'waitlistreschedule'" class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                For <a *ngIf="type !== 'waitlistreschedule'"
+                                                    class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
                                                     (click)="handleSideScreen('members')">Change
                                                     <!-- <i class="fa fa-pencil"></i> -->
                                                 </a>
@@ -286,20 +287,23 @@
                                             <div class="clearfix"></div>
                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                 <div class="card-body">
-                                                    <div *ngIf = "type !== 'waitlistreschedule'">
-                                                        <h6 class="card-title service" *ngFor="let member of waitlist_for">
+                                                    <div *ngIf="type !== 'waitlistreschedule'">
+                                                        <h6 class="card-title service"
+                                                            *ngFor="let member of waitlist_for">
                                                             {{member.firstName | capitalizeFirst}}
                                                             {{member.lastName | capitalizeFirst}}
                                                         </h6>
                                                     </div>
-                                                    
-                                                    <h6 class="card-title service" *ngIf = "type === 'waitlistreschedule'">
-                                                        {{wtlst_for_fname | capitalizeFirst}} {{wtlst_for_lname | capitalizeFirst}}
+
+                                                    <h6 class="card-title service"
+                                                        *ngIf="type === 'waitlistreschedule'">
+                                                        {{wtlst_for_fname | capitalizeFirst}}
+                                                        {{wtlst_for_lname | capitalizeFirst}}
                                                     </h6>
                                                     <div class="contact-section">
                                                         <i class="fa fa-mobile "></i>
-                                                        <i *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"
-                                                                            class="fa wtsapaud-icon wtsap-cal"></i>
+                                                        <i *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)"
+                                                            class="fa wtsapaud-icon wtsap-cal"></i>
                                                         <!-- <span class="mgn-lt-10 phonevallabel">
                                                             {{waitlist_for[0].phoneNo}}
                                                         </span> -->
@@ -307,19 +311,34 @@
                                                             *ngIf="userPhone && !changePhno">{{userPhone}}</span>
                                                         <span class="mgn-lt-10 phonevallabel"
                                                             *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
-                                                            class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
-                                                                (click)="editPhone()"></i></a>
-                                                                <div class="mode-hint mgn-bt-5" *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && (sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone')">
-                                                                    The provider will contact you in this number
-                                                                </div>
+                                                            class="mgn-lt-5 lnk pointer-cursor">
+                                                            <!-- <i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
+                                                                (click)="editPhone()"></i> -->
+                                                        </a>
+                                                        <div class="mode-hint mgn-bt-5"
+                                                            *ngIf="(!changePhno || currentPhone == callingModes) && (sel_ser_det && sel_ser_det.virtualCallingModes && (sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'))">
+                                                            The provider will contact you in this number
+                                                        </div>
+                                                    </div>
+                                                    <div class="contact-section"
+                                                        *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                        <i class="fa wtsapaud-icon wtsap-cal"></i>
+                                                        <span class="mgn-lt-10 phonevallabel">{{callingModes}}</span><a
+                                                            class="mgn-lt-5 lnk pointer-cursor">
+                                                        </a>
+                                                        <div class="mode-hint mgn-bt-5">
+                                                            The provider will contact you in this number
+                                                        </div>
                                                     </div>
                                                     <div class=""
                                                         *ngIf="userData && userData.userProfile && userData.userProfile.email">
                                                         <i class="fa fa-envelope-o "></i>
                                                         <span
                                                             class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
-                                                        <a class="mgn-lt-5 lnk pointer-cursor"><i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
-                                                                (click)="handleEmail()"></i></a>
+                                                        <a class="mgn-lt-5 lnk pointer-cursor">
+                                                            <!-- <i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
+                                                                (click)="handleEmail()"></i> -->
+                                                        </a>
                                                         <!-- <span class="mgn-lt-5 emailvallabel"
                                                 *ngIf="currentPhone && changePhno">{{currentPhone}}</span>&nbsp;<a class="lnk pointer-cursor"><i
                                                 class="fa fa-pencil" (click)="editPhone()"></i></a> -->
@@ -329,14 +348,15 @@
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding"
-                                                *ngIf="(s3CouponsList.length > 0)"> 
-                                                <a class="lnk pointer-cursor action" *ngIf="selected_coupons.length === 0"
+                                                *ngIf="(s3CouponsList.length > 0)">
+                                                <a class="lnk pointer-cursor action"
+                                                    *ngIf="selected_coupons.length === 0"
                                                     (click)="applyPromocode()">Apply
                                                     Promocode</a>
-                                                    <a class="lnk pointer-cursor action" *ngIf="selected_coupons.length > 0"
+                                                <a class="lnk pointer-cursor action" *ngIf="selected_coupons.length > 0"
                                                     (click)="applyPromocode()">
                                                     Promocode applied</a>
-                                                    {{selected_coupons.toString()}}</div>
+                                                {{selected_coupons.toString()}}</div>
                                             <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
                                                 <mat-chip-list class="btns">
                                                     <mat-chip (click)="handleSideScreen('note')"><a
@@ -356,7 +376,8 @@
                                             </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                    <div *ngIf="sel_ser_det.isPrePayment && type !== 'waitlistreschedule'" class=" mgn-bt-20">
+                                                    <div *ngIf="sel_ser_det.isPrePayment && type !== 'waitlistreschedule'"
+                                                        class=" mgn-bt-20">
                                                         <!-- <span class="bold mgn-lt-5 red">{{sel_ser_det.name}}</span> -->
                                                         This service
                                                         requires
@@ -366,7 +387,8 @@
                                                                 class="rupee-font">&#8377;
                                                             </span>{{prepaymentAmount}}</span>
                                                     </div>
-                                                    <div class="checkin-btn-bp pointer-cursor" *ngIf="type !== 'waitlistreschedule'"
+                                                    <div class="checkin-btn-bp pointer-cursor"
+                                                        *ngIf="type !== 'waitlistreschedule'"
                                                         [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === ''"
                                                         (click)="handleCheckinClicked()">
                                                         <span *ngIf="!sel_ser_det.isPrePayment">Confirm
@@ -374,7 +396,8 @@
                                                         <span *ngIf="sel_ser_det.isPrePayment">Proceed to Payment</span>
                                                         <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                     </div>
-                                                    <div class="checkin-btn-bp pointer-cursor" *ngIf="type == 'waitlistreschedule'"
+                                                    <div class="checkin-btn-bp pointer-cursor"
+                                                        *ngIf="type == 'waitlistreschedule'"
                                                         (click)="rescheduleWaitlist()">
                                                         Reschedule
                                                         <i class="fa fa-long-arrow-right mgn-lt-5"></i>
@@ -625,11 +648,11 @@
                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                 <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
                                     <mat-chip-list class="">
-                                        <mat-chip><a class="lnk pointer-cursor"
-                                                (click)="imagefile.click()"><input #imagefile type="file"
-                                                    accept="/*;capture=camera" style="display:none;" multiple
-                                                    (change)="filesSelected($event)"><i class="fa fa-paperclip mgn-rt-5"
-                                                    aria-hidden="true"></i>Upload File</a></mat-chip>
+                                        <mat-chip><a class="lnk pointer-cursor" (click)="imagefile.click()"><input
+                                                    #imagefile type="file" accept="/*;capture=camera"
+                                                    style="display:none;" multiple (change)="filesSelected($event)"><i
+                                                    class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
+                                                File</a></mat-chip>
                                     </mat-chip-list>
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 lnk pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
@@ -735,11 +758,10 @@
                         </div>
                         <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
                             *ngIf="action=='members'">
-                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">{{select_the_cap}}
-                                {{member_cap}}
-                                {{for_whom_the_cap}} appointment
-                                {{is_beingmade_cap}} <a class="lnk pointer-cursor action mgn-lt-5"
-                                    (click)="addMember()"><i class="fa fa-user-plus"></i> {{add_member_cap}}</a> </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
+                                <!-- {{select_the_cap}} {{member_cap}} {{for_whom_the_cap}} appointment {is_beingmade_cap}}  -->
+                                Booking for
+                            </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <ng-container *ngIf="action==='members'">
                                     <div class="member-outer">
@@ -768,11 +790,52 @@
                                                     </mat-radio-group>
                                                 </ng-container>
                                             </ul>
+                                            <a class="lnk pointer-cursor action mgn-lt-5" (click)="addMember()"><i
+                                                    class="fa fa-user-plus"></i> {{add_member_cap}}</a>
+                                        </div>
+                                    </div>
+                                    <label class="mgn-up-30 mgn-bt-20">Send booking alerts and communications to</label>
+                                    <div class="mgn-bt-20">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-lt-30"
+                                            *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                            <div class="disp-flex">
+                                                <div class="changephemail">
+                                                    <i class="fa wtsapaud-icon wtsap-cal"></i>WhatsApp Number: </div>
+                                                <input type="text" maxlength="10" placeholder="WhatsApp number" class=""
+                                                    [(ngModel)]="callingModes" />
+                                            </div>
+                                            <app-field-error-display class="red" [displayError]="true"
+                                                *ngIf="callingmodePhoneerror != null"
+                                                errorMsg={{callingmodePhoneerror}}>
+                                            </app-field-error-display>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-lt-30">
+                                            <div class="disp-flex">
+                                                <div class="changephemail">Phone: </div>
+                                                <input type="text" maxlength="10" placeholder="Contact number" class=""
+                                                    [(ngModel)]="selected_phone" />
+                                            </div>
+                                            <app-field-error-display class="red" [displayError]="true"
+                                                *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
+                                            </app-field-error-display>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-lt-30">
+                                            <div class="disp-flex">
+                                                <div class="changephemail">Email: </div>
+                                                <input class="" id="email" placeholder="Email(user@xyz.com)"
+                                                    [(ngModel)]="payEmail" autocomplete="off"
+                                                    (keyup)="showConfrmEmail($event)" onpaste="return false;"
+                                                    oncopy="return false" oncut="return false" ondrag="return false"
+                                                    ondrop="return false">
+                                            </div>
+                                            <app-field-error-display class="red" [displayError]="true"
+                                                *ngIf="emailerror != null" errorMsg={{emailerror}}>
+                                            </app-field-error-display>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="!showCreateMember">
                                         <button mat-button class="cs-btn bt1 backtocheckin"
-                                            (click)="goBack()">OK
+                                            (click)="saveMemberDetails()">OK
                                         </button>
                                     </div>
                                 </ng-container>

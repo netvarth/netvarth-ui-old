@@ -559,7 +559,7 @@
                           <table class="table tbl-qboard childDetails child-tbl-color">
                             <tbody *ngFor="let appt of timeSlotAppts[slot.time], let apptIndex=index">
                               <tr class="pointer-cursor" (click)="goCheckinDetail(appt)">
-                                <td class="chkWth"><input
+                                <td class="chkWth"><input *ngIf="appt.providerConsumer"
                                     [checked]="apptsChecked && apptsChecked[slotIndex] && apptsChecked[slotIndex][apptIndex]"
                                     type="checkbox" class="ckbx pull-left" (click)="stopprop($event)"
                                     (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
@@ -1153,7 +1153,7 @@
                   <tbody class="dynamic-content" *ngFor="let appt of check_in_filtered_list, let i=index">
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)">
                       <td class="chkWth">
-                        <input [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left"
+                        <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left"
                           (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                       </td>
                       <td class="parent-selection parent-title td-one">
