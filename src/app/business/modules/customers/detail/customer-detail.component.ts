@@ -91,7 +91,9 @@ export class CustomerDetailComponent implements OnInit {
     deptId;
     type;
     customerDetails: any = [];
-    visitDetails: any = [];
+    todayvisitDetails: any = [];
+    futurevisitDetails: any = [];
+    historyvisitDetails: any = [];
     customerAction = '';
     waitlistModes = {
         WALK_IN_CHECKIN: 'Walk in Check-in',
@@ -103,8 +105,12 @@ export class CustomerDetailComponent implements OnInit {
     };
     domain;
     communication_history: any = [];
-    visitDetailsArray = [];
-    showMoreActivity = false;
+    todayVisitDetailsArray: any = [];
+    futureVisitDetailsArray: any = [];
+    historyVisitDetailsArray: any = [];
+    showMoreFuture = false;
+    showMoreToday = false;
+    showMoreHistory = false;
     selectedDetailsforMsg: any = [];
     uid;
     constructor(
@@ -231,7 +237,9 @@ export class CustomerDetailComponent implements OnInit {
                                             this.viewCustomer = true;
                                             this.loading = false;
                                             if (this.customerId) {
-                                                this.getCustomerLastVisit();
+                                                this.getCustomerTodayVisit();
+                                                this.getCustomerFutureVisit();
+                                                this.getCustomerHistoryVisit();
                                             }
                                         }
                                     }
@@ -680,12 +688,33 @@ export class CustomerDetailComponent implements OnInit {
         };
         this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
     }
-    getCustomerLastVisit() {
+    getCustomerTodayVisit() {
         this.loading = true;
-        this.provider_services.getCustomerLastVisit(this.customerId).subscribe(
+        this.provider_services.getCustomerTodayVisit(this.customerId).subscribe(
             (data: any) => {
-                this.visitDetailsArray = data;
-                this.visitDetails = this.visitDetailsArray.slice(0, 10);
+                this.todayVisitDetailsArray = data;
+                this.todayvisitDetails = this.todayVisitDetailsArray.slice(0, 5);
+                this.loading = false;
+            }
+        );
+    }
+    getCustomerFutureVisit() {
+        this.loading = true;
+        this.provider_services.getCustomerFutureVisit(this.customerId).subscribe(
+            (data: any) => {
+                this.futureVisitDetailsArray = data;
+                this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
+                this.loading = false;
+            }
+        );
+    }
+    getCustomerHistoryVisit() {
+        this.loading = true;
+        this.provider_services.getCustomerHistoryVisit(this.customerId).subscribe(
+            (data: any) => {
+                this.historyVisitDetailsArray = data;
+                // this.historyvisitDetails = this.historyVisitDetailsArray.slice(0, 5);
+                this.historyvisitDetails = this.historyVisitDetailsArray;
                 this.loading = false;
             }
         );
@@ -938,18 +967,31 @@ export class CustomerDetailComponent implements OnInit {
     }
     goBackfromAction(source?) {
         this.customerAction = '';
-        if (source === 'recent') {
-            this.visitDetails = this.visitDetailsArray.slice(0, 10);
-            this.showMoreActivity = false;
+    }
+    showMore(type) {
+        if (type === 'today') {
+            this.todayvisitDetails = this.todayVisitDetailsArray;
+            this.showMoreToday = true;
+        } else if (type === 'future') {
+            this.futurevisitDetails = this.futureVisitDetailsArray;
+            this.showMoreFuture = true;
         }
     }
-    showMore() {
-        this.showMoreActivity = true;
-        this.visitDetails = this.visitDetailsArray;
+    showLess(type) {
+        if (type === 'today') {
+            this.todayvisitDetails = this.todayVisitDetailsArray.slice(0, 5);
+            this.showMoreToday = false;
+        } else if (type === 'future') {
+            this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
+            this.showMoreFuture = false;
+        }
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
         return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    }
+    showHistory() {
+        this.showMoreHistory = !this.showMoreHistory;
     }
 }
 

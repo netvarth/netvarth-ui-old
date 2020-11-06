@@ -12973,3 +12973,10 @@ hr {
 .pointer-auto {
   cursor: auto !important;
 }
+.type-head {
+  background: #d8e2f1;
+  color: #3c8dbc;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+}

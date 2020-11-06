@@ -1619,10 +1619,6 @@ export class ProviderServices {
       const url = 'provider/mr/' + mrId;
       return this.servicemeta.httpPut(url, data);
    }
-   getCustomerLastVisit(id) {
-      const url = 'provider/mr/patientPreviousVisit/' + id;
-      return this.servicemeta.httpGet(url);
-   }
    deleteUplodedsign(name, id) {
       return this.servicemeta.httpDelete('provider/user/digitalSign/' + id + '/' + name);
    }
@@ -1642,5 +1638,17 @@ export class ProviderServices {
    confirmAppointmentBlock(data) {
       const url = 'provider/appointment/confirm';
       return this.servicemeta.httpPut(url, data);
+   }
+   getCustomerTodayVisit(id) {
+      const url = 'provider/customers/bookings/today/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   getCustomerFutureVisit(id) {
+      const url = 'provider/customers/bookings/future/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   getCustomerHistoryVisit(id) {
+      const url = 'provider/customers/bookings/history/' + id;
+      return this.servicemeta.httpGet(url);
    }
 }
