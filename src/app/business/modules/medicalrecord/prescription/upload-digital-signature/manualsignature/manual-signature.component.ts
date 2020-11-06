@@ -15,8 +15,8 @@ export class ManualSignatureComponent implements OnInit {
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
   signaturePadOptions: Object = {
     'minWidth': 5,
-    'canvasWidth': 500,
-    'canvasHeight': 300,
+    'canvasWidth': 250,
+    'canvasHeight': 250,
     'canvasstyle': 'background-color: gainsboro',
   };
   display_PatientId: any;

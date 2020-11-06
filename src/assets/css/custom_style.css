@@ -12980,3 +12980,6 @@ hr {
   font-weight: bold;
   font-size: 1rem;
 }
+.signature-pad canvas{
+  border: 1px solid #3c8dbc; 
+}
