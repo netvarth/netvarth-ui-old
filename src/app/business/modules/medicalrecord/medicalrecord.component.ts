@@ -321,7 +321,8 @@ export class MedicalrecordComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        'activity_log': this.activityLogs
+        'activity_log': this.activityLogs,
+        'mrId' : this.mrId
       }
     });
 

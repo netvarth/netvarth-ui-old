@@ -1626,4 +1626,8 @@ export class ProviderServices {
    deleteUplodedsign(name, id) {
       return this.servicemeta.httpDelete('provider/user/digitalSign/' + id + '/' + name);
    }
+   getMRAudits(id) {
+      const url = 'provider/mr/auditLog/' + id;
+      return this.servicemeta.httpGet(url);
+   }
 }
