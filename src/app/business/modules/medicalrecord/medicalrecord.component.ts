@@ -188,6 +188,11 @@ export class MedicalrecordComponent implements OnInit {
           const response = data;
           this.customerDetails = response[0];
           this.PatientId = this.customerDetails.id;
+          if (this.customerDetails.memberJaldeeId) {
+            this.display_PatientId = this.customerDetails.memberJaldeeId;
+          } else if (this.customerDetails.jaldeeId) {
+            this.display_PatientId = this.customerDetails.jaldeeId;
+          }
           this.medicalService.setPatientDetails(this.customerDetails);
           const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
           this.medicalService.setDoctorId(user.id);
