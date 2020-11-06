@@ -121,19 +121,30 @@
                                         <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center">
                                             <span class="status-label"
                                                 *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
+                                                <!-- virtual time today -->
                                             <span class="status-label"
-                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0">ESTIMATED
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">ESTIMATED
                                                 TIME</span>
+                                                <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">
+                                                    {{waitlist.appxWaitingTime}} min
+                                                </span>
+                                                <!-- virtual time future -->
+                                                <span class="status-label"
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">STARTS AT</span>
+                                                <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">
+                                                    {{waitlist.serviceTime}}
+                                                </span>
+
                                             <span class="status-label"
                                                 *ngIf="waitlist.token && !(waitlist.appxWaitingTime>=0)">TOKEN NO</span>
                                             <span class="item-label-val"
                                                 *ngIf="waitlist.token">{{waitlist.token}}</span>
                                             <span class="est-tok-time" *ngIf="waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !== 'done' && !waitlist.serviceTime">
                                                   Est Wait Time: {{waitlist.appxWaitingTime}} min
-                                                </span>    
-                                            <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0">
-                                                {{waitlist.appxWaitingTime}} min
-                                            </span>
+                                                </span>
+                                            <span class="est-tok-time"
+                                                *ngIf="waitlist.serviceTime && ( waitlist.appxWaitingTime >=0 && waitlist.token && (waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !=='done'))">Starts
+                                                at : {{waitlist.serviceTime}}</span> 
                                         </div>
                                         <div *ngIf="waitlist.batchName"
                                             class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item">
