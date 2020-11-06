@@ -137,6 +137,11 @@ export class MedicalrecordComponent implements OnInit {
         this.customerDetails = response.appmtFor[0];
         this.medicalService.setPatientDetails(this.customerDetails);
         this.providerId = response.provider.id;
+        // if (!response.provider.id) {
+        //   const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        //   this.providerId = user.id;
+        // }
+        // console.log(this.providerId);
         this.medicalService.setDoctorId(this.providerId);
         this.PatientId = this.customerDetails.id;
         if (this.customerDetails.memberJaldeeId) {
@@ -172,6 +177,12 @@ export class MedicalrecordComponent implements OnInit {
           this.display_PatientId = this.customerDetails.jaldeeId;
         }
         this.providerId = response.provider.id;
+        this.providerId = data.provider.id;
+        // if (!data.provider.id) {
+        //   const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        //   this.providerId = user.id;
+        // }
+        // console.log(this.providerId);
         this.medicalService.setDoctorId(this.providerId);
         this.getPatientVisitListCount();
       },
@@ -277,6 +288,11 @@ export class MedicalrecordComponent implements OnInit {
           this.customerDetails = data.providerConsumer;
           this.medicalService.setPatientDetails(this.customerDetails);
           this.providerId = data.provider.id;
+          // if (!data.provider.id) {
+          //   const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+          //   this.providerId = user.id;
+          // }
+          // console.log(this.providerId);
           this.medicalService.setDoctorId(this.providerId);
           this.PatientId = this.customerDetails.id;
           if (this.customerDetails.memberJaldeeId) {
