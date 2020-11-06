@@ -62,6 +62,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
     private medicalrecord_service: MedicalrecordService) {
     this.medicalrecord_service.patient_data.subscribe(res => {
       this.navigationParams = res;
+      console.log(this.navigationParams);
       this.navigationExtras = this.navigationParams;
     });
     this.medicalrecord_service.patient_data.subscribe(data => {

@@ -60,6 +60,7 @@ export class UploadSignatureComponent implements OnInit {
     private medicalrecord_service: MedicalrecordService) {
     this.medicalrecord_service.patient_data.subscribe(res => {
       this.navigationParams = res;
+      console.log(this.navigationParams);
       this.navigationExtras = this.navigationParams;
     });
     this.medicalrecord_service.patient_data.subscribe(data => {
@@ -147,8 +148,8 @@ export class UploadSignatureComponent implements OnInit {
   uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
+        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams});
         this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

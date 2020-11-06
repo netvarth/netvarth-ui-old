@@ -16,7 +16,8 @@ export class ManualSignatureComponent implements OnInit {
   signaturePadOptions: Object = {
     'minWidth': 5,
     'canvasWidth': 500,
-    'canvasHeight': 300
+    'canvasHeight': 300,
+    'canvasstyle': 'background-color: gainsboro',
   };
   display_PatientId: any;
   today = new Date();
@@ -50,6 +51,7 @@ export class ManualSignatureComponent implements OnInit {
   digitalSign = false;
   signatureviewdialogRef;
   digitalsignature = {};
+  sign = true;
   
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
@@ -121,17 +123,21 @@ export class ManualSignatureComponent implements OnInit {
 
   drawStart() {
     // will be notified signature_pad's onBegin event
+    this.sign = false;
     console.log('begin drawing');
   }
   goBack() {
    // this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
   }
+  clearSign() {
+    this.signaturePad.clear();
+  }
 
   uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
-        this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
         this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
+        this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
