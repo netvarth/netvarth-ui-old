@@ -69,7 +69,13 @@ export class MedicalrecordComponent implements OnInit {
     private datePipe: DateFormatPipe
   ) {
     this.visitdate = this.datePipe.transformToDateWithTime(new Date());
+    this.activated_route.queryParamMap.subscribe(queryParams => {
+      if (queryParams['calledfrom']) {
+        this.medicalService.setCalledFrom(queryParams['calledfrom']);
+      }
 
+
+    });
 
 
   }
@@ -181,6 +187,7 @@ export class MedicalrecordComponent implements OnInit {
         (data: any) => {
           const response = data;
           this.customerDetails = response[0];
+          this.PatientId = this.customerDetails.id;
           this.medicalService.setPatientDetails(this.customerDetails);
           const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
           this.medicalService.setDoctorId(user.id);
@@ -314,15 +321,16 @@ export class MedicalrecordComponent implements OnInit {
 
   }
   goback() {
-
-    if (this.back_type === 'waitlist') {
+    const back_type = this.medicalService.getReturnTo();
+    if (back_type === 'waitlist') {
       this.router.navigate(['provider', 'check-ins']);
-    } else if (this.back_type === 'appt') {
+    } else if (back_type === 'appt') {
       this.router.navigate(['provider', 'appointments']);
-    } else if (this.back_type === 'consumer') {
+    } else if (back_type === 'patient') {
       this.router.navigate(['provider', 'customers']);
+    } else if (back_type === 'list') {
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'list']);
     } else {
-      // this.router.navigate(['provider', 'customers']);
       this.location.back();
     }
   }

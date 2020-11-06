@@ -351,16 +351,7 @@ export class CustomersListComponent implements OnInit {
       }
     });
     this.mrdialogRef.afterClosed().subscribe(result => {
-      console.log(JSON.stringify(result));
-      if (result.type === 'prescription') {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], result.navigationParams);
-      } else if (result.type === 'clinicalnotes') {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
-      }
+
     });
 
   }
@@ -371,7 +362,7 @@ export class CustomersListComponent implements OnInit {
     const bookingType = 'FOLLOWUP';
     const bookingId = 0;
 
-    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list']);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
   }
   medicalRecord(customerDetail) {
     const customerDetails = customerDetail;
@@ -380,7 +371,7 @@ export class CustomersListComponent implements OnInit {
     const bookingType = 'FOLLOWUP';
     const bookingId = 0;
 
-    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes']);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'patient' } });
   }
   prescription(customerDetail) {
     const customerDetails = customerDetail;
@@ -389,7 +380,7 @@ export class CustomersListComponent implements OnInit {
     const bookingType = 'FOLLOWUP';
     const bookingId = 0;
 
-    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription']);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'],{ queryParams: { 'calledfrom': 'patient' } });
   }
   stopprop(event) {
     event.stopPropagation();

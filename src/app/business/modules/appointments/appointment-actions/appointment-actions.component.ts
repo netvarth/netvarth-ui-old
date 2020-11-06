@@ -619,8 +619,8 @@ export class AppointmentActionsComponent implements OnInit {
     const customerDetails = this.appt.appmtFor[0];
     const customerId = customerDetails.id;
     const bookingId = this.appt.uid;
-     const bookingType = 'APPT';
-     this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes']);
+    const bookingType = 'APPT';
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'appt' } });
 
   }
   prescription() {
@@ -634,8 +634,8 @@ export class AppointmentActionsComponent implements OnInit {
     const customerDetails = this.appt.appmtFor[0];
     const customerId = customerDetails.id;
     const bookingId = this.appt.uid;
-     const bookingType = 'APPT';
-     this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription' ]);
+    const bookingType = 'APPT';
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'], { queryParams: { 'calledfrom': 'appt' } });
   }
   gotoCustomerDetails() {
     this.dialogRef.close();

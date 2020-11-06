@@ -5,6 +5,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
   providedIn: 'root'
 })
 export class MedicalrecordService {
+  calledFrom: any;
   bookingType: any;
   department: any;
   serviceName: any;
@@ -29,6 +30,14 @@ export class MedicalrecordService {
 
   getDrugList() {
     return this.drugList;
+  }
+  setCalledFrom(data) {
+    this.calledFrom = data;
+
+  }
+  getReturnTo() {
+    return this.calledFrom;
+
   }
 
   setDrugList(data) {
