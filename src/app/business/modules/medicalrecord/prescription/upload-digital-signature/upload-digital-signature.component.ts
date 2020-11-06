@@ -129,6 +129,19 @@ export class UploadDigitalSignatureComponent implements OnInit {
   goBack() {
     this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
   }
+  uploadSignature() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: { providerId: this.providerId }
+    };
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadsignature'], navigationExtras);
+  }
+  manualSignature(){
+    const navigationExtras: NavigationExtras = {
+      queryParams: { providerId: this.providerId }
+    };
+    this.router.navigate(['provider', 'customers', 'medicalrecord', 'manualsignature'], navigationExtras);
+  }
+
   getDigitalSign() {
     if (this.providerId) {
       this.provider_services.getDigitalSign(this.providerId)

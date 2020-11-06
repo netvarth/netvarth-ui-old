@@ -1,0 +1,18 @@
+<section >
+    <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        <span class="fa fa-arrow-left pointer-cursor"  (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+      {{heading}}
+     </h5>
+    </div>
+   
+                <div class="card title-gb">
+                   
+<div class="no-dta" >
+<h5> Create your own signature</h5>
+<div>
+    <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
+</div>
+</div>
+
+</div></section>

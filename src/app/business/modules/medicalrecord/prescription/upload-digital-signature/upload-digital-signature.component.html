@@ -1,3 +1,4 @@
+
 <section >
     <div class="card title-gb">
       <h5 class="mgn-up-10">
@@ -5,71 +6,33 @@
       {{heading}}
      </h5>
     </div>
-    <!-- </section>
-    <section> -->
-        <!-- <div class="content loc-list">
-            <div class="col-md-12 no-padding-small">-->
-                <div class="card title-gb">
-                    <!-- <div class="mgn-up-10">
-
-                        <hr>
-                        <span>Patient Name: {{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
-                        <span >Patient Id: {{display_PatientId}}</span><br *ngIf="display_PatientId">
-                        <span *ngIf="patientDetails.dob">DOB: {{patientDetails.dob  | date:display_dateFormat}}</span><br *ngIf="patientDetails.dob">
-                        <span *ngIf="patientDetails.gender">Gender: {{patientDetails.gender | capitalizeFirst}}</span><br *ngIf="patientDetails.gender">
-                        <hr>
-                    </div> -->
-<div class="no-dta"  *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
-<h5> By clicking upload Sign you will have choice of uploading a file or taking picture</h5>
-<div>
-     <button  mat-button style= "margin-top: 10px;" class="cs-btn bt1 " >
-             <a class="pointer-cursor" style= "color: whitesmoke"
-             (click)="imagefile.click()"><input #imagefile type="file"
-                 accept="/*;capture=camera" style="display:none;"
-                 (change)="filesSelected($event)">Upload Sign</a>
-
-     </button>
-
-
- </div>
- <!-- <ng-signature-pad
-   doneButtonText="Show Signature"
-   fomrat="base64"
-   done="showImage($event)"></ng-signature-pad> -->
-
-
-</div>
-<div class="no-dta" style="height: 200px;" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length > 0">
-<ng-container class="attachment">
-<div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
-    *ngFor="let item of selectedMessage.files; let i = index">
-    <h4>Selected Digital Signature</h4>
-    <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
-        <span class="ln-hgt-40">{{item.name}}</span>
+    <div class="card title-gb">
+<div class="no-dta" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0" >
+    <div >
+      <span class="b-link">
+        <h5 class="heading3b">You can create digital signature in two ways:</h5>
+        <p>1.Upload a digital signature image </p>
+        <p>2.Create a digital signature </p>
+      </span>
     </div>
-    <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
-        <span class="">
-            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                    <i class="icon-delete"></i>
-                    <span>delete</span>
-                </button>
-            </mat-menu>
+    <div >
+      <div class="card mrcreate pointlist">
+        <span (click)="uploadSignature()">
+          <h5 class="heading3b" style="color:#3c8dbc;"><u>I will Upload digital signature image</u><i
+              class="fa fa-arrow-right pull-right" aria-hidden="true"></i></h5>
+          <span class="form-level-settings">You can scan or take a picture of signature</span>
         </span>
+      </div>
+      <div class="card mrcreate pointlist">
+        <span (click)="manualSignature()" >
+          <h5 class="heading3b" style="color:#3c8dbc;"><u>I will create a digital signature manually</u><i
+              class="fa fa-arrow-right pull-right" aria-hidden="true"></i></h5>
+          <span class="form-level-settings">Create digital signature manually </span>
+        </span>
+      </div>
     </div>
-    <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
-          <button type="button"  class="cs-btn bt2"  (click)="deleteTempImage(i)">Cancel</button>
-        <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages()">OK</button>
-    </div>
-</div>
-
-</ng-container>
-</div>
-
-<div class="no-dta" style="height: 200px;" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">
+  </div>
+  <div class="no-dta" style="height: 200px;" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">
     <ng-container class="attachment">
     <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
         *ngFor="let item of selectedMessage.files; let i = index">
@@ -94,9 +57,6 @@
 
     </ng-container>
     </div>
+</div>
+</section>
 
-    <!-- <div>
-        <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
-    </div> -->
-
-</div></section>

@@ -1,0 +1,29 @@
+
+<section >
+    <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        <span class="fa fa-arrow-left pointer-cursor"  (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+      {{heading}}
+     </h5>
+    </div>
+   
+                <div class="card title-gb">
+                   
+<div class="no-dta"  *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
+<h5> By clicking upload Sign you will have choice of uploading a file or taking picture</h5>
+<div>
+     <button  mat-button style= "margin-top: 10px;" class="cs-btn bt1 " >
+             <a class="pointer-cursor" style= "color: whitesmoke"
+             (click)="imagefile.click()"><input #imagefile type="file"
+                 accept="/*;capture=camera" style="display:none;"
+                 (change)="filesSelected($event)">Upload Sign</a>
+
+     </button>
+
+
+ </div>
+</div>
+
+
+
+</div></section>
