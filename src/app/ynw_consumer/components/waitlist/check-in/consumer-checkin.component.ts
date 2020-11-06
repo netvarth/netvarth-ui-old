@@ -2057,4 +2057,11 @@ export class ConsumerCheckinComponent implements OnInit {
             this.action = '';
         }
     }
+    disableButn() {
+        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.apptTime['time'] === this.holdselectedTime) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
