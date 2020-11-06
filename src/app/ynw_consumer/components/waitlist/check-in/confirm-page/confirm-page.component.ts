@@ -65,7 +65,7 @@ export class ConfirmPageComponent implements OnInit {
   }
   okClick(waitlist) {
     if (waitlist.service.livetrack) {
-      this.router.navigate(['consumer', 'checkin', 'track', this.infoParams.uuid], { queryParams: { account_id: this.infoParams.account_id } });
+      this.router.navigate(['consumer', 'checkin', 'track', waitlist.ynwUuid], { queryParams: { account_id: this.infoParams.account_id } });
     } else {
       this.router.navigate(['consumer']);
     }
