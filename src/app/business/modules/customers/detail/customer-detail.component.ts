@@ -868,7 +868,7 @@ export class CustomerDetailComponent implements OnInit {
             this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
         }
     }
-    gettoCustomerDetail(visit) {
+    gotoCustomerDetail(visit) {
         if (visit.waitlist) {
             this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid]);
         } else {
