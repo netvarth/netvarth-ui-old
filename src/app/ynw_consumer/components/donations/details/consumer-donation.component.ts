@@ -332,11 +332,12 @@ export class ConsumerDonationComponent implements OnInit {
             });
     }
     addDonor() {
-        if (this.donor === '') {
+        const dnr = this.donor.trim();
+        if (dnr === '') {
             this.donorerror = 'Please enter the donor name';
             return;
         } else {
-            this.donorName = this.donor;
+            this.donorName = dnr;
             this.action = '';
         }
     }
