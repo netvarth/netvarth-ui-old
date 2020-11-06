@@ -691,6 +691,7 @@ export class AppointmentActionsComponent implements OnInit {
             .subscribe(
                 () => {
                     this.dialogRef.close();
+                    this.router.navigate(['provider', 'appointments']);
                 },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
