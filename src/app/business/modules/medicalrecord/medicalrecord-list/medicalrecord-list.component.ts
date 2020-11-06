@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { ActivatedRoute,Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MatTableDataSource } from '@angular/material/table';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 })
 export class MedicalrecordListComponent implements OnInit {
 
+  mrList = 0;
   selectedRowIndex: any;
   loading = true;
   patientId: any;
@@ -25,10 +26,7 @@ export class MedicalrecordListComponent implements OnInit {
     private router: Router,
     private sharedfunctionObj: SharedFunctions,
     private location: Location) {
-    this.activatedRoute.queryParams.subscribe(queryParams => {
-      this.patientId = queryParams.id;
-
-    });
+    this.patientId = this.activatedRoute.parent.snapshot.params['id'];
   }
 
 
@@ -36,9 +34,7 @@ export class MedicalrecordListComponent implements OnInit {
     this.getPatientDetails();
     this.getPatientMedicalRecords();
   }
-  // getLastVisitDate(visit) {
-  //   return this.dateformat.transformToDatewithtime(visit.lastVisitedDate);
-  // }
+
   getPatientDetails() {
     const filter = { 'id-eq': this.patientId };
     this.provider_services.getProviderCustomers(filter)
@@ -55,6 +51,7 @@ export class MedicalrecordListComponent implements OnInit {
     this.provider_services.getPatientMedicalRecords(this.patientId)
       .subscribe((data: any) => {
         this.mr_dataSource = data;
+        this.mrList = data.length;
         this.loading = false;
       },
         error => {
@@ -92,33 +89,15 @@ export class MedicalrecordListComponent implements OnInit {
 
   }
   getMedicalRecord(mrDetails) {
-   //  this.selectedRowIndex = mrDetails.mrId;
-    if (mrDetails.waitlist) {
-      const mrId = mrDetails.waitlist.mrId;
-      const customerDetails = mrDetails.waitlist.waitlistingFor[0];
-      const customerId = customerDetails.id;
-      const bookingId = mrDetails.waitlist.ynwUuid;
-       const bookingType = 'TOKEN';
-       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ]);
-
-
-    } else if (mrDetails.appointmnet) {
-       const mrId = mrDetails.appointmnet.mrId;
-      const customerDetails = mrDetails.appointmnet.appmtFor[0];
-      const customerId = customerDetails.id;
-      const bookingId = mrDetails.appointmnet.uid;
-       const bookingType = 'APPT';
-       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ]);
-    } else {
-      const mrId = mrDetails.mrId;
-      const customerDetails = mrDetails.providerConsumer;
-      const customerId = customerDetails.id;
-      const bookingId = 0;
-      const bookingType = 'FOLLOWUP';
-      this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ]);
-
+    let bookingId = 0;
+    const bookingType = mrDetails.bookingType;
+    const mrId = mrDetails.id;
+    const customerDetails = mrDetails.providerConsumer;
+    const customerId = customerDetails.id;
+    if (mrDetails.uuid) {
+      bookingId = mrDetails.uuid;
     }
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
+
   }
-
-
 }

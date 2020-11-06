@@ -365,27 +365,31 @@ export class CustomersListComponent implements OnInit {
 
   }
   listMedicalrecords(customer) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { 'id': customer.id }
-    };
+    const customerDetails = customer;
+    const customerId = customerDetails.id;
+    const mrId = 0;
+    const bookingType = 'FOLLOWUP';
+    const bookingId = 0;
 
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list']);
   }
   medicalRecord(customerDetail) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-    };
+    const customerDetails = customerDetail;
+    const customerId = customerDetails.id;
+    const mrId = 0;
+    const bookingType = 'FOLLOWUP';
+    const bookingId = 0;
 
-    this.shared_functions.removeitemfromLocalStorage('mrId');
-    this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes']);
   }
   prescription(customerDetail) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-    };
+    const customerDetails = customerDetail;
+    const customerId = customerDetails.id;
+    const mrId = 0;
+    const bookingType = 'FOLLOWUP';
+    const bookingId = 0;
 
-    this.shared_functions.removeitemfromLocalStorage('mrId');
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription']);
   }
   stopprop(event) {
     event.stopPropagation();

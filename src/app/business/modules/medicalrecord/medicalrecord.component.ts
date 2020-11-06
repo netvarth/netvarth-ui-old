@@ -86,20 +86,21 @@ export class MedicalrecordComponent implements OnInit {
 
       if (this.mrId !== 0) {
         this.getMedicalRecordUsingId(this.mrId);
-      }
-      if (this.bookingType === 'APPT') {
-        this.getAppointmentById(this.bookingId);
-      } else if (this.bookingType === 'TOKEN') {
-        this.getWaitlistDetails(this.bookingId);
-      } else if (this.bookingType === 'FOLLOWUP') {
-        this.getPatientDetails(this.patientId);
+      } else {
+        if (this.bookingType === 'APPT') {
+          this.getAppointmentById(this.bookingId);
+        } else if (this.bookingType === 'TOKEN') {
+          this.getWaitlistDetails(this.bookingId);
+        } else if (this.bookingType === 'FOLLOWUP') {
+          this.getPatientDetails(this.patientId);
+        }
       }
       const clinical_link = '/provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/clinicalnotes';
-     const prescription_link = '/provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/prescription';
+      const prescription_link = '/provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/prescription';
       this.routeLinks = [
         {
           label: 'Clinical Notes',
-          link:clinical_link,
+          link: clinical_link,
           id: 'clinicalnotes',
           index: 0
         }, {
@@ -190,9 +191,9 @@ export class MedicalrecordComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  routerNavigate(event,routerId) {
-  console.log(event);
-  event.target.classList.add('mat-tab-link-active');
+  routerNavigate(event, routerId) {
+    console.log(event);
+    event.target.classList.add('mat-tab-link-active');
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, routerId]);
 
   }
@@ -254,6 +255,23 @@ export class MedicalrecordComponent implements OnInit {
           this.mrNumber = data.mrNumber;
           this.mrCreatedDate = data.mrCreatedDate;
           this.activityLogs = data.auditLogs;
+          this.visitdate = data.mrConsultationDate;
+          if (data.department) {
+            this.department = data.service.department;
+          } if (data.service) {
+            this.serviceName = data.service.name;
+          }
+          this.medicalService.setServiceDept(this.serviceName, this.department);
+          this.customerDetails = data.providerConsumer;
+          this.medicalService.setPatientDetails(this.customerDetails);
+          this.providerId = data.provider.id;
+          this.medicalService.setDoctorId(this.providerId);
+          this.PatientId = this.customerDetails.id;
+          if (this.customerDetails.memberJaldeeId) {
+            this.display_PatientId = this.customerDetails.memberJaldeeId;
+          } else if (this.customerDetails.jaldeeId) {
+            this.display_PatientId = this.customerDetails.jaldeeId;
+          }
           if (this.data.consultationMode === 'Out Patient') {
             this.patientConsultationType = 'OP';
 

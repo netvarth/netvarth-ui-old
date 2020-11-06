@@ -110,11 +110,11 @@ export class PrescriptionComponent implements OnInit {
     }
   }
   uploadSign() {
-    const navigationExtras: NavigationExtras = {
-      relativeTo: this.activatedRoute,
-      queryParams: { providerId: this.provider_user_Id }
-    };
-    this.router.navigate(['../uploadsign'], navigationExtras);
+    // const navigationExtras: NavigationExtras = {
+
+    //   queryParams: { providerId: this.provider_user_Id }
+    // };
+    this.router.navigate(['../uploadsign', { providerId: this.provider_user_Id },   {relativeTo: this.activatedRoute}]);
   }
   getDigitalSign() {
     if (this.provider_user_Id) {
@@ -196,9 +196,10 @@ export class PrescriptionComponent implements OnInit {
     if (this.mrId) {
       this.provider_services.updateMRprescription(result, this.mrId).
         subscribe(res => {
-
-          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
           this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
+          this.getMrprescription(this.mrId);
+          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+
         },
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -207,8 +208,10 @@ export class PrescriptionComponent implements OnInit {
       this.medicalrecord_service.createMR('prescriptions', result)
         .then((data: number) => {
           this.mrId = data;
-          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
           this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
+          this.getMrprescription(this.mrId);
+          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+
         },
           error => {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

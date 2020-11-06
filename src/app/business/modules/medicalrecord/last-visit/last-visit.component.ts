@@ -134,6 +134,7 @@ export class LastVisitComponent implements OnInit {
     // this.selectedRowIndex = visitDetails.mrId;
 
     if (visitDetails.waitlist) {
+      console.log(visitDetails.waitlist);
       let mrId = 0;
       if (visitDetails.waitlist.mrId) {
         mrId = visitDetails.waitlist.mrId;
@@ -165,7 +166,7 @@ export class LastVisitComponent implements OnInit {
     } else {
 
       const mrId = visitDetails.mrId;
-      const customerDetails = visitDetails[0];
+      const customerDetails = visitDetails.providerConsumer;
       const customerId = customerDetails.id;
       const bookingId = 0;
       const bookingType = 'FOLLOWUP';
