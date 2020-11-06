@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { projectConstants } from '../../../../../app.component';
-// import { MedicalrecordService } from '../../medicalrecord.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ImagesviewComponent } from '../imagesview/imagesview.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MedicalrecordService } from '../../medicalrecord.service';
 
 @Component({
   selector: 'app-upload-digital-signature',
@@ -54,18 +54,16 @@ export class UploadDigitalSignatureComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
-    // private medicalrecord_service: MedicalrecordService
+    private medicalrecord_service: MedicalrecordService
   ) {
 
-    this.activatedRoute.queryParams.subscribe(queryParams => {
-      if (queryParams.providerId) {
-        this.providerId = queryParams.providerId;
-      }
-    });
+
 
   }
 
   ngOnInit() {
+    this.providerId = this.medicalrecord_service.getDoctorId();
+    console.log(this.providerId);
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];

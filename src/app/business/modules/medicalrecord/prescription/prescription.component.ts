@@ -110,11 +110,8 @@ export class PrescriptionComponent implements OnInit {
     }
   }
   uploadSign() {
-    // const navigationExtras: NavigationExtras = {
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign' ]);
 
-    //   queryParams: { providerId: this.provider_user_Id }
-    // };
-    this.router.navigate(['../uploadsign', { providerId: this.provider_user_Id },   {relativeTo: this.activatedRoute}]);
   }
   getDigitalSign() {
     if (this.provider_user_Id) {
