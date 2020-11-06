@@ -6,7 +6,8 @@
     </h5>
   </div>
 </section>
-<section class="medical-record">
+<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+<section *ngIf="!loading" class="medical-record">
   <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 mgn-up-10 no-padding-small">
     <div class="card title-gb no-padding">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10">

@@ -18,6 +18,7 @@ import { Location } from '@angular/common';
 })
 export class MedicalrecordComponent implements OnInit {
 
+  accountType: any;
   bookingId: string;
   patientId: string;
   activityLogs: any;
@@ -60,6 +61,7 @@ export class MedicalrecordComponent implements OnInit {
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   back_type: any;
   logsdialogRef: any;
+  loading = true;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -82,6 +84,9 @@ export class MedicalrecordComponent implements OnInit {
 
 
   ngOnInit() {
+    const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
+    this.medicalService.setDoctorId(user.id);
     this.activated_route.paramMap.subscribe(params => {
       this.patientId = params.get('id');
       this.bookingType = params.get('type');
@@ -126,6 +131,7 @@ export class MedicalrecordComponent implements OnInit {
     this.provider_services.getAppointmentById(uid)
       .subscribe((data: any) => {
         const response = data;
+        this.loading =false;
         this.visitdate = response.consLastVisitedDate;
 
         if (response.department) {
@@ -136,13 +142,11 @@ export class MedicalrecordComponent implements OnInit {
         this.medicalService.setServiceDept(this.serviceName, this.department);
         this.customerDetails = response.appmtFor[0];
         this.medicalService.setPatientDetails(this.customerDetails);
-        this.providerId = response.provider.id;
-        // if (!response.provider.id) {
-        //   const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
-        //   this.providerId = user.id;
-        // }
-        // console.log(this.providerId);
-        this.medicalService.setDoctorId(this.providerId);
+        if (response.provider.id) {
+          this.medicalService.setDoctorId(response.provider.id);
+        }
+
+
         this.PatientId = this.customerDetails.id;
         if (this.customerDetails.memberJaldeeId) {
           this.display_PatientId = this.customerDetails.memberJaldeeId;
@@ -162,6 +166,7 @@ export class MedicalrecordComponent implements OnInit {
     this.provider_services.getProviderWaitlistDetailById(uid)
       .subscribe((data: any) => {
         const response = data;
+        this.loading =false;
         this.visitdate = response.consLastVisitedDate;
         if (response.department) {
           this.department = response.service.department;
@@ -176,14 +181,11 @@ export class MedicalrecordComponent implements OnInit {
         } else if (this.customerDetails.jaldeeId) {
           this.display_PatientId = this.customerDetails.jaldeeId;
         }
-        this.providerId = response.provider.id;
-        this.providerId = data.provider.id;
-        // if (!data.provider.id) {
-        //   const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
-        //   this.providerId = user.id;
-        // }
-        // console.log(this.providerId);
-        this.medicalService.setDoctorId(this.providerId);
+        if (response.provider.id) {
+          this.medicalService.setDoctorId(response.provider.id);
+        }
+
+
         this.getPatientVisitListCount();
       },
         error => {
@@ -197,6 +199,7 @@ export class MedicalrecordComponent implements OnInit {
       .subscribe(
         (data: any) => {
           const response = data;
+          this.loading =false;
           this.customerDetails = response[0];
           this.PatientId = this.customerDetails.id;
           if (this.customerDetails.memberJaldeeId) {
@@ -205,8 +208,6 @@ export class MedicalrecordComponent implements OnInit {
             this.display_PatientId = this.customerDetails.jaldeeId;
           }
           this.medicalService.setPatientDetails(this.customerDetails);
-          const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
-          this.medicalService.setDoctorId(user.id);
           this.getPatientVisitListCount();
 
         },
@@ -273,8 +274,7 @@ export class MedicalrecordComponent implements OnInit {
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
-          console.log(data);
-          console.log(data.mrNumber);
+           this.loading =false;
           this.mrNumber = data.mrNumber;
           this.mrCreatedDate = data.mrCreatedDate;
           this.activityLogs = data.auditLogs;
@@ -287,13 +287,9 @@ export class MedicalrecordComponent implements OnInit {
           this.medicalService.setServiceDept(this.serviceName, this.department);
           this.customerDetails = data.providerConsumer;
           this.medicalService.setPatientDetails(this.customerDetails);
-          this.providerId = data.provider.id;
-          // if (!data.provider.id) {
-          //   const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
-          //   this.providerId = user.id;
-          // }
-          // console.log(this.providerId);
-          this.medicalService.setDoctorId(this.providerId);
+          if (data.provider.id) {
+            this.medicalService.setDoctorId(data.provider.id);
+          }
           this.PatientId = this.customerDetails.id;
           if (this.customerDetails.memberJaldeeId) {
             this.display_PatientId = this.customerDetails.memberJaldeeId;

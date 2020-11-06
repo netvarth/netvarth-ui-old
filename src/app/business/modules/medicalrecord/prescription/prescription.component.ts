@@ -68,7 +68,6 @@ export class PrescriptionComponent implements OnInit {
     if (this.mrId === 0) {
       this.loading = false;
     } else {
-      this.provider_user_Id=this.medicalrecord_service.getDoctorId();
       this.getMrprescription(this.mrId);
       this.getMedicalRecord(this.mrId);
     }
@@ -78,6 +77,7 @@ export class PrescriptionComponent implements OnInit {
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
+          console.log(data);
           this.prescriptionShared = data.prescShared;
           this.prescriptionSharedTimestamp = data.lastSharedTime;
 
@@ -114,7 +114,7 @@ export class PrescriptionComponent implements OnInit {
 
   }
   getDigitalSign() {
-    if (this.provider_user_Id) {
+     this.provider_user_Id = this.medicalrecord_service.getDoctorId();
       this.provider_services.getDigitalSign(this.provider_user_Id)
         .subscribe((data) => {
           console.log(data);
@@ -124,7 +124,7 @@ export class PrescriptionComponent implements OnInit {
             this.digitalSign = false;
 
           });
-    }
+
   }
 
 
