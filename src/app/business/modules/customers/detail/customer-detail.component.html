@@ -248,7 +248,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     <table class="table">
                                         <tbody>
                                             <tr class="pointer-cursor cellhover" *ngFor="let visit of todayvisitDetails"
-                                                (click)="gotoCustomerDetail(visit)">
+                                                (click)="gotoCustomerDetail(visit, 1)">
                                                 <ng-container *ngIf="visit.waitlist">
                                                     <td class="consumer-dash"> <i *ngIf="!visit.waitlist.showToken"
                                                             class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
@@ -366,7 +366,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     <table class="table">
                                         <tbody>
                                             <tr class="pointer-cursor cellhover" *ngFor="let visit of futurevisitDetails"
-                                                (click)="gotoCustomerDetail(visit)">
+                                                (click)="gotoCustomerDetail(visit, 2)">
                                                 <ng-container *ngIf="visit.waitlist">
                                                     <td class="consumer-dash"> <i *ngIf="!visit.waitlist.showToken"
                                                             class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
@@ -484,7 +484,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 <table class="table">
                                     <tbody>
                                         <tr class="pointer-cursor cellhover" *ngFor="let visit of historyvisitDetails"
-                                            (click)="gotoCustomerDetail(visit)">
+                                            (click)="gotoCustomerDetail(visit, 3)">
                                             <ng-container *ngIf="visit.waitlist">
                                                 <td class="consumer-dash"> <i *ngIf="!visit.waitlist.showToken"
                                                         class="fa chckn-icon" [matTooltip]="'Check-in'"></i>

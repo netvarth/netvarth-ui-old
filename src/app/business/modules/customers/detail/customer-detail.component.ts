@@ -868,11 +868,11 @@ export class CustomerDetailComponent implements OnInit {
             this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
         }
     }
-    gotoCustomerDetail(visit) {
+    gotoCustomerDetail(visit, time_type) {
         if (visit.waitlist) {
-            this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid]);
+            this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid], {queryParams: {timetype: time_type}});
         } else {
-            this.router.navigate(['provider', 'appointments', visit.appointmnet.uid]);
+            this.router.navigate(['provider', 'appointments', visit.appointmnet.uid], {queryParams: {timetype: time_type}});
         }
     }
     goBack() {
