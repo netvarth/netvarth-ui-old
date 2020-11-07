@@ -9,6 +9,7 @@ export class ImagesviewComponent implements OnInit {
   imgDetails: any;
   locationImg: any;
   cacheavoider = '';
+  title = '';
   constructor(
     public dialogRef: MatDialogRef<ImagesviewComponent>,
     public sharedfunctionObj: SharedFunctions,
@@ -21,6 +22,7 @@ export class ImagesviewComponent implements OnInit {
       const cnow = new Date();
       const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
       this.cacheavoider = dd;
+      this.title = this.imgDetails.title;
       this.locationImg = this.showimg(this.imgDetails.url);
   }
   showimg(imgurl) {

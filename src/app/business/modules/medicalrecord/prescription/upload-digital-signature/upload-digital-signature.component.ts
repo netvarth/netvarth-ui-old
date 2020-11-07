@@ -251,6 +251,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
   }
 
   showimgPopup(file) {
+    file.title = 'Your digital signature';
     this.signatureviewdialogRef = this.dialog.open(ImagesviewComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

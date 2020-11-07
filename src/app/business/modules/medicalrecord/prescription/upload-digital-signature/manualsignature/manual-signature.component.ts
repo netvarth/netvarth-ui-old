@@ -15,9 +15,8 @@ export class ManualSignatureComponent implements OnInit {
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
   signaturePadOptions: Object = {
     'minWidth': 5,
-    'canvasWidth': 250,
-    'canvasHeight': 250,
-    'canvasstyle': 'background-color: gainsboro',
+    'canvasWidth': 500,
+    'canvasHeight': 300
   };
   display_PatientId: any;
   today = new Date();
@@ -43,7 +42,7 @@ export class ManualSignatureComponent implements OnInit {
 
   upload_status = 'Added to list';
   disable = false;
-  heading = 'Upload digital signature';
+  heading = 'Create digital signature';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any;
   navigationExtras: NavigationExtras;
