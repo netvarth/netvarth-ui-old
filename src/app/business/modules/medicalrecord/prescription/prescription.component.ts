@@ -291,6 +291,7 @@ export class PrescriptionComponent implements OnInit {
     return inst;
   }
   showimgPopup(file) {
+    file.title = 'Uploaded Prescription';
     this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

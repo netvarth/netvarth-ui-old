@@ -12994,3 +12994,14 @@ hr {
 .c-checkin-new .fm-contact-table .td1 {
   text-align: end;
 }
+@media (max-width:890px) {
+  .signature-pad canvas {
+    width: 400px;
+  }
+}
+@media (max-width:700px) {
+  .signature-pad canvas {
+    width: 250px;
+    height: 200px;
+  }
+}
