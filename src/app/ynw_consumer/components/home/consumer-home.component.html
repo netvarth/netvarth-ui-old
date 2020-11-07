@@ -116,7 +116,11 @@
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
                                                 <span
                                                     *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
-                                            </h6>
+                                                    <span *ngIf="booking.isRescheduled" class="circle-tokens">
+                                                        <i class="consumer-reschedule-icon" [matTooltip]="'Rescheduled'"></i>
+                                                    </span>
+                                                </h6>
+                                            
                                             <!-- <span *ngIf="booking.apptStatus == 'Confirmed'">
                                                 <a href="{{path}}status/{{booking.appointmentEncId}}"
                                                     (click)="stopprop($event)" target="blank"><u class="font-smalr">VIEW
@@ -310,7 +314,11 @@
                                                     <span
                                                         *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                 </span>
+                                                <span *ngIf="booking.isRescheduled" class="circle-tokens">
+                                                    <i class="consumer-reschedule-icon" [matTooltip]="'Rescheduled'"></i>
+                                                </span>
                                             </h6>
+                                            
                                             <!-- <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                 <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
@@ -446,7 +454,11 @@
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
                                                     <span
                                                         *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
-                                                </h6>
+                                                        <span *ngIf="booking.isRescheduled" class="circle-tokens">
+                                                            <i class="consumer-reschedule-icon" [matTooltip]="'Rescheduled'"></i>
+                                                        </span>
+                                                    </h6>
+                                                
                                                 <!-- <span *ngIf="booking.apptStatus == 'Confirmed'">
                                                     <a href="{{path}}status/{{booking.appointmentEncId}}" target="blank"
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
@@ -643,8 +655,11 @@
                                                         <span
                                                             *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                     </span>
-
+                                                    <span *ngIf="booking.isRescheduled" class="circle-tokens">
+                                                        <i class="consumer-reschedule-icon" [matTooltip]="'Rescheduled'"></i>
+                                                    </span>
                                                 </h6>
+                                                
                                                 <!-- <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                     <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW
@@ -784,7 +799,11 @@
                                             <h6
                                                 [ngClass]="{'colr-confrm':(booking.apptStatus == 'Confirmed'),'colr-arrived':(booking.apptStatus == 'Arrived'),'colr-started':(booking.apptStatus == 'Started'),'colr-canceld':(booking.apptStatus == 'Cancelled'),'colr-completed':(booking.apptStatus == 'Completed')}">
                                                 {{booking.apptStatus}}
+                                                <span *ngIf="booking.isRescheduled" class="circle-tokens">
+                                                    <i class="consumer-reschedule-icon" [matTooltip]="'Rescheduled'"></i>
+                                                </span>
                                             </h6>
+                                            
                                             <!-- <span *ngIf="booking.apptStatus == 'Confirmed'"><a
                                                     href="{{path}}status/{{booking.appointmentEncId}}" target="blank"
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
@@ -896,6 +915,7 @@
                                                 {{booking.waitlistingFor[0].lastName}}
                                             </div>
                                         </td>
+                                        
                                         <td>
                                             <h6
                                                 [ngClass]="{'colr-confrm':(booking.waitlistStatus == 'Confirmed'),'colr-arrived':(booking.waitlistStatus == 'arrived'),'colr-started':(booking.waitlistStatus == 'started'),'colr-canceld':(booking.waitlistStatus == 'cancelled'),'colr-completed':(booking.waitlistStatus == 'done')}">
@@ -917,7 +937,11 @@
                                                     <span
                                                         *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                 </span>
+                                                <span *ngIf="booking.isRescheduled" class="circle-tokens">
+                                                    <i class="consumer-reschedule-icon" [matTooltip]="'Rescheduled'"></i>
+                                                </span>
                                             </h6>
+                                            
                                             <!-- <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                 <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
                                                     (click)="stopprop($event)"><u class="font-smalr">VIEW
@@ -1034,7 +1058,11 @@
                                                 <h6
                                                     [ngClass]="{'colr-confrm':(booking.apptStatus == 'Confirmed'),'colr-arrived':(booking.apptStatus == 'Arrived'),'colr-started':(booking.apptStatus == 'Started'),'colr-canceld':(booking.apptStatus == 'Cancelled'),'colr-completed':(booking.apptStatus == 'Completed')}">
                                                     {{booking.apptStatus}}
+                                                    <span *ngIf="booking.isRescheduled" class="circle-tokens">
+                                                        <i class="consumer-reschedule-icon" [matTooltip]="'Rescheduled'"></i>
+                                                    </span>
                                                 </h6>
+                                                
                                                 <!-- <span *ngIf="booking.apptStatus == 'Confirmed'"><a
                                                         href="{{path}}status/{{booking.appointmentEncId}}"
                                                         target="blank" (click)="stopprop($event)"><u
@@ -1169,7 +1197,11 @@
                                                         <span
                                                             *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
                                                     </span>
+                                                    <span *ngIf="booking.isRescheduled" class="circle-tokens">
+                                                        <i class="consumer-reschedule-icon" [matTooltip]="'Rescheduled'"></i>
+                                                    </span>
                                                 </h6>
+                                                
                                                 <!-- <span *ngIf="booking.waitlistStatus == 'checkedIn'">
                                                     <a href="{{path}}status/{{booking.checkinEncId}}" target="blank"
                                                         (click)="stopprop($event)"><u class="font-smalr">VIEW

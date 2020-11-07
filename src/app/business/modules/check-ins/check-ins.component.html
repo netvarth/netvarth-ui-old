@@ -366,6 +366,9 @@
                       </td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                          <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="checkin.isRescheduled"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                          </span>
                           <span class="icon-cloud mgn-rt-10" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                             [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                           </span>
@@ -564,6 +567,9 @@
                       </td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                          <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="checkin.isRescheduled"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                          </span>
                           <span class="icon-cloud mgn-rt-10" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                             [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                           </span>
@@ -874,6 +880,9 @@
                     </td>
                     <td class="td-three">
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="checkin.isRescheduled"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                          </span>
                         <span class="icon-cloud mgn-rt-10" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                           [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                         </span>
@@ -1253,6 +1262,9 @@
                     </td>
                     <td class="td-three">
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="checkin.isRescheduled"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                          </span>
                         <span class="icon-cloud mgn-rt-10" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                           [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                         </span>

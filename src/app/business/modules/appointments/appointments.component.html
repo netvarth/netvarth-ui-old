@@ -612,6 +612,9 @@
                                 </td>
                                 <td class="td-three">
                                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                    <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                                      [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                                    </span>
                                     <span class="icon-cloud icon-btn1 mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
                                       [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                                     </span>
@@ -1199,6 +1202,9 @@
                       </td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                          <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                          </span>
                           <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
                             [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                           </span>
