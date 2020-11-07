@@ -12342,6 +12342,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/callcancel.svg);
   width: 40px;
 }
+.dashboardrescheduled-icon {
+  content: url(../images/dashboard-icons/schedule.svg);
+  width: 15px;
+}
 
 .dashboardstart-icon {
   content: url(../images/dashboard-icons/start.svg);
