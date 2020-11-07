@@ -797,7 +797,52 @@
                                     </div>
                                     <label class="mgn-up-30 mgn-bt-20">Send booking alerts and communications to</label>
                                     <div class="mgn-bt-20">
-                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-lt-30"
+                                        <table class="fm-contact-table">
+                                            <tr>
+                                                <td class="td1">Phone : </td>
+                                                <td> &nbsp;&nbsp;<input type="text" maxlength="10"
+                                                        placeholder="Contact number" class=""
+                                                        [(ngModel)]="selected_phone" /></td>
+                                                <td>
+                                                    <app-field-error-display class="red" [displayError]="true"
+                                                        *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
+                                                    </app-field-error-display>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td1">Email : </td>
+                                                <td>
+                                                    &nbsp;&nbsp;<input class="" id="email"
+                                                        placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
+                                                        autocomplete="off" (keyup)="showConfrmEmail($event)"
+                                                        onpaste="return false;" oncopy="return false"
+                                                        oncut="return false" ondrag="return false"
+                                                        ondrop="return false">
+                                                </td>
+                                                <td>
+                                                    <app-field-error-display class="red" [displayError]="true"
+                                                        *ngIf="emailerror != null" errorMsg={{emailerror}}>
+                                                    </app-field-error-display>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr class="mgn-bt-20"
+                                            *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                <td class="td1"><i class="fa wtsapaud-icon wtsap-cal"
+                                                        style="top : 10px !important"></i>WhatsApp Number : </td>
+                                                <td> &nbsp;&nbsp;<input type="text" maxlength="10"
+                                                        placeholder="WhatsApp number" class=""
+                                                        [(ngModel)]="callingModes" /></td>
+                                                <td>
+                                                    <app-field-error-display class="red" [displayError]="true"
+                                                        *ngIf="callingmodePhoneerror != null"
+                                                        errorMsg={{callingmodePhoneerror}}>
+                                                    </app-field-error-display>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-lt-30"
                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                             <div class="disp-flex">
                                                 <div class="changephemail">
@@ -809,7 +854,7 @@
                                                 *ngIf="callingmodePhoneerror != null"
                                                 errorMsg={{callingmodePhoneerror}}>
                                             </app-field-error-display>
-                                        </div>
+                                        </div> 
                                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-lt-30">
                                             <div class="disp-flex">
                                                 <div class="changephemail">Phone: </div>
@@ -832,7 +877,9 @@
                                             <app-field-error-display class="red" [displayError]="true"
                                                 *ngIf="emailerror != null" errorMsg={{emailerror}}>
                                             </app-field-error-display>
-                                        </div>
+                                        </div> -->
+
+
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="!showCreateMember">
                                         <button mat-button class="cs-btn bt1 backtocheckin"

@@ -12983,3 +12983,11 @@ hr {
 .signature-pad canvas{
   border: 1px solid #3c8dbc; 
 }
+.c-checkin-new .fm-contact-table {
+  border-collapse: separate;
+  border-spacing: 0 1em;
+  font-size: 0.92rem;
+}
+.c-checkin-new .fm-contact-table .td1 {
+  text-align: end;
+}
