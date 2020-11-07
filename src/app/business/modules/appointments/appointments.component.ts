@@ -68,8 +68,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   no_result_found = Messages.NO_RESULT_FOUND;
   manage_labels = Messages.MANAGE_LABELS;
   add_label = Messages.ADD_LABEL;
-  check_in_statuses_filter = projectConstants.APPT_STATUSES_FILTER;
-  future_check_in_statuses_filter = projectConstants.FUTURE_APPT_STATUSES_FILTER;
+  check_in_statuses_filter = projectConstantsLocal.APPT_STATUSES_FILTER;
+  future_check_in_statuses_filter = projectConstantsLocal.FUTURE_APPT_STATUSES_FILTER;
   apis_loaded = false;
   carouselOne;
   breadcrumb_moreoptions: any = [];

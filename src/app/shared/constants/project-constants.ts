@@ -441,7 +441,7 @@ export const projectConstantsLocal = {
     // { displayName: 'Obsolete', value: 'Obsolete' },
   ],
   APPT_STATUSES_FILTER: [
-    { displayName: 'Checked in', value: 'Confirmed' },
+    { displayName: 'Confirmed', value: 'Confirmed' },
     { displayName: 'Arrived', value: 'Arrived' },
     { displayName: 'Started', value: 'Started' },
     { displayName: 'Completed', value: 'Completed' },
