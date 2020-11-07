@@ -41,7 +41,6 @@ export class MedicalrecordComponent implements OnInit {
   customerDetails: any;
   uuid: any;
   mrdialogRef: any;
-  PatientId: any;
   gender: any;
   patientFirstName: any;
   patientLastName: number;
@@ -94,6 +93,7 @@ export class MedicalrecordComponent implements OnInit {
       const medicalrecordId = params.get('mrId');
       this.mrId = parseInt(medicalrecordId, 0);
       this.medicalService.setParams(this.bookingType, this.bookingId);
+       this.getPatientVisitListCount();
 
       if (this.mrId !== 0) {
         this.getMedicalRecordUsingId(this.mrId);
@@ -147,13 +147,13 @@ export class MedicalrecordComponent implements OnInit {
         }
 
 
-        this.PatientId = this.customerDetails.id;
+        this.patientId = this.customerDetails.id;
         if (this.customerDetails.memberJaldeeId) {
           this.display_PatientId = this.customerDetails.memberJaldeeId;
         } else if (this.customerDetails.jaldeeId) {
           this.display_PatientId = this.customerDetails.jaldeeId;
         }
-        this.getPatientVisitListCount();
+
 
 
 
@@ -175,7 +175,7 @@ export class MedicalrecordComponent implements OnInit {
         }
         this.customerDetails = response.waitlistingFor[0];
         this.medicalService.setPatientDetails(this.customerDetails);
-        this.PatientId = this.customerDetails.id;
+        this.patientId = this.customerDetails.id;
         if (this.customerDetails.memberJaldeeId) {
           this.display_PatientId = this.customerDetails.memberJaldeeId;
         } else if (this.customerDetails.jaldeeId) {
@@ -186,7 +186,7 @@ export class MedicalrecordComponent implements OnInit {
         }
 
 
-        this.getPatientVisitListCount();
+
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -201,14 +201,14 @@ export class MedicalrecordComponent implements OnInit {
           const response = data;
           this.loading =false;
           this.customerDetails = response[0];
-          this.PatientId = this.customerDetails.id;
+          this.patientId = this.customerDetails.id;
           if (this.customerDetails.memberJaldeeId) {
             this.display_PatientId = this.customerDetails.memberJaldeeId;
           } else if (this.customerDetails.jaldeeId) {
             this.display_PatientId = this.customerDetails.jaldeeId;
           }
           this.medicalService.setPatientDetails(this.customerDetails);
-          this.getPatientVisitListCount();
+
 
         },
         error => {
@@ -224,8 +224,8 @@ export class MedicalrecordComponent implements OnInit {
 
 
   getPatientVisitListCount() {
-    if (this.PatientId !== null && this.PatientId !== undefined) {
-      this.provider_services.getPatientVisitListCount(this.PatientId)
+    if (this.patientId !== null && this.patientId !== undefined) {
+      this.provider_services.getPatientVisitListCount(this.patientId)
         .subscribe((data: any) => {
           this.visitcount = data;
           this.showLastvisitorNot();
@@ -269,7 +269,7 @@ export class MedicalrecordComponent implements OnInit {
 
   }
   getMedicalRecordUsingId(mrId) {
-
+console.log('mrId'+mrId);
 
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
@@ -290,7 +290,7 @@ export class MedicalrecordComponent implements OnInit {
           if (data.provider.id) {
             this.medicalService.setDoctorId(data.provider.id);
           }
-          this.PatientId = this.customerDetails.id;
+          this.patientId = this.customerDetails.id;
           if (this.customerDetails.memberJaldeeId) {
             this.display_PatientId = this.customerDetails.memberJaldeeId;
           } else if (this.customerDetails.jaldeeId) {
@@ -302,7 +302,7 @@ export class MedicalrecordComponent implements OnInit {
           } else {
             this.patientConsultationType = data.consultationMode.toUpperCase();
           }
-          this.getPatientVisitListCount();
+
 
         }
       },
@@ -311,13 +311,13 @@ export class MedicalrecordComponent implements OnInit {
         });
   }
   VisitList() {
-    console.log(this.PatientId);
+    console.log(this.patientId);
     this.mrdialogRef = this.dialog.open(LastVisitComponent, {
       width: '800px;',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        patientId: this.PatientId,
+        patientId: this.patientId,
         customerDetail: this.customerDetails
 
       }
@@ -327,7 +327,7 @@ export class MedicalrecordComponent implements OnInit {
     });
   }
   activitylogs() {
-    console.log(this.PatientId);
+    console.log(this.patientId);
     this.logsdialogRef = this.dialog.open(ActivityLogComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
