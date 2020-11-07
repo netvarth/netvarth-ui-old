@@ -31,18 +31,19 @@
                                     <div class="row col-sm-12 padleft">
                                         <h4>{{queue_data.name | capitalizeFirst}} <span
                                                 *ngIf="queue_data.provider">({{queue_data.provider.firstName}})</span>
-                                        </h4>
-                                        <span class="tspace" *ngIf="!queue_data.provider">
-                                            <mat-slide-toggle [checked]="queue_data.apptState=='ENABLED'"
-                                                (change)="changeProviderScheduleStatus(queue_data)"></mat-slide-toggle>
-                                        </span>
+                                                <span class="tspace" *ngIf="!queue_data.provider">
+                                                    <mat-slide-toggle [checked]="queue_data.apptState=='ENABLED'"
+                                                        (change)="changeProviderScheduleStatus(queue_data)"></mat-slide-toggle>
+                                                        <span class="row col-sm-12">
+                                                            <span class='greenc'
+                                                                *ngIf="queue_data.apptState=='ENABLED'">{{enabled_cap}}</span>
+                                                            <span class='disabled'
+                                                                *ngIf="queue_data.apptState=='DISABLED'">{{disabled_cap}}</span>
+                                                        </span>
+                                                    </span>
+                                            </h4>
                                     </div>
-                                    <div class="row col-sm-12 padleft">
-                                        <span class='greenc'
-                                            *ngIf="queue_data.apptState=='ENABLED'">{{enabled_cap}}</span>
-                                        <span class='disabled'
-                                            *ngIf="queue_data.apptState=='DISABLED'">{{disabled_cap}}</span>
-                                    </div>
+                                    
                                     <div class="row col-sm-12 workpading">
                                         <div class="c-ot row col-sm-12">
                                             <div class="item schedule"
