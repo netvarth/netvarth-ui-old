@@ -32,7 +32,7 @@
 
     <div class="form-group">
       <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="Frequency per day(How often medicine needs to be taken)" formControlName="frequency">
+        <input matInput type="text" class="form-control" placeholder="Frequency per day" formControlName="frequency">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
 {
@@ -43,7 +43,7 @@
     </div>
     <div class="form-group">
       <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="Dosage per consumption(Quantity to be taken at each consumption)" formControlName="dosage">
+        <input matInput type="text" class="form-control" placeholder="Dosage per consumption" formControlName="dosage">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dosage')" [errorMsgs]="fed_service.getErrorMessage(amForm,'dosage',
 {

@@ -716,6 +716,7 @@ export class AppointmentComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
+        this.note_placeholder = this.sel_ser_det.consumerNoteTitle;
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate, accountid) {
         this.queuejson = [];
@@ -871,14 +872,16 @@ export class AppointmentComponent implements OnInit {
             }
             if (error === '') {
                 if (this.waitlist_for.length === 0) {
-                    if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-                        this.getCustomerCount();
-                    } else {
-                        this.createCustomer();
-                    }
-                } else {
-                    this.saveCheckin();
+                    // if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+                    //     this.getCustomerCount();
+                    // } else {
+                    //     this.createCustomer();
+                    // }
+                    this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
                 }
+                //  else {
+                this.saveCheckin();
+                // }
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 // this.api_error = error;
@@ -950,7 +953,6 @@ export class AppointmentComponent implements OnInit {
             },
             'consumerNote': this.consumerNote,
             'phoneNumber': this.consumerPhoneNo,
-            // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'appointmentMode': this.apptType
         };
@@ -980,7 +982,7 @@ export class AppointmentComponent implements OnInit {
                 } else if (i === 'Phone') {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else {
-                    post_Data['virtualService'] = {'VideoCall' : ''};
+                    post_Data['virtualService'] = { 'VideoCall': '' };
                 }
                 //  else {
                 //     post_Data['virtualService'] = {};
@@ -1001,9 +1003,31 @@ export class AppointmentComponent implements OnInit {
             post_Data['consumer'] = { id: this.customer_data.id };
             //   post_Data['ignorePrePayment'] = true;
             if (!this.is_wtsap_empty) {
-                this.addAppointmentInProvider(post_Data);
+                if (this.thirdParty === '') {
+                    this.addAppointmentInProvider(post_Data);
+                } else {
+                    this.addAppointmentBlock(post_Data);
+                }
             }
         }
+    }
+    addAppointmentBlock(post_Data) {
+        this.provider_services.addAppointmentBlock(post_Data)
+            .subscribe((data) => {
+                const retData = data;
+                let retUuid;
+                Object.keys(retData).forEach(key => {
+                    retUuid = retData[key];
+                    this.trackUuid = retData[key];
+                });
+                if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
+                    this.consumerNoteAndFileSave(retUuid);
+                }
+                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+                this.showCheckin = false;
+                this.searchForm.reset();
+                this.router.navigate(['provider', 'appointments']);
+            });
     }
     addAppointmentInProvider(post_Data) {
         this.api_loading = true;

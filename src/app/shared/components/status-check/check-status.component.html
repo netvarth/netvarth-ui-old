@@ -124,8 +124,7 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="book-status"
-                *ngIf="statusInfo.apptStatus !== 'Arrived' && statusInfo.apptStatus !== 'Confirmed'"> Current status
+              <div class="book-status"> Current status
               </div>
               <table class="status-table">
                 <tbody>
@@ -147,7 +146,7 @@
                 </tbody>
               </table>
               <div class="txt-align-center"
-                *ngIf="statusInfo.waitlistStatus && statusInfo.waitlistStatus !== 'arrived' && statusInfo.waitlistStatus !== 'checkedIn'">
+                *ngIf="statusInfo.waitlistStatus">
                 <span class="cancelled" *ngIf="statusInfo.waitlistStatus === 'cancelled'">
                   <ng-container *ngIf="statusInfo.showToken"> Token</ng-container>
                   <ng-container *ngIf="!statusInfo.showToken"> Check-in</ng-container>
@@ -161,7 +160,7 @@
                 </span>
               </div>
               <div class="txt-align-center"
-                *ngIf="statusInfo.apptStatus && statusInfo.apptStatus !== 'Arrived' && statusInfo.apptStatus !== 'Confirmed'">
+                *ngIf="statusInfo.apptStatus">
                 <span class="cancelled"
                   *ngIf="statusInfo.apptStatus === 'Cancelled' || statusInfo.apptStatus === 'Rejected'">
                   Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}

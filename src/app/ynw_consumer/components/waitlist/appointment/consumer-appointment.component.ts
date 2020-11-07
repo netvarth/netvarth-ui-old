@@ -155,6 +155,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     emailerror = null;
     email1error = null;
     phoneerror = null;
+    callingmodePhoneerror = null;
     edit = true;
     changePhno = false;
     selected_phone;
@@ -219,6 +220,9 @@ export class ConsumerAppointmentComponent implements OnInit {
     apptdisable = false;
     availableDates: any = [];
     holdselectedTime;
+    noPhoneError = false;
+    noEmailError = false;
+    noCallingError = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -492,6 +496,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.emailerror = null;
         this.email1error = null;
         this.phoneerror = null;
+        this.callingmodePhoneerror = null;
     }
     setServiceDetails(curservid) {
         let serv;
@@ -1580,6 +1585,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     handleSideScreen(action) {
         this.showAction = true;
         this.action = action;
+        this.selected_phone = this.userPhone;
     }
     // hideFilterSidebar() {
     //     this.showAction = false;
@@ -1805,6 +1811,77 @@ export class ConsumerAppointmentComponent implements OnInit {
             return true;
         } else {
             return false;
+        }
+    }
+    saveMemberDetails() {
+        this.resetApiErrors();
+        this.resetApi();
+        this.noEmailError = true;
+        this.noPhoneError = true;
+        this.noCallingError = true;
+        const curphone = this.selected_phone;
+        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+        const result = pattern.test(curphone);
+        const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        const result1 = pattern1.test(curphone);
+        const callResult = pattern.test(curphone);
+        const callResult1 = pattern1.test(curphone);
+        if (this.callingModes === '') {
+            this.callingmodePhoneerror = Messages.BPROFILE_PHONENO;
+            this.noCallingError = false;
+        } else if (!callResult) {
+            this.callingmodePhoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID;
+            this.noCallingError = false;
+        } else if (!callResult1) {
+            this.callingmodePhoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS;
+            this.noCallingError = false;
+        }
+        if (this.selected_phone === '') {
+            this.phoneerror = Messages.BPROFILE_PHONENO;
+            this.noPhoneError = false;
+        } else if (!result) {
+            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID;
+            this.noPhoneError = false;
+        } else if (!result1) {
+            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS;
+            this.noPhoneError = false;
+        } else {
+            this.currentPhone = this.selected_phone;
+            this.userPhone = this.selected_phone;
+            this.edit = true;
+            this.changePhno = true;
+            this.noPhoneError = true;
+        }
+        if (this.payEmail && this.payEmail.trim() !== '') {
+            const stat = this.validateEmail(this.payEmail.trim());
+            if (!stat) {
+                this.emailerror = 'Please enter a valid email.';
+                this.noEmailError = false;
+            } else {
+                const post_data = {
+                    'id': this.userData.userProfile.id || null,
+                    'firstName': this.userData.userProfile.firstName || null,
+                    'lastName': this.userData.userProfile.lastName || null,
+                    'dob': this.userData.userProfile.dob || null,
+                    'gender': this.userData.userProfile.gender || null,
+                    'email': this.payEmail.trim() || ''
+                };
+                const passtyp = 'consumer';
+                this.shared_services.updateProfile(post_data, passtyp)
+                    .subscribe(
+                        () => {
+                            this.getProfile();
+                            this.noEmailError = true;
+                        },
+                        error => {
+                            this.api_error = error.error;
+                            this.noEmailError = false;
+                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+            }
+        }
+        if (this.noPhoneError && this.noEmailError && this.noCallingError) {
+            this.action = '';
         }
     }
 }

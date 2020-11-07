@@ -119,7 +119,7 @@
                 <div class="icon-text">View Details</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && data.timetype !== 3"
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection"
             (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
@@ -134,7 +134,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && data.timetype !== 3 && (checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')"
+            *ngIf="!data.multiSelection && (checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')"
             (click)="rescheduleActionClicked()">
             <div class="action-box-sub">
                 <span class="reschedule-icon"></span>
@@ -145,16 +145,16 @@
             (click)="medicalRecord()">
             <div class="action-box-sub">
                 <span class="medicalrecord-icon"></span>
-                <div *ngIf="checkin.mrId === 0" class="icon-text">Create Medical Record</div>
-                <div *ngIf="checkin.mrId !== 0" class="icon-text">View Medical Record</div>
+                <div  class="icon-text">Medical Record</div>
+                <!-- <div *ngIf="checkin.mrId !== 0" class="icon-text">View Medical Record</div> -->
             </div>
         </div>
         <div *ngIf="domain === 'healthCare' && !data.multiSelection && showmrrx" class="action-box pointer-cursor"
             (click)="prescription()">
             <div class="action-box-sub">
                 <span class="mr-rx-icon"></span>
-                <div *ngIf="!checkin.prescriptionCreated" class="icon-text">Create Rx</div>
-                <div *ngIf="checkin.prescriptionCreated" class="icon-text">View Rx</div>
+                <div  class="icon-text">Prescription</div>
+                <!-- <div *ngIf="checkin.prescriptionCreated" class="icon-text">View Rx</div> -->
             </div>
         </div>
     </div>

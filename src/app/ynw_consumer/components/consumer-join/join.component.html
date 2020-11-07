@@ -46,7 +46,7 @@ onSubmit(loginForm.value)">
             </button>
             <button class="cust-logpg-submt" *ngIf="phoneExists" type="button" mat-button [disabled]="api_loading"
                 (click)="onSubmit(loginForm.value)">
-                <span *ngIf="!api_loading">sign in</span>
+                <span *ngIf="!api_loading">Log in</span>
                 <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                 </app-common-innerloading-spinner>
             </button>

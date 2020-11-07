@@ -271,7 +271,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   trackDetail: any = [];
   consumerTrackstatus = false;
   labeldialogRef;
-  admin = true;
+  admin = false;
   @ViewChild('chekinSection') chekinSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   topHeight = 0;
@@ -2279,7 +2279,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid]);
+    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], {queryParams: {timetype: this.time_type}});
   }
   viewBillPage() {
     const _this = this;
@@ -2729,7 +2729,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsByProvider() {
     const qs = [];
-    if (this.selectedUser.id === 'all') {
+    if (!this.selectedUser || (this.selectedUser && this.selectedUser.id === 'all')) {
       this.activeQs = this.tempActiveQs;
     } else {
       for (let i = 0; i < this.tempActiveQs.length; i++) {

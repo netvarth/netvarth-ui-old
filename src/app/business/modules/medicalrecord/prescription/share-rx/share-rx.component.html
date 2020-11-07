@@ -41,18 +41,20 @@
       <div class="mgtop40 form-group" >
               We will create a PDF of your prescription and will share Via
           <div class="coupon-outer">
-              <mat-checkbox    class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+              <mat-checkbox   [disabled]=" !phone ||  phone === 'null'"  class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                   SMS
               </mat-checkbox>
-              <mat-checkbox  class="mgright50 example-margin" [(ngModel)]="email"
+              <mat-checkbox  [disabled]=" !email_id"  class="mgright50 example-margin" [(ngModel)]="email"
                   [ngModelOptions]="{standalone: true}">Email
               </mat-checkbox>
-              <mat-checkbox  class="mgright50 example-margin" [(ngModel)]="pushnotify"
+              <mat-checkbox  [disabled] = "!email_id && (!phone ||  phone === 'null')"  class="mgright50 example-margin" [(ngModel)]="pushnotify"
                   [ngModelOptions]="{standalone: true}">App
                   notification
               </mat-checkbox>
           </div>
       </div>
+      <div style="color: red;" *ngIf = "!email_id && (!phone ||  phone === 'null')"> The Patient does not have a mobile number/email</div>
+
 
   </mat-dialog-content>
   <mat-dialog-actions>

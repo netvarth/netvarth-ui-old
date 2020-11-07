@@ -47,9 +47,9 @@
                 <span class="itemHead">Phone No</span>
                 <span class="itemVal">{{waitlist_data.waitlistPhoneNumber}}</span>
               </div>
-              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.consumer.jaldeeId">
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].memberJaldeeId">
                 <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>
-                <span class="itemVal">{{waitlist_data.consumer.jaldeeId}}</span>
+                <span class="itemVal">{{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.service.deptName">
                 <span class="itemHead">Department</span>
@@ -62,16 +62,31 @@
                   {{waitlist_data.batchName}}
                 </span>
               </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.amountPaid">
+                <span class="itemHead">Amount Paid</span>
+                <span class="price rupee-font">
+                  &#8377;{{waitlist_data.amountPaid}}
+                </span>
+              </div>
               
 
               <!-- Status,Date,Time bar -->
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar">
-                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
+                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" *ngIf="(waitlist_data.service.serviceType === 'virtualService' && waitlist_data.waitlistStatus !== 'arrived')">
                   <span class="status-label">STATUS</span>
                   <span>
-                    {{waitlist_data.waitlistStatus | capitalizeFirst}}
+                    {{check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]}}
                   </span>
                 </div>
+                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" *ngIf="(waitlist_data.service.serviceType !== 'virtualService')">
+                  <span class="status-label">STATUS</span>
+                  <span>
+                    {{check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]}}
+                  </span>
+                </div>
+
+
+
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-5 stats-item">
                   <span class="status-label">DATE & TIME-WINDOW</span>
                   <span>

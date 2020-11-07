@@ -89,6 +89,7 @@ export class CheckinActionsComponent implements OnInit {
         this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
+        console.log(this.data);
         this.checkin = this.data.checkinData;
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
@@ -382,7 +383,7 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     goToCheckinDetails() {
-        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid]);
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid], { queryParams: { timetype: this.data.timetype }});
         this.dialogRef.close();
     }
     viewBillPage() {

@@ -81,7 +81,9 @@
                                             <td width="48%" align="right">Advance Payment</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td><span class="rupee-font">&#8377;
-                                                </span> {{infoParams.prepayment}}</td>
+                                                </span>
+                                                {{(infoParams.prepayment) ? infoParams.prepayment : appointment.amountPaid}}
+                                            </td>
                                         </tr>
                                         <tr *ngIf="appointment.batchId">
                                             <td width="48%" align="right">Batch</td>

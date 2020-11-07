@@ -26,6 +26,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { ActivityLogComponent } from './activity-log/activity-log.component';
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { ManualSignatureComponent } from './prescription/upload-digital-signature/manualsignature/manual-signature.component';
+import { UploadSignatureComponent } from './prescription/upload-digital-signature/uploadsignature/upload-signature.component';
 // import { SignaturePadModule } from '@ng-plus/signature-pad';
 
 
@@ -44,6 +47,8 @@ import { ActivityLogComponent } from './activity-log/activity-log.component';
               MedicalrecordListComponent,
               UploadDigitalSignatureComponent,
               ActivityLogComponent,
+              ManualSignatureComponent,
+              UploadSignatureComponent
               // SignaturePadModule
             ],
   imports: [
@@ -57,7 +62,8 @@ import { ActivityLogComponent } from './activity-log/activity-log.component';
     MatDatepickerModule,
     MatIconModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    SignaturePadModule
   ],
   entryComponents: [
   LastVisitComponent,

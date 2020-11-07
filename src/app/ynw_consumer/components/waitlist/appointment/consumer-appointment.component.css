@@ -1194,3 +1194,9 @@ height: 150px !important;
   width: 25px !important;
   top: 4px !important;
  }
+  .changephemail {
+     /* width: 65px !important; */
+   }
+   .changephemail .wtsapaud-icon {
+    top: 5px !important;
+}

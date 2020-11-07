@@ -2,7 +2,7 @@
     Select an action to perform
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
-<div class="action-section col-md-12 no-padding" *ngIf=" action===''">
+<div class="action-section col-md-12 no-padding" *ngIf="action===''">
     <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-10 mgn-up-10" *ngIf="!data.multiSelection">
         <p *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''" style="font-weight: bold;">
             Appointment for : {{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}} </p>
@@ -12,6 +12,18 @@
         </p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
+        <div class="action-box pointer-cursor" *ngIf="appt.apptStatus==='blocked'" (click)="addCustomerDetails()">
+            <div class="action-box-sub">
+                <span class="add-appt-icon"></span>
+                <div class="icon-text">Add {{customer_label}}</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="appt.apptStatus==='blocked'" (click)="unBlockAppt()">
+            <div class="action-box-sub">
+                <span class="unblock-appt-icon"></span>
+                <div class="icon-text">Unblock</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingAppt()">
             <div class="action-box-sub" *ngIf="appt.callingStatus">
                 <span class="callstop-icon"></span>
@@ -73,7 +85,8 @@
                 <div class="icon-text">Status change</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="gotoCustomerDetails()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'"
+            (click)="gotoCustomerDetails()">
             <div class="action-box-sub">
                 <span class="customerdetails-icon"></span>
                 <div class="icon-text">{{customer_label | capitalizeFirst}} details</div>
@@ -104,7 +117,7 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="addProviderNote()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'" (click)="addProviderNote()">
             <div class="action-box-sub">
                 <span class="notes-icon"></span>
                 <div class="icon-text">Private Notes</div>
@@ -117,7 +130,7 @@
                 <div class="icon-text">View Details</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && data.timetype !== 3"
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection"
             (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
@@ -132,7 +145,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && data.timetype !== 3 && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
+            *ngIf="!data.multiSelection && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
             (click)="rescheduleActionClicked()">
             <div class="action-box-sub">
                 <span class="reschedule-icon"></span>
@@ -143,16 +156,16 @@
             (click)="medicalRecord()">
             <div class="action-box-sub">
                 <span class="medicalrecord-icon"></span>
-                <div *ngIf="appt.mrId === 0" class="icon-text">Create Medical Record</div>
-                <div *ngIf="appt.mrId !== 0" class="icon-text">View Medical Record</div>
+                <div class="icon-text">Medical Record</div>
+                <!-- <div *ngIf="appt.mrId !== 0" class="icon-text">View Medical Record</div> -->
             </div>
         </div>
         <div *ngIf="domain === 'healthCare' && !data.multiSelection &&  showmrrx" class="action-box pointer-cursor"
             (click)="prescription()">
             <div class="action-box-sub">
                 <span class="mr-rx-icon"></span>
-                <div *ngIf="!appt.prescriptionCreated" class="icon-text">Create Rx</div>
-                <div *ngIf="appt.prescriptionCreated" class="icon-text">View Rx</div>
+                <div class="icon-text">Prescription</div>
+                <!-- <div *ngIf="appt.prescriptionCreated" class="icon-text">View Rx</div> -->
             </div>
         </div>
     </div>

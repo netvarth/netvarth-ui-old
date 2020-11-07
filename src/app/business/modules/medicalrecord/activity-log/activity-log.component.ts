@@ -25,7 +25,7 @@ export class ActivityLogComponent implements OnInit {
   aditlogs: any = {};
   action: any;
   loading = true;
-  dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
+  dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
   constructor(
     public dialogRef: MatDialogRef<ActivityLogComponent>,

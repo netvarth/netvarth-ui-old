@@ -3,9 +3,7 @@
 </section> -->
 <section class="">
   <div class="card title-gb">
-      <h5 class="mgn-up-10"> <button type="button" class="btn default profile-back" (click)="redirecToJaldeeBilling()">
-              <span class="fa fa-chevron-left">&nbsp;Back</span>
-          </button>&nbsp;&nbsp;&nbsp;Reports</h5>
+      <h5 class="mgn-up-10">Reports<a class="pull-left mgn-rt-20 back-btn" (click)="redirecToJaldeeBilling()"><i class="fa fa-arrow-left"></i></a></h5>
   </div>
 </section>
 <section>
@@ -150,7 +148,7 @@
                     <td data-title="Time Period">{{formatDateDisplay(report.reportFromDate)}}
                       - {{formatDateDisplay(report.reportEndDate)}}</td>
                     <td data-title="Coupons Used">
-                      <span *ngIf="!report.listOfJaldeeCoupons">-</span>
+                      <span *ngIf="!report.listOfJaldeeCoupons"></span>
                       <span *ngIf="report.listOfJaldeeCoupons">
                         <span *ngFor="let jcoupon of getJSONfromString(report.listOfJaldeeCoupons) | keyvalue">
                           {{jcoupon.key}}

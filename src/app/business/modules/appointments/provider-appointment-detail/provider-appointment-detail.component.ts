@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import * as moment from 'moment';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
@@ -38,7 +39,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   no_pvt_notes_cap = Messages.CHECK_DET_NO_PVT_NOTES_FOUND_CAP;
   no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP;
   no_history_found = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
-  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   optinal_fields = Messages.DISPLAYBOARD_OPTIONAL_FIELDS;
   waitlist_id = null;
   waitlist_data;
@@ -89,6 +90,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   view_more = false;
   actiondialogRef: any;
   apptMultiSelection = false;
+  timetype;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -99,6 +101,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
+    });
+    this.activated_route.queryParams.subscribe(params => {
+      this.timetype = JSON.parse(params.timetype);
     });
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
@@ -111,6 +116,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit() {
+    console.log(this.check_in_statuses);
     this.getPos();
     this.api_loading = true;
     this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');
@@ -185,7 +191,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
+          if (this.waitlist_data.apptStatus !== 'blocked') {
           this.getWaitlistNotes(this.waitlist_data.uid);
+          }
           this.getCheckInHistory(this.waitlist_data.uid);
           this.getCommunicationHistory(this.waitlist_data.uid);
           if (this.waitlist_data.provider) {
@@ -470,6 +478,7 @@ gotoActions(checkin?) {
     data: {
       checkinData: waitlist,
       multiSelection: this.apptMultiSelection,
+      timetype: this.timetype,
       NoViewDetail: 'true'
     }
   });

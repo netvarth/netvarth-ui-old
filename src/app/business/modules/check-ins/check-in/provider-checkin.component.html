@@ -106,7 +106,7 @@
                   <div *ngIf="thirdParty !== ''">
                     {{customer_label | capitalizeFirst}} from
                     {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}
-                    <a class="underline mgn-lt-20" (click)="createNew()">Fill the
+                    <a class="customer-action-btn pointer-cursor" (click)="createNew()">Fill the
                       {{customer_label}}
                       details </a>
                   </div>
@@ -351,7 +351,7 @@
               <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
             </div>
             <div class="col-md-12 mgn-up-20" *ngIf="consumerNote">
-              <a class="notes pointer-cursor" (click)="toggleNotes()">Notes</a>
+              <a class="notes pointer-cursor" (click)="toggleNotes()">{{sel_ser_det.consumerNoteTitle}}</a>
             </div>
             <ng-container *ngIf="consumerNote && notes" class="notes">
               <div class="row col-md-12" style="display: flex;">

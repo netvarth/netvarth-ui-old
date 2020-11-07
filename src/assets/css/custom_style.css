@@ -10023,6 +10023,7 @@ td.chkWth, th.chkWth {
     width: 50px !important;
   }
   .jld-lnk-btn {
+    margin-top: 10px;
     margin-left: 0 !important;
     padding: 3px 6px !important;
     font-weight: 600;
@@ -12945,4 +12946,37 @@ hr {
 .customernote-icon {
   content: url(../images/patientnote.svg);
   width: 20px;
+}
+.recentactivity .cellhover:hover {
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+}
+.block-hint {
+  color: orange;
+  font-size: 0.7rem;
+}
+.add-appt-icon {
+  content: url(../images/Addappoinment.svg);
+  width: 40px;
+}
+.unblock-appt-icon {
+  content: url(../images/Unblock.svg);
+  width: 40px;
+}
+.dashboardadd-customer-icon {
+  content: url(../images/addpatientblack.svg);
+  width: 15px;
+}
+.actionbtn .mat-icon-button {
+  width: 20px !important;
+  height: 30px !important;
+}
+.pointer-auto {
+  cursor: auto !important;
+}
+.type-head {
+  background: #d8e2f1;
+  color: #3c8dbc;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1rem;
 }

@@ -48,7 +48,7 @@
                     <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
                   </ul>
                 </li>
-                <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db">
+                <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db" *ngIf="time_type !==3">
                   <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selectedView" style="padding-top: 12px !important;">
@@ -71,7 +71,7 @@
                   </ul>
                 </li>
                 <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db"
-                  *ngIf="account_type === 'BRANCH' && admin">
+                  *ngIf="account_type === 'BRANCH' && admin && time_type !==3">
                   <i class="fa fa-user dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     style="padding-top: 12px !important;">
@@ -435,7 +435,7 @@
                                       {{mode.value}}</mat-checkbox>
                                   </li>
                                 </div>
-                                <div *ngIf="time_type !== 3 && providerLabels.length > 0">
+                                <div *ngIf="providerLabels.length > 0">
                                   <!-- <div *ngFor="let lbl of providerLabels">
                                   <label class="filterHeaders">{{lbl.displayName}}</label>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -559,16 +559,20 @@
                           <table class="table tbl-qboard childDetails child-tbl-color">
                             <tbody *ngFor="let appt of timeSlotAppts[slot.time], let apptIndex=index">
                               <tr class="pointer-cursor" (click)="goCheckinDetail(appt)">
-                                <td class="chkWth"><input
+                                <td class="chkWth"><input *ngIf="appt.providerConsumer"
                                     [checked]="apptsChecked && apptsChecked[slotIndex] && apptsChecked[slotIndex][apptIndex]"
                                     type="checkbox" class="ckbx pull-left" (click)="stopprop($event)"
                                     (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
                                 <td class="parent-selection parent-title td-one">
                                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                                    class="bold pull-left pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
-                                    *ngIf="appt.appmtFor[0].firstName">
+                                    class="bold pull-left font11" [class.pointer-cursor]="appt.apptStatus!=='blocked'" 
+                                    (click)="stopprop($event);gotoCustomerDetails(appt)" *ngIf="appt.appmtFor[0].firstName"
+                                    [class.pointer-auto]="appt.apptStatus=='blocked'">
                                     {{appt.appmtFor[0].firstName}}
-                                    {{appt.appmtFor[0].lastName}}</div>
+                                    {{appt.appmtFor[0].lastName}}
+                                    <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked
+                                    </div>
+                                  </div>
                                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                                     class="bold pull-left pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
                                     *ngIf="!appt.appmtFor[0].firstName">
@@ -659,6 +663,12 @@
                                     <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                                     <span *ngIf="!small_device_display && !appt.callingStatus">
                                       &nbsp;Call</span>
+                                  </a>
+                                  <a class="statusText btn-play pointer-cursor start-btn"
+                                    (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                                    <i class="dashboardadd-customer-icon"></i>
+                                    <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                                   </a>
                                   <a class="statusText btn-play pointer-cursor start-btn"
                                     (click)="stopprop($event);changeWaitlistStatus('Started', appt)"
@@ -1046,7 +1056,7 @@
                                       {{mode.value}}</mat-checkbox>
                                   </li>
                                 </div>
-                                <div *ngIf="time_type !== 3 && providerLabels.length > 0">
+                                <div *ngIf="providerLabels.length > 0">
                                   <!-- <div *ngFor="let lbl of providerLabels">
                                   <label class="filterHeaders">{{lbl.displayName}}</label>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -1143,7 +1153,7 @@
                   <tbody class="dynamic-content" *ngFor="let appt of check_in_filtered_list, let i=index">
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)">
                       <td class="chkWth">
-                        <input [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left"
+                        <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left"
                           (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                       </td>
                       <td class="parent-selection parent-title td-one">
@@ -1153,10 +1163,13 @@
                         <div class="pull-left mgn-lt-5 date greenc bold" *ngIf="time_type!=3">
                           {{getSingleTime(appt.appmtTime)}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                          class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
-                          *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">
+                          class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
+                          *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName" 
+                          [class.pointer-cursor]="appt.apptStatus!=='blocked'" [class.pointer-auto]="appt.apptStatus=='blocked'">
                           {{appt.appmtFor[0].firstName}}
-                          {{appt.appmtFor[0].lastName}}</div>
+                          {{appt.appmtFor[0].lastName}}
+                          <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
+                        </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
                           *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
@@ -1245,7 +1258,12 @@
                       [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                       <i class="icon-arrived"></i> <span *ngIf="!small_device_display"> Arrived</span>
                     </a> -->
-
+                        <a class="statusText btn-play pointer-cursor start-btn"
+                          (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                          <i class="dashboardadd-customer-icon"></i>
+                          <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
+                        </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);changeWaitlistStatus('Started', appt)"
                           *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"

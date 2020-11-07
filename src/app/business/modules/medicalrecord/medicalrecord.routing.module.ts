@@ -8,6 +8,8 @@ import { ClinicalnotesComponent } from './clinicalnotes/clinicalnotes.component'
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-list.component';
 import { UploadDigitalSignatureComponent } from './prescription/upload-digital-signature/upload-digital-signature.component';
+import { UploadSignatureComponent } from './prescription/upload-digital-signature/uploadsignature/upload-signature.component';
+import { ManualSignatureComponent } from './prescription/upload-digital-signature/manualsignature/manual-signature.component';
 
 
 
@@ -28,7 +30,10 @@ const routes: Routes = [
   { path: 'edit', component: GeneralComponent },
   { path: 'uploadRx', component: UploadPrescriptionComponent },
   { path: 'addrxlist', component: DrugListComponent },
-  { path: 'uploadsign', component: UploadDigitalSignatureComponent }
+  {path: 'uploadsign', component: UploadDigitalSignatureComponent},
+  {path: 'uploadsignature', component: UploadSignatureComponent},
+  {path: 'manualsignature', component: ManualSignatureComponent}
+
 
 
 ];

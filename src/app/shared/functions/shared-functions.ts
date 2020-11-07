@@ -11,6 +11,7 @@ import { CommonDataStorageService } from '../services/common-datastorage.service
 import * as moment from 'moment';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
 import { ProviderDataStorageService } from '../../ynw_provider/services/provider-datastorage.service';
+import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
 @Injectable()
 
 export class SharedFunctions {
@@ -20,7 +21,7 @@ export class SharedFunctions {
   private switchSubject = new Subject<any>();
   mUniqueId;
   constructor(private shared_service: SharedServices, private router: Router,
-    private dialog: MatDialog,
+    private dialog: MatDialog, public provider_services: ProviderServices,
     private snackBar: MatSnackBar,
     public dateformat: DateFormatPipe,
     private common_datastorage: CommonDataStorageService,
@@ -1590,10 +1591,13 @@ export class SharedFunctions {
   }
 
   b64toBlob(b64Data) {
+    console.log("hj");
+    console.log(b64Data);
     const contentType = 'image/png';
     const sliceSize = 512;
 
     const byteCharacters = atob(b64Data);
+    console.log(byteCharacters);
     const byteArrays = [];
 
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -1612,8 +1616,33 @@ export class SharedFunctions {
     const blob = new Blob(byteArrays, { type: contentType });
     return blob;
   }
+  b64toBlobforSign(b64Data) {
+    const byteString = atob(b64Data.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: 'image/jpeg' });
+  }
 
   getNumberArray(n: number): any[] {
     return Array(n);
+  }
+  getGlobalSettings() {
+    return new Promise((resolve) => {
+      let settings = this.getitemFromGroupStorage('settings');
+      if (!settings) {
+        this.provider_services.getGlobalSettings().subscribe(
+          (data: any) => {
+            settings = data;
+            this.setitemToGroupStorage('settings', data);
+            resolve(data);
+          });
+      } else {
+        resolve(settings);
+      }
+    });
   }
 }

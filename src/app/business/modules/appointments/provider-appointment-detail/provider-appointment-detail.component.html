@@ -45,9 +45,9 @@
                 <span class="itemHead">Phone No</span>
                 <span class="itemVal">{{waitlist_data.phoneNumber}}</span>
               </div>
-              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.providerConsumer.jaldeeId">
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].memberJaldeeId">
                 <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>
-                <span class="itemVal">{{waitlist_data.providerConsumer.jaldeeId}}</span>
+                <span class="itemVal">{{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.service.deptName">
                 <span class="itemHead">Department</span>
@@ -59,14 +59,26 @@
                   {{waitlist_data.batchId}}
                 </span>
               </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.amountPaid">
+                <span class="itemHead">Amount Paid</span>
+                <span class="price rupee-font">
+                  &#8377;{{waitlist_data.amountPaid}}
+                </span>
+              </div>
               
 
               <!-- Status,Date,Time bar -->
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar">
-                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
+                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" *ngIf="(waitlist_data.service.serviceType === 'virtualService' && waitlist_data.apptStatus !== 'Arrived')">
                   <span class="status-label">STATUS</span>
                   <span>
-                    {{waitlist_data.apptStatus}}
+                    {{check_in_statuses[waitlist_data.apptStatus | capitalizeFirst]}}
+                  </span>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" *ngIf="(waitlist_data.service.serviceType !== 'virtualService')">
+                  <span class="status-label">STATUS</span>
+                  <span>
+                    {{check_in_statuses[waitlist_data.apptStatus | capitalizeFirst]}}
                   </span>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-5 stats-item">
@@ -96,8 +108,8 @@
               <!-- Instructions,messages,notes -->
               <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                 <mat-tab-group animationDuration="10ms" class="index-head">
-                  <mat-tab label="Private Notes">
-                    <span>
+                  <mat-tab label="Private Notes" *ngIf="waitlist_data.apptStatus!=='blocked'">
+                    <span *ngIf="waitlist_notes.length > 0">
                       <div class="pnotes" *ngFor="let note of waitlist_notes">
                         <p [innerHTML]="note.note | nl2br"></p>
                         <p>{{note.timeStamp | date: dateTimeFormat}}</p>

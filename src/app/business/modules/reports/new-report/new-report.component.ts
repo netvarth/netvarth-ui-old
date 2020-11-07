@@ -528,9 +528,11 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'appmtFor': this.getCustomerFilter(this.appointment_customerId)
-
+          'apptForId': this.appointment_customerId
         };
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
         if (this.appointment_schedule_id === 0) {
           delete this.filterparams.schedule;
         }
@@ -583,10 +585,12 @@ export class NewReportComponent implements OnInit {
           'service': this.token_service_id,
           'waitlistStatus': this.waitlist_status,
           'waitlistMode': this.waitlist_mode,
-          'waitlistingFor': this.getCustomerFilter(this.waitlist_customerId)
+          'waitlistingForId': this.waitlist_customerId
 
         };
-
+        if (!this.waitlist_customerId) {
+          delete this.filterparams.waitlistingFor;
+        }
         if (this.waitlist_billpaymentstatus === 0) {
           delete this.filterparams.billPaymentStatus;
         }
@@ -666,9 +670,7 @@ export class NewReportComponent implements OnInit {
 
     }
   }
-  getCustomerFilter(id) {
-return 'memberJaldeeId::' + id;
-  }
+
   changeTimePeriod(event) {
 
     if (event.value === 'DATE_RANGE') {
