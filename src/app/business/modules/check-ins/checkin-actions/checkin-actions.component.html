@@ -119,8 +119,7 @@
                 <div class="icon-text">View Details</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection"
-            (click)="showLabels()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
                 <div class="icon-text">Labels</div>
@@ -145,7 +144,7 @@
             (click)="medicalRecord()">
             <div class="action-box-sub">
                 <span class="medicalrecord-icon"></span>
-                <div  class="icon-text">Medical Record</div>
+                <div class="icon-text">Medical Record</div>
                 <!-- <div *ngIf="checkin.mrId !== 0" class="icon-text">View Medical Record</div> -->
             </div>
         </div>
@@ -153,7 +152,7 @@
             (click)="prescription()">
             <div class="action-box-sub">
                 <span class="mr-rx-icon"></span>
-                <div  class="icon-text">Prescription</div>
+                <div class="icon-text">Prescription</div>
                 <!-- <div *ngIf="checkin.prescriptionCreated" class="icon-text">View Rx</div> -->
             </div>
         </div>
@@ -255,6 +254,9 @@
 <div class="reschedule p-checkin" *ngIf="action === 'slotChange'">
     <div class="mainouter">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 ">
+            <div *ngIf="data.timetype == 3">
+                Past Date: <strong>{{pastDate | date: dateDisplayFormat}}</strong>
+            </div>
             <div class="date-outer" style="border: none;">
                 <div class="date-head">{{(showToken) ? 'Token' : 'Check-in'}} Date</div>
                 <div class="date-body">

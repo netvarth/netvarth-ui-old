@@ -117,7 +117,8 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'" (click)="addProviderNote()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'"
+            (click)="addProviderNote()">
             <div class="action-box-sub">
                 <span class="notes-icon"></span>
                 <div class="icon-text">Private Notes</div>
@@ -130,8 +131,7 @@
                 <div class="icon-text">View Details</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection"
-            (click)="showLabels()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
                 <div class="icon-text">Labels</div>
@@ -264,6 +264,9 @@
 <div class="reschedule p-checkin" *ngIf="action === 'slotChange'">
     <div class="mainouter">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 ">
+            <div *ngIf="data.timetype == 3">
+                Past Date: <strong>{{pastDate | date: dateDisplayFormat}}</strong>
+            </div>
             <div class="date-outer" style="border: none;">
                 <div class="date-head">Appointment Date</div>
                 <div class="date-body">

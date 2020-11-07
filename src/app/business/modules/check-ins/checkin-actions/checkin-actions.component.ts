@@ -79,6 +79,7 @@ export class CheckinActionsComponent implements OnInit {
     showToken;
     dateDisplayFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    pastDate;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -90,12 +91,18 @@ export class CheckinActionsComponent implements OnInit {
     }
     ngOnInit() {
         console.log(this.data);
+        this.setMinMaxDate();
         this.checkin = this.data.checkinData;
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
             this.location_id = this.checkin.queue.location.id;
             this.serv_id = this.checkin.service.id;
-            this.checkin_date = this.checkin.date;
+            if (this.data.timetype === 3) {
+                this.pastDate = this.checkin.date;
+                this.checkin_date = moment(this.today, 'YYYY-MM-DD HH:mm').format();
+            } else {
+                this.checkin_date = this.checkin.date;
+            }
             this.accountid = this.checkin.providerAccount.id;
             this.showToken = this.checkin.showToken;
             this.getPos();
@@ -157,7 +164,6 @@ export class CheckinActionsComponent implements OnInit {
     }
     rescheduleActionClicked() {
         this.action = 'reschedule';
-        this.setMinMaxDate();
     }
     setMinMaxDate() {
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -383,7 +389,7 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     goToCheckinDetails() {
-        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid], { queryParams: { timetype: this.data.timetype }});
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid], { queryParams: { timetype: this.data.timetype } });
         this.dialogRef.close();
     }
     viewBillPage() {

@@ -66,6 +66,7 @@ export class AppointmentActionsComponent implements OnInit {
     domain;
     customer_label = '';
     showmrrx = false;
+    pastDate;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -74,6 +75,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
+        this.setMinMaxDate();
         this.appt = this.data.checkinData;
         if (!this.data.multiSelection) {
             this.getPos();
@@ -88,9 +90,13 @@ export class AppointmentActionsComponent implements OnInit {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
     setData() {
-        // this.selectedTime = this.holdselectedTime = this.appt.appmtTime;
         this.holdselectedTime = this.appt.appmtTime;
-        this.sel_checkindate = this.hold_sel_checkindate = this.appt.appmtDate;
+        if (this.data.timetype === 3) {
+            this.pastDate = this.appt.appmtDate;
+            this.sel_checkindate = this.hold_sel_checkindate = moment(this.today, 'YYYY-MM-DD HH:mm').format();
+        } else {
+            this.sel_checkindate = this.hold_sel_checkindate = this.appt.appmtDate;
+        }
         this.sel_schedule_id = this.appt.schedule.id;
         this.servId = this.appt.service.id;
         this.locId = this.appt.location.id;
@@ -169,7 +175,6 @@ export class AppointmentActionsComponent implements OnInit {
     }
     rescheduleActionClicked() {
         this.action = 'reschedule';
-        this.setMinMaxDate();
     }
     changeSlot() {
         this.action = 'slotChange';
@@ -228,7 +233,7 @@ export class AppointmentActionsComponent implements OnInit {
         }
     }
     goToCheckinDetails() {
-        this.router.navigate(['provider', 'appointments', this.appt.uid], { queryParams: { timetype: this.data.timetype }});
+        this.router.navigate(['provider', 'appointments', this.appt.uid], { queryParams: { timetype: this.data.timetype } });
         this.dialogRef.close();
     }
     viewBillPage() {
