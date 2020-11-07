@@ -415,7 +415,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             <button *ngIf="visit.waitlist.consumerNote" mat-menu-item
                                                                 (click)="showConsumerNote(visit)">
                                                                 <i class="customernote-icon"></i>
-                                                                {{customer_label | capitalizeFirst}} note
+                                                                {{visit.waitlist.service.consumerNoteTitle}}
                                                             </button>
                                                         </mat-menu>
                                                     </td>
@@ -466,7 +466,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             <button *ngIf="visit.appointmnet.consumerNote" mat-menu-item
                                                                 (click)="showConsumerNote(visit)">
                                                                 <i class="customernote-icon"></i>
-                                                                {{customer_label | capitalizeFirst}} note
+                                                                {{visit.appointmnet.service.consumerNoteTitle}}
                                                             </button>
                                                         </mat-menu>
                                                     </td>
@@ -533,7 +533,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         <button *ngIf="visit.waitlist.consumerNote" mat-menu-item
                                                             (click)="showConsumerNote(visit)">
                                                             <i class="customernote-icon"></i>
-                                                            {{customer_label | capitalizeFirst}} note
+                                                            {{visit.waitlist.service.consumerNoteTitle}}
                                                         </button>
                                                     </mat-menu>
                                                 </td>
@@ -584,7 +584,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         <button *ngIf="visit.appointmnet.consumerNote" mat-menu-item
                                                             (click)="showConsumerNote(visit)">
                                                             <i class="customernote-icon"></i>
-                                                            {{customer_label | capitalizeFirst}} note
+                                                            {{visit.waitlist.service.consumerNoteTitle}}
                                                         </button>
                                                     </mat-menu>
                                                 </td>
