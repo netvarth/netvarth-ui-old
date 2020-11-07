@@ -10,6 +10,7 @@ import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/function
 import * as moment from 'moment';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { CheckinActionsComponent } from '../checkin-actions/checkin-actions.component';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
   templateUrl: './provider-waitlist-checkin-detail.component.html'
@@ -38,7 +39,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   no_pvt_notes_cap = Messages.CHECK_DET_NO_PVT_NOTES_FOUND_CAP;
   no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP;
   no_history_found = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
-  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   optinal_fields = Messages.DISPLAYBOARD_OPTIONAL_FIELDS;
   waitlist_id = null;
   waitlist_data;
