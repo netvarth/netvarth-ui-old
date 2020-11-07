@@ -20,6 +20,7 @@ import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, P
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { CheckinActionsComponent } from './checkin-actions/checkin-actions.component';
 import { VoicecallDetailsComponent } from './voicecall-details/voicecall-details.component';
+import Speech from 'speak-tts';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -272,6 +273,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   consumerTrackstatus = false;
   labeldialogRef;
   admin = false;
+  speech;
   @ViewChild('chekinSection') chekinSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   topHeight = 0;
@@ -439,6 +441,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.customerIdTooltip = this.customer_label + ' id';
+    this._initSpeech();
     this.getDisplayboardCount();
     this.getPos();
     this.getLabel();
@@ -2279,7 +2282,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], {queryParams: {timetype: this.time_type}});
+    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], { queryParams: { timetype: this.time_type } });
   }
   viewBillPage() {
     const _this = this;
@@ -2436,12 +2439,63 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   //     );
   // }
 
+  playSound(checkin, count) {
+    const _this = this;
+    let tokenNo = 1;
+    if (checkin.token) {
+      tokenNo = checkin.token;
+    }
+    this.speech.setLanguage('hi-IN');
+    // Speech.setVoice(voice);
+    this.speech.speak({
+      text: 'Token Number ' + tokenNo + checkin.waitlistingFor[0].firstName + ' ' + checkin.waitlistingFor[0].lastName,
+      queue: false,
+      listeners: {
+        onstart: () => {
+          console.log('Start utterance');
+        },
+        onend: () => {
+          console.log('End utterance');
+          count++;
+          if (count !== 3) {
+            _this.playSound(checkin, count);
+          }
+        },
+        onresume: () => {
+          console.log('Resume utterance');
+        },
+        onboundary: event => {
+          console.log(
+            event.name +
+            ' boundary reached after ' +
+            event.elapsedTime +
+            ' milliseconds.'
+          );
+        }
+      }
+    }).then(() => {
+      console.log('Success !');
+    }).catch(e => {
+      console.error('An error occurred :', e);
+    });
+  }
   callingWaitlist(checkin) {
-    const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
-    this.provider_services.setCallStatus(checkin.ynwUuid, status).subscribe(
-      () => {
-        this.loadApiSwitch('reloadAPIs');
-      });
+    console.log(checkin);
+    if (checkin.showToken) {
+      if (!checkin.callingStatus) {
+        const speechSupported = this.shared_functions.getitemfromLocalStorage('speech');
+        if (speechSupported) {
+          this.playSound(checkin, 0);
+        }
+      } else {
+        this.speech.stop();
+      }
+      const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
+      this.provider_services.setCallStatus(checkin.ynwUuid, status).subscribe(
+        () => {
+          this.loadApiSwitch('reloadAPIs');
+        });
+    }
   }
   printHistoryCheckin() {
     const Mfilter = this.setFilterForApi();
@@ -3006,5 +3060,33 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   stopprop(event) {
     event.stopPropagation();
+  }
+  _initSpeech() {
+    this.speech = new Speech();
+    if (this.speech.hasBrowserSupport()) { // returns a boolean
+      this.shared_functions.setitemonLocalStorage('speech', true);
+      this.speech
+        .init({
+          volume: 0.5,
+          lang: 'en-GB',
+          rate: 1,
+          pitch: 1,
+          // 'voice':'Google UK English Male',
+          // 'splitSentences': false,
+          listeners: {
+            onvoiceschanged: voices => {
+              console.log('Voices changed', voices);
+            }
+          }
+        })
+        .then(data => {
+          console.log('Speech is ready', data);
+          // _addVoicesList(data.voices);
+          // _prepareSpeakButton(speech);
+        })
+        .catch(e => {
+          console.error('An error occured while initializing : ', e);
+        });
+    }
   }
 }

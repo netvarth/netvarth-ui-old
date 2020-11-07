@@ -1591,7 +1591,6 @@ export class SharedFunctions {
   }
 
   b64toBlob(b64Data) {
-    console.log("hj");
     console.log(b64Data);
     const contentType = 'image/png';
     const sliceSize = 512;
