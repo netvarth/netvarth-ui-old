@@ -127,8 +127,16 @@ export class ShareRxComponent implements OnInit {
       .subscribe(
         (data: any) => {
           const response = data;
+          console.log(response);
           this.loading =false;
           this.customerDetail = response[0];
+           if (this.customerDetail.email) {
+              this.email_id = this.customerDetail.email;
+            }
+            if (this.customerDetail.phoneNo) {
+              this.phone = this.customerDetail.phoneNo;
+            }
+
   });
 }
   onSubmit(formdata) {
