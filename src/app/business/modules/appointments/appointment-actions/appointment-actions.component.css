@@ -37,6 +37,7 @@
     width: 50px !important;
   }
 }
+
 @media (max-width: 400px) {
   .icon-text {
     font-size: smaller;
