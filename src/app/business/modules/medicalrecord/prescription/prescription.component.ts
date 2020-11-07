@@ -65,6 +65,11 @@ export class PrescriptionComponent implements OnInit {
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
     this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
     this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
+    this.provider_user_Id = this.medicalrecord_service.getDoctorId();
+    if (!this.provider_user_Id) {
+      const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+      this.provider_user_Id = user.id;
+    }
     if (this.mrId === 0) {
       this.loading = false;
     } else {
@@ -114,7 +119,7 @@ export class PrescriptionComponent implements OnInit {
 
   }
   getDigitalSign() {
-     this.provider_user_Id = this.medicalrecord_service.getDoctorId();
+     
       this.provider_services.getDigitalSign(this.provider_user_Id)
         .subscribe((data) => {
           console.log(data);

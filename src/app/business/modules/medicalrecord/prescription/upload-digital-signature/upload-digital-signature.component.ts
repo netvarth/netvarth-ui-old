@@ -67,6 +67,10 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.providerId = this.medicalrecord_service.getDoctorId();
     console.log(this.providerId);
+    if (!this.providerId) {
+      const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+      this.providerId = user.id;
+    }
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
