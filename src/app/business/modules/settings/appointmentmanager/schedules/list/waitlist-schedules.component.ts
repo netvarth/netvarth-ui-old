@@ -927,8 +927,13 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
             this.todayQLoading[index] = true;
         }
         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
-        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const today = new Date(todaydt);
+       // const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        // const today = new Date(todaydt);
+      //  const today = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      const server = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      const serverdate = moment(server).format();
+      const servdate = new Date(serverdate);
+      const today = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
         const dd = today.getDate();
         const mm = today.getMonth() + 1;
         const yyyy = today.getFullYear();
