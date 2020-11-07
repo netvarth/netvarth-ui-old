@@ -118,13 +118,13 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     const navigationExtras: NavigationExtras = {
       queryParams: { providerId: this.providerId }
     };
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadsignature'], navigationExtras);
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsignature'], navigationExtras);
   }
   manualSignature(){
     const navigationExtras: NavigationExtras = {
       queryParams: { providerId: this.providerId }
     };
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'manualsignature'], navigationExtras);
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'manualsignature'], navigationExtras);
   }
 
   getDigitalSign() {
