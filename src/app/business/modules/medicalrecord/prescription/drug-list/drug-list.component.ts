@@ -177,12 +177,7 @@ export class DrugListComponent implements OnInit {
         subscribe(res => {
           console.log(this.drugList);
           this.showSave = false;
-<<<<<<< HEAD
           this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-=======
-          this.sharedfunctionObj.openSnackBar('Prescription updated Successfully');
-          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
->>>>>>> refs/remotes/origin/1.6.x
         },
           error => {
             this.disable = false;
@@ -309,3 +304,4 @@ export class DrugListComponent implements OnInit {
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
 }
+

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { projectConstants } from '../../../../../app.component';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -13,8 +13,9 @@ import { MedicalrecordService } from '../../medicalrecord.service';
   templateUrl: './upload-digital-signature.component.html',
   styleUrls: ['./upload-digital-signature.component.css']
 })
-export class UploadDigitalSignatureComponent implements OnInit {
+export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
 
+  signaturePad: any;
   bookingId: any;
   bookingType: any;
   patientId: any;
@@ -50,7 +51,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
   digitalSign = false;
   signatureviewdialogRef;
   digitalsignature = {};
-  
+
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
@@ -103,7 +104,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
     if (this.providerId) {
       this.uploadMrDigitalsign(this.providerId, submit_data);
     }
- 
+
   }
 
   drawStart() {

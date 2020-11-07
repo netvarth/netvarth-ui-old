@@ -6,7 +6,8 @@
     </h5>
   </div>
 </section>
-<section class="medical-record">
+<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+<section *ngIf="!loading" class="medical-record">
   <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 mgn-up-10 no-padding-small">
     <div class="card title-gb no-padding">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10">
@@ -14,7 +15,7 @@
           <label>Patient Id  </label>&nbsp; <span>{{display_PatientId}}</span> <br *ngIf="display_PatientId">
           <label  *ngIf="customerDetails.dob">DOB </label> &nbsp;<span  *ngIf="customerDetails.dob">{{customerDetails.dob  | date:display_dateFormat}} </span> <br  *ngIf="customerDetails.dob">
           <label *ngIf="customerDetails.gender">Gender </label> &nbsp;<span *ngIf="customerDetails.gender">{{customerDetails.gender | capitalizeFirst}} </span>
-         
+
         <!-- <span>Patient Name: {{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
         <span>Patient Id: {{display_PatientId}}</span><br *ngIf="display_PatientId">
         <span *ngIf="customerDetails.dob">DOB: {{customerDetails.dob  | date:display_dateFormat}}</span><br
@@ -28,7 +29,7 @@
           <button *ngIf="dateShow">{{visitdate }} &nbsp;</button>
           <button *ngIf="isShowList" (click)="VisitList()">{{visitdate}} &nbsp; <i class="arrow down"></i></button>
           &nbsp;
-          <span *ngIf="mrNumber" class="div-outline custId-cursor" (click)="activitylogs()"><u style="color: blue;">ActivityLogs</u></span>
+          <span  *ngIf="mrNumber" class="div-outline custId-cursor pull-right mr-20" (click)="activitylogs()"><u style="color: blue;">Activity Logs</u></span>
           <!-- <span>(Recent visit)</span> -->
         </p>
         <hr>
@@ -61,7 +62,7 @@
         <div style="padding: 5px;">
           <nav mat-tab-nav-bar>
             <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link"
-              [queryParams]="navigation_params" routerLinkActive="mat-tab-link-active" #rla="routerLinkActive"
+           routerLinkActive="mat-tab-link-active" #rla="routerLinkActive"
               class="routerLink.active heading2" [active]="rla.isActive" (click)="activeLinkIndex = i"
               [routerLinkActiveOptions]="{exact: true}">
               {{routeLink.label}}
@@ -75,3 +76,4 @@
   </div>
   <div class="clearfix"></div>
 </section>
+
