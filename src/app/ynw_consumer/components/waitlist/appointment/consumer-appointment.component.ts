@@ -1389,7 +1389,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
         if (this.consumerNote === '') {
-            this.consumerNote = 'Please find the attachment from Consumer with this message';
+            this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
         }
         dataToSend.append('message', this.consumerNote);
         const captions = {};
