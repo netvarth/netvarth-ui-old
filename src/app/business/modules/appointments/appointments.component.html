@@ -1,11 +1,40 @@
-<section class="">
-  <div class="card title-gb">
-    <h5 class="mgn-up-10">
-      Appointments
-      <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
-    </h5>
+<section #chekinSection>
+  <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
+    <div class="dash-head">Appointments </div>
+  </div>
+  <div class="pull-right">
+    <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
+      <div class="navbar-custom-menu width100pc">
+        <ul class="nav navbar-nav width100pc">
+          <li class="dropdown messages-menu loc-lst queue-menu pull-right">
+            <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
+            <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
+              *ngIf="selected_location" style="padding-top: 12px !important;">
+              <span *ngIf="!small_device_display">
+                {{selected_location.place | capitalizeFirst}}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <ul class="menu">
+                  <li *ngFor="let location of locations;let i = index"
+                    [ngClass]="{'active': (location.place == selected_location.place)}">
+                    <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
+                      <h4 *ngIf="location.place.length>='27'">
+                        {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
+                      <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
 </section>
+
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
@@ -21,34 +50,11 @@
   <div class="col-md-12 no-padding-small">
     <div class="row">
       <div class="card p0 w-dta">
-        <header class="main-header dash chkin" id="apptsHeader">
+        <header class="main-header dash chkin" id="apptsHeader" [class.index-zero]="filter_sidebar">
           <nav class="navbar navbar-static-top jd-custom-nav" role="navigation">
             <div class="navbar-custom-menu width100pc">
               <ul class="nav navbar-nav width100pc">
-                <li class="dropdown messages-menu loc-lst queue-menu pull-right">
-                  <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
-                  <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-                    *ngIf="selected_location" style="padding-top: 12px !important;">
-                    <span *ngIf="!small_device_display">
-                      {{selected_location.place | capitalizeFirst}}</span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <ul class="menu">
-                        <li *ngFor="let location of locations;let i = index"
-                          [ngClass]="{'active': (location.place == selected_location.place)}">
-                          <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
-                            <h4 *ngIf="location.place.length>='27'">
-                              {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
-                            <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
-                  </ul>
-                </li>
-                <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db" *ngIf="time_type !==3">
+                <li class="pl5 dropdown messages-menu loc-lst  queue-menu tok-db pull-right" *ngIf="time_type !==3">
                   <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selectedView" style="padding-top: 12px !important;">
@@ -70,7 +76,7 @@
                     <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
                   </ul>
                 </li>
-                <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db"
+                <li class="pl5 dropdown messages-menu loc-lst queue-menu tok-db pull-right"
                   *ngIf="account_type === 'BRANCH' && admin && time_type !==3">
                   <i class="fa fa-user dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
@@ -86,7 +92,6 @@
                             <h4 *ngIf="user.firstName.length>='27'">
                               {{ user.firstName.substring(0,24) }}...</h4>
                             <h4 *ngIf="user.firstName.length<'27'">
-                              <!-- {{user.firstName}} -->
                               {{(user.businessName) ? user.businessName : user.firstName}}
                             </h4>
                           </a>
@@ -119,21 +124,6 @@
                     <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
                   </a>
                 </li>
-                <!-- <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
-                <a (click)="showAdjustDelay()"
-                  class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
-                  data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
-              </li> -->
-                <!-- <li class="dropdown notifications-menu pull-right">
-                <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
-                  <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                    [matTooltip]="filtericonTooltip">
-                  </i>
-                </a>
-              </li> -->
-                <li class="dropdown messages-menu mgn-up-10" *ngIf="time_type == 2">
-
-                </li>
               </ul>
             </div>
           </nav>
@@ -142,11 +132,11 @@
           *ngIf="activeSchedules && activeSchedules.length > 0 && time_type !==3">
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
-              <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
+              <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="activeSchedules">
                 <button class="item cust-button-3"
                   [ngClass]="{active: isQueueSelected(schedule.id)?true:false, disabled: schedule.apptState === 'ENABLED'?false:true}"
                   (click)="viewQClicked(schedule)" *ngFor="let schedule of activeSchedules;let i = index">
-                  <span> {{schedule.name}}<br />
+                  <span> {{schedule.name}} (S{{i+1}})<br />
                     <input style="margin:0px;" [checked]="isQueueSelected(schedule.id)" type="checkbox"
                       class="ckbx pull-left" />&nbsp;
                     <span *ngIf="schedule.apptSchedule.timeSlots && schedule.apptSchedule.timeSlots[0]">
@@ -161,1014 +151,174 @@
             </div>
           </div>
         </div>
-        <div class="head mgn-up-5 mgn-bt-5" id="apptsTimeTypes" *ngIf="selected_location">
-          <div class="col-md-5 col-xs-12 col-sm-12 no-padding wl-tp-cont1" style="display: flex;">
-            <button class="cust-button-1" [ngClass]="{'active': time_type==1}" (click)="setTimeType(1)">
-              {{today_cap}} ({{today_waitlist_count}})
-            </button>
-            <button class="cust-button-1" [ngClass]="{'active': time_type==2}" (click)="setTimeType(2)">
-              {{future_cap}} ({{future_waitlist_count}})
-            </button>
-            <button class="cust-button-1" [ngClass]="{'active': time_type==3}" (click)="setTimeType(3)">
-              {{history_cap}} ({{history_waitlist_count}})
-            </button>
-          </div>
-          <div class="col-md-7 col-xs-12 col-sm-12 wl-tp-cont2" *ngIf="time_type!=3">
-            <button class="cust-button-2" [ngClass]="{active: (statusAction === 'new')}"
-              (click)="viewStatusFilterBtnClicked('new', time_type)">
-              Scheduled ({{scheduled_count}})
-            </button>
-            <button class="cust-button-2" [ngClass]="{active: (statusAction === 'started')}"
-              (click)="viewStatusFilterBtnClicked('started')" *ngIf="time_type==1">
-              Started ({{started_count}})
-            </button>
-            <button class="cust-button-2" [ngClass]="{active: (statusAction === 'completed')}"
-              (click)="viewStatusFilterBtnClicked('completed')" *ngIf="time_type==1">
-              Completed ({{completed_count}})
-            </button>
-            <button class="cust-button-2" [ngClass]="{active: (statusAction === 'cancelled')}"
-              (click)="viewStatusFilterBtnClicked('cancelled', time_type)">
-              Cancelled ({{cancelled_count}})
-            </button>
-            <button class="cust-button-2 tme" *ngIf="time_type==2">
-              <mat-datepicker-toggle matSuffix [for]="picker">
-              </mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              <input readonly matInput type="text" [(ngModel)]="filter.future_appt_date" [matDatepicker]="picker"
-                [min]="tomorrowDate" #futuredate (dateChange)="getFutureAppointments()">
-            </button>
-          </div>
-        </div>
-        <div class="dash-list">
-          <div class="dash-list">
-            <div class="chkins-sect m0">
-              <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
-                *ngIf="!loading && time_type!=3 && isBatch ">
-                <table class="table tbl-qboard" style="width: 100%;">
-                  <thead id="childActionBar" class="childActionBar">
-                    <tr>
-                      <th class="chkWth"><input style="margin-left: -3px; margin-top: 6px;" [(ngModel)]="selAllSlots"
-                          type="checkbox" class="ckbx pull-left" (click)="selectAllSlots()" [checked]="selAllSlots" />
-                      </th>
-                      <th colspan="3">
-                        <div class="pull-left">
-                          <!-- <a class="icon-action pointer-cursor icon-size2"
-                          *ngIf="apptSingleSelection || apptMultiSelection" (click)="addConsumerInboxMessage()"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
-                          <i class="fa fa-comments-o "></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size2"
-                          *ngIf="apptSingleSelection && time_type!=3 && showShare"
-                          [matTooltip]="'Send details via SMS/Email'">
-                          <i class="fa fa-comment-o" (click)="smsAppt()"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size3"
-                          *ngIf="consumerTrackstatus && apptSingleSelection &&  time_type == 1 "
-                          (click)="locateCustomer()" [matTooltip]="'Where is my customer'">
-                          <i class="fa fa-location-arrow"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection"
-                          [matTooltip]="'Print'">
-                          <i class="fa fa-print" (click)="printAppt()"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection"
-                          [matTooltip]="'View Details'">
-                          <i class="fa fa-eye" (click)="goToCheckinDetails()"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="pos && apptSingleSelection"
-                          [matTooltip]="'Bill'">
-                          <i class="fa fa-newspaper-o" (click)="viewBillPage()"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection"
-                          [matTooltip]="'Private Note'">
-                          <i class="fa icon-note" (click)="addProviderNote()"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showRejected"
-                          [matTooltip]="'Cancel'">
-                          <i class="fa fa-trash-o" (click)="changeWaitlistStatus('Rejected')"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showArrived"
-                          [matTooltip]="'Mark as Arrived'">
-                          <i class="icon-arrived" (click)="changeWaitlistStatus('Arrived')"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showUndo"
-                          [matTooltip]="'Undo'">
-                          <i class="fa fa-undo" (click)="changeWaitlistStatus('Confirmed')"></i>
-                        </a>
-                        <a ngbDropdown class="icon-action pointer-cursor icon-size1"
-                          *ngIf="apptSingleSelection && time_type!=3" [matTooltip]="'Labels'">
-                          <span class="navbar-custom-menu" style="position: absolute;">
-                            <ul class="nav navbar-nav">
-                              <li ngbDropdown class="dropdown messages-menu loc-lst queue-menu">
-                                <div ngbDropdownToggle class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
-                                  [matTooltip]="''" (click)="labelClick()">
-                                  <i class="label-img"></i></div>
-                                <ul ngbDropdownMenu class="dropdown-menu" *ngIf="showLabels">
-                                  <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
-                                    <ul class="menu"
-                                      style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
-                                      <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                        <ul class="menu"
-                                          style="overflow: hidden;max-height:none;font-weight: normal;">
-                                          <li *ngFor="let value of label.valueSet">
-                                            <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
-                                              (click)="changeLabelvalue(label.label, value.value)">
-                                              {{value.shortValue}} {{label.label}}<i class="fa fa-check"
-                                                *ngIf="value.selected"></i></a>
-                                          </li>
-                                        </ul>
-                                      </li>
-                                      <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                        <a class="pointer-cursor" style="color: black;font-weight: 700;"
-                                          (click)="addLabelvalue('newvalue', label)">
-                                          {{label.displayName}}</a>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                  <li class="footer"><a class="pointer-cursor"
-                                      (click)="addLabelvalue('newlabel')">{{add_label}}</a>
-                                  </li>
-                                  <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
-                                      routerLink="/provider/settings/general/labels">{{manage_labels}}</a>
-                                  </li>
-                                </ul>
-                              </li>
-                            </ul>
-                          </span>
-                        </a> -->
-                          <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
-                            (click)="showCheckinActions()" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
-                            <!-- <i class="dashaction-icon"></i> -->
-                            Actions <i class="fa fa-caret-down"></i>
-                          </a>
-                          <a *ngIf="!apptSingleSelection && !apptMultiSelection && time_type!=3"
-                            class="mgn-lt-20 icon-action pointer-cursor icon-size1 underline avail-slot"
-                            [matTooltip]="'Free slots'" (click)="showSlots()">Available slots
-                            <!-- <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i> -->
-                          </a>
+        <mat-tab-group class="checkinlist" (selectedTabChange)="tabChange($event)" [selectedIndex]="time_type - 1">
+          <mat-tab label="Today ({{today_waitlist_count}})">
+            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+            <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive" *ngIf="!loading">
+              <div>
+                <aside class="filterSidebar" *ngIf="filter_sidebar">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
+                    <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Close filter window'"></i>
+                      <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+                    </div>
+                    <ul class="sidebar-menu">
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                            class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                            class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
+                            (keyup)="keyPressed($event)" class="filterTextbox"
+                            placeholder="{{customerIdTooltip | capitalizeFirst}}">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (blur)="doSearch()"
+                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
+                        </li>
+                      </div>
+                      <div *ngIf="service_list.length > 0">
+                        <label class="filterHeaders">Services</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allServiceSelected"
+                            (change)="setFilterDataCheckbox('service', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox *ngFor="let service of service_list"
+                            [checked]="services.indexOf(service.id) !== -1"
+                            (change)="setFilterDataCheckbox('service', service.id, $event)">
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                              class="fa meet-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                              class="fa zoom-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                              class="fa phon-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                              class="fa wtsapaud-icon"></i>
+                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                              class="fa wtsapvid-icon"></i>{{service.name}}
+                          </mat-checkbox>
+                        </li>
+                      </div>
+                      <div>
+                        <label class="filterHeaders">Appointment Mode</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allModeSelected"
+                            (change)="setFilterDataCheckbox('appointmentMode', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of appointmentModes">
+                          <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
+                            (change)="setFilterDataCheckbox('appointmentMode', mode.mode, $event)">
+                            {{mode.value}}</mat-checkbox>
+                        </li>
+                      </div>
+                      <div *ngIf="providerLabels.length > 0">
+                        <div>
+                          <label class="filterHeaders">Labels</label>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let lbl of providerLabels">
+                            <mat-checkbox
+                              [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                              (change)="setLabelFilter(lbl, $event)">
+                              {{lbl.displayName}}</mat-checkbox>
+                          </li>
                         </div>
-                        <div class="pull-right">
-                          <a class="icon-action pointer-cursor icon-size2" [matTooltip]="'Refresh'">
-                            <i class="fa fa-refresh" (click)="refresh()"></i>
-                          </a>
-                          <a class="icon-action pointer-cursor icon-size1" data-toggle="control-sidebar">
-                            <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                              [matTooltip]="filtericonTooltip">
-                            </i>
-                          </a>
-                          <aside class="filterSidebar" *ngIf="filter_sidebar">
-                            <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
-                              <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
-                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
-                                  (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                                  [matTooltip]="'Close filter window'"></i>
-                                <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                                  [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
-                              </div>
-                              <ul class="sidebar-menu">
-                                <div class="filterTextinput">
-                                  <li class="filterli">
-                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                      class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
-                                  </li>
-                                </div>
-                                <div class="filterTextinput">
-                                  <li class="filterli">
-                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                      class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
-                                  </li>
-                                </div>
-                                <div class="filterTextinput">
-                                  <li class="filterli">
-                                    <input type="text" autocomplete="off" [(ngModel)]="filter.patientId"
-                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox"
-                                      placeholder="{{customerIdTooltip | capitalizeFirst}}">
-                                  </li>
-                                </div>
-                                <div class="filterTextinput" *ngIf="time_type == 3">
-                                  <li class="filterli">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
-                                      (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
-                                      maxlength="10" class="filterTextbox" placeholder="Phone Number">
-                                  </li>
-                                </div>
-                                <div class="filterTextinput">
-                                  <li class="filterli">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
-                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox"
-                                      placeholder="Confirmation No">
-                                  </li>
-                                </div>
-                                <div *ngIf="service_list.length > 0">
-                                  <label class="filterHeaders">Services</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allServiceSelected"
-                                      (change)="setFilterDataCheckbox('service', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox *ngFor="let service of service_list"
-                                      [checked]="services.indexOf(service.id) !== -1"
-                                      (change)="setFilterDataCheckbox('service', service.id, $event)">
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
-                                        class="fa meet-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
-                                        class="fa zoom-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
-                                        class="fa phon-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
-                                        class="fa wtsapaud-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                        class="fa wtsapvid-icon"></i>
-                                      {{service.name}}
-
-                                    </mat-checkbox>
-                                  </li>
-                                </div>
-                                <div *ngIf="time_type === 3">
-                                  <label class="filterHeaders">Appointment Status</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allApptStatusSelected"
-                                      (change)="setFilterDataCheckbox('apptStatus', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                    *ngFor="let appt_status of check_in_statuses_filter">
-                                    <mat-checkbox [checked]="apptStatuses.indexOf(appt_status.value) !== -1"
-                                      (change)="setFilterDataCheckbox('apptStatus', appt_status.value, $event)">
-                                      {{appt_status.displayName}}</mat-checkbox>
-                                  </li>
-                                </div>
-                                <div *ngIf="time_type == 3">
-                                  <label class="filterHeaders">Payment Status</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allPayStatusSelected"
-                                      (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                    *ngFor="let pay_status of payStatusList">
-                                    <mat-checkbox [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
-                                      (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
-                                      {{pay_status.value}}</mat-checkbox>
-                                  </li>
-                                </div>
-                                <div>
-                                  <label class="filterHeaders">Appointment Mode</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allModeSelected"
-                                      (change)="setFilterDataCheckbox('appointmentMode', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                    *ngFor="let mode of appointmentModes">
-                                    <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
-                                      (change)="setFilterDataCheckbox('appointmentMode', mode.mode, $event)">
-                                      {{mode.value}}</mat-checkbox>
-                                  </li>
-                                </div>
-                                <div *ngIf="providerLabels.length > 0">
-                                  <!-- <div *ngFor="let lbl of providerLabels">
-                                  <label class="filterHeaders">{{lbl.displayName}}</label>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allLabelSelected[lbl.label]"
-                                      (change)="setLabelFilter(lbl, 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                    *ngFor="let valueset of lbl?.valueSet">
-                                    <mat-checkbox
-                                      [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(valueset.value) !== -1"
-                                      (change)="setLabelFilter(lbl, valueset.value , $event)">
-                                      {{valueset.shortValue}}</mat-checkbox>
-                                  </li>
-                                </div> -->
-                                  <div>
-                                    <label class="filterHeaders">Labels</label>
-                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                      <mat-checkbox [checked]="allLabelSelected"
-                                        (change)="setLabelFilter('all', $event)">
-                                        All</mat-checkbox>
-                                    </li>
-                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                      *ngFor="let lbl of providerLabels">
-                                      <mat-checkbox
-                                        [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
-                                        (change)="setLabelFilter(lbl, $event)">
-                                        {{lbl.displayName}}</mat-checkbox>
-                                    </li>
-                                  </div>
-                                </div>
-                                <div class="filterTextinput" *ngIf="time_type == 3">
-                                  <li class="filterli filterDatepicker">
-                                    <input type="text" [(ngModel)]="filter.check_in_start_date" [matDatepicker]="picker"
-                                      #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
-                                      placeholder="Start Date">
-                                    <mat-datepicker-toggle matSuffix [for]="picker">
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                  </li>
-                                </div>
-                                <div class="filterTextinput" *ngIf="time_type == 3">
-                                  <li class="filterli filterDatepicker">
-                                    <input type="text" [(ngModel)]="filter.check_in_end_date" [matDatepicker]="picker"
-                                      #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
-                                      placeholder="End Date">
-                                    <mat-datepicker-toggle matSuffix [for]="picker">
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                  </li>
-                                </div>
-                              </ul>
-                            </section>
-                          </aside>
-                        </div>
-                      </th>
-                    </tr>
-                    <tr *ngIf="showSlotsN">
-                      <td colspan="5" [ngClass]="{'no-appt': showNoSlots}">
-                        <mat-chip-list class="apptm-in-chip slot-list" *ngIf="!slotsloading && slotsForQ.length!=0">
-                          <mat-chip class="apptslotW pointer-cursor" [ngClass]="{'active': slot.active}"
-                            *ngFor="let slot of slotsForQ" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
-                            {{getSingleTime(slot.time)}}</mat-chip>
-                        </mat-chip-list>
-                        <span class="black" *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
-                      </td>
-                    </tr>
-                  </thead>
-                  <tbody *ngFor="let slot of availableSlotDetails.availableSlots, let slotIndex=index">
-                    <tr class="parentRow" [ngClass]="{greenb: timeSlotAppts[slot.time]?true:false}">
-                      <td class="chkWth">
-                        <input [(ngModel)]="chkSlotInput[slotIndex]" [checked]="this.slotsChecked[slotIndex]"
-                          (click)="stopprop($event)" type="checkbox" class="ckbx pull-left"
-                          [disabled]="!timeSlotAppts[slot.time]" (change)="slotCheckSelected(slotIndex, slot)" />
-                      </td>
-                      <td class="parent-selection parent-title td-one">
-                        <div class="parent-name pull-left"
-                          [ngClass]="{'pointer-cursor': (slot.capacity-slot.noOfAvailbleSlots)!=0 || timeSlotAppts[slot.time]?true:false}"
-                          (click)="stopprop($event);((slot.capacity-slot.noOfAvailbleSlots)!=0 || timeSlotAppts[slot.time]) && slotRowSelected(slotIndex)">
-                          <span class="timeslot" #appSlots>{{getSingleTime(slot.time)}}</span><span
-                            *ngIf="batchEnabled && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0"
-                            class="slot">
-                            [Batch: {{timeSlotAppts[slot.time][0].batchId}}]</span>
-                        </div>
-                      </td>
-                      <td class="title td-two-full"
-                        [ngClass]="{'pointer-cursor': (slot.capacity-slot.noOfAvailbleSlots)!=0?true:false}"
-                        (click)="stopprop($event);(slot.capacity-slot.noOfAvailbleSlots)!=0 && slotRowSelected(slotIndex)">
-                        <div class="pull-left">
-                          <span>Appointments: <span class="icon-size5"
-                              [ngClass]="{greenc: (slot.capacity-slot.noOfAvailbleSlots) < slot.capacity?true:false, underline: (slot.capacity-slot.noOfAvailbleSlots) < slot.capacity?true:false, red: (slot.capacity-slot.noOfAvailbleSlots)==slot.capacity?true:false}">{{slot.capacity-slot.noOfAvailbleSlots}}</span>
-                            / <span class="icon-size5">{{slot.capacity}}</span></span>
-                        </div>
-                      </td>
-                      <td class="">
-                        <a class="statusText btn-play pointer-cursor start-btn"
-                          *ngIf="statusAction =='new' && time_type!=2 && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0 && timeSlotAppts[slot.time][0].batchId && batchEnabled"
-                          (click)="stopprop($event);changeApptStatusByBatch('Started', timeSlotAppts[slot.time][0])"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                          <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
-                        </a>
-                        <a class="statusText btn-play pointer-cursor cancel-btn"
-                          *ngIf="statusAction =='new' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0 && timeSlotAppts[slot.time][0].batchId && batchEnabled"
-                          (click)="stopprop($event);cancelBatchAppt(timeSlotAppts[slot.time][0])"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Cancel'">
-                          <i class="fa fa-trash"></i> <span *ngIf="!small_device_display"> Cancel</span>
-                        </a>
-                        <a class="statusText btn-play pointer-cursor done-btn"
-                          *ngIf="statusAction =='started' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0  && timeSlotAppts[slot.time][0].batchId && batchEnabled"
-                          (click)="stopprop($event);changeApptStatusByBatch('Completed', timeSlotAppts[slot.time][0])"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
-                          <i class="dashboardcomplete-icon" style="color: green;"></i> <span
-                            *ngIf="!small_device_display">
-                            Complete</span>
-                        </a>
-                      </td>
-                    </tr>
-                    <tr *ngIf="slotSelected[slotIndex]" class="brd-tp">
-                      <td colspan="4" class="nopadding-td">
-                        <div class="table-responsive width100pc">
-                          <table class="table tbl-qboard childDetails child-tbl-color">
-                            <tbody *ngFor="let appt of timeSlotAppts[slot.time], let apptIndex=index">
-                              <tr class="pointer-cursor" (click)="goCheckinDetail(appt)">
-                                <td class="chkWth"><input *ngIf="appt.providerConsumer"
-                                    [checked]="apptsChecked && apptsChecked[slotIndex] && apptsChecked[slotIndex][apptIndex]"
-                                    type="checkbox" class="ckbx pull-left" (click)="stopprop($event)"
-                                    (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
-                                <td class="parent-selection parent-title td-one">
-                                  <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                                    class="bold pull-left font11" [class.pointer-cursor]="appt.apptStatus!=='blocked'" 
-                                    (click)="stopprop($event);gotoCustomerDetails(appt)" *ngIf="appt.appmtFor[0].firstName"
-                                    [class.pointer-auto]="appt.apptStatus=='blocked'">
-                                    {{appt.appmtFor[0].firstName}}
-                                    {{appt.appmtFor[0].lastName}}
-                                    <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked
-                                    </div>
-                                  </div>
-                                  <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
-                                    class="bold pull-left pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
-                                    *ngIf="!appt.appmtFor[0].firstName">
-                                    {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}
-                                  </div>
-                                </td>
-                                <td class="title td-two">
-                                  <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
-                                    class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3 font-bold font1"
-                                    *ngIf="servicesCount>1">
-                                    <i class="fa meet-icon"
-                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                    <i class="fa zoom-icon"
-                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                    <i class="fa phon-icon"
-                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                    <i class="fa wtsapaud-icon"
-                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
-                                    <i class="fa wtsapvid-icon"
-                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
-                                    {{appt.service.name}}
-
-                                  </div>
-                                  <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-                                    class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                    <span class="checkin-label mgn-rt-10"
-                                      *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
-                                  </div>
-                                  <!-- <div *ngIf="appt.batchId" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-3 bold">
-                                  Batch: {{appt.batchId}}
-                                </div> -->
-                                </td>
-                                <td class="td-three">
-                                  <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                    <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
-                                      [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
-                                    </span>
-                                    <span class="icon-cloud icon-btn1 mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
-                                      [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
-                                    </span>
-                                    <span class="fa fa-phone phone-in-icon" [matTooltipClass]="tooltipcls"
-                                      [matTooltip]="'Phone in'" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
-                                    </span>
-                                    <span title="{{arrived_upper}}" [matTooltipClass]="tooltipcls"
-                                      [matTooltip]="'Arrived'"
-                                      class="pull-left dashboardarrived-icon checkin_status icon-btn1 mgn-rt-10"
-                                      *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
-                                    <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
-                                      class="pull-left cnote icon-btn1  pointer-cursor mgn-rt-10"
-                                      *ngIf="appt.consumerNote" (click)="stopprop($event);showConsumerNote(appt)">
-                                      <i class="icon-note"></i>
-                                    </span>
-                                    <span (click)="stopprop($event);openAttachmentGallery(appt)"
-                                      [matTooltip]="'Attachment included'"
-                                      class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.hasAttachment"><i
-                                        style="font-size: 20px;" class="material-icons">attach_file</i></span>
-                                  </div>
-                                  <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                    <span class="info-box-text" style="font-size: smaller;"
-                                      *ngIf="appt.apptStatus === 'Cancelled' || appt.apptStatus === 'Rejected'">
-                                      {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
-                                    </span>
-                                    <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'"
-                                      data-title="Payment Status" class="payment" *ngIf="pos">
-                                      <ng-container *ngIf="appt.paymentStatus">
-                                        <span class="paid-h icon-btn"
-                                          *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span
-                                            class="text">{{partially_paid_cap}}</span></span>
-                                        <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
-                                            class="text">{{paid_cap}}</span></span>
-                                        <span class="paid-f icon-btn" style="color: red;"
-                                          *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
-                                      </ng-container>
-                                    </span>
-                                  </div>
-                                </td>
-                                <td class="q-actions td-four">
-                                  <a class="statusText btn-play pointer-cursor call-btn"
-                                    [class.stopcall-btn]="appt.callingStatus"
-                                    *ngIf="board_count > 0 && !appt.virtualService && time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
-                                    (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
-                                    [matTooltip]="'Call'">
-                                    <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
-                                      *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop
-                                    </span>
-                                    <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
-                                    <span *ngIf="!small_device_display && !appt.callingStatus">
-                                      &nbsp;Call</span>
-                                  </a>
-                                  <a class="statusText btn-play pointer-cursor start-btn"
-                                    (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
-                                    [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                                    <i class="dashboardadd-customer-icon"></i>
-                                    <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
-                                  </a>
-                                  <a class="statusText btn-play pointer-cursor start-btn"
-                                    (click)="stopprop($event);changeWaitlistStatus('Started', appt)"
-                                    *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && !appt.virtualService"
-                                    [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                                    <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display">
-                                      Start</span>
-                                  </a>
-                                  <!-- <a class="statusText btn-play pointer-cursor"
-                                  (click)="showCallingModes(appt, 'normalStart')"
-                                  *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && appt.virtualService"
-                                  [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                                  <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
-                                </a> -->
-                                  <a class="statusText btn-play pointer-cursor start-btn"
-                                    [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
-                                    *ngIf="time_type==1 && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
-                                    [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
-                                    (click)="stopprop($event);showCallingModes(appt, 'Started')">
-                                    <span
-                                      *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                                    <i class="fa meet-icon"
-                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                    <i class="fa zoom-icon"
-                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                    <i class="fa phon-icon"
-                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                    <i class="fa wtsapaud-icon"
-                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
-                                    <i class="fa wtsapvid-icon"
-                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                                      *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
-                                    <span
-                                      *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                                    <span *ngIf="!small_device_display">
-                                      <!-- Start -->
-                                      {{appt.apptStatus === 'Started' ? 'Resume': 'Start'}}
-                                    </span>
-                                  </a>
-                                  <a class="btn-play pointer-cursor done-btn" *ngIf="appt.apptStatus === 'Started'"
-                                    (click)="stopprop($event);changeWaitlistStatus('Completed',appt)"
-                                    [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
-                                    <i class="dashboardcomplete-icon" style="color: green;"></i> <span
-                                      *ngIf="!small_device_display"> {{done_cap}} </span>
-                                  </a>
-                                  <a class="statusText btn-play pointer-cursor act-btn single-action"
-                                    (click)="stopprop($event);showCheckinActions(appt)" [matTooltipClass]="tooltipcls"
-                                    [matTooltip]="'Actions'">
-                                    <!-- <i class="dashaction-icon"></i> -->
-                                    Actions <i class="fa fa-caret-down"></i>
-                                  </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      </div>
+                    </ul>
+                  </section>
+                </aside>
               </div>
-              <div id="contentDiv" class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive"
-                *ngIf="!loading && (!isBatch || this.time_type == 3)">
+              <div class="inpro-box mgn-up-10" *ngIf="startedAppts.length > 0">
+                <div class="inpro pad-10 pull-left">
+                  <div class="inprogress"> In progress ({{started_count}})</div>
+                </div>
+                <div class="pad-10 act-icons pull-right">
+                  <a class="icon-action pointer-cursor icon-size2" [matTooltip]="'Refresh'">
+                    <i class="fa fa-refresh" (click)="refresh()"></i>
+                  </a>
+                  <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+                    <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="filtericonTooltip">
+                    </i>
+                  </a>
+
+                </div>
                 <table class="table tbl-qboard childDetails singleDash">
-                  <thead id="childActionBar">
+                  <thead id="childActionBar" *ngIf="startedAppts.length > 1 || apptStartedMultiSelection">
                     <tr>
-                      <th class="chkWth">
-                        <input *ngIf="check_in_filtered_list.length != 0" type="checkbox" class="ckbx pull-left"
-                          [checked]="chkSelectAppointments" (change)="selectAllAppoinments()"
-                          [(ngModel)]="chkSelectAppointments" />
+                      <th class="chkWth check-table-head" *ngIf="startedAppts.length > 1" colspan="3">
+                        <input type="checkbox" class="ckbx pull-left" [checked]="chkStartedSelectAppointments"
+                          (click)="stopprop($event)" (change)="selectAllStarted()"
+                          [(ngModel)]="chkStartedSelectAppointments" [ngModelOptions]="{standalone: true}" />
+                        <label class="selectall"> Select all</label>
+                        <a *ngIf="apptStartedMultiSelection" class="statusText btn-play pointer-cursor act-btn"
+                          (click)="showCheckinActions('started')" [matTooltipClass]="tooltipcls"
+                          [matTooltip]="'Actions'">
+                          Actions <i class="fa fa-caret-down"></i>
+                        </a>
                       </th>
-                      <th colspan="4" class="childActionBar" style="padding-left: 5px;">
-                        <div class="pull-left">
-                          <a *ngIf="time_type==3" class="icon-action pointer-cursor icon-size2"
-                            [matTooltip]="'Print All'">
-                            <i class="fa fa-download" (click)="printHistoryCheckin()"></i>
-                          </a>
-                          <!--  <a class="icon-action pointer-cursor icon-size2"
-                          *ngIf="apptSingleSelection || apptMultiSelection" (click)="addConsumerInboxMessage()"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
-                          <i class="fa fa-comments-o "></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size2"
-                          *ngIf="apptSingleSelection && time_type!=3 && showShare"
-                          [matTooltip]="'Send details via SMS/Email'">
-                          <i class="fa fa-comment-o" (click)="smsAppt()"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size3"
-                          *ngIf="consumerTrackstatus && apptSingleSelection &&  time_type == 1 "
-                          (click)="locateCustomer()" [matTooltip]="'Where is my customer'">
-                          <i class="fa fa-location-arrow"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection  && time_type!=3"
-                          [matTooltip]="'Print'">
-                          <i class="fa fa-print" (click)="printAppt()"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection"
-                          [matTooltip]="'View Details'">
-                          <i class="fa fa-eye" (click)="goToCheckinDetails()"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="pos && apptSingleSelection"
-                          [matTooltip]="'Bill'">
-                          <i class="fa fa-newspaper-o" (click)="viewBillPage()"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection"
-                          [matTooltip]="'Private Note'">
-                          <i class="fa icon-note" (click)="addProviderNote()"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showArrived"
-                          [matTooltip]="'Mark as Arrived'">
-                          <i class="icon-arrived" (click)="changeWaitlistStatus('Arrived')"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showUndo"
-                          [matTooltip]="'Undo'">
-                          <i class="fa fa-undo" (click)="changeWaitlistStatus('Confirmed')"></i>
-                        </a>
-                        <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showRejected"
-                          [matTooltip]="'Cancel'">
-                          <i class="fa fa-trash" (click)="changeWaitlistStatus('Rejected')"></i>
-                        </a>
-                        <a ngbDropdown class="icon-action pointer-cursor icon-size1"
-                          *ngIf="apptSingleSelection && time_type!=3" [matTooltip]="'Labels'">
-                          <span class="navbar-custom-menu" style="position: absolute;">
-                            <ul class="nav navbar-nav">
-                              <li ngbDropdown class="dropdown messages-menu loc-lst queue-menu">
-                                <div ngbDropdownToggle class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
-                                  [matTooltip]="''" (click)="labelClick()">
-                                  <i class="label-img"></i></div>
-                                <ul ngbDropdownMenu class="dropdown-menu" *ngIf="showLabels">
-                                  <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
-                                    <ul class="menu"
-                                      style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
-                                      <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                        <ul class="menu"
-                                          style="overflow: hidden;max-height:none;font-weight: normal;">
-                                          <li *ngFor="let value of label.valueSet">
-                                            <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
-                                              (click)="changeLabelvalue(label.label, value.value)">
-                                              {{value.shortValue}} <i class="fa fa-check"
-                                                *ngIf="value.selected"></i></a>
-                                          </li>
-                                        </ul>
-                                      </li>
-                                      <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                        <a class="pointer-cursor" style="color: black;font-weight: 700;"
-                                          (click)="addLabelvalue('newvalue', label)">
-                                          {{label.displayName}}</a>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                  <li class="footer"><a class="pointer-cursor"
-                                      (click)="addLabelvalue('newlabel')">{{add_label}}</a>
-                                  </li>
-                                  <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
-                                      routerLink="/provider/settings/general/labels">{{manage_labels}}</a>
-                                  </li>
-                                </ul>
-                              </li>
-                            </ul>
-                          </span>
-                        </a> -->
-                          <a *ngIf="time_type!=3 && !apptSingleSelection && !apptMultiSelection"
-                            class="mgn-lt-20 icon-action pointer-cursor icon-size1 underline avail-slot"
-                            [matTooltip]="'Free slots'" (click)="showSlots()">Available slots
-                            <!-- <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i> -->
-                          </a>
-                          <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
-                            (click)="showCheckinActions()" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
-                            <!-- <i class="dashaction-icon"></i> -->
-                            Actions <i class="fa fa-caret-down"></i>
-                          </a>
-                        </div>
-                        <div class="pull-right">
-                          <a *ngIf="time_type!=3" class="icon-action pointer-cursor icon-size2"
-                            [matTooltip]="'Refresh'">
-                            <i class="fa fa-refresh" (click)="refresh()"></i>
-                          </a>
-                          <a class="icon-action pointer-cursor icon-size1" data-toggle="control-sidebar">
-                            <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                              [matTooltip]="filtericonTooltip">
-                            </i>
-                          </a>
-                          <aside class="filterSidebar" *ngIf="filter_sidebar">
-                            <section id="filterContainer" class="sidebar sidebar-bottom">
-                              <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
-                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
-                                  (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                                  [matTooltip]="'Close filter window'"></i>
-                                <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                                  [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
-                              </div>
-                              <ul class="sidebar-menu">
-                                <div class="filterTextinput">
-                                  <li class="filterli">
-                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                      class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
-                                  </li>
-                                </div>
-                                <div class="filterTextinput">
-                                  <li class="filterli">
-                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                                      class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
-                                  </li>
-                                </div>
-                                <div class="filterTextinput">
-                                  <li class="filterli">
-                                    <input type="text" autocomplete="off" [(ngModel)]="filter.patientId"
-                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox"
-                                      placeholder="{{customerIdTooltip | capitalizeFirst}}">
-                                  </li>
-                                </div>
-                                <div class="filterTextinput" *ngIf="time_type == 3">
-                                  <li class="filterli">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
-                                      (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
-                                      maxlength="10" class="filterTextbox" placeholder="Phone Number">
-                                  </li>
-                                </div>
-                                <div class="filterTextinput">
-                                  <li class="filterli">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
-                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox"
-                                      placeholder="Confirmation No">
-                                  </li>
-                                </div>
-                                <!-- <div *ngIf="time_type == 3">
-                                <label class="filterHeaders">Age Group</label>
-                                <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                </li>
-                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox [checked]="allAgeSlected"
-                                    (change)="setFilterDataCheckbox('age', 'all', $event)">
-                                    All</mat-checkbox>
-                                </li>
-                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox [checked]="ageGroups.indexOf('kids') !== -1"
-                                    (change)="setFilterDataCheckbox('age', 'kids', $event)">
-                                    kids</mat-checkbox>
-                                </li>
-                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox [checked]="ageGroups.indexOf('kids') !== -1"
-                                    (change)="setFilterDataCheckbox('age', 'adults', $event)">
-                                    Adults</mat-checkbox>
-                                </li>
-                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox [checked]="ageGroups.indexOf('kids') !== -1"
-                                    (change)="setFilterDataCheckbox('age', 'senior', $event)">
-                                    Senior citizen</mat-checkbox>
-                                </li>
-                              </div>
-                              <div *ngIf="time_type == 3">
-                                <label class="filterHeaders">Gender</label>
-                                <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                </li>
-                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox [checked]="allGenderSlected"
-                                    (change)="setFilterDataCheckbox('gender', 'all', $event)">
-                                    All</mat-checkbox>
-                                </li>
-                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox [checked]="genderList.indexOf('male') !== -1"
-                                    (change)="setFilterDataCheckbox('gender', 'male', $event)">
-                                    Male</mat-checkbox>
-                                </li>
-                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox [checked]="genderList.indexOf('female') !== -1"
-                                    (change)="setFilterDataCheckbox('gender', 'female', $event)">
-                                    Female</mat-checkbox>
-                                </li>
-                              </div> -->
-                                <div *ngIf="locations.length > 0 && time_type === 3">
-                                  <label class="filterHeaders">Locations</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allLocationSelected"
-                                      (change)="setFilterDataCheckbox('location', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox *ngFor="let loc of locations"
-                                      [checked]="filterLocation.indexOf(loc.id) !== -1"
-                                      (change)="setFilterDataCheckbox('location', loc.id, $event)">
-                                      {{loc.place}}
-                                    </mat-checkbox>
-                                  </li>
-                                </div>
-                                <div *ngIf="schedules.length > 0 && time_type === 3">
-                                  <label class="filterHeaders">schedules</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allScheduleSelected"
-                                      (change)="setFilterDataCheckbox('schedule', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox *ngFor="let q of schedules"
-                                      [checked]="filteredSchedule.indexOf(q.id) !== -1"
-                                      (change)="setFilterDataCheckbox('schedule', q.id, $event)">
-                                      {{q.name}} <span
-                                        class="qtime-size">[{{q.apptSchedule.timeSlots[0]['sTime'] + ' - ' + q.apptSchedule.timeSlots[0]['eTime']}}]
-                                      </span>
-                                    </mat-checkbox>
-                                  </li>
-                                </div>
-
-                                <div *ngIf="service_list.length > 0">
-                                  <label class="filterHeaders">Services</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allServiceSelected"
-                                      (change)="setFilterDataCheckbox('service', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox *ngFor="let service of service_list"
-                                      [checked]="services.indexOf(service.id) !== -1"
-                                      (change)="setFilterDataCheckbox('service', service.id, $event)">
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
-                                        class="fa meet-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
-                                        class="fa zoom-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
-                                        class="fa phon-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
-                                        class="fa wtsapaud-icon"></i>
-                                      <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
-                                        class="fa wtsapvid-icon"></i>
-                                      {{service.name}}
-
-                                    </mat-checkbox>
-                                  </li>
-                                </div>
-                                <div *ngIf="time_type === 3">
-                                  <label class="filterHeaders">Appointment Status</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allApptStatusSelected"
-                                      (change)="setFilterDataCheckbox('apptStatus', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                    *ngFor="let appt_status of check_in_statuses_filter">
-                                    <mat-checkbox [checked]="apptStatuses.indexOf(appt_status.value) !== -1"
-                                      (change)="setFilterDataCheckbox('apptStatus', appt_status.value, $event)">
-                                      {{appt_status.displayName}}</mat-checkbox>
-                                  </li>
-                                </div>
-                                <div *ngIf="time_type == 3">
-                                  <label class="filterHeaders">Payment Status</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allPayStatusSelected"
-                                      (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                    *ngFor="let pay_status of payStatusList">
-                                    <mat-checkbox [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
-                                      (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
-                                      {{pay_status.value}}</mat-checkbox>
-                                  </li>
-                                </div>
-                                <div>
-                                  <label class="filterHeaders">Appointment Mode</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allModeSelected"
-                                      (change)="setFilterDataCheckbox('appointmentMode', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                    *ngFor="let mode of appointmentModes">
-                                    <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
-                                      (change)="setFilterDataCheckbox('appointmentMode', mode.mode, $event)">
-                                      {{mode.value}}</mat-checkbox>
-                                  </li>
-                                </div>
-                                <div *ngIf="providerLabels.length > 0">
-                                  <!-- <div *ngFor="let lbl of providerLabels">
-                                  <label class="filterHeaders">{{lbl.displayName}}</label>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allLabelSelected[lbl.label]"
-                                      (change)="setLabelFilter(lbl, 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                    *ngFor="let valueset of lbl?.valueSet">
-                                    <mat-checkbox
-                                      [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(valueset.value) !== -1"
-                                      (change)="setLabelFilter(lbl, valueset.value , $event)">
-                                      {{valueset.shortValue}}</mat-checkbox>
-                                  </li>
-                                </div> -->
-                                  <div>
-                                    <label class="filterHeaders">Labels</label>
-                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                      <mat-checkbox [checked]="allLabelSelected"
-                                        (change)="setLabelFilter('all', $event)">
-                                        All</mat-checkbox>
-                                    </li>
-                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                      *ngFor="let lbl of providerLabels">
-                                      <mat-checkbox
-                                        [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
-                                        (change)="setLabelFilter(lbl, $event)">
-                                        {{lbl.displayName}}</mat-checkbox>
-                                    </li>
-                                  </div>
-                                </div>
-                                <div class="filterTextinput" *ngIf="time_type == 3">
-                                  <li class="filterli filterDatepicker">
-                                    <input type="text" [(ngModel)]="filter.check_in_start_date" [matDatepicker]="picker"
-                                      #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
-                                      placeholder="Start Date" readonly>
-                                    <mat-datepicker-toggle matSuffix [for]="picker">
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                  </li>
-                                </div>
-                                <div class="filterTextinput" *ngIf="time_type == 3">
-                                  <li class="filterli filterDatepicker">
-                                    <input type="text" [(ngModel)]="filter.check_in_end_date" [matDatepicker]="picker"
-                                      #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
-                                      placeholder="End Date" readonly>
-                                    <mat-datepicker-toggle matSuffix [for]="picker">
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                  </li>
-                                </div>
-                                <!-- <div class="filterTextinput" *ngIf="time_type !== 1">
-                                <li class="filterli filterDatepicker">
-                                  <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
-                                    (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
-                                </li>
-                              </div> -->
-                              </ul>
-                            </section>
-                          </aside>
-                        </div>
+                      <th class="childActionBar" colspan="2">
                       </th>
-                    </tr>
-                    <tr *ngIf="showSlotsN">
-                      <td colspan="5" [ngClass]="{'no-appt':showNoSlots}">
-                        <mat-chip-list class="apptm-in-chip slot-list" *ngIf="!slotsloading && slotsForQ.length > 0">
-                          <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
-                            (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
-                            {{getSingleTime(slot.time)}}</mat-chip>
-                        </mat-chip-list>
-                        <span class="black" *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
-                      </td>
                     </tr>
                   </thead>
-                  <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
-                    <!-- <tr>
-                    <td colspan="5" *ngIf="showSlotsN">
-                      <mat-chip-list class="apptm-in-chip">
-                        <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
-                          [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
-                          {{getSingleTime(slot.time)}}</mat-chip>
-                      </mat-chip-list>
-                    </td>
-                  </tr> -->
+                  <tbody *ngIf="!loading && (startedAppts.length == 0 || activeSchedules.length == 0)">
                     <tr>
                       <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
                         No Appointments Found
                       </td>
                       <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
-                        No schedules
+                        {{no_service_cap}}
                       </td>
                     </tr>
                   </tbody>
-                  <tbody class="dynamic-content" *ngFor="let appt of check_in_filtered_list, let i=index">
-                    <tr class="pointer-cursor" (click)="goCheckinDetail(appt)">
-                      <td class="chkWth">
-                        <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left"
-                          (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                  <tbody *ngIf="startedAppts.length > 0 && activeSchedules.length > 0">
+                    <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                      *ngFor="let appt of startedAppts, let i=index">
+                      <td class="chkWth" *ngIf="startedAppts.length > 1">
+                        <input *ngIf="appt.providerConsumer" [checked]="startedChkAppointments[i]" type="checkbox"
+                          class="ckbx pull-left" (click)="stopprop($event)"
+                          (change)="chkStartedAptHistoryClicked(i, appt)" />
                       </td>
                       <td class="parent-selection parent-title td-one">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           *ngIf="time_type==3">
                           {{appt.appmtDate | date: display_dateFormat}}</div>
-                        <div class="pull-left mgn-lt-5 date greenc bold" *ngIf="time_type!=3">
-                          {{getSingleTime(appt.appmtTime)}}</div>
+                        <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
+                          <span class="greenc bold font11"> {{getSingleTime(appt.appmtTime)}}</span>
+                          <span *ngIf="this.selQIds.length > 1">
+                            S{{getScheduleIndex(appt.schedule.id) + 1}}
+                          </span></div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
-                          class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
-                          *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName" 
-                          [class.pointer-cursor]="appt.apptStatus!=='blocked'" [class.pointer-auto]="appt.apptStatus=='blocked'">
+                          class="bold pull-left mgn-lt-5 name font11"
+                          (click)="stopprop($event);gotoCustomerDetails(appt)"
+                          *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
+                          [class.pointer-cursor]="appt.apptStatus!=='blocked'"
+                          [class.pointer-auto]="appt.apptStatus=='blocked'">
                           {{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}
                           <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
@@ -1190,9 +340,7 @@
                           <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
-                            *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
-                          {{appt.service.name}}
-
+                            *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -1203,7 +351,7 @@
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                           </span>
                           <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
                             [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
@@ -1211,10 +359,6 @@
                           <span class="fa fa-phone phone-in-icon" [matTooltipClass]="tooltipcls"
                             [matTooltip]="'Phone in'" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
                           </span>
-                          <!-- <span [matTooltip]="cust_note_tooltip" class="pull-left cnote pointer-cursor"
-                          *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
-                          <i class="icon-note"></i>
-                        </span> -->
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
                             class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
                             *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
@@ -1248,22 +392,17 @@
                           </span>
                         </div>
                       </td>
-                      <td class="q-actions td-four">
+                      <td class="q-actions td-four" [class.disp-flex]="small_device_display">
                         <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
-                          *ngIf="board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
+                          *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                           (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Call'">
                           <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
-                            *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop</span>
+                            *ngIf="appt.callingStatus">&nbsp; Stop</span>
                           <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
-                          <span *ngIf="!small_device_display && !appt.callingStatus">
+                          <span *ngIf="!appt.callingStatus">
                             &nbsp;Call</span>
                         </a>
-                        <!-- <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Arrived', appt)"
-                      *ngIf="appt.apptStatus == 'Confirmed' && !appt.virtualService && time_type != 2"
-                      [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                      <i class="icon-arrived"></i> <span *ngIf="!small_device_display"> Arrived</span>
-                    </a> -->
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
@@ -1271,23 +410,16 @@
                           <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
-                          (click)="stopprop($event);changeWaitlistStatus('Started', appt)"
+                          (click)="stopprop($event);changeWaitlistStatus('started', 'Started', appt)"
                           *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
-                        <!-- <a class="statusText btn-play pointer-cursor" (click)="showCallingModes(appt, 'normalStart')"
-                        *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type == 1 && appt.virtualService"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                        <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
-                      </a> -->
                         <a class="statusText btn-play pointer-cursor start-btn"
                           [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
                           *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
-                          (click)="stopprop($event);showCallingModes(appt, 'Started')">
-                          <span
-                            *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                          (click)="stopprop($event);showCallingModes(appt)">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -1301,67 +433,954 @@
                           <span
                             *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                           <span *ngIf="!small_device_display">
-                            <!-- Start -->
                             {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
-                          (click)="stopprop($event);changeWaitlistStatus('Completed', appt)"
+                          (click)="stopprop($event);changeWaitlistStatus('started', 'Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
                           <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                             *ngIf="!small_device_display">
                             {{done_cap}}</span>
                         </a>
-                        <!-- <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Confirmed', appt)"
-                      [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to Confirmed'" 
-                      *ngIf="(time_type == 1 && appt.apptStatus !== 'Completed' && appt.apptStatus !== 'Confirmed') || 
-                      (time_type == 2 && (appt.apptStatus === 'Cancelled' || appt.apptStatus === 'Rejected'))">
-                      <i class="fa fa-undo" style="color: green;"></i> <span *ngIf="!small_device_display">
-                        Confirmed</span>
-                    </a> -->
                         <a class="statusText btn-play pointer-cursor act-btn single-action"
-                          (click)="stopprop($event);showCheckinActions(appt)" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Actions'">
-                          <!-- <i class="dashaction-icon"></i> -->
+                          *ngIf="!small_device_display" (click)="stopprop($event);showCheckinActions('started', appt)"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                           Actions <i class="fa fa-caret-down"></i>
                         </a>
+                        <span class="actionbtn" *ngIf="small_device_display">
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button type="button" (click)="showCheckinActions('started', appt)" mat-menu-item>
+                              <span>Actions</span>
+                            </button>
+                          </mat-menu>
+                        </span>
                       </td>
                     </tr>
                   </tbody>
-                  <tfoot>
-                    <tr>
-                      <td colspan="5">
-                        <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
-                          [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
-                          [curpage]="pagination.startpageval"></app-pager>
-                      </td>
-                    </tr>
-                  </tfoot>
                 </table>
               </div>
-              <div class="clearfix"></div>
-              <div class="dashqr" *ngIf="showQR">
-                <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
-                </ngx-qrcode>
+              <div class="">
+                <div class="pad-10 pull-left check-status">
+                  <a class="mgn-rt-10" [class.selectedStatus]="statusAction=='new'" (click)="statusClick('new')">
+                    Active ({{scheduled_count}})</a>
+                  <a class="mgn-rt-10" [class.selectedStatus]="statusAction=='completed'"
+                    (click)="statusClick('completed')"> Completed ({{completed_count}})</a>
+                  <a class="mgn-rt-10" [class.selectedStatus]="statusAction=='cancelled'"
+                    (click)="statusClick('cancelled')"> Cancelled ({{cancelled_count}})</a>
+                </div>
+                <div class="pad-10 act-icons pull-right">
+                  <a class="icon-action pointer-cursor icon-size2" [matTooltip]="'Refresh'">
+                    <i class="fa fa-refresh" (click)="refresh()"></i>
+                  </a>
+                  <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+                    <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="filtericonTooltip">
+                    </i>
+                  </a>
+                </div>
+                <table class="table tbl-qboard childDetails singleDash">
+                  <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
+                    <tr>
+                      <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
+                        <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
+                          (click)="stopprop($event)" (change)="selectAllAppoinments()"
+                          [(ngModel)]="chkSelectAppointments" [ngModelOptions]="{standalone: true}" />
+                        <label class="selectall"> Select all</label>
+                        <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
+                          (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
+                          [matTooltip]="'Actions'">
+                          Actions <i class="fa fa-caret-down"></i>
+                        </a>
+                      </th>
+                      <th class="childActionBar" colspan="2">
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
+                    <tr>
+                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
+                        <p *ngIf="statusAction === 'new'">No active appointments</p>
+                        <p *ngIf="statusAction === 'completed'">No completed appointments
+                        </p>
+                        <p *ngIf="statusAction === 'cancelled'">No cancelled appointments
+                        </p>
+                      </td>
+                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
+                        {{no_service_cap}}
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0">
+                    <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                      *ngFor="let appt of check_in_filtered_list, let i=index">
+                      <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
+                        <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
+                          class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                      </td>
+                      <td class="parent-selection parent-title td-one">
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
+                          *ngIf="time_type==3">
+                          {{appt.appmtDate | date: display_dateFormat}}</div>
+                          <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
+                            <span class="greenc bold font11"> {{getSingleTime(appt.appmtTime)}}</span>
+                          <span *ngIf="this.selQIds.length > 1">
+                            S{{getScheduleIndex(appt.schedule.id) + 1}}
+                          </span></div>
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
+                          class="bold pull-left mgn-lt-5 name font11"
+                          (click)="stopprop($event);gotoCustomerDetails(appt)"
+                          *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
+                          [class.pointer-cursor]="appt.apptStatus!=='blocked'"
+                          [class.pointer-auto]="appt.apptStatus=='blocked'">
+                          {{appt.appmtFor[0].firstName}}
+                          {{appt.appmtFor[0].lastName}}
+                          <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
+                        </div>
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
+                          class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
+                          *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
+                          {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
+                      </td>
+                      <td class="title td-two">
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
+                          <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                            *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                          <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                            *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                          <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                            *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                          <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                            *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
+                          <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                            *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
+                        </div>
+                        <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                          class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                          <span class="checkin-label mgn-rt-10"
+                            *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                        </div>
+                      </td>
+                      <td class="td-three">
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                          <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                          </span>
+                          <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                          </span>
+                          <span class="fa fa-phone phone-in-icon" [matTooltipClass]="tooltipcls"
+                            [matTooltip]="'Phone in'" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
+                          </span>
+                          <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
+                            class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
+                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                          <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
+                            class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
+                            (click)="stopprop($event);showConsumerNote(appt)">
+                            <i class="icon-note"></i>
+                          </span>
+                          <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
+                          *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
+                          <span class="" style="font-size: smaller;">
+                            {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
+                          </span>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
+                          <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'"
+                            data-title="Payment Status" class="payment">
+                            <ng-container *ngIf="appt.paymentStatus">
+                              <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span
+                                  class="text">{{partially_paid_cap}}</span></span>
+                              <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
+                                  class="text">{{paid_cap}}</span></span>
+                              <span class="paid-f icon-btn" style="color: red;"
+                                *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
+                            </ng-container>
+                          </span>
+                        </div>
+                      </td>
+                      <td class="q-actions td-four" [class.disp-flex]="small_device_display">
+                        <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
+                          *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
+                          (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
+                          [matTooltip]="'Call'">
+                          <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
+                            *ngIf="appt.callingStatus">&nbsp; Stop</span>
+                          <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
+                          <span *ngIf="!appt.callingStatus">
+                            &nbsp;Call</span>
+                        </a>
+                        <a class="statusText btn-play pointer-cursor start-btn"
+                          (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                          <i class="dashboardadd-customer-icon"></i>
+                          <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
+                        </a>
+                        <a class="statusText btn-play pointer-cursor start-btn"
+                          (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', appt)"
+                          *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                          <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
+                        </a>
+                        <a class="statusText btn-play pointer-cursor start-btn"
+                          [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
+                          *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
+                          (click)="stopprop($event);showCallingModes(appt)">
+                          <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                          <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                          <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                          <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
+                          <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
+                          <span
+                            *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                          <span *ngIf="!small_device_display">
+                            {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                          </span>
+                        </a>
+                        <a class="statusText btn-play pointer-cursor done-btn"
+                          (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Completed', appt)"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
+                          <i class="dashboardcomplete-icon" style="color: green;"></i> <span
+                            *ngIf="!small_device_display">
+                            {{done_cap}}</span>
+                        </a>
+                        <a class="statusText btn-play pointer-cursor act-btn single-action"
+                          *ngIf="!small_device_display"
+                          (click)="stopprop($event);showCheckinActions(statusAction, appt)"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                          Actions <i class="fa fa-caret-down"></i>
+                        </a>
+                        <span class="actionbtn" *ngIf="small_device_display">
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button type="button" (click)="showCheckinActions(statusAction, appt)" mat-menu-item>
+                              <span>Actions</span>
+                            </button>
+                          </mat-menu>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             </div>
-          </div>
-        </div>
+          </mat-tab>
+          <mat-tab label="Future ({{future_waitlist_count}})">
+            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+            <div *ngIf="!loading">
+              <div class="pad-10 pull-left check-status">
+                <a class="mgn-rt-10" [class.selectedStatus]="statusAction=='new'" (click)="statusClick('new')">
+                  Active ({{scheduled_count}})</a>
+                <a class="mgn-rt-10" [class.selectedStatus]="statusAction=='cancelled'"
+                  (click)="statusClick('cancelled')"> Cancelled ({{cancelled_count}})</a>
+              </div>
+              <div class="pad-10 act-icons pull-right">
+                <a class="icon-action pointer-cursor icon-size2" [matTooltip]="'Refresh'">
+                  <i class="fa fa-refresh" (click)="refresh()"></i>
+                </a>
+                <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+                  <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="filtericonTooltip">
+                  </i>
+                </a>
+                <div>
+                  <aside class="filterSidebar" *ngIf="filter_sidebar">
+                    <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
+                      <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
+                        <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                          (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                          [matTooltip]="'Close filter window'"></i>
+                        <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+                      </div>
+                      <ul class="sidebar-menu">
+                        <div class="filterTextinput">
+                          <li class="filterli">
+                            <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                              class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                          </li>
+                        </div>
+                        <div class="filterTextinput">
+                          <li class="filterli">
+                            <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                              class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                          </li>
+                        </div>
+                        <div class="filterTextinput">
+                          <li class="filterli">
+                            <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
+                              (keyup)="keyPressed($event)" class="filterTextbox"
+                              placeholder="{{customerIdTooltip | capitalizeFirst}}">
+                          </li>
+                        </div>
+                        <div class="filterTextinput">
+                          <li class="filterli">
+                            <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (blur)="doSearch()"
+                              (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
+                          </li>
+                        </div>
+                        <div *ngIf="service_list.length > 0">
+                          <label class="filterHeaders">Services</label>
+                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allServiceSelected"
+                              (change)="setFilterDataCheckbox('service', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox *ngFor="let service of service_list"
+                              [checked]="services.indexOf(service.id) !== -1"
+                              (change)="setFilterDataCheckbox('service', service.id, $event)">
+                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                class="fa meet-icon"></i>
+                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                class="fa zoom-icon"></i>
+                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                                class="fa phon-icon"></i>
+                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                                class="fa wtsapaud-icon"></i>
+                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                                class="fa wtsapvid-icon"></i>{{service.name}}
+                            </mat-checkbox>
+                          </li>
+                        </div>
+                        <div>
+                          <label class="filterHeaders">Appointment Mode</label>
+                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allModeSelected"
+                              (change)="setFilterDataCheckbox('appointmentMode', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let mode of appointmentModes">
+                            <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
+                              (change)="setFilterDataCheckbox('appointmentMode', mode.mode, $event)">
+                              {{mode.value}}</mat-checkbox>
+                          </li>
+                        </div>
+                        <div *ngIf="providerLabels.length > 0">
+                          <div>
+                            <label class="filterHeaders">Labels</label>
+                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                              <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
+                                All</mat-checkbox>
+                            </li>
+                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                              *ngFor="let lbl of providerLabels">
+                              <mat-checkbox
+                                [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                                (change)="setLabelFilter(lbl, $event)">
+                                {{lbl.displayName}}</mat-checkbox>
+                            </li>
+                          </div>
+                        </div>
+                      </ul>
+                    </section>
+                  </aside>
+                </div>
+              </div>
+              <table class="table tbl-qboard childDetails singleDash">
+                <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
+                  <tr>
+                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
+                      <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
+                        (click)="stopprop($event)" (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments"
+                        [ngModelOptions]="{standalone: true}" />
+                      <label class="selectall"> Select all</label>
+                      <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
+                        (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Actions'">
+                        Actions <i class="fa fa-caret-down"></i>
+                      </a>
+                    </th>
+                    <th class="childActionBar" colspan="2">
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
+                  <tr>
+                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
+                      <p *ngIf="statusAction === 'new'">No active appointments</p>
+                      <p *ngIf="statusAction === 'completed'">No completed appointments
+                      </p>
+                      <p *ngIf="statusAction === 'cancelled'">No cancelled appointments
+                      </p>
+                    </td>
+                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
+                      {{no_service_cap}}
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0">
+                  <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                    *ngFor="let appt of check_in_filtered_list, let i=index">
+                    <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
+                      <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
+                        class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                    </td>
+                    <td class="parent-selection parent-title td-one">
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
+                        *ngIf="time_type==3">
+                        {{appt.appmtDate | date: display_dateFormat}}</div>
+                        <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
+                          <span class="greenc bold font11"> {{getSingleTime(appt.appmtTime)}}</span>
+                        <span *ngIf="this.selQIds.length > 1">
+                          S{{getScheduleIndex(appt.schedule.id) + 1}}
+                        </span></div>
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
+                        class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
+                        *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
+                        [class.pointer-cursor]="appt.apptStatus!=='blocked'"
+                        [class.pointer-auto]="appt.apptStatus=='blocked'">
+                        {{appt.appmtFor[0].firstName}}
+                        {{appt.appmtFor[0].lastName}}
+                        <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
+                      </div>
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
+                        *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
+                        {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
+                    </td>
+                    <td class="title td-two">
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
+                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
+                        <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                        <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                        <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                        <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
+                        <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
+                      </div>
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                        class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <span class="checkin-label mgn-rt-10"
+                          *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                      </div>
+                    </td>
+                    <td class="td-three">
+                      <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                        </span>
+                        <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                        </span>
+                        <span class="fa fa-phone phone-in-icon" [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'"
+                          *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
+                        </span>
+                        <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
+                          class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
+                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                        <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
+                          class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
+                          (click)="stopprop($event);showConsumerNote(appt)">
+                          <i class="icon-note"></i>
+                        </span>
+                        <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                          [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                            class="material-icons">attach_file</i></span>
+                      </div>
+                      <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
+                        *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
+                        <span class="" style="font-size: smaller;">
+                          {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
+                        </span>
+                      </div>
+                      <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
+                        <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'" data-title="Payment Status"
+                          class="payment">
+                          <ng-container *ngIf="appt.paymentStatus">
+                            <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span
+                                class="text">{{partially_paid_cap}}</span></span>
+                            <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
+                                class="text">{{paid_cap}}</span></span>
+                            <span class="paid-f icon-btn" style="color: red;"
+                              *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
+                          </ng-container>
+                        </span>
+                      </div>
+                    </td>
+                    <td class="q-actions td-four" [class.disp-flex]="small_device_display">
+                      <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
+                        *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
+                        (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Call'">
+                        <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
+                          *ngIf="appt.callingStatus">&nbsp; Stop</span>
+                        <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
+                        <span *ngIf="!appt.callingStatus">
+                          &nbsp;Call</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                        <i class="dashboardadd-customer-icon"></i>
+                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', appt)"
+                        *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                        <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
+                        *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
+                        (click)="stopprop($event);showCallingModes(appt)">
+                        <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                        <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                        <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                        <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
+                        <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
+                        <span
+                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                        <span *ngIf="!small_device_display">
+                          {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                        </span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor done-btn"
+                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Completed', appt)"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
+                        <i class="dashboardcomplete-icon" style="color: green;"></i> <span
+                          *ngIf="!small_device_display">
+                          {{done_cap}}</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor act-btn single-action" *ngIf="!small_device_display"
+                        (click)="stopprop($event);showCheckinActions(statusAction, appt)" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Actions'">
+                        Actions <i class="fa fa-caret-down"></i>
+                      </a>
+                      <span class="actionbtn" *ngIf="small_device_display">
+                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button type="button" (click)="showCheckinActions(statusAction, appt)" mat-menu-item>
+                            <span>Actions</span>
+                          </button>
+                        </mat-menu>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-tab>
+          <mat-tab label="History ({{history_waitlist_count}})">
+            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+            <div *ngIf="!loading">
+              <div class="pad-10 act-icons pull-right">
+                <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar"
+                  *ngIf="check_in_filtered_list.length > 0">
+                  <i class="printer-icon" (click)="printHistoryCheckin()" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="'Print All'">
+                  </i>
+                </a>
+                <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+                  <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="filtericonTooltip">
+                  </i>
+                </a>
+                <div>
+                  <aside class="filterSidebar" *ngIf="filter_sidebar">
+                    <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
+                      <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
+                        <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                          (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                          [matTooltip]="'Close filter window'"></i>
+                        <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+                      </div>
+                      <ul class="sidebar-menu">
+                        <div class="filterTextinput">
+                          <li class="filterli">
+                            <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                              class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                          </li>
+                        </div>
+                        <div class="filterTextinput">
+                          <li class="filterli">
+                            <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                              class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                          </li>
+                        </div>
+                        <div class="filterTextinput">
+                          <li class="filterli">
+                            <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
+                              (keyup)="keyPressed($event)" class="filterTextbox"
+                              placeholder="{{customerIdTooltip | capitalizeFirst}}">
+                          </li>
+                        </div>
+                        <div class="filterTextinput" *ngIf="time_type == 3">
+                          <li class="filterli">
+                            <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
+                              (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
+                              maxlength="10" class="filterTextbox" placeholder="Phone Number">
+                          </li>
+                        </div>
+                        <div class="filterTextinput">
+                          <li class="filterli">
+                            <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (blur)="doSearch()"
+                              (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Confirmation No">
+                          </li>
+                        </div>
+                        <div *ngIf="service_list.length > 0">
+                          <label class="filterHeaders">Services</label>
+                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allServiceSelected"
+                              (change)="setFilterDataCheckbox('service', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox *ngFor="let service of service_list"
+                              [checked]="services.indexOf(service.id) !== -1"
+                              (change)="setFilterDataCheckbox('service', service.id, $event)">
+                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                class="fa meet-icon"></i>
+                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                class="fa zoom-icon"></i>
+                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                                class="fa phon-icon"></i>
+                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                                class="fa wtsapaud-icon"></i>
+                              <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                                class="fa wtsapvid-icon"></i>
+                              {{service.name}}
+                            </mat-checkbox>
+                          </li>
+                        </div>
+                        <div *ngIf="time_type === 3">
+                          <label class="filterHeaders">Appointment Status</label>
+                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allApptStatusSelected"
+                              (change)="setFilterDataCheckbox('apptStatus', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let appt_status of check_in_statuses_filter">
+                            <mat-checkbox [checked]="apptStatuses.indexOf(appt_status.value) !== -1"
+                              (change)="setFilterDataCheckbox('apptStatus', appt_status.value, $event)">
+                              {{appt_status.displayName}}</mat-checkbox>
+                          </li>
+                        </div>
+                        <div *ngIf="time_type == 3">
+                          <label class="filterHeaders">Payment Status</label>
+                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allPayStatusSelected"
+                              (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let pay_status of payStatusList">
+                            <mat-checkbox [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
+                              (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
+                              {{pay_status.value}}</mat-checkbox>
+                          </li>
+                        </div>
+                        <div>
+                          <label class="filterHeaders">Appointment Mode</label>
+                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allModeSelected"
+                              (change)="setFilterDataCheckbox('appointmentMode', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let mode of appointmentModes">
+                            <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
+                              (change)="setFilterDataCheckbox('appointmentMode', mode.mode, $event)">
+                              {{mode.value}}</mat-checkbox>
+                          </li>
+                        </div>
+                        <div *ngIf="providerLabels.length > 0">
+                          <div>
+                            <label class="filterHeaders">Labels</label>
+                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                              <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
+                                All</mat-checkbox>
+                            </li>
+                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                              *ngFor="let lbl of providerLabels">
+                              <mat-checkbox
+                                [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                                (change)="setLabelFilter(lbl, $event)">
+                                {{lbl.displayName}}</mat-checkbox>
+                            </li>
+                          </div>
+                        </div>
+                        <div class="filterTextinput" *ngIf="time_type == 3">
+                          <li class="filterli filterDatepicker">
+                            <input type="text" [(ngModel)]="filter.check_in_start_date" [matDatepicker]="picker" #Fdate
+                              (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
+                              placeholder="Start Date">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </li>
+                        </div>
+                        <div class="filterTextinput" *ngIf="time_type == 3">
+                          <li class="filterli filterDatepicker">
+                            <input type="text" [(ngModel)]="filter.check_in_end_date" [matDatepicker]="picker" #Fdate
+                              (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
+                              placeholder="End Date">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </li>
+                        </div>
+                      </ul>
+                    </section>
+                  </aside>
+                </div>
+              </div>
+              <table class="table tbl-qboard childDetails singleDash">
+                <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
+                  <tr>
+                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
+                      <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
+                        (click)="stopprop($event)" (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments"
+                        [ngModelOptions]="{standalone: true}" />
+                      <label class="selectall"> Select all</label>
+                      <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
+                        (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Actions'">
+                        Actions <i class="fa fa-caret-down"></i>
+                      </a>
+                    </th>
+                    <th class="childActionBar" colspan="2">
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
+                  <tr>
+                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
+                      <p *ngIf="statusAction === 'new'">No active appointments</p>
+                      <p *ngIf="statusAction === 'completed'">No completed appointments
+                      </p>
+                      <p *ngIf="statusAction === 'cancelled'">No cancelled appointments
+                      </p>
+                    </td>
+                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
+                      {{no_service_cap}}
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0">
+                  <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                    *ngFor="let appt of check_in_filtered_list, let i=index">
+                    <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
+                      <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
+                        class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                    </td>
+                    <td class="parent-selection parent-title td-one">
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
+                        *ngIf="time_type==3">
+                        {{appt.appmtDate | date: display_dateFormat}}</div>
+                        <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
+                          <span class="greenc bold font11"> {{getSingleTime(appt.appmtTime)}}</span>
+                        <span *ngIf="this.selQIds.length > 1">
+                          S{{getScheduleIndex(appt.schedule.id) + 1}}
+                        </span></div>
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
+                        class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
+                        *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
+                        [class.pointer-cursor]="appt.apptStatus!=='blocked'"
+                        [class.pointer-auto]="appt.apptStatus=='blocked'">
+                        {{appt.appmtFor[0].firstName}}
+                        {{appt.appmtFor[0].lastName}}
+                        <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
+                      </div>
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
+                        class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
+                        *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
+                        {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
+                    </td>
+                    <td class="title td-two">
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
+                        class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
+                        <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                        <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                        <i class="fa phon-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                        <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
+                        <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                          *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
+                      </div>
+                      <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                        class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <span class="checkin-label mgn-rt-10"
+                          *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                      </div>
+                    </td>
+                    <td class="td-three">
+                      <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                        </span>
+                        <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                        </span>
+                        <span class="fa fa-phone phone-in-icon" [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'"
+                          *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
+                        </span>
+                        <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
+                          class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
+                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
+                        <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
+                          class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
+                          (click)="stopprop($event);showConsumerNote(appt)">
+                          <i class="icon-note"></i>
+                        </span>
+                        <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                          [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                            class="material-icons">attach_file</i></span>
+                      </div>
+                      <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
+                        *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
+                        <span class="" style="font-size: smaller;">
+                          {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
+                        </span>
+                      </div>
+                      <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
+                        <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'" data-title="Payment Status"
+                          class="payment">
+                          <ng-container *ngIf="appt.paymentStatus">
+                            <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span
+                                class="text">{{partially_paid_cap}}</span></span>
+                            <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
+                                class="text">{{paid_cap}}</span></span>
+                            <span class="paid-f icon-btn" style="color: red;"
+                              *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
+                          </ng-container>
+                        </span>
+                      </div>
+                    </td>
+                    <td class="q-actions td-four" [class.disp-flex]="small_device_display">
+                      <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
+                        *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
+                        (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Call'">
+                        <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
+                          *ngIf="appt.callingStatus">&nbsp; Stop</span>
+                        <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
+                        <span *ngIf="!appt.callingStatus">
+                          &nbsp;Call</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                        <i class="dashboardadd-customer-icon"></i>
+                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', appt)"
+                        *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                        <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
+                        *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
+                        (click)="stopprop($event);showCallingModes(appt)">
+                        <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                        <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                        <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                        <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
+                        <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
+                        <span
+                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                        <span *ngIf="!small_device_display">
+                          {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                        </span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor done-btn"
+                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Completed', appt)"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
+                        <i class="dashboardcomplete-icon" style="color: green;"></i> <span
+                          *ngIf="!small_device_display">
+                          {{done_cap}}</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor act-btn single-action" *ngIf="!small_device_display"
+                        (click)="stopprop($event);showCheckinActions(statusAction, appt)" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Actions'">
+                        Actions <i class="fa fa-caret-down"></i>
+                      </a>
+                      <span class="actionbtn" *ngIf="small_device_display">
+                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button type="button" (click)="showCheckinActions(statusAction, appt)" mat-menu-item>
+                            <span>Actions</span>
+                          </button>
+                        </mat-menu>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="5">
+                      <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
+                        [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
+                        [curpage]="pagination.startpageval"></app-pager>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
       </div>
-
-      <!-- <div class="col-md-12 no-padding">
-      <ul class="icon-hints-ul no-padding">
-        <li class="icon-hints-li"><i class="fa fa-refresh"></i> Refresh</li>
-        <li class="icon-hints-li"><i class="icon-arrived"></i> Arrived</li>
-        <li class="icon-hints-li"><i class="fa fa-trash"></i> Cancel</li>
-        <li class="icon-hints-li"><i class="fa fa-print"></i> Print</li>
-        <li class="icon-hints-li"><i class="fa fa-eye"></i> View</li>
-        <li class="icon-hints-li"><i class="fa fa-check-circle"></i> Complete</li>
-        <li class="icon-hints-li"><i class="fa fa-phone"></i> Phone-In</li>
-        <li class="icon-hints-li"><i class="icon-cloud"></i> Online</li>
-      </ul>
-    </div> -->
     </div>
   </div>
   <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"

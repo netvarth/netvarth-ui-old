@@ -6,15 +6,11 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { ApplyLabelComponent } from '../check-ins/apply-label/apply-label.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
-import { AddProviderWaitlistCheckInProviderNoteComponent } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
-import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
-import { CheckinDetailsSendComponent } from '../check-ins/checkin-details-send/checkin-details-send.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
 import { interval as observableInterval, Subscription } from 'rxjs';
@@ -132,7 +128,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     perPage: this.filter.page_count
   };
   availableSlotDetails: any = [];
-  selQId;
+  selQIds: any = [];
   selUser;
   timeSlotAppts: any = [];
   statusMultiCtrl: any = [];
@@ -326,6 +322,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   customerIdTooltip = '';
   allLabels: any = [];
   voicedialogRef: any;
+  startedAppts: any = [];
+  apptStartedMultiSelection = false;
+  apptStartedSingleSelection = false;
+  startedAppointmentsChecked: any = [];
+  startedChkAppointments: any = [];
+  chkStartedSelectAppointments = false;
+  allStartedSelection = false;
+  allSelection = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -519,55 +523,29 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   isQueueSelected(qId) {
-    if (this.time_type === 3) {
-      if (this.selQidsforHistory.indexOf(qId) !== -1) {
-        return true;
-      }
-      return false;
-    } else {
-      if (this.selQId === qId) {
-        return true;
-      }
-      return false;
+    if (this.selQIds.indexOf(qId) !== -1) {
+      return true;
     }
+    return false;
   }
   viewQClicked(q) {
-    if (this.time_type === 3) {
-      const qindx = this.selQidsforHistory.indexOf(q.id);
-      if (qindx !== -1) {
-        if (this.selQidsforHistory.length === 1) {
-          return false;
-        }
-        this.selQidsforHistory.splice(qindx, 1);
-      } else {
-        this.selQidsforHistory.push(q.id);
-      }
-      this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
-    } else {
-      if (this.selQId === q.id) {
+    console.log(this.selQIds);
+    const qindx = this.selQIds.indexOf(q.id);
+    if (qindx !== -1) {
+      if (this.selQIds.length === 1) {
         return false;
-      } else {
-        this.selQId = q.id;
-        if (q && q.provider) {
-          this.selUser = q.provider;
-        }
-        this.servicesCount = q.services.length;
-        this.selQCapacity = q.parallelServing;
-        this.batchEnabled = q.batchEnabled;
-        if (this.selQCapacity > 1) {
-          this.isBatch = true;
-        } else {
-          this.isBatch = false;
-        }
-        if (this.time_type === 2) {
-          this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
-        } else {
-          this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
-        }
       }
+      this.selQIds.splice(qindx, 1);
+    } else {
+      this.selQIds.push(q.id);
     }
-    if (this.showSlotsN) {
-      this.showSlots('show');
+    console.log(this.selQIds);
+    if (this.time_type === 1) {
+      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
+    } else if (this.time_type === 2) {
+      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
+    } else {
+      this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQIds);
     }
     this.loadApiSwitch('reloadAPIs');
   }
@@ -631,7 +609,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   showAdjustDelay() {
-    // if (this.queues.length === 0 || !this.selQId) {
+    // if (this.queues.length === 0 || !this.selQIds) {
     //   this.shared_functions.openSnackBar('Delay can be applied only for active schedules', { 'panelClass': 'snackbarerror' });
     //   return false;
     // } else {
@@ -792,99 +770,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     // this.getQsByProvider();
     if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
-      this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
-      const selQdetails = this.activeSchedules.filter(q => q.id === this.selQId);
-      if (selQdetails.length > 0) {
-        this.servicesCount = selQdetails[0].services.length;
-        if (this.activeSchedules[0] && this.activeSchedules[0].provider) {
-          this.selUser = this.activeSchedules[0].provider;
-        }
-        this.selQCapacity = this.activeSchedules[0].parallelServing;
-        this.batchEnabled = this.activeSchedules[0].batchEnable;
-        if (this.selQCapacity > 1) {
-          this.isBatch = true;
-        } else {
-          this.isBatch = false;
-        }
-      } else if (this.activeSchedules.length > 0) {
-        const selQ = this.activeSchedules[0];
-        this.selQId = selQ.id;
-        if (selQ && selQ.provider) {
-          this.selUser = selQ.provider;
-        }
-        this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
-        this.servicesCount = selQ.services.length;
-        this.selQCapacity = selQ.parallelServing;
-        this.batchEnabled = selQ.batchEnable;
-        if (this.selQCapacity > 1) {
-          this.isBatch = true;
-        } else {
-          this.isBatch = false;
-        }
-      }
+      this.selQIds = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
     } else if (this.time_type === 1 && this.shared_functions.getitemFromGroupStorage('appt_selQ')) {
-      this.selQId = this.shared_functions.getitemFromGroupStorage('appt_selQ');
-      const selQdetails = this.activeSchedules.filter(q => q.id === this.selQId);
-      if (selQdetails && selQdetails.length !== 0) {
-        this.servicesCount = selQdetails[0].services.length;
-        if (this.activeSchedules[0] && this.activeSchedules[0].provider) {
-          this.selUser = this.activeSchedules[0].provider;
-        }
-        this.selQCapacity = this.activeSchedules[0].parallelServing;
-        this.batchEnabled = this.activeSchedules[0].batchEnable;
-        if (this.selQCapacity > 1) {
-          this.isBatch = true;
-        } else {
-          this.isBatch = false;
-        }
-      } else if (this.activeSchedules.length > 0) {
-        const selQ = this.activeSchedules[0];
-        this.selQId = selQ.id;
-        if (selQ && selQ.provider) {
-          this.selUser = selQ.provider;
-        }
-        this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
-        this.servicesCount = selQ.services.length;
-        this.selQCapacity = selQ.parallelServing;
-        this.batchEnabled = selQ.batchEnable;
-        if (this.selQCapacity > 1) {
-          this.isBatch = true;
-        } else {
-          this.isBatch = false;
-        }
-      } else {
-        this.isBatch = false;
-      }
+      this.selQIds = this.shared_functions.getitemFromGroupStorage('appt_selQ');
     } else if (this.activeSchedules.length > 0) {
-      // if (this.shared_functions.getitemFromGroupStorage('appt_history_selQ') && this.shared_functions.getitemFromGroupStorage('appt_history_selQ').length !== 0) {
-      //   this.selQidsforHistory = this.shared_functions.getitemFromGroupStorage('appt_history_selQ');
-      // } else {
-      // }
       if (this.time_type === 3) {
         const qIds = this.getQIdsFromView(view);
         this.selQidsforHistory = qIds;
         this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
       }
-      this.selQId = this.activeSchedules[this.findCurrentActiveQueue(this.activeSchedules)].id;
-      if (this.activeSchedules[0] && this.activeSchedules[0].provider) {
-        this.selUser = this.activeSchedules[0].provider;
-      }
-      // this.selQId = this.activeSchedules[0].id;
-      this.servicesCount = this.activeSchedules[0].services.length;
-      this.selQCapacity = this.activeSchedules[0].parallelServing;
-      this.batchEnabled = this.activeSchedules[0].batchEnable;
-      if (this.selQCapacity > 1) {
-        this.isBatch = true;
-      } else {
-        this.isBatch = false;
-      }
+      this.selQIds = this.activeSchedules[this.findCurrentActiveQueue(this.activeSchedules)];
+      console.log(this.selQIds);
       if (this.time_type === 1) {
-        this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
+        this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
       }
       if (this.time_type === 2) {
-        this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
+        this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
       }
     }
+
     this.getQsByProvider();
     this.loadApiSwitch(source);
   }
@@ -1128,11 +1032,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  sortQsByStatus(queues) {
-    queues.sort(function (queue1, queue2) {
-      return queue1.apptState - queue2.apptState;
-    });
-  }
   getAppointmentsPerSlot(appointments) {
     let date;
     if (this.time_type === 1) {
@@ -1141,11 +1040,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.time_type === 2) {
       date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
     }
-    if (this.selQId && date) {
-      this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(data => {
+    if (this.selQIds && date) {
+      this.provider_services.getAppointmentSlotsByDate(this.selQIds, date).subscribe(data => {
         this.availableSlotDetails = data;
         this.timeSlotAppts = this.shared_functions.groupBy(appointments, 'appmtTime');
-        // this.loading = false;
       });
     }
   }
@@ -1170,7 +1068,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   viewStatusFilterBtnClicked(action, type?) {
     this.statusAction = action;
-    // this.loading = true;
     this.resetCheckList();
     if (action === 'new') {
       if (type === 1) {
@@ -1182,7 +1079,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         if (!this.isBatch) {
           this.check_in_filtered_list = this.getScheduledAppointment(this.futureAppointments);
-          // this.loading = false;
         } else {
           this.getAppointmentsPerSlot(this.getScheduledAppointment(this.futureAppointments));
         }
@@ -1190,14 +1086,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (action === 'started') {
       if (!this.isBatch) {
         this.check_in_filtered_list = this.getStartedAppointment(this.todayAppointments);
-        // this.loading = false;
       } else {
         this.getAppointmentsPerSlot(this.getStartedAppointment(this.todayAppointments));
       }
     } else if (action === 'completed') {
       if (!this.isBatch) {
         this.check_in_filtered_list = this.getCompletedAppointment(this.todayAppointments);
-        // this.loading = false;
       } else {
         this.getAppointmentsPerSlot(this.getCompletedAppointment(this.todayAppointments));
       }
@@ -1205,14 +1099,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (type === 1) {
         if (!this.isBatch) {
           this.check_in_filtered_list = this.getCancelledAppointment(this.todayAppointments);
-          // this.loading = false;
         } else {
           this.getAppointmentsPerSlot(this.getCancelledAppointment(this.todayAppointments));
         }
       } else {
         if (!this.isBatch) {
           this.check_in_filtered_list = this.getCancelledAppointment(this.futureAppointments);
-          // this.loading = false;
         } else {
           this.getAppointmentsPerSlot(this.getCancelledAppointment(this.futureAppointments));
         }
@@ -1268,10 +1160,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getFutureAppointmentsCount(Mfilter = null) {
-    // let no_filter = false;
-    if (this.filter.future_appt_date === null) {
-      this.getTomorrowDate();
-    }
     const queueid = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
     if (!Mfilter) {
       Mfilter = {};
@@ -1281,14 +1169,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (queueid) {
         Mfilter['schedule-eq'] = queueid;
       }
-      // no_filter = true;
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    }
-    if (this.filter.future_appt_date !== null) {
-      const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
-      Mfilter['date-eq'] = date;
     }
     return new Promise((resolve) => {
       this.provider_services.getFutureAppointmentsCount(Mfilter)
@@ -1302,18 +1185,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getHistoryAppointmentsCount(Mfilter = null) {
-    // const queueid = this.shared_functions.getitemFromGroupStorage('appt_history_selQ');
-    // let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
-      // if (this.selected_location && this.selected_location.id) {
-      //   Mfilter['location-eq'] = this.selected_location.id;
-      // }
-
-      // if (queueid && queueid.length > 0) {
-      //   Mfilter['schedule-eq'] = queueid.toString();
-      // }
-      //  no_filter = true;
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
@@ -1343,50 +1216,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptMultiSelection = false;
     this.chkAppointments = {};
     this.selAllSlots = false;
+    this.startedChkAppointments = {};
+    this.startedAppointmentsChecked = [];
+    this.apptStartedSingleSelection = false;
+    this.apptStartedMultiSelection = false;
   }
   getTodayAppointments() {
     const Mfilter = this.setFilterForApi();
-    let selQs;
     if (this.shared_functions.getitemFromGroupStorage('appt_selQ')) {
-      this.selQId = this.shared_functions.getitemFromGroupStorage('appt_selQ');
-      selQs = this.activeSchedules.filter(q => q.id === this.selQId);
+      this.selQIds = this.shared_functions.getitemFromGroupStorage('appt_selQ');
+    } else {
+
     }
-    if (selQs && selQs.length > 0) {
-      this.selQId = selQs[0].id;
-      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
-      this.servicesCount = selQs[0].services.length;
-      if (selQs[0] && selQs[0].provider) {
-        this.selUser = selQs[0].provider;
-      }
-      this.selQCapacity = selQs[0].parallelServing;
-      this.batchEnabled = selQs[0].batchEnable;
-      if (this.selQCapacity > 1) {
-        this.isBatch = true;
-      } else {
-        this.isBatch = false;
-      }
-    } else if (this.activeSchedules.length > 0) {
-      this.selQId = this.activeSchedules[0].id;
-      if (this.activeSchedules[0] && this.activeSchedules[0].provider) {
-        this.selUser = this.activeSchedules[0].provider;
-      }
-      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
-      this.servicesCount = this.activeSchedules[0].services.length;
-      this.selQCapacity = this.activeSchedules[0].parallelServing;
-      this.batchEnabled = this.activeSchedules[0].batchEnable;
-      if (this.selQCapacity > 1) {
-        this.isBatch = true;
-      } else {
-        this.isBatch = false;
-      }
-    }
-    if (this.selQId) {
-      Mfilter['schedule-eq'] = this.selQId;
+    if (this.selQIds) {
+      Mfilter['schedule-eq'] = this.selQIds.toString();
       const qs = [];
-      qs.push(this.selQId);
-      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
+      qs.push(this.selQIds);
+      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
       this.shared_functions.setitemToGroupStorage('appt_history_selQ', qs);
-      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
+      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
@@ -1410,13 +1258,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                   this.noFilter = true;
                 }
                 this.setCounts(this.appt_list);
-                if (this.isBatch) {
-                  this.resetCheckList();
-                  this.getAppointmentsPerSlot(this.getActiveAppointments(this.todayAppointments, this.statusAction));
-                } else {
-                  this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-                }
-                // this.loading = false;
+                this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+                this.startedAppts = this.getActiveAppointments(this.todayAppointments, 'started');
               },
               () => {
                 // this.load_waitlist = 1;
@@ -1454,62 +1297,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getFutureAppointments() {
     this.resetCheckList();
-    // this.loading = true;
-    if (this.filter.future_appt_date === null) {
-      this.getTomorrowDate();
-    }
-
-    this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
-    const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
-    let selQs = [];
     if (this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
-      this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
-      selQs = this.activeSchedules.filter(q => q.id === this.selQId);
+      this.selQIds = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
     }
-    if (selQs.length > 0) {
-      this.selQId = selQs[0].id;
-      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
-      if (selQs[0] && selQs[0].provider) {
-        this.selUser = selQs[0].provider;
-      }
-      this.servicesCount = selQs[0].services.length;
-      this.selQCapacity = selQs[0].parallelServing;
-      this.batchEnabled = selQs[0].batchEnable;
-      if (this.selQCapacity > 1) {
-        this.isBatch = true;
-      } else {
-        this.isBatch = false;
-      }
-    } else if (this.activeSchedules.length > 0) {
-      this.selQId = this.activeSchedules[0].id;
-      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
-      if (this.activeSchedules[0] && this.activeSchedules[0].provider) {
-        this.selUser = this.activeSchedules[0].provider;
-      }
-      this.servicesCount = this.activeSchedules[0].services.length;
-      this.selQCapacity = this.activeSchedules[0].parallelServing;
-      this.batchEnabled = this.activeSchedules[0].batchEnable;
-      if (this.selQCapacity > 1) {
-        this.isBatch = true;
-      } else {
-        this.isBatch = false;
-      }
-    }
-    // this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
-    if (this.selQId) {
-      Mfilter['schedule-eq'] = this.selQId;
+    if (this.selQIds) {
+      Mfilter['schedule-eq'] = this.selQIds;
       const qs = [];
-      qs.push(this.selQId);
-      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
+      qs.push(this.selQIds);
+      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
       this.shared_functions.setitemToGroupStorage('appt_history_selQ', qs);
-      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
+      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    }
-    if (this.filter.future_appt_date !== null) {
-      Mfilter['date-eq'] = date;
     }
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
@@ -1525,18 +1326,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               } else {
                 this.noFilter = true;
               }
-              if (this.selQId) {
-                if (!this.isBatch) {
-                  this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, this.statusAction);
-                } else {
-                  this.getAppointmentsPerSlot(this.getActiveAppointments(this.futureAppointments, this.statusAction));
-                }
+              if (this.selQIds) {
+                this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, this.statusAction);
                 this.setFutureCounts(this.futureAppointments);
               }
-              // this.loading = false;
             },
             () => {
-              // this.load_waitlist = 1;
             },
             () => {
               this.loading = false;
@@ -1545,9 +1340,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryAppointments() {
     let Mfilter = this.setFilterForApi();
-    // if (this.selQidsforHistory.length !== 0) {
-    //   Mfilter['schedule-eq'] = this.selQidsforHistory.toString();
-    // }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
@@ -1639,16 +1431,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   setFilterForApi() {
     const api_filter = {};
     if (this.time_type === 1) {
-      if (this.selQId) {
-        api_filter['schedule-eq'] = this.selQId;
+      if (this.selQIds) {
+        api_filter['schedule-eq'] = this.selQIds.toString();
       }
       if (this.token && this.time_type === 1) {
         api_filter['token-eq'] = this.token;
       }
     }
-    // else if (this.filter.queue !== 'all') {
-    //   api_filter['schedule-eq'] = this.filter.queue;
-    // }
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
@@ -1680,9 +1469,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.filter.check_in_end_date != null) {
         api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
       }
-      // if (this.filter.future_appt_date != null && this.time_type === 2) {
-      //   api_filter['date-eq'] = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
-      // }
     }
     if (this.time_type === 3) {
       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
@@ -1712,14 +1498,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') !== -1) {
           api_filter['dob-le'] = kids;
         }
-        // if (this.filter.age === 'kids') {
-        //   api_filter['dob-ge'] = kids;
-        // } else if (this.filter.age === 'adults') {
-        //   api_filter['dob-le'] = kids;
-        //   api_filter['dob-ge'] = adults;
-        // } else if (this.filter.age === 'senior') {
-        //   api_filter['dob-le'] = adults;
-        // }
       }
       if (this.genderList.length > 0 && this.filter.gender !== 'all') {
         api_filter['gender-eq'] = this.genderList.toString();
@@ -1742,7 +1520,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     this.labelSelection();
-    // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all') {
@@ -1762,46 +1539,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const slots = slot.split('-');
     return this.shared_functions.convert24HourtoAmPm(slots[0]);
   }
-  isAvailableSlot(slot) {
-    if (slot.noOfAvailbleSlots === '0' || !slot.active) {
-      return true;
-    }
-    return false;
-  }
-  apptClicked(type, time?) {
+
+  apptClicked(type) {
     if (this.schedules.length === 0) {
       this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
     } else {
-      let slot = '';
-      if (time) {
-        slot = time;
-      }
-      let deptId;
-      let userId;
-      let serviceId;
-      const qfilter = this.activeSchedules.filter(q => q.id === this.selQId);
-      if (qfilter && qfilter[0].services && qfilter[0].services.length > 0) {
-        serviceId = qfilter[0].services[0].id;
-      }
-      if (qfilter && qfilter[0].provider) {
-        userId = qfilter[0].provider.id;
-        const filteredDept = this.users.filter(user => user.id === userId);
-        if (filteredDept[0] && filteredDept[0].deptId) {
-          deptId = filteredDept[0].deptId;
-        }
-      } else {
-        userId = '0';
-        const filteredService = this.service_list.filter(service => service.id === serviceId);
-        if (filteredService[0] && filteredService[0].department) {
-          deptId = filteredService[0].department;
-        }
-      }
-      let date;
-      if (this.time_type === 2) {
-        date = this.filter.future_appt_date;
-      }
       this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
-        { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: date } });
+        { queryParams: { checkinType: type } });
     }
   }
   searchCustomer() {
@@ -1815,9 +1559,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelFilter = [];
     this.labelFilterData = '';
   }
-  labelClick() {
-    this.showLabels = true;
-  }
+
   getLabel() {
     this.providerLabels = [];
     this.provider_services.getLabelList().subscribe(data => {
@@ -1832,13 +1574,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-  labelfilterClicked(index, label) {
-    delete this.labelMultiCtrl[label];
-    this.labelFilter[index] = !this.labelFilter[index];
-    if (!this.labelFilter[index]) {
-      this.doSearch();
-    }
-  }
   labelSelection() {
     this.labelFilterData = '';
     this.labelsCount = [];
@@ -1847,20 +1582,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selectedLabels[key].length > 0) {
         count++;
         if (!this.labelFilterData.includes(key)) {
-          // const labelvalues = this.selectedLabels[key].join(',');
-          // const labelvaluesArray = labelvalues.split(',');
-          // for (const value of labelvaluesArray) {
-          //   const lblFilter = key + '::' + value;
-          //   const Mfilter = this.setFilterForApi();
-          //   Mfilter['label-eq'] = lblFilter;
-          //   const promise = this.getHistoryAppointmentsCount(Mfilter);
-          //   promise.then(
-          //     result => {
-          //       if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
-          //         this.labelsCount.push(value + ' - ' + result);
-          //       }
-          //     });
-          // }
           if (count === 1) {
             this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
           } else {
@@ -1872,145 +1593,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  labels(checkin) {
-    for (let i = 0; i < this.providerLabels.length; i++) {
-      for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-        this.providerLabels[i].valueSet[j].selected = false;
-      }
-    }
-    setTimeout(() => {
-      const values = [];
-      if (checkin.label) {
-        for (const value of Object.values(checkin.label)) {
-          values.push(value);
-        }
-        for (let i = 0; i < this.providerLabels.length; i++) {
-          for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-            for (let k = 0; k < values.length; k++) {
-              if (this.providerLabels[i].valueSet[j].value === values[k]) {
-                this.providerLabels[i].valueSet[j].selected = true;
-              }
-            }
-          }
-        }
-      }
-    }, 100);
-  }
-  addLabel(checkinId) {
-    this.provider_services.addLabeltoAppointment(checkinId, this.labelMap).subscribe(data => {
-      this.loadApiSwitch('');
-    },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-  }
-  deleteLabel(label, checkinId) {
-    this.provider_services.deleteLabelfromAppointment(checkinId, label).subscribe(data => {
-      this.loadApiSwitch('');
-    },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-  }
-  changeLabelvalue(labelname, value) {
-    this.showLabels = false;
-    const _this = this;
-    const appts = [];
-    if (!this.isBatch || this.time_type === 3) {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        appts.push(_this.appointmentsChecked[apptIndex]);
-      });
-    } else {
-      Object.keys(_this.apptsChecked).forEach(slotIndex => {
-        Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          appts.push(_this.apptsChecked[slotIndex][apptIndex]);
-        });
-      });
-    }
-    if (appts.length === 1) {
-      this.labelMap = new Object();
-      this.labelMap[labelname] = value;
-      for (let i = 0; i < this.providerLabels.length; i++) {
-        for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-          if (this.providerLabels[i].valueSet[j].value === value) {
-            if (!this.providerLabels[i].valueSet[j].selected) {
-              this.providerLabels[i].valueSet[j].selected = true;
-              this.addLabel(appts[0].uid);
-            } else {
-              this.providerLabels[i].valueSet[j].selected = false;
-              this.deleteLabel(labelname, appts[0].uid);
-            }
-          } else {
-            if (this.providerLabels[i].label === labelname) {
-              this.providerLabels[i].valueSet[j].selected = false;
-            }
-          }
-        }
-      }
-    }
-  }
-  getSelectedAppointments(isBatch, appointments, time_type) {
-    const keylen = Object.keys(appointments).length;
-    let count = 0;
-    const appts = [];
-    return new Promise(function (resolve, reject) {
-      if (!isBatch || time_type === 3) {
-        Object.keys(appointments).forEach(apptIndex => {
-          appts.push(appointments[apptIndex]);
-          count++;
-        });
-      } else {
-        Object.keys(appointments).forEach(slotIndex => {
-          Object.keys(appointments[slotIndex]).forEach(apptIndex => {
-            appts.push(appointments[slotIndex][apptIndex]);
-            count++;
-          });
-        });
-      }
-      if (count === keylen) {
-        resolve(appts);
-      }
-    });
-  }
-  addLabelvalue(source, label?) {
-    const _this = this;
-    const appts = [];
-    if (!this.isBatch) {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        appts.push(_this.appointmentsChecked[apptIndex]);
-      });
-    } else {
-      Object.keys(_this.apptsChecked).forEach(slotIndex => {
-        Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          appts.push(_this.apptsChecked[slotIndex][apptIndex]);
-        });
-      });
-    }
-    this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: {
-        checkin: appts[0],
-        source: source,
-        label: label
-      }
-    });
-    this.labeldialogRef.afterClosed().subscribe(data => {
-      if (data) {
-        setTimeout(() => {
-          this.labels(appts[0]);
-          this.labelMap = new Object();
-          this.labelMap[data.label] = data.value;
-          this.addLabel(appts[0].uid);
-          this.getDisplayname(data.label);
-          this.loadApiSwitch('');
-        }, 500);
-      }
-      this.getLabel();
-    });
-  }
+
   /**
  * Router Navigations
  */
@@ -2022,9 +1605,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   gotoUser() {
     this.router.navigate(['provider', 'settings', 'general', 'users']);
-  }
-  applyLabel(checkin) {
-    this.router.navigate(['provider', 'check-ins', checkin.uid, 'add-label'], { queryParams: checkin.label });
   }
   /**
    * Filter Actions
@@ -2048,154 +1628,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
     return label_status;
   }
-  // filterbyStatus(status) {
-  //   this.filterStatus = false;
-  //   if (this.showStausFilters[status]) {
-  //     this.showStausFilters[status] = false;
-  //   } else {
-  //     this.showStausFilters[status] = true;
-  //   }
-  //   if (!this.showStausFilters['checkedIn'] && !this.showStausFilters['started'] && !this.showStausFilters['complete'] && !this.showStausFilters['cancelled']) {
-  //     this.filterStatus = true;
-  //   }
-  //   this.filter.appt_status = status;
-  //   if (status === 'checkedIn') {
-  //     this.newPanel = true;
-  //   }
-  //   if (status === 'started') {
-  //     this.startedPanel = true;
-  //   }
-  //   if (status === 'complete') {
-  //     this.completedPanel = true;
-  //   }
-  //   if (status === 'cancelled') {
-  //     this.cancelledPanel = true;
-  //   }
-  // }
-  selectAllSlots() {
-    if (!this.selAllSlots) {
-      for (let sIndex = 0; sIndex < this.availableSlotDetails.availableSlots.length; sIndex++) {
-        const availableTime = this.availableSlotDetails.availableSlots[sIndex].time;
-        if (this.timeSlotAppts[availableTime] && this.timeSlotAppts[availableTime].length > 0) {
-          this.slotsChecked[sIndex] = true;
-          this.chkSlotInput[sIndex] = true;
-          this.slotCheckSelected(sIndex, this.availableSlotDetails.availableSlots[sIndex]);
-        }
-      }
-    } else {
-      this.slotsChecked = {};
-      this.apptsChecked = {};
-    }
-  }
-  slotRowSelected(slotIndex) {
-    if (!this.slotSelected[slotIndex]) {
-      this.slotSelected[slotIndex] = true;
-    } else {
-      this.slotSelected[slotIndex] = false;
-    }
-  }
-  slotCheckSelected(slotIndex, slot) {
-    if (this.chkSlotInput[slotIndex]) {
-      this.slotsChecked[slotIndex] = true;
-      if (!this.apptsChecked[slotIndex]) {
-        this.apptsChecked[slotIndex] = {};
-      }
-      const slotApptLength = this.timeSlotAppts[slot.time].length;
-      for (let aptIndex = 0; aptIndex < slotApptLength; aptIndex++) {
-        if (!this.apptsChecked[slotIndex][aptIndex]) {
-          this.apptsChecked[slotIndex][aptIndex] = this.timeSlotAppts[slot.time][aptIndex];
-        }
-      }
-      this.checkAllSlotsSelected();
-    } else {
-      this.slotsChecked[slotIndex] = false;
-      delete this.apptsChecked[slotIndex];
-      this.selAllSlots = false;
-    }
-    this.setSelections();
-  }
-  checkAllSlotsSelected() {
-    let notfound = false;
-    for (let sIndex = 0; sIndex < this.availableSlotDetails.availableSlots.length; sIndex++) {
-      const availableTime = this.availableSlotDetails.availableSlots[sIndex].time;
-      if (this.timeSlotAppts[availableTime] && this.timeSlotAppts[availableTime].length > 0) {
-        for (let slIndex = 0; slIndex < this.timeSlotAppts[availableTime].length; slIndex++) {
-          if (!this.slotsChecked[sIndex]) {
-            notfound = true;
-            break;
-          }
-        }
-      }
-      if (notfound) {
-        break;
-      }
-    }
-    if (notfound) {
-      this.selAllSlots = false;
-    } else {
-      this.selAllSlots = true;
-    }
-  }
-  setSelections() {
-    this.showUndo = false;
-    this.showArrived = false;
-    this.showRejected = false;
-    this.showShare = false;
-    const selLength = Object.keys(this.apptsChecked).length;
-    if (selLength === 0) {
-      this.apptSingleSelection = false;
-      this.apptMultiSelection = false;
-    } else if (selLength === 1) {
-      Object.keys(this.apptsChecked).forEach(key => {
-        if (Object.keys(this.apptsChecked[key]).length === 1) {
-          Object.keys(this.apptsChecked[key]).forEach(appt => {
-            this.apptMultiSelection = false;
-            this.apptSingleSelection = true;
-            const activeAppt = this.apptsChecked[key][appt];
-            if (this.time_type === 1 && activeAppt.apptStatus === 'Confirmed' && !activeAppt.virtualService) {
-              this.showArrived = true;
-            }
-            if (activeAppt.apptStatus !== 'Completed' && activeAppt.apptStatus !== 'Confirmed') {
-              this.showUndo = true;
-            }
-            if (activeAppt.apptStatus === 'Confirmed' || activeAppt.apptStatus === 'Arrived') {
-              this.showRejected = true;
-            }
-            if (activeAppt.apptStatus !== 'Rejected' || activeAppt.apptStatus !== 'Cancelled') {
-              this.showShare = true;
-            }
-            return;
-          });
-        } else {
-          this.apptMultiSelection = true;
-          this.apptSingleSelection = false;
-        }
-      });
-    } else {
-      this.apptMultiSelection = true;
-      this.apptSingleSelection = false;
-    }
-  }
-  apptRowSelected(slotIndex, apptIndex, appt, slotName) {
-    if (!this.apptsChecked[slotIndex]) {
-      this.apptsChecked[slotIndex] = {};
-    }
-    if (!this.apptsChecked[slotIndex][apptIndex]) {
-      this.apptsChecked[slotIndex][apptIndex] = appt;
-      if (Object.keys(this.apptsChecked[slotIndex]).length === this.timeSlotAppts[slotName].length) {
-        this.slotsChecked[slotIndex] = true;
-      }
-      this.checkAllSlotsSelected();
-    } else {
-      delete this.apptsChecked[slotIndex][apptIndex];
-      if (Object.keys(this.apptsChecked[slotIndex]).length === 0) {
-        delete this.apptsChecked[slotIndex];
-      }
-      this.slotsChecked[slotIndex] = false;
-      this.selAllSlots = false;
-    }
-    this.setSelections();
-  }
+
   selectAllAppoinments() {
     this.appointmentsChecked = {};
     this.chkAppointments = {};
@@ -2220,9 +1653,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selAllSlots = false;
     }
     this.setApptSelections();
-  }
-  getAppxTime(appt) {
-    return this.shared_functions.providerConvertMinutesToHourMinute(appt.appxWaitingTime);
   }
   clearFilter() {
     this.resetFilter();
@@ -2261,42 +1691,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   setFilterDataCheckbox(type, value, event) {
     this.filter[type] = value;
     this.resetPaginationData();
-    // if (type === 'age') {
-    //   if (value === 'all') {
-    //     this.ageGroups = [];
-    //     if (event.checked) {
-    //       this.allAgeSlected = true;
-    //     } else {
-    //       this.allAgeSlected = false;
-    //     }
-    //   } else {
-    //     const indx = this.ageGroups.indexOf(value);
-    //     if (indx === -1) {
-    //       this.ageGroups.push(value);
-    //     } else {
-    //       this.ageGroups.splice(indx, 1);
-    //     }
-    //     this.allAgeSlected = false;
-    //   }
-    // }
-    // if (type === 'gender') {
-    //   if (value === 'all') {
-    //     this.genderList = [];
-    //     if (event.checked) {
-    //       this.allGenderSlected = true;
-    //     } else {
-    //       this.allGenderSlected = false;
-    //     }
-    //   } else {
-    //     const indx = this.genderList.indexOf(value);
-    //     if (indx === -1) {
-    //       this.genderList.push(value);
-    //     } else {
-    //       this.genderList.splice(indx, 1);
-    //     }
-    //     this.allGenderSlected = false;
-    //   }
-    // }
     if (type === 'appointmentMode') {
       if (value === 'all') {
         this.apptModes = [];
@@ -2470,26 +1864,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  addConsumerInboxMessage() {
-    const _this = this;
-    const appts = [];
-    if (!this.isBatch || this.time_type === 3) {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        appts.push(_this.appointmentsChecked[apptIndex]);
-      });
-    } else {
-      Object.keys(_this.apptsChecked).forEach(slotIndex => {
-        Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          appts.push(_this.apptsChecked[slotIndex][apptIndex]);
-        });
-      });
-    }
-    _this.provider_shared_functions.addConsumerInboxMessage(appts, this, 'appt')
-      .then(
-        () => { },
-        () => { }
-      );
-  }
+
   changeApptStatusByBatch(action, appt, result?) {
     let post_data = {
       date: appt.appmtDate
@@ -2523,54 +1898,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  changeWaitlistStatus(action, appt?) {
+  changeWaitlistStatus(status, action, appt?) {
     const _this = this;
     let appmt;
     if (appt) {
       appmt = appt;
     } else {
-      if (!this.isBatch || this.time_type === 3) {
-        Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-          appmt = _this.appointmentsChecked[apptIndex];
+      if (status === 'started') {
+        Object.keys(_this.startedAppointmentsChecked).forEach(apptIndex => {
+          appmt = _this.startedAppointmentsChecked[apptIndex];
         });
       } else {
-        Object.keys(_this.apptsChecked).forEach(slotIndex => {
-          Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-            appmt = _this.apptsChecked[slotIndex][apptIndex];
-          });
+        Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+          appmt = _this.appointmentsChecked[apptIndex];
         });
       }
     }
     _this.provider_shared_functions.changeWaitlistStatus(_this, appmt, action, 'appt');
   }
 
-  // showCallingModes(action) {
-  //   const _this = this;
-  //   let checkin;
-  //   _this.changeWaitlistStatus(action);
-  //   Object.keys(_this.apptsChecked).forEach(slotIndex => {
-  //     Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-  //       checkin = _this.apptsChecked[slotIndex][apptIndex];
-  //     });
-  //   });
-  //   _this.provider_shared_functions.changeWaitlistStatus(_this, checkin, action, 'appt');
-  //   _this.notedialogRef = _this.dialog.open(CallingModesComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       modes: checkin.virtualService,
-  //       uuid: checkin.uid,
-  //       consumerid: checkin.consumer.id,
-  //       qdata: checkin,
-  //       type: 'appt'
-  //     }
-  //   });
-  //   _this.notedialogRef.afterClosed().subscribe(result => {
-  //     if (result === 'reloadlist') {
-  //     }
-  //   });
-  // }
   goCheckinDetail(checkin) {
     if (this.time_type === 3) {
       this.shared_functions.setitemToGroupStorage('appthP', this.filter.page || 1);
@@ -2578,295 +1924,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.router.navigate(['provider', 'appointments', checkin.uid], { queryParams: { timetype: this.time_type } });
   }
-  goToCheckinDetails() {
-    const _this = this;
-    if (!this.isBatch || this.time_type === 3) {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        const checkin = _this.appointmentsChecked[apptIndex];
-        _this.router.navigate(['provider', 'appointments', checkin.uid]);
-      });
-    } else {
-      Object.keys(_this.apptsChecked).forEach(slotIndex => {
-        Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          const checkin = _this.apptsChecked[slotIndex][apptIndex];
-          _this.router.navigate(['provider', 'appointments', checkin.uid]);
-        });
-      });
-    }
-  }
-  addProviderNote(source, waitlist?) {
-    const _this = this;
-    let checkin;
-    if (!this.isBatch || this.time_type === 3) {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        checkin = _this.appointmentsChecked[apptIndex];
-        _this.addnotedialogRef = _this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true,
-          data: {
-            checkin_id: checkin.uid,
-            source: 'appt'
-          }
-        });
-        _this.addnotedialogRef.afterClosed().subscribe(result => {
-          if (result === 'reloadlist') { }
-        });
-      });
-    } else {
-      Object.keys(_this.apptsChecked).forEach(slotIndex => {
-        Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          checkin = _this.apptsChecked[slotIndex][apptIndex];
-          _this.addnotedialogRef = _this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true,
-            data: {
-              checkin_id: checkin.uid,
-              source: 'appt'
-            }
-          });
-          _this.addnotedialogRef.afterClosed().subscribe(result => {
-            if (result === 'reloadlist') { }
-          });
-        });
-      });
-    }
-  }
-  getVirtualServiceCount(virtualService) {
-    return Object.keys(virtualService).length;
-  }
-  smsAppt() {
-    const _this = this;
-    let appt;
-    if (!this.isBatch || this.time_type === 3) {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        appt = _this.appointmentsChecked[apptIndex];
-      });
-      this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          qdata: appt,
-          uuid: appt.uid,
-          chekintype: 'appointment'
-        }
-      });
-      // _this.provider_services.smsAppt(appt.uid).subscribe(
-      //   () => {
-      //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
-      //   },
-      //   error => {
-      //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      //   }
-      // );
-    } else {
-      Object.keys(_this.apptsChecked).forEach(slotIndex => {
-        Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          appt = _this.apptsChecked[slotIndex][apptIndex];
-        });
-        this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true,
-          data: {
-            qdata: appt,
-            uuid: appt.uid,
-            chekintype: 'appointment'
-          }
-        });
-        // _this.provider_services.smsAppt(appt.uid).subscribe(
-        //   () => {
-        //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
-        //   },
-        //   error => {
-        //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //   }
-        // );
-      });
-    }
-  }
-  // emailAppt() {
-  //   const _this = this;
-  //   let appt;
-  //   if (!this.isBatch || this.time_type === 3) {
-  //     Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-  //       appt = _this.appointmentsChecked[apptIndex];
-  //     });
-  //     this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
-  //       width: '50%',
-  //       panelClass: ['popup-class', 'commonpopupmainclass'],
-  //       disableClose: true,
-  //       data: {
-  //         uuid: appt.uid,
-  //         check: 'apptemail'
-  //       }
-  //     });
-  //     // _this.provider_services.emailAppt(appt.uid).subscribe(
-  //     //   () => {
-  //     //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
-  //     //   },
-  //     //   error => {
-  //     //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //     //   }
-  //     // );
-  //   } else {
-  //     Object.keys(_this.apptsChecked).forEach(slotIndex => {
-  //       Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-  //         appt = _this.appointmentsChecked[apptIndex];
-  //       });
-  //       this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
-  //         width: '50%',
-  //         panelClass: ['popup-class', 'commonpopupmainclass'],
-  //         disableClose: true,
-  //         data: {
-  //           uuid: appt.uid,
-  //           check: 'apptemail'
-  //         }
-  //       });
-  //       //   this.provider_services.emailAppt(appt.uid).subscribe(
-  //       //     () => {
-  //       //       _this.shared_functions.openSnackBar('Appointment details mailed successfully');
-  //       //     },
-  //       //     error => {
-  //       //       _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       //     }
-  //       //   );
-  //     });
-  //   }
-  // }
-  printAppt() {
-    const _this = this;
-    let appt;
-    if (!this.isBatch || this.time_type === 3) {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        appt = _this.appointmentsChecked[apptIndex];
-      });
-    } else {
-      Object.keys(_this.apptsChecked).forEach(slotIndex => {
-        Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          appt = _this.apptsChecked[slotIndex][apptIndex];
-        });
-      });
-    }
-    this.printBill(appt);
-  }
-  printBill(apptlist) {
-    const _this = this;
-    _this.qrCodegeneration(apptlist);
-    setTimeout(() => {
-      const printContent = document.getElementById('print-section');
-      const params = [
-        'height=' + screen.height,
-        'width=' + screen.width,
-        'fullscreen=yes'
-      ].join(',');
-      const printWindow = window.open('', '', params);
-      let checkin_html = '';
-      checkin_html += '<table style="width:100%;"><thead>';
-      checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(apptlist.appmtDate) + '<br/>';
-      if (apptlist.batchId) {
-        checkin_html += 'Batch <span style="font-weight:bold">' + apptlist.batchId + '</span>';
-      } else {
-        checkin_html += 'Appointment Time <span style="font-weight:bold">' + this.getSingleTime(apptlist.appmtTime) + '</span>';
-      }
-      checkin_html += '</td></tr>';
-      checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.bname.charAt(0).toUpperCase() + this.bname.substring(1) + '</td></tr>';
-      checkin_html += '<tr><td colspan="3" style="text-align:center">' + apptlist.location.place + '</td></tr>';
-      checkin_html += '</thead><tbody>';
-      checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + apptlist.appmtFor[0].firstName + ' ' + apptlist.appmtFor[0].lastName + '</td></tr>';
-      if (apptlist.service && apptlist.service.deptName) {
-        checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + apptlist.service.deptName + '</td></tr>';
-      }
-      checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + apptlist.service.name + '</td></tr>';
-      if (apptlist.provider && apptlist.provider.firstName && apptlist.provider.lastName) {
-        checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + apptlist.provider.firstName.charAt(0).toUpperCase() + apptlist.provider.firstName.substring(1) + ' ' + apptlist.provider.lastName + '</td></tr>';
-      }
-      checkin_html += '<tr><td width="48%" align="right">schedule</td><td>:</td><td>' + apptlist.schedule.name + ' [' + apptlist.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + apptlist.schedule.apptSchedule.timeSlots[0].eTime + ']' + '</td></tr>';
-      checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
-      checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
-      checkin_html += '</tbody></table>';
-      printWindow.document.write('<html><head><title></title>');
-      printWindow.document.write('</head><body >');
-      printWindow.document.write(checkin_html);
-      printWindow.document.write('</body></html>');
-      _this.showQR = false;
-      printWindow.moveTo(0, 0);
-      printWindow.print();
-    });
-  }
-  viewBillPage() {
-    const _this = this;
-    let checkin_details;
-    if (!this.isBatch || this.time_type === 3) {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        checkin_details = _this.appointmentsChecked[apptIndex];
-        _this.provider_services.getWaitlistBill(checkin_details.uid).subscribe(
-          () => {
-            _this.router.navigate(['provider', 'bill', checkin_details.uid], { queryParams: { source: 'appt' } });
-          },
-          error => {
-            _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
-      });
-    } else {
-      Object.keys(_this.apptsChecked).forEach(slotIndex => {
-        Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          checkin_details = _this.apptsChecked[slotIndex][apptIndex];
-          _this.provider_services.getWaitlistBill(_this.apptsChecked[slotIndex][apptIndex].uid).subscribe(
-            () => {
-              _this.router.navigate(['provider', 'bill', checkin_details.uid], { queryParams: { source: 'appt' } });
-            },
-            error => {
-              _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            }
-          );
-        });
-      });
-    }
-  }
-  qrCodegeneration(valuetogenerate) {
-    this.qr_value = this.path + 'status/' + valuetogenerate.appointmentEncId;
-    this.showQR = true;
-  }
-  showSlots(show?) {
-    if (!show) {
-      this.showSlotsN = !this.showSlotsN;
-    }
-    let date;
-    this.slotsloading = true;
-    this.slotsForQ = [];
-    if (this.time_type === 1) {
-      date = this.shared_functions.transformToYMDFormat(this.server_date);
-    }
-    if (this.time_type === 2) {
-      date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
-    }
-    this.showNoSlots = true;
-    if (this.selQId && date) {
-      this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(
-        (data: any) => {
-          for (let i = 0; i < data.availableSlots.length; i++) {
-            if (data.availableSlots[i].active && data.availableSlots[i].noOfAvailbleSlots !== '0') {
-              // if (data.availableSlots[i].noOfAvailbleSlots !== '0') {
-              if (this.slotsForQ.indexOf(data.availableSlots[i]) === -1) {
-                this.slotsForQ.push(data.availableSlots[i]);
-                this.showNoSlots = false;
-              }
-            }
-          }
-          // this.slotsForQ = data.availableSlots;
-        }, () => {
 
-        }, () => {
-          this.slotsloading = false;
-        });
-    } else {
-      this.slotsloading = false;
-    }
-  }
   findCurrentActiveQueue(ques) {
     let selindx = 0;
     const cday = new Date();
@@ -2891,48 +1949,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return selindx;
   }
-  locateCustomerMsg(details) {
-    if (details && details.jaldeeDistance) {
-      const distance = details.jaldeeDistance.distance;
-      const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
-      const travelTime = details.jaldeelTravelTime.travelTime;
-      const hours = Math.floor(travelTime / 60);
-      const mode = details.jaldeelTravelTime.travelMode;
-      const minutes = travelTime % 60;
-      return this.provider_shared_functions.getLiveTrackMessage(distance, unit, hours, minutes, mode);
-    }
-  }
+
   callingAppt(checkin) {
     const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
     this.provider_services.setApptCallStatus(checkin.uid, status).subscribe(
       () => {
         this.loadApiSwitch('reloadAPIs');
-      });
-  }
-  locateCustomer(source) {
-    const _this = this;
-    let appt;
-    Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-      appt = _this.appointmentsChecked[apptIndex];
-    });
-    this.provider_services.getCustomerTrackStatusforAppointment(appt.uid).subscribe(data => {
-      this.trackDetail = data;
-      this.customerMsg = this.locateCustomerMsg(this.trackDetail);
-      this.locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
-        width: '40%',
-        panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          message: this.customerMsg
-        }
-      });
-      this.locateCustomerdialogRef.afterClosed().subscribe(result => {
-        if (result === 'reloadlist') {
-        }
-      });
-    },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
@@ -2987,7 +2009,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               checkin_html += '</table>';
               checkin_html += '<div style="margin:10px">';
-              // checkin_html += '<div style="padding-bottom:10px;">' + 'Total - ' + result + ' Records</div>';
               if (!this.labelFilterData.match('$') && this.labelsCount.length > 1) {
                 for (const count of this.labelsCount) {
                   checkin_html += '<div style="padding-bottom:10px;">' + count + ' Records</div>';
@@ -3063,7 +2084,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { }
       );
   }
-  showCallingModes(modes, action) {
+  showCallingModes(modes) {
     if (!modes.consumer) {
       this.consumr_id = modes.providerConsumer.id;
     } else {
@@ -3131,7 +2152,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsByProvider() {
     const qs = [];
-    if (!this.selectedUser || (this.selectedUser && this.selectedUser.id === 'all')) {
+    console.log(this.selectedUser);
+    if (this.selectedUser && this.selectedUser.id === 'all') {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
       for (let i = 0; i < this.tempActiveSchedules.length; i++) {
@@ -3142,24 +2164,38 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.activeSchedules = qs;
     }
     if (this.activeSchedules.length === 0) {
-      this.selQId = null;
+      this.selQIds = [];
     } else {
-      let found = 0;
+      const qids = [];
       for (const q of this.activeSchedules) {
-        if (this.selQId === q.id) {
-          found++;
-        }
+        qids.push(q.id);
       }
-      if (found === 0) {
-        this.selQId = this.activeSchedules[0].id;
+      const selQids = [];
+      if (qids.length > 0) {
+        if (this.selQIds && this.selQIds.length > 0) {
+          for (const id of this.selQIds) {
+            const qArr = qids.filter(qid => qid === id);
+            if (qArr.length > 0) {
+              selQids.push(id);
+            }
+          }
+          if (selQids.length === 0) {
+            this.selQIds = qids;
+          }
+        } else {
+          this.selQIds = qids;
+        }
+      } else {
+        this.selQIds.push(this.activeSchedules[0].id);
       }
     }
     if (this.time_type === 1) {
-      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
+      console.log(this.selQIds);
+      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
     } else if (this.time_type === 2) {
-      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
+      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     } else {
-      this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQId);
+      this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQIds);
     }
     this.loadApiSwitch('reloadAPIs');
   }
@@ -3300,38 +2336,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoSettings() {
     this.router.navigate(['/provider/settings']);
   }
-  // setLabelFilter(label, value, event) {
-  //   this.resetPaginationData();
-  //   if (value === 'all') {
-  //     this.selectedLabels[label.label] = [];
-  //     this.allLabelSelected[label.label] = false;
-  //     if (event.checked) {
-  //       for (const value of label.valueSet) {
-  //         if (this.selectedLabels[label.label].indexOf(value.value) === -1) {
-  //           this.selectedLabels[label.label].push(value.value);
-  //         }
-  //       }
-  //       this.allLabelSelected[label.label] = true;
-  //     }
-  //   } else {
-  //     this.allLabelSelected[label.label] = false;
-  //     if (this.selectedLabels[label.label]) {
-  //       const indx = this.selectedLabels[label.label].indexOf(value);
-  //       if (indx === -1) {
-  //         this.selectedLabels[label.label].push(value);
-  //       } else {
-  //         this.selectedLabels[label.label].splice(indx, 1);
-  //       }
-  //     } else {
-  //       this.selectedLabels[label.label] = [];
-  //       this.selectedLabels[label.label].push(value);
-  //     }
-  //     if (this.selectedLabels[label.label].length === label.valueSet.length) {
-  //       this.allLabelSelected[label.label] = true;
-  //     }
-  //   }
-  //   this.doSearch();
-  // }
+
   setLabelFilter(label, event) {
     this.resetPaginationData();
     const value = event.checked;
@@ -3363,29 +2368,31 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.doSearch();
   }
-  showCheckinActions(checkin?) {
+  showCheckinActions(status, checkin?) {
     let waitlist = [];
     if (checkin) {
       waitlist = checkin;
     } else {
-      if (!this.isBatch || this.time_type === 3) {
+      if (status === 'started') {
+        Object.keys(this.startedAppointmentsChecked).forEach(apptIndex => {
+          waitlist.push(this.startedAppointmentsChecked[apptIndex]);
+        });
+      } else {
         Object.keys(this.appointmentsChecked).forEach(apptIndex => {
           waitlist.push(this.appointmentsChecked[apptIndex]);
         });
-      } else {
-        Object.keys(this.apptsChecked).forEach(slotIndex => {
-          Object.keys(this.apptsChecked[slotIndex]).forEach(apptIndex => {
-            waitlist.push(this.apptsChecked[slotIndex][apptIndex]);
-          });
-        });
       }
     }
-    // let multiSelection;
-    // if (checkin) {
-    //   multiSelection = false;
-    // } else {
-    //     multiSelection = this.apptMultiSelection;
-    // }
+    let multiSelection;
+    if (checkin) {
+      multiSelection = false;
+    } else {
+      if (status === 'started') {
+        multiSelection = this.apptStartedMultiSelection;
+      } else {
+        multiSelection = this.apptMultiSelection;
+      }
+    }
     const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
@@ -3393,13 +2400,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       data: {
         checkinData: waitlist,
         timetype: this.time_type,
-        multiSelection: this.apptMultiSelection,
+        multiSelection: multiSelection,
         labelFilterData: this.labelFilterData,
         labelsCount: this.labelsCount
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
       this.chkSelectAppointments = false;
+      this.chkStartedSelectAppointments = false;
       this.getLabel();
       this.loadApiSwitch('');
     });
@@ -3432,5 +2440,73 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   addCustomerDetails(appt) {
     this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: appt.uid } });
+  }
+  selectAllStarted() {
+    this.startedAppointmentsChecked = {};
+    this.startedChkAppointments = {};
+    if (this.chkStartedSelectAppointments) {
+      for (let aIndex = 0; aIndex < this.startedAppts.length; aIndex++) {
+        this.chkStartedAptHistoryClicked(aIndex, this.startedAppts[aIndex]);
+      }
+    } else {
+      this.apptStartedSingleSelection = false;
+      this.apptStartedMultiSelection = false;
+      this.activeAppointment = null;
+    }
+  }
+  chkStartedAptHistoryClicked(index, appt) {
+    if (!this.startedChkAppointments[index]) {
+      this.startedChkAppointments[index] = true;
+      this.startedAppointmentsChecked[index] = appt;
+    } else {
+      this.startedChkAppointments[index] = false;
+      delete this.startedAppointmentsChecked[index];
+      this.chkStartedSelectAppointments = false;
+    }
+    this.setStartedApptSelections();
+  }
+
+  setStartedApptSelections() {
+    this.apptSingleSelection = false;
+    this.apptStartedMultiSelection = false;
+    this.activeAppointment = null;
+    const totalAppointmentsSelected = Object.keys(this.startedAppointmentsChecked).length;
+    if (totalAppointmentsSelected === this.startedAppts.length && totalAppointmentsSelected !== 0) {
+      this.chkStartedSelectAppointments = true;
+    }
+    if (totalAppointmentsSelected === 1) {
+      this.apptSingleSelection = true;
+      Object.keys(this.startedAppointmentsChecked).forEach(key => {
+        this.activeAppointment = this.startedAppointmentsChecked[key];
+      });
+    } else if (totalAppointmentsSelected > 1) {
+      this.apptStartedMultiSelection = true;
+    }
+  }
+  tabChange(event) {
+    this.resetCheckList();
+    this.chkSelectAppointments = false;
+    this.chkStartedSelectAppointments = false;
+    this.allStartedSelection = false;
+    this.allSelection = false;
+    this.loading = true;
+    this.hideFilterSidebar();
+    this.setTimeType(event.index + 1);
+  }
+  statusClick(status) {
+    this.allSelection = false;
+    this.statusAction = status;
+    this.chkSelectAppointments = false;
+    this.chkStartedSelectAppointments = false;
+    this.resetCheckList();
+    if (this.time_type === 1) {
+      this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, status);
+    } else {
+      this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, status);
+    }
+  }
+  getScheduleIndex(id) {
+    const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
+    return this.activeSchedules.indexOf(filterSchedule[0]);
   }
 }
