@@ -2220,13 +2220,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
   }
-  searchCustomer(source) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        source: source
-      }
-    };
-    this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+  searchCustomer() {
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     source: source
+    //   }
+    // };
+    // this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+    this.router.navigate(['provider', 'customers', 'add']);
   }
   showAdjustDelay() {
     if (this.queues.length === 0) {

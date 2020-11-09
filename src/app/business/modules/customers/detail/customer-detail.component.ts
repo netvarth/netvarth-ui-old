@@ -473,12 +473,7 @@ export class CustomerDetailComponent implements OnInit {
                         } else if (this.source === 'appt-block') {
                             this.confirmApptBlock(data);
                         } else {
-                            const navigationExtras: NavigationExtras = {
-                                queryParams: {
-                                    phoneNo: this.phoneNo
-                                }
-                            };
-                            this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+                            this.router.navigate(['provider', 'customers']);
                         }
                     },
                     error => {
@@ -530,12 +525,7 @@ export class CustomerDetailComponent implements OnInit {
                             };
                             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
                         } else {
-                            const navigationExtras: NavigationExtras = {
-                                queryParams: {
-                                    phoneNo: this.phoneNo
-                                }
-                            };
-                            this.router.navigate(['provider', 'customers'], navigationExtras);
+                            this.router.navigate(['provider', 'customers']);
                         }
                     },
                     error => {

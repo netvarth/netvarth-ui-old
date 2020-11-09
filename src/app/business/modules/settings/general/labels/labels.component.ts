@@ -3,6 +3,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-labels',
@@ -31,7 +32,7 @@ export class LabelsComponent implements OnInit {
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
     constructor(private router: Router,
-        private routerobj: Router,
+        private _location: Location,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions) { }
 
@@ -64,7 +65,7 @@ export class LabelsComponent implements OnInit {
     performActions(actions) {
         this.addLabel();
         if (actions === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/general->labels']);
+            this.router.navigate(['/provider/' + this.domain + '/general->labels']);
         }
     }
     addLabel() {
@@ -106,9 +107,9 @@ export class LabelsComponent implements OnInit {
             });
     }
     redirecToGeneral() {
-        this.router.navigate(['provider', 'settings' , 'general']);
+        this._location.back();
     }
     redirecToHelp() {
-        this.routerobj.navigate(['/provider/' + this.domain + '/general->labels']);
+        this.router.navigate(['/provider/' + this.domain + '/general->labels']);
     }
 }
