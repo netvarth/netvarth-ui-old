@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
