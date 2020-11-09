@@ -1784,6 +1784,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.showAction = true;
         this.action = action;
         this.selected_phone = this.userPhone;
+        this.payEmail = this.userData.userProfile.email;
     }
     hideFilterSidebar() {
         this.showAction = false;
