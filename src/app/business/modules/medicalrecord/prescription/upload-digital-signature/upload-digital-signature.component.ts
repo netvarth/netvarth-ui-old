@@ -7,6 +7,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { ImagesviewComponent } from '../imagesview/imagesview.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MedicalrecordService } from '../../medicalrecord.service';
+import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-upload-digital-signature',
@@ -51,6 +52,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   digitalSign = false;
   signatureviewdialogRef;
   digitalsignature = {};
+  removedsigndialogRef;
 
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
@@ -148,7 +150,18 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   }
 
   deleteTempImagefrmdb(img, index) {
-      this.provider_services.deleteUplodedsign(img.keyName , this.providerId)
+
+    this.removedsigndialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you really want to remove the signature?'
+      }
+    });
+    this.removedsigndialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.provider_services.deleteUplodedsign(img.keyName , this.providerId)
       .subscribe((data) => {
         this.selectedMessage.files.splice(index, 1);
         this.getDigitalSign();
@@ -156,6 +169,8 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
       error => {
         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });
+      }
+    });
     }
 
 

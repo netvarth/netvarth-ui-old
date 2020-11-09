@@ -168,7 +168,7 @@ export class DrugListComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you really want to remove the prescription?'
+        'message': 'Do you really want to remove the medicine details?'
       }
     });
     this.removedrugdialogRef.afterClosed().subscribe(result => {

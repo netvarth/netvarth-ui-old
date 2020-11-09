@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { MatDialog } from '@angular/material/dialog';
 import { SignaturePad } from 'angular2-signaturepad';
+import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-upload-signature',
@@ -52,6 +53,7 @@ export class UploadSignatureComponent implements OnInit {
   bookingId: any;
   bookingType: any;
   patientId: any;
+  removesignuploadeddialogRef;
   
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
@@ -107,7 +109,20 @@ export class UploadSignatureComponent implements OnInit {
     return imgsize;
   }
   deleteTempImage(index) {
-    this.selectedMessage.files.splice(index, 1);
+    this.removesignuploadeddialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you really want to remove the signature?'
+      }
+    });
+    this.removesignuploadeddialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedMessage.files.splice(index, 1);
+      }
+    });
+    
   }
 
 
