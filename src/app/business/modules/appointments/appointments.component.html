@@ -152,7 +152,7 @@
           </div>
         </div>
 
-   
+
         <mat-tab-group class="checkinlist" (selectedTabChange)="tabChange($event)" [selectedIndex]="time_type - 1">
           <mat-tab label="Today ({{today_waitlist_count}})">
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -312,9 +312,8 @@
                           {{appt.appmtDate | date: display_dateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                           <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                          <div *ngIf="this.selQIds.length > 1">
-                            S{{getScheduleIndex(appt.schedule.id) + 1}}
-                          </div></div>
+                          <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                        </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name font11"
                           (click)="stopprop($event);gotoCustomerDetails(appt)"
@@ -355,8 +354,14 @@
                           <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                           </span>
-                          <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                          <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                          </span>
+                          <span class="phonein-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                          </span>
+                          <span class="walkin-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'WALK_IN_APPOINTMENT'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
                           </span>
                           <span class="fa fa-phone phone-in-icon" [matTooltipClass]="tooltipcls"
                             [matTooltip]="'Phone in'" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
@@ -527,11 +532,10 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           *ngIf="time_type!=1">
                           {{appt.appmtDate | date: display_dateFormat}}</div>
-                          <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
-                            <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                          <div *ngIf="this.selQIds.length > 1">
-                            S{{getScheduleIndex(appt.schedule.id) + 1}}
-                          </div></div>
+                        <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
+                          <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
+                          <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                        </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name font11"
                           (click)="stopprop($event);gotoCustomerDetails(appt)"
@@ -572,8 +576,14 @@
                           <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                           </span>
-                          <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                          <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                          </span>
+                          <span class="phonein-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                          </span>
+                          <span class="walkin-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'WALK_IN_APPOINTMENT'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
                           </span>
                           <span class="fa fa-phone phone-in-icon" [matTooltipClass]="tooltipcls"
                             [matTooltip]="'Phone in'" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
@@ -845,11 +855,10 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         *ngIf="time_type!=1">
                         {{appt.appmtDate | date: display_dateFormat}}</div>
-                        <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
-                          <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                        <div *ngIf="this.selQIds.length > 1">
-                          S{{getScheduleIndex(appt.schedule.id) + 1}}
-                        </div></div>
+                      <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
+                        <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
+                        <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                      </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
                         *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
@@ -889,8 +898,14 @@
                         <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                         </span>
-                        <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                        <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                        </span>
+                        <span class="phonein-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                        </span>
+                        <span class="walkin-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'WALK_IN_APPOINTMENT'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
                         </span>
                         <span class="fa fa-phone phone-in-icon" [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'"
                           *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
@@ -1217,11 +1232,10 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         *ngIf="time_type!=1">
                         {{appt.appmtDate | date: display_dateFormat}}</div>
-                        <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
-                          <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                        <div *ngIf="this.selQIds.length > 1">
-                          S{{getScheduleIndex(appt.schedule.id) + 1}}
-                        </div></div>
+                      <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
+                        <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
+                        <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                      </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
                         *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
@@ -1261,8 +1275,14 @@
                         <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                         </span>
-                        <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                        <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                        </span>
+                        <span class="phonein-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                        </span>
+                        <span class="walkin-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'WALK_IN_APPOINTMENT'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
                         </span>
                         <span class="fa fa-phone phone-in-icon" [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'"
                           *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
@@ -1382,7 +1402,7 @@
             </div>
           </mat-tab>
         </mat-tab-group>
-    
+
 
       </div>
     </div>

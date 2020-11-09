@@ -369,8 +369,14 @@
                           <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="checkin.isRescheduled"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                           </span>
-                          <span class="icon-cloud mgn-rt-10" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
+                          <span class="online-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'ONLINE_CHECKIN'"
                             [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                          </span>
+                          <span class="phonein-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                          </span>
+                          <span class="walkin-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'WALK_IN_CHECKIN'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
                           </span>
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'"
                             class="fa fa-phone phone-in-icon" *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'">
@@ -570,8 +576,14 @@
                           <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="checkin.isRescheduled"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                           </span>
-                          <span class="icon-cloud mgn-rt-10" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                          <span class="online-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'ONLINE_CHECKIN'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                          </span>
+                          <span class="phonein-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                          </span>
+                          <span class="walkin-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'WALK_IN_CHECKIN'"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
                           </span>
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'"
                             class="fa fa-phone phone-in-icon" *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'">
@@ -881,10 +893,16 @@
                     <td class="td-three">
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="checkin.isRescheduled"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
-                          </span>
-                        <span class="icon-cloud mgn-rt-10" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                        </span>
+                        <span class="online-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'ONLINE_CHECKIN'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                        </span>
+                        <span class="phonein-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                        </span>
+                        <span class="walkin-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'WALK_IN_CHECKIN'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
                         </span>
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'" class="fa fa-phone phone-in-icon"
                           *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'">
@@ -1263,10 +1281,16 @@
                     <td class="td-three">
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="checkin.isRescheduled"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
-                          </span>
-                        <span class="icon-cloud mgn-rt-10" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
+                        </span>
+                        <span class="online-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'ONLINE_CHECKIN'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
+                        </span>
+                        <span class="phonein-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
+                        </span>
+                        <span class="walkin-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'WALK_IN_CHECKIN'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
                         </span>
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'" class="fa fa-phone phone-in-icon"
                           *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'">

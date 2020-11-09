@@ -13019,3 +13019,15 @@ hr {
   box-shadow: 0 0 10px #00000042 !important;
   font-weight: bold;
 }
+.online-icon {
+  content: url(../images/online2.svg);
+  width: 15px;
+}
+.phonein-icon {
+  content: url(../images/phonein.svg);
+  width: 15px;
+}
+.walkin-icon {
+  content: url(../images/walkin.svg);
+  width: 15px;
+}
