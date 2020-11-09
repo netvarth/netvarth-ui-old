@@ -351,41 +351,36 @@ export class CustomersListComponent implements OnInit {
       }
     });
     this.mrdialogRef.afterClosed().subscribe(result => {
-      console.log(JSON.stringify(result));
-      if (result.type === 'prescription') {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], result.navigationParams);
-      } else if (result.type === 'clinicalnotes') {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
-      }
+
     });
 
   }
   listMedicalrecords(customer) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { 'id': customer.id }
-    };
+    const customerDetails = customer;
+    const customerId = customerDetails.id;
+    const mrId = 0;
+    const bookingType = 'FOLLOWUP';
+    const bookingId = 0;
 
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
   }
   medicalRecord(customerDetail) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-    };
+    const customerDetails = customerDetail;
+    const customerId = customerDetails.id;
+    const mrId = 0;
+    const bookingType = 'FOLLOWUP';
+    const bookingId = 0;
 
-    this.shared_functions.removeitemfromLocalStorage('mrId');
-    this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'patient' } });
   }
   prescription(customerDetail) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-    };
+    const customerDetails = customerDetail;
+    const customerId = customerDetails.id;
+    const mrId = 0;
+    const bookingType = 'FOLLOWUP';
+    const bookingId = 0;
 
-    this.shared_functions.removeitemfromLocalStorage('mrId');
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'],{ queryParams: { 'calledfrom': 'patient' } });
   }
   stopprop(event) {
     event.stopPropagation();

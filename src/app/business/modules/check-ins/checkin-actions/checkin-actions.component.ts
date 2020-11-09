@@ -644,71 +644,35 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     medicalRecord() {
-        this.dialogRef.close();
-        let medicalrecord_mode = 'new';
-        let mrId = 0;
-        if (this.checkin.mrId) {
-            medicalrecord_mode = 'view';
-            mrId = this.checkin.mrId;
-        }
-        let providerId;
-        if (this.checkin.provider && this.checkin.provider.id) {
-            providerId = this.checkin.provider.id;
-        } else {
-            providerId = '';
-        }
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
-                'serviceId': this.checkin.service.id,
-                'serviceName': this.checkin.service.name,
-                'booking_type': 'TOKEN',
-                'booking_date': this.checkin.consLastVisitedDate,
-                'booking_time': this.checkin.checkInTime,
-                'department': this.checkin.service.deptName,
-                'consultationMode': 'OP',
-                'booking_id': this.checkin.ynwUuid,
-                'mr_mode': medicalrecord_mode,
-                'mrId': mrId,
-                'back_type': 'waitlist',
-                'provider_id': providerId
-            }
-        };
 
-        this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+      this.dialogRef.close();
+
+      let mrId = 0;
+      if (this.checkin.mrId) {
+        mrId = this.checkin.mrId;
+      }
+
+      const customerDetails = this.checkin.waitlistingFor[0];
+      const customerId = customerDetails.id;
+      const bookingId = this.checkin.ynwUuid;
+       const bookingType = 'TOKEN';
+       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ], { queryParams: { 'calledfrom': 'waitlist' } });
+
+
     }
     prescription() {
-        this.dialogRef.close();
-        let medicalrecord_mode = 'new';
-        let mrId = 0;
-        if (this.checkin.mrId) {
-            medicalrecord_mode = 'view';
-            mrId = this.checkin.mrId;
-        }
-        let providerId;
-        if (this.checkin.provider && this.checkin.provider.id) {
-            providerId = this.checkin.provider.id;
-        } else {
-            providerId = '';
-        }
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
-                'serviceId': this.checkin.service.id,
-                'serviceName': this.checkin.service.name,
-                'booking_type': 'TOKEN',
-                'booking_date': this.checkin.consLastVisitedDate,
-                'booking_time': this.checkin.checkInTime,
-                'department': this.checkin.service.deptName,
-                'consultationMode': 'OP',
-                'mrId': mrId,
-                'mr_mode': medicalrecord_mode,
-                'booking_id': this.checkin.ynwUuid,
-                'back_type': 'waitlist',
-                'provider_id': providerId
-            }
-        };
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+      this.dialogRef.close();
+
+      let mrId = 0;
+      if (this.checkin.mrId) {
+        mrId = this.checkin.mrId;
+      }
+
+      const customerDetails = this.checkin.waitlistingFor[0];
+      const customerId = customerDetails.id;
+      const bookingId = this.checkin.ynwUuid;
+       const bookingType = 'TOKEN';
+       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription'], { queryParams: { 'calledfrom': 'waitlist' } });
     }
     gotoCustomerDetails() {
         this.dialogRef.close();

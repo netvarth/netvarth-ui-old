@@ -26,19 +26,34 @@ export class CustomerActionsComponent implements OnInit {
     }
     prescription() {
         this.closeDialog();
-        const navigationExtras: NavigationExtras = {
-            queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-        };
-        this.shared_functions.removeitemfromLocalStorage('mrId');
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+        const customerDetails = this.customerDetails;
+        const customerId = customerDetails[0].id;
+        const mrId = 0;
+        const bookingType = 'FOLLOWUP';
+        const bookingId = 0;
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'],{ queryParams: { 'calledfrom': 'patient' } });
+        // const navigationExtras: NavigationExtras = {
+        //     queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
+        // };
+        // this.shared_functions.removeitemfromLocalStorage('mrId');
+        // this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
     medicalRecord() {
-        this.closeDialog();
-        const navigationExtras: NavigationExtras = {
-            queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-        };
-        this.shared_functions.removeitemfromLocalStorage('mrId');
-        this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+    this.closeDialog();
+    console.log(this.customerDetails);
+    const customerDetails = this.customerDetails;
+    const customerId = customerDetails[0].id;
+    const mrId = 0;
+    const bookingType = 'FOLLOWUP';
+    const bookingId = 0;
+
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'patient' } });
+       // this.closeDialog();
+        // const navigationExtras: NavigationExtras = {
+        //     queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
+        // };
+        // this.shared_functions.removeitemfromLocalStorage('mrId');
+        // this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
     }
     lastvisits() {
         this.closeDialog();
@@ -67,10 +82,16 @@ export class CustomerActionsComponent implements OnInit {
     }
     listMedicalrecords() {
         this.closeDialog();
-        const navigationExtras: NavigationExtras = {
-            queryParams: { 'id': this.customerDetails[0].id }
-        };
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
+        const customerDetails = this.customerDetails;
+        const customerId = customerDetails[0].id;
+        const mrId = 0;
+        const bookingType = 'FOLLOWUP';
+        const bookingId = 0;
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
+    //     const navigationExtras: NavigationExtras = {
+    //         queryParams: { 'id': this.customerDetails[0].id }
+    //     };
+    //     this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
     }
     editCustomer() {
         this.dialogRef.close('edit');

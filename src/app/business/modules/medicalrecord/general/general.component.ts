@@ -13,6 +13,9 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
   styleUrls: ['./general.component.css']
 })
 export class GeneralComponent implements OnInit {
+  patientId: string;
+  bookingId: string;
+  bookingType: string;
   display_PatientId: any;
   paramObject: any;
   mrId: any;
@@ -25,6 +28,7 @@ export class GeneralComponent implements OnInit {
   userId: any;
   today = new Date();
   patientid: any;
+
   department: any;
   serviceName: any;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
@@ -39,32 +43,18 @@ export class GeneralComponent implements OnInit {
     private router: Router,
     private medicalrecordService: MedicalrecordService
   ) {
-    this.medicalrecordService.patient_data.subscribe(res => {
 
-      this.navigationParams = res;
-      console.log(JSON.stringify(res));
 
-      this.navigationExtras = this.navigationParams;
-      if (res.department) {
-        this.department = res.department;
-        console.log(this.department);
-      }
-      if (res.serviceName) {
-        this.serviceName = res.serviceName;
-        console.log(this.serviceName);
-      }
-      this.customerDetails = JSON.parse(res.customerDetail);
-      if (this.customerDetails.memberJaldeeId) {
-        this.display_PatientId = this.customerDetails.memberJaldeeId;
-      } else if (this.customerDetails.jaldeeId) {
-        this.display_PatientId = this.customerDetails.jaldeeId;
-      }
-      this.paramObject = JSON.stringify(res);
-    });
+    this.customerDetails = this.medicalrecordService.getPatientDetails();
+    if (this.customerDetails.memberJaldeeId) {
+      this.display_PatientId = this.customerDetails.memberJaldeeId;
+    } else if (this.customerDetails.jaldeeId) {
+      this.display_PatientId = this.customerDetails.jaldeeId;
+    }
+    this.serviceName = this.medicalrecordService.getServiceName();
+    this.department = this.medicalrecordService.getDepartmentName();
 
-    this.medicalrecordService._mrUid.subscribe(mrId => {
-      this.mrId = mrId;
-    });
+
     this.activated_route.queryParams.subscribe(params => {
       this.editable_object = JSON.parse(params.data);
       this.edit_data = this.editable_object.value;
@@ -76,11 +66,18 @@ export class GeneralComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.activated_route.paramMap.subscribe(params => {
+      this.patientId = params.get('id');
+      this.bookingType = params.get('type');
+      this.bookingId = params.get('uid');
+      const medicalrecordId = params.get('mrId');
+      this.mrId = parseInt(medicalrecordId, 0);
+    });
   }
 
   redirecToClinicalNotes() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord'],  { queryParams: this.navigationParams });
-    // this.router.navigateByUrl('../clinicalnotes', { relativeTo: this.activated_route });
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
+
   }
 
   updateClinicalNotes(notes) {
@@ -96,11 +93,9 @@ export class GeneralComponent implements OnInit {
     if (this.mrId === 0) {
 
       this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
-        this.navigationParams = { ...this.navigationParams, 'mrId': res };
-
-        this.medicalrecordService.setCurrentMRID(res);
+        this.mrId = res;
         this.sharedfunctionObj.openSnackBar('Medical Record Created Successfully');
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], { queryParams: this.navigationParams });
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -117,7 +112,7 @@ export class GeneralComponent implements OnInit {
     this.provider_services.updateMrClinicalNOtes(payload, mrId)
       .subscribe((data) => {
         this.shared_functions.openSnackBar(this.displayTitle + ' updated successfully');
-        this.router.navigate(['provider', 'customers', 'medicalrecord'],  { queryParams: this.navigationParams });
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

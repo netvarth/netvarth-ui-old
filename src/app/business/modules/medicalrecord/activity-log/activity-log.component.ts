@@ -69,3 +69,4 @@ export class ActivityLogComponent implements OnInit {
         });
   }
 }
+

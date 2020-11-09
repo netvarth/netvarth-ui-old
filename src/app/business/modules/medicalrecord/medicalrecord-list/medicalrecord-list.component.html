@@ -15,11 +15,11 @@
             <mat-spinner></mat-spinner>
           </div>
           <div *ngIf="!loading">
-            <!-- <div *ngIf="mr_dataSource.length === 0" class="mgn-up-10 style-padding">
+            <div *ngIf="mrList=== 0" class="mgn-up-10 style-padding">
               <p>No Medical Records Found For This Patient</p>
-            </div> -->
-            <mat-table [dataSource]="mr_dataSource">
-              
+            </div>
+            <mat-table *ngIf="mrList!== 0" [dataSource]="mr_dataSource">
+
                 <ng-container matColumnDef="createdDate">
                   <mat-header-cell *matHeaderCellDef> Created On </mat-header-cell>
                   <mat-cell *matCellDef=" let mr">

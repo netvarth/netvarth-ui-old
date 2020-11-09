@@ -26,7 +26,7 @@ const routes: Routes = [
       }
     ]
   },
-   { path: 'list', component: MedicalrecordListComponent },
+  { path: 'list', component: MedicalrecordListComponent },
   { path: 'edit', component: GeneralComponent },
   { path: 'uploadRx', component: UploadPrescriptionComponent },
   { path: 'addrxlist', component: DrugListComponent },
@@ -46,3 +46,4 @@ const routes: Routes = [
 export class MedicalrecordRoutingModule {
 
 }
+

@@ -18,6 +18,9 @@ import { Location } from '@angular/common';
 })
 export class MedicalrecordComponent implements OnInit {
 
+  accountType: any;
+  bookingId: string;
+  patientId: string;
   activityLogs: any;
   mrNumber: any;
   visitdate: Date;
@@ -31,25 +34,24 @@ export class MedicalrecordComponent implements OnInit {
   serviceName = 'Consultation';
   department: any;
   data: any;
-  mrId: any;
+  mrId = 0;
   routeLinks: any[];
   activeLinkIndex = -1;
   userId;
   customerDetails: any;
   uuid: any;
   mrdialogRef: any;
-  PatientId: any;
   gender: any;
   patientFirstName: any;
   patientLastName: number;
   PatientDob: any;
   mrlist;
+  providerId;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   mrCreatedDate: string;
   consultationMode = 'Out Patient';
   bookingType: any;
   patientConsultationType = 'OP';
-  // patientConsultationModes: any = [{ 'name': 'OP' }, { 'name': 'PHONE' }, { 'name': 'EMAIL' }, { 'name': 'VIDEO' }];
   patientConsultationModes: any = [{ 'displayName': 'Out Patient', 'name': 'OP' }, { 'displayName': 'Phone', 'name': 'PHONE' }, { 'displayName': 'E-mail', 'name': 'EMAIL' }, { 'displayName': 'Tele-Service', 'name': 'VIDEO' }];
 
   visitTime = new Date().toLocaleTimeString();
@@ -58,6 +60,7 @@ export class MedicalrecordComponent implements OnInit {
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   back_type: any;
   logsdialogRef: any;
+  loading = true;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -67,125 +70,162 @@ export class MedicalrecordComponent implements OnInit {
     private datePipe: DateFormatPipe
   ) {
     this.visitdate = this.datePipe.transformToDateWithTime(new Date());
-    this.routeLinks = [
-      {
-        label: 'Clinical Notes',
-        link: '/provider/customers/medicalrecord/clinicalnotes',
-        id: 'clinicalnotes',
-        index: 0
-      }, {
-        label: 'Prescription',
-        link: '/provider/customers/medicalrecord/prescription',
-        id: 'prescription',
-        index: 1
+    this.activated_route.queryParamMap.subscribe(queryParams => {
+      if (queryParams['calledfrom']) {
+        this.medicalService.setCalledFrom(queryParams['calledfrom']);
       }
-    ];
 
 
-    this.activated_route.queryParams.subscribe(
-      (qparams) => {
-        if (qparams['customerDetail']) {
-          console.log(qparams);
-          this.navigation_params = qparams;
-          // tslint:disable-next-line:radix
+    });
 
-          if (qparams.booking_date) {
-            this.visitdate = qparams.booking_date;
-          }
-          if (qparams.back_type) {
-            this.medicalService.setBacknav(qparams.back_type);
-          }
-
-          this.customerDetails = JSON.parse(qparams.customerDetail);
-          if (this.customerDetails.memberJaldeeId) {
-            this.display_PatientId = this.customerDetails.memberJaldeeId;
-          } else if (this.customerDetails.jaldeeId) {
-            this.display_PatientId = this.customerDetails.jaldeeId;
-          }
-
-          this.PatientId = this.customerDetails.id;
-          if (qparams.department) {
-            this.department = qparams.department;
-          }
-          if (qparams.serviceName) {
-            this.serviceName = qparams.serviceName;
-          }
-
-          if (qparams.booking_type && qparams.booking_type === 'TOKEN' || 'APPT') {
-            this.bookingType = qparams.booking_type;
-            if (qparams.consultationMode) {
-              this.consultationMode = qparams.consultationMode;
-            }
-          }
-
-
-          if (qparams.mrId) {
-            // tslint:disable-next-line:radix
-            this.mrId = parseInt(qparams.mrId);
-            this.medicalService.setCurrentMRID(this.mrId);
-          }
-          if (qparams.visitDate) {
-            this.visitdate = qparams.visitDate;
-          }
-          if (qparams.booking_time) {
-            this.visitTime = qparams.booking_time;
-          }
-          this.medicalService.setPatientDetailsForMR(qparams);
-
-
-        } else {
-          this.medicalService.patient_data.subscribe(res => {
-            this.navigation_params = {
-              'clone_params': res
-            };
-
-
-            this.customerDetails = JSON.parse(res.customerDetail);
-
-            if (res.booking_date) {
-              this.visitdate = res.booking_date;
-            }
-            this.PatientId = this.customerDetails.id;
-            if (res.department) {
-              this.department = res.department;
-            }
-            if (res.serviceName) {
-              this.serviceName = res.serviceName;
-            }
-
-
-
-          });
-          this.medicalService._mrUid.subscribe(mrId => {
-            this.mrId = mrId;
-          });
-
-
-        }
-
-      });
 
   }
 
 
   ngOnInit() {
-    if (this.mrId !== 0) {
-      this.getMedicalRecordUsingMR(this.mrId);
-    }
-    this.medicalService.back_nav.subscribe(res => {
-      this.back_type = res;
-    });
+    const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
+    this.medicalService.setDoctorId(user.id);
+    this.activated_route.paramMap.subscribe(params => {
+      this.patientId = params.get('id');
+      this.bookingType = params.get('type');
+      this.bookingId = params.get('uid');
+      const medicalrecordId = params.get('mrId');
+      this.mrId = parseInt(medicalrecordId, 0);
+      this.medicalService.setParams(this.bookingType, this.bookingId);
+       this.getPatientVisitListCount();
 
-    this.router.events.subscribe((res) => {
-      this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
+      if (this.mrId !== 0) {
+        this.getMedicalRecordUsingId(this.mrId);
+      } else {
+        if (this.bookingType === 'APPT') {
+          this.getAppointmentById(this.bookingId);
+        } else if (this.bookingType === 'TOKEN') {
+          this.getWaitlistDetails(this.bookingId);
+        } else if (this.bookingType === 'FOLLOWUP') {
+          this.getPatientDetails(this.patientId);
+        }
+      }
+      const clinical_link = '/provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/clinicalnotes';
+      const prescription_link = '/provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/prescription';
+      this.routeLinks = [
+        {
+          label: 'Clinical Notes',
+          link: clinical_link,
+          id: 'clinicalnotes',
+          index: 0
+        }, {
+          label: 'Prescription',
+          link: prescription_link,
+          id: 'prescription',
+          index: 1
+        }
+
+      ];
+
     });
-    this.getPatientVisitListCount();
 
 
   }
+  getAppointmentById(uid) {
+    this.provider_services.getAppointmentById(uid)
+      .subscribe((data: any) => {
+        const response = data;
+        this.loading =false;
+        this.visitdate = response.consLastVisitedDate;
+
+        if (response.department) {
+          this.department = response.service.department;
+        } if (response.service) {
+          this.serviceName = response.service.name;
+        }
+        this.medicalService.setServiceDept(this.serviceName, this.department);
+        this.customerDetails = response.appmtFor[0];
+        this.medicalService.setPatientDetails(this.customerDetails);
+        if (response.provider.id) {
+          this.medicalService.setDoctorId(response.provider.id);
+        }
+
+
+        this.patientId = this.customerDetails.id;
+        if (this.customerDetails.memberJaldeeId) {
+          this.display_PatientId = this.customerDetails.memberJaldeeId;
+        } else if (this.customerDetails.jaldeeId) {
+          this.display_PatientId = this.customerDetails.jaldeeId;
+        }
+
+
+
+
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+  getWaitlistDetails(uid) {
+    this.provider_services.getProviderWaitlistDetailById(uid)
+      .subscribe((data: any) => {
+        const response = data;
+        this.loading =false;
+        this.visitdate = response.consLastVisitedDate;
+        if (response.department) {
+          this.department = response.service.department;
+        } if (response.service) {
+          this.serviceName = response.service.name;
+        }
+        this.customerDetails = response.waitlistingFor[0];
+        this.medicalService.setPatientDetails(this.customerDetails);
+        this.patientId = this.customerDetails.id;
+        if (this.customerDetails.memberJaldeeId) {
+          this.display_PatientId = this.customerDetails.memberJaldeeId;
+        } else if (this.customerDetails.jaldeeId) {
+          this.display_PatientId = this.customerDetails.jaldeeId;
+        }
+        if (response.provider.id) {
+          this.medicalService.setDoctorId(response.provider.id);
+        }
+
+
+
+      },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+  getPatientDetails(uid) {
+
+    const filter = { 'id-eq': uid };
+    this.provider_services.getCustomer(filter)
+      .subscribe(
+        (data: any) => {
+          const response = data;
+          this.loading =false;
+          this.customerDetails = response[0];
+          this.patientId = this.customerDetails.id;
+          if (this.customerDetails.memberJaldeeId) {
+            this.display_PatientId = this.customerDetails.memberJaldeeId;
+          } else if (this.customerDetails.jaldeeId) {
+            this.display_PatientId = this.customerDetails.jaldeeId;
+          }
+          this.medicalService.setPatientDetails(this.customerDetails);
+
+
+        },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+  routerNavigate(event, routerId) {
+    console.log(event);
+    event.target.classList.add('mat-tab-link-active');
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, routerId]);
+
+  }
+
+
   getPatientVisitListCount() {
-    if (this.PatientId !== null && this.PatientId !== undefined) {
-      this.provider_services.getPatientVisitListCount(this.PatientId)
+    if (this.patientId !== null && this.patientId !== undefined) {
+      this.provider_services.getPatientVisitListCount(this.patientId)
         .subscribe((data: any) => {
           this.visitcount = data;
           this.showLastvisitorNot();
@@ -203,10 +243,7 @@ export class MedicalrecordComponent implements OnInit {
     if (this.mrId === 0) {
 
       this.medicalService.createMR('consultationMode', event).then(res => {
-        this.getMedicalRecordUsingMR(res);
-        this.navigation_params = { ...this.navigation_params, 'mrId': res };
-        this.medicalService.setPatientDetailsForMR(this.navigation_params);
-        this.medicalService.setCurrentMRID(res);
+        this.getMedicalRecordUsingId(res);
 
       },
         error => {
@@ -221,7 +258,7 @@ export class MedicalrecordComponent implements OnInit {
   updateMR(payload, mrId) {
     this.provider_services.updateMR(payload, mrId)
       .subscribe((data) => {
-        this.getMedicalRecordUsingMR(data);
+        this.getMedicalRecordUsingId(data);
 
         this.sharedfunctionObj.openSnackBar('Medical Record updated successfully');
       },
@@ -231,23 +268,41 @@ export class MedicalrecordComponent implements OnInit {
 
 
   }
-  getMedicalRecordUsingMR(mrId) {
-
+  getMedicalRecordUsingId(mrId) {
+console.log('mrId'+mrId);
 
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
-          console.log(data);
-          console.log(data.mrNumber);
+           this.loading =false;
           this.mrNumber = data.mrNumber;
           this.mrCreatedDate = data.mrCreatedDate;
           this.activityLogs = data.auditLogs;
+          this.visitdate = data.mrConsultationDate;
+          if (data.department) {
+            this.department = data.service.department;
+          } if (data.service) {
+            this.serviceName = data.service.name;
+          }
+          this.medicalService.setServiceDept(this.serviceName, this.department);
+          this.customerDetails = data.providerConsumer;
+          this.medicalService.setPatientDetails(this.customerDetails);
+          if (data.provider.id) {
+            this.medicalService.setDoctorId(data.provider.id);
+          }
+          this.patientId = this.customerDetails.id;
+          if (this.customerDetails.memberJaldeeId) {
+            this.display_PatientId = this.customerDetails.memberJaldeeId;
+          } else if (this.customerDetails.jaldeeId) {
+            this.display_PatientId = this.customerDetails.jaldeeId;
+          }
           if (this.data.consultationMode === 'Out Patient') {
             this.patientConsultationType = 'OP';
 
           } else {
             this.patientConsultationType = data.consultationMode.toUpperCase();
           }
+
 
         }
       },
@@ -256,32 +311,23 @@ export class MedicalrecordComponent implements OnInit {
         });
   }
   VisitList() {
-    console.log(this.PatientId);
+    console.log(this.patientId);
     this.mrdialogRef = this.dialog.open(LastVisitComponent, {
       width: '800px;',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        patientId: this.PatientId,
+        patientId: this.patientId,
         customerDetail: this.customerDetails
 
       }
     });
     this.mrdialogRef.afterClosed().subscribe(result => {
-      console.log(JSON.stringify(result));
-      if (result.type === 'prescription') {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], result.navigationParams);
-      } else if (result.type === 'clinicalnotes') {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
-      }
+
     });
   }
   activitylogs() {
-    console.log(this.PatientId);
+    console.log(this.patientId);
     this.logsdialogRef = this.dialog.open(ActivityLogComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -294,14 +340,16 @@ export class MedicalrecordComponent implements OnInit {
 
   }
   goback() {
-    if (this.back_type === 'waitlist') {
+    const back_type = this.medicalService.getReturnTo();
+    if (back_type === 'waitlist') {
       this.router.navigate(['provider', 'check-ins']);
-    } else if (this.back_type === 'appt') {
+    } else if (back_type === 'appt') {
       this.router.navigate(['provider', 'appointments']);
-    } else if (this.back_type === 'consumer') {
+    } else if (back_type === 'patient') {
       this.router.navigate(['provider', 'customers']);
+    } else if (back_type === 'list') {
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'list']);
     } else {
-      // this.router.navigate(['provider', 'customers']);
       this.location.back();
     }
   }
@@ -345,3 +393,4 @@ export class MedicalrecordComponent implements OnInit {
 
   }
 }
+

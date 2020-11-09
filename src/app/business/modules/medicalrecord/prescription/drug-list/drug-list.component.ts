@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MedicalrecordService } from '../../medicalrecord.service';
 import { AddDrugComponent } from '../add-drug/add-drug.component';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
@@ -18,6 +18,9 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 })
 export class DrugListComponent implements OnInit {
 
+  bookingId: any;
+  bookingType: any;
+  patientId: any;
   display_PatientId: any;
   today = new Date();
   patientDetails;
@@ -49,53 +52,38 @@ export class DrugListComponent implements OnInit {
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
-    private activatedRoot: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private medicalrecord_service: MedicalrecordService) {
-      this.medicalrecord_service.patient_data.subscribe(res => {
-      this.navigationParams = res;
 
-    });
-    this.medicalrecord_service.patient_data.subscribe(data => {
-      this.patientDetails = JSON.parse(data.customerDetail);
-      if (this.patientDetails.memberJaldeeId) {
-        this.display_PatientId = this.patientDetails.memberJaldeeId;
-      } else if (this.patientDetails.jaldeeId) {
-        this.display_PatientId = this.patientDetails.jaldeeId;
-      }
-      this.userId = this.patientDetails.id;
-    });
-    this.activatedRoot.queryParams.subscribe(queryParams => {
+    this.activatedRoute.queryParams.subscribe(queryParams => {
       if (queryParams.details) {
-      const data = JSON.parse(queryParams.details);
-      this.drugList = data;
-    }
-    if (queryParams.mode) {
-      const type = queryParams.mode;
-      if (type === 'view') {
-        this.heading = 'Update Prescription';
+        const data = JSON.parse(queryParams.details);
+        this.drugList = data;
       }
-     }
+      if (queryParams.mode) {
+        const type = queryParams.mode;
+        if (type === 'view') {
+          this.heading = 'Update Prescription';
+        }
+      }
     });
   }
 
   ngOnInit() {
+    this.patientDetails = this.medicalrecord_service.getPatientDetails();
+    const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
+    this.mrId = parseInt(medicalrecordId, 0);
+    this.patientId = this.activatedRoute.parent.snapshot.params['id'];
+    this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
+    this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.providerId = user.id;
-    // this.getDigitalSign();
-    // this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
-    this.medicalrecord_service._mrUid.subscribe(mrId => {
-      if (mrId !== 0) {
-        this.mrId = mrId;
 
-      } else {
-        this.loading = false;
-      }
-    });
     this.getMrprescription();
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , { queryParams: this.navigationParams } );
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
   getDigitalSign() {
     if (this.providerId) {
@@ -189,22 +177,20 @@ export class DrugListComponent implements OnInit {
         subscribe(res => {
           console.log(this.drugList);
           this.showSave = false;
-          this.sharedfunctionObj.openSnackBar('Prescription updated Successfully');
-          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
+          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
         },
-        error => {
-          this.disable = false;
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
+          error => {
+            this.disable = false;
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
     } else {
       this.medicalrecord_service.createMR('prescriptions', this.drugList)
-        .then(data => {
-          this.navigationParams = { ...this.navigationParams, 'mrId': data };
+        .then((data: number) => {
+          this.mrId = data;
 
-          this.medicalrecord_service.setCurrentMRID(data);
           this.showSave = false;
           this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
-          this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
+          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
         },
           error => {
             this.disable = false;
@@ -315,6 +301,7 @@ export class DrugListComponent implements OnInit {
     });
   }
   redirecToPrescriptionHome() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] , { queryParams: this.navigationParams } );
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
 }
+

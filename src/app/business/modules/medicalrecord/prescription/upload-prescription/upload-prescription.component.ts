@@ -15,6 +15,9 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 })
 export class UploadPrescriptionComponent implements OnInit {
 
+  bookingId: any;
+  bookingType: any;
+  patientId: any;
   display_PatientId: any;
   today = new Date();
   patientDetails;
@@ -47,38 +50,32 @@ export class UploadPrescriptionComponent implements OnInit {
     public provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
-    private activatedRoot: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
-      this.medicalrecord_service.patient_data.subscribe(res => {
-        this.navigationParams = res;
-        this.navigationExtras = this.navigationParams;
-      });
-    this.medicalrecord_service.patient_data.subscribe(data => {
-      this.patientDetails = JSON.parse(data.customerDetail);
-      if (this.patientDetails.memberJaldeeId) {
-        this.display_PatientId = this.patientDetails.memberJaldeeId;
-      } else if (this.patientDetails.jaldeeId) {
-        this.display_PatientId = this.patientDetails.jaldeeId;
+
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      if (queryParams.mode) {
+        const type = queryParams.mode;
+        if (type === 'view') {
+          this.heading = 'Update Prescription';
+        }
       }
-      this.userId = this.patientDetails.id;
-    });
-    this.medicalrecord_service._mrUid.subscribe(mrId => {
-      if (mrId !== 0) {
-        this.mrId = mrId;
-      }
-    });
-    this.activatedRoot.queryParams.subscribe(queryParams => {
-    if (queryParams.mode) {
-      const type = queryParams.mode;
-      if (type === 'view') {
-        this.heading = 'Update Prescription';
-      }
-     }
     });
 
   }
 
   ngOnInit() {
+    this.patientDetails = this.medicalrecord_service.getPatientDetails();
+    if (this.patientDetails.memberJaldeeId) {
+      this.display_PatientId = this.patientDetails.memberJaldeeId;
+    } else if (this.patientDetails.jaldeeId) {
+      this.display_PatientId = this.patientDetails.jaldeeId;
+    }
+    const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
+    this.mrId = parseInt(medicalrecordId, 0);
+    this.patientId = this.activatedRoute.parent.snapshot.params['id'];
+    this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
+    this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
     if (this.mrId) {
       this.getMrprescription(this.mrId);
     }
@@ -86,7 +83,7 @@ export class UploadPrescriptionComponent implements OnInit {
 
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
 
   getMrprescription(mrId) {
@@ -95,7 +92,7 @@ export class UploadPrescriptionComponent implements OnInit {
         this.uploadImages = data;
         console.log(data);
         for (const pic of this.uploadImages) {
-          const imgdet = {'name': pic.originalName, 'keyName': pic.keyName , 'size': pic.imageSize, 'view': true};
+          const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true };
           this.selectedMessage.files.push(imgdet);
         }
         console.log(this.selectedMessage.files);
@@ -134,21 +131,16 @@ export class UploadPrescriptionComponent implements OnInit {
 
 
 
-deletePrevUploadRx() {
-  return new Promise((resolve, reject) => {
-    for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
-      if (this.selectedMessage.files[ia].view === true) {
-        this.selectedMessage.files.splice(ia, 1);
+  deletePrevUploadRx() {
+    return new Promise((resolve, reject) => {
+      for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
+        if (this.selectedMessage.files[ia].view === true) {
+          this.selectedMessage.files.splice(ia, 1);
+        }
       }
-    }
-  });
-  // for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
-  //   if (this.selectedMessage.files[ia].view === true) {
-  //     this.selectedMessage.files.splice(ia, 1);
-  //   }
-  // }
+    });
 
-}
+  }
 
   saveImages() {
     this.disable = true;
@@ -181,9 +173,9 @@ deletePrevUploadRx() {
       this.uploadMrPrescription(this.mrId, submit_data);
     } else {
       this.medicalrecord_service.createMRForUploadPrescription()
-        .then(data => {
-          this.navigationParams = { ...this.navigationParams, 'mrId': data };
-          this.medicalrecord_service.setCurrentMRID(data);
+        .then((data: number) => {
+          this.mrId = data;
+
           this.uploadMrPrescription(data, submit_data);
         },
           error => {
@@ -199,7 +191,7 @@ deletePrevUploadRx() {
         this.showSave = false;
         this.upload_status = 'Uploaded';
         this.sharedfunctionObj.openSnackBar('Prescription uploaded successfully');
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'] ,  { queryParams: this.navigationParams });
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
       },
         error => {
           this.disable = false;
@@ -209,13 +201,13 @@ deletePrevUploadRx() {
   deleteTempImage(img, index) {
     this.showSave = true;
     if (img.view && img.view === true) {
-      this.provider_services.deleteUplodedprescription(img.keyName , this.mrId)
-      .subscribe((data) => {
-        this.selectedMessage.files.splice(index, 1);
-       },
-      error => {
-        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      });
+      this.provider_services.deleteUplodedprescription(img.keyName, this.mrId)
+        .subscribe((data) => {
+          this.selectedMessage.files.splice(index, 1);
+        },
+          error => {
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
     } else {
       this.selectedMessage.files.splice(index, 1);
     }

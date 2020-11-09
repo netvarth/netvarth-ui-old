@@ -4,8 +4,8 @@
           <i class="fa fa-window-close" aria-hidden="true"></i>
       </button>
   </h1>
-
-  <mat-dialog-content>
+  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+  <mat-dialog-content *ngIf="!loading">
 
           <div class="form-group" >
               <div> Share with {{customerDetail.firstName | capitalizeFirst}}  {{customerDetail.lastName}}</div>

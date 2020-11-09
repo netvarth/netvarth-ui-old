@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { projectConstants } from '../../../../../../app.component';
-import { MedicalrecordService } from '../../../medicalrecord.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -50,13 +49,16 @@ export class UploadSignatureComponent implements OnInit {
   providerId;
   digitalSign = false;
   signatureviewdialogRef;
-  digitalsignature = {};
+  bookingId: any;
+  bookingType: any;
+  patientId: any;
   
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
     private activatedRoot: ActivatedRoute,
     public dialog: MatDialog,
+<<<<<<< HEAD
     private medicalrecord_service: MedicalrecordService) {
     this.medicalrecord_service.patient_data.subscribe(res => {
       this.navigationParams = res;
@@ -77,9 +79,19 @@ export class UploadSignatureComponent implements OnInit {
         this.mrId = mrId;
       }
     });
+=======
+    //private medicalrecord_service: MedicalrecordService
+    ) {
+      const medicalrecordId = this.activatedRoot.parent.snapshot.params['mrId'];
+      this.mrId = parseInt(medicalrecordId, 0);
+      this.patientId = this.activatedRoot.parent.snapshot.params['id'];
+      this.bookingType = this.activatedRoot.parent.snapshot.params['type'];
+      this.bookingId = this.activatedRoot.parent.snapshot.params['uid'];
+>>>>>>> refs/remotes/origin/1.6-MR
     this.activatedRoot.queryParams.subscribe(queryParams => {
       if (queryParams.providerId) {
         this.providerId = queryParams.providerId;
+        console.log(this.providerId);
       }
     });
 
@@ -89,7 +101,7 @@ export class UploadSignatureComponent implements OnInit {
   }
 
   goBack() {
-    //this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign' ]);
   }
 
   filesSelected(event) {
@@ -150,6 +162,10 @@ export class UploadSignatureComponent implements OnInit {
       .subscribe((data) => {
         this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams});
         this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
+<<<<<<< HEAD
+=======
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+>>>>>>> refs/remotes/origin/1.6-MR
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
