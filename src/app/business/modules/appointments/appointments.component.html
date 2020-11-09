@@ -132,7 +132,7 @@
           *ngIf="activeSchedules && activeSchedules.length > 0 && time_type !==3">
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
-              <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="activeSchedules">
+              <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
                 <button class="item cust-button-3"
                   [ngClass]="{active: isQueueSelected(schedule.id)?true:false, disabled: schedule.apptState === 'ENABLED'?false:true}"
                   (click)="viewQClicked(schedule)" *ngFor="let schedule of activeSchedules;let i = index">
@@ -151,6 +151,8 @@
             </div>
           </div>
         </div>
+
+   
         <mat-tab-group class="checkinlist" (selectedTabChange)="tabChange($event)" [selectedIndex]="time_type - 1">
           <mat-tab label="Today ({{today_waitlist_count}})">
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -306,10 +308,10 @@
                       </td>
                       <td class="parent-selection parent-title td-one">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
-                          *ngIf="time_type==3">
+                          *ngIf="time_type!=1">
                           {{appt.appmtDate | date: display_dateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
-                          <span class="greenc bold font11"> {{getSingleTime(appt.appmtTime)}}</span>
+                          <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
                           <div *ngIf="this.selQIds.length > 1">
                             S{{getScheduleIndex(appt.schedule.id) + 1}}
                           </div></div>
@@ -523,10 +525,10 @@
                       </td>
                       <td class="parent-selection parent-title td-one">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
-                          *ngIf="time_type==3">
+                          *ngIf="time_type!=1">
                           {{appt.appmtDate | date: display_dateFormat}}</div>
                           <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
-                            <span class="greenc bold font11"> {{getSingleTime(appt.appmtTime)}}</span>
+                            <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
                           <div *ngIf="this.selQIds.length > 1">
                             S{{getScheduleIndex(appt.schedule.id) + 1}}
                           </div></div>
@@ -841,10 +843,10 @@
                     </td>
                     <td class="parent-selection parent-title td-one">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
-                        *ngIf="time_type==3">
+                        *ngIf="time_type!=1">
                         {{appt.appmtDate | date: display_dateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
-                          <span class="greenc bold font11"> {{getSingleTime(appt.appmtTime)}}</span>
+                          <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
                         <div *ngIf="this.selQIds.length > 1">
                           S{{getScheduleIndex(appt.schedule.id) + 1}}
                         </div></div>
@@ -1213,10 +1215,10 @@
                     </td>
                     <td class="parent-selection parent-title td-one">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
-                        *ngIf="time_type==3">
+                        *ngIf="time_type!=1">
                         {{appt.appmtDate | date: display_dateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
-                          <span class="greenc bold font11"> {{getSingleTime(appt.appmtTime)}}</span>
+                          <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
                         <div *ngIf="this.selQIds.length > 1">
                           S{{getScheduleIndex(appt.schedule.id) + 1}}
                         </div></div>
@@ -1380,6 +1382,8 @@
             </div>
           </mat-tab>
         </mat-tab-group>
+    
+
       </div>
     </div>
   </div>
