@@ -112,6 +112,7 @@ export class CustomerDetailComponent implements OnInit {
     showMoreHistory = false;
     selectedDetailsforMsg: any = [];
     uid;
+    customernotes = '';
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -123,7 +124,9 @@ export class CustomerDetailComponent implements OnInit {
         private _location: Location, public dialog: MatDialog,
         private router: Router) {
         // this.search_data = this.data.search_data;
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        const customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.customer_label = customer_label.charAt(0).toUpperCase() + customer_label.slice(1).toLowerCase();
+        this.customernotes = this.customer_label + ' note';
         this.activated_route.queryParams.subscribe(qparams => {
             const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
             this.domain = user.sector;
@@ -688,22 +691,18 @@ export class CustomerDetailComponent implements OnInit {
         this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
     }
     getCustomerTodayVisit() {
-        this.loading = true;
         this.provider_services.getCustomerTodayVisit(this.customerId).subscribe(
             (data: any) => {
                 this.todayVisitDetailsArray = data;
                 this.todayvisitDetails = this.todayVisitDetailsArray.slice(0, 5);
-                this.loading = false;
             }
         );
     }
     getCustomerFutureVisit() {
-        this.loading = true;
         this.provider_services.getCustomerFutureVisit(this.customerId).subscribe(
             (data: any) => {
                 this.futureVisitDetailsArray = data;
                 this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
-                this.loading = false;
             }
         );
     }
@@ -712,6 +711,7 @@ export class CustomerDetailComponent implements OnInit {
         this.provider_services.getCustomerHistoryVisit(this.customerId).subscribe(
             (data: any) => {
                 this.historyvisitDetails = data;
+                this.loading = false;
             }
         );
     }
