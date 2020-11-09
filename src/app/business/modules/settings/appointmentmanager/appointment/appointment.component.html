@@ -599,8 +599,8 @@
                             </aside>
                         </div>
                         <div class="col-md-12 mgn-up-20 " *ngIf="!showAction">
-                            <mat-chip-list class="btns">
-                                <mat-chip *ngIf="thirdParty === ''" class="pro-action"
+                            <mat-chip-list class="btns" *ngIf="thirdParty === ''">
+                                <mat-chip class="pro-action"
                                     (click)="handleSideScreen('members')"><a>Add / Change
                                         Member </a>
                                 </mat-chip>

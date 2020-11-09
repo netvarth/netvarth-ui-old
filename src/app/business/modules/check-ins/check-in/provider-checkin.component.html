@@ -546,8 +546,8 @@
                 <span> Attach File
                 </span>
               </button> -->
-              <mat-chip-list class="btns">
-                <mat-chip *ngIf="thirdParty === ''" class="pro-action" (click)="handleSideScreen('members')"><a>Add /
+              <mat-chip-list class="btns" *ngIf="thirdParty === ''">
+                <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
                     Change
                     Member </a>
                 </mat-chip>
