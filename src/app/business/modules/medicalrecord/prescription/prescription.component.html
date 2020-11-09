@@ -26,7 +26,7 @@
     </div>
   </div>
   <div class="mgn-up-20" *ngIf="drugList.length>0">
-      <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on {{prescriptionSharedTimestamp}}</i></div>
+      <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
     <div class="pad-10 table-responsive">
       <table class="table table-bordered">
         <thead>
@@ -103,7 +103,7 @@
     </div>
   </div>
   <div class="mgn-up-20" *ngIf="uploadlist.length>0">
-      <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on {{prescriptionSharedTimestamp}}</i></div>
+      <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
     <div class="pad-10 table-responsive">
       <table class="table table-bordered">
         <thead>

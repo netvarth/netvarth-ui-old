@@ -7,7 +7,6 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { CustomerActionsComponent } from '../customer-actions/customer-actions.component';
@@ -718,155 +717,56 @@ export class CustomerDetailComponent implements OnInit {
     stopprop(event) {
         event.stopPropagation();
     }
-    lastvisits(customerDetail) {
-        const mrdialogRef = this.dialog.open(LastVisitComponent, {
-            width: '80%',
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true,
-            data: {
-                patientId: customerDetail.id,
-                customerDetail: customerDetail,
-                back_type: 'consumer-detail'
+    medicalRecord(visitDetails) {
+        console.log(visitDetails);
+        if (visitDetails.waitlist) {
+            console.log(visitDetails.waitlist);
+            let mrId = 0;
+            if (visitDetails.waitlist.mrId) {
+            mrId = visitDetails.waitlist.mrId;
             }
-        });
-        mrdialogRef.afterClosed().subscribe(result => {
-            console.log(JSON.stringify(result));
-            if (result.type === 'prescription') {
-                this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-                this.router.onSameUrlNavigation = 'reload';
-                this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], result.navigationParams);
-            } else if (result.type === 'clinicalnotes') {
-                this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-                this.router.onSameUrlNavigation = 'reload';
-                this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
+            const customerDetails = visitDetails.waitlist.waitlistingFor[0];
+            const customerId = customerDetails.id;
+            const bookingId = visitDetails.waitlist.ynwUuid;
+            const bookingType = 'TOKEN';
+            this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ]);
+        } else if (visitDetails.appointmnet) {
+            let mrId = 0;
+            if (visitDetails.appointmnet.mrId) {
+            mrId = visitDetails.appointmnet.mrId;
             }
-        });
+            const customerDetails = visitDetails.appointmnet.appmtFor[0];
+            const customerId = customerDetails.id;
+            const bookingId = visitDetails.appointmnet.uid;
+            const bookingType = 'APPT';
+            this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ]);
+         }
+    }
+    prescription(visitDetails) {
+        console.log(visitDetails);
+        if (visitDetails.waitlist) {
+            console.log(visitDetails.waitlist);
+            let mrId = 0;
+            if (visitDetails.waitlist.mrId) {
+              mrId = visitDetails.waitlist.mrId;
+            }
+            const customerDetails = visitDetails.waitlist.waitlistingFor[0];
+            const customerId = customerDetails.id;
+            const bookingId = visitDetails.waitlist.ynwUuid;
+            const bookingType = 'TOKEN';
+            this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription' ]);
+          } else if (visitDetails.appointmnet) {
+            let mrId = 0;
+            if (visitDetails.appointmnet.mrId) {
+              mrId = visitDetails.appointmnet.mrId;
+            }
+            const customerDetails = visitDetails.appointmnet.appmtFor[0];
+            const customerId = customerDetails.id;
+            const bookingId = visitDetails.appointmnet.uid;
+             const bookingType = 'APPT';
+             this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription']);
+          }
 
-    }
-    listMedicalrecords(customer) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { 'id': customer.id }
-        };
-
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
-    }
-    medicalRecord(visitDetail) {
-        let medicalrecord_mode = 'new';
-        let mrId = 0;
-        if (visitDetail.mrId) {
-            medicalrecord_mode = 'view';
-            mrId = visitDetail.mrId;
-        }
-        if (visitDetail.waitlist) {
-            let providerId;
-            if (visitDetail.waitlist.provider && visitDetail.waitlist.provider.id) {
-                providerId = visitDetail.waitlist.provider.id;
-            } else {
-                providerId = '';
-            }
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    'customerDetail': JSON.stringify(visitDetail.waitlist.waitlistingFor[0]),
-                    'serviceId': visitDetail.waitlist.service.id,
-                    'serviceName': visitDetail.waitlist.service.name,
-                    'booking_type': 'TOKEN',
-                    'booking_date': visitDetail.waitlist.consLastVisitedDate,
-                    'booking_time': visitDetail.waitlist.checkInTime,
-                    'department': visitDetail.waitlist.service.deptName,
-                    'consultationMode': 'OP',
-                    'booking_id': visitDetail.waitlist.ynwUuid,
-                    'mr_mode': medicalrecord_mode,
-                    'mrId': mrId,
-                    'back_type': 'consumer-detail',
-                    'provider_id': providerId
-                }
-            };
-            this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
-        } else {
-            let providerId;
-            if (visitDetail.appointmnet.provider && visitDetail.appointmnet.provider.id) {
-                providerId = visitDetail.appointmnet.provider.id;
-            } else {
-                providerId = '';
-            }
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    'customerDetail': JSON.stringify(visitDetail.appointmnet.appmtFor[0]),
-                    'serviceId': visitDetail.appointmnet.service.id,
-                    'serviceName': visitDetail.appointmnet.service.name,
-                    'department': visitDetail.appointmnet.service.deptName,
-                    'booking_type': 'APPT',
-                    'booking_date': visitDetail.appointmnet.consLastVisitedDate,
-                    'booking_time': visitDetail.appointmnet.apptTakenTime,
-                    'mr_mode': medicalrecord_mode,
-                    'mrId': mrId,
-                    'booking_id': visitDetail.appointmnet.uid,
-                    'back_type': 'consumer-detail',
-                    'provider_id': providerId,
-                    'visitDate': visitDetail.appointmnet.consLastVisitedDate,
-                }
-            };
-            this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
-        }
-    }
-    prescription(visitDetail) {
-        let medicalrecord_mode = 'new';
-        let mrId = 0;
-        if (visitDetail.mrId) {
-            medicalrecord_mode = 'view';
-            mrId = visitDetail.mrId;
-        }
-        if (visitDetail.waitlist) {
-            let providerId;
-            if (visitDetail.waitlist.provider && visitDetail.waitlist.provider.id) {
-                providerId = visitDetail.waitlist.provider.id;
-            } else {
-                providerId = '';
-            }
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    'customerDetail': JSON.stringify(visitDetail.waitlist.waitlistingFor[0]),
-                    'serviceId': visitDetail.waitlist.service.id,
-                    'serviceName': visitDetail.waitlist.service.name,
-                    'booking_type': 'TOKEN',
-                    'booking_date': visitDetail.waitlist.consLastVisitedDate,
-                    'booking_time': visitDetail.waitlist.checkInTime,
-                    'department': visitDetail.waitlist.service.deptName,
-                    'consultationMode': 'OP',
-                    'mrId': mrId,
-                    'mr_mode': medicalrecord_mode,
-                    'booking_id': visitDetail.waitlist.ynwUuid,
-                    'back_type': 'consumer-detail',
-                    'provider_id': providerId
-                }
-            };
-            this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
-        } else {
-            let providerId;
-            if (visitDetail.appointmnet.provider && visitDetail.appointmnet.provider.id) {
-                providerId = visitDetail.appointmnet.provider.id;
-            } else {
-                providerId = '';
-            }
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    'customerDetail': JSON.stringify(visitDetail.appointmnet.appmtFor[0]),
-                    'serviceId': visitDetail.appointmnet.service.id,
-                    'serviceName': visitDetail.appointmnet.service.name,
-                    'department': visitDetail.appointmnet.service.deptName,
-                    'booking_type': 'APPT',
-                    'booking_date': visitDetail.appointmnet.consLastVisitedDate,
-                    'booking_time': visitDetail.appointmnet.apptTakenTime,
-                    'mr_mode': medicalrecord_mode,
-                    'mrId': mrId,
-                    'booking_id': visitDetail.appointmnet.uid,
-                    'back_type': 'consumer-detail',
-                    'provider_id': providerId,
-                    'visitDate': visitDetail.appointmnet.consLastVisitedDate,
-                }
-            };
-            this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
-        }
     }
     gotoCustomerDetail(visit, time_type) {
         if (visit.waitlist) {
