@@ -430,7 +430,8 @@ export const projectConstantsLocal = {
     Completed: 'Completed',
     Rejected: 'Cancelled',
     Confirmed: 'Confirmed',
-    Rescheduled: 'Rescheduled'
+    Rescheduled: 'Rescheduled',
+    PrepaymentPending: 'Prepayment Pending',
   },
   INVOICE_STATUS_FILTER: [
     { displayName: 'Paid', value: 'Paid' },

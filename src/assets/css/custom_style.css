@@ -8971,6 +8971,9 @@ owl-carousel .bt3.active {
 .content.comn-cls .lbr .card .appthistory .c-history li.Rescheduled:before {
   background: #e3b022;
 }
+.content.comn-cls .lbr .card .appthistory .c-history li.PrepaymentPending:before {
+  background: #ffbc00;
+}
 
 .content.comn-cls .lbr .card .appthistory .c-history li.Completed:before {
   background: #0edcb8;

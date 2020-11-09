@@ -10077,6 +10077,9 @@ body { font-size: 1rem !important}
 .content.comn-cls .lbr .card .c-history li.rescheduled:before {
     background: #e3b022;
 }
+.content.comn-cls .lbr .card .c-history li.prepaymentPending:before {
+    background: #ffbc00;
+}
 
 .content.comn-cls .lbr .card .c-history li.done:before {
     background: #0edcb8;
