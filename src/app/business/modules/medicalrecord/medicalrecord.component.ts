@@ -142,21 +142,16 @@ export class MedicalrecordComponent implements OnInit {
         this.medicalService.setServiceDept(this.serviceName, this.department);
         this.customerDetails = response.appmtFor[0];
         this.medicalService.setPatientDetails(this.customerDetails);
-        if (response.provider.id) {
-          this.medicalService.setDoctorId(response.provider.id);
-        }
-
-
         this.patientId = this.customerDetails.id;
         if (this.customerDetails.memberJaldeeId) {
           this.display_PatientId = this.customerDetails.memberJaldeeId;
         } else if (this.customerDetails.jaldeeId) {
           this.display_PatientId = this.customerDetails.jaldeeId;
         }
-
-
-
-
+        if (response.provider.id) {
+          this.medicalService.setDoctorId(response.provider.id);
+        }
+       
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -184,8 +179,6 @@ export class MedicalrecordComponent implements OnInit {
         if (response.provider.id) {
           this.medicalService.setDoctorId(response.provider.id);
         }
-
-
 
       },
         error => {
@@ -287,14 +280,14 @@ console.log('mrId'+mrId);
           this.medicalService.setServiceDept(this.serviceName, this.department);
           this.customerDetails = data.providerConsumer;
           this.medicalService.setPatientDetails(this.customerDetails);
-          if (data.provider.id) {
-            this.medicalService.setDoctorId(data.provider.id);
-          }
           this.patientId = this.customerDetails.id;
           if (this.customerDetails.memberJaldeeId) {
             this.display_PatientId = this.customerDetails.memberJaldeeId;
           } else if (this.customerDetails.jaldeeId) {
             this.display_PatientId = this.customerDetails.jaldeeId;
+          }
+          if (data.provider.id) {
+            this.medicalService.setDoctorId(data.provider.id);
           }
           if (this.data.consultationMode === 'Out Patient') {
             this.patientConsultationType = 'OP';
