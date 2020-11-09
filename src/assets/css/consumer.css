@@ -6127,6 +6127,11 @@
     .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .header .lt .status-outer .cancel-label, .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .header .lt .status-outer .started-label, .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .header .lt .status-outer .done-label {
         margin-left: 10px;
     }
+    .consumer-dashhome .mat-flat-button {
+        min-width: 45px !important;
+        line-height: 30px !important;
+        padding: 0 10px !important;
+    }
 }
 
 .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .header .lt .status-outer .cancel-label:before, .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .header .lt .status-outer .started-label:before, .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .header .lt .status-outer .done-label:before {
@@ -6560,11 +6565,11 @@
     text-align: left;
 }
 .consumer-dash .flat-icon-btn {
-    border: 1px solid rgb(4 62 121);
+    /* border: 1px solid rgb(4 62 121); */
     border-radius: 50px;
-    color: rgb(255 255 255);
+    /* color: rgb(255 255 255); */
     background: rgb(24 62 121);
-    min-width: 0px !important;
+    /* min-width: 0px !important; */
     display: none;
 }
 @media only screen and (max-width: 637px) {
@@ -6739,4 +6744,22 @@
 }
 .checkin-details .histry-font {
     font-size: 0.9rem;
+}
+.myjld-histry {
+    content: url(../images/myjaldee/historywhite.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 20px;
+}
+.myjld-payment {
+    content: url(../images/myjaldee/payments-01.svg);
+    position: relative;
+    /* padding-right: 1px; */
+    width: 20px;
+}
+.myjld-fav {
+    content: url(../images/myjaldee/favorite.svg);
+    position: relative;
+    /* padding-right: 1px; */
+    width: 15px;
 }

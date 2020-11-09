@@ -1772,4 +1772,25 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   stopprop(event) {
     event.stopPropagation();
   }
+
+  gotoLivetrackPage(stat, bookingDetails) {
+    let uid;
+    if (bookingDetails.appointmentEncId) {
+      uid = bookingDetails.uid;
+    } else {
+      uid = bookingDetails.ynwUuid;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        account_id: bookingDetails.providerAccount.id,
+        status: stat
+      }
+    };
+    if (bookingDetails.appointmentEncId) {
+      this.router.navigate(['consumer', 'appointment', 'track', uid], navigationExtras);
+    } else {
+      this.router.navigate(['consumer', 'checkin', 'track', uid], navigationExtras);
+    }
+
+  }
 }

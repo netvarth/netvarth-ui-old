@@ -34,7 +34,7 @@
                                         Payments</button>
                                     <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()"
                                         [matTooltip]="'My Payments'">
-                                        <i class="fa fa-credit-card"></i>
+                                        <i class="fa myjld-payment"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
@@ -42,7 +42,7 @@
                                         Favourites</button>
                                     <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()"
                                         [matTooltip]="'My Favourites'">
-                                        <i class="fa fa-heart"></i>
+                                        <i class="fa myjld-fav"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
@@ -50,7 +50,7 @@
                                         (click)="gotoHistory()">History</button>
                                     <button class="flat-icon-btn" mat-flat-button (click)="gotoHistory()"
                                         [matTooltip]="'History'">
-                                        <i class="fa fa-history"></i>
+                                        <i class="fa myjld-histry"></i>
                                     </button>
                                 </div>
                             </div>
@@ -187,8 +187,8 @@
                                                         (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add
                                                         to Favourite</span>
                                                 </button>
-                                                <button class="cursr-dfult" mat-menu-item
-                                                    *ngIf="(booking.apptStatus=='Confirmed'|| 'prepaymentPending') && (booking.jaldeeApptDistanceTime && booking.service.livetrack && booking.apptStatus === 'Confirmed')">
+                                                <button class="custId-cursor" mat-menu-item
+                                                    *ngIf="(booking.apptStatus=='Confirmed'|| 'prepaymentPending') && (booking.jaldeeApptDistanceTime && booking.service.livetrack && booking.apptStatus === 'Confirmed')" (click)="gotoLivetrackPage('true',booking)">
                                                     <i class="fa fa-check fl-right"></i> Sharing location
                                                 </button>
                                                 <button mat-menu-item
@@ -384,8 +384,8 @@
                                                         (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add
                                                         to Favourite</span>
                                                 </button>
-                                                <button class="cursr-dfult" mat-menu-item
-                                                    *ngIf="(booking.waitlistStatus=='checkedIn'|| 'prepaymentPending') && (booking.jaldeeWaitlistDistanceTime && booking.service.livetrack && booking.waitlistStatus === 'checkedIn')">
+                                                <button class="custId-cursor" mat-menu-item
+                                                    *ngIf="(booking.waitlistStatus=='checkedIn'|| 'prepaymentPending') && (booking.jaldeeWaitlistDistanceTime && booking.service.livetrack && booking.waitlistStatus === 'checkedIn')" (click)="gotoLivetrackPage('true',booking)">
                                                     <i class="fa fa-check fl-right"></i> Sharing location
                                                 </button>
                                                 <button mat-menu-item
@@ -528,8 +528,8 @@
                                                             (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add
                                                             to Favourite</span>
                                                     </button>
-                                                    <button class="cursr-dfult" mat-menu-item
-                                                        *ngIf="(booking.apptStatus=='Confirmed'|| 'prepaymentPending') && (booking.jaldeeApptDistanceTime && booking.service.livetrack && booking.apptStatus === 'Confirmed')">
+                                                    <button class="custId-cursor" mat-menu-item
+                                                        *ngIf="(booking.apptStatus=='Confirmed'|| 'prepaymentPending') && (booking.jaldeeApptDistanceTime && booking.service.livetrack && booking.apptStatus === 'Confirmed')" (click)="gotoLivetrackPage('true',booking)">
                                                         <i class="fa fa-check fl-right"></i> Sharing location
                                                     </button>
                                                     <button mat-menu-item
@@ -728,8 +728,8 @@
                                                             (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add
                                                             to Favourite</span>
                                                     </button>
-                                                    <button class="cursr-dfult" mat-menu-item
-                                                        *ngIf="(booking.waitlistStatus=='checkedIn'|| 'prepaymentPending') && (booking.jaldeeWaitlistDistanceTime && booking.service.livetrack && booking.waitlistStatus === 'checkedIn')">
+                                                    <button class="custId-cursor" mat-menu-item
+                                                        *ngIf="(booking.waitlistStatus=='checkedIn'|| 'prepaymentPending') && (booking.jaldeeWaitlistDistanceTime && booking.service.livetrack && booking.waitlistStatus === 'checkedIn')" (click)="gotoLivetrackPage('true',booking)">
                                                         <i class="fa fa-check fl-right"></i> Sharing location
                                                     </button>
                                                     <button mat-menu-item
