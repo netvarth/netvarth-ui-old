@@ -1,26 +1,24 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { projectConstants } from '../../../../../app.component';
-import { MedicalrecordService } from '../../medicalrecord.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ImagesviewComponent } from '../imagesview/imagesview.component';
 import { MatDialog } from '@angular/material/dialog';
-import { SignaturePad } from 'angular2-signaturepad';
+import { MedicalrecordService } from '../../medicalrecord.service';
 
 @Component({
   selector: 'app-upload-digital-signature',
   templateUrl: './upload-digital-signature.component.html',
   styleUrls: ['./upload-digital-signature.component.css']
 })
-export class UploadDigitalSignatureComponent implements OnInit {
-  @ViewChild(SignaturePad) signaturePad: SignaturePad;
-  signaturePadOptions: Object = {
-    'minWidth': 5,
-    'canvasWidth': 500,
-    'canvasHeight': 300
-  };
+export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
+
+  signaturePad: any;
+  bookingId: any;
+  bookingType: any;
+  patientId: any;
   display_PatientId: any;
   today = new Date();
   patientDetails;
@@ -53,41 +51,31 @@ export class UploadDigitalSignatureComponent implements OnInit {
   digitalSign = false;
   signatureviewdialogRef;
   digitalsignature = {};
-  
+
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
-    private activatedRoot: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
-    private medicalrecord_service: MedicalrecordService) {
-    this.medicalrecord_service.patient_data.subscribe(res => {
-      this.navigationParams = res;
-      console.log(this.navigationParams);
-      this.navigationExtras = this.navigationParams;
-    });
-    this.medicalrecord_service.patient_data.subscribe(data => {
-      this.patientDetails = JSON.parse(data.customerDetail);
-      if (this.patientDetails.memberJaldeeId) {
-        this.display_PatientId = this.patientDetails.memberJaldeeId;
-      } else if (this.patientDetails.jaldeeId) {
-        this.display_PatientId = this.patientDetails.jaldeeId;
-      }
-      this.userId = this.patientDetails.id;
-    });
-    this.medicalrecord_service._mrUid.subscribe(mrId => {
-      if (mrId !== 0) {
-        this.mrId = mrId;
-      }
-    });
-    this.activatedRoot.queryParams.subscribe(queryParams => {
-      if (queryParams.providerId) {
-        this.providerId = queryParams.providerId;
-      }
-    });
+    private medicalrecord_service: MedicalrecordService
+  ) {
+
+
 
   }
 
   ngOnInit() {
+    this.providerId = this.medicalrecord_service.getDoctorId();
+    console.log(this.providerId);
+    if (!this.providerId) {
+      const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+      this.providerId = user.id;
+    }
+    const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
+    this.mrId = parseInt(medicalrecordId, 0);
+    this.patientId = this.activatedRoute.parent.snapshot.params['id'];
+    this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
+    this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
     this.getDigitalSign();
   }
 
@@ -120,7 +108,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
     if (this.providerId) {
       this.uploadMrDigitalsign(this.providerId, submit_data);
     }
- 
+
   }
 
   drawStart() {
@@ -128,19 +116,19 @@ export class UploadDigitalSignatureComponent implements OnInit {
     console.log('begin drawing');
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
   uploadSignature() {
     const navigationExtras: NavigationExtras = {
       queryParams: { providerId: this.providerId }
     };
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadsignature'], navigationExtras);
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsignature'], navigationExtras);
   }
   manualSignature(){
     const navigationExtras: NavigationExtras = {
       queryParams: { providerId: this.providerId }
     };
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'manualsignature'], navigationExtras);
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'manualsignature'], navigationExtras);
   }
 
   getDigitalSign() {
@@ -158,7 +146,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
           });
     }
   }
-  
+
   deleteTempImagefrmdb(img, index) {
       this.provider_services.deleteUplodedsign(img.keyName , this.providerId)
       .subscribe((data) => {
@@ -169,22 +157,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });
     }
-  // getMrprescription(mrId) {
-  //   this.provider_services.getMRprescription(mrId)
-  //     .subscribe((data) => {
-  //       this.uploadImages = data;
-  //       console.log(data);
-  //       for (const pic of this.uploadImages) {
-  //         const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true };
-  //         this.selectedMessage.files.push(imgdet);
-  //       }
-  //       console.log(this.selectedMessage.files);
-  //     },
-  //       error => {
-  //         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-  //       });
 
-  // }
 
   filesSelected(event) {
     const input = event.target.files;
@@ -243,7 +216,7 @@ export class UploadDigitalSignatureComponent implements OnInit {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
         this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

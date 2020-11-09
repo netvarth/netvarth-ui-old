@@ -1,16 +1,5 @@
 
 <section >
-<<<<<<< HEAD
-    <div class="card title-gb">
-      <h5 class="mgn-up-10">
-        <span class="fa fa-arrow-left pointer-cursor"  (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-      {{heading}}
-     </h5>
-    </div>
-   
-                <div class="card title-gb">
-                   
-=======
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor"  (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -20,7 +9,6 @@
  
               <div class="card title-gb">
                  
->>>>>>> refs/remotes/origin/1.6-MR
 <div class="no-dta"  *ngIf=" selectedMessage.files && selectedMessage.files.length == 0">
 <h5> By clicking upload Sign you will have choice of uploading a file or taking picture</h5>
 <div>
@@ -34,37 +22,6 @@
 
 
 </div>
-<<<<<<< HEAD
-<div class="no-dta" style="height: 200px;" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-    <ng-container class="attachment">
-    <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
-        *ngFor="let item of selectedMessage.files; let i = index">
-        <h4>Selected Digital Signature</h4>
-        <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
-            <span class="ln-hgt-40">{{item.name}}</span>
-        </div>
-        <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
-            <span class="">
-                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                    <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                        <i class="icon-delete"></i>
-                        <span>delete</span>
-                    </button>
-                </mat-menu>
-            </span>
-        </div>
-        <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
-              <button type="button"  class="cs-btn bt2"  (click)="deleteTempImage(i)">Cancel</button>
-            <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages()">OK</button>
-        </div>
-    </div>
-    
-    </ng-container>
-    </div>
-=======
 </div>
 <div class="no-dta" style="height: 200px;" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
   <ng-container class="attachment">
@@ -95,7 +52,6 @@
   
   </ng-container>
   </div>
->>>>>>> refs/remotes/origin/1.6-MR
 
 
 
