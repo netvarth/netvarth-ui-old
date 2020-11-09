@@ -9,6 +9,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
+import { SharedServices } from '../../../shared/services/shared-services';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -45,9 +46,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
           title: 'Inbox'
       }
   ];
-  constructor(private inbox_services: InboxServices,
-    private dialog: MatDialog, private provider_services: ProviderServices,
-    public shared_functions: SharedFunctions, private routerobj: Router) { }
+  inboxCntFetched;
+  inboxUnreadCnt;
+  constructor(
+    private inbox_services: InboxServices,
+    private dialog: MatDialog,
+    private provider_services: ProviderServices,
+    public shared_functions: SharedFunctions,
+    public shared_service: SharedServices,
+    private routerobj: Router) { }
 
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -81,9 +88,30 @@ export class InboxListComponent implements OnInit, OnDestroy {
 
   readConsumerMessages(consumerId, messageId, providerId) {
       this.provider_services.readConsumerMessages(consumerId, messageId, providerId).subscribe(data => {
+        this.getInboxUnreadCnt();
         this.getInboxMessages();
       });
   }
+  getInboxUnreadCnt() {
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    if (!usertype) {
+      if (this.cronHandle) {
+        this.cronHandle.unsubscribe();
+      }
+    }
+    let type;
+    type = usertype;
+    this.shared_service.getInboxUnreadCount(type)
+      .subscribe(data => {
+        this.inboxCntFetched = true;
+        this.inboxUnreadCnt = data;
+        this.shared_functions.sendMessage({ ttype: 'messageCount', messageFetched: this.inboxCntFetched, unreadCount: this.inboxUnreadCnt });
+      },
+        () => {
+        });
+  }
+
+
   replyMessage(message) {
     const pass_ob = {};
     let source = 'provider-';
