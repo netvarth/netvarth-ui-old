@@ -276,7 +276,6 @@ export class ConsumerCheckinComponent implements OnInit {
                     this.rescheduleUserId = params.uuid;
                     this.getRescheduleWaitlistDet();
                 }
-                this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
             });
 
     }
@@ -388,6 +387,7 @@ export class ConsumerCheckinComponent implements OnInit {
         // this.sel_queue_det = retdatedet;
         this.showfuturediv = false;
         this.revealphonenumber = true;
+        this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
     }
     createForm() {
         this.searchForm = this.fb.group({
@@ -416,6 +416,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 this.sel_ser = this.waitlist.service.id;
                 this.holdselectedTime = this.waitlist.appmtTime;
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
                 // this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedService, this.sel_checkindate, this.account_id);
             });
 
