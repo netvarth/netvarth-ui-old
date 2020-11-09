@@ -9,6 +9,7 @@ import { ShareRxComponent } from '../share-rx/share-rx.component';
 import { projectConstants } from '../../../../../app.component';
 import { InstructionsComponent } from '../instructions/instructions.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 
 @Component({
@@ -48,6 +49,7 @@ export class DrugListComponent implements OnInit {
   heading = 'Create Prescription';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any;
+  removedrugdialogRef;
 
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
@@ -158,17 +160,32 @@ export class DrugListComponent implements OnInit {
   }
 
   deleteDrug(index) {
-    this.drugList.splice(index, 1);
     console.log(this.drugList);
     this.showSave = true;
-    if (this.deleteFromDb) {
-      if (this.mrId) {
-        this.provider_services.updateMRprescription(this.drugList, this.mrId).
-          subscribe(res => {
-            console.log(this.drugList);
-          });
+
+    this.removedrugdialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you really want to remove the prescription?'
       }
-    }
+    });
+    this.removedrugdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.drugList.splice(index, 1);
+        if (this.deleteFromDb) {
+          if (this.mrId) {
+            this.provider_services.updateMRprescription(this.drugList, this.mrId).
+              subscribe(res => {
+                console.log(this.drugList);
+              });
+          }
+        }
+      }
+    });
+
+   
   }
   saveRx() {
     this.disable = true;

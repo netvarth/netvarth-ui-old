@@ -7,6 +7,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-upload-prescription',
@@ -46,6 +47,7 @@ export class UploadPrescriptionComponent implements OnInit {
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any;
   navigationExtras: NavigationExtras;
+  removeprescriptiondialogRef;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
@@ -131,16 +133,7 @@ export class UploadPrescriptionComponent implements OnInit {
 
 
 
-  deletePrevUploadRx() {
-    return new Promise((resolve, reject) => {
-      for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
-        if (this.selectedMessage.files[ia].view === true) {
-          this.selectedMessage.files.splice(ia, 1);
-        }
-      }
-    });
-
-  }
+ 
 
   saveImages() {
     this.disable = true;
@@ -175,6 +168,7 @@ export class UploadPrescriptionComponent implements OnInit {
       this.medicalrecord_service.createMRForUploadPrescription()
         .then((data: number) => {
           this.mrId = data;
+          console.log(this.mrId);
 
           this.uploadMrPrescription(data, submit_data);
         },
@@ -200,17 +194,32 @@ export class UploadPrescriptionComponent implements OnInit {
   }
   deleteTempImage(img, index) {
     this.showSave = true;
-    if (img.view && img.view === true) {
-      this.provider_services.deleteUplodedprescription(img.keyName, this.mrId)
-        .subscribe((data) => {
+
+    this.removeprescriptiondialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you really want to remove the prescription?'
+      }
+    });
+    this.removeprescriptiondialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (img.view && img.view === true) {
+          this.provider_services.deleteUplodedprescription(img.keyName, this.mrId)
+            .subscribe((data) => {
+              this.selectedMessage.files.splice(index, 1);
+            },
+              error => {
+                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              });
+        } else {
           this.selectedMessage.files.splice(index, 1);
-        },
-          error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-          });
-    } else {
-      this.selectedMessage.files.splice(index, 1);
-    }
+        }
+      }
+    });
+
+   
   }
 
   somethingChanged() {
