@@ -165,11 +165,16 @@ export class UploadPrescriptionComponent implements OnInit {
     if (this.mrId) {
       this.uploadMrPrescription(this.mrId, submit_data);
     } else {
-      this.medicalrecord_service.createMRForUploadPrescription()
+      let passingId ;
+      if (this.bookingType === 'FOLLOWUP') {
+        passingId = this.patientId;
+      } else {
+        passingId = this.bookingId;
+      }
+      this.medicalrecord_service.createMRForUploadPrescription(this.bookingType, passingId)
         .then((data: number) => {
           this.mrId = data;
           console.log(this.mrId);
-
           this.uploadMrPrescription(data, submit_data);
         },
           error => {

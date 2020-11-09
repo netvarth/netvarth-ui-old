@@ -119,17 +119,22 @@ export class MedicalrecordService {
     }
 
   }
-  createMRForUploadPrescription() {
+  createMRForUploadPrescription(type, id) {
     const $this = this;
 
     delete $this.mr_payload_new['clinicalNotes'];
-    delete this.mr_payload_new['prescriptions'];
+    delete $this.mr_payload_new['prescriptions'];
+    this.mr_payload_new['mrConsultationDate'] = new Date();
+    console.log($this.mr_payload_new);
+    console.log(type);
+    console.log(id);
 
 
-    if ($this.bookingType === 'FOLLOWUP') {
+
+    if (type === 'FOLLOWUP') {
 
       return new Promise((resolve, reject) => {
-        this.provider_services.createMedicalRecordForFollowUp($this.mr_payload_new, $this.patientData.id)
+        this.provider_services.createMedicalRecordForFollowUp($this.mr_payload_new, id)
           .subscribe(
             response => {
               resolve(response);
@@ -143,7 +148,7 @@ export class MedicalrecordService {
 
     } else {
       return new Promise((resolve, reject) => {
-        this.provider_services.createMedicalRecord($this.mr_payload_new, $this.bookingId)
+        this.provider_services.createMedicalRecord($this.mr_payload_new, id)
           .subscribe(
             response => {
               resolve(response);
