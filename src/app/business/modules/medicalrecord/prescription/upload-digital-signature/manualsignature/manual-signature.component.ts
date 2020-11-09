@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MedicalrecordService } from '../../../medicalrecord.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -48,28 +49,33 @@ export class ManualSignatureComponent implements OnInit {
   providerId;
   digitalSign = false;
   signatureviewdialogRef;
-<<<<<<< HEAD
   digitalsignature = {};
   sign = true;
   
-=======
-  bookingId: any;
-  bookingType: any;
-  patientId: any;
-  sign = true;
->>>>>>> refs/remotes/origin/1.6-MR
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
     private activatedRoot: ActivatedRoute,
     public dialog: MatDialog,
-   // private medicalrecord_service: MedicalrecordService
-    ) {
-      const medicalrecordId = this.activatedRoot.parent.snapshot.params['mrId'];
-      this.mrId = parseInt(medicalrecordId, 0);
-      this.patientId = this.activatedRoot.parent.snapshot.params['id'];
-      this.bookingType = this.activatedRoot.parent.snapshot.params['type'];
-      this.bookingId = this.activatedRoot.parent.snapshot.params['uid'];
+    private medicalrecord_service: MedicalrecordService) {
+    this.medicalrecord_service.patient_data.subscribe(res => {
+      this.navigationParams = res;
+      this.navigationExtras = this.navigationParams;
+    });
+    this.medicalrecord_service.patient_data.subscribe(data => {
+      this.patientDetails = JSON.parse(data.customerDetail);
+      if (this.patientDetails.memberJaldeeId) {
+        this.display_PatientId = this.patientDetails.memberJaldeeId;
+      } else if (this.patientDetails.jaldeeId) {
+        this.display_PatientId = this.patientDetails.jaldeeId;
+      }
+      this.userId = this.patientDetails.id;
+    });
+    this.medicalrecord_service._mrUid.subscribe(mrId => {
+      if (mrId !== 0) {
+        this.mrId = mrId;
+      }
+    });
     this.activatedRoot.queryParams.subscribe(queryParams => {
       if (queryParams.providerId) {
         this.providerId = queryParams.providerId;
@@ -113,18 +119,14 @@ export class ManualSignatureComponent implements OnInit {
     }
  
   }
-  clearSign() {
-    this.signaturePad.clear();
-  }
 
   drawStart() {
-    this.sign = false;
     // will be notified signature_pad's onBegin event
     this.sign = false;
     console.log('begin drawing');
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign' ]);
+   // this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
   }
   clearSign() {
     this.signaturePad.clear();
@@ -133,13 +135,8 @@ export class ManualSignatureComponent implements OnInit {
   uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
-<<<<<<< HEAD
         this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], { queryParams: this.navigationParams });
         this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
-=======
-        this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
-        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
->>>>>>> refs/remotes/origin/1.6-MR
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

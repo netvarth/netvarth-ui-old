@@ -13,10 +13,6 @@ import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { LoadingSpinnerModule } from './components/loading-spinner/loading-spinner.module';
 import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-note.component';
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/1.6-MR
 
 @NgModule({
   imports: [
@@ -27,11 +23,7 @@ import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-not
     FormMessageDisplayModule,
     FooterModule,
     FormsModule,
-<<<<<<< HEAD
     LoadingSpinnerModule
-=======
-    LoadingSpinnerModule,
->>>>>>> refs/remotes/origin/1.6-MR
 ],
   declarations: [
     HomeAppComponent,
@@ -40,11 +32,7 @@ import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-not
     ForgotPasswordAppComponent,
     JcCouponNoteComponent
   ],
-<<<<<<< HEAD
   exports: [],
-=======
-
->>>>>>> refs/remotes/origin/1.6-MR
   entryComponents: [
     HomeAppComponent,
     OtpFormAppComponent,
@@ -62,5 +50,3 @@ import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-not
 export class ProviderAppModule {
 
 }
-
-
