@@ -1041,7 +1041,11 @@ export class ProviderCheckinComponent implements OnInit {
     addWaitlistBlock(post_Data) {
         this.provider_services.addWaitlistBlock(post_Data)
             .subscribe((data) => {
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+                if (this.settingsjson.showTokenId) {
+                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION'));
+                } else {
+                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC'));
+                }
                 this.showCheckin = false;
                 this.searchForm.reset();
                 this.router.navigate(['provider', 'check-ins']);
@@ -1061,10 +1065,10 @@ export class ProviderCheckinComponent implements OnInit {
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUuid);
                 }
-                if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC'));
-                } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
+                if (this.settingsjson.showTokenId) {
                     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION'));
+                } else {
+                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC'));
                 }
                 this.showCheckin = false;
                 this.searchForm.reset();
