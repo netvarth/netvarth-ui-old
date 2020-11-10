@@ -61,7 +61,7 @@ export class MedicalrecordComponent implements OnInit {
   back_type: any;
   logsdialogRef: any;
   loading = true;
-  user_name: any;
+  doctorName;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -149,7 +149,8 @@ export class MedicalrecordComponent implements OnInit {
         } else if (this.customerDetails.jaldeeId) {
           this.display_PatientId = this.customerDetails.jaldeeId;
         }
-        if (response.provider.id) {
+        if (response.provider && response.provider.id) {
+          this.doctorName = response.provider.firstName + ' ' + response.provider.lastName;
           this.medicalService.setDoctorId(response.provider.id);
         }
        
@@ -169,6 +170,7 @@ export class MedicalrecordComponent implements OnInit {
         } if (response.service) {
           this.serviceName = response.service.name;
         }
+        this.medicalService.setServiceDept(this.serviceName, this.department);
         this.customerDetails = response.waitlistingFor[0];
         this.medicalService.setPatientDetails(this.customerDetails);
         this.patientId = this.customerDetails.id;
@@ -177,7 +179,8 @@ export class MedicalrecordComponent implements OnInit {
         } else if (this.customerDetails.jaldeeId) {
           this.display_PatientId = this.customerDetails.jaldeeId;
         }
-        if (response.provider.id) {
+        if (response.provider && response.provider.id) {
+          this.doctorName = response.provider.firstName + ' ' + response.provider.lastName;
           this.medicalService.setDoctorId(response.provider.id);
         }
 
@@ -268,8 +271,7 @@ console.log('mrId'+mrId);
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
-          console.log(data);
-          this.loading =false;
+           this.loading =false;
           this.mrNumber = data.mrNumber;
           this.mrCreatedDate = data.mrCreatedDate;
           this.activityLogs = data.auditLogs;
@@ -288,14 +290,9 @@ console.log('mrId'+mrId);
           } else if (this.customerDetails.jaldeeId) {
             this.display_PatientId = this.customerDetails.jaldeeId;
           }
-          if (data.provider.id) {
+          if (data.provider && data.provider.id) {
+            this.doctorName = data.provider.firstName + ' ' + data.provider.lastName;
             this.medicalService.setDoctorId(data.provider.id);
-          }
-          if (data.provider) {
-            console.log(data.provider.lastName);
-            this.user_name = data.provider.firstName ? data.provider.firstName : '' + ' ' +
-                             data.provider.lastName ? data.provider.lastName : '';
-            console.log(this.user_name);
           }
           if (this.data.consultationMode === 'Out Patient') {
             this.patientConsultationType = 'OP';
