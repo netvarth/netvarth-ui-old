@@ -681,4 +681,19 @@ export class CheckinActionsComponent implements OnInit {
         };
         this.router.navigate(['/provider/customers/' + this.checkin.waitlistingFor[0].id], navigationExtras);
     }
+    addCustomerDetails() {
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: this.checkin.ynwUuid } });
+    }
+    unBlockWaitlist() {
+        this.provider_services.deleteWaitlistBlock(this.checkin.ynwUuid)
+            .subscribe(
+                () => {
+                    this.dialogRef.close();
+                    this.router.navigate(['provider', 'appointments']);
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+    }
 }

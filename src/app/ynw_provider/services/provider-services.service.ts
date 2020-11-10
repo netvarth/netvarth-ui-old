@@ -1651,5 +1651,18 @@ export class ProviderServices {
       const url = 'provider/mr/auditLog/' + id;
       return this.servicemeta.httpGet(url);
    }
+   // waitlist block
+   addWaitlistBlock(data) {
+      const url = 'provider/waitlist/block';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteWaitlistBlock(uid) {
+      const url = 'provider/waitlist/unblock/' + uid;
+      return this.servicemeta.httpPut(url);
+   }
+   confirmWaitlistBlock(data) {
+      const url = 'provider/waitlist/confirm';
+      return this.servicemeta.httpPut(url, data);
+   }
 }
 

@@ -472,6 +472,8 @@ export class CustomerDetailComponent implements OnInit {
                             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
                         } else if (this.source === 'appt-block') {
                             this.confirmApptBlock(data);
+                        } else if (this.source === 'waitlist-block') {
+                            this.confirmWaitlistBlock(data);
                         } else {
                             this.router.navigate(['provider', 'customers']);
                         }
@@ -548,6 +550,23 @@ export class CustomerDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.router.navigate(['provider', 'appointments']);
+                });
+    }
+    confirmWaitlistBlock(id) {
+        const post_data = {
+            'ynwUuid': this.uid,
+            'consumer': {
+                'id': id
+            },
+            'waitlistingFor': [{
+                'id': id
+            }],
+        };
+        console.log(post_data);
+        this.provider_services.confirmWaitlistBlock(post_data)
+            .subscribe(
+                data => {
+                    this.router.navigate(['provider', 'check-ins']);
                 });
     }
     onCancel() {

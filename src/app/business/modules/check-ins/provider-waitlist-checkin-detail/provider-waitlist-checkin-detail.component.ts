@@ -214,7 +214,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
             this.waitlist_data.history = true;
           }
           // this.getWaitlistNotes();
-          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+          if (this.waitlist_data.waitlistStatus !== 'blocked') {
+            this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+            }
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.provider) {

@@ -1018,15 +1018,6 @@ export class AppointmentComponent implements OnInit {
     addAppointmentBlock(post_Data) {
         this.provider_services.addAppointmentBlock(post_Data)
             .subscribe((data) => {
-                const retData = data;
-                let retUuid;
-                Object.keys(retData).forEach(key => {
-                    retUuid = retData[key];
-                    this.trackUuid = retData[key];
-                });
-                if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
-                    this.consumerNoteAndFileSave(retUuid);
-                }
                 this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
                 this.showCheckin = false;
                 this.searchForm.reset();

@@ -214,6 +214,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   today_rejected_count = 0;
   today_cancelled_checkins_count = 0;
   today_checkedin_count = 0;
+  today_blocked_count = 0;
   scheduled_count = 0;
   started_count = 0;
   cancelled_count = 0;
@@ -1587,7 +1588,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   setCounts(list) {
     this.today_arrived_count = this.getCount(list, 'arrived');
     this.today_checkedin_count = this.getCount(list, 'checkedIn');
-    this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
+    this.today_blocked_count = this.getCount(list, 'blocked');
+    this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count + this.today_blocked_count;
     this.today_started_count = this.getCount(list, 'started');
     this.today_completed_count = this.getCount(list, 'done');
     this.today_cancelled_count = this.getCount(list, 'cancelled');
@@ -1726,6 +1728,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (appointments['checkedIn']) {
       Array.prototype.push.apply(scheduledList, appointments['checkedIn'].slice());
+    }
+    if (appointments['blocked']) {
+      Array.prototype.push.apply(scheduledList, appointments['blocked'].slice());
     }
     if (this.time_type === 1) {
       this.sortCheckins(scheduledList);
@@ -3054,10 +3059,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.shared_functions.isNumeric(evt);
   }
   gotoCustomerDetails(waitlist) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'view' }
-    };
-    this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id], navigationExtras);
+    if (waitlist.waitlistStatus !== 'blocked') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: { action: 'view' }
+      };
+      this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id], navigationExtras);
+    }
   }
   stopprop(event) {
     event.stopPropagation();
@@ -3089,5 +3096,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           console.error('An error occured while initializing : ', e);
         });
     }
+  }
+    addCustomerDetails(checkin) {
+    this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
   }
 }

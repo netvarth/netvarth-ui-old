@@ -901,14 +901,14 @@ export class ProviderCheckinComponent implements OnInit {
             }
             if (error === '') {
                 if (this.waitlist_for.length === 0) {
-                    if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-                        this.getCustomerCount();
-                    } else {
-                        this.createCustomer();
-                    }
-                } else {
-                    this.saveCheckin();
+                    // if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+                    //     this.getCustomerCount();
+                    // } else {
+                    //     this.createCustomer();
+                    // }
+                    this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
                 }
+                    this.saveCheckin();
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 // this.api_error = error;
@@ -1030,9 +1030,22 @@ export class ProviderCheckinComponent implements OnInit {
             post_Data['consumer'] = { id: this.customer_data.id };
             post_Data['ignorePrePayment'] = true;
             if (!this.is_wtsap_empty) {
-                this.addCheckInProvider(post_Data);
+                if (this.thirdParty === '') {
+                    this.addCheckInProvider(post_Data);
+                } else {
+                    this.addWaitlistBlock(post_Data);
+                }
             }
         }
+    }
+    addWaitlistBlock(post_Data) {
+        this.provider_services.addWaitlistBlock(post_Data)
+            .subscribe((data) => {
+                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+                this.showCheckin = false;
+                this.searchForm.reset();
+                this.router.navigate(['provider', 'check-ins']);
+            });
     }
     addCheckInProvider(post_Data) {
         this.api_loading = true;

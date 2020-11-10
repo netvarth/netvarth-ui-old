@@ -535,9 +535,12 @@
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                          (click)="gotoCustomerDetails(checkin)">
+                          (click)="gotoCustomerDetails(checkin)"
+                          [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
+                          [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
                           {{checkin.waitlistingFor[0].firstName}}
-                          {{checkin.waitlistingFor[0].lastName}}</div>
+                          {{checkin.waitlistingFor[0].lastName}}
+                          <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">&nbsp;&nbsp;Blocked</div></div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -628,6 +631,12 @@
                           <span *ngIf="!small_device_display && !checkin.callingStatus">
                             &nbsp;Call</span>
                         </a>
+                        <a class="statusText btn-play pointer-cursor start-btn"
+                        (click)="stopprop($event);addCustomerDetails(checkin)" *ngIf="checkin.waitlistStatus == 'blocked'"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                        <i class="dashboardadd-customer-icon"></i>
+                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
+                      </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);changeWaitlistStatus(statusAction, 'STARTED', checkin)"
                           *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"

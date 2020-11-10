@@ -122,7 +122,7 @@
               <!-- Instructions,messages,notes -->
               <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                 <mat-tab-group animationDuration="10ms" class="index-head">
-                  <mat-tab label="Private Notes">
+                  <mat-tab label="Private Notes" *ngIf="waitlist_data.waitlistStatus !== 'blocked'">
                     <span>
                       <div class="pnotes" *ngFor="let note of waitlist_notes">
                         <p [innerHTML]="note.note | nl2br"></p>

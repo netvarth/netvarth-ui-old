@@ -26,6 +26,18 @@
                 <div class="icon-text">Call</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'" (click)="addCustomerDetails()">
+            <div class="action-box-sub">
+                <span class="add-appt-icon"></span>
+                <div class="icon-text">Add {{customer_label}}</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'" (click)="unBlockWaitlist()">
+            <div class="action-box-sub">
+                <span class="unblock-appt-icon"></span>
+                <div class="icon-text">Unblock</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" *ngIf="showStart" (click)="changeWaitlistStatus('STARTED')">
             <div class="action-box-sub">
                 <span class="start-icon"></span>
