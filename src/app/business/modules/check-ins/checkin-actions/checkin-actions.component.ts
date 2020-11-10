@@ -447,7 +447,7 @@ export class CheckinActionsComponent implements OnInit {
                 });
     }
     setActions() {
-        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn') {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked') {
             this.showUndo = true;
         }
         if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && !this.checkin.virtualService) {
@@ -474,7 +474,7 @@ export class CheckinActionsComponent implements OnInit {
         if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
             this.showCall = true;
         }
-        if (this.pos && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
+        if (this.pos && this.checkin.waitlistStatus !== 'blocked' && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
             this.showBill = true;
         }
         if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled') {

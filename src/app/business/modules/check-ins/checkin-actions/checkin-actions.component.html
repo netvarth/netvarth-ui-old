@@ -87,7 +87,7 @@
                 <div class="icon-text">Status change</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="gotoCustomerDetails()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'" (click)="gotoCustomerDetails()">
             <div class="action-box-sub">
                 <span class="customerdetails-icon"></span>
                 <div class="icon-text">{{customer_label | capitalizeFirst}} details</div>
@@ -118,7 +118,7 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="addProviderNote()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'" (click)="addProviderNote()">
             <div class="action-box-sub">
                 <span class="notes-icon"></span>
                 <div class="icon-text">Private Notes</div>
