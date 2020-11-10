@@ -483,7 +483,7 @@
                   <a class="icon-action pointer-cursor icon-size2" [matTooltip]="'Refresh'">
                     <i class="fa fa-refresh" (click)="refresh()"></i>
                   </a>
-                  <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar" *ngIf="startedAppts.length > 0">
+                  <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar" *ngIf="startedAppts.length === 0">
                     <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
                       [matTooltip]="filtericonTooltip">
                     </i>
