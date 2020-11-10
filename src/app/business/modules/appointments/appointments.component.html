@@ -320,7 +320,7 @@
                           *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                           [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                           [class.pointer-auto]="appt.apptStatus=='blocked'">
-                          {{appt.appmtFor[0].firstName}}
+                          {{appt.appmtFor[0].firstName | capitalizeFirst}}
                           {{appt.appmtFor[0].lastName}}
                           <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
                         </div>
@@ -406,12 +406,6 @@
                           <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                           <span *ngIf="!appt.callingStatus">
                             &nbsp;Call</span>
-                        </a>
-                        <a class="statusText btn-play pointer-cursor start-btn"
-                          (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                          <i class="dashboardadd-customer-icon"></i>
-                          <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);changeWaitlistStatus('started', 'Started', appt)"
@@ -539,7 +533,7 @@
                           *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                           [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                           [class.pointer-auto]="appt.apptStatus=='blocked'">
-                          {{appt.appmtFor[0].firstName}}
+                          {{appt.appmtFor[0].firstName | capitalizeFirst}}
                           {{appt.appmtFor[0].lastName}}
                           <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
                         </div>
@@ -628,7 +622,7 @@
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Add ' + {{customer_label}}">>
                           <i class="dashboardadd-customer-icon"></i>
                           <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                         </a>
@@ -858,7 +852,7 @@
                         *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                         [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                         [class.pointer-auto]="appt.apptStatus=='blocked'">
-                        {{appt.appmtFor[0].firstName}}
+                        {{appt.appmtFor[0].firstName | capitalizeFirst}}
                         {{appt.appmtFor[0].lastName}}
                         <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
                       </div>
@@ -944,12 +938,6 @@
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                         <span *ngIf="!appt.callingStatus">
                           &nbsp;Call</span>
-                      </a>
-                      <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                        <i class="dashboardadd-customer-icon"></i>
-                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
                         (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', appt)"
@@ -1218,7 +1206,7 @@
                         *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                         [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                         [class.pointer-auto]="appt.apptStatus=='blocked'">
-                        {{appt.appmtFor[0].firstName}}
+                        {{appt.appmtFor[0].firstName | capitalizeFirst}}
                         {{appt.appmtFor[0].lastName}}
                         <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
                       </div>
@@ -1304,12 +1292,6 @@
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                         <span *ngIf="!appt.callingStatus">
                           &nbsp;Call</span>
-                      </a>
-                      <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                        <i class="dashboardadd-customer-icon"></i>
-                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
                         (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', appt)"

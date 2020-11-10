@@ -36,7 +36,7 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">Appointment For
-                                            <a *ngIf="type !== 'reschedule'"
+                                            <a *ngIf="type !== 'reschedule' && servicesjson.length > 1"
                                                 class="changeitem pointer-cursor mgn-lt-10 pull-right"
                                                 (click)="changeService()">Change
                                                 Service</a></div>
