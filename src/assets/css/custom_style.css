@@ -13021,13 +13021,13 @@ hr {
 }
 .online-icon {
   content: url(../images/online2.svg);
-  width: 15px;
+  width: 25px;
 }
 .phonein-icon {
   content: url(../images/phonein.svg);
-  width: 15px;
+  width: 25px;
 }
 .walkin-icon {
   content: url(../images/walkin.svg);
-  width: 15px;
+  width: 25px;
 }

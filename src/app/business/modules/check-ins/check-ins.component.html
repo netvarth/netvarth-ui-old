@@ -370,7 +370,7 @@
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
                           </span>
                           <span class="online-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'ONLINE_CHECKIN'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
                           </span>
                           <span class="phonein-icon mgn-rt-10" *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
@@ -1223,18 +1223,7 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeQs.length == 0)">
-                  <tr>
-                    <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0">
-                      <p *ngIf="!showToken">No history check-ins</p>
-                      <p *ngIf="showToken ">No history tokens</p>
-                    </td>
-                    <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0">
-                      {{no_service_cap}}
-                    </td>
-                  </tr>
-                </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0">
+                <tbody *ngIf="check_in_filtered_list.length > 0">
                   <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
                     (click)="goCheckinDetail(checkin)">
                     <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">

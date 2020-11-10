@@ -1207,21 +1207,7 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody *ngIf="!loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
-                  <tr>
-                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
-                      <p *ngIf="statusAction === 'new'">No active appointments</p>
-                      <p *ngIf="statusAction === 'completed'">No completed appointments
-                      </p>
-                      <p *ngIf="statusAction === 'cancelled'">No cancelled appointments
-                      </p>
-                    </td>
-                    <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
-                      {{no_service_cap}}
-                    </td>
-                  </tr>
-                </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0">
+                <tbody *ngIf="check_in_filtered_list.length > 0">
                   <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
