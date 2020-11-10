@@ -407,12 +407,7 @@
                           <span *ngIf="!appt.callingStatus">
                             &nbsp;Call</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor start-btn"
-                          (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                          <i class="dashboardadd-customer-icon"></i>
-                          <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
-                        </a>
+                        
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);changeWaitlistStatus('started', 'Started', appt)"
                           *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
@@ -628,7 +623,7 @@
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                          [matTooltipClass]="tooltipcls" [matTooltip]="addCustomerTooltip">
                           <i class="dashboardadd-customer-icon"></i>
                           <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                         </a>
@@ -944,12 +939,6 @@
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                         <span *ngIf="!appt.callingStatus">
                           &nbsp;Call</span>
-                      </a>
-                      <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                        <i class="dashboardadd-customer-icon"></i>
-                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
                         (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', appt)"
@@ -1304,12 +1293,6 @@
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
                         <span *ngIf="!appt.callingStatus">
                           &nbsp;Call</span>
-                      </a>
-                      <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
-                        <i class="dashboardadd-customer-icon"></i>
-                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
                         (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', appt)"

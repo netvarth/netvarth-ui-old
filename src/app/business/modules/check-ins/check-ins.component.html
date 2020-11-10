@@ -627,7 +627,7 @@
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                         (click)="stopprop($event);addCustomerDetails(checkin)" *ngIf="checkin.waitlistStatus == 'blocked'"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                        [matTooltipClass]="tooltipcls" [matTooltip]="addCustomerTooltip">
                         <i class="dashboardadd-customer-icon"></i>
                         <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                       </a>
