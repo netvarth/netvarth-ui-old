@@ -15,7 +15,7 @@
                         <div class="c-body">
                             <div class="card title-gb">
                                 <h5 class="mgn-up-10">Payment Details
-                                    <a class="pull-right back-btn" (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a>
+                                    <a class="pull-left mgn-rt-20 back-btn" (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a>
                                 </h5>
                                 
                             </div>
@@ -55,7 +55,7 @@
                                                 <span class="waitlist_for">
                                                     {{payments.status
                                                     | capitalizeFirst}}</span></div>
-                                            <div class="item"><span class="ttle">Refundable</span>
+                                            <!-- <div class="item"><span class="ttle">Refundable</span>
                                                 <a *ngIf="payments.refundableAmount > 0"
                                                     class="waitlist_for pointer-cursor rupee-font"
                                                     style="text-decoration: underline;" (click)="showRefunds()">
@@ -65,7 +65,7 @@
                                                     class="waitlist_for rupee-font">
                                                     {{payments.refundableAmount |
                                                                                         currency:'&#8377; '}}</span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="bill-section"
                                             *ngIf="showRefund && payments && payments.refundDetails">
