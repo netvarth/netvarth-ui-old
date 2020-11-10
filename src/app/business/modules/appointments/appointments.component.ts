@@ -330,6 +330,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   chkStartedSelectAppointments = false;
   allStartedSelection = false;
   allSelection = false;
+  addCustomerTooltip = '';
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -430,6 +431,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.customerIdTooltip = this.customer_label + ' id';
+    this.addCustomerTooltip = 'Add ' + this.customer_label;
     this.getPos();
     this.getLabel();
     this.getDisplayboardCount();
@@ -1120,7 +1122,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.today_arrived_count = this.getCount(list, 'Arrived');
     this.today_checkedin_count = this.getCount(list, 'Confirmed');
     this.today_bloacked_count = this.getCount(list, 'blocked');
-    this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
+    this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count + this.today_bloacked_count;
     this.today_started_count = this.getCount(list, 'Started');
     this.today_completed_count = this.getCount(list, 'Completed');
     this.today_cancelled_count = this.getCount(list, 'Cancelled');
@@ -2491,6 +2493,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allSelection = false;
     this.loading = true;
     this.hideFilterSidebar();
+    console.log(this.activeSchedules);
+    console.log(this.tempActiveSchedules);
     this.setTimeType(event.index + 1);
   }
   statusClick(status) {
@@ -2508,5 +2512,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getScheduleIndex(id) {
     const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
     return this.activeSchedules.indexOf(filterSchedule[0]);
+  }
+  handleApptSelectionType(type) {
+    console.log(type);
+    this.selected_type = type;
   }
 }
