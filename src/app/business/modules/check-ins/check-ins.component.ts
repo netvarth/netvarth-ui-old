@@ -2494,7 +2494,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.playSound(checkin, 0);
         }
       } else {
-        this.speech.stop();
+        this.speech.pause();
       }
       const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
       this.provider_services.setCallStatus(checkin.ynwUuid, status).subscribe(
@@ -2849,6 +2849,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               const description = communications[comIndex].attachements[attachIndex].s3path;
               const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
               if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+                console.log(comIndex);
                 imagePath = communications[comIndex].attachements[attachIndex].s3path;
               }
               const imgobj = new Image(
@@ -2858,23 +2859,27 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                   description: description
                 },
               );
+              console.log(imgobj);
               this.image_list_popup_temp.push(imgobj);
               count++;
             }
           }
         }
+        console.log(count);
         if (count > 0) {
           this.image_list_popup = this.image_list_popup_temp;
           setTimeout(() => {
             this.openImageModalRow(this.image_list_popup[0]);
-          }, 200);
+          }, 500);
         }
       },
       error => { }
     );
   }
   openImageModalRow(image: Image) {
+    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    console.log(index);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
