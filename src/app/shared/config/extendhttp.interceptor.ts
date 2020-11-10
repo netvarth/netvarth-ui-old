@@ -1,7 +1,7 @@
-import { catchError ,  switchMap ,  retry } from 'rxjs/operators';
+import { catchError, switchMap, retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { Observable ,  Subject ,  throwError, EMPTY } from 'rxjs';
+import { Observable, Subject, throwError, EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
 import { SharedFunctions } from '../functions/shared-functions';
@@ -9,6 +9,7 @@ import { Messages } from '../constants/project-messages';
 import { SharedServices } from '../services/shared-services';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MaintenanceMsgComponent } from '../components/maintenance-msg/maintenance-msg.component';
 // import { version } from '../constants/version' ;
 
 @Injectable()
@@ -183,22 +184,33 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                   return EMPTY;
                 })
               );
-               // return EMPTY;
+              // return EMPTY;
               // return throwError(error);
             } else if (error.status === 405) {
-              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              // this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              const dialogRef = this.dialog.open(MaintenanceMsgComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                  'message': error.error
+                }
+              });
+              dialogRef.afterClosed().subscribe(result => {
+                this.router.navigate(['/']);
+              });
               return EMPTY;
               // this.router.navigate(['/maintenance']);
               // return throwError(error);
             } else if (error.status === 0) {
               // Network Error Handling
               // return next.handle(this.updateHeader(req, url)).pipe(
-                retry(2),
+              retry(2),
                 // catchError((errorN: HttpErrorResponse) => {
-                   this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
-                   return EMPTY;
-                // }),
-                // delay(10000);
+                this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
+              return EMPTY;
+              // }),
+              // delay(10000);
               // );
             } else if (error.status === 404) {
               // return EMPTY;
