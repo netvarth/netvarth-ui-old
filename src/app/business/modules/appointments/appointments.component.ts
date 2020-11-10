@@ -2513,8 +2513,4 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
     return this.activeSchedules.indexOf(filterSchedule[0]);
   }
-  handleApptSelectionType(type) {
-    console.log(type);
-    this.selected_type = type;
-  }
 }
