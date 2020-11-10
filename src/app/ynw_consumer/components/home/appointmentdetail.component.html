@@ -59,6 +59,7 @@
                                                     {{appt.service.name | capitalizeFirst}} <span
                                                         *ngIf="appt.service.deptName">({{appt.service.deptName}})
                                                     </span>
+                                                    <a *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode == 'Zoom')" class="joinMeeting" href="{{appt.service.virtualCallingModes[0].value}}" target="blank">Join Meeting</a>
                                                 </span>
                                             </div>
                                         </div>

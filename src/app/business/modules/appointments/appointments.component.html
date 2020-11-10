@@ -381,9 +381,9 @@
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                           *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
-                          <span class="" style="font-size: smaller;">
+                          <!-- <span class="" style="font-size: smaller;">
                             {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
-                          </span>
+                          </span> -->
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'"
@@ -603,9 +603,9 @@
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                           *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
-                          <span class="" style="font-size: smaller;">
+                          <!-- <span class="" style="font-size: smaller;">
                             {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
-                          </span>
+                          </span> -->
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'"
@@ -925,9 +925,9 @@
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                         *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
-                        <span class="" style="font-size: smaller;">
+                        <!-- <span class="" style="font-size: smaller;">
                           {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
-                        </span>
+                        </span> -->
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'" data-title="Payment Status"

@@ -6763,3 +6763,16 @@
     /* padding-right: 1px; */
     width: 15px;
 }
+.myjld-meetingdetail {
+    content: url(../images/myjaldee/sticky-notes.svg);
+    position: relative;
+    width: 15px;
+}
+.cust-book-details .joinMeeting {
+    padding: 6px;
+    font-size: 0.8rem;
+    background: #f1b51cd6;
+    border-radius: 50px;
+    margin-left: 10px;
+    color: #3c5c8d;
+}
