@@ -477,7 +477,7 @@ export class CheckinActionsComponent implements OnInit {
         if (this.pos && this.checkin.waitlistStatus !== 'blocked' && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
             this.showBill = true;
         }
-        if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled') {
+        if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled' && this.checkin.waitlistStatus !== 'blocked') {
             this.showmrrx = true;
         }
     }
