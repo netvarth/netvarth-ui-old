@@ -2493,8 +2493,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allSelection = false;
     this.loading = true;
     this.hideFilterSidebar();
-    console.log(this.activeSchedules);
-    console.log(this.tempActiveSchedules);
     this.setTimeType(event.index + 1);
   }
   statusClick(status) {
