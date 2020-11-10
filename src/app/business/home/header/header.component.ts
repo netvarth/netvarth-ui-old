@@ -13,6 +13,7 @@ import { ProviderDataStorageService } from '../../../ynw_provider/services/provi
 import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderStartTourComponent } from '../../../ynw_provider/components/provider-start-tour/provider-start-tour.component';
+import { HelpPopUpComponent } from './help-pop-up/help-pop-up.component';
 
 @Component({
   selector: 'app-header',
@@ -400,5 +401,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.sharedfunctionobj.removeitemfromSessionStorage('accountid');
     this.sharedfunctionobj.removeitemfromSessionStorage('tabId');
     window.location.reload();
+  }
+  helpClicked() {
+    const dialogRef = this.dialog.open(HelpPopUpComponent, {
+      width: '25%',
+      panelClass: ['commonpopupmainclass', 'popup-class']
+    });
+    dialogRef.afterClosed().subscribe(result => {});
   }
 }

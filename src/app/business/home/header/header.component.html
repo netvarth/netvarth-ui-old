@@ -1,6 +1,6 @@
 <header class="main-header jaldee-header">
   <!-- Logo -->
-  <a  (click)="gotoActiveHome()" class="logo hidden-xs pointer-cursor">
+  <a (click)="gotoActiveHome()" class="logo hidden-xs pointer-cursor">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><img src="assets/images/home/logo-business.png" alt="Jaldee"></span>
     <!-- logo for regular state and mobile devices -->
@@ -10,7 +10,7 @@
   <nav class="navbar navbar-static-top" role="navigation">
     <!-- Sidebar toggle button-->
     <a (click)="gotoActiveHome()" class="visible-xs logo-mini-app pointer-cursor pull-left">
-      <img src="./assets/images/home/logo-business.png" alt="Jaldee"/>
+      <img src="./assets/images/home/logo-business.png" alt="Jaldee" />
     </a>
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" *ngIf="!iswiz">
       <span class="sr-only">Toggle navigation</span>
@@ -24,23 +24,26 @@
             <i class="fa fa-arrow-left"></i>
           </a>
         </li>
-         <li [matTooltip]="'Take a tour'" *ngIf="!iswiz">
+        <li *ngIf="!iswiz">
+          <a (click)="helpClicked()">Help</a>
+        </li>
+        
+        <li [matTooltip]="'Take a tour'" *ngIf="!iswiz">
           <a (click)="tourIconClicked()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <!-- <i class="fa fa-plane"> -->
-              Take a tour
-              <div joyrideStep="step4"  title="Reach Out To Us" [stepContent]="text4"  ></div>
-              <ng-template #text4>
-                <div>
-                  We offer free support and we are always ready to help.<br>
-                  <br>
-                  Call us at- <span style="color: white;"><b>888-012-5000</b></span><br>
-                  Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
+            <i class="fa take-tour-icon"></i>
+            <div joyrideStep="step4" title="Reach Out To Us" [stepContent]="text4"></div>
+            <ng-template #text4>
+              <div>
+                We offer free support and we are always ready to help.<br>
+                <br>
+                Call us at- <span style="color: white;"><b>888-012-5000</b></span><br>
+                Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
 
-                </div>
+              </div>
             </ng-template>
-            <!-- </i> -->
           </a>
         </li>
+
         <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">
           <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>
@@ -92,7 +95,8 @@
           <a (click)="gotoLicense()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="icon-license"></i>
           </a>
-          <ul class="dropdown-menu" *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=6">
+          <ul class="dropdown-menu"
+            *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=6">
             <li class="header">
               <p *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId==9 && license_message != ''"
                 style="color: red; width: 100%; text-align: left;">
@@ -103,10 +107,12 @@
               <p style="width: 100%; text-align: left;"
                 *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
                 Your current license is
-                <i style="color:red">{{licenseDetails.accountLicense.displayName}}.</i><span> Upgrade license </span> for more features.
+                <i style="color:red">{{licenseDetails.accountLicense.displayName}}.</i><span> Upgrade license </span>
+                for more features.
               </p>
             </li>
-            <li *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
+            <li
+              *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
               <ul class="menu pointer-cursor">
                 <li>
                   <a (click)="upgradeMembership()">
