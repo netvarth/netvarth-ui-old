@@ -94,7 +94,7 @@
                               {{customerDetail.lastName}}</span>
                       </td>
                       <td><label>Gender:&nbsp;</label>
-                          <span *ngIf="customerDetail.gender">{{customerDetail.gender}}</span>
+                          <span *ngIf="customerDetail.gender">{{customerDetail.gender | capitalizeFirst}}</span>
                           <span *ngIf="!customerDetail.gender">......</span>
                       </td>
                       <td><label>Dob:&nbsp;</label>
