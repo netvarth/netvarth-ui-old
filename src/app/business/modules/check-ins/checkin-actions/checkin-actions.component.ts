@@ -690,7 +690,7 @@ export class CheckinActionsComponent implements OnInit {
             .subscribe(
                 () => {
                     this.dialogRef.close();
-                    this.router.navigate(['provider', 'appointments']);
+                    this.router.navigate(['provider', 'check-ins']);
                 },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
