@@ -302,7 +302,7 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') {
             this.showCancel = true;
         }
-        if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeApptDistanceTime && this.appt.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
+        if (this.data.timetype === 1 && this.appt.service.livetrack && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeApptDistanceTime && this.appt.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
             this.trackStatus = true;
         }
         if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected' && (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo)) {
@@ -320,7 +320,7 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived')) {
             this.showCall = true;
         }
-        if (this.pos && this.appt.apptStatus !== 'blocked' && ((this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') || ((this.appt.apptStatus === 'cancelled' || this.appt.apptStatus === 'Rejected') && this.appt.paymentStatus !== 'NotPaid'))) {
+        if (this.pos && this.appt.apptStatus !== 'blocked' && ((this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') || ((this.appt.apptStatus === 'Cancelled' || this.appt.apptStatus === 'Rejected') && this.appt.paymentStatus !== 'NotPaid'))) {
             this.showBill = true;
         }
         if (this.data.timetype !== 2 && this.appt.apptStatus !== 'blocked' && (this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected')) {

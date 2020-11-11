@@ -518,7 +518,7 @@
                     <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
                       (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                        <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
+                        <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
                           (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                       </td>
                       <td class="parent-selection parent-title td-one">

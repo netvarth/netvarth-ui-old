@@ -69,7 +69,8 @@
 											</div>
 										</div>
 										<ng-container *ngIf="bill_data.billStatus!='Settled'">
-											<div class="workbench mat-form-field-wrapper" *ngIf="pos">
+											<div class="workbench mat-form-field-wrapper" *ngIf="pos && ((!source && checkin.waitlistStatus != 'cancelled') || (source && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled'))">
+
 												<ng-container
 													*ngIf="(!showAddItemsec && showAddItemMenuSection) || showAddItemsec || showJCouponSection">
 													<div class="section-two">
