@@ -6776,3 +6776,8 @@
     margin-left: 10px;
     color: #3c5c8d;
 }
+.delivery-amenity {
+    content: url(../images/myjaldee/amenities/delivery-man.svg);
+    position: relative;
+    width: 20px;
+}

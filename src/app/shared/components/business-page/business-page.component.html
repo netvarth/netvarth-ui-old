@@ -212,6 +212,9 @@
                                                 <li *ngIf="locationjson[0]?.locationVirtualFields?.firstaid=='true'"
                                                     [matTooltip]="'First Aid'"><span class="icon-first-aid"></span>
                                                 </li>
+                                                <li *ngIf="locationjson[0]?.locationVirtualFields?.deliveryoptions=='true'"
+                                                    [matTooltip]="'Delivery'"><span class="fa delivery-amenity"></span>
+                                                </li>
                                             </ng-container>
                                         </ul>
                                     </div>
