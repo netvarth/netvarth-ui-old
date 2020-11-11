@@ -345,7 +345,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                             if (!allQs[ii].instantQueue && allQs[ii].queueState === 'ENABLED') {
                                 this.scheduledQs.push(allQs[ii]);
                             }
-                            if (allQs[ii].queueState === 'DISABLED') {
+                            if (allQs[ii].queueState === 'DISABLED' || allQs[ii].queueState === 'EXPIRED') {
                                 this.disabledQs.push(allQs[ii]);
                             }
                             if (allQs[ii].queueState === 'ENABLED') {
@@ -369,7 +369,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     }
     getServices() {
         // const params = { 'status': 'ACTIVE' };
-        const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId , 'serviceType-neq': 'donationService'};
+        const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId, 'serviceType-neq': 'donationService' };
         return new Promise((resolve, reject) => {
             this.provider_services.getProviderServices(filter)
                 .subscribe(data => {
@@ -601,13 +601,17 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         instantQInput['capacity'] = instantQ.qcapacity;
         instantQInput['queueState'] = 'ENABLED';
         instantQInput['instantQueue'] = true;
-        instantQInput['provider'] = {'id': this.userId};
+        instantQInput['provider'] = { 'id': this.userId };
         if (isNaN(instantQ.qcapacity)) {
             const error = 'Please enter a numeric value for capacity';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         } else if (isNaN(instantQ.qserveonce)) {
             const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        } else if (JSON.parse(instantQ.qserveonce) === 0 || (JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
+            const error = this.customer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' +  this.customer_label + 's served.';
+          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          return;
         } else {
             if (this.action === 'edit') {
                 this.updateInstantQ(instantQInput);
@@ -971,9 +975,9 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         });
     }
     redirecToUserSettings() {
-      this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings']);
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings']);
     }
     adduserqueue() {
-      this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'queues', 'add']);
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'queues', 'add']);
     }
 }

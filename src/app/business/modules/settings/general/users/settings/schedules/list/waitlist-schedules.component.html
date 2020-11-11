@@ -4,14 +4,15 @@
 </section> -->
 <section class="">
         <div class="card title-gb">
-          <h5 class="mgn-up-10"> 
-            <!-- <button type="button" class="btn default profile-back" (click)="redirecToUserSettings()">
+                <h5 class="mgn-up-10">
+                        <!-- <button type="button" class="btn default profile-back" (click)="redirecToUserSettings()">
              <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
-             <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToUserSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-             User Appointment Schedules
-          </h5>     
+                        <span class="fa fa-arrow-left pointer-cursor"
+                                (click)="redirecToUserSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        User Appointment Schedules
+                </h5>
         </div>
-      </section>
+</section>
 <section class="q-list">
         <div class="content instant loc-list">
                 <div class="row col-md-12 m0 no-padding-small" *ngIf="api_loading">
@@ -23,7 +24,7 @@
                         <!-- <div class="card">
                                 <p class="form-level-settings">{{waitlist_cap}}</p>
                                 <div class="copy"> -->
-                                        <!-- <div class="col-md-12 no-padding" style="display: flex">
+                        <!-- <div class="col-md-12 no-padding" style="display: flex">
                                                 <label style="color: #222223!important"><b>My Availability
                                                                 Today</b></label>
                                                 <mat-panel-description class="acc-plus-btn pointer-cursor"
@@ -36,7 +37,7 @@
                                                         </button>
                                                 </mat-panel-description>
                                         </div> -->
-                                        <!-- <div class="row m0" *ngIf="showInstantQFlag">
+                        <!-- <div class="row m0" *ngIf="showInstantQFlag">
                                                 <div class="col-md-12 p0">
                                                         <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
                                                                         onSubmit(instantQForm.value)">
@@ -217,7 +218,7 @@
                                                         </form>
                                                 </div>
                                         </div> -->
-                                        <!-- <div class="row col-md-12 col-xs-12 no-padding m0 mt10"
+                        <!-- <div class="row col-md-12 col-xs-12 no-padding m0 mt10"
                                                 *ngFor="let queue of todaysQs; index as i">
                                                 <div class="col-md-12 no-padding">
                                                         <div class="copy">
@@ -325,24 +326,24 @@
                                                         </div>
                                                 </div>
                                         </div> -->
-                                <!-- </div>
+                        <!-- </div>
                         </div> -->
                         <div class="card sched_q p0 mt10">
-                                        <div class="col-md-12 no-padding">
-                                                        <ul class="nav jd-custom-nav chkn-dash">
-                                                             <li class="dropdown notifications-menu pull-right">
-                                                                <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="adduserschedules()"
-                                                                      class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                                                                      <span><i class="fa fa-plus"></i>Add Schedule</span>
-                                                                </a>
-                                                             </li>
-                                                        </ul>
-                                        </div>
+                                <div class="col-md-12 no-padding">
+                                        <ul class="nav jd-custom-nav chkn-dash">
+                                                <li class="dropdown notifications-menu pull-right">
+                                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                                                (click)="adduserschedules()"
+                                                                class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                                                <span><i class="fa fa-plus"></i>Add Schedule</span>
+                                                        </a>
+                                                </li>
+                                        </ul>
+                                </div>
                                 <mat-accordion class="no-padding">
                                         <mat-expansion-panel [expanded]="false">
                                                 <mat-expansion-panel-header>
-                                                        <mat-panel-title><i
-                                                                        class="q-recur">&nbsp;&nbsp;&nbsp;</i>Active
+                                                        <mat-panel-title><i class="q-recur">&nbsp;&nbsp;&nbsp;</i>Active
                                                                 Schedules ({{scheduledQs.length}})</mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                 <div class="row q-time queuelist m0"
@@ -490,7 +491,8 @@
                                 <mat-accordion class="no-padding">
                                         <mat-expansion-panel [expanded]="false">
                                                 <mat-expansion-panel-header>
-                                                        <mat-panel-title>Inactive Schedules ({{disabledQs.length}})
+                                                        <mat-panel-title>Inactive/Expired Schedules
+                                                                ({{disabledQs.length}})
                                                         </mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                 <div class="row q-time queuelist  m0" *ngFor="let queue of disabledQs">
@@ -533,22 +535,23 @@
                                                                                 <div class="clearfix"></div>
                                                                                 <mat-menu #appMenu="matMenu">
                                                                                         <button mat-menu-item
-                                                                                                *ngIf="queue.showDisableBtn"
+                                                                                                *ngIf="queue.showDisableBtn && queue.apptState !== 'EXPIRED'"
                                                                                                 (click)="changeProviderScheduleStatus(queue)">
                                                                                                 <i
                                                                                                         class="icon-enable"></i>Enable
                                                                                         </button>
-                                                                                        <button mat-menu-item  
-                                                                                        (click)="addEditProviderQueue('editFromList', queue)"
-                                                                                        >
-                                                                                        <i class="icon-edit"></i>Edit
-                                                                                </button>
+                                                                                        <button mat-menu-item
+                                                                                                (click)="addEditProviderQueue('editFromList', queue)">
+                                                                                                <i
+                                                                                                        class="icon-edit"></i>Edit
+                                                                                        </button>
                                                                                 </mat-menu>
                                                                         </div>
                                                                 </div>
                                                         </div>
                                                 </div>
-                                                <div class="card" *ngIf="disabledQs.length==0">No Disabled Schedules</div>
+                                                <div class="card" *ngIf="disabledQs.length==0">No Disabled Schedules
+                                                </div>
                                         </mat-expansion-panel>
                                 </mat-accordion>
                         </div>

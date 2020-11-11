@@ -9,6 +9,8 @@ import { projectConstants } from '../../../../app.component';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import * as moment from 'moment';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
+import { CheckinActionsComponent } from '../checkin-actions/checkin-actions.component';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
   templateUrl: './provider-waitlist-checkin-detail.component.html'
@@ -37,7 +39,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   no_pvt_notes_cap = Messages.CHECK_DET_NO_PVT_NOTES_FOUND_CAP;
   no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP;
   no_history_found = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
-  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   optinal_fields = Messages.DISPLAYBOARD_OPTIONAL_FIELDS;
   waitlist_id = null;
   waitlist_data;
@@ -80,6 +82,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   iconClass: string;
   spfname: any;
   splname: any;
+  view_more = false;
+  multiSelection = false;
+  timetype;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -90,6 +95,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
+    });
+    this.activated_route.queryParams.subscribe(params => {
+      this.timetype = JSON.parse(params.timetype);
     });
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
@@ -206,7 +214,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
             this.waitlist_data.history = true;
           }
           // this.getWaitlistNotes();
-          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+          if (this.waitlist_data.waitlistStatus !== 'blocked') {
+            this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+            }
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.provider) {
@@ -529,6 +539,29 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getPos() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {
       this.pos = data['enablepos'];
+    });
+  }
+  viewMore() {
+    this.view_more = !this.view_more;
+  }
+  gotoActions(checkin?) {
+    let waitlist = [];
+    if (checkin) {
+      waitlist = checkin;
+    }
+    const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
+        checkinData: waitlist,
+        multiSelection: this.multiSelection,
+        timetype: this.timetype,
+        NoViewDetail: 'true'
+      }
+    });
+    actiondialogRef.afterClosed().subscribe(data => {
+      this.getProviderSettings();
     });
   }
 }

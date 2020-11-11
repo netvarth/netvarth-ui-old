@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-labels',
@@ -27,14 +28,17 @@ export class LabelsComponent implements OnInit {
     ];
     api_loading: boolean;
     label_list: any;
-
+source;
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
     constructor(private router: Router,
-        private routerobj: Router,
+        private _location: Location, public activateroute: ActivatedRoute,
         private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions) { }
-
+        private shared_functions: SharedFunctions) {
+            this.activateroute.queryParams.subscribe(params => {
+               this.source = params.source;
+              });
+         }
     ngOnInit() {
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'general->labels', 'subKey': 'timewindow', 'classname': 'b-queue',
@@ -64,7 +68,7 @@ export class LabelsComponent implements OnInit {
     performActions(actions) {
         this.addLabel();
         if (actions === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/general->labels']);
+            this.router.navigate(['/provider/' + this.domain + '/general->labels']);
         }
     }
     addLabel() {
@@ -106,9 +110,13 @@ export class LabelsComponent implements OnInit {
             });
     }
     redirecToGeneral() {
+        if (this.source === 'appt' || this.source === 'checkin') {
+            this._location.back();
+        } else {
         this.router.navigate(['provider', 'settings' , 'general']);
+        }
     }
     redirecToHelp() {
-        this.routerobj.navigate(['/provider/' + this.domain + '/general->labels']);
+        this.router.navigate(['/provider/' + this.domain + '/general->labels']);
     }
 }

@@ -50,6 +50,7 @@ export class TeleServiceShareComponent implements OnInit {
   providr_msg: string;
   provider_msgJV: string;
   disableButton = false;
+  gooleWaitFor: string;
 
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
@@ -96,6 +97,7 @@ export class TeleServiceShareComponent implements OnInit {
       this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
       this.videocall_msg = ' , your ' + this.data.app + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + this.data.app + ' call has started.\nWhen it is your turn, click on the following link- ' + this.meetingLink;
       this.waitFor = '\n3. Wait for the video call to start';
+      this.gooleWaitFor = '\n2. Wait for the video call to start';
       switch (this.data.app) {
         case 'WhatsApp':
           if (this.data.serviceDetail.virtualServiceType === 'videoService') {
@@ -111,7 +113,7 @@ export class TeleServiceShareComponent implements OnInit {
           this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.instalZoom + this.waitFor;
           break;
         case 'GoogleMeet':
-          this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.signinGoogle + this.waitFor;
+          this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.signinGoogle + this.gooleWaitFor;
           break;
         case 'VideoCall':
             this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.waitFor;

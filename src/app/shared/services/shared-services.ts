@@ -15,8 +15,8 @@ export class SharedServices {
     const url = s3Url + '/UIConfig/config.json?modifiedDate=' + UTCstring;
     return this.servicemeta.httpGet(url);
   }
-  adminLogin(body) {
-    return this.servicemeta.httpPost('superadmin/login', body);
+  adminLogin(body, type) {
+    return this.servicemeta.httpPost(type + '/login', body);
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
   ConsumerLogin(body) {
@@ -378,13 +378,13 @@ export class SharedServices {
       }
       param += 'action-eq=' + action;
     }*/
-    if (sdate !== '') {
+    if (sdate && sdate !== '') {
       if (param !== '') {
         param += '&';
       }
       param += 'createdDate-ge=' + sdate;
     }
-    if (edate !== '') {
+    if (edate && edate !== '') {
       if (param !== '') {
         param += '&';
       }

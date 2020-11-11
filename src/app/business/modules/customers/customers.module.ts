@@ -19,6 +19,8 @@ import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-memb
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
+import { CustomerActionsComponent } from './customer-actions/customer-actions.component';
+import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 
 
 @NgModule({
@@ -39,13 +41,17 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
         NgxMatSelectSearchModule,
         NgbModule,
         OwlModule,
+        InboxModule
     ],
     declarations: [
         CustomersListComponent,
         CustomerDetailComponent,
-        CustomerSearchComponent
+        CustomerSearchComponent,
+        CustomerActionsComponent
     ],
-    entryComponents: [],
+    entryComponents: [
+        CustomerActionsComponent
+    ],
     exports: [CustomersListComponent,MedicalrecordModule]
 })
 

@@ -429,7 +429,9 @@ export const projectConstantsLocal = {
     Cancelled: 'Cancelled',
     Completed: 'Completed',
     Rejected: 'Cancelled',
-    Confirmed: 'Confirmed'
+    Confirmed: 'Confirmed',
+    Rescheduled: 'Rescheduled',
+    PrepaymentPending: 'Prepayment Pending',
   },
   INVOICE_STATUS_FILTER: [
     { displayName: 'Paid', value: 'Paid' },
@@ -440,7 +442,7 @@ export const projectConstantsLocal = {
     // { displayName: 'Obsolete', value: 'Obsolete' },
   ],
   APPT_STATUSES_FILTER: [
-    { displayName: 'Checked in', value: 'Confirmed' },
+    { displayName: 'Confirmed', value: 'Confirmed' },
     { displayName: 'Arrived', value: 'Arrived' },
     { displayName: 'Started', value: 'Started' },
     { displayName: 'Completed', value: 'Completed' },
@@ -814,9 +816,9 @@ export const projectConstantsLocal = {
   { title: 'Blocked', value: 'blocked', reasonkey: 'blockedCancel' },
   { title: 'Closing Soon', value: 'closingSoon', reasonkey: 'closingSoonCancel', type: 2 },
   { title: 'Too Full', value: 'tooFull', reasonkey: 'tooFullCancel' },
-  { title: 'PrePayment Pending', value: 'prePaymentPending', reasonkey: 'tooFullCancel' },
-  { title: 'Queue Disabled', value: 'QueueDisabled', reasonkey: 'tooFullCancel' },
-  { title: 'Holiday', value: 'holiday', reasonkey: 'tooFullCancel' },
+  // { title: 'PrePayment Pending', value: 'prePaymentPending', reasonkey: 'tooFullCancel' },
+  // { title: 'Queue Disabled', value: 'QueueDisabled', reasonkey: 'tooFullCancel' },
+  // { title: 'Holiday', value: 'holiday', reasonkey: 'tooFullCancel' },
   { title: 'Other', value: 'other', reasonkey: 'other', type: 2 },
   ],
   REQUIRED_FIELDS_JALDEE_ONLINE: [

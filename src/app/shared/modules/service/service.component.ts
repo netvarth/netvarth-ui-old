@@ -67,6 +67,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     maxlimit = projectConstants.PRICE_MAX_VALUE;
     serviceForm: FormGroup;
     serviceSubscription: Subscription;
+    preSubscription: Subscription;
     action = 'show';
     service;
     service_data;
@@ -150,6 +151,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
         public router: Router) {
         this.customer_label = this.sharedFunctons.getTerminologyTerm('customer');
         this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG;
+        this.preSubscription = this.sharedFunctons.getMessage().subscribe(
+            (message: any) => {
+                switch (message.ttype) {
+                    case 'hide-prepost': {
+                        this.showInfo = false;
+                    }
+                }
+            });
         this.serviceSubscription = this.servicesService.initService.subscribe(
             (serviceParams: any) => {
                 if (serviceParams) {
@@ -680,7 +689,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.telemodes = ['Phone', 'WhatsApp'];
 
                 } else if (this.serv_mode && this.serv_mode === 'videoService') {
-                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp', 'VideoCall'];
+                    // this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp', 'VideoCall'];
+                    this.telemodes = ['Zoom', 'GoogleMeet', 'WhatsApp'];
                 } else {
                     this.telemodes = ['Zoom', 'GoogleMeet', 'Phone', 'WhatsApp'];
                 }

@@ -13,7 +13,6 @@ import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { LoadingSpinnerModule } from './components/loading-spinner/loading-spinner.module';
 import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-note.component';
-import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 
 @NgModule({
   imports: [
@@ -24,8 +23,7 @@ import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
     FormMessageDisplayModule,
     FooterModule,
     FormsModule,
-    LoadingSpinnerModule,
-    DateRangePickerModule
+    LoadingSpinnerModule
 ],
   declarations: [
     HomeAppComponent,
@@ -34,7 +32,7 @@ import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
     ForgotPasswordAppComponent,
     JcCouponNoteComponent
   ],
-  exports: [DateRangePickerModule],
+  exports: [],
   entryComponents: [
     HomeAppComponent,
     OtpFormAppComponent,
@@ -52,5 +50,3 @@ import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 export class ProviderAppModule {
 
 }
-
-

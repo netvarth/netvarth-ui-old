@@ -8968,6 +8968,12 @@ owl-carousel .bt3.active {
 .content.comn-cls .lbr .card .appthistory .c-history li.Confirmed:before {
   background: #5568ff;
 }
+.content.comn-cls .lbr .card .appthistory .c-history li.Rescheduled:before {
+  background: #e3b022;
+}
+.content.comn-cls .lbr .card .appthistory .c-history li.PrepaymentPending:before {
+  background: #ffbc00;
+}
 
 .content.comn-cls .lbr .card .appthistory .c-history li.Completed:before {
   background: #0edcb8;
@@ -10023,6 +10029,7 @@ td.chkWth, th.chkWth {
     width: 50px !important;
   }
   .jld-lnk-btn {
+    margin-top: 10px;
     margin-left: 0 !important;
     padding: 3px 6px !important;
     font-weight: 600;
@@ -12338,6 +12345,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/callcancel.svg);
   width: 40px;
 }
+.dashboardrescheduled-icon {
+  content: url(../images/dashboard-icons/schedule.svg);
+  width: 15px;
+}
 
 .dashboardstart-icon {
   content: url(../images/dashboard-icons/start.svg);
@@ -12824,8 +12835,8 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: 10px 10px 15px 0px #cccccc9c;
   margin-bottom: 20px;
   margin-top: 10px;
-  font-size: 1rem;
-  padding: 10px 0;
+  font-size: 1.1rem;
+  padding: 10px;
 }
 .cust-detail {
   color: #3c8dbc;
@@ -12874,7 +12885,7 @@ hr {
   font-size: 1rem !important;
 }
 .customer-action-btn {
-  padding: 5px 25px;
+  padding: 3px 25px;
   border: 1px solid;
   border-radius: 20px;
   float: right;
@@ -12888,4 +12899,135 @@ hr {
 }
 .trackSlide .fa-share-alt{
   font-size: 2rem;
+}
+.rece-act {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.rece-act table tr {
+  box-shadow:  10px 15px 0px #cccccc9c;
+}
+
+.checkin-details .act-span {
+  float: right;
+  background: #cae0ed;
+  padding: 9px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #1e4079;
+}
+.checkin-details .sub-user-name {
+  font-size: 0.92rem;
+  color: #3c8dbc;
+}
+.edit-customer-icon {
+  content: url(../images/edit-customer.svg);
+  width: 40px;
+}
+.comm-history-icon {
+  content: url(../images/communication.svg);
+  width: 20px;
+}
+.last-visit-icon {
+  content: url(../images/lastvisits.svg);
+  width: 40px;
+}
+.medical-list-icon {
+  content: url(../images/medicallists.svg);
+  width: 40px;
+}
+.customerlist-grid tr:hover {
+  background: #d8e2f1 !important;
+}
+.recent .mr-rx-icon {
+  width: 20px !important;
+}
+.recent .medicalrecord-icon {
+  width: 20px !important;
+}
+.drugdetail .mat-form-field-label{
+  color: #3f51b5 !important;
+}
+.customerdetails-icon {
+  content: url(../images/patientdetails-01.svg);
+  width: 40px;
+}
+.customernote-icon {
+  content: url(../images/patientnote.svg);
+  width: 20px;
+}
+.recentactivity .cellhover:hover {
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+}
+.block-hint {
+  color: orange;
+  font-size: 0.7rem;
+}
+.add-appt-icon {
+  content: url(../images/Addappoinment.svg);
+  width: 40px;
+}
+.unblock-appt-icon {
+  content: url(../images/Unblock.svg);
+  width: 40px;
+}
+.dashboardadd-customer-icon {
+  content: url(../images/addpatientblack.svg);
+  width: 15px;
+}
+.actionbtn .mat-icon-button {
+  width: 20px !important;
+  height: 30px !important;
+}
+.pointer-auto {
+  cursor: auto !important;
+}
+.type-head {
+  background: #d8e2f1;
+  color: #3c8dbc;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.signature-pad canvas{
+  border: 1px solid #3c8dbc; 
+}
+.c-checkin-new .fm-contact-table {
+  border-collapse: separate;
+  border-spacing: 0 1em;
+  font-size: 0.92rem;
+}
+.c-checkin-new .fm-contact-table .td1 {
+  text-align: end;
+}
+@media (max-width:890px) {
+  .signature-pad canvas {
+    width: 400px;
+  }
+}
+@media (max-width:700px) {
+  .signature-pad canvas {
+    width: 250px;
+    height: 200px;
+  }
+}
+
+.prov-wtlst-note-border {
+  border: 1px solid #00000042;
+  padding: 20px;
+  box-shadow: 0 0 10px #00000042 !important;
+  font-weight: bold;
+}
+.online-icon {
+  content: url(../images/online2.svg);
+  width: 25px;
+}
+.phonein-icon {
+  content: url(../images/phonein.svg);
+  width: 25px;
+}
+.walkin-icon {
+  content: url(../images/walkin.svg);
+  width: 25px;
 }

@@ -3,9 +3,10 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
-import { MedicalrecordService } from '../../medicalrecord.service';
+// import { MedicalrecordService } from '../../medicalrecord.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { MedicalrecordService } from '../../medicalrecord.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
   styleUrls: ['./share-rx.component.css']
 })
 export class ShareRxComponent implements OnInit {
+  patientId: any;
   email_id = '';
   msgreceivers: any = [];
   spId: any;
@@ -73,6 +75,7 @@ export class ShareRxComponent implements OnInit {
   curDate = new Date();
   accountType: any;
   userbname: any;
+  loading=true;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -83,33 +86,24 @@ export class ShareRxComponent implements OnInit {
     public provider_services: ProviderServices,
     private medicalService: MedicalrecordService
   ) {
-    this.spId = this.data.userId;
-    this.provider_user_Id = this.data.provider_user_Id;
-    console.log(this.spId);
+
+    this.provider_user_Id = this.medicalService.getDoctorId();
     this.mrId = this.data.mrId;
     this.type = this.data.type;
-    console.log(this.type);
-    this.chekintype = this.data.chekintype;
-    this.medicalService.patient_data.subscribe(res => {
-      this.customerDetail = JSON.parse(res.customerDetail);
-      console.log(this.customerDetail);
-      console.log(this.customerDetail.phoneNo);
-      // if (this.customerDetail.email) {
-      //   this.email_id = this.customerDetail.email;
-      // }
-      // if (this.customerDetail.phoneNo) {
-      //   this.phone = this.customerDetail.phoneNo;
-      // }
+    this.patientId=this.data.patientId;
+    this.getPatientDetails(this.patientId);
 
-    });
+
   }
   ngOnInit() {
+
+    const cnow = new Date();
+    const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+    this.cacheavoider = dd;
     this.sharewith = 0;
     this.msgreceivers = [{ 'id': 0, 'name': 'Patient' }];
     this.createForm();
-    console.log(this.mrId);
     this.getMrprescription();
-    // this.getBusinessProfile();
     this.getBussinessProfileApi();
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
@@ -127,6 +121,24 @@ export class ShareRxComponent implements OnInit {
   back() {
     this.dialogRef.close();
   }
+  getPatientDetails(uid){
+    const filter = { 'id-eq': uid };
+    this.provider_services.getCustomer(filter)
+      .subscribe(
+        (data: any) => {
+          const response = data;
+          console.log(response);
+          this.loading =false;
+          this.customerDetail = response[0];
+           if (this.customerDetail.email) {
+              this.email_id = this.customerDetail.email;
+            }
+            if (this.customerDetail.phoneNo) {
+              this.phone = this.customerDetail.phoneNo;
+            }
+
+  });
+}
   onSubmit(formdata) {
     this.disable = true;
     this.resetApiErrors();
@@ -270,9 +282,6 @@ export class ShareRxComponent implements OnInit {
       .subscribe(
         data => {
           this.blogo = data;
-          const cnow = new Date();
-          const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
-          this.cacheavoider = dd;
         },
         () => {
 
@@ -294,6 +303,14 @@ export class ShareRxComponent implements OnInit {
           });
     }
   }
+  showdigitalsign() {
+    let logourl = '';
+    if (this.signurl) {
+      logourl = (this.signurl) ? this.signurl + '?' + this.cacheavoider : '';
+    }
+    return this.shared_functions.showlogoicon(logourl);
+
+  }
   showimg() {
     let logourl = '';
     this.profimg_exists = false;
@@ -311,7 +328,7 @@ export class ShareRxComponent implements OnInit {
           this.userbname = this.userdata.businessName;
           console.log(this.userdata);
         },
-        );
+      );
     }
   }
   getBussinessProfileApi() {

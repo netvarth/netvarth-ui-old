@@ -383,6 +383,16 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         this.api_loading = false;
     }
     redirecToServices() {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'services']);
+        if (this.hideBack) {
+            this.sharedfunctionObj.sendMessage({ ttype: 'hide-prepost' });
+            this.hideBack = false;
+            if (this.service_id) {
+                this.servicecaption = 'Edit Service';
+            } else {
+                this.servicecaption = 'Add Service';
+            }
+        } else {
+            this.router.navigate(['provider', 'settings', 'q-manager', 'services']);
+        }
     }
 }

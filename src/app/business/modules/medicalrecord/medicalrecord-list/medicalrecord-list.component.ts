@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MatTableDataSource } from '@angular/material/table';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 })
 export class MedicalrecordListComponent implements OnInit {
 
+  mrList = 0;
   selectedRowIndex: any;
   loading = true;
   patientId: any;
@@ -25,10 +26,7 @@ export class MedicalrecordListComponent implements OnInit {
     private router: Router,
     private sharedfunctionObj: SharedFunctions,
     private location: Location) {
-    this.activatedRoute.queryParams.subscribe(queryParams => {
-      this.patientId = queryParams.id;
-
-    });
+    this.patientId = this.activatedRoute.parent.snapshot.params['id'];
   }
 
 
@@ -36,9 +34,7 @@ export class MedicalrecordListComponent implements OnInit {
     this.getPatientDetails();
     this.getPatientMedicalRecords();
   }
-  // getLastVisitDate(visit) {
-  //   return this.dateformat.transformToDatewithtime(visit.lastVisitedDate);
-  // }
+
   getPatientDetails() {
     const filter = { 'id-eq': this.patientId };
     this.provider_services.getProviderCustomers(filter)
@@ -55,6 +51,7 @@ export class MedicalrecordListComponent implements OnInit {
     this.provider_services.getPatientMedicalRecords(this.patientId)
       .subscribe((data: any) => {
         this.mr_dataSource = data;
+        this.mrList = data.length;
         this.loading = false;
       },
         error => {
@@ -92,60 +89,15 @@ export class MedicalrecordListComponent implements OnInit {
 
   }
   getMedicalRecord(mrDetails) {
-   //  this.selectedRowIndex = mrDetails.mrId;
-    if (mrDetails.waitlist) {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(mrDetails.waitlist.waitlistingFor[0]),
-          'serviceId': mrDetails.waitlist.service.id,
-          'serviceName': mrDetails.waitlist.service.name,
-          'booking_type': 'TOKEN',
-          'booking_date': mrDetails.mrConsultationDate,
-          'booking_time': mrDetails.waitlist.checkInTime,
-          'department': mrDetails.waitlist.service.deptName,
-          'consultationMode': 'OP',
-          'booking_id': mrDetails.waitlist.ynwUuid,
-          'mrId': mrDetails.id,
-          'visitDate': mrDetails.mrConsultationDate,
-          'back_type': 'consumer'
-
-        }
-      };
-
-
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], navigationExtras);
-    } else if (mrDetails.appointmnet) {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(mrDetails.appointmnet.appmtFor[0]),
-          'serviceId': mrDetails.appointmnet.service.id,
-          'serviceName': mrDetails.appointmnet.service.name,
-          'department': mrDetails.appointmnet.service.deptName,
-          'booking_type': 'APPT',
-          'booking_date': mrDetails.mrConsultationDate,
-          'booking_time': mrDetails.appointmnet.apptTakenTime,
-          'mrId': mrDetails.id,
-          'booking_id': mrDetails.appointmnet.uid,
-          'visitDate': mrDetails.mrConsultationDate,
-          'back_type': 'consumer'
-        }
-      };
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], navigationExtras);
-    } else {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'customerDetail': JSON.stringify(mrDetails.providerConsumer),
-          'serviceName': 'Consultation',
-          'booking_type': 'FOLLOWUP',
-          'mrId': mrDetails.id,
-          'visitDate': mrDetails.mrConsultationDate,
-          'booking_date': mrDetails.mrConsultationDate,
-          'back_type': 'consumer'
-        }
-      };
-      this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], navigationExtras);
+    let bookingId = 0;
+    const bookingType = mrDetails.bookingType;
+    const mrId = mrDetails.id;
+    const customerDetails = mrDetails.providerConsumer;
+    const customerId = customerDetails.id;
+    if (mrDetails.uuid) {
+      bookingId = mrDetails.uuid;
     }
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
+
   }
-
-
 }

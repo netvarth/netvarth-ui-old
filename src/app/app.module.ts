@@ -58,6 +58,7 @@ import { RazorpayService } from './shared/services/razorpay.service';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
 import { ShareService } from 'ngx-sharebuttons';
+import { SignaturePadModule } from 'angular2-signaturepad';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -117,7 +118,8 @@ export function init_app(globalService: GlobalService) {
     SalesChannelModule,
     ForgotPasswordModule,
     SetPasswwordModule,
-    JoyrideModule.forRoot()
+    JoyrideModule.forRoot(),
+    SignaturePadModule
 
   ],
   providers: [

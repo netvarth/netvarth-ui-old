@@ -1619,11 +1619,50 @@ export class ProviderServices {
       const url = 'provider/mr/' + mrId;
       return this.servicemeta.httpPut(url, data);
    }
-   getCustomerLastVisit(id) {
-      const url = 'provider/mr/patientPreviousVisit/' + id;
-      return this.servicemeta.httpGet(url);
-   }
    deleteUplodedsign(name, id) {
       return this.servicemeta.httpDelete('provider/user/digitalSign/' + id + '/' + name);
    }
+
+   addAppointmentBlock(data) {
+      const url = 'provider/appointment/block';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteAppointmentBlock(uid) {
+      const url = 'provider/appointment/unblock/' + uid;
+      return this.servicemeta.httpPut(url);
+   }
+   confirmAppointmentBlock(data) {
+      const url = 'provider/appointment/confirm';
+      return this.servicemeta.httpPut(url, data);
+   }
+   getCustomerTodayVisit(id) {
+      const url = 'provider/customers/bookings/today/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   getCustomerFutureVisit(id) {
+      const url = 'provider/customers/bookings/future/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   getCustomerHistoryVisit(id) {
+      const url = 'provider/customers/bookings/history/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   getMRAudits(id) {
+      const url = 'provider/mr/auditLog/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   // waitlist block
+   addWaitlistBlock(data) {
+      const url = 'provider/waitlist/block';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteWaitlistBlock(uid) {
+      const url = 'provider/waitlist/unblock/' + uid;
+      return this.servicemeta.httpPut(url);
+   }
+   confirmWaitlistBlock(data) {
+      const url = 'provider/waitlist/confirm';
+      return this.servicemeta.httpPut(url, data);
+   }
 }
+

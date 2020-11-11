@@ -331,7 +331,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                                 if (!allQs[ii].instantQueue && allQs[ii].queueState === 'ENABLED') {
                                     this.scheduledQs.push(allQs[ii]);
                                 }
-                                if (allQs[ii].queueState === 'DISABLED') {
+                                if (allQs[ii].queueState === 'DISABLED' || allQs[ii].queueState === 'EXPIRED') {
                                     this.disabledQs.push(allQs[ii]);
                                 }
                                 if (allQs[ii].queueState === 'ENABLED') {
@@ -594,6 +594,10 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         } else if (!this.shared_Functionsobj.checkIsInteger(instantQ.qserveonce)) {
             const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        } else if (JSON.parse(instantQ.qserveonce) === 0 || (JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
+            const error = this.customer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' +  this.customer_label + 's served.';
+          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          return;
         } else {
             if (this.action === 'edit') {
                 this.updateInstantQ(instantQInput);

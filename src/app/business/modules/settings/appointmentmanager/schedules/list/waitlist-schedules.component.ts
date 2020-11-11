@@ -346,7 +346,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                             if (!allQs[ii].instantQueue && allQs[ii].apptState === 'ENABLED') {
                                 this.scheduledQs.push(allQs[ii]);
                             }
-                            if (allQs[ii].apptState === 'DISABLED') {
+                            if (allQs[ii].apptState === 'DISABLED' || allQs[ii].apptState === 'EXPIRED') {
                                 this.disabledQs.push(allQs[ii]);
                             }
                             if (allQs[ii].apptState === 'ENABLED') {
@@ -927,8 +927,13 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
             this.todayQLoading[index] = true;
         }
         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
-        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const today = new Date(todaydt);
+       // const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        // const today = new Date(todaydt);
+      //  const today = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      const server = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      const serverdate = moment(server).format();
+      const servdate = new Date(serverdate);
+      const today = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
         const dd = today.getDate();
         const mm = today.getMonth() + 1;
         const yyyy = today.getFullYear();
@@ -971,13 +976,13 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         });
     }
     redirecToApptmanager() {
-        this.routerobj.navigate(['provider', 'settings' , 'appointmentmanager' ]);
-      }
-      redirecToHelp() {
+        this.routerobj.navigate(['provider', 'settings', 'appointmentmanager']);
+    }
+    redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->schedules']);
-      }
-      addschedules() {
+    }
+    addschedules() {
         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', 'add']);
-      }
+    }
 }
 

@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
 @Component({
     selector: 'app-appointment-checkin',
@@ -215,6 +216,7 @@ export class AppointmentComponent implements OnInit {
     heading = 'Create an Appointment';
     serviceIdParam = '';
     jaldeeId;
+    availableDates: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -716,6 +718,7 @@ export class AppointmentComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
+        this.note_placeholder = this.sel_ser_det.consumerNoteTitle;
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate, accountid) {
         this.queuejson = [];
@@ -762,6 +765,7 @@ export class AppointmentComponent implements OnInit {
         this.sel_queue_id = 0;
         this.resetApi();
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+        this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
     }
     showConfrmEmail(event) {
         if (event.key !== 'Enter') {
@@ -854,6 +858,7 @@ export class AppointmentComponent implements OnInit {
         }
         this.handleFuturetoggle();
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+        this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
     }
     handleServiceForWhom() {
         this.resetApi();
@@ -871,14 +876,16 @@ export class AppointmentComponent implements OnInit {
             }
             if (error === '') {
                 if (this.waitlist_for.length === 0) {
-                    if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-                        this.getCustomerCount();
-                    } else {
-                        this.createCustomer();
-                    }
-                } else {
-                    this.saveCheckin();
+                    // if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+                    //     this.getCustomerCount();
+                    // } else {
+                    //     this.createCustomer();
+                    // }
+                    this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
                 }
+                //  else {
+                this.saveCheckin();
+                // }
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 // this.api_error = error;
@@ -950,7 +957,6 @@ export class AppointmentComponent implements OnInit {
             },
             'consumerNote': this.consumerNote,
             'phoneNumber': this.consumerPhoneNo,
-            // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'appointmentMode': this.apptType
         };
@@ -980,7 +986,7 @@ export class AppointmentComponent implements OnInit {
                 } else if (i === 'Phone') {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else {
-                    post_Data['virtualService'] = {'VideoCall' : ''};
+                    post_Data['virtualService'] = { 'VideoCall': '' };
                 }
                 //  else {
                 //     post_Data['virtualService'] = {};
@@ -1001,9 +1007,22 @@ export class AppointmentComponent implements OnInit {
             post_Data['consumer'] = { id: this.customer_data.id };
             //   post_Data['ignorePrePayment'] = true;
             if (!this.is_wtsap_empty) {
-                this.addAppointmentInProvider(post_Data);
+                if (this.thirdParty === '') {
+                    this.addAppointmentInProvider(post_Data);
+                } else {
+                    this.addAppointmentBlock(post_Data);
+                }
             }
         }
+    }
+    addAppointmentBlock(post_Data) {
+        this.provider_services.addAppointmentBlock(post_Data)
+            .subscribe((data) => {
+                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+                this.showCheckin = false;
+                this.searchForm.reset();
+                this.router.navigate(['provider', 'appointments']);
+            });
     }
     addAppointmentInProvider(post_Data) {
         this.api_loading = true;
@@ -1281,6 +1300,7 @@ export class AppointmentComponent implements OnInit {
         if (nDt.getTime() >= strtDt.getTime()) {
             this.sel_checkindate = ndate;
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+            this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
         }
         const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
@@ -1400,7 +1420,7 @@ export class AppointmentComponent implements OnInit {
                                 this.selected_user = this.users[0];
                             }
                         } else {
-                            this.selected_user = this.userN;
+                            this.selected_user = this.users[0];
                         }
                         this.handleUserSelection(this.selected_user);
                     } else {
@@ -1444,6 +1464,7 @@ export class AppointmentComponent implements OnInit {
                             }
                             this.setServiceDetails(this.sel_ser);
                             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+                            this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
                         } else {
                             // if (this.filterDepart) {
                             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
@@ -1521,6 +1542,7 @@ export class AppointmentComponent implements OnInit {
             }
             this.setServiceDetails(this.sel_ser);
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+            this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
         } else {
             // if (this.filterDepart) {
             //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
@@ -1550,6 +1572,7 @@ export class AppointmentComponent implements OnInit {
                     }
                     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
                     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+                    this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
                 }
                 this.api_loading1 = false;
             },
@@ -1584,7 +1607,7 @@ export class AppointmentComponent implements OnInit {
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
         if (this.consumerNote === '') {
-            this.consumerNote = 'Please find the attachment from Consumer with this message';
+            this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
         }
         dataToSend.append('message', this.consumerNote);
         const captions = {};
@@ -1748,5 +1771,19 @@ export class AppointmentComponent implements OnInit {
         } else {
             this.router.navigate(['provider', 'appointments']);
         }
+    }
+    getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
+        const _this = this;
+        _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
+            .subscribe((data: any) => {
+                const availables = data.filter(obj => obj.availableSlots);
+                const availDates = availables.map(function (a) { return a.date; });
+                _this.availableDates = availDates.filter(function (elem, index, self) {
+                    return index === self.indexOf(elem);
+                });
+            });
+    }
+    dateClass(date: Date): MatCalendarCellCssClasses {
+        return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
 }

@@ -21,6 +21,7 @@ import { interval as observableInterval, Subscription } from 'rxjs';
 import { CheckinActionsComponent } from './checkin-actions/checkin-actions.component';
 declare let cordova: any;
 import { VoicecallDetailsComponent } from './voicecall-details/voicecall-details.component';
+import Speech from 'speak-tts';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -214,6 +215,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   today_rejected_count = 0;
   today_cancelled_checkins_count = 0;
   today_checkedin_count = 0;
+  today_blocked_count = 0;
   scheduled_count = 0;
   started_count = 0;
   cancelled_count = 0;
@@ -322,6 +324,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   maxday = new Date();
   allLabels: any = [];
   voicedialogRef: any;
+  addCustomerTooltip = '';
+  admin = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -432,17 +436,30 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTomorrowDate();
     }
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    if (this.active_user.adminPrivilege) {
+      this.admin = true;
+    }
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.customerIdTooltip = this.customer_label + ' id';
+    this.addCustomerTooltip = 'Add ' + this.customer_label;
+    this._initSpeech();
     this.getDisplayboardCount();
     this.getPos();
     this.getLabel();
-    this.getDepartments();
-    this.getLocationList();
-    this.getProviders();
-    this.getServiceList();
+    if (this.active_user.accountType === 'BRANCH') {
+      this.getDepartments();
+      this.getProviders().then(
+        () => {
+          this.getLocationList();
+          this.getServiceList();
+        }
+      );
+    } else {
+      this.getLocationList();
+      this.getServiceList();
+    }
     this.image_list_popup_temp = [];
     // const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
     // if (savedtype !== undefined && savedtype !== null) {
@@ -841,15 +858,39 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     });
   }
+  getDefaultViewQs(allQueues) {
+    console.log(allQueues);
+    const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    console.log(loggedUser.adminPrivilege);
+    if (!loggedUser.adminPrivilege) {
+      const userQs = [];
+      console.log(allQueues.length);
+      for (let qIndex = 0; qIndex < allQueues.length; qIndex++) {
+        console.log(allQueues[qIndex]);
+        console.log(loggedUser.id);
+        if (allQueues[qIndex].provider && (allQueues[qIndex].provider.id === loggedUser.id)) {
+          userQs.push(allQueues[qIndex]);
+        }
+      }
+      console.log(userQs);
+      return userQs;
+    } else {
+      return allQueues;
+    }
+  }
+  getUserType() {
+
+  }
   initViews(queues, source?) {
     const _this = this;
     _this.views = [];
+    const qsActive = this.getDefaultViewQs(queues);
     return new Promise(function (resolve, reject) {
       const tempView = {};
       tempView['name'] = Messages.DEFAULTVIEWCAP;
       tempView['id'] = 0;
       tempView['customViewConditions'] = {};
-      tempView['customViewConditions'].queues = queues;
+      tempView['customViewConditions'].queues = qsActive;
       _this.selectedView = tempView;
       _this.getViews().then(
         (data: any) => {
@@ -894,6 +935,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         self.queues = queues;
         self.initViews(queues, '').then(
           (view) => {
+            console.log('view:');
+            console.log(view);
             self.initView(view, 'changeLocation');
           }
         );
@@ -902,6 +945,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsFromView(view, queues) {
     const qs = [];
+    console.log(view);
     if (view && view.name !== Messages.DEFAULTVIEWCAP) {
       for (let i = 0; i < queues.length; i++) {
         for (let j = 0; j < view.customViewConditions.queues.length; j++) {
@@ -911,7 +955,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     } else {
-      return queues;
+      const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      console.log(loggedUser);
+      if (!loggedUser.adminPrivilege) {
+        for (let qIndex = 0; qIndex < queues.length; qIndex++) {
+          console.log(queues[qIndex]);
+          console.log(loggedUser.id);
+          if (queues[qIndex].provider && (queues[qIndex].provider.id === loggedUser.id)) {
+            qs.push(queues[qIndex]);
+          }
+        }
+      } else {
+        return queues;
+      }
     }
     return qs;
   }
@@ -944,11 +1000,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadApiSwitch('reloadAPIs');
   }
   initView(view, source?) {
+    console.log(view);
     this.activeQs = this.tempActiveQs = [];
+    console.log(this.getQsFromView(view, this.queues));
     const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
       this.activeQs = this.tempActiveQs = groupbyQs['ENABLED'];
     }
+    console.log(this.activeQs);
     const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
     if (view.name !== Messages.DEFAULTVIEWCAP) {
       if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
@@ -1086,7 +1145,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             // } else {
             //   _this.qExist = false;
             // }
-            resolve(queues);
+            const qList = queues.filter(sch => sch.queueState !== 'EXPIRED');
+            resolve(qList);
           });
       });
     }
@@ -1530,7 +1590,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   setCounts(list) {
     this.today_arrived_count = this.getCount(list, 'arrived');
     this.today_checkedin_count = this.getCount(list, 'checkedIn');
-    this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
+    this.today_blocked_count = this.getCount(list, 'blocked');
+    this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count + this.today_blocked_count;
     this.today_started_count = this.getCount(list, 'started');
     this.today_completed_count = this.getCount(list, 'done');
     this.today_cancelled_count = this.getCount(list, 'cancelled');
@@ -1669,6 +1730,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (appointments['checkedIn']) {
       Array.prototype.push.apply(scheduledList, appointments['checkedIn'].slice());
+    }
+    if (appointments['blocked']) {
+      Array.prototype.push.apply(scheduledList, appointments['blocked'].slice());
     }
     if (this.time_type === 1) {
       this.sortCheckins(scheduledList);
@@ -1985,6 +2049,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 0; i < this.allLabels.length; i++) {
       if (this.allLabels[i].label === label) {
         return this.allLabels[i].displayName;
+      } else {
+        return label;
       }
     }
   }
@@ -2163,13 +2229,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
   }
-  searchCustomer(source) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        source: source
-      }
-    };
-    this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+  searchCustomer() {
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     source: source
+    //   }
+    // };
+    // this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+    this.router.navigate(['provider', 'customers', 'add']);
   }
   showAdjustDelay() {
     if (this.queues.length === 0) {
@@ -2225,7 +2292,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid]);
+    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], { queryParams: { timetype: this.time_type } });
   }
   viewBillPage() {
     const _this = this;
@@ -2382,12 +2449,63 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   //     );
   // }
 
+  playSound(checkin, count) {
+    const _this = this;
+    let tokenNo = 1;
+    if (checkin.token) {
+      tokenNo = checkin.token;
+    }
+    this.speech.setLanguage('hi-IN');
+    // Speech.setVoice(voice);
+    this.speech.speak({
+      text: 'Token Number ' + tokenNo + checkin.waitlistingFor[0].firstName + ' ' + checkin.waitlistingFor[0].lastName,
+      queue: false,
+      listeners: {
+        onstart: () => {
+          console.log('Start utterance');
+        },
+        onend: () => {
+          console.log('End utterance');
+          count++;
+          if (count !== 3) {
+            _this.playSound(checkin, count);
+          }
+        },
+        onresume: () => {
+          console.log('Resume utterance');
+        },
+        onboundary: event => {
+          console.log(
+            event.name +
+            ' boundary reached after ' +
+            event.elapsedTime +
+            ' milliseconds.'
+          );
+        }
+      }
+    }).then(() => {
+      console.log('Success !');
+    }).catch(e => {
+      console.error('An error occurred :', e);
+    });
+  }
   callingWaitlist(checkin) {
-    const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
-    this.provider_services.setCallStatus(checkin.ynwUuid, status).subscribe(
-      () => {
-        this.loadApiSwitch('reloadAPIs');
-      });
+    console.log(checkin);
+    if (checkin.showToken) {
+      if (!checkin.callingStatus) {
+        const speechSupported = this.shared_functions.getitemfromLocalStorage('speech');
+        if (speechSupported) {
+          this.playSound(checkin, 0);
+        }
+      } else {
+        this.speech.pause();
+      }
+      const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
+      this.provider_services.setCallStatus(checkin.ynwUuid, status).subscribe(
+        () => {
+          this.loadApiSwitch('reloadAPIs');
+        });
+    }
   }
   printHistoryCheckin() {
     const Mfilter = this.setFilterForApi();
@@ -2645,20 +2763,27 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getProviders() {
-    const apiFilter = {};
-    apiFilter['userType-eq'] = 'PROVIDER';
-    // let filter = 'userType-neq :"assistant"'
-    this.provider_services.getUsers(apiFilter).subscribe(data => {
-      this.users = data;
-      const tempUser = {};
-      tempUser['firstName'] = 'All';
-      tempUser['id'] = 'all';
-      this.users.push(tempUser);
-      if (this.shared_functions.getitemFromGroupStorage('selectedUser')) {
-        this.selectedUser = this.shared_functions.getitemFromGroupStorage('selectedUser');
-      } else {
-        this.selectedUser = tempUser;
-      }
+    const _this = this;
+    return new Promise(function (resolve) {
+      const apiFilter = {};
+      apiFilter['userType-eq'] = 'PROVIDER';
+      // let filter = 'userType-neq :"assistant"'
+      _this.provider_services.getUsers(apiFilter).subscribe(data => {
+        _this.users = data;
+        const tempUser = {};
+        tempUser['firstName'] = 'All';
+        tempUser['id'] = 'all';
+        _this.users.push(tempUser);
+        if (_this.shared_functions.getitemFromGroupStorage('selectedUser')) {
+          _this.selectedUser = _this.shared_functions.getitemFromGroupStorage('selectedUser');
+        } else {
+          _this.selectedUser = tempUser;
+        }
+        resolve();
+      },
+        () => {
+          resolve();
+        });
       // this.handleUserSelection(this.selectedUser);
     });
   }
@@ -2670,7 +2795,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsByProvider() {
     const qs = [];
-    if (this.selectedUser.id === 'all') {
+    if (!this.selectedUser || (this.selectedUser && this.selectedUser.id === 'all')) {
       this.activeQs = this.tempActiveQs;
     } else {
       for (let i = 0; i < this.tempActiveQs.length; i++) {
@@ -2730,6 +2855,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               const description = communications[comIndex].attachements[attachIndex].s3path;
               const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
               if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+                console.log(comIndex);
                 imagePath = communications[comIndex].attachements[attachIndex].s3path;
               }
               const imgobj = new Image(
@@ -2739,23 +2865,27 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                   description: description
                 },
               );
+              console.log(imgobj);
               this.image_list_popup_temp.push(imgobj);
               count++;
             }
           }
         }
+        console.log(count);
         if (count > 0) {
           this.image_list_popup = this.image_list_popup_temp;
           setTimeout(() => {
             this.openImageModalRow(this.image_list_popup[0]);
-          }, 200);
+          }, 500);
         }
       },
       error => { }
     );
   }
   openImageModalRow(image: Image) {
+    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    console.log(index);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
@@ -2938,5 +3068,47 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   onButtonAfterHook() { }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
+  }
+  gotoCustomerDetails(waitlist) {
+    if (waitlist.waitlistStatus !== 'blocked') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: { action: 'view' }
+      };
+      this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id], navigationExtras);
+    }
+  }
+  stopprop(event) {
+    event.stopPropagation();
+  }
+  _initSpeech() {
+    this.speech = new Speech();
+    if (this.speech.hasBrowserSupport()) { // returns a boolean
+      this.shared_functions.setitemonLocalStorage('speech', true);
+      this.speech
+        .init({
+          volume: 0.5,
+          lang: 'en-GB',
+          rate: 1,
+          pitch: 1,
+          // 'voice':'Google UK English Male',
+          // 'splitSentences': false,
+          listeners: {
+            onvoiceschanged: voices => {
+              console.log('Voices changed', voices);
+            }
+          }
+        })
+        .then(data => {
+          console.log('Speech is ready', data);
+          // _addVoicesList(data.voices);
+          // _prepareSpeakButton(speech);
+        })
+        .catch(e => {
+          console.error('An error occured while initializing : ', e);
+        });
+    }
+  }
+    addCustomerDetails(checkin) {
+    this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
   }
 }

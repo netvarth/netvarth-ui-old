@@ -2295,4 +2295,25 @@ header {
     width: 20px;
     height: 20px;
   }
+
+.take-tour-icon {
+        content: url(../images/header/tour.svg);
+        /* top: 4px; */
+        position: relative;
+        padding-right: 1px;
+        width: 35px;
+        top: -5px;
+}  
+.contact-help-icon {
+    content: url(../images/header/support2.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 20px;
+}
+.contact-wtsap-icon {
+    content: url(../images/header/whatsapp.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 35px;
+}
   

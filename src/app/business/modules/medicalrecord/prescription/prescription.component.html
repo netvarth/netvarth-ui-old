@@ -4,29 +4,29 @@
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10">
       <span class="b-link">
         <h5 class="heading3b">You can create prescription in two ways:</h5>
-        <p>1.Take a picture of paper based prescription and upload that image </p>
-        <p>2. You can create a prescription in this software manually </p>
+        <p>1.Upload a paper prescription image </p>
+        <p>2.Create a prescription digitally signed </p>
       </span>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
       <div class="card mrcreate pointlist">
         <span (click)="uploadRx()">
           <h5 class="heading3b" style="color:#3c8dbc;"><u>I will Upload paper prescription image</u><i
-              class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
+              class="fa fa-arrow-right pull-right" aria-hidden="true"></i></h5>
           <span class="form-level-settings">You can scan or take a picture of prescription</span>
         </span>
       </div>
       <div class="card mrcreate pointlist">
         <span (click)="addDrug()">
           <h5 class="heading3b" style="color:#3c8dbc;"><u>I will create a prescription manually</u><i
-              class="fa fa-angle-double-right pull-right" aria-hidden="true"></i></h5>
+              class="fa fa-arrow-right pull-right" aria-hidden="true"></i></h5>
           <span class="form-level-settings">Create prescription manually </span>
         </span>
       </div>
     </div>
   </div>
   <div class="mgn-up-20" *ngIf="drugList.length>0">
-      <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on {{prescriptionSharedTimestamp}}</i></div>
+      <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
     <div class="pad-10 table-responsive">
       <table class="table table-bordered">
         <thead>
@@ -103,7 +103,7 @@
     </div>
   </div>
   <div class="mgn-up-20" *ngIf="uploadlist.length>0">
-      <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on {{prescriptionSharedTimestamp}}</i></div>
+      <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
     <div class="pad-10 table-responsive">
       <table class="table table-bordered">
         <thead>

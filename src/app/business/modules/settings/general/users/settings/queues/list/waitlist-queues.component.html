@@ -122,7 +122,8 @@
                                                                                         </mat-menu>
                                                                                 </span>
                                                                         </div>
-                                                                        <div *ngIf="action=='edit'" style="margin-top: -23px">
+                                                                        <div *ngIf="action=='edit'"
+                                                                                style="margin-top: -23px">
                                                                                 <div>{{loc_name}}</div>
                                                                         </div>
                                                                 </div>
@@ -493,7 +494,7 @@
                                 <mat-accordion class="no-padding">
                                         <mat-expansion-panel [expanded]="false">
                                                 <mat-expansion-panel-header>
-                                                        <mat-panel-title>Disabled Queues ({{disabledQs.length}})
+                                                        <mat-panel-title>Disabled/Expired Queues ({{disabledQs.length}})
                                                         </mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                 <div class="row q-time queuelist  m0" *ngFor="let queue of disabledQs">
@@ -536,10 +537,16 @@
                                                                                 <div class="clearfix"></div>
                                                                                 <mat-menu #appMenu="matMenu">
                                                                                         <button mat-menu-item
-                                                                                                *ngIf="queue.showDisableBtn"
+                                                                                                *ngIf="queue.showDisableBtn && queue.queueState!=='EXPIRED'"
                                                                                                 (click)="changeProviderQueueStatus(queue)">
                                                                                                 <i
                                                                                                         class="icon-enable"></i>Enable
+                                                                                        </button>
+                                                                                        <button mat-menu-item
+                                                                                                (click)="addEditProviderQueue('editFromList', queue)"
+                                                                                                *ngIf="queue.queueState=='EXPIRED'">
+                                                                                                <i
+                                                                                                        class="icon-edit"></i>Edit
                                                                                         </button>
                                                                                 </mat-menu>
                                                                         </div>

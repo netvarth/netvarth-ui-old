@@ -25,6 +25,12 @@ import { UploadDigitalSignatureComponent } from './prescription/upload-digital-s
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
+import { ActivityLogComponent } from './activity-log/activity-log.component';
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { ManualSignatureComponent } from './prescription/upload-digital-signature/manualsignature/manual-signature.component';
+import { UploadSignatureComponent } from './prescription/upload-digital-signature/uploadsignature/upload-signature.component';
+// import { SignaturePadModule } from '@ng-plus/signature-pad';
+
 
 @NgModule({
   declarations: [MedicalrecordComponent,
@@ -39,7 +45,11 @@ import { MatTableModule } from '@angular/material/table';
              InstructionsComponent,
               ImagesviewComponent,
               MedicalrecordListComponent,
-              UploadDigitalSignatureComponent
+              UploadDigitalSignatureComponent,
+              ActivityLogComponent,
+              ManualSignatureComponent,
+              UploadSignatureComponent
+              // SignaturePadModule
             ],
   imports: [
     SharedModule,
@@ -52,7 +62,8 @@ import { MatTableModule } from '@angular/material/table';
     MatDatepickerModule,
     MatIconModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    SignaturePadModule
   ],
   entryComponents: [
   LastVisitComponent,

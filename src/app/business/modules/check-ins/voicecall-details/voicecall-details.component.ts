@@ -53,10 +53,10 @@ export class VoicecallDetailsComponent implements OnInit {
   createMeeting() {
     let post_itemdata: any = [];
     post_itemdata = {
-      "mode": "VoIp",
+      'mode': 'VoIp',
       'providerPhNo': this.phoneNumber,
       'uuid': this.checkin_id,
-      "custId": 0
+      'custId': 0
     };
     this.provider_services.createWaitlistVoiceCall(post_itemdata).subscribe(
       () => {

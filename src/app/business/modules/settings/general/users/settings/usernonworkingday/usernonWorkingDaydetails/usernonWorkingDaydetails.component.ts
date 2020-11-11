@@ -44,7 +44,7 @@ export class UsernonWorkingDaydetailsComponent implements OnInit {
     {
       title: Messages.GENERALSETTINGS,
       url: '/provider/settings/general'
-  },
+    },
     {
       url: '/provider/settings/general/users',
       title: 'Users'
@@ -218,14 +218,16 @@ export class UsernonWorkingDaydetailsComponent implements OnInit {
       const curtime = this.shared_functions.getTimeAsNumberOfMinutes(today_curtime);
       const selstarttime = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
       if (selstarttime < curtime) {
-        this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
+        // this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
+        this.sharedfunctionObj.openSnackBar(Messages.HOLIDAY_STIME, { 'panelClass': 'snackbarerror' });
         return;
       }
     }
     const Start_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
     const End_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
     if (End_time <= Start_time) {
-      this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
+      // this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
+      this.sharedfunctionObj.openSnackBar(Messages.HOLIDAY_ETIME, { 'panelClass': 'snackbarerror' });
       return;
     }
 
@@ -313,6 +315,6 @@ export class UsernonWorkingDaydetailsComponent implements OnInit {
     this.api_success = null;
   }
   redirecToUserHolidaylist() {
-    this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings' , 'holidays']);
+    this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'holidays']);
   }
 }

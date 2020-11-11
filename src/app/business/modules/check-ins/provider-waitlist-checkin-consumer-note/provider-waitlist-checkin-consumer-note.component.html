@@ -1,33 +1,40 @@
-<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">{{checkin.service.consumerNoteTitle}}
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">{{checkin.service.consumerNoteTitle}} from 
+  <span *ngIf="type === 'checkin'">{{checkin.waitlistingFor[0].firstName}}
+    {{checkin.waitlistingFor[0].lastName}}</span>
+  <span *ngIf="type === 'appt'">{{checkin.appmtFor[0].firstName}} {{checkin.appmtFor[0].lastName}}</span>
   <!-- {{consumer_label |capitalizeFirst}} {{note_cap}} -->
   <button #queue mat-dialog-close class="modal_close" tabindex="-1">
     <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
 </h1>
-<mat-dialog-content style="padding-top: 0px;">
+<mat-dialog-content style="padding-top: 0px;display: grid;">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding no-margin" *ngIf="type === 'checkin'">
-    <p *ngIf="checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">Token
+
+    <!-- <p *ngIf="checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">Token
       for : {{checkin.waitlistingFor[0].firstName}}
       {{checkin.waitlistingFor[0].lastName}}</p>
     <p *ngIf="!checkin.showToken && (checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName)">
       Check-in for : {{checkin.waitlistingFor[0].firstName}}
       {{checkin.waitlistingFor[0].lastName}}</p>
     <p *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName">
-      {{consumer_label | capitalizeFirst}} id : {{checkin.consumer.jaldeeId}}</p>
+      {{consumer_label | capitalizeFirst}} id : {{checkin.consumer.jaldeeId}}</p> -->
+
+    <!-- <p>Service : {{checkin.service.name}}</p> -->
     <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
 
-    <p>Service : {{checkin.service.name}}</p>
   </div>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding no-margin" *ngIf="type === 'appt'">
-    <p *ngIf="checkin.appmtFor[0].firstName != '' || checkin.appmtFor[0].lastName != ''">Appointment for :
+
+    <!-- <p *ngIf="checkin.appmtFor[0].firstName != '' || checkin.appmtFor[0].lastName != ''">Appointment for :
       {{checkin.appmtFor[0].firstName}} {{checkin.appmtFor[0].lastName}} </p>
     <p *ngIf="checkin.appmtFor[0].firstName == '' && checkin.appmtFor[0].lastName == ''">
-      {{consumer_label | capitalizeFirst}} id : {{checkin.providerConsumer.jaldeeId}} </p>
+      {{consumer_label | capitalizeFirst}} id : {{checkin.providerConsumer.jaldeeId}} </p> -->
+    <!-- <p>Service : {{checkin.service.name}}</p> -->
     <p>Appointment Time : {{getSingleTime(checkin.appmtTime)}}
     </p>
-    <p>Service : {{checkin.service.name}}</p>
   </div>
-  <div class="customer-note" [innerHTML]="checkin.consumerNote | nl2br | capitalizeFirst">
+  <div class="prov-wtlst-note-border">
+   {{checkin.consumerNote | nl2br | capitalizeFirst}}
   </div>
 </mat-dialog-content>
 <!-- <mat-dialog-actions>

@@ -5,10 +5,10 @@
 </section> -->
 <section class="">
   <div class="title-gb no-padding">
-      <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-        {{customer_labels}}
-        <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
-      </div>
+    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+      {{customer_labels}}
+      <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+    </div>
   </div>
 </section>
 <section class="dashboard content customers" *ngIf="!apiloading">
@@ -54,6 +54,12 @@
                 <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
               </a>
             </li>
+            <!-- <li class="dropdown notifications-menu">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" (click)="CreateVoiceCall()"
+                data-toggle="dropdown"><span class="statuslink " *ngIf="customerselection" [matTooltip]="'Voice Call'">
+                  <i class="fa fa-phone"></i> Voice Call</span>
+              </a>
+            </li> -->
           </ul>
         </div>
 
@@ -68,8 +74,14 @@
             <ul class="sidebar-menu">
               <div class="filterTextinput">
                 <li class="filterli">
-                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,lName)"
                     class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                </li>
+              </div>
+              <div class="filterTextinput">
+                <li class="filterli">
+                  <input type="text" #lName (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                    class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
                 </li>
               </div>
               <div class="filterTextinput">
@@ -132,7 +144,7 @@
             </div>
           </div> -->
 
-          <table class="table">
+          <table class="table customerlist-grid">
             <!-- <thead>
             <tr>
               <th>
@@ -141,10 +153,11 @@
             </tr>
           </thead> -->
             <tbody>
-              <tr *ngFor="let customer of customers let i=index" [class.selected-customer]="customerSelected[i]">
+              <tr class="pointer-cursor" *ngFor="let customer of customers let i=index"
+                [class.selected-customer]="customerSelected[i]" (click)="viewCustomer(customer)">
                 <td class="one">
                   <input [checked]="customerSelected[i]" type="checkbox" class="ckbx pull-left"
-                    (change)="selectcustomers(i, customer)" />
+                    (click)="stopprop($event)" (change)="selectcustomers(i, customer)" />
                   <span *ngIf="customer.jaldeeId" class="pad-rt-5 mgn-lt-10"><b>{{customer_label | capitalizeFirst}}
                       Id:</b> {{customer.jaldeeId}}</span></td>
                 <td class="one">
@@ -165,7 +178,7 @@
                 </td>
                 <td class="four pull-right">
                   <span>
-                    <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                    <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
                       <mat-icon>more_vert</mat-icon>
                     </button>
                   </span>
@@ -180,20 +193,20 @@
                     </button>
                     <button *ngIf="domain === 'healthCare'" mat-menu-item (click)="listMedicalrecords(customer)">
                       <i class="medicalrecordlisticon-customer"></i>
-                       List MedicalRecords
-                      </button>
+                      List MedicalRecords
+                    </button>
                     <button *ngIf="domain === 'healthCare'" mat-menu-item (click)="lastvisits(customer)">
-                    <i class="viewdetails-icon-customer"></i>
+                      <i class="viewdetails-icon-customer"></i>
                       Last visits
                     </button>
-                    <button   *ngIf="domain === 'healthCare'" mat-menu-item (click)="medicalRecord(customer)">
+                    <button *ngIf="domain === 'healthCare'" mat-menu-item (click)="medicalRecord(customer)">
                       <i class="medicalrecord-icon-customer"></i>
-                      Create  MedicalRecord
+                      MedicalRecord
                     </button>
-                    <button   *ngIf="domain === 'healthCare'" mat-menu-item (click)="prescription(customer)">
-                       <i class="mr-rx-icon-customer"></i>
-                        Create RX
-                      </button>
+                    <button *ngIf="domain === 'healthCare'" mat-menu-item (click)="prescription(customer)">
+                      <i class="mr-rx-icon-customer"></i>
+                      Prescription
+                    </button>
                   </mat-menu>
                 </td>
               </tr>
@@ -229,7 +242,6 @@
                     class="fa fa-envelope"></i>{{customer.email}}</span></div>
               <div class="col-md-1 col-sm-5 mt5"><span *ngIf="customer.lastVisitedDate">Last visited on
                   {{customer.lastVisitedDate | date: dateFormat }}</span></div>
-
               <div class="col-md-2 col-sm-5 mt5" >
                 <span *ngIf="customer.jaldeeId">{{customer_label | capitalizeFirst}} Id: {{customer.jaldeeId}}</span></div>
               <mat-menu #appMenu="matMenu">
@@ -244,7 +256,6 @@
             No {{customer_label | capitalizeFirst}}s Found
           </div> -->
         </div>
-
       </div>
     </div>
   </div>

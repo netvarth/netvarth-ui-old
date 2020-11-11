@@ -1,0 +1,30 @@
+.pop-content {
+    text-align: center;
+    padding-bottom: 20px !important;
+}
+.pop-wtsap {
+    font-size: 30px;
+    color: green;
+    /* padding-right: 20px; */
+}
+.pop-phone {
+    font-size: 30px;
+    /* padding-right: 20px; */
+}
+.pop-number {
+    /* font-size: 20px; */
+    font-weight: 600;
+    color: blue !important;
+}
+.pop-content .mat-grid-tile {
+    /* box-shadow: 5px 5px 5px 5px  #ecaf0842 !important */
+    box-shadow: 10px 10px 15px 0 #cccccc9c;
+}
+.pop-content .figure-disp {
+    display: grid !important;
+}
+@media (max-width: 360px) {
+    .pop-number {
+        font-size: 0.6rem;
+    }
+}

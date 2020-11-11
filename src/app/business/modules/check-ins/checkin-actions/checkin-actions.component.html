@@ -26,6 +26,18 @@
                 <div class="icon-text">Call</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'" (click)="addCustomerDetails()">
+            <div class="action-box-sub">
+                <span class="add-appt-icon"></span>
+                <div class="icon-text">Add {{customer_label}}</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus==='blocked'" (click)="unBlockWaitlist()">
+            <div class="action-box-sub">
+                <span class="unblock-appt-icon"></span>
+                <div class="icon-text">Unblock</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" *ngIf="showStart" (click)="changeWaitlistStatus('STARTED')">
             <div class="action-box-sub">
                 <span class="start-icon"></span>
@@ -75,6 +87,12 @@
                 <div class="icon-text">Status change</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'" (click)="gotoCustomerDetails()">
+            <div class="action-box-sub">
+                <span class="customerdetails-icon"></span>
+                <div class="icon-text">{{customer_label | capitalizeFirst}} details</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()" *ngIf="showMsg">
             <div class="action-box-sub">
                 <span class="message-icon"></span>
@@ -100,20 +118,20 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="addProviderNote()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'" (click)="addProviderNote()">
             <div class="action-box-sub">
                 <span class="notes-icon"></span>
                 <div class="icon-text">Private Notes</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="goToCheckinDetails()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && !data.NoViewDetail"
+            (click)="goToCheckinDetails()">
             <div class="action-box-sub">
                 <span class="viewdetails-icon"></span>
                 <div class="icon-text">View Details</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && data.timetype !== 3"
-            (click)="showLabels()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
                 <div class="icon-text">Labels</div>
@@ -126,7 +144,8 @@
                 <div class="icon-text">Print</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && data.timetype !== 3 && (checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')"
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && (checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')"
             (click)="rescheduleActionClicked()">
             <div class="action-box-sub">
                 <span class="reschedule-icon"></span>
@@ -137,16 +156,16 @@
             (click)="medicalRecord()">
             <div class="action-box-sub">
                 <span class="medicalrecord-icon"></span>
-                <div *ngIf="checkin.mrId === 0" class="icon-text">Create Medical Record</div>
-                <div *ngIf="checkin.mrId !== 0" class="icon-text">View Medical Record</div>
+                <div class="icon-text">Medical Record</div>
+                <!-- <div *ngIf="checkin.mrId !== 0" class="icon-text">View Medical Record</div> -->
             </div>
         </div>
         <div *ngIf="domain === 'healthCare' && !data.multiSelection && showmrrx" class="action-box pointer-cursor"
             (click)="prescription()">
             <div class="action-box-sub">
                 <span class="mr-rx-icon"></span>
-                <div *ngIf="!checkin.prescriptionCreated" class="icon-text">Create Rx</div>
-                <div *ngIf="checkin.prescriptionCreated" class="icon-text">View Rx</div>
+                <div class="icon-text">Prescription</div>
+                <!-- <div *ngIf="checkin.prescriptionCreated" class="icon-text">View Rx</div> -->
             </div>
         </div>
     </div>
@@ -205,10 +224,11 @@
     </div>
 </div>
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'reschedule'">
-    Reschedule {{(showToken) ? 'Token' : 'Check-in'}} for
-    {{checkin.waitlistingFor[0].firstName | capitalizeFirst}} {{checkin.waitlistingFor[0].lastName | capitalizeFirst}}
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
+<h4 style="margin-left: 25px;"*ngIf="action === 'reschedule'">Reschedule {{(showToken) ? 'Token' : 'Check-in'}} for
+    {{checkin.waitlistingFor[0].firstName | capitalizeFirst}} {{checkin.waitlistingFor[0].lastName | capitalizeFirst}}
+</h4>
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'slotChange'">
     Choose Date & Time
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
@@ -233,25 +253,29 @@
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"
                     class="fa wtsapvid-icon"></i>
                 {{checkin.service.name}} </p>
-            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: dateFormat}}, [{{checkin.queue.queueStartTime}}-{{checkin.queue.queueEndTime}}]
+            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: dateFormat}},
+                [{{checkin.queue.queueStartTime}}-{{checkin.queue.queueEndTime}}]
             </p>
         </div>
         <div class="clearfix"></div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 changelink"><span class="cs-btn bt3"
-            (click)="changeSlot()">Change Date & Time
-        </span></div>
+                (click)="changeSlot()">Change Date & Time
+            </span></div>
 
     </div>
 </div>
 <div class="reschedule p-checkin" *ngIf="action === 'slotChange'">
     <div class="mainouter">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 ">
+            <div class="mgn-up-10 mgn-bt-10" *ngIf="data.timetype == 3">
+                Past Date: <strong>{{pastDate | date: dateDisplayFormat}}</strong>
+            </div>
             <div class="date-outer" style="border: none;">
                 <div class="date-head">{{(showToken) ? 'Token' : 'Check-in'}} Date</div>
                 <div class="date-body">
                     <span class="selected-date">
-                        <span class="icon-minus" (click)="calculateDate(-1, 'pre')" 
-                        [class.disable]="disableMinus()"></span>{{checkin_date | date: dateDisplayFormat}}
+                        <span class="icon-minus" (click)="calculateDate(-1, 'pre')"
+                            [class.disable]="disableMinus()"></span>{{checkin_date | date: dateDisplayFormat}}
                         <span class="icon-add" (click)="calculateDate(1, 'post')"></span>
                     </span>
                     <div class="form-group dt">
@@ -272,20 +296,20 @@
             </div>
             <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
                 <mat-chip-list>
-                    <mat-chip *ngFor="let queue of queuejson, let i= index" (click)="handleQueueSelection(queue, i);" [selected]="queue.id === queuejson[this.sel_queue_indx].id">
+                    <mat-chip *ngFor="let queue of queuejson, let i= index" (click)="handleQueueSelection(queue, i);"
+                        [selected]="queue.id === queuejson[this.sel_queue_indx].id">
                         <span>{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
                         </span>
                     </mat-chip>
                 </mat-chip-list>
             </div>
-            <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10" *ngIf="freeSlots.length === 0 && !loading">
-                No slots available.
-            </div> -->
+            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10" *ngIf="queuejson.length === 0 && !loading">
+                No queues available.
+            </div>
             <div
                 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding reschedulebtn">
                 <button type="button" class="cs-btn bt2 mgn-rt-5" (click)="close()">Cancel</button>
-                <button class="cs-btn bt1"
-                    (click)="rescheduleWaitlist()">Reschedule</button>
+                <button class="cs-btn bt1" (click)="rescheduleWaitlist()">Reschedule</button>
             </div>
         </div>
     </div>

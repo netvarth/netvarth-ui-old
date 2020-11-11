@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddDrugComponent } from './add-drug/add-drug.component';
-import { NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras, Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -17,6 +17,9 @@ import { ShareRxComponent } from './share-rx/share-rx.component';
   styleUrls: ['./prescription.component.css']
 })
 export class PrescriptionComponent implements OnInit {
+  bookingId: any;
+  bookingType: any;
+  patientId: any;
   prescriptionSharedTimestamp: any;
   prescriptionShared = false;
   instructiondialogRef: any;
@@ -28,7 +31,7 @@ export class PrescriptionComponent implements OnInit {
   drugtype;
   editedIndex;
   drugdet;
-  mrId;
+  mrId = 0;
   optionsForRx = true;
   uploadRxstat = false;
   selectedMessage = {
@@ -47,28 +50,26 @@ export class PrescriptionComponent implements OnInit {
   navigations: any;
   provider_user_Id: any;
   constructor(
-    // private activatedRoot: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private medicalrecord_service: MedicalrecordService,
   ) {
-    this.medicalrecord_service.patient_data.subscribe(res => {
-      this.navigations = res;
-      console.log(this.navigations);
-      this.provider_user_Id = res.provider_id;
-      if (!this.provider_user_Id) {
-        const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
-        this.provider_user_Id = user.id;
-      }
-    });
-    this.medicalrecord_service._mrUid.subscribe(mrId => {
-      this.mrId = mrId;
-    });
+
   }
   ngOnInit() {
-
+    const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
+    this.mrId = parseInt(medicalrecordId, 0);
+    this.patientId = this.activatedRoute.parent.snapshot.params['id'];
+    this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
+    this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
+    this.provider_user_Id = this.medicalrecord_service.getDoctorId();
+    if (!this.provider_user_Id) {
+      const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+      this.provider_user_Id = user.id;
+    }
     if (this.mrId === 0) {
       this.loading = false;
     } else {
@@ -81,8 +82,8 @@ export class PrescriptionComponent implements OnInit {
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
+          console.log(data);
           this.prescriptionShared = data.prescShared;
-
           this.prescriptionSharedTimestamp = data.lastSharedTime;
 
         }
@@ -114,13 +115,11 @@ export class PrescriptionComponent implements OnInit {
     }
   }
   uploadSign() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { providerId: this.provider_user_Id }
-    };
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadsign'], navigationExtras);
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign' ]);
+
   }
   getDigitalSign() {
-    if (this.provider_user_Id) {
+     
       this.provider_services.getDigitalSign(this.provider_user_Id)
         .subscribe((data) => {
           console.log(data);
@@ -128,14 +127,14 @@ export class PrescriptionComponent implements OnInit {
         },
           error => {
             this.digitalSign = false;
-            // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+
           });
-    }
+
   }
 
 
   uploadRx() {
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'uploadRx']);
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadRx' ]);
   }
 
   shareManualRx(type) {
@@ -145,14 +144,13 @@ export class PrescriptionComponent implements OnInit {
       disableClose: true,
       data: {
         mrId: this.mrId,
-        userId: this.provider_user_Id,
-        provider_user_Id: this.provider_user_Id,
-        type: type
+        type: type,
+        patientId: this.patientId
       }
     });
     this.sharedialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
+
       }
     });
   }
@@ -191,27 +189,56 @@ export class PrescriptionComponent implements OnInit {
 
     this.addDrugdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const navigationExtras: NavigationExtras = {
-          queryParams: { details: JSON.stringify(result) }
-        };
-        this.router.navigate(['/provider/customers/medicalrecord/addrxlist'], navigationExtras);
+
+        this.saveRx(result);
       }
     });
+  }
+
+  saveRx(result) {
+    if (this.mrId) {
+      this.provider_services.updateMRprescription(result, this.mrId).
+        subscribe(res => {
+          this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
+          this.getMrprescription(this.mrId);
+          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+
+        },
+          error => {
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+    } else {
+      this.medicalrecord_service.createMR('prescriptions', result)
+        .then((data: number) => {
+          this.mrId = data;
+          this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
+          this.getMrprescription(this.mrId);
+          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+
+        },
+          error => {
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+    }
   }
 
   updatePrescription() {
     this.disable = true;
     const navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute,
       queryParams: { mode: 'view' }
     };
-    this.router.navigate(['/provider/customers/medicalrecord/addrxlist'], navigationExtras);
+    this.router.navigate(['../addrxlist'], navigationExtras);
+
+
   }
   updatePaperPrescription() {
     this.disable = true;
     const navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute,
       queryParams: { mode: 'view' }
     };
-    this.router.navigate(['/provider/customers/medicalrecord/uploadRx'], navigationExtras);
+    this.router.navigate(['../uploadRx'], navigationExtras);
   }
   imageSize(val) {
     let imgsize;
@@ -259,6 +286,7 @@ export class PrescriptionComponent implements OnInit {
     return inst;
   }
   showimgPopup(file) {
+    file.title = 'Uploaded Prescription';
     this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

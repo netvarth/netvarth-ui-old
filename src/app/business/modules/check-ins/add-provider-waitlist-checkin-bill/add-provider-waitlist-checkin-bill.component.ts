@@ -1175,10 +1175,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const discount = {};
     discount['id'] = this.selOrderDiscount.id;
     if (this.selOrderDiscount.discType === 'OnDemand') {
-      const len = this.discAmount.split('.').length;
-      if (len > 2) {
-        this.sharedfunctionObj.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
-      } else {
+     // const len = this.discAmount.split('.').length;
+      // if (len > 2) {
+      //   this.sharedfunctionObj.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
+      // } else {
+      //   discount['discValue'] = this.discAmount;
+      // }
+      if (this.discAmount) {
         discount['discValue'] = this.discAmount;
       }
     }

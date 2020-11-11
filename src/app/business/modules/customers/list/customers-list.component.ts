@@ -9,6 +9,7 @@ import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format
 import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
+import { VoicecallDetailsSendComponent } from '../../appointments/voicecall-details-send/voicecall-details-send.component';
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html'
@@ -28,6 +29,7 @@ export class CustomersListComponent implements OnInit {
   open_filter = false;
   filter = {
     first_name: '',
+    last_name: '',
     date: null,
     mobile: '',
     email: '',
@@ -67,6 +69,7 @@ export class CustomersListComponent implements OnInit {
   showToken = false;
   filters: any = {
     'first_name': false,
+    'last_name': false,
     'date': false,
     'mobile': false,
     'email': false
@@ -190,7 +193,7 @@ export class CustomersListComponent implements OnInit {
   }
   doSearch() {
     this.getCustomersList();
-    if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {
+    if (this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -199,12 +202,14 @@ export class CustomersListComponent implements OnInit {
   resetFilter() {
     this.filters = {
       'first_name': false,
+      'last_name': false,
       'date': false,
       'mobile': false,
       'email': false
     };
     this.filter = {
       first_name: '',
+      last_name: '',
       date: null,
       mobile: '',
       email: '',
@@ -224,6 +229,9 @@ export class CustomersListComponent implements OnInit {
     const api_filter = {};
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
+    }
+    if (this.filter.last_name !== '') {
+      api_filter['lastName-eq'] = this.filter.last_name;
     }
     if (this.filter.date != null) {
       api_filter['dob-eq'] = this.shared_functions.transformToYMDFormat(this.filter.date);
@@ -304,6 +312,20 @@ export class CustomersListComponent implements OnInit {
         () => { }
       );
   }
+  CreateVoiceCall() {
+    this.customerlist = this.selectedcustomersforcall;
+    for (let i in this.customerlist) {
+      this.customerDetails = this.customerlist[i];
+    }
+    this.voicedialogRef = this.dialog.open(VoicecallDetailsSendComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        custId: this.customerDetails.id
+      }
+    });
+  }
   editCustomer(customer) {
     const navigationExtras: NavigationExtras = {
       queryParams: { action: 'edit' }
@@ -336,41 +358,38 @@ export class CustomersListComponent implements OnInit {
       }
     });
     this.mrdialogRef.afterClosed().subscribe(result => {
-      console.log(JSON.stringify(result));
-      if (result.type === 'prescription') {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], result.navigationParams);
-      } else if (result.type === 'clinicalnotes') {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'clinicalnotes'], result.navigationParams);
-      }
+
     });
 
   }
   listMedicalrecords(customer) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { 'id': customer.id }
-    };
+    const customerDetails = customer;
+    const customerId = customerDetails.id;
+    const mrId = 0;
+    const bookingType = 'FOLLOWUP';
+    const bookingId = 0;
 
-    this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
   }
   medicalRecord(customerDetail) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-    };
+    const customerDetails = customerDetail;
+    const customerId = customerDetails.id;
+    const mrId = 0;
+    const bookingType = 'FOLLOWUP';
+    const bookingId = 0;
 
-    this.shared_functions.removeitemfromLocalStorage('mrId');
-    this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'patient' } });
   }
   prescription(customerDetail) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { 'customerDetail': JSON.stringify(customerDetail), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-    };
+    const customerDetails = customerDetail;
+    const customerId = customerDetails.id;
+    const mrId = 0;
+    const bookingType = 'FOLLOWUP';
+    const bookingId = 0;
 
-  this.shared_functions.removeitemfromLocalStorage('mrId');
-this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
-    }
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'],{ queryParams: { 'calledfrom': 'patient' } });
+  }
+  stopprop(event) {
+    event.stopPropagation();
+  }
 }
-

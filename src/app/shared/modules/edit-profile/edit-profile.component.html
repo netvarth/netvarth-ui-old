@@ -72,15 +72,6 @@
                                         [errorMsg]="email1error">
                                     </app-field-error-display>
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label class="col-form-label" for="email">{{email_cap}}</label>
-                                    <input type="text" class="form-control" id="email" autofocus
-                                    formControlName="email" (keyup)="isVerified(spForm.controls['email'].value)" autocomplete="off">
-                                    <div *ngIf="is_verified" class="verified">{{verified_cap}}</div>
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(spForm,'email')"
-                                    errorMsg="Please enter a valid email.">
-                                    </app-field-error-display>
-                                </div> -->
                                 <div class="form-group">
                                     <label class="col-form-label" for="gender">{{gender_cap}} </label>
                                     <mat-radio-group formControlName="gender">
@@ -130,8 +121,6 @@
                             {{change_password_cap}}</li>
                         <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">
                             {{change_mobile_cap}}</li>
-                        <li (click)="shared_functions.redirectto('members')" class="icon-members"
-                            *ngIf="curtype=='consumer'">{{family_members_cap}}</li>
                     </ul>
                 </div>
             </div>

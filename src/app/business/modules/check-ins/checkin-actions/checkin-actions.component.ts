@@ -79,6 +79,7 @@ export class CheckinActionsComponent implements OnInit {
     showToken;
     dateDisplayFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    pastDate;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -89,17 +90,26 @@ export class CheckinActionsComponent implements OnInit {
         this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
+        console.log(this.data);
+        this.setMinMaxDate();
         this.checkin = this.data.checkinData;
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
             this.location_id = this.checkin.queue.location.id;
             this.serv_id = this.checkin.service.id;
-            this.checkin_date = this.checkin.date;
+            if (this.data.timetype === 3) {
+                this.pastDate = this.checkin.date;
+                this.checkin_date = moment(this.today, 'YYYY-MM-DD HH:mm').format();
+            } else {
+                this.checkin_date = this.checkin.date;
+            }
             this.accountid = this.checkin.providerAccount.id;
             this.showToken = this.checkin.showToken;
+            this.getPos();
+            this.getLabel();
+        } else {
+            this.showMsg = true;
         }
-        this.getPos();
-        this.getLabel();
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
@@ -156,7 +166,6 @@ export class CheckinActionsComponent implements OnInit {
     }
     rescheduleActionClicked() {
         this.action = 'reschedule';
-        this.setMinMaxDate();
     }
     setMinMaxDate() {
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -382,7 +391,7 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     goToCheckinDetails() {
-        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid]);
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid], { queryParams: { timetype: this.data.timetype } });
         this.dialogRef.close();
     }
     viewBillPage() {
@@ -434,45 +443,44 @@ export class CheckinActionsComponent implements OnInit {
                     layout_list = data;
                     this.board_count = layout_list.length;
                     this.setActions();
+                },
+                error => {
+                    this.setActions();
                 });
     }
     setActions() {
-        if (!this.data.multiSelection) {
-            if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn') {
-                this.showUndo = true;
-            }
-            if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && !this.checkin.virtualService) {
-                this.showArrived = true;
-            }
-            if (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') {
-                this.showCancel = true;
-            }
-            if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.jaldeeWaitlistDistanceTime && this.checkin.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.checkin.jaldeeStartTimeType === 'ONEHOUR' || this.checkin.jaldeeStartTimeType === 'AFTERSTART')) {
-                this.trackStatus = true;
-            }
-            if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled' && ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email)) {
-                this.showSendDetails = true;
-            }
-            if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
-                this.showMsg = true;
-            }
-            if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (!this.checkin.virtualService)) {
-                this.showStart = true;
-            }
-            if ((this.data.timetype === 1 || this.data.timetype === 3) && this.checkin.virtualService && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started')) {
-                this.showTeleserviceStart = true;
-            }
-            if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
-                this.showCall = true;
-            }
-            if (this.pos && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
-                this.showBill = true;
-            }
-            if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled') {
-                this.showmrrx = true;
-            }
-        } else {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked') {
+            this.showUndo = true;
+        }
+        if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && !this.checkin.virtualService) {
+            this.showArrived = true;
+        }
+        if (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') {
+            this.showCancel = true;
+        }
+        if (this.data.timetype === 1 && this.checkin.service.livetrack && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.jaldeeWaitlistDistanceTime && this.checkin.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.checkin.jaldeeStartTimeType === 'ONEHOUR' || this.checkin.jaldeeStartTimeType === 'AFTERSTART')) {
+            this.trackStatus = true;
+        }
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled' && ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email)) {
+            this.showSendDetails = true;
+        }
+        if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
             this.showMsg = true;
+        }
+        if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (!this.checkin.virtualService)) {
+            this.showStart = true;
+        }
+        if ((this.data.timetype === 1 || this.data.timetype === 3) && this.checkin.virtualService && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started')) {
+            this.showTeleserviceStart = true;
+        }
+        if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
+            this.showCall = true;
+        }
+        if (this.pos && this.checkin.waitlistStatus !== 'blocked' && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
+            this.showBill = true;
+        }
+        if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled' && this.checkin.waitlistStatus !== 'blocked') {
+            this.showmrrx = true;
         }
     }
     getLabel() {
@@ -581,7 +589,7 @@ export class CheckinActionsComponent implements OnInit {
         this.action = 'label';
     }
     gotoLabel() {
-        this.router.navigate(['provider', 'settings', 'general', 'labels']);
+        this.router.navigate(['provider', 'settings', 'general', 'labels'], {queryParams: {source : 'checkin'}});
         this.dialogRef.close();
     }
     goBack() {
@@ -608,7 +616,10 @@ export class CheckinActionsComponent implements OnInit {
         this.provider_services.getProviderPOSStatus().subscribe(data => {
             this.pos = data['enablepos'];
             this.getDisplayboardCount();
-        });
+        },
+            error => {
+                this.getDisplayboardCount();
+            });
     }
     addLabeltoAppt(label, event) {
         this.labelMap = new Object();
@@ -635,70 +646,56 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     medicalRecord() {
-        this.dialogRef.close();
-        let medicalrecord_mode = 'new';
-        let mrId = 0;
-        if (this.checkin.mrId) {
-            medicalrecord_mode = 'view';
-            mrId = this.checkin.mrId;
-        }
-        let providerId;
-        if (this.checkin.provider && this.checkin.provider.id) {
-            providerId = this.checkin.provider.id;
-        } else {
-            providerId = '';
-        }
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
-                'serviceId': this.checkin.service.id,
-                'serviceName': this.checkin.service.name,
-                'booking_type': 'TOKEN',
-                'booking_date': this.checkin.consLastVisitedDate,
-                'booking_time': this.checkin.checkInTime,
-                'department': this.checkin.service.deptName,
-                'consultationMode': 'OP',
-                'booking_id': this.checkin.ynwUuid,
-                'mr_mode': medicalrecord_mode,
-                'mrId': mrId,
-                'back_type': 'waitlist',
-                'provider_id': providerId
-            }
-        };
 
-        this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
+      this.dialogRef.close();
+
+      let mrId = 0;
+      if (this.checkin.mrId) {
+        mrId = this.checkin.mrId;
+      }
+
+      const customerDetails = this.checkin.waitlistingFor[0];
+      const customerId = customerDetails.id;
+      const bookingId = this.checkin.ynwUuid;
+       const bookingType = 'TOKEN';
+       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ], { queryParams: { 'calledfrom': 'waitlist' } });
+
+
     }
     prescription() {
+      this.dialogRef.close();
+
+      let mrId = 0;
+      if (this.checkin.mrId) {
+        mrId = this.checkin.mrId;
+      }
+
+      const customerDetails = this.checkin.waitlistingFor[0];
+      const customerId = customerDetails.id;
+      const bookingId = this.checkin.ynwUuid;
+       const bookingType = 'TOKEN';
+       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription'], { queryParams: { 'calledfrom': 'waitlist' } });
+    }
+    gotoCustomerDetails() {
         this.dialogRef.close();
-        let medicalrecord_mode = 'new';
-        let mrId = 0;
-        if (this.checkin.mrId) {
-            medicalrecord_mode = 'view';
-            mrId = this.checkin.mrId;
-        }
-        let providerId;
-        if (this.checkin.provider && this.checkin.provider.id) {
-            providerId = this.checkin.provider.id;
-        } else {
-            providerId = '';
-        }
         const navigationExtras: NavigationExtras = {
-            queryParams: {
-                'customerDetail': JSON.stringify(this.checkin.waitlistingFor[0]),
-                'serviceId': this.checkin.service.id,
-                'serviceName': this.checkin.service.name,
-                'booking_type': 'TOKEN',
-                'booking_date': this.checkin.consLastVisitedDate,
-                'booking_time': this.checkin.checkInTime,
-                'department': this.checkin.service.deptName,
-                'consultationMode': 'OP',
-                'mrId': mrId,
-                'mr_mode': medicalrecord_mode,
-                'booking_id': this.checkin.ynwUuid,
-                'back_type': 'waitlist',
-                'provider_id': providerId
-            }
+            queryParams: { action: 'view' }
         };
-        this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
+        this.router.navigate(['/provider/customers/' + this.checkin.waitlistingFor[0].id], navigationExtras);
+    }
+    addCustomerDetails() {
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: this.checkin.ynwUuid } });
+    }
+    unBlockWaitlist() {
+        this.provider_services.deleteWaitlistBlock(this.checkin.ynwUuid)
+            .subscribe(
+                () => {
+                    this.dialogRef.close();
+                    this.router.navigate(['provider', 'check-ins']);
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
     }
 }

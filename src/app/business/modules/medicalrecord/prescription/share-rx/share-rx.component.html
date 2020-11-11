@@ -4,8 +4,8 @@
           <i class="fa fa-window-close" aria-hidden="true"></i>
       </button>
   </h1>
-
-  <mat-dialog-content>
+  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+  <mat-dialog-content *ngIf="!loading">
 
           <div class="form-group" >
               <div> Share with {{customerDetail.firstName | capitalizeFirst}}  {{customerDetail.lastName}}</div>
@@ -41,18 +41,20 @@
       <div class="mgtop40 form-group" >
               We will create a PDF of your prescription and will share Via
           <div class="coupon-outer">
-              <mat-checkbox    class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+              <mat-checkbox   [disabled]=" !phone ||  phone === 'null'"  class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                   SMS
               </mat-checkbox>
-              <mat-checkbox  class="mgright50 example-margin" [(ngModel)]="email"
+              <mat-checkbox  [disabled]=" !email_id"  class="mgright50 example-margin" [(ngModel)]="email"
                   [ngModelOptions]="{standalone: true}">Email
               </mat-checkbox>
-              <mat-checkbox  class="mgright50 example-margin" [(ngModel)]="pushnotify"
+              <mat-checkbox  [disabled] = "!email_id && (!phone ||  phone === 'null')"  class="mgright50 example-margin" [(ngModel)]="pushnotify"
                   [ngModelOptions]="{standalone: true}">App
                   notification
               </mat-checkbox>
           </div>
       </div>
+      <div style="color: red;" *ngIf = "!email_id && (!phone ||  phone === 'null')"> The Patient does not have a mobile number/email</div>
+
 
   </mat-dialog-content>
   <mat-dialog-actions>
@@ -60,7 +62,7 @@
       <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
           <button type="button" mat-dialog-close class="cs-btn bt2"
               [disabled]="disableButton">Cancel</button>
-          <button type="submit" mat-button [disabled]="!amForm.valid || disable"
+          <button type="submit" mat-button [disabled]="!amForm.valid || disable || (!sms && !email && !pushnotify)"
               class="cs-btn bt1 mr10">Share</button>
 
       </div>
@@ -92,7 +94,7 @@
                               {{customerDetail.lastName}}</span>
                       </td>
                       <td><label>Gender:&nbsp;</label>
-                          <span *ngIf="customerDetail.gender">{{customerDetail.gender}}</span>
+                          <span *ngIf="customerDetail.gender">{{customerDetail.gender | capitalizeFirst}}</span>
                           <span *ngIf="!customerDetail.gender">......</span>
                       </td>
                       <td><label>Dob:&nbsp;</label>
@@ -135,7 +137,7 @@
               <table class="sign-table" style="width: 100%; margin: auto;margin-top: 20px">
                   <tr>
                       <td style="text-align: right; padding-right: 10px; width: 20%">Signature</td>
-                      <td><img alt="" style="width: 100px; height: 75px;" [src]="signurl"/></td>
+                      <td><img alt="" style="width: 100px; height: 75px;" [src]="showdigitalsign()"/></td>
                   </tr>
               </table>
           </div>
