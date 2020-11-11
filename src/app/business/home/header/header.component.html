@@ -25,10 +25,12 @@
           </a>
         </li>
         <li *ngIf="!iswiz">
-          <a (click)="helpClicked()">Help</a>
+          <a (click)="helpClicked()">
+            <i class="fa contact-help-icon"></i>
+          </a>
         </li>
         
-        <li [matTooltip]="'Take a tour'" *ngIf="!iswiz">
+        <!-- <li [matTooltip]="'Take a tour'" *ngIf="!iswiz">
           <a (click)="tourIconClicked()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa take-tour-icon"></i>
             <div joyrideStep="step4" title="Reach Out To Us" [stepContent]="text4"></div>
@@ -42,7 +44,7 @@
               </div>
             </ng-template>
           </a>
-        </li>
+        </li> -->
 
         <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">
           <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
