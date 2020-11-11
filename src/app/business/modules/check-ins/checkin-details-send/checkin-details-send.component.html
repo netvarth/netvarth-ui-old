@@ -4,8 +4,8 @@
                         <div>
                             <div *ngIf="!showToken"><span style="font-size: x-large;">Checkin Details</span></div>
                             <div *ngIf="showToken"><span style="font-size: x-large;">Token Details</span></div><br>
-                            <p *ngIf="!showToken">Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
-                            <p *ngIf = "showToken">Token for : {{consumer_fname}} {{consumer_lname}}</p>
+                            <p *ngIf="!showToken && (consumer_fname || consumer_lname)">Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
+                            <p *ngIf = "showToken && (consumer_fname || consumer_lname)">Token for : {{consumer_fname}} {{consumer_lname}}</p>
                             <p>Service : 
                                 <i *ngIf="data.qdata.service.serviceType === 'virtualService'" [class]=iconClass></i>
                                 {{serv_name}} 
