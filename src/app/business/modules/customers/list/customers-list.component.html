@@ -74,8 +74,14 @@
             <ul class="sidebar-menu">
               <div class="filterTextinput">
                 <li class="filterli">
-                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,lName)"
                     class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                </li>
+              </div>
+              <div class="filterTextinput">
+                <li class="filterli">
+                  <input type="text" #lName (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                    class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
                 </li>
               </div>
               <div class="filterTextinput">

@@ -29,6 +29,7 @@ export class CustomersListComponent implements OnInit {
   open_filter = false;
   filter = {
     first_name: '',
+    last_name: '',
     date: null,
     mobile: '',
     email: '',
@@ -68,6 +69,7 @@ export class CustomersListComponent implements OnInit {
   showToken = false;
   filters: any = {
     'first_name': false,
+    'last_name': false,
     'date': false,
     'mobile': false,
     'email': false
@@ -191,7 +193,7 @@ export class CustomersListComponent implements OnInit {
   }
   doSearch() {
     this.getCustomersList();
-    if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {
+    if (this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -200,12 +202,14 @@ export class CustomersListComponent implements OnInit {
   resetFilter() {
     this.filters = {
       'first_name': false,
+      'last_name': false,
       'date': false,
       'mobile': false,
       'email': false
     };
     this.filter = {
       first_name: '',
+      last_name: '',
       date: null,
       mobile: '',
       email: '',
@@ -225,6 +229,9 @@ export class CustomersListComponent implements OnInit {
     const api_filter = {};
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
+    }
+    if (this.filter.last_name !== '') {
+      api_filter['lastName-eq'] = this.filter.last_name;
     }
     if (this.filter.date != null) {
       api_filter['dob-eq'] = this.shared_functions.transformToYMDFormat(this.filter.date);
