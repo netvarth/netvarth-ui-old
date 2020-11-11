@@ -411,11 +411,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.loading = false;
           // more case
           this.todayBookings = [];
+          console.log(this.todayBookings);
           this.todayBookings_more = [];
           // tslint:disable-next-line:no-shadowed-variable
           for (let i = 0; i < this.today_totalbookings.length; i++) {
             if (i <= 2) {
               this.todayBookings.push(this.today_totalbookings[i]);
+              console.log(this.todayBookings);
             } else {
               this.todayBookings_more.push(this.today_totalbookings[i]);
             }
@@ -1793,4 +1795,27 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
 
   }
+  prescription (checkin, type) {
+  // if (type === 'appointment') {
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       uuid: checkin.uid,
+  //       accountId: checkin.providerAccount.id,
+  //       type: 'appointment',
+  //       'paidStatus': false
+  //     }
+  //   };
+  //   this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
+  // } else {
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       uuid: checkin.ynwUuid,
+  //       accountId: checkin.providerAccount.id,
+  //       type: 'waitlist',
+  //       'paidStatus': false
+  //     }
+  //   };
+  //   this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
+  // }
+ }
 }

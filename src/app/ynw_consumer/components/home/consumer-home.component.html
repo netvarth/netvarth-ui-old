@@ -149,6 +149,9 @@
                                                     *ngIf="booking.amountDue>0 && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
                                                     (click)="viewBill(booking,'appointment',$event)">View Bill</button> -->
                                             </span>
+                                            <span> <button class="bt3 cust-btn"
+                                                *ngIf="booking.prescShared"
+                                                (click)="prescription(booking ,'appointment')"><i class="mr-rx-icon-customer"></i></button>   </span>
                                         </td>
                                         <td>
                                             <button mat-icon-button [matMenuTriggerFor]="appMenu"
@@ -344,6 +347,9 @@
                                                     *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
                                                     (click)="viewBill(booking,'checkin',$event)">View Bill</button> -->
                                             </span>
+                                            <span> <button class="bt3 cust-btn"
+                                                *ngIf="booking.prescShared"
+                                                (click)="prescription(booking ,'appointment')"><i class="mr-rx-icon-customer"></i></button>   </span>
                                         </td>
                                         <td>
                                             <button mat-icon-button [matMenuTriggerFor]="appMenu"
@@ -488,6 +494,9 @@
                                                         (click)="viewBill(booking,'appointment',$event)">View
                                                         Bill</button> -->
                                                 </span>
+                                                <span> <button c lass="bt3 cust-btn"
+                                                    *ngIf="booking.prescShared"
+                                                    (click)="prescription(booking ,'appointment')"><i class="mr-rx-icon-customer"></i></button>   </span>
                                             </td>
                                             <td>
                                                 <button mat-icon-button [matMenuTriggerFor]="appMenu"
@@ -687,6 +696,9 @@
                                                         *ngIf="booking.amountDue>0 && booking.waitlistStatus != 'cancelled'"
                                                         (click)="viewBill(booking,'checkin',$event)">View Bill</button> -->
                                                 </span>
+                                                <span> <button class="bt3 cust-btn"
+                                                    *ngIf="booking.prescShared"
+                                                    (click)="prescription(booking ,'appointment')"><i class="mr-rx-icon-customer"></i></button>   </span>
                                             </td>
                                             <td>
                                                 <button mat-icon-button [matMenuTriggerFor]="appMenu"
