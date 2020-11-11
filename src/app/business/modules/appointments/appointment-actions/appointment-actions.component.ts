@@ -664,3 +664,4 @@ export class AppointmentActionsComponent implements OnInit {
                 });
     }
 }
+
