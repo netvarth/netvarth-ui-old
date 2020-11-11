@@ -1611,8 +1611,8 @@ export class ProviderServices {
       const url = 'provider/mr/sharePrescription/' + id;
       return this.servicemeta.httpPost(url, data);
    }
-   shareRxforProvider(id, data) {
-      const url = 'provider/mr/sharePrescription/provider/' + id;
+   shareRxforThirdparty(id, data) {
+      const url = 'provider/mr/sharePrescription/thirdParty/' + id;
       return this.servicemeta.httpPost(url, data);
    }
    updateMR(data, mrId) {
