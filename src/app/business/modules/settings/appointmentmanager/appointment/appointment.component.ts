@@ -764,7 +764,7 @@ export class AppointmentComponent implements OnInit {
         this.queuejson = [];
         this.sel_queue_id = 0;
         this.resetApi();
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id); 
+        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
     }
     showConfrmEmail(event) {
@@ -1420,7 +1420,7 @@ export class AppointmentComponent implements OnInit {
                                 this.selected_user = this.users[0];
                             }
                         } else {
-                            this.selected_user = this.userN;
+                            this.selected_user = this.users[0];
                         }
                         this.handleUserSelection(this.selected_user);
                     } else {

@@ -325,6 +325,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   maxday = new Date();
   allLabels: any = [];
   voicedialogRef: any;
+  addCustomerTooltip = '';
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -442,6 +443,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.customerIdTooltip = this.customer_label + ' id';
+    this.addCustomerTooltip = 'Add ' + this.customer_label;
     this._initSpeech();
     this.getDisplayboardCount();
     this.getPos();
@@ -2047,6 +2049,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 0; i < this.allLabels.length; i++) {
       if (this.allLabels[i].label === label) {
         return this.allLabels[i].displayName;
+      } else {
+        return label;
       }
     }
   }
