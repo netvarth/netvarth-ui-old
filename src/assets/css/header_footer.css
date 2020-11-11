@@ -2297,11 +2297,23 @@ header {
   }
 
 .take-tour-icon {
-        content: url(../images/myjaldee/takeATour.svg);
+        content: url(../images/header/tour.svg);
         /* top: 4px; */
         position: relative;
         padding-right: 1px;
-        width: 25px;
+        width: 35px;
         top: -5px;
 }  
+.contact-help-icon {
+    content: url(../images/header/Help.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 20px;
+}
+.contact-wtsap-icon {
+    content: url(../images/header/whatsapp.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 30px;
+}
   
