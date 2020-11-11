@@ -150,8 +150,8 @@
                                                     (click)="viewBill(booking,'appointment',$event)">View Bill</button> -->
                                             </span>
                                             <span> <button class="bt3 cust-btn"
-                                                *ngIf="booking.prescShared"
-                                                (click)="prescription(booking ,'appointment')"><i class="mr-rx-icon-customer"></i></button>   </span>
+                                                *ngIf="booking.prescShared" (click)="prescription(booking,'checkin',$event)"
+                                                ><i class="mr-rx-icon-customer"></i> <a href="booking.prescUrl"></a></button>   </span>
                                         </td>
                                         <td>
                                             <button mat-icon-button [matMenuTriggerFor]="appMenu"
@@ -348,8 +348,8 @@
                                                     (click)="viewBill(booking,'checkin',$event)">View Bill</button> -->
                                             </span>
                                             <span> <button class="bt3 cust-btn"
-                                                *ngIf="booking.prescShared"
-                                                (click)="prescription(booking ,'appointment')"><i class="mr-rx-icon-customer"></i></button>   </span>
+                                                *ngIf="booking.prescShared" (click)="prescription(booking,'checkin',$event)"
+                                               ><i class="mr-rx-icon-customer"></i> <a href="booking.prescUrl"></a></button>   </span>
                                         </td>
                                         <td>
                                             <button mat-icon-button [matMenuTriggerFor]="appMenu"
@@ -495,8 +495,8 @@
                                                         Bill</button> -->
                                                 </span>
                                                 <span> <button c lass="bt3 cust-btn"
-                                                    *ngIf="booking.prescShared"
-                                                    (click)="prescription(booking ,'appointment')"><i class="mr-rx-icon-customer"></i></button>   </span>
+                                                    *ngIf="booking.prescShared" (click)="prescription(booking,'checkin',$event)"
+                                                    ><i class="mr-rx-icon-customer"></i> <a href="booking.prescUrl"></a></button>   </span>
                                             </td>
                                             <td>
                                                 <button mat-icon-button [matMenuTriggerFor]="appMenu"
@@ -697,8 +697,8 @@
                                                         (click)="viewBill(booking,'checkin',$event)">View Bill</button> -->
                                                 </span>
                                                 <span> <button class="bt3 cust-btn"
-                                                    *ngIf="booking.prescShared"
-                                                    (click)="prescription(booking ,'appointment')"><i class="mr-rx-icon-customer"></i></button>   </span>
+                                                    *ngIf="booking.prescShared"  (click)="prescription(booking,'checkin',$event)"
+                                                   ><i class="mr-rx-icon-customer"></i> <a href="booking.prescUrl"></a></button>   </span>
                                             </td>
                                             <td>
                                                 <button mat-icon-button [matMenuTriggerFor]="appMenu"

@@ -1795,27 +1795,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
 
   }
-  prescription (checkin, type) {
-  // if (type === 'appointment') {
-  //   const navigationExtras: NavigationExtras = {
-  //     queryParams: {
-  //       uuid: checkin.uid,
-  //       accountId: checkin.providerAccount.id,
-  //       type: 'appointment',
-  //       'paidStatus': false
-  //     }
-  //   };
-  //   this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
-  // } else {
-  //   const navigationExtras: NavigationExtras = {
-  //     queryParams: {
-  //       uuid: checkin.ynwUuid,
-  //       accountId: checkin.providerAccount.id,
-  //       type: 'waitlist',
-  //       'paidStatus': false
-  //     }
-  //   };
-  //   this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
-  // }
+  prescription (checkin, type, event) {
+    event.stopPropagation();
+    console.log(checkin);
  }
 }
