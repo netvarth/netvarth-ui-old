@@ -134,36 +134,11 @@
       </div> -->
 </div></div></div></div>
 </div>
-<div class=" pad-20 table-responsive" *ngIf="drugList.length === 0">
-      <h5> Create prescription of your own</h5>
-      <table  class="table ">
-              <thead>
-                      <tr >
-                        <th>
-                         Medicine
-                        </th>
-                        <th>
-                            Duration(days)
-                        </th>
-                         <th>
-                            Dosage
-                        </th>
-                        <th>
-                            Frequency
-                        </th>
-                        <th>
-                            Instructions
-                        </th>
-
-                      </tr>
-                    </thead>
-                      <tbody>
-
-                  No Medicines Added
-
-              </tbody>
-            </table>
-            <span (click)="addDrug()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Add more</u></span>
+<div class="btm-pad-20" *ngIf="drugList.length === 0">
+     <div>
+      Medicines are not added
+     </div>
+            <span (click)="addDrug()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Add</u></span>
 
 </div>
 </ng-container>
