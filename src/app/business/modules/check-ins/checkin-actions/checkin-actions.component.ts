@@ -587,7 +587,7 @@ export class CheckinActionsComponent implements OnInit {
         this.action = 'label';
     }
     gotoLabel() {
-        this.router.navigate(['provider', 'settings', 'general', 'labels']);
+        this.router.navigate(['provider', 'settings', 'general', 'labels'], {queryParams: {source : 'checkin'}});
         this.dialogRef.close();
     }
     goBack() {

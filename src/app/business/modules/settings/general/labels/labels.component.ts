@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
@@ -28,14 +28,17 @@ export class LabelsComponent implements OnInit {
     ];
     api_loading: boolean;
     label_list: any;
-
+source;
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
     constructor(private router: Router,
-        private _location: Location,
+        private _location: Location, public activateroute: ActivatedRoute,
         private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions) { }
-
+        private shared_functions: SharedFunctions) {
+            this.activateroute.queryParams.subscribe(params => {
+               this.source = params.source;
+              });
+         }
     ngOnInit() {
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'general->labels', 'subKey': 'timewindow', 'classname': 'b-queue',
@@ -107,7 +110,11 @@ export class LabelsComponent implements OnInit {
             });
     }
     redirecToGeneral() {
-        this._location.back();
+        if (this.source) {
+            this._location.back();
+        } else {
+        this.router.navigate(['provider', 'settings' , 'general']);
+        }
     }
     redirecToHelp() {
         this.router.navigate(['/provider/' + this.domain + '/general->labels']);

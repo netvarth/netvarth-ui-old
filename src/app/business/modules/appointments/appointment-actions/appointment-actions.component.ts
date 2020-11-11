@@ -433,7 +433,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.action = 'label';
     }
     gotoLabel() {
-        this.router.navigate(['provider', 'settings', 'general', 'labels']);
+        this.router.navigate(['provider', 'settings', 'general', 'labels'], {queryParams: {source : 'appt'}});
         this.dialogRef.close();
     }
     goBack() {
