@@ -70,7 +70,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
       this.getAllQs().then(result => {
         if (parseInt(qparams.data, 0) === 0) {
           this.masterToggle();
-          }
+        }
         if (_this.selected_data.length > 0) {
           _this.queue_dataSource.data.forEach(function (row) {
             if (_this.selected_data && _this.selected_data.length > 0) {
@@ -193,48 +193,37 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
   // common method got o previous page------------------------------------->
   passQueueSelectedToReports() {
     this.queues_selected = this.selection.selected;
+    if (this.selection.selected.length === 0) {
+      this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+    } else {
+      if (this.queue_dataSource.filteredData.length < this.selection.selected.length) {
+        this.queues_selected = this.queue_dataSource.filteredData;
 
-
-      if (this.selection.selected.length === 0) {
+      } else if (this.queue_dataSource.filteredData.length > this.selection.selected.length) {
+        this.queues_selected = this.selection.selected;
+      }
+      if (this.queues_selected.length === this.queueCount) {
+        this.queues_selected = 'All';
+      }
+      if (this.queues_selected !== 'All') {
+        let queue_id = '';
+        this.queues_selected.forEach(function (queue) {
+          queue_id = queue_id + queue.id + ',';
+        });
+        this.queues_selected = queue_id;
+      }
+      if (this.queues_selected.length === 0) {
         this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
-
       } else {
-
-
-        if (this.queue_dataSource.filteredData.length < this.selection.selected.length) {
-          this.queues_selected = this.queue_dataSource.filteredData;
-
-        } else if (this.queue_dataSource.filteredData.length > this.selection.selected.length) {
-          this.queues_selected = this.selection.selected;
-        }
-        if (this.queues_selected.length === this.queueCount) {
-          this.queues_selected = 'All';
-        }
-        if (this.queues_selected !== 'All') {
-          let queue_id = '';
-          this.queues_selected.forEach(function (queue) {
-            queue_id = queue_id + queue.id +  ',';
-          });
-
-         this.queues_selected = queue_id;
-        }
-
-
-        console.log(this.queues_selected.length + '=' + this.queueCount);
-
         this.report_service.updatedQueueDataSelection(this.queues_selected);
         this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
-
-        //
-        // }
-
-
-
-
+      }
+      //
+      // }
     }
   }
 
-  redirecToReports(){
+  redirecToReports() {
     this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
   }
 
