@@ -13031,3 +13031,16 @@ hr {
   content: url(../images/walkin.svg);
   width: 25px;
 }
+@media only screen and (max-width: 767px) {
+  .mgn-top-10 {
+    margin-top: 10px !important;
+  }
+}
+.mgn-m-lt-15 {
+  margin-left: -15px !important;
+}
+@media only screen and (max-width: 767px){
+.table-outer .drugdetailslist td:before {
+  width: 50% !important;
+}
+}
