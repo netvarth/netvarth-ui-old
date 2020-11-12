@@ -48,6 +48,8 @@ import { MyfavouritesComponent } from './components/myfavourites/myfavourites.co
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ActionPopupComponent } from './components/home/action-popup/action-popup.component';
 import { ViewRxComponent } from './components/home/view-rx/view-rx.component';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 
 @NgModule({
   imports: [
@@ -73,7 +75,9 @@ import { ViewRxComponent } from './components/home/view-rx/view-rx.component';
     ConsumerDonationModule,
     SearchFormModule,
     ConsumerFooterModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    ShareButtonsModule,
+    ShareIconsModule
   ],
   declarations: [
     ConsumerComponent,
