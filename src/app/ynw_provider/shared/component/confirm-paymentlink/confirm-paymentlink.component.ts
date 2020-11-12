@@ -6,6 +6,8 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { MatDialog } from '@angular/material/dialog';
+import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 
 
 @Component({
@@ -56,12 +58,19 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   emailId: any;
   number: any;
   mail: any;
+  smsCredits;
+  is_smsLow = false;
+  smsWarnMsg: string;
+  corpSettings: any;
+  addondialogRef: any;
   constructor(
     public dialogRef: MatDialogRef<ConfirmPatmentLinkComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
+    private provider_servicesobj: ProviderServices,
+    private dialog: MatDialog,
     public shared_functions: SharedFunctions) {
     this.uuid = this.data.uuid;
     this.mobilenumber = this.data.mobilenumber;
@@ -73,8 +82,10 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
   }
   ngOnInit() {
+    console.log('confrm payment link');
     this.blankPattern = projectConstantsLocal.VALIDATOR_BLANK;
     this.createForm();
+    this.getSMSCredits();
   }
   createForm() {
     this.amForm = this.fb.group({
@@ -140,6 +151,46 @@ export class ConfirmPatmentLinkComponent implements OnInit {
             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
     }
+  }
+
+  getSMSCredits() {
+    this.provider_services.getSMSCredits().subscribe(data => {
+        this.smsCredits = data;
+        if (this.smsCredits < 5) {
+          this.is_smsLow = true;
+          this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.getLicenseCorpSettings();
+        } else {
+          this.is_smsLow = false;
+        }
+    });
+  }
+  getLicenseCorpSettings() {
+    this.provider_servicesobj.getLicenseCorpSettings().subscribe(
+        (data: any) => {
+            this.corpSettings = data;
+        }
+    );
+}
+  gotoSmsAddon() {
+    this.dialogRef.close();
+    if (this.corpSettings && this.corpSettings.isCentralised) {
+      this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  } else {
+      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+          width: '50%',
+          data: {
+              type: 'addons'
+          },
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true
+      });
+      this.addondialogRef.afterClosed().subscribe(result => {
+        if (result) {
+         this.getSMSCredits();
+        }
+      });
+  }
   }
 
 }

@@ -105,6 +105,7 @@ export class NewReportComponent implements OnInit {
   time_period;
   payment_modes;
   payment_status;
+  pay_confirm_num;
 
   constructor(
     private router: Router,
@@ -508,7 +509,9 @@ export class NewReportComponent implements OnInit {
           filter['paymentOn-ge'] = this.dateformat.transformTofilterDate(this.payment_startDate);
           filter['paymentOn-le'] = this.dateformat.transformTofilterDate(this.payment_endDate);
         }
-
+        if (this.pay_confirm_num) {
+          filter['transactionEncId-like'] = 'confirmationNo::' + this.pay_confirm_num;
+        }
         const request_payload: any = {};
         request_payload.reportType = this.report_type.toUpperCase();
         request_payload.reportDateCategory = this.payment_timePeriod;

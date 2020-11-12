@@ -4,6 +4,8 @@ import { SharedFunctions } from '../../../../../../../../shared/functions/shared
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddproviderAddonComponent } from '../../../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 
 @Component({
   selector: 'app-userconsumer-notifications',
@@ -101,11 +103,18 @@ export class ConsumerNotificationUserComponent implements OnInit {
   secndapp_time: number[];
   thirdapp_time: number[];
   fourthapp_time: number[];
+  smsCredits;
+  is_smsLow = false;
+  smsWarnMsg: string;
+  corpSettings: any;
+  addondialogRef: any;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
     public provider_services: ProviderServices,
     private activatedRoot: ActivatedRoute,
+    private provider_servicesobj: ProviderServices,
+    private dialog: MatDialog,
     private provider_datastorage: ProviderDataStorageService) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
@@ -389,5 +398,42 @@ export class ConsumerNotificationUserComponent implements OnInit {
  hourtoMin(val) {
   const minutes = val * 60;
   return minutes;
+  }
+
+  getSMSCredits() {
+    this.provider_services.getSMSCredits().subscribe(data => {
+        this.smsCredits = data;
+        if (this.smsCredits < 5) {
+          this.is_smsLow = true;
+          this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.getLicenseCorpSettings();
+        }
+    });
+  }
+  getLicenseCorpSettings() {
+    this.provider_servicesobj.getLicenseCorpSettings().subscribe(
+        (data: any) => {
+            this.corpSettings = data;
+        }
+    );
+}
+  gotoSmsAddon() {
+    if (this.corpSettings && this.corpSettings.isCentralised) {
+      this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  } else {
+      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+          width: '50%',
+          data: {
+              type: 'addons'
+          },
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true
+      });
+      this.addondialogRef.afterClosed().subscribe(result => {
+        if (result) {
+         this.getSMSCredits();
+        }
+      });
+  }
   }
 }

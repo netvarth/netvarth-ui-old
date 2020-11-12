@@ -13044,3 +13044,9 @@ hr {
   width: 50% !important;
 }
 }
+
+.sms_credit_warn {
+  color: red;
+  font-size: 0.7rem !important;
+  /* margin-top: 10px; */
+}
