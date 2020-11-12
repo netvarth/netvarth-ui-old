@@ -6,7 +6,7 @@
     <div class="sa-lc" (click)="setCurrentLocation(locrefrence)">
       <mat-form-field class="search_location_class">
         <i class="fa fa-check icon" *ngIf="isCurrentLocation"></i>
-        <input type="text" name="location_box" aria-label="locs" [(ngModel)]="location_name" matInput
+        <input type="text" class="txtCity" name="location_box" aria-label="locs" [(ngModel)]="location_name" matInput
           [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="" #locrefrence
           (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)" (keyup)="locationClick($event)">
 

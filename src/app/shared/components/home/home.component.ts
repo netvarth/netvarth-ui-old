@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit {
       loop: true,
       responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
     };
+
     this.customOptions = {
       loop: true,
       mouseDrag: true,
@@ -94,16 +95,20 @@ export class HomeComponent implements OnInit {
       nav: true
     };
     this.carouselOne = {
-      items: 1,
+      nav: true,
+      navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
       dots: false,
-      // nav: true,
-      autoplayTimeout: 15000,
-      autoplayHoverPause: true,
       loop: true,
-      autoplay: true,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true
+      responsiveClass: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        992: {
+          items: 3,
+          center: true,
+        }
+      }
     };
     setTimeout(() => {
       this.handleScroll('home');
@@ -296,7 +301,7 @@ export class HomeComponent implements OnInit {
   // checkinDetailsView() {
   //   this.routerobj.navigate(['/waitlist-details/ecid']);
   // }
-  knowCheckinStatus () {
+  knowCheckinStatus() {
     this.routerobj.navigate(['status/new']);
   }
   providerLinkClicked() {

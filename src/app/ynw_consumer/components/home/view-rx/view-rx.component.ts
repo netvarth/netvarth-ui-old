@@ -8,6 +8,7 @@ import { Meta, Title } from '@angular/platform-browser';
   styleUrls: ['./view-rx.component.css']
 })
 export class ViewRxComponent implements OnInit {
+  elementType = 'url';
   wpath: any;
   description: string;
   imageUrl: string;
