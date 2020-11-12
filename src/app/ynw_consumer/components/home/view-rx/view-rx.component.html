@@ -14,8 +14,8 @@
         </div>
         <div class="coupon-outer">
             <button class="btn btn-info jld-lnk-btn">
-                <a class="ngx-qr-btn" [href]="qrCodePath" download>
-                <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a>
+                <a class="ngx-qr-btn" [href]="shareLink" download>
+                <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download Prescription</a>
             </button>
           
         </div>
@@ -23,7 +23,7 @@
          <div>Prescription Link - <span class="jld-lnk-font custId-cursor" ><a href="{{accuid}}" target="blank">{{accuid}}</a></span></div>
          <br>
         
-         <!-- <div class="mgn-up-20" >
+         <div class="mgn-up-20" >
           <label>Share Prescription Link</label>
           <share-buttons [theme]="'circles-dark'" 
             [include]="['facebook','whatsapp','email']"
@@ -33,7 +33,7 @@
             [showIcon]="true"
             [showText]="true">
         </share-buttons>
-          </div> -->
+          </div>
          </div>
         </div>
      
