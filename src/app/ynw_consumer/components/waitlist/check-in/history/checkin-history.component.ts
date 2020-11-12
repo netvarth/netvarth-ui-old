@@ -12,6 +12,7 @@ import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/m
 import { ConsumerRateServicePopupComponent } from '../../../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { ViewRxComponent } from '../../../home/view-rx/view-rx.component';
 // import * as moment from 'moment';
 
 
@@ -56,6 +57,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   small_device_display = false;
   screenWidth;
+  viewrxdialogRef;
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router,
     public route: ActivatedRoute,
@@ -315,4 +317,15 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     };
     this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
   }
+  viewprescription(checkin) {
+    console.log(checkin);
+    this.viewrxdialogRef = this.dialog.open(ViewRxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        accencUid: checkin.prescUrl
+      }
+    });
+ }
 }
