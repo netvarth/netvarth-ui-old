@@ -47,6 +47,7 @@ import { ConsumerFooterModule } from './components/footer/footer.module';
 import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ActionPopupComponent } from './components/home/action-popup/action-popup.component';
+import { ViewRxComponent } from './components/home/view-rx/view-rx.component';
 
 @NgModule({
   imports: [
@@ -87,7 +88,8 @@ import { ActionPopupComponent } from './components/home/action-popup/action-popu
     AddManagePrivacyComponent,
     MeetingDetailsComponent,
     MyfavouritesComponent,
-    ActionPopupComponent
+    ActionPopupComponent,
+    ViewRxComponent
   ],
   exports: [ConfirmBoxComponent],
   schemas: [

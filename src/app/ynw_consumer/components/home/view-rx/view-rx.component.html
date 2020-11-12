@@ -1,0 +1,41 @@
+<h1 class="mat-dialog-title">Prescription
+    <button  mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+  </h1>
+
+  
+  <mat-dialog-content>
+    <div class="coupon-outer textcenter" *ngIf="qr_code_oId" #qrCodeOnlineId>
+
+        <div>
+            <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
+            </ngx-qrcode>
+        </div>
+        <div class="coupon-outer">
+            <button class="btn btn-info jld-lnk-btn">
+                <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a>
+            </button>
+          
+        </div>
+        <div class="jld-link-pad">
+         <div>Prescription Link - <span class="jld-lnk-font custId-cursor" ><a href="{{accuid}}" target="blank">{{accuid}}</a></span></div>
+         <br>
+        
+         <!-- <div class="mgn-up-20" >
+          <label>Share Prescription Link</label>
+          <share-buttons [theme]="'circles-dark'" 
+            [include]="['facebook','whatsapp','email']"
+            [url]="shareLink"
+            [autoSetMeta]="true"
+            [image]="qrCodePath"
+            [showIcon]="true"
+            [showText]="true">
+        </share-buttons>
+          </div> -->
+         </div>
+        </div>
+     
+  </mat-dialog-content>
+  

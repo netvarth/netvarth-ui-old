@@ -20,6 +20,7 @@ import { CouponsComponent } from '../../../shared/components/coupons/coupons.com
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MeetingDetailsComponent } from '../meeting-details/meeting-details.component';
+import { ViewRxComponent } from './view-rx/view-rx.component';
 
 @Component({
   selector: 'app-consumer-home',
@@ -178,6 +179,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   tdyDate: string;
   loading = true;
   provider_label: any;
+  viewrxdialogRef;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -1795,8 +1797,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
 
   }
-  prescription (checkin, type, event) {
-    event.stopPropagation();
-    console.log(checkin);
+  viewprescription(checkin) {
+    this.viewrxdialogRef = this.dialog.open(ViewRxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        accencUid: checkin.prescUrl
+      }
+    });
  }
 }

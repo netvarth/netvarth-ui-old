@@ -196,6 +196,10 @@
                                                     (click)="gotoLivetrack(booking.uid,booking.providerAccount.id,'false')">
                                                     <i class="fa fa-times fl-right"></i>Sharing location
                                                 </button>
+
+                                                <button class="custId-cursor" mat-menu-item *ngIf="booking.prescShared"
+                                                (click)="viewprescription(booking)">
+                                                <i class="mr-rx-icon-customer"></i>view prescription</button>
                                             </mat-menu>
                                         </td>
                                     </ng-container>
@@ -393,6 +397,10 @@
                                                     (click)="gotoLivetrackchekin(booking.ynwUuid,booking.providerAccount.id,'false')">
                                                     <i class="fa fa-times fl-right"></i>Sharing location
                                                 </button>
+
+                                                <button class="custId-cursor" mat-menu-item *ngIf="booking.prescShared"
+                                                (click)="viewprescription(booking)">
+                                                <i class="mr-rx-icon-customer"></i>view prescription</button>
                                             </mat-menu>
                                         </td>
                                     </ng-container>
@@ -537,6 +545,9 @@
                                                         (click)="gotoLivetrack(booking.uid,booking.providerAccount.id,'false')">
                                                         <i class="fa fa-times fl-right"></i>Sharing location
                                                     </button>
+                                                    <button class="custId-cursor" mat-menu-item *ngIf="booking.prescShared"
+                                                    (click)="viewprescription(booking)">
+                                                    <i class="mr-rx-icon-customer"></i>view prescription</button>
                                                 </mat-menu>
                                             </td>
                                         </ng-container>
@@ -737,6 +748,10 @@
                                                         (click)="gotoLivetrackchekin(booking.ynwUuid,booking.providerAccount.id,'false')">
                                                         <i class="fa fa-times fl-right"></i>Sharing location
                                                     </button>
+
+                                                    <button class="custId-cursor" mat-menu-item *ngIf="booking.prescShared"
+                                                    (click)="viewprescription(booking)">
+                                                    <i class="mr-rx-icon-customer"></i>view prescription</button>
                                                 </mat-menu>
                                             </td>
                                         </ng-container>
