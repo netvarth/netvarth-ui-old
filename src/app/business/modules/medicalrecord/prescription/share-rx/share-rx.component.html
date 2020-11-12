@@ -25,18 +25,17 @@
               errorMsg="Please enter a message.">
           </app-field-error-display>
       </div>
-      <div class="mgn-m-lt-15">
-      <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="mgn-m-lt-15 " *ngIf="showthirdparty">
+      <div class="col-md-6 col-sm-6 col-xs-12 mgn-bt-10">
       <div class="form-group" *ngIf="showthirdparty">
         <mat-form-field>
             <input matInput type="text" class="form-control" id="thirdpartyphone"
                 placeholder="Phonenumber" [(ngModel)]="thirdpartyphone" [ngModelOptions]="{standalone: true}"
                 autocomplete="off">
         </mat-form-field>
-
     </div>
       </div>
-      <div class="col-md-6 col-sm-6 col-xs-12 mgn-top-10">
+      <div class="col-md-6 col-sm-6 col-xs-12 mgn-top-10 mgn-bt-10 ">
     <div class="form-group" *ngIf="showthirdparty">
         <mat-form-field>
             <input matInput type="text" class="form-control" id="thirdpartyemail"
@@ -62,9 +61,11 @@
                   notification
               </mat-checkbox>
           </div>
-          <div style="color: red;" *ngIf = "!sms && !email && !pushnotify"> Please tick any of the options</div>
+          <div style="color: red;font: italic" *ngIf = "!sms && !email && !pushnotify"> Please tick any of the options</div>
       </div>
-      
+      <div  class="form-group" *ngIf="showthirdparty">
+        We will create a PDF of your prescription and will share Via sms and email.
+      </div>
 
 
   </mat-dialog-content>
