@@ -1,11 +1,12 @@
-<form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
+<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+<form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"  *ngIf="!loading">
   <h1 class="mat-dialog-title">Share Prescription
       <button #queue mat-dialog-close class="modal_close">
           <i class="fa fa-window-close" aria-hidden="true"></i>
       </button>
   </h1>
-  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-  <mat-dialog-content *ngIf="!loading">
+  
+  <mat-dialog-content>
 
           <div class="form-group" >
               <!-- <div> Share with {{customerDetail.firstName | capitalizeFirst}}  {{customerDetail.lastName}}</div> -->
@@ -75,7 +76,7 @@
           <button type="button" mat-dialog-close class="cs-btn bt2"
               [disabled]="disableButton">Cancel</button>
           <button type="submit" mat-button [disabled]="!amForm.valid || disable "
-              class="cs-btn bt1 mr10">Share</button>
+              class="cs-btn bt1 mr10">Share<i class="fa fa-spinner fa-spin" *ngIf="sharebtnloading"></i></button>
 
       </div>
   </mat-dialog-actions>
