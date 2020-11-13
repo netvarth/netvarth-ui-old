@@ -208,7 +208,6 @@ export class ConsumerCheckinComponent implements OnInit {
             title: 'Checkin'
         }
     ];
-    wtsapmode: any;
     tele_srv_stat: any;
     couponvalid = true;
     selected_coupons: any = [];
@@ -570,8 +569,15 @@ export class ConsumerCheckinComponent implements OnInit {
                 serv = this.servicesjson[i];
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
-                        this.callingModes = this.customer_data.primaryPhoneNumber;
-                        this.wtsapmode = this.customer_data.primaryPhoneNumber;
+                        console.log(this.type);
+                        if (this.type === 'waitlistreschedule') {
+                            console.log(this.waitlist.virtualService);
+                            this.callingModes = this.waitlist.virtualService['WhatsApp'];
+                            this.changePhno = true;
+                           } else {
+                            this.callingModes = this.customer_data.primaryPhoneNumber;
+                           }
+                           console.log(this.callingModes);
                     }
                 }
                 break;
@@ -1657,6 +1663,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                        this.currentPhone = this.userData.userProfile.primaryMobileNo || '';
                         this.consumerPhoneNo = this.userPhone;
                     }
                     if (this.userEmail) {

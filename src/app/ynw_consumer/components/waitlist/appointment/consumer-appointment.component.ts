@@ -506,8 +506,13 @@ export class ConsumerAppointmentComponent implements OnInit {
                 serv = this.servicesjson[i];
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
+                       if (this.type === 'reschedule') {
+                        console.log(this.appointment.virtualService);
+                        this.callingModes = this.appointment.virtualService['WhatsApp'];
+                        this.changePhno = true;
+                       } else {
                         this.callingModes = this.customer_data.primaryPhoneNumber;
-                        this.wtsapmode = this.customer_data.primaryPhoneNumber;
+                       }
                     }
                 }
                 break;
@@ -1460,7 +1465,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-                        // this.consumerPhoneNo = this.userPhone;
+                        this.currentPhone = this.userPhone;
                     }
                     if (this.userEmail) {
                         this.emailExist = true;
