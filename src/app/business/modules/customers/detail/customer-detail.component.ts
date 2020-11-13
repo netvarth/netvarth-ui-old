@@ -872,7 +872,7 @@ export class CustomerDetailComponent implements OnInit {
             }
         });
     }
-    goBackfromAction(source?) {
+    goBackfromAction() {
         this.customerAction = '';
     }
     showMore(type) {
