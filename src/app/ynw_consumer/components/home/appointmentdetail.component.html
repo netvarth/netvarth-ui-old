@@ -103,9 +103,8 @@
                                         <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
                                             <span class="status-label">STATUS</span>
                                             <span>
-                                                <div class="item-label-val"
-                                                    [ngClass]="{'red': appt.apptStatus == 'Cancelled', 'whtsap-ic': appt.apptStatus == 'Completed' }">
-                                                    {{appt.apptStatus}}
+                                                <div class="item-label-val">
+                                                    {{check_in_statuses[appt.apptStatus | capitalizeFirst]}}
                                                 </div>
                                             </span>
                                         </div>

@@ -103,7 +103,7 @@
                                         <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
                                             <span class="status-label">STATUS</span>
                                             <span>
-                                                <div *ngIf="waitlist.waitlistStatus == 'checkedIn'"
+                                                <!-- <div *ngIf="waitlist.waitlistStatus == 'checkedIn'"
                                                     class="item-label-val">Checked-in</div>
                                                 <div *ngIf="waitlist.waitlistStatus == 'done'"
                                                     class="item-label-val whtsap-ic">
@@ -111,6 +111,9 @@
                                                 <div [ngClass]="{'red': waitlist.waitlistStatus == 'cancelled'}"
                                                     *ngIf="(waitlist.waitlistStatus !== 'checkedIn' && waitlist.waitlistStatus !== 'done')"
                                                     class="item-label-val">{{waitlist.waitlistStatus}}
+                                                </div> -->
+                                                <div class="item-label-val">
+                                                    {{check_in_statuses[waitlist.waitlistStatus | capitalizeFirst]}}
                                                 </div>
                                             </span>
                                         </div>

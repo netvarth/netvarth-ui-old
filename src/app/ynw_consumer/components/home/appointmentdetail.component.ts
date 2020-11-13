@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ActionPopupComponent } from './action-popup/action-popup.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-appointmentdetail',
@@ -36,6 +37,7 @@ export class ApptDetailComponent implements OnInit {
   details_cap = Messages.CHECK_DET_DETAILS_CAP;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
+  check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP;
   providerId: any;
   addnotedialogRef: any;
