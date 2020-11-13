@@ -1,7 +1,7 @@
 <section id="cons_home_n">
     <header class="site-header">
 		<div class="container">
-			<div class="row align-items-center justify-content-between">
+			<div class="row align-items-center justify-content-between hidden-xs hidden-sm">
 				<div class="site-branding col-lg-auto">
 					<img src="assets/images/home/logo-white.png" alt="Jaldee" class="img-fluid logo" />
 				</div>
@@ -15,6 +15,25 @@
 					<div class="account-links">
 						<a class="cursor-pointer" (click)="providerLinkClicked()">Business Partner Zone</a>
 						<a class="login-link"><span class="cons_btn_login_top" (click)="doLogin('consumer')">Log in</span> / <span class="cons_btn_join_top" (click)="doSignup('consumer')">Sign up</span></a>
+					</div>
+				</div>
+			</div>
+			<div class="row align-items-center justify-content-between visible-xs visible-sm">
+				<div class="site-branding col-xs-5">
+					<img src="assets/images/home/logo-white.png" alt="Jaldee" class="img-fluid logo" />
+				</div>
+				<div class="col-xs-7 site-header--links align-items-center ">					
+					<div class="account-links pull-right">
+						<a class="cursor-pointer d-block" (click)="providerLinkClicked()">Business Partner Zone</a>
+						<a class="login-link d-block mgn-up-10 pull-right"><span class="cons_btn_login_top" (click)="doLogin('consumer')">Log in</span> / <span class="cons_btn_join_top" (click)="doSignup('consumer')">Sign up</span></a>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 mgn-up-20">
+					<div class="download-buttons centeralign">
+						<span>Download Jaldee App</span>
+						<a href="http://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"
+                        target="_blank"><img src="assets/images/home/playstore-icon.png" alt="Download from Google Play Store" class="" /></a>
+						<a href="#"><img src="assets/images/home/applestore-icon.png" alt="Download from Apple Store" class="" /></a>
 					</div>
 				</div>
 			</div>
@@ -354,7 +373,7 @@
 
 		<div id="grey-cta-bar">
 			<div class="container">
-				<div class="row align-items-center justify-content-between">
+				<div class="row align-items-center justify-content-between m0">
 					<h3><span class="small">Can your Service Provider</span><br>Benefit from <span style="color: #f1b51c;">Jaldee?</span></h3>
 					<a href="#" class="btn cta-btn-lg">Refer a Provider</a>
 				</div>
@@ -391,12 +410,12 @@
 						<div>
 							<h4>Jaldee</h4>
 							<ul class="menu">
-								<li><a href="#">About</a></li>
+								<li><a class="pointer-cursor" [routerLink]="['/home/aboutus']" target="_blank">About</a></li>
 								<li><a href="#">Careers</a></li>
 								<li><a href="#">Report Abuse</a></li>
-								<li><a href="#">Contact</a></li>
+								<li><a class="pointer-cursor" [routerLink]="['/home/contact']" target="_blank">Contact</a></li>
 								<li><a href="#">Press</a></li>
-								<li><a href="#">Terms</a></li>
+								<li><a class="pointer-cursor" [routerLink]="['/terms']" target="_blank">Terms</a></li>
 								<li><a href="#">Investors</a></li>
 							</ul>
 						</div>
@@ -446,15 +465,15 @@
     
     				<div class="col-lg-4 social-menu text-right">
     					<span>Follow Us:</span>
-    					<a class="social-icon fa fa-facebook" href="#" target="_blank" title="Follow us on Facebook" rel="noopener noreferrer">
+    					<a class="social-icon fa fa-facebook" href="https://www.facebook.com/jaldeeinc/" target="_blank" title="Follow us on Facebook" rel="noopener noreferrer">
     					</a>
-    					<a class="social-icon fa fa-twitter" href="#" target="_blank" title="Follow us on Twitter" rel="noopener noreferrer">
+    					<a class="social-icon fa fa-twitter" href="https://twitter.com/jaldee6" target="_blank" title="Follow us on Twitter" rel="noopener noreferrer">
     					</a> 
     					<a class="social-icon fa fa-instagram" href="#" target="_blank" title="Follow us on Instagram" rel="noopener noreferrer">
     					</a>
     					<a class="social-icon fa fa-google-plus" href="#" target="_blank" title="Follow us on Google Plus" rel="noopener noreferrer">
     					</a>
-    					<a class="social-icon fa fa-youtube-play" href="#" target="_blank" title="Subscribe our Youtube Channel" rel="noopener noreferrer">
+    					<a class="social-icon fa fa-youtube-play" href="https://www.youtube.com/watch?v=qF4gLhQW2CE" target="_blank" title="Subscribe our Youtube Channel" rel="noopener noreferrer">
     					</a>
     				</div>
 				</div>
