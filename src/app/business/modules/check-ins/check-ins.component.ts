@@ -19,9 +19,9 @@ import { CheckinDetailsSendComponent } from './checkin-details-send/checkin-deta
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { CheckinActionsComponent } from './checkin-actions/checkin-actions.component';
-declare let cordova: any;
 import { VoicecallDetailsComponent } from './voicecall-details/voicecall-details.component';
 import Speech from 'speak-tts';
+declare let cordova: any;
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -274,6 +274,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   trackDetail: any = [];
   consumerTrackstatus = false;
   labeldialogRef;
+  admin = false;
+  speech;
   @ViewChild('chekinSection') chekinSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   topHeight = 0;
@@ -325,7 +327,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   allLabels: any = [];
   voicedialogRef: any;
   addCustomerTooltip = '';
-  admin = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2555,7 +2556,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
               checkin_html += '</div>';
-              cordova.plugins.printer.print(checkin_html);
               // printWindow.document.write('<html><head><title></title>');
               // printWindow.document.write('</head><body >');
               // printWindow.document.write(checkin_html);
@@ -2566,6 +2566,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               // setTimeout(() => {
               //   printWindow.close();
               // }, 500);
+              cordova.plugins.printer.print(checkin_html);
             });
       });
   }
@@ -2588,12 +2589,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.bname = bprof.bn;
     setTimeout(() => {
       const printContent = document.getElementById('print-section');
-      // const params = [
-      //   'height=' + screen.height,
-      //   'width=' + screen.width,
-      //   'fullscreen=yes'
-      // ].join(',');
-      // const printWindow = window.open('', '', params);
+      const params = [
+        'height=' + screen.height,
+        'width=' + screen.width,
+        'fullscreen=yes'
+      ].join(',');
+      const printWindow = window.open('', '', params);
       let checkin_html = '';
       checkin_html += '<table style="width:100%;"><thead>';
       checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(checkinlist.date) + '<br/>';
@@ -2616,14 +2617,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
       checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
       checkin_html += '</tbody></table>';
-      cordova.plugins.printer.print(checkin_html);
-      // printWindow.document.write('<html><head><title></title>');
-      // printWindow.document.write('</head><body>');
-      // printWindow.document.write(checkin_html);
-      // printWindow.document.write('</body></html>');
-      // // this.showQR = false;
-      // printWindow.moveTo(0, 0);
-      // printWindow.print();
+      printWindow.document.write('<html><head><title></title>');
+      printWindow.document.write('</head><body>');
+      printWindow.document.write(checkin_html);
+      printWindow.document.write('</body></html>');
+      // this.showQR = false;
+      printWindow.moveTo(0, 0);
+      printWindow.print();
     });
   }
   smsCheckin() {

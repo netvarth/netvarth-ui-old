@@ -59,6 +59,7 @@ import { ProviderDataStorageService } from './ynw_provider/services/provider-dat
 import { JoyrideModule } from 'ngx-joyride';
 import { ShareService } from 'ngx-sharebuttons';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -77,14 +78,15 @@ export function init_app(globalService: GlobalService) {
     CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
-    ConsumerPaymentmodeComponent
+    ConsumerPaymentmodeComponent,
+    VoicecallDetailsSendComponent
   ],
   entryComponents: [
     SignUpComponent,
     LoginComponent,
     ConfirmBoxComponent,
     AddInboxMessagesComponent,
-    // VoicecallDetailsSendComponent,
+    VoicecallDetailsSendComponent,
     CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
