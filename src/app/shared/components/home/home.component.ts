@@ -170,7 +170,7 @@ export class HomeComponent implements OnInit {
     };
   }
   playvideoClicked() {
-    document.getElementById('vidwrap').innerHTML = '<iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/qF4gLhQW2CE?controls=1&rel=0&autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    document.getElementById('videowrap').innerHTML = '<iframe width="100%"  src="https://www.youtube-nocookie.com/embed/qF4gLhQW2CE?controls=1&rel=0&autoplay=1" height= "514px" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
   }
 
   setSystemDate() {

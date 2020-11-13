@@ -1,24 +1,31 @@
-<app-header [headerTitle]="" [includedfrom]="'phome'" id="pro_home" (jnav)="handleScroll($event)"></app-header>
+<!-- <app-header [headerTitle]="" [includedfrom]="'phome'" id="pro_home" (jnav)="handleScroll($event)"></app-header> -->
+<header>
+  <div class="container">
+    <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
+      <div class="lgo col-md-3 col-xs-5 pull-left">
+        <a routerLink="/"><img class="busN-logo" src="assets/images/jaldee-businesslogo.png" alt="Jaldee Logo"></a>
+      </div>
+    </div>
+  </div>
+</header>
 
 <section class="phome">
   <section class="banner_part">
     <div class="containerbanner">
-      <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
       <div class="row align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 mgn-up-50 no-padding">
-          <div class="col-md-5 col-lg-4 col-sm-12 col-xs-12 no-padding pull-right" style="display: flex;
-          flex-wrap: wrap;">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
             <form [formGroup]="loginForm" class="login-form" novalidate (ngSubmit)="loginForm.valid &&
-    onSubmit (loginForm.value)" *ngIf="step==1">
+    onSubmit (loginForm.value)">
 
               <div class="limiter col-lg-12 col-xl-12 col-md-12 no-padding">
                 <!-- <div class="banner-right"> -->
-                <div class="ynw-common-form-nm no-padding pull-right">
-                  <div class="wrap-login100 mgn-bt-30" >
+                <div class="ynw-common-form-nm no-padding">
+                  <div class="wrap-login100 mgn-bt-30 mgnauto">
                     <div class="login"><strong>Service Provider Login</strong></div>
                     <div class="wrap-input100 validate-input">
                       <div class="form-group">
-                          <!-- <div class="form-group mob-prefx mobile-field ">
+                        <!-- <div class="form-group mob-prefx mobile-field ">
                               <div style="display: flex;">
                                       <div class="input-group-prepend mob-prefix"  style="margin-bottom:6px;" >
                                           <span class="input-group-text" style="margin-top:auto;" id="">+91</span>
@@ -29,13 +36,12 @@
                            </mat-form-field>
                               </div>
                           </div> -->
-                          <mat-form-field >
-                            <input type="text"   matInput class="form-control" id="emailId" placeholder="Mobile/Email"
-                             formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
-                            </mat-form-field>
+                        <mat-form-field>
+                          <input type="text" matInput class="form-control" id="emailId" placeholder="Mobile/Email"
+                            formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
+                        </mat-form-field>
 
-                        <app-field-error-display
-                          [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                           errorMsg="please enter your Mobile/Email">
                         </app-field-error-display>
                         <!-- <span class="focus-input100" data-></span> -->
@@ -46,10 +52,9 @@
                         <input type="password" matInput class="form-control" id="password" placeholder="Password"
                           formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
                       </mat-form-field>
-                      <app-field-error-display
-                      [displayError]="fed_service.isFieldValid(loginForm,'password')"
-                      errorMsg="Password is required">
-                    </app-field-error-display>
+                      <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password')"
+                        errorMsg="Password is required">
+                      </app-field-error-display>
                       <a style="margin-top:30px;cursor: pointer;" class="forgotpass" (click)="doForgotPassword()">Forgot
                         Password ?</a>
                       <div class="container-login100-form-btn">
@@ -76,7 +81,7 @@
             </form>
           </div>
 
-          <div class="col-md-7 col-lg-8 col-sm-12 col-xs-12">
+          <!-- <div class="col-md-7 col-lg-8 col-sm-12 col-xs-12">
             <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-20 no-padding-small">
               <h1>Become Jaldee Service Provider&nbsp;</h1>
               <h3 class="mgn-up-20">You focus on serving people, we focus on giving you the affordable technology</h3>
@@ -84,8 +89,6 @@
             <div class="clearfix"></div>
             <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
               <div class="col-md-6 col-sm-12 col-xs-12 feature_part no-padding-small">
-                <!-- <span class="single_feature_icon">
-                    </span> -->
                 <div>
                   <div class="title">Jaldee QManager</div>
                   <p>One integrated queue system for walk-ins/ phone-ins and for online. QManager supports
@@ -94,8 +97,6 @@
                 </div>
               </div>
               <div class="col-md-6 col-sm-12 col-xs-12 feature_part no-padding-small">
-                <!-- <span class="single_feature_icon">
-                    </span> -->
                 <div>
                   <div class="title">Jaldee Online </div>
                   <p>Showcase your profile online, increase visibility and generate more
@@ -104,8 +105,6 @@
               </div>
               <div class="clearfix"></div>
               <div class="col-md-6 col-sm-12 col-xs-12 feature_part no-padding-small">
-                <!-- <span class="single_feature_icon">
-                    </span> -->
                 <div>
                   <div class="title">Jaldee PoS/Billing</div>
                   <p>Affordable cloud based PoS, supports billing, electronic receipts and
@@ -114,22 +113,20 @@
                 </div>
               </div>
               <div class="col-md-6 col-sm-12 col-xs-12 feature_part no-padding-small">
-                <!-- <span class="single_feature_icon">
-                    </span> -->
                 <div>
                   <div class="title"> Jaldee Appointment Manager</div>
                   <p>Schedule your appointments at ease. Let your consumers book appointments for the available time slots.</p>
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
   </section>
 
 
-  <div class="site-section" id="features-section">
+  <!-- <div class="site-section" id="features-section">
     <div class="container8">
       <div class="row mb-5 justify-content-center text-center" data-aos="fade-up">
         <div class="col-7 text-center  mb-5">
@@ -221,8 +218,6 @@
               <ul style="list-style-type:disc;">
                 <li>Monthly subscription plans: Pay as you use (Starting with free version) </li>
                 <li>No separate hardware required. Works even from your smartphone </li>
-                <!-- <li>No license contracts,
-              no long term commitments.</li> -->
               </ul>
             </div>
           </div>
@@ -270,7 +265,6 @@
                 <br>
                 Jaldee tracks consumers real-time location. Get the estimated time of arrival and plan accordingly.
               </p>
-              <!-- <a href="#" class="btn_2">Explore</a> -->
             </div>
           </div>
           <div class="col-md-6 col-lg-6">
@@ -296,7 +290,6 @@
                 Get online enquiries from consumers through Jaldee and give more awareness about your services.
                 Enable Jaldee Coupons and attract more consumers.
               </p>
-              <!-- <a href="#" class="btn_2">Explore</a> -->
             </div>
           </div>
           <div class="col-md-6 col-lg-6">
@@ -320,7 +313,6 @@
                 Reduce no show up by accepting prepayments.
                 Supports electronic receipts.
               </p>
-              <!-- <a href="#" class="btn_2">Explore</a> -->
             </div>
           </div>
           <div class="col-md-6 col-lg-6 col-sm-12">
@@ -347,8 +339,6 @@
                 Or if the staff is ready to show up for a few hours on her off day you can make the appointment slots available for that time. 
                 Track customers' live location to know the inflow before hand which gives you enough time to make preparations.
                   Appointment Manager makes it easy for you and your staff to be more productive without breaking a sweat.  </p>
-              <!-- <span class="comingsoon">Coming soon</span> <br> <br> -->
-              <!-- <a href="#" class="btn_2">Explore</a> -->
             </div>
           </div>
           <div class="col-md-6 col-lg-6 col-sm-12">
@@ -552,9 +542,9 @@
           <div class="col-xl-5 col-lg-6">
             <div class="app-caption">
               <div class="section-tittle section-tittle3">
-                <h2 style="color: whitesmoke;">Our App Available For Any Device Download now</h2>
-                <!-- <p>Download and use in any your own device</p> -->
-                <div class="app-btn">
+                <h2 style="color: whitesmoke;">Our App Available For Any Device Download now</h2>-->
+  <!-- <p>Download and use in any your own device</p> -->
+  <!--<div class="app-btn">
                   <a href="https://apps.apple.com/in/app/jaldee-for-business/id1475235232" class="app-btn1">
                     <img [lazySrc]="images.jaldee_playstore" lazySrcVisible="visible"
                       alt="Download Business app from Google Play"></a> &nbsp;
@@ -574,11 +564,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!--Scroll to top-->
-<div class="scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled}">
+  <!-- <div class="scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled}">
   <button (click)="scrollToTop()">
       <i class="fa fa-chevron-up"></i>
   </button>
 </div>
-  <app-footer [includedfrom]="'phome'"></app-footer>
+  <app-footer [includedfrom]="'phome'"></app-footer> -->

@@ -13,7 +13,7 @@
 						<a href="#"><img src="assets/images/home/applestore-icon.png" alt="Download from Apple Store" class="" /></a>
 					</div>
 					<div class="account-links">
-						<a class="cursor-pointer" (click)="providerLinkClicked()">Business Partner Zone</a>
+						<a class="cursor-pointer" href="https://business.jaldee.com/">Business Partner Zone</a>
 						<a class="login-link"><span class="cons_btn_login_top" (click)="doLogin('consumer')">Log in</span> / <span class="cons_btn_join_top" (click)="doSignup('consumer')">Sign up</span></a>
 					</div>
 				</div>
@@ -33,7 +33,7 @@
 						<span>Download Jaldee App</span>
 						<a href="http://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"
                         target="_blank"><img src="assets/images/home/playstore-icon.png" alt="Download from Google Play Store" class="" /></a>
-						<a href="#"><img src="assets/images/home/applestore-icon.png" alt="Download from Apple Store" class="" /></a>
+						<a href="https://apps.apple.com/in/app/jaldee-com/id1478246665"><img src="assets/images/home/applestore-icon.png" alt="Download from Apple Store" class="" /></a>
 					</div>
 				</div>
 			</div>
@@ -69,12 +69,13 @@
 			<div class="container">
 				<div class="row no-gutters">
 					<div class="col-lg-6 text-block">
-						<h3>Welcome to</h3>
+						<h3>Welcome to Welcome to Jaldee</h3>
 						<img src="assets/images/home/logo-blue.png" alt="Jaldee" class="img-fluid" />
 						<ul>
-							<li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets.</li>
-							<li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</li>
-							<li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</li>
+							<li>What is Jaldee? <br/> Jaldee is a platform for you to avail services. Our goal is to ensure you do this without having to wait in line. </li>
+							<li>What makes Jaldee different? <br/> Jaldee was built keeping you- the customer- in mind. <br/>
+							Therefore, Jaldee ensures you don't have to spend time waiting at the service center when you book an appointment.<br/>
+								When you book through Jaldee, Jaldee's highly effective alert system keeps you up-to-date with the status of your booking. Use Jaldee search to find what your looking for.</li>
 						</ul>
 					</div>
 					<div class="col-lg-6 image-block">
@@ -134,18 +135,25 @@
 			<div class="container">
 				<div class="section-header text-center">
 					<img src="assets/images/home/logo-blue.png" alt="Jaldee" />
-					<h2 class="section-title">Our Video</h2>
+					<h2 class="section-title">What is Jaldee?</h2>
+					<!-- <h2 class="section-title">Our Video</h2> -->
 				</div>
-				<div class="d-flex flex-wrap video-wrapper">
-					<div class="video-text-box">
+				<!-- <div class="d-flex flex-wrap video-wrapper"> -->
+					<!-- <div class="video-text-box">
 						<h2>Lorem Ipsum</h2>
 						<p>When you choose The Derby Hearing Centre you’re guaranteed an excellent service, whether you require wax removal or a new hearing aid. We take care of everything, ensuring that you’re able to hear in high definition. A 5 year warranty is available on premium hearing aids, and this also includes free batteries for two years. Trust in the skills of our specialists, and the state-of-the-art equipment that we use. Call us today for an excellent service, completely independent and we supply every hearing aid make and model available from the top manufactures.</p>
+					</div> -->
+					<div id="videowrap">
+						<div>
+						<img src="assets/images/home/video-poster.png" alt="Poster" class="jald-video-img"/>
+						</div>
+						<div class="play-btn-sec" style="height: 100px;"><span id="play-btn" (click)="playvideoClicked()"><img src="assets/images/home/video-play-icon.png" alt="Play" /></span></div>
 					</div>
-					<div class="video-box">
+					<!-- <div class="video-box">
 						<img src="assets/images/home/video-poster.png" alt="Poster" />
-						<span id="play-btn"><img src="assets/images/home/video-play-icon.png" alt="Play" /></span>
-					</div>
-				</div>
+						<span id="play-btn" (click)="playvideoClicked()"><img src="assets/images/home/video-play-icon.png" alt="Play" /></span>
+					</div> -->
+				<!-- </div> -->
 			</div>
 		</section>
 
@@ -190,7 +198,7 @@
 				<div class="section-header text-center">
 					<img src="assets/images/home/logo-blue.png" alt="Jaldee" />
 					<h2 class="section-title">Explore Services</h2>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+					<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> -->
 				</div>
 				<div id="services-grid" class="row">
 					<div class="col-lg-4 service">
@@ -200,7 +208,7 @@
 							</div>
 							<div class="service-overlay text-center">
 								<h3 class="service-title">Healthcare</h3>
-								<p>[doctors, dentists, labs, radiology, ayurvedic, naturopathy, homeopathy, Veterinary]</p>
+								<p>[Doctors, Dentists, Labs, Radiology, Ayurvedic, Naturopathy, homeopathy, Veterinary]</p>
 							</div>
 						</div>
 					</div>
@@ -222,7 +230,7 @@
 							</div>
 							<div class="service-overlay text-center">
 								<h3 class="service-title">Restaurants</h3>
-								<p>[Dine-in, takeaway]</p>
+								<p>[Dine-in, Takeaway]</p>
 							</div>
 						</div>
 					</div>
@@ -255,7 +263,7 @@
 							</div>
 							<div class="service-overlay text-center">
 								<h3 class="service-title">Religious, Vaastu & Astrology</h3>
-								<p>[Temples, Persists, Ceremonies, more]</p>
+								<p>[Temples, Priests, Ceremonies, more]</p>
 							</div>
 						</div>
 					</div>
@@ -267,11 +275,121 @@
 			<div class="container">
 				<div class="section-header text-center">
 					<img src="assets/images/home/logo-blue.png" alt="Jaldee" />
-					<h2 class="section-title">Client Reviews</h2>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+					<h2 class="section-title">Jaldee News</h2>
+					<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> -->
 				</div>
 				<owl-carousel [options]="carouselOne" id="reviews-carousel" [carouselClasses]="['owl-carousel', 'owl-theme']">
 					<div class="item review-card text-center">
+						<!-- <div class="customer-avatar">
+							<img src="assets/images/home/client.png" alt="client-avatar" />
+						</div> -->
+						<div class="customer-info">
+							<!-- <h4 class="name">John Smith</h4> -->
+							<h4 class="name">Jaldee Telehealth</h4>
+							<p class="position">&nbsp;</p>
+							<!-- <p class="position">Manager</p> -->
+						</div>
+						<!-- <div class="ratings">
+							<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
+							<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
+						</div> -->
+						<div class="review-text">
+							<p>Consult your doctor from anywhere. Visit <a href="https://business.jaldee.com/">telehealth.jaldee.com</a> to view our doctors and book a video consultation.</p>
+						</div>
+					</div>
+					<div class="item review-card text-center">
+						<!-- <div class="customer-avatar">
+							<img src="assets/images/home/client.png" alt="client-avatar" />
+						</div> -->
+						<div class="customer-info">
+							<!-- <h4 class="name">John Smith</h4> -->
+							<h4 class="name">Jaldee Blog</h4>
+							<p class="position">&nbsp;</p>
+							
+							<!-- <p class="position">Manager</p> -->
+						</div>
+						<!-- <div class="ratings">
+							<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
+							<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
+						</div> -->
+						<div class="review-text">
+							<p>Jaldee is proud to announce the launch of our new blog. Check it out! Visit <a href="https://blog.jaldee.com/">blog.jaldee.com</a>.</p>
+						</div>
+					</div>
+					<div class="item review-card text-center">
+						<!-- <div class="customer-avatar">
+							<img src="assets/images/home/client.png" alt="client-avatar" />
+						</div> -->
+						<div class="customer-info">
+							<!-- <h4 class="name">John Smith</h4> -->
+							<h4 class="name">Jaldee Business</h4>
+							<p class="position">&nbsp;</p>
+							<!-- <p class="position">Manager</p> -->
+						</div>
+						<!-- <div class="ratings">
+							<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
+							<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
+						</div> -->
+						<div class="review-text">
+							<p>Get your website and QR code online in minutes. Visit  <a href="https://business.jaldee.com/">business.jaldee.com</a> to get started.</p>
+						</div>
+					</div>
+					<div class="item review-card text-center">
+						<!-- <div class="customer-avatar">
+							<img src="assets/images/home/client.png" alt="client-avatar" />
+						</div> -->
+						<div class="customer-info">
+							<!-- <h4 class="name">John Smith</h4> -->
+							<h4 class="name">Jaldee Telehealth</h4>
+							<p class="position">&nbsp;</p>
+							<!-- <p class="position">Manager</p> -->
+						</div>
+						<!-- <div class="ratings">
+							<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
+							<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
+						</div> -->
+						<div class="review-text">
+							<p>Consult your doctor from anywhere. Visit <a href="https://telehealth.jaldee.com/">telehealth.jaldee.com</a> to view our doctors and book a video consultation.</p>
+						</div>
+					</div>
+					<div class="item review-card text-center">
+						<!-- <div class="customer-avatar">
+							<img src="assets/images/home/client.png" alt="client-avatar" />
+						</div> -->
+						<div class="customer-info">
+							<!-- <h4 class="name">John Smith</h4> -->
+							<h4 class="name">Jaldee Blog</h4>
+							<p class="position">&nbsp;</p>
+							
+							<!-- <p class="position">Manager</p> -->
+						</div>
+						<!-- <div class="ratings">
+							<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
+							<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
+						</div> -->
+						<div class="review-text">
+							<p>Jaldee is proud to announce the launch of our new blog. Check it out! Visit <a href="https://blog.jaldee.com/">blog.jaldee.com</a>.</p>
+						</div>
+					</div>
+					<div class="item review-card text-center">
+						<!-- <div class="customer-avatar">
+							<img src="assets/images/home/client.png" alt="client-avatar" />
+						</div> -->
+						<div class="customer-info">
+							<!-- <h4 class="name">John Smith</h4> -->
+							<h4 class="name">Jaldee Business</h4>
+							<p class="position">&nbsp;</p>
+							<!-- <p class="position">Manager</p> -->
+						</div>
+						<!-- <div class="ratings">
+							<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
+							<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
+						</div> -->
+						<div class="review-text">
+							<p>Get your website and QR code online in minutes. Visit  <a href="https://business.jaldee.com/">business.jaldee.com</a> to get started.</p>
+						</div>
+					</div>
+					<!-- <div class="item review-card text-center">
 						<div class="customer-avatar">
 							<img src="assets/images/home/client.png" alt="client-avatar" />
 						</div>
@@ -366,7 +484,7 @@
 						<div class="review-text">
 							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
 						</div>
-					</div>
+					</div> -->
 				</owl-carousel>
 			</div>
 		</section>
@@ -487,9 +605,6 @@
 				<div class="row align-items-center justify-content-between">
 					<div class="footer-bottom--links col-auto">
 						<a href="#">Privacy Policy</a><span class="separator">|</span><a href="#">Privacy Shield Privacy Notice</a><span class="separator">|</span><a href="#">Site Map</a>
-					</div>
-					<div class="site-info col-auto">
-						@Designed by Craftive Logos.
 					</div>
 				</div>
 			</div>
