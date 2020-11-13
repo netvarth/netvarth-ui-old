@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -223,6 +223,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     noPhoneError = false;
     noEmailError = false;
     noCallingError = false;
+    @ViewChild('imagefile') fileInput: ElementRef;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -506,13 +507,13 @@ export class ConsumerAppointmentComponent implements OnInit {
                 serv = this.servicesjson[i];
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
-                       if (this.type === 'reschedule') {
-                        console.log(this.appointment.virtualService);
-                        this.callingModes = this.appointment.virtualService['WhatsApp'];
-                        this.changePhno = true;
-                       } else {
-                        this.callingModes = this.customer_data.primaryPhoneNumber;
-                       }
+                        if (this.type === 'reschedule') {
+                            console.log(this.appointment.virtualService);
+                            this.callingModes = this.appointment.virtualService['WhatsApp'];
+                            this.changePhno = true;
+                        } else {
+                            this.callingModes = this.customer_data.primaryPhoneNumber;
+                        }
                     }
                 }
                 break;
@@ -1390,6 +1391,8 @@ export class ConsumerAppointmentComponent implements OnInit {
 
     deleteTempImage(index) {
         this.selectedMessage.files.splice(index, 1);
+        this.selectedMessage.base64.splice(index, 1);
+        this.fileInput.nativeElement.value = '';
     }
 
     consumerNoteAndFileSave(uuid) {
