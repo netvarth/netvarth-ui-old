@@ -543,8 +543,7 @@
                         <td class="parent-selection parent-title td-one">
                           <div class="pull-left mgn-lt-5 date">
                             <span class="greenc bold font11">{{getSingleTime(appt.time)}}</span>
-                            <div *ngIf="this.selQIds.length > 1">
-                              S{{getScheduleIndex(apptByTimeSlot[appt.time][0].schedule.id) + 1}}</div>
+                            <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(apptByTimeSlot[appt.time][0].schedule.id) + 1}}</div>
                           </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                             class="bold pull-left mgn-lt-5 name font11"
@@ -711,7 +710,7 @@
                         </td>
                       </ng-container>
                       <ng-container *ngIf="!apptByTimeSlot[appt.time]">
-                        <td class="chkWth">
+                        <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                         </td>
                         <td class="parent-selection parent-title td-one">
                           <div class="pull-left mgn-lt-5 date">
