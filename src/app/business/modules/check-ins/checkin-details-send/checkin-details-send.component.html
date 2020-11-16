@@ -45,6 +45,7 @@
                     [ngModelOptions]="{standalone: true}">Email
                 </mat-checkbox>
             </div>
+            <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
         </div>
         <div style="color: red;" *ngIf = " !consumer_email && (!phone || phone === 'null')">{{SEND_MESSAGE}}</div>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>

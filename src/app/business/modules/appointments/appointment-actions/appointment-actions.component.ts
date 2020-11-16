@@ -68,6 +68,7 @@ export class AppointmentActionsComponent implements OnInit {
     customer_label = '';
     showmrrx = false;
     pastDate;
+    subdomain;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -88,6 +89,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        this.subdomain = user.subSector;
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
     setData() {

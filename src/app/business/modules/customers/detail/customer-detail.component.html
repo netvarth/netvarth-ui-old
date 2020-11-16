@@ -11,16 +11,16 @@
         </h5>
     </div>
 </section>
-<section *ngIf="customerAction === 'inbox' && !showMoreHistory">
+<section *ngIf="customerAction === 'inbox'">
     <div class="card title-gb">
-        <h5 class="mgn-up-10" *ngIf="customerAction === 'inbox'">
+        <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor"
                 (click)="goBackfromAction()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Communication history
         </h5>
     </div>
 </section>
-<section *ngIf="showMoreHistory">
+<section *ngIf="showMoreHistory && customerAction === ''">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor"
@@ -280,12 +280,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #visitMenu="matMenu">
-                                                            <button class="recent" *ngIf="domain === 'healthCare'"
+                                                            <button class="recent" *ngIf="domain === 'healthCare' && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                                 mat-menu-item (click)="medicalRecord(visit)">
                                                                 <i class="medicalrecord-icon"></i>
                                                                 MedicalRecord
                                                             </button>
-                                                            <button class="recent" *ngIf="domain === 'healthCare'"
+                                                            <button class="recent" *ngIf="domain === 'healthCare' && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                                 mat-menu-item (click)="prescription(visit)">
                                                                 <i class="mr-rx-icon"></i>
                                                                 Prescription
@@ -331,12 +331,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #visitMenu="matMenu">
-                                                            <button class="recent" *ngIf="domain === 'healthCare'"
+                                                            <button class="recent" *ngIf="domain === 'healthCare' && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                                 mat-menu-item (click)="medicalRecord(visit)">
                                                                 <i class="medicalrecord-icon"></i>
                                                                 MedicalRecord
                                                             </button>
-                                                            <button class="recent" *ngIf="domain === 'healthCare'"
+                                                            <button class="recent" *ngIf="domain === 'healthCare' && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                                 mat-menu-item (click)="prescription(visit)">
                                                                 <i class="mr-rx-icon"></i>
                                                                 Prescription
@@ -496,12 +496,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #visitMenu="matMenu">
-                                                        <button class="recent" *ngIf="domain === 'healthCare'"
+                                                        <button class="recent" *ngIf="domain === 'healthCare' && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                             mat-menu-item (click)="medicalRecord(visit)">
                                                             <i class="medicalrecord-icon"></i>
                                                             MedicalRecord
                                                         </button>
-                                                        <button class="recent" *ngIf="domain === 'healthCare'"
+                                                        <button class="recent" *ngIf="domain === 'healthCare' && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                             mat-menu-item (click)="prescription(visit)">
                                                             <i class="mr-rx-icon"></i>
                                                             Prescription
@@ -547,12 +547,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #visitMenu="matMenu">
-                                                        <button class="recent" *ngIf="domain === 'healthCare'"
+                                                        <button class="recent" *ngIf="domain === 'healthCare' && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                             mat-menu-item (click)="medicalRecord(visit)">
                                                             <i class="medicalrecord-icon"></i>
                                                             MedicalRecord
                                                         </button>
-                                                        <button class="recent" *ngIf="domain === 'healthCare'"
+                                                        <button class="recent" *ngIf="domain === 'healthCare' && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                             mat-menu-item (click)="prescription(visit)">
                                                             <i class="mr-rx-icon"></i>
                                                             Prescription

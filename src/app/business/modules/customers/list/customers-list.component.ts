@@ -87,6 +87,7 @@ export class CustomersListComponent implements OnInit {
   customerlist: any;
   customerDetails: any;
   voicedialogRef: any;
+  subdomain;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -110,6 +111,7 @@ export class CustomersListComponent implements OnInit {
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.subdomain = user.subSector;
     this.getCustomersList(true);
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');

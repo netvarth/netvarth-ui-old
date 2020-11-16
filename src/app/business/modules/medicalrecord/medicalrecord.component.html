@@ -29,7 +29,7 @@
           <button *ngIf="dateShow">{{visitdate }} &nbsp;</button>
           <button *ngIf="isShowList" (click)="VisitList()">{{visitdate}} &nbsp; <i class="arrow down"></i></button>
           &nbsp;
-          <span  *ngIf="mrNumber" class="div-outline custId-cursor pull-right mr-20" (click)="activitylogs()"><u style="color: blue;">Activity Logs</u></span>
+          <span *ngIf="mrId !== 0"  class="div-outline custId-cursor pull-right mr-20" (click)="activitylogs()"><u style="color: blue;">Activity Logs</u></span>
           <!-- <span>(Recent visit)</span> -->
         </p>
         <hr>
@@ -60,7 +60,7 @@
         <hr>
       </div>
       <div class="clearfix"></div>
-      <div class="content w-manager settings comn-cls">
+      <div class="content w-manager settings ">
         <div style="padding: 5px;">
           <nav mat-tab-nav-bar>
             <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link"

@@ -3,6 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-checkin-details-send',
@@ -41,16 +43,25 @@ export class CheckinDetailsSendComponent implements OnInit {
     settings: any = [];
     showToken = false;
   iconClass: string;
+  smsCredits;
+  smsWarnMsg: string;
+  is_smsLow = false;
+  corpSettings: any;
+  addondialogRef: any;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
+        private provider_servicesobj: ProviderServices,
         private shared_functions: SharedFunctions,
+        private dialog: MatDialog,
         public dialogRef: MatDialogRef<CheckinDetailsSendComponent>) {
             this.customer_label = this.shared_functions.getTerminologyTerm('customer');
             this.uuid = this.data.uuid;
             this.chekintype = this.data.chekintype;
         }
    ngOnInit() {
+     console.log('checkindetail send');
+    this.getSMSCredits();
     this.getProviderSettings();
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.bname = this.data.qdata.providerAccount.businessName;
@@ -185,6 +196,46 @@ export class CheckinDetailsSendComponent implements OnInit {
               );
           }
       }
+    }
+
+    getSMSCredits() {
+      this.provider_services.getSMSCredits().subscribe(data => {
+          this.smsCredits = data;
+          if (this.smsCredits < 5) {
+            this.is_smsLow = true;
+            this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+            this.getLicenseCorpSettings();
+          } else {
+            this.is_smsLow = false;
+          }
+      });
+    }
+    getLicenseCorpSettings() {
+      this.provider_servicesobj.getLicenseCorpSettings().subscribe(
+          (data: any) => {
+              this.corpSettings = data;
+          }
+      );
+  }
+    gotoSmsAddon() {
+      this.dialogRef.close();
+      if (this.corpSettings && this.corpSettings.isCentralised) {
+        this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+    } else {
+        this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+            width: '50%',
+            data: {
+                type: 'addons'
+            },
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true
+        });
+        this.addondialogRef.afterClosed().subscribe(result => {
+          if (result) {
+           this.getSMSCredits();
+          }
+        });
+    }
     }
   }
 

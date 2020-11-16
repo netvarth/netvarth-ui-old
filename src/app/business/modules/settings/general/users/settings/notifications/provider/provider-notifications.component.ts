@@ -4,6 +4,8 @@ import { SharedFunctions } from '../../../../../../../../shared/functions/shared
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
+import { MatDialog } from '@angular/material/dialog';
+import { AddproviderAddonComponent } from '../../../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -93,10 +95,17 @@ export class ProviderNotificationUserComponent implements OnInit {
   settings: any = [];
   showToken = false;
   api_loading = true;
+  smsCredits;
+  is_smsLow = false;
+  smsWarnMsg: string;
+  corpSettings: any;
+  addondialogRef: any;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
     private activatedRoot: ActivatedRoute,
+    private provider_servicesobj: ProviderServices,
+    private dialog: MatDialog,
     public provider_services: ProviderServices) {
     this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
   }
@@ -115,6 +124,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.getNotificationList();
     this.getGlobalSettingsStatus();
     this.getProviderSettings();
+    this.getSMSCredits();
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -964,5 +974,42 @@ export class ProviderNotificationUserComponent implements OnInit {
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
+  }
+
+  getSMSCredits() {
+    this.provider_services.getSMSCredits().subscribe(data => {
+        this.smsCredits = data;
+        if (this.smsCredits < 5) {
+          this.is_smsLow = true;
+          this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.getLicenseCorpSettings();
+        }
+    });
+  }
+  getLicenseCorpSettings() {
+    this.provider_servicesobj.getLicenseCorpSettings().subscribe(
+        (data: any) => {
+            this.corpSettings = data;
+        }
+    );
+}
+  gotoSmsAddon() {
+    if (this.corpSettings && this.corpSettings.isCentralised) {
+      this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  } else {
+      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+          width: '50%',
+          data: {
+              type: 'addons'
+          },
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true
+      });
+      this.addondialogRef.afterClosed().subscribe(result => {
+        if (result) {
+         this.getSMSCredits();
+        }
+      });
+  }
   }
 }

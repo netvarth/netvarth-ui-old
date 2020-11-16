@@ -13031,3 +13031,28 @@ hr {
   content: url(../images/walkin.svg);
   width: 25px;
 }
+@media only screen and (max-width: 767px) {
+  .mgn-top-10 {
+    margin-top: 10px !important;
+  }
+}
+.mgn-m-lt-15 {
+  margin-left: -15px !important;
+}
+@media only screen and (max-width: 767px){
+.table-outer .drugdetailslist td:before {
+  width: 50% !important;
+}
+}
+
+.sms_credit_warn {
+  color: red;
+  font-size: 0.7rem !important;
+  /* margin-top: 10px; */
+}
+.bill-icon-history {
+  content: url(../images/dashboard-icons/Bill-01-01.svg);  
+  position: relative;
+  padding-right: 1px;
+  width: 20px;
+}

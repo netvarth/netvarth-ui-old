@@ -8,6 +8,9 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddproviderAddonComponent } from '../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 @Component({
   selector: 'app-add-inbox-messages',
   templateUrl: './add-inbox-messages.component.html'
@@ -46,6 +49,11 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   SEND_MESSAGE = '';
   customer_label = '';
   phone_history: any;
+  smsCredits: any;
+  smsWarnMsg: string;
+  is_smsLow = false;
+  corpSettings: any;
+  addondialogRef: any;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -53,7 +61,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedfunctionObj: SharedFunctions,
-    public common_datastorage: CommonDataStorageService
+    public common_datastorage: CommonDataStorageService,
+    public provider_services: ProviderServices,
+    private provider_servicesobj: ProviderServices,
+    private dialog: MatDialog
   ) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     this.typeOfMsg = this.data.typeOfMsg;
@@ -95,8 +106,12 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
+    console.log('Inside add Inbox');
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.createForm();
+    if (this.source === 'provider-waitlist') {
+      this.getSMSCredits();
+    }
   }
   ngOnDestroy() {
   }
@@ -465,5 +480,45 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       delete this.activeImageCaption[index];
       this.showCaptionBox[index] = false;
     }
+  }
+
+  getSMSCredits() {
+    this.provider_services.getSMSCredits().subscribe(data => {
+        this.smsCredits = data;
+        if (this.smsCredits < 5) {
+          this.is_smsLow = true;
+          this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.getLicenseCorpSettings();
+        } else {
+          this.is_smsLow = false;
+        }
+    });
+  }
+  getLicenseCorpSettings() {
+    this.provider_servicesobj.getLicenseCorpSettings().subscribe(
+        (data: any) => {
+            this.corpSettings = data;
+        }
+    );
+}
+  gotoSmsAddon() {
+    this.dialogRef.close();
+    if (this.corpSettings && this.corpSettings.isCentralised) {
+      this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  } else {
+      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+          width: '50%',
+          data: {
+              type: 'addons'
+          },
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true
+      });
+      this.addondialogRef.afterClosed().subscribe(result => {
+        if (result) {
+         this.getSMSCredits();
+        }
+      });
+  }
   }
 }

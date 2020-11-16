@@ -42,8 +42,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   constructor(private router: Router, private shared_functions: SharedFunctions,
     public shared_services: SharedServices, private dialog: MatDialog) { }
 
-
   private _refreshSubject: Subject<any> = new Subject<any>();
+  private _maintananceSubject: Subject<any> = new Subject<any>();
 
   // private _ifSessionExpiredN() {
   //   this._refreshSubject.subscribe({
@@ -104,7 +104,21 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     }
     return this._refreshSubject;
   }
-
+  private _ifMaintenanceOn() {
+    this._maintananceSubject.subscribe ({
+      complete: () => {
+        this._maintananceSubject = new Subject<any>();
+      }
+    });
+    if (this._maintananceSubject.observers.length === 1) {
+      this.shared_functions.callMaintanance().then(
+        (refreshSubject: any) => {
+          this._maintananceSubject.next(refreshSubject);
+        }
+      );
+    }
+    return this._maintananceSubject;
+  }
   private _checkSessionExpiryErr(error: HttpErrorResponse): boolean {
     return (
       error.status &&
@@ -112,6 +126,12 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     );
   }
 
+  private _checkMaintanance(error: HttpErrorResponse): boolean {
+    return (
+      error.status &&
+      error.status === 405
+    );
+  }
   private _handleErrors(error: HttpErrorResponse): boolean {
     return;
   }
@@ -176,22 +196,24 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                   return next.handle(this.updateHeader(req, url));
                 })
               );
-            } else if (error.status === 405) {
-              // this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-              const dialogRef = this.dialog.open(MaintenanceMsgComponent, {
-                width: '50%',
-                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-                disableClose: true,
-                data: {
-                  'message': error.error
-                }
-              });
-              dialogRef.afterClosed().subscribe(result => {
-                this.router.navigate(['/']);
-              });
-              return EMPTY;
-              // this.router.navigate(['/maintenance']);
-              // return throwError(error);
+            } else if (this._checkMaintanance(error)) {
+              return this._ifMaintenanceOn().pipe(
+                switchMap(() => {
+                  const dialogRef = this.dialog.open(MaintenanceMsgComponent, {
+                    width: '40%',
+                    panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+                    disableClose: true,
+                    data: {
+                      'message': error.error
+                    }
+                  });
+                  dialogRef.afterClosed().subscribe(result => {
+                    window.location.reload();
+                    // this.router.navigate(['/']);
+                  });
+                  return EMPTY;
+                })
+              );
             } else if (error.status === 0) {
                 retry(2),
                 this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });

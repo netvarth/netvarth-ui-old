@@ -49,6 +49,13 @@ export class SharedFunctions {
       );
   }
 
+  callMaintanance () {
+    const promise = new Promise((resolve) => {
+      resolve();
+    });
+    return promise;
+  }
+
   doLogout() {
     const promise = new Promise((resolve, reject) => {
       if (localStorage.getItem('isBusinessOwner') === 'true') {

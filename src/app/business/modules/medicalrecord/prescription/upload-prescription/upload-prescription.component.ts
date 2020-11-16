@@ -48,6 +48,7 @@ export class UploadPrescriptionComponent implements OnInit {
   navigationParams: any;
   navigationExtras: NavigationExtras;
   removeprescriptiondialogRef;
+  imagesviewdialogRef;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
@@ -94,7 +95,7 @@ export class UploadPrescriptionComponent implements OnInit {
         this.uploadImages = data;
         console.log(data);
         for (const pic of this.uploadImages) {
-          const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true };
+          const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true ,'url':pic.url};
           this.selectedMessage.files.push(imgdet);
         }
         console.log(this.selectedMessage.files);
@@ -131,7 +132,44 @@ export class UploadPrescriptionComponent implements OnInit {
     return imgsize;
   }
 
-
+  // showimgPopup(file,index) {
+  //   console.log(index);
+  //   console.log(file);
+  //   if (file.view) {
+  //     file.title = 'Uploaded Prescription';
+  //     this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
+  //       width: '50%',
+  //       panelClass: ['popup-class', 'commonpopupmainclass'],
+  //       disableClose: true,
+  //       data: file,
+  //     });
+  //     this.imagesviewdialogRef.afterClosed().subscribe(result => {
+  //       if (result) {
+  //         console.log(result);
+  //       }
+  //     });
+  //   } else {
+  //     console.log("in else");
+  //     const fileselected = { url: '', title: '' } ;
+  //     //fileselected.url 
+  //    // const blob = this.sharedfunctionObj.b64toBlobforSign() ;
+  //    fileselected.url = this.selectedMessage.base64[0];
+  //     fileselected.title = 'Upload Prescription';
+  //     console.log(fileselected);
+  //     this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
+  //       width: '50%',
+  //       panelClass: ['popup-class', 'commonpopupmainclass'],
+  //       disableClose: true,
+  //       data: fileselected,
+  //     });
+  //     this.imagesviewdialogRef.afterClosed().subscribe(result => {
+  //       if (result) {
+  //         console.log(result);
+  //       }
+  //     });
+  //   }
+    
+  // }
 
  
 
@@ -220,6 +258,7 @@ export class UploadPrescriptionComponent implements OnInit {
               });
         } else {
           this.selectedMessage.files.splice(index, 1);
+          this.selectedMessage.base64.splice(index, 1);
         }
       }
     });

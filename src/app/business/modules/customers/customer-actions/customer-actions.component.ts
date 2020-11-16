@@ -13,6 +13,7 @@ import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.co
 export class CustomerActionsComponent implements OnInit {
     domain;
     customerDetails: any = [];
+    subdomain;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         private shared_functions: SharedFunctions, private router: Router,
         public dialog: MatDialog, private provider_shared_functions: ProviderSharedFuctions,
@@ -23,6 +24,7 @@ export class CustomerActionsComponent implements OnInit {
         console.log(this.customerDetails);
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        this.subdomain = user.subSector;
     }
     prescription() {
         this.closeDialog();

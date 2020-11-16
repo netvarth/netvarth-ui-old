@@ -131,7 +131,7 @@
                 <div class="icon-text">View Details</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="showLabels()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
                 <div class="icon-text">Labels</div>
@@ -152,7 +152,7 @@
                 <div class="icon-text">Reschedule</div>
             </div>
         </div>
-        <div *ngIf="domain === 'healthCare' && !data.multiSelection &&  showmrrx" class="action-box pointer-cursor"
+        <div *ngIf="domain === 'healthCare' && !data.multiSelection &&  showmrrx && subdomain !=='laboratory' && subdomain !=='pharmacy'" class="action-box pointer-cursor"
             (click)="medicalRecord()">
             <div class="action-box-sub">
                 <span class="medicalrecord-icon"></span>
@@ -160,7 +160,7 @@
                 <!-- <div *ngIf="checkin.mrId !== 0" class="icon-text">View Medical Record</div> -->
             </div>
         </div>
-        <div *ngIf="domain === 'healthCare' && !data.multiSelection && showmrrx" class="action-box pointer-cursor"
+        <div *ngIf="domain === 'healthCare' && !data.multiSelection && showmrrx && subdomain !=='laboratory' && subdomain !=='pharmacy'" class="action-box pointer-cursor"
             (click)="prescription()">
             <div class="action-box-sub">
                 <span class="mr-rx-icon"></span>

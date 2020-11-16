@@ -112,6 +112,7 @@ export class CustomerDetailComponent implements OnInit {
     selectedDetailsforMsg: any = [];
     uid;
     customernotes = '';
+    subdomain;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -129,6 +130,7 @@ export class CustomerDetailComponent implements OnInit {
         this.activated_route.queryParams.subscribe(qparams => {
             const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
             this.domain = user.sector;
+            this.subdomain = user.subSector;
             this.source = qparams.source;
             if (qparams.uid) {
                 this.uid = qparams.uid;
@@ -870,7 +872,7 @@ export class CustomerDetailComponent implements OnInit {
             }
         });
     }
-    goBackfromAction(source?) {
+    goBackfromAction() {
         this.customerAction = '';
     }
     showMore(type) {

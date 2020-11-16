@@ -35,8 +35,8 @@ export class ShareRxComponent implements OnInit {
   splname: any;
   Schedulestime: any;
   Scheduleetime: any;
-  sms = true;
-  email = true;
+  sms = false;
+  email = false;
   chekintype: any;
   consumer_fname: any;
   consumer_lname: any;
@@ -49,7 +49,7 @@ export class ShareRxComponent implements OnInit {
   SEND_MESSAGE = '';
   settings: any = [];
   showToken = false;
-  pushnotify = true;
+  pushnotify = false;
   disableButton;
   sharewith;
   showcustomId = false;
@@ -75,7 +75,11 @@ export class ShareRxComponent implements OnInit {
   curDate = new Date();
   accountType: any;
   userbname: any;
-  loading=true;
+  loading = true;
+  showthirdparty = false;
+  thirdpartyphone = '';
+  thirdpartyemail = '';
+  sharebtnloading = false;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -90,7 +94,7 @@ export class ShareRxComponent implements OnInit {
     this.provider_user_Id = this.medicalService.getDoctorId();
     this.mrId = this.data.mrId;
     this.type = this.data.type;
-    this.patientId=this.data.patientId;
+    this.patientId = this.data.patientId;
     this.getPatientDetails(this.patientId);
 
 
@@ -101,7 +105,7 @@ export class ShareRxComponent implements OnInit {
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
     this.sharewith = 0;
-    this.msgreceivers = [{ 'id': 0, 'name': 'Patient' }];
+    this.msgreceivers = [{ 'id': 0, 'name': 'Patient' },{ 'id': 1, 'name': 'Thirdparty' }];
     this.createForm();
     this.getMrprescription();
     this.getBussinessProfileApi();
@@ -116,19 +120,18 @@ export class ShareRxComponent implements OnInit {
     this.amForm = this.fb.group({
       message: ['', Validators.compose([Validators.required])]
     });
-
+    
   }
   back() {
     this.dialogRef.close();
   }
-  getPatientDetails(uid){
+  getPatientDetails(uid) {
     const filter = { 'id-eq': uid };
     this.provider_services.getCustomer(filter)
       .subscribe(
         (data: any) => {
           const response = data;
           console.log(response);
-          this.loading =false;
           this.customerDetail = response[0];
            if (this.customerDetail.email) {
               this.email_id = this.customerDetail.email;
@@ -141,6 +144,7 @@ export class ShareRxComponent implements OnInit {
 }
   onSubmit(formdata) {
     this.disable = true;
+    this.sharebtnloading = true;
     this.resetApiErrors();
     const vwofrx = document.getElementById('sharerxview');
     let rxview = '';
@@ -152,29 +156,74 @@ export class ShareRxComponent implements OnInit {
     console.log(formdata);
     console.log(this.sharewith);
     console.log(this.customid);
-    if (this.sharewith !== 0 && this.customid === '') {
-      this.api_error = 'Custom id cannot be empty';
-      return;
+    if (this.sharewith !== 0 ) {
+      if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
+        this.api_error = 'Please enter a phone number or email';
+        this.disable = false;
+        this.sharebtnloading = false;
+                return;
+      }
+      if (this.thirdpartyphone !== '') {
+        const curphone = this.thirdpartyphone;
+        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+        const result = pattern.test(curphone);
+        if (!result) {
+          this.api_error = this.shared_functions.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID');
+          // 'Please enter a valid mobile phone number';
+          this.disable = false;
+          this.sharebtnloading = false;
+          return;
+        }
+        const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        const result1 = pattern1.test(curphone);
+        if (!result1) {
+          this.api_error = this.shared_functions.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS');
+          // 'Mobile number should have 10 digits';
+          this.disable = false;
+          this.sharebtnloading = false;
+          return;
+        }
+      }
+      if (this.thirdpartyemail !== '') {
+        const curemail = this.thirdpartyemail.trim();
+        const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+        const result2 = pattern2.test(curemail);
+        if (!result2) {
+          this.api_error = this.shared_functions.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID');
+          // 'Please enter a valid email id';
+          this.disable = false;
+          this.sharebtnloading = false;
+          return;
+        }
+      }
+    }
+    if (this.sharewith === 0 ) {
+      if (!this.sms && !this.email && !this.pushnotify) {
+        this.api_error = 'share via options are not selected';
+        this.disable = false;
+        this.sharebtnloading = false;
+        return;
+      }
     }
     if (this.type === 'adddrug') {
-      if (this.sharewith !== 0 && this.customid !== '') {
+      if (this.sharewith !== 0 ) {
         const passData = {
-          'customId': this.customid,
           'message': formdata.message,
           'html': rxview,
-          'medium': {
-            'email': this.email,
-            'sms': this.sms,
-            'pushNotification': this.pushnotify
+          'shareThirdParty': {
+            'phone': this.thirdpartyphone,
+            'email': this.thirdpartyemail
           }
         };
-        this.provider_services.shareRxforProvider(this.mrId, passData)
+        this.provider_services.shareRxforThirdparty(this.mrId, passData)
           .subscribe((data) => {
             this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.sharebtnloading = false;
             this.dialogRef.close();
           }, error => {
             this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.disable = false;
+            this.sharebtnloading = false;
           });
 
       } else if (this.sharewith === 0) {
@@ -190,31 +239,33 @@ export class ShareRxComponent implements OnInit {
         this.provider_services.shareRx(this.mrId, passData)
           .subscribe((data) => {
             this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.sharebtnloading = false;
             this.dialogRef.close();
           }, error => {
             this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.disable = false;
+            this.sharebtnloading = false;
           });
       }
     } else {
-      if (this.sharewith !== 0 && this.customid !== '') {
+      if (this.sharewith !== 0 ) {
         const passData = {
-          'customId': this.customid,
           'message': formdata.message,
           'html': '',
-          'medium': {
-            'email': this.email,
-            'sms': this.sms,
-            'pushNotification': this.pushnotify
+          'shareThirdParty': {
+            'phone': this.thirdpartyphone,
+            'email': this.thirdpartyemail
           }
         };
-        this.provider_services.shareRxforProvider(this.mrId, passData)
+        this.provider_services.shareRxforThirdparty(this.mrId, passData)
           .subscribe((data) => {
             this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.sharebtnloading = false;
             this.dialogRef.close();
           }, error => {
             this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.disable = false;
+            this.sharebtnloading = false;
           });
 
       } else if (this.sharewith === 0) {
@@ -231,21 +282,24 @@ export class ShareRxComponent implements OnInit {
           .subscribe((data) => {
             this.shared_functions.openSnackBar('Prescription shared successfully');
             this.dialogRef.close();
+            this.sharebtnloading = false;
           }, error => {
             this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.disable = false;
+            this.sharebtnloading = false;
           });
       }
     }
   }
   onUserSelect(event) {
+    this.resetApiErrors();
     this.customid = '';
     console.log(event);
     console.log(this.sharewith);
     if (event.value !== 0) {
-      this.showcustomId = true;
+      this.showthirdparty = true;
     } else {
-      this.showcustomId = false;
+      this.showthirdparty = false;
       // if (this.customerDetail.email) {
       //   this.email_id = this.customerDetail.email;
       // }
@@ -337,6 +391,7 @@ export class ShareRxComponent implements OnInit {
         data => {
           this.bdata = data;
           console.log(this.bdata);
+          this.loading = false;
           this.bname = this.bdata.businessName;
           this.address = this.bdata.baseLocation.address;
           this.mobile = this.bdata.accountLinkedPhNo;

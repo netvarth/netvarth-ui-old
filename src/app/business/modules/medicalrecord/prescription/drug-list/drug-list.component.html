@@ -29,10 +29,13 @@
                           </div>
                           <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <ng-container *ngIf="!loading">
-
- <div class="pad-20 table-responsive" *ngIf="drugList.length>0">
+  <div class="w-dta" >
+    <div class="row">
+        <div class="copy">
+            <div class="table-outer q-itm">
+ <div class="drugdetailslist pad-20 " *ngIf="drugList.length>0">
   <h5> Medicines added to the prescription</h5>
-<table class="table table-bordered" >
+<table class="table" >
     <thead>
     <tr >
       <th>
@@ -57,68 +60,62 @@
   </thead>
     <tbody>
       <tr *ngFor="let drug of drugList; let i = index;" >
-        <td >
+        <td data-title="Medicine">
           {{drug.medicine_name}}
         </td>
-        <td >
+        <td data-title="Duration(days)">
           {{drug.duration}}
         </td>
-        <td>
+        <td data-title="Dosage">
               {{drug.dosage}}
            </td>
-        <td>
+        <td data-title="Frequency">
                {{drug.frequency}}
             </td>
-            <td  *ngIf="instrutionType(drug.instructions) === 0">
+            <td data-title="Instructions" *ngIf="instrutionType(drug.instructions) === 0">
               <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u style="color: #3c8dbc ; font-size: smaller;cursor: pointer;">more</u></span></span>
              </td>
-             <td *ngIf="instrutionType(drug.instructions) === 1">
+             <td data-title="Instructions" *ngIf="instrutionType(drug.instructions) === 1">
                {{drug.instructions}}
            </td>
-         <td>
+         <!-- <td>
           <span (click)="deleteDrug(i)"> <i class="fa fa-trash" aria-hidden="true"></i></span> &nbsp;<span (click)="editDrug(drug,i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-         </td>
+         </td> -->
+         <td class="action">
+          <span class="mbt">
+              <button type="button" mat-icon-button
+                  [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                  <button type="button" (click)="editDrug(drug,i)" mat-menu-item
+                     >
+                      <i class="icon-edit"></i>
+                      edit
+                  </button>
+                  
+                  <button type="button" (click)="deleteDrug(i)"
+                      mat-menu-item>
+                      <i class="icon-delete"></i>
+                      delete
+                  </button>
+              </mat-menu>
+          </span>
+          <span class="mbt-mobile-show">
+              <button class="editcls" type="button"
+                  (click)="editDrug(drug,i)">edit</button>
+             
+              <button class="deletecls" type="button"
+                  (click)="deleteDrug(i)">delete</button>
+          </span>
+      </td>
 
       </tr>
     </tbody>
   </table>
   <span (click)="addDrug()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Add more</u></span>
 
-  <!-- <div class="mgn-up-10">
-      <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0"><span class="red">You never uploaded digital signature,</span><a class="lnk action pointer-cursor"
-          (click)="imagefile.click()"><input #imagefile type="file"
-              accept="/*;capture=camera" style="display:none;" multiple
-              (change)="filesSelected($event)"> <u> create or Upload digital signature for sharing Rx</u></a>
-         </span>
-
-         <ng-container class="attachment"
-    *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-    <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
-        *ngFor="let item of selectedMessage.files; let i = index">
-        <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
-            <span class="ln-hgt-40">{{item.name}}</span>
-        </div>
-        <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
-            <span class="">
-                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                    <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                        <i class="icon-delete"></i>
-                        <span>delete</span>
-                    </button>
-                </mat-menu>
-            </span>
-        </div>
-        <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
-              <button type="button"  class="cs-btn bt2"  (click)="deleteTempImage(i)">cancel</button>
-            <button mat-button class="cs-btn bt1 savemember mgn-lt-5" (click)="saveDigitalSignImages(i)">OK</button>
-        </div>
-    </div>
-
-</ng-container>
-  </div> -->
+ 
 
   <div  *ngIf="drugList.length > 0 && showSave" class="mgn-up-10">
       <button type="button" mat-button  class="cs-btn bt1" [disabled]="disable" (click)="saveRx()">Save Prescription </button>
@@ -135,38 +132,13 @@
               <i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share Rx</button>
 
       </div> -->
-
+</div></div></div></div>
 </div>
-<div class=" pad-20 table-responsive" *ngIf="drugList.length === 0">
-      <h5> Create prescription of your own</h5>
-      <table  class="table ">
-              <thead>
-                      <tr >
-                        <th>
-                         Medicine
-                        </th>
-                        <th>
-                            Duration(days)
-                        </th>
-                         <th>
-                            Dosage
-                        </th>
-                        <th>
-                            Frequency
-                        </th>
-                        <th>
-                            Instructions
-                        </th>
-
-                      </tr>
-                    </thead>
-                      <tbody>
-
-                  No Medicines Added
-
-              </tbody>
-            </table>
-            <span (click)="addDrug()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Add more</u></span>
+<div class="btm-pad-20" *ngIf="drugList.length === 0">
+     <div>
+      Medicines are not added
+     </div>
+            <span (click)="addDrug()" class="lnk action pointlist" style="color: #3c8dbc; font-size: smaller"><u>Add</u></span>
 
 </div>
 </ng-container>

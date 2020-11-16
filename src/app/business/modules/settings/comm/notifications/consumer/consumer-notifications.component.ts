@@ -4,6 +4,8 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
+import { AddproviderAddonComponent } from '../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-consumer-notifications',
@@ -104,15 +106,24 @@ export class ConsumerNotificationsComponent implements OnInit {
   secndapp_time: number[];
   thirdapp_time: number[];
   fourthapp_time: number[];
+  smsCredits;
+  is_smsLow: boolean;
+  smsWarnMsg: string;
+  corpSettings: any;
+  dialogRef: any;
+  addondialogRef: any;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
     public provider_services: ProviderServices,
+    private provider_servicesobj: ProviderServices,
+    private dialog: MatDialog,
     private provider_datastorage: ProviderDataStorageService) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
 
   ngOnInit() {
+    console.log('consumer notify big');
     for (let j = 0; j <= 60; j++) {
       this.appt_remind_min[j] = j ;
     }
@@ -126,6 +137,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.getNotificationSettings();
     this.getNotificationList();
     this.getGlobalSettingsStatus();
+    this.getSMSCredits();
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
     const breadcrumbs = [];
@@ -387,5 +399,44 @@ export class ConsumerNotificationsComponent implements OnInit {
       case 'third' : this.t_selected_min = obj; break;
       case 'fourth' : this.ft_selected_min = obj; break;
      }
+  }
+
+  getSMSCredits() {
+    this.provider_services.getSMSCredits().subscribe(data => {
+        this.smsCredits = data;
+        if (this.smsCredits < 5) {
+          this.is_smsLow = true;
+          this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.getLicenseCorpSettings();
+        } else {
+          this.is_smsLow = false;
+        }
+    });
+  }
+  getLicenseCorpSettings() {
+    this.provider_servicesobj.getLicenseCorpSettings().subscribe(
+        (data: any) => {
+            this.corpSettings = data;
+        }
+    );
+}
+  gotoSmsAddon() {
+    if (this.corpSettings && this.corpSettings.isCentralised) {
+      this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  } else {
+      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+          width: '50%',
+          data: {
+              type: 'addons'
+          },
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true
+      });
+      this.addondialogRef.afterClosed().subscribe(result => {
+        if (result) {
+         this.getSMSCredits();
+        }
+      });
+  }
   }
 }
