@@ -714,12 +714,12 @@
                         </td>
                       </ng-container>
                       <ng-container *ngIf="!apptByTimeSlot[appt.time]">
-                        <td class="parent-selection parent-title td-one disp-flex">
+                        <td class="chkWth">
+                        </td>
+                        <td class="parent-selection parent-title td-one">
                           <div class="pull-left mgn-lt-5 date">
                             <span class="greenc bold font11">{{getSingleTime(appt.time)}}</span>
-                          </div>
-                          <div class="bold pull-left mgn-lt-5 name font11 link pointer-cursor">
-                            <i class="icon-add" (click)="apptClicked('WALK_IN_APPOINTMENT', appt)"></i>
+                            <i class="icon-add pointer-cursor link mgn-lt-5 font11" (click)="apptClicked('WALK_IN_APPOINTMENT', appt)"></i>
                           </div>
                         </td>
                       </ng-container>
