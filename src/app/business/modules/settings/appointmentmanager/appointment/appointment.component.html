@@ -495,11 +495,16 @@
                                                     <ng-container>
                                                         <mat-radio-group>
                                                             <li *ngFor="let memb of familymembers">
-                                                                <mat-radio-button
+                                                                <mat-radio-button *ngIf="memb.firstName"
                                                                     (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                                                     [value]="memb.id" [checked]="isChecked(memb.id)">
                                                                     {{memb.firstName | capitalizeFirst}} {{(memb.lastName) ? memb.lastName : ''}}
                                                                 </mat-radio-button>
+                                                                <mat-radio-button  *ngIf="!memb.firstName"
+                                                                (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
+                                                                [value]="memb.id" [checked]="isChecked(memb.id)">
+                                                                Patient Id:{{memb.id}}
+                                                            </mat-radio-button>
                                                             </li>
                                                         </mat-radio-group>
                                                     </ng-container>
