@@ -96,7 +96,7 @@
                                             <td width="48%" align="right">Amount paid</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td><span class="rupee-font">&#8377;
-                                                </span>{{(infoParams.prepayment) ? infoParams.prepayment : wtlst.amountPaid}}
+                                                </span>{{infoParams.prepayment}}
                                             </td>
                                         </tr>
                                         <tr *ngIf="wtlst.service?.minPrePaymentAmount && infoParams.type === 'waitlistreschedule' && wtlst.amountPaid > 0">

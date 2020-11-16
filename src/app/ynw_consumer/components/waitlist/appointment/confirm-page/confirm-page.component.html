@@ -82,7 +82,7 @@
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td><span class="rupee-font">&#8377;
                                                 </span>
-                                                {{(infoParams.prepayment) ? infoParams.prepayment : appointment.amountPaid}}
+                                                {{infoParams.prepayment}}
                                             </td>
                                         </tr>
                                         <tr *ngIf="appointment.service?.minPrePaymentAmount && type == 'reschedule' && appointment.amountPaid > 0">
