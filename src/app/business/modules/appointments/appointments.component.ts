@@ -1273,6 +1273,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.setCounts(this.appt_list);
                 this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
                 this.apptByTimeSlot = this.shared_functions.groupBy(this.check_in_filtered_list, 'appmtTime');
+                console.log(this.apptByTimeSlot);
                 this.handleApptSelectionType();
                 this.startedAppts = this.getActiveAppointments(this.todayAppointments, 'started');
               },
@@ -1560,14 +1561,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
     } else {
       console.log(time);
-      // let slot = '';
-      // if (time) {
-      //   slot = time;
-      // }
+      let slot = '';
+      if (time) {
+        slot = time.time;
+      }
       // let deptId;
       // let userId;
       // let serviceId;
-      // const qfilter = this.activeSchedules.filter(q => q.id === this.selQIds);
+      // const qfilter = this.activeSchedules.filter(q => q.id === time);
       // if (qfilter && qfilter[0].services && qfilter[0].services.length > 0) {
       //   serviceId = qfilter[0].services[0].id;
       // }
@@ -1586,11 +1587,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // }
       // let date;
       // if (this.time_type === 2) {
-      //   date = this.filter.future_appt_date;
+        // date = this.filter.future_appt_date;
       // }
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
+      { queryParams: { timeslot: slot, checkinType: type} });
       // this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
-      //   { queryParams: { timeslot: slot, scheduleId: this.selQIds, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: date } });
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments']);
+      //   { queryParams: { timeslot: slot, scheduleId: time.time, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: date } });
     }
   }
   searchCustomer() {
@@ -1965,6 +1967,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goCheckinDetail(checkin) {
+    console.log(checkin);
     if (this.time_type === 3) {
       this.shared_functions.setitemToGroupStorage('appthP', this.filter.page || 1);
       this.shared_functions.setitemToGroupStorage('appthPFil', this.filter);

@@ -536,8 +536,8 @@
                   </tbody>
 
                   <tbody *ngIf="scheduleSlots.length > 0 && statusAction == 'new' && selected_type != 'booked'">
-                    <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
-                      *ngFor="let appt of scheduleSlots, let i=index">
+                    <tr *ngFor="let appt of scheduleSlots, let i=index" (click)="goCheckinDetail(apptByTimeSlot[appt.time][0])"
+                    [class.pointer-cursor]="apptByTimeSlot[appt.time]">
                       <ng-container *ngIf="apptByTimeSlot[appt.time] && selected_type === 'all'">
                         <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                           <input *ngIf="apptByTimeSlot[appt.time][0].providerConsumer" [checked]="chkAppointments[i]"
@@ -718,8 +718,8 @@
                           <div class="pull-left mgn-lt-5 date">
                             <span class="greenc bold font11">{{getSingleTime(appt.time)}}</span>
                           </div>
-                          <div class="bold pull-left mgn-lt-5 name font11 link">
-                            <i class="icon-add" (click)="apptClicked('WALK_IN_APPOINTMENT', appt.time)"></i>
+                          <div class="bold pull-left mgn-lt-5 name font11 link pointer-cursor">
+                            <i class="icon-add" (click)="apptClicked('WALK_IN_APPOINTMENT', appt)"></i>
                           </div>
                         </td>
                       </ng-container>
