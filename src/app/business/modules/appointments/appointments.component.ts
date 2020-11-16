@@ -331,7 +331,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   allStartedSelection = false;
   allSelection = false;
   addCustomerTooltip = '';
-  selected_type = 'booked';
+  selected_type = '';
   apptByTimeSlot: any = [];
   scheduleSlots: any = [];
   constructor(private shared_functions: SharedFunctions,
@@ -342,6 +342,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     public activateroute: ActivatedRoute,
     private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions) {
+      console.log(this.shared_functions.getitemFromGroupStorage('selected_type'));
     this.onResize();
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -417,6 +418,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       'show_learnmore': true, 'scrollKey': 'appointments',
       'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
     };
+    console.log(this.shared_functions.getitemFromGroupStorage('selected_type'));
+    if (this.shared_functions.getitemFromGroupStorage('selected_type')) {
+      this.selected_type = this.shared_functions.getitemFromGroupStorage('selected_type');
+    } else {
+    this.selected_type = 'booked';
+    this.shared_functions.setitemToGroupStorage('selected_type', this.selected_type);
+    }
     const savedtype = this.shared_functions.getitemFromGroupStorage('apptType');
     if (savedtype !== undefined && savedtype !== null) {
       this.time_type = savedtype;
@@ -2570,6 +2578,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   handleApptSelectionType(type?) {
     this.selected_type = type;
+    this.shared_functions.setitemToGroupStorage('selected_type', this.selected_type);
     console.log(this.selected_type);
     if (this.selected_type !== 'booked') {
       const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });

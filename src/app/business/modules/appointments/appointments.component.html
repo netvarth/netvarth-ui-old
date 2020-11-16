@@ -464,10 +464,10 @@
                 </table>
               </div>
               <div class="">
-                
-                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 mgn-bt-10" *ngIf="time_type === 1">
+
+                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 mgn-bt-10" *ngIf="time_type === 1 && statusAction == 'new'">
                   <div class="col-md-3 col-xs-12 col-sm-12 no-padding">
-                    <mat-select placeholder="" [ngModel]="selected_type">
+                    <mat-select [(ngModel)]="selected_type">
                       <mat-option [value]="'all'" (click)="handleApptSelectionType('all')">
                         All
                       </mat-option>
@@ -520,7 +520,7 @@
                     </tr>
                   </thead>
                   <tbody
-                    *ngIf="selected_type == 'booked' && !loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
+                    *ngIf="statusAction != 'new' && !loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
                     <tr>
                       <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
                         <p *ngIf="statusAction === 'new'">No active appointments</p>
@@ -535,7 +535,7 @@
                     </tr>
                   </tbody>
 
-                  <tbody *ngIf="scheduleSlots.length > 0 && selected_type != 'booked'">
+                  <tbody *ngIf="scheduleSlots.length > 0 && statusAction == 'new' && selected_type != 'booked'">
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of scheduleSlots, let i=index">
                       <ng-container *ngIf="apptByTimeSlot[appt.time] && selected_type === 'all'">
@@ -714,7 +714,7 @@
                         </td>
                       </ng-container>
                       <ng-container *ngIf="!apptByTimeSlot[appt.time]">
-                        <td class="parent-selection parent-title td-one">
+                        <td class="parent-selection parent-title td-one disp-flex">
                           <div class="pull-left mgn-lt-5 date">
                             <span class="greenc bold font11">{{getSingleTime(appt.time)}}</span>
                           </div>
@@ -727,7 +727,7 @@
                   </tbody>
 
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0 && selected_type === 'booked'">
+                    *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0 && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked'))">
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
