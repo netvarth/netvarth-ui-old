@@ -359,6 +359,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.appointment = appt;
                 if (this.type === 'reschedule') {
                     this.waitlist_for.push({ id: this.appointment.appmtFor[0].id, firstName: this.appointment.appmtFor[0].firstName, lastName: this.appointment.appmtFor[0].lastName, phoneNo: this.appointment.phoneNumber });
+                    this.userPhone = this.appointment.phoneNumber;
                 }
 
                 this.sel_loc = this.appointment.location.id;
@@ -508,7 +509,6 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         if (this.type === 'reschedule') {
-                            console.log(this.appointment.virtualService);
                             this.callingModes = this.appointment.virtualService['WhatsApp'];
                             this.changePhno = true;
                         } else {

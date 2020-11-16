@@ -403,6 +403,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     this.waitlist_for.push({ id: this.waitlist.waitlistingFor[0].id, firstName: this.waitlist.waitlistingFor[0].firstName, lastName: this.waitlist.waitlistingFor[0].lastName, phoneNo: this.waitlist.phoneNumber });
                     this.wtlst_for_fname = this.waitlist.waitlistingFor[0].firstName;
                     this.wtlst_for_lname = this.waitlist.waitlistingFor[0].lastName;
+                    this.userPhone = this.waitlist.waitlistPhoneNumber;
                 }
                 this.checkin_date = this.waitlist.date;
                 if (this.checkin_date !== this.todaydate) {
@@ -569,15 +570,12 @@ export class ConsumerCheckinComponent implements OnInit {
                 serv = this.servicesjson[i];
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
-                        console.log(this.type);
                         if (this.type === 'waitlistreschedule') {
-                            console.log(this.waitlist.virtualService);
                             this.callingModes = this.waitlist.virtualService['WhatsApp'];
                             this.changePhno = true;
                            } else {
                             this.callingModes = this.customer_data.primaryPhoneNumber;
                            }
-                           console.log(this.callingModes);
                     }
                 }
                 break;
@@ -943,7 +941,6 @@ export class ConsumerCheckinComponent implements OnInit {
                 let retUUID;
                 let prepayAmount;
                 let uuidList = [];
-                console.log(this.waitlist_for.length);
                 Object.keys(retData).forEach(key => {
                     if (key === '_prepaymentAmount') {
                         prepayAmount = retData['_prepaymentAmount'];
@@ -1663,8 +1660,8 @@ export class ConsumerCheckinComponent implements OnInit {
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-                        this.currentPhone = this.userData.userProfile.primaryMobileNo || '';
-                        // this.consumerPhoneNo = this.userPhone;
+                        // this.currentPhone = this.userData.userProfile.primaryMobileNo || '';
+                         this.consumerPhoneNo = this.userPhone;
                     }
                     if (this.userEmail) {
                         this.emailExist = true;
