@@ -162,3 +162,6 @@
 .content {
   padding: 15px 0px !important;
 }
+.name-line-ht {
+  line-height: 1 !important;
+}

@@ -1664,7 +1664,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
                         this.currentPhone = this.userData.userProfile.primaryMobileNo || '';
-                        this.consumerPhoneNo = this.userPhone;
+                        // this.consumerPhoneNo = this.userPhone;
                     }
                     if (this.userEmail) {
                         this.emailExist = true;
