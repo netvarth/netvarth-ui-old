@@ -342,7 +342,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     public activateroute: ActivatedRoute,
     private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions) {
-      console.log(this.shared_functions.getitemFromGroupStorage('selected_type'));
+    console.log(this.shared_functions.getitemFromGroupStorage('selected_type'));
     this.onResize();
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -422,8 +422,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.shared_functions.getitemFromGroupStorage('selected_type')) {
       this.selected_type = this.shared_functions.getitemFromGroupStorage('selected_type');
     } else {
-    this.selected_type = 'booked';
-    this.shared_functions.setitemToGroupStorage('selected_type', this.selected_type);
+      this.selected_type = 'booked';
+      this.shared_functions.setitemToGroupStorage('selected_type', this.selected_type);
     }
     const savedtype = this.shared_functions.getitemFromGroupStorage('apptType');
     if (savedtype !== undefined && savedtype !== null) {
@@ -2572,15 +2572,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           }
         }
+
+        this.loading = false;
         console.log(this.scheduleSlots);
       }
     );
   }
   handleApptSelectionType(type?) {
+    if (type) {
     this.selected_type = type;
+    }
     this.shared_functions.setitemToGroupStorage('selected_type', this.selected_type);
     console.log(this.selected_type);
     if (this.selected_type !== 'booked') {
+      this.loading = true;
       const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
       const today = moment(server).format('YYYY-MM-DD');
       const schIds = this.selQIds.toString();
