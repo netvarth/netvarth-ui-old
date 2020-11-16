@@ -1664,5 +1664,9 @@ export class ProviderServices {
       const url = 'provider/waitlist/confirm';
       return this.servicemeta.httpPut(url, data);
    }
+   getSlotsByScheduleandDate(ids, date) {
+      const url = 'provider/appointment/schedule/' + ids + '/date/' + date;
+      return this.servicemeta.httpGet(url);
+   }
 }
 

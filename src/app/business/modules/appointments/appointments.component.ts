@@ -331,6 +331,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   allStartedSelection = false;
   allSelection = false;
   addCustomerTooltip = '';
+  selected_type = 'booked';
+  apptByTimeSlot: any = [];
+  scheduleSlots: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1261,6 +1264,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
                 this.setCounts(this.appt_list);
                 this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+                this.apptByTimeSlot = this.shared_functions.groupBy(this.check_in_filtered_list, 'appmtTime');
+                this.handleApptSelectionType();
                 this.startedAppts = this.getActiveAppointments(this.todayAppointments, 'started');
               },
               () => {
@@ -1542,12 +1547,42 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.shared_functions.convert24HourtoAmPm(slots[0]);
   }
 
-  apptClicked(type) {
+  apptClicked(type, time?) {
     if (this.schedules.length === 0) {
       this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
     } else {
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
-        { queryParams: { checkinType: type } });
+      console.log(time);
+      // let slot = '';
+      // if (time) {
+      //   slot = time;
+      // }
+      // let deptId;
+      // let userId;
+      // let serviceId;
+      // const qfilter = this.activeSchedules.filter(q => q.id === this.selQIds);
+      // if (qfilter && qfilter[0].services && qfilter[0].services.length > 0) {
+      //   serviceId = qfilter[0].services[0].id;
+      // }
+      // if (qfilter && qfilter[0].provider) {
+      //   userId = qfilter[0].provider.id;
+      //   const filteredDept = this.users.filter(user => user.id === userId);
+      //   if (filteredDept[0] && filteredDept[0].deptId) {
+      //     deptId = filteredDept[0].deptId;
+      //   }
+      // } else {
+      //   userId = '0';
+      //   const filteredService = this.service_list.filter(service => service.id === serviceId);
+      //   if (filteredService[0] && filteredService[0].department) {
+      //     deptId = filteredService[0].department;
+      //   }
+      // }
+      // let date;
+      // if (this.time_type === 2) {
+      //   date = this.filter.future_appt_date;
+      // }
+      // this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
+      //   { queryParams: { timeslot: slot, scheduleId: this.selQIds, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: date } });
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments']);
     }
   }
   searchCustomer() {
@@ -2512,5 +2547,36 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getScheduleIndex(id) {
     const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
     return this.activeSchedules.indexOf(filterSchedule[0]);
+  }
+  getSlotBYScheduleandDate(scheduleid, date) {
+    this.scheduleSlots = [];
+    this.provider_services.getSlotsByScheduleandDate(scheduleid, date).subscribe(
+      (data: any) => {
+        console.log(data);
+        console.log(this.apptByTimeSlot);
+        for (let i = 0; i < data.length; i++) {
+          console.log(data[i]);
+          for (let j = 0; j < data[i].availableSlots.length; j++) {
+            if (this.apptByTimeSlot[data[i].availableSlots[j].time] || (data[i].availableSlots[j].active && data[i].availableSlots[j].noOfAvailbleSlots !== '0')) {
+              if (this.scheduleSlots.indexOf(data[i].availableSlots[j]) === -1) {
+                this.scheduleSlots.push(data[i].availableSlots[j]);
+              }
+            }
+          }
+        }
+        console.log(this.scheduleSlots);
+      }
+    );
+  }
+  handleApptSelectionType(type?) {
+    this.selected_type = type;
+    console.log(this.selected_type);
+    if (this.selected_type !== 'booked') {
+      const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      const today = moment(server).format('YYYY-MM-DD');
+      const schIds = this.selQIds.toString();
+      const ids = schIds.replace(/,/g, '-');
+      this.getSlotBYScheduleandDate(ids, today);
+    }
   }
 }
