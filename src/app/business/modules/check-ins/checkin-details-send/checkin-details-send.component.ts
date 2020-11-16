@@ -154,7 +154,11 @@ export class CheckinDetailsSendComponent implements OnInit {
               this.provider_services.smsCheckin(this.uuid).subscribe(
               () => {
                   this.dialogRef.close();
+                  if (this.showToken) {
+                    this.shared_functions.openSnackBar('Token details sent successfully');
+                  } else {
                   this.shared_functions.openSnackBar('Check-in details sent successfully');
+                  }
               },
               error => {
                   this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -165,7 +169,11 @@ export class CheckinDetailsSendComponent implements OnInit {
               this.provider_services.emailCheckin(this.uuid).subscribe(
                   () => {
                       this.dialogRef.close();
+                      if (this.showToken) {
+                        this.shared_functions.openSnackBar('Token details mailed successfully');
+                      } else {
                       this.shared_functions.openSnackBar('Check-in details mailed successfully');
+                      }
                   },
                   error => {
                       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
