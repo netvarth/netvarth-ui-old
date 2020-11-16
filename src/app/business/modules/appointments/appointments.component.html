@@ -152,7 +152,7 @@
           </div>
         </div>
 
- 
+
 
         <mat-tab-group class="checkinlist" (selectedTabChange)="tabChange($event)" [selectedIndex]="time_type - 1">
           <mat-tab label="Today ({{today_waitlist_count}})">
@@ -408,7 +408,6 @@
                           <span *ngIf="!appt.callingStatus">
                             &nbsp;Call</span>
                         </a>
-
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);changeWaitlistStatus('started', 'Started', appt)"
                           *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
@@ -464,8 +463,8 @@
                 </table>
               </div>
               <div class="">
-
-                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 mgn-bt-10" *ngIf="time_type === 1 && statusAction == 'new'">
+                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 mgn-bt-10"
+                  *ngIf="time_type === 1 && statusAction == 'new'">
                   <div class="col-md-3 col-xs-12 col-sm-12 no-padding">
                     <mat-select [(ngModel)]="selected_type">
                       <mat-option [value]="'all'" (click)="handleApptSelectionType('all')">
@@ -479,8 +478,7 @@
                       </mat-option>
                     </mat-select>
                   </div>
-  </div>
-
+                </div>
                 <div class="pad-10 pull-left check-status">
                   <a class="mgn-rt-10" [class.selectedStatus]="statusAction=='new'" (click)="statusClick('new')">
                     Active ({{scheduled_count}})</a>
@@ -499,8 +497,6 @@
                     </i>
                   </a>
                 </div>
-
-            
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                     <tr>
@@ -534,10 +530,10 @@
                       </td>
                     </tr>
                   </tbody>
-
                   <tbody *ngIf="scheduleSlots.length > 0 && statusAction == 'new' && selected_type != 'booked'">
-                    <tr *ngFor="let appt of scheduleSlots, let i=index" (click)="goCheckinDetail(apptByTimeSlot[appt.time][0])"
-                    [class.pointer-cursor]="apptByTimeSlot[appt.time]">
+                    <tr *ngFor="let appt of scheduleSlots, let i=index"
+                      (click)="goCheckinDetail(apptByTimeSlot[appt.time][0])"
+                      [class.pointer-cursor]="apptByTimeSlot[appt.time]">
                       <ng-container *ngIf="apptByTimeSlot[appt.time] && selected_type === 'all'">
                         <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                           <input *ngIf="apptByTimeSlot[appt.time][0].providerConsumer" [checked]="chkAppointments[i]"
@@ -547,7 +543,8 @@
                         <td class="parent-selection parent-title td-one">
                           <div class="pull-left mgn-lt-5 date">
                             <span class="greenc bold font11">{{getSingleTime(appt.time)}}</span>
-                            <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(apptByTimeSlot[appt.time][0].schedule.id) + 1}}</div>
+                            <div *ngIf="this.selQIds.length > 1">
+                              S{{getScheduleIndex(apptByTimeSlot[appt.time][0].schedule.id) + 1}}</div>
                           </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                             class="bold pull-left mgn-lt-5 name font11"
@@ -719,13 +716,16 @@
                         <td class="parent-selection parent-title td-one">
                           <div class="pull-left mgn-lt-5 date">
                             <span class="greenc bold font11">{{getSingleTime(appt.time)}}</span>
-                            <i class="icon-add pointer-cursor link mgn-lt-5 font11" (click)="apptClicked('WALK_IN_APPOINTMENT', appt)"></i>
+                            <i class="icon-add pointer-cursor link mgn-lt-10 font11"
+                              (click)="apptClicked('WALK_IN_APPOINTMENT', appt)"></i>
                           </div>
                         </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                       </ng-container>
                     </tr>
                   </tbody>
-
                   <tbody
                     *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0 && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked'))">
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
@@ -1570,8 +1570,6 @@
             </div>
           </mat-tab>
         </mat-tab-group>
-
-
       </div>
     </div>
   </div>

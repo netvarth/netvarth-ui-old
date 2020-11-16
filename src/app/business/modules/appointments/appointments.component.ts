@@ -342,7 +342,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     public activateroute: ActivatedRoute,
     private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions) {
-    console.log(this.shared_functions.getitemFromGroupStorage('selected_type'));
     this.onResize();
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -418,7 +417,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       'show_learnmore': true, 'scrollKey': 'appointments',
       'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
     };
-    console.log(this.shared_functions.getitemFromGroupStorage('selected_type'));
     if (this.shared_functions.getitemFromGroupStorage('selected_type')) {
       this.selected_type = this.shared_functions.getitemFromGroupStorage('selected_type');
     } else {
@@ -542,7 +540,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return false;
   }
   viewQClicked(q) {
-    console.log(this.selQIds);
     const qindx = this.selQIds.indexOf(q.id);
     if (qindx !== -1) {
       if (this.selQIds.length === 1) {
@@ -552,7 +549,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.selQIds.push(q.id);
     }
-    console.log(this.selQIds);
     if (this.time_type === 1) {
       this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
     } else if (this.time_type === 2) {
@@ -1273,7 +1269,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.setCounts(this.appt_list);
                 this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
                 this.apptByTimeSlot = this.shared_functions.groupBy(this.check_in_filtered_list, 'appmtTime');
-                console.log(this.apptByTimeSlot);
                 this.handleApptSelectionType();
                 this.startedAppts = this.getActiveAppointments(this.todayAppointments, 'started');
               },
@@ -1587,10 +1582,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // }
       // let date;
       // if (this.time_type === 2) {
-        // date = this.filter.future_appt_date;
+      // date = this.filter.future_appt_date;
       // }
       this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
-      { queryParams: { timeslot: slot, checkinType: type} });
+        { queryParams: { timeslot: slot, checkinType: type } });
       // this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
       //   { queryParams: { timeslot: slot, scheduleId: time.time, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: date } });
     }
@@ -1967,7 +1962,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goCheckinDetail(checkin) {
-    console.log(checkin);
     if (this.time_type === 3) {
       this.shared_functions.setitemToGroupStorage('appthP', this.filter.page || 1);
       this.shared_functions.setitemToGroupStorage('appthPFil', this.filter);
@@ -2202,7 +2196,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsByProvider() {
     const qs = [];
-    console.log(this.selectedUser);
     if (this.selectedUser && this.selectedUser.id === 'all') {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
@@ -2240,7 +2233,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.time_type === 1) {
-      console.log(this.selQIds);
       this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
     } else if (this.time_type === 2) {
       this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
@@ -2563,10 +2555,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.scheduleSlots = [];
     this.provider_services.getSlotsByScheduleandDate(scheduleid, date).subscribe(
       (data: any) => {
-        console.log(data);
-        console.log(this.apptByTimeSlot);
         for (let i = 0; i < data.length; i++) {
-          console.log(data[i]);
           for (let j = 0; j < data[i].availableSlots.length; j++) {
             if (this.apptByTimeSlot[data[i].availableSlots[j].time] || (data[i].availableSlots[j].active && data[i].availableSlots[j].noOfAvailbleSlots !== '0')) {
               if (this.scheduleSlots.indexOf(data[i].availableSlots[j]) === -1) {
@@ -2575,18 +2564,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           }
         }
-
         this.loading = false;
-        console.log(this.scheduleSlots);
       }
     );
   }
   handleApptSelectionType(type?) {
     if (type) {
-    this.selected_type = type;
+      this.selected_type = type;
     }
     this.shared_functions.setitemToGroupStorage('selected_type', this.selected_type);
-    console.log(this.selected_type);
     if (this.selected_type !== 'booked') {
       this.loading = true;
       const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
