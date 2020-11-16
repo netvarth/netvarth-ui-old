@@ -100,13 +100,13 @@ export class AppointmentConfirmPopupComponent implements OnInit {
                         }
                     }
                 }
-                let retUUID;
-                let prepayAmount;
+                // let retUUID;
+                // let prepayAmount;
                 Object.keys(retData).forEach(key => {
                     if (key === '_prepaymentAmount') {
-                        prepayAmount = retData['_prepaymentAmount'];
+                        // prepayAmount = retData['_prepaymentAmount'];
                     } else {
-                        retUUID = retData[key];
+                        // retUUID = retData[key];
                         this.trackUuid = retData[key];
                     }
                 });

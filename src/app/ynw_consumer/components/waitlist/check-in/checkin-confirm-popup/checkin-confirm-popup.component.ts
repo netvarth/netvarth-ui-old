@@ -31,6 +31,8 @@ export class CheckinConfirmPopupComponent implements OnInit {
         caption: []
     };
     settingsjson: any = [];
+    consumerNote = '';
+
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -91,15 +93,15 @@ export class CheckinConfirmPopupComponent implements OnInit {
         this.shared_services.addCheckin(this.account_id, this.post_Data)
             .subscribe(data => {
                 const retData = data;
-                let retUUID;
-                let prepayAmount;
+                // let retUUID;
+                // let prepayAmount;
                 let uuidList = [];
                 console.log(this.waitlist_for.length);
                 Object.keys(retData).forEach(key => {
                     if (key === '_prepaymentAmount') {
-                        prepayAmount = retData['_prepaymentAmount'];
+                        // prepayAmount = retData['_prepaymentAmount'];
                     } else {
-                        retUUID = retData[key];
+                        // retUUID = retData[key];
                         this.trackUuid = retData[key];
                         uuidList.push(retData[key]);
                     }
@@ -146,5 +148,32 @@ export class CheckinConfirmPopupComponent implements OnInit {
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     // this.api_loading = false;
                 });
+    }
+    consumerNoteAndFileSave(uuid) {
+        const dataToSend: FormData = new FormData();
+        if (this.consumerNote === '') {
+            this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
+        }
+        dataToSend.append('message', this.consumerNote);
+        const captions = {};
+        let i = 0;
+        if (this.selectedMessage) {
+            for (const pic of this.selectedMessage.files) {
+                dataToSend.append('attachments', pic, pic['name']);
+                captions[i] = 'caption';
+                i++;
+            }
+        }
+        const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+        dataToSend.append('captions', blobPropdata);
+        this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
+            dataToSend)
+            .subscribe(
+                () => {
+                },
+                error => {
+                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                }
+            );
     }
 }
