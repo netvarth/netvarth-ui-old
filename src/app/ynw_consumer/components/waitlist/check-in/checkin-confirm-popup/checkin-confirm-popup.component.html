@@ -1,0 +1,75 @@
+<h1 class="mat-dialog-title">CONFIRM YOUR TOKEN<button mat-dialog-close class="modal_close" tabindex="-1"><i
+    class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<mat-dialog-content class="ynw-common-form apply-label">
+<div class="form-group col-md-12">
+    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
+        {{showCheckinButtonCaption()}} For
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-12">
+        <h6 class="card-title service bookingFor">
+            {{service_det.name}}
+        </h6>
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-12">
+        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+            Date/Time
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+        <h6 class="card-title serv-time border-style waitinginLine">
+            <span *ngIf="!isFuturedate">Today, </span>
+            <span *ngIf="!isFuturedate">
+                {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+            </span>
+            <span *ngIf="isFuturedate">{{post_Data.date | date: dateFormat}},
+            </span>
+            <span *ngIf="isFuturedate">
+                {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+            </span>
+        </h6>
+        </div>
+        <div class="col-md126 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+            Waiting in line
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+        <h6 class="card-title serv-time border-style waitinginLine">
+            <span *ngIf="sel_queue_personaahead <= 0">0 People</span>
+            <span *ngIf="sel_queue_personaahead == 1">1<span> Person</span></span>
+            <span *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
+            People</span></span>
+        </h6>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-10">
+        Booking For
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-12">
+        <h6 class="card-title service bookingFor"
+            *ngFor="let member of waitlist_for">
+            {{member.firstName | capitalizeFirst}}
+            {{member.lastName | capitalizeFirst}}
+        </h6>
+        <div class="contact-section mgn-up-10">
+            <i class="fa fa-mobile "></i>
+            <span class="mgn-lt-10 phonevallabel">{{userPhone}}</span>
+        </div>
+        <div class="">
+             <i class="fa fa-envelope-o "></i>
+             <span class="mgn-lt-5 phonevallabel">{{eMail}}</span>
+             </div>
+    </div>
+</div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+
+    <button (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Confirm</button>
+</mat-dialog-actions>
+<!-- <div class="ticket">
+    <div class="ticket__content">
+      <p class="ticket__text"></p>
+    </div>
+  </div> -->
+
+
+<!-- <app-field-error-display [displayError]="true" *ngIf="api_error['error']" errorMsg="{{api_error['error']}}">
+</app-field-error-display> -->

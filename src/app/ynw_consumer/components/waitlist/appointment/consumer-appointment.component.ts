@@ -15,6 +15,7 @@ import { Location } from '@angular/common';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
+import { AppointmentConfirmPopupComponent } from './appointment-confirm-popup/appointment-confirm-popup.component';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -809,7 +810,8 @@ export class ConsumerAppointmentComponent implements OnInit {
             // post_Data['consumer'] = { id: this.customer_data.id };
             // post_Data['ignorePrePayment'] = true;
             if (!this.is_wtsap_empty) {
-                this.addCheckInConsumer(post_Data);
+                this.showConfirmPopup(post_Data)
+                // this.addCheckInConsumer(post_Data);
             }
             //  this.addCheckInConsumer(post_Data);
         }
@@ -1894,4 +1896,27 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.action = '';
         }
     }
+    showConfirmPopup(post_Data) {
+                // this.dialogRef.close();
+                const checkinconfirmdialogRef = this.dialog.open(AppointmentConfirmPopupComponent, {
+                    width: '50%',
+                    panelClass: ['popup-class', 'commonpopupmainclass'],
+                    disableClose: true,
+                    data: {
+                        service_details : this.sel_ser_det,
+                        waitlist_for : this.waitlist_for,
+                        userPhone : this.userPhone,
+                        post_Data : post_Data,
+                        account_id : this.account_id,
+                        sel_queue_personaahead : this.sel_queue_personaahead,
+                        isFuturedate : this.isFuturedate,
+                        eMail : this.userData.userProfile.email,
+                        // selected_queue_sTime : this.queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime']
+                    }
+                });
+                checkinconfirmdialogRef.afterClosed().subscribe(result => {
+                    if (result === 'reloadlist') {
+                    }
+                });
+            }
 }

@@ -16,6 +16,7 @@ import { Location } from '@angular/common';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
+import { CheckinConfirmPopupComponent } from './checkin-confirm-popup/checkin-confirm-popup.component';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
@@ -929,7 +930,8 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
             if (!this.is_wtsap_empty) {
-                this.addCheckInConsumer(post_Data);
+                this.showConfirmPopup(post_Data)
+                // this.addCheckInConsumer(post_Data);
             }
         }
     }
@@ -2070,5 +2072,28 @@ export class ConsumerCheckinComponent implements OnInit {
         } else {
             return false;
         }
+    }
+    showConfirmPopup(post_Data) {
+        // this.dialogRef.close();
+        const checkinconfirmdialogRef = this.dialog.open(CheckinConfirmPopupComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                service_details : this.sel_ser_det,
+                waitlist_for : this.waitlist_for,
+                userPhone : this.userPhone,
+                post_Data : post_Data,
+                account_id : this.account_id,
+                sel_queue_personaahead : this.sel_queue_personaahead,
+                isFuturedate : this.isFuturedate,
+                eMail : this.userData.userProfile.email,
+                // selected_queue_sTime : this.queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime']
+            }
+        });
+        checkinconfirmdialogRef.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+            }
+        });
     }
 }

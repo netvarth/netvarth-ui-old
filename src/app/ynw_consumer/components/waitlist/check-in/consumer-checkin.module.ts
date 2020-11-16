@@ -17,6 +17,7 @@ import { PagerModule } from '../../../../shared/modules/pager/pager.module';
 import { ConsumerCheckinBillComponent } from './checkin-bill/checkin-bill.component';
 import { HeaderModule } from '../../../../shared/modules/header/header.module';
 import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
+import { CheckinConfirmPopupComponent } from './checkin-confirm-popup/checkin-confirm-popup.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
         ConsumerLiveTrackComponent,
         ConsumerCheckinHistoryComponent,
         ConsumerCheckinBillComponent,
-        ConfirmPageComponent
+        ConfirmPageComponent,
+        CheckinConfirmPopupComponent
     ],
     imports: [
         FormMessageDisplayModule,
@@ -42,6 +44,9 @@ import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
         OwlModule,
         PagerModule,
         HeaderModule
+    ],
+    entryComponents: [
+        CheckinConfirmPopupComponent
     ],
     exports: [ConsumerCheckinComponent]
 })

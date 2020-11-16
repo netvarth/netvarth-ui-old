@@ -16,6 +16,7 @@ import { ConsumerAppointmentHistoryComponent } from './history/appointment-histo
 import { ConsumerAppointmentBillComponent } from './appointment-bill/appointment-bill.component';
 import { HeaderModule } from '../../../../shared/modules/header/header.module';
 import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
+import { AppointmentConfirmPopupComponent } from './appointment-confirm-popup/appointment-confirm-popup.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
         ConsumerAppointmentLiveTrackComponent,
         ConsumerAppointmentHistoryComponent,
         ConsumerAppointmentBillComponent,
-        ConfirmPageComponent
+        ConfirmPageComponent,
+        AppointmentConfirmPopupComponent
     ],
     imports: [
         FormMessageDisplayModule,
@@ -39,6 +41,9 @@ import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
         Nl2BrPipeModule,
         OwlModule,
         HeaderModule
+    ],
+    entryComponents: [
+        AppointmentConfirmPopupComponent
     ],
     exports: [ConsumerAppointmentComponent]
 })
