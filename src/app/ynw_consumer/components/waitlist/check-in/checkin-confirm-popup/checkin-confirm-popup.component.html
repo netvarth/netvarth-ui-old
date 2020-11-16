@@ -18,12 +18,12 @@
         <h6 class="card-title serv-time border-style waitinginLine">
             <span *ngIf="!isFuturedate">Today, </span>
             <span *ngIf="!isFuturedate">
-                {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                <!-- {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}} -->
             </span>
             <span *ngIf="isFuturedate">{{post_Data.date | date: dateFormat}},
             </span>
             <span *ngIf="isFuturedate">
-                {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                <!-- {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}} -->
             </span>
         </h6>
         </div>
