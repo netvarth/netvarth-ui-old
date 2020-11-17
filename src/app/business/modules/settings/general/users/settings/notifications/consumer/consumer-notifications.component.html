@@ -83,7 +83,7 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyWLNotificatonSettings.sms"
+                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="earlyWLNotificatonSettings.sms"
                         (change)="showSubmit('EARLY_WL')">
                       </mat-slide-toggle>
                       <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
@@ -118,7 +118,7 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="prefinalWLNotificationSettings.sms"
+                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="prefinalWLNotificationSettings.sms"
                         (change)="showSubmit('PREFINAL_WL')">
                       </mat-slide-toggle>
                       <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
@@ -153,7 +153,7 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalWLNotificationSettings.sms"
+                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="finalWLNotificationSettings.sms"
                         (change)="showSubmit('FINAL_WL')">
                       </mat-slide-toggle>
                       <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
@@ -191,7 +191,7 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="wlAddNotificationSettings.sms"
+                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="wlAddNotificationSettings.sms"
                         (change)="showSubmit('WAITLISTADD')">
                       </mat-slide-toggle>
                       <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
@@ -357,7 +357,7 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="apptAddNotificationSettings.sms"
+                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="apptAddNotificationSettings.sms"
                         (change)="showSubmit('APPOINTMENTADD')">
                       </mat-slide-toggle>
                       <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
@@ -424,7 +424,7 @@
             <ul class="notifications">
               <li class="mgn-lt-10">
                 <span class="notification"> via SMS </span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.sms"
+                <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.sms"
                   (change)="showSubmit('FIRST_APPT')">
                 </mat-slide-toggle>
                 <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
@@ -480,7 +480,7 @@
             <ul class="notifications">
               <li class="mgn-lt-10">
                 <span class="notification"> via SMS </span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.sms"
+                <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.sms"
                   (change)="showSubmit('SECOND_APPT')">
                 </mat-slide-toggle>
                 <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
@@ -537,7 +537,7 @@
             <ul class="notifications">
               <li class="mgn-lt-10">
                 <span class="notification"> via SMS </span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.sms"
+                <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.sms"
                   (change)="showSubmit('THIRD_APPT')">
                 </mat-slide-toggle>
                 <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
@@ -593,7 +593,7 @@
             <ul class="notifications">
               <li class="mgn-lt-10">
                 <span class="notification"> via SMS </span>
-                <mat-slide-toggle class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.sms"
+                <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.sms"
                   (change)="showSubmit('FOURTH_APPT')">
                 </mat-slide-toggle>
                 <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>

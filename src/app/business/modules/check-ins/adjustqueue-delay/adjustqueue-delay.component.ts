@@ -7,6 +7,8 @@ import { projectConstants } from '../../../../app.component';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
+import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-adjustqueue-delay',
   templateUrl: './adjustqueue-delay.component.html'
@@ -69,6 +71,12 @@ export class AdjustqueueDelayComponent implements OnInit {
   qdata_list;
   settings: any;
   showToken = false;
+  smsCredits;
+  is_smsLow = false;
+  smsWarnMsg: string;
+  corpSettings: any;
+  addondialogRef: any;
+  is_noSMS = false;
 
   constructor(
     // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
@@ -79,7 +87,8 @@ export class AdjustqueueDelayComponent implements OnInit {
     public shared_services: SharedServices,
     public provider_services: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
-    private shared_functions: SharedFunctions
+    private shared_functions: SharedFunctions,
+    private dialog: MatDialog
   ) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
   }
@@ -88,6 +97,7 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.getProviderSettings();
+    this.getSMSCredits();
     // this.breadcrumbs = [
     //   {
     //     title: 'Check-ins',
@@ -568,5 +578,50 @@ export class AdjustqueueDelayComponent implements OnInit {
   resetApi() {
     this.api_error = null;
     this.api_success = null;
+  }
+
+  getSMSCredits() {
+    this.provider_services.getSMSCredits().subscribe(data => {
+        this.smsCredits = data;
+        if (this.smsCredits < 5 && this.smsCredits > 0) {
+          this.is_smsLow = true;
+          this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.getLicenseCorpSettings();
+        } else if (this.smsCredits === 0) {
+          this.is_smsLow = true;
+          this.is_noSMS = true;
+          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+          this.getLicenseCorpSettings();
+        } else {
+          this.is_smsLow = false;
+          this.is_noSMS = false;
+        }
+    });
+  }
+  getLicenseCorpSettings() {
+    this.provider_services.getLicenseCorpSettings().subscribe(
+        (data: any) => {
+            this.corpSettings = data;
+        }
+    );
+}
+  gotoSmsAddon() {
+    if (this.corpSettings && this.corpSettings.isCentralised) {
+      this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  } else {
+      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+          width: '50%',
+          data: {
+              type: 'addons'
+          },
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true
+      });
+      this.addondialogRef.afterClosed().subscribe(result => {
+        if (result) {
+         this.getSMSCredits();
+        }
+      });
+  }
   }
 }

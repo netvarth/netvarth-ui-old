@@ -48,6 +48,7 @@ export class CheckinDetailsSendComponent implements OnInit {
   is_smsLow = false;
   corpSettings: any;
   addondialogRef: any;
+  is_noSMS = false;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
@@ -215,10 +216,12 @@ export class CheckinDetailsSendComponent implements OnInit {
             this.getLicenseCorpSettings();
           } else if (this.smsCredits === 0) {
             this.is_smsLow = true;
+            this.is_noSMS = true;
             this.smsWarnMsg = Messages.NO_SMS_CREDIT;
             this.getLicenseCorpSettings();
           } else {
             this.is_smsLow = false;
+            this.is_noSMS = false;
           }
       });
     }

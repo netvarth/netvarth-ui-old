@@ -33,7 +33,7 @@
   </div>
   <div class="coupon-outer mgn-up-40">
     Send {{data.status === true ? 'Message' : 'Reminder'}} Via<br>
-    <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
+    <mat-checkbox [disabled]="is_noSMS" class="mgright50 example-margin" [(ngModel)]="sms">
       Mobile
     </mat-checkbox>
     <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">Email
@@ -41,6 +41,7 @@
     <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">
       App Notification
     </mat-checkbox>
+    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
   </div>
 </div>
 
@@ -73,7 +74,7 @@
   </mat-tab-group>
   <div *ngIf="!providerView" class="coupon-outer">
     Share Meeting Details Via<br>
-    <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
+  <mat-checkbox [disabled]="is_noSMS" class="mgright50 example-margin" [(ngModel)]="sms">
       Mobile
     </mat-checkbox>
     <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">Email
@@ -81,6 +82,7 @@
     <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">
       App Notification
     </mat-checkbox>
+    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
   </div>
 </div>
 
