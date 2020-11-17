@@ -1393,7 +1393,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showUndo = false;
     this.showArrived = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
-    if (totalAppointmentsSelected === this.check_in_filtered_list.length && totalAppointmentsSelected !== 0) {
+    const filterArray = this.check_in_filtered_list.filter(appt => appt.providerConsumer);
+    if (totalAppointmentsSelected === filterArray.length && totalAppointmentsSelected !== 0) {
       this.chkSelectAppointments = true;
     }
     if (totalAppointmentsSelected === 1) {

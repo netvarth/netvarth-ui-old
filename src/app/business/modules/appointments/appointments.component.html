@@ -317,10 +317,9 @@
                             (click)="stopprop($event);gotoCustomerDetails(appt)"
                             *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                             [class.pointer-cursor]="appt.apptStatus!=='blocked'"
-                            [class.pointer-auto]="appt.apptStatus=='blocked'">
-                            {{appt.appmtFor[0].firstName}}
+                            [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                             {{appt.appmtFor[0].lastName}}
-                            <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
+                            <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                           </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                             class="bold pull-left mgn-lt-5 name pointer-cursor font11"
@@ -462,7 +461,7 @@
                 <div class="">
                   <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10"
                     *ngIf="time_type === 1 && statusAction == 'new'">
-                    <div class="col-md-3 col-xs-12 col-sm-12 no-padding">
+                    <div class="col-md-3 col-xs-5 col-sm-4 no-padding">
                       <mat-select class="selecttype" [(ngModel)]="selected_type">
                         <mat-option [value]="'all'" (click)="handleApptSelectionType('all')">
                           All slots
@@ -551,8 +550,7 @@
                               [class.pointer-auto]="apptByTimeSlot[appt.time][0].apptStatus=='blocked'">
                               {{apptByTimeSlot[appt.time][0].appmtFor[0].firstName}}
                               {{apptByTimeSlot[appt.time][0].appmtFor[0].lastName}}
-                              <div class="block-hint" *ngIf="apptByTimeSlot[appt.time][0].apptStatus==='blocked'">
-                                &nbsp;&nbsp;Blocked</div>
+                              <div class="block-hint" *ngIf="apptByTimeSlot[appt.time][0].apptStatus==='blocked'">Blocked</div>
                             </div>
                             <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                               class="bold pull-left mgn-lt-5 name pointer-cursor font11"
@@ -749,10 +747,9 @@
                             (click)="stopprop($event);gotoCustomerDetails(appt)"
                             *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                             [class.pointer-cursor]="appt.apptStatus!=='blocked'"
-                            [class.pointer-auto]="appt.apptStatus=='blocked'">
-                            {{appt.appmtFor[0].firstName}}
+                            [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                             {{appt.appmtFor[0].lastName}}
-                            <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
+                            <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                           </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                             class="bold pull-left mgn-lt-5 name pointer-cursor font11"
@@ -1070,10 +1067,9 @@
                           (click)="stopprop($event);gotoCustomerDetails(appt)"
                           *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                           [class.pointer-cursor]="appt.apptStatus!=='blocked'"
-                          [class.pointer-auto]="appt.apptStatus=='blocked'">
-                          {{appt.appmtFor[0].firstName}}
+                          [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}
-                          <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
+                          <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
@@ -1431,10 +1427,9 @@
                           (click)="stopprop($event);gotoCustomerDetails(appt)"
                           *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                           [class.pointer-cursor]="appt.apptStatus!=='blocked'"
-                          [class.pointer-auto]="appt.apptStatus=='blocked'">
-                          {{appt.appmtFor[0].firstName}}
+                          [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}
-                          <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
+                          <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"

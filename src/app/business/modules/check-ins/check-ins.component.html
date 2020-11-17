@@ -535,10 +535,9 @@
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="gotoCustomerDetails(checkin)"
                           [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
-                          [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
-                          {{checkin.waitlistingFor[0].firstName}}
+                          [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}
-                          <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
+                          <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
@@ -863,10 +862,9 @@
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                         (click)="gotoCustomerDetails(checkin)"
                         [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
-                        [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
-                        {{checkin.waitlistingFor[0].firstName}}
+                        [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
                         {{checkin.waitlistingFor[0].lastName}}
-                        <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">&nbsp;&nbsp;Blocked</div>
+                        <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
