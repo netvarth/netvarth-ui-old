@@ -1916,8 +1916,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     }
                 });
                 checkinconfirmdialogRef.afterClosed().subscribe(result => {
-                    if (result === 'reloadlist') {
-                    }
+                        this.apptdisable = false
                 });
             }
 }
