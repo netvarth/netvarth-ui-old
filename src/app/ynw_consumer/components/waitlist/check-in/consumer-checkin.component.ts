@@ -573,7 +573,13 @@ export class ConsumerCheckinComponent implements OnInit {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         if (this.type === 'waitlistreschedule') {
                             this.callingModes = this.waitlist.virtualService['WhatsApp'];
-                            this.changePhno = true;
+                            // this.changePhno = true;
+                            if (serv.virtualCallingModes[0].value === this.waitlist.waitlistPhoneNumber) {
+                                this.changePhno = false;
+                            } else {
+                             this.changePhno = true;
+                             this.currentPhone = this.waitlist.waitlistPhoneNumber;
+                            }
                            } else {
                             this.callingModes = this.customer_data.primaryPhoneNumber;
                            }

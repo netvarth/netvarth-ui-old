@@ -511,7 +511,13 @@ export class ConsumerAppointmentComponent implements OnInit {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         if (this.type === 'reschedule') {
                             this.callingModes = this.appointment.virtualService['WhatsApp'];
+                           // this.changePhno = true;
+                           if (serv.virtualCallingModes[0].value === this.appointment.phoneNumber) {
+                               this.changePhno = false;
+                           } else {
                             this.changePhno = true;
+                            this.currentPhone = this.appointment.phoneNumber;
+                           }
                         } else {
                             this.callingModes = this.customer_data.primaryPhoneNumber;
                         }
