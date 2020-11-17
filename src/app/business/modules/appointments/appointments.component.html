@@ -460,18 +460,18 @@
                   </table>
                 </div>
                 <div class="">
-                  <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 mgn-bt-10"
+                  <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10"
                     *ngIf="time_type === 1 && statusAction == 'new'">
                     <div class="col-md-3 col-xs-12 col-sm-12 no-padding">
-                      <mat-select [(ngModel)]="selected_type">
+                      <mat-select class="selecttype" [(ngModel)]="selected_type">
                         <mat-option [value]="'all'" (click)="handleApptSelectionType('all')">
-                          All
+                          All slots
                         </mat-option>
                         <mat-option [value]="'booked'" (click)="handleApptSelectionType('booked')">
-                          Booked
+                          Booked slots
                         </mat-option>
                         <mat-option [value]="'free'" (click)="handleApptSelectionType('free')">
-                          Free
+                          Free slots
                         </mat-option>
                       </mat-select>
                     </div>

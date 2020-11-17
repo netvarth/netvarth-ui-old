@@ -13055,3 +13055,7 @@ hr {
   padding-right: 1px;
   width: 20px;
 }
+.selecttype {
+  outline: auto #dddd;
+  padding: 10px;
+}
