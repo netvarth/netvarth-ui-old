@@ -2586,7 +2586,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   showSelectAll() {
     if (this.check_in_filtered_list.length > 1) {
-      const filterArray = this.check_in_filtered_list.filter(appt => appt.consumer);
+      const filterArray = this.check_in_filtered_list.filter(appt => appt.providerConsumer);
       if (filterArray.length > 1) {
         return true;
       } else {
