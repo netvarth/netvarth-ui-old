@@ -426,7 +426,7 @@ export const Messages = {
   'SCHEDULED_ON_CAP': 'Scheduled on',
   'MIN_CAP': 'Min(s)',
   'NO_CAP': 'No',
-  'EXISTS_AT': 'exist at',
+  'EXISTS_AT': 'exists at',
 
   // App-shared-components-Forgot Password
   'FORGOT_PASSWORD_CAP': 'Forgot Password',
