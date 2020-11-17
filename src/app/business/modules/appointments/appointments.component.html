@@ -498,9 +498,9 @@
                   </a>
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
-                  <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
+                  <thead id="childActionBar" *ngIf="showSelectAll()">
                     <tr>
-                      <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
+                      <th class="chkWth check-table-head" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                           (click)="stopprop($event)" (change)="selectAllAppoinments()"
                           [(ngModel)]="chkSelectAppointments" [ngModelOptions]="{standalone: true}" />
@@ -535,8 +535,8 @@
                       (click)="goCheckinDetail(apptByTimeSlot[appt.time][0])"
                       [class.pointer-cursor]="apptByTimeSlot[appt.time]">
                       <ng-container *ngIf="apptByTimeSlot[appt.time] && selected_type === 'all'">
-                        <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                          <input *ngIf="apptByTimeSlot[appt.time][0].providerConsumer" [checked]="chkAppointments[i]"
+                        <td class="chkWth" *ngIf="showSelectAll()">
+                          <input [checked]="chkAppointments[i]"
                             type="checkbox" class="ckbx pull-left" (click)="stopprop($event)"
                             (change)="chkAptHistoryClicked(i, apptByTimeSlot[appt.time][0])" />
                         </td>
@@ -729,8 +729,8 @@
                     *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0 && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked'))">
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
-                      <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                        <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
+                      <td class="chkWth" *ngIf="showSelectAll()">
+                        <input [checked]="chkAppointments[i]" type="checkbox"
                           class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                       </td>
                       <td class="parent-selection parent-title td-one">
@@ -1012,9 +1012,9 @@
                 </div>
               </div>
               <table class="table tbl-qboard childDetails singleDash">
-                <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
+                <thead id="childActionBar" *ngIf="showSelectAll()">
                   <tr>
-                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
+                    <th class="chkWth check-table-head" colspan="3">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                         (click)="stopprop($event)" (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments"
                         [ngModelOptions]="{standalone: true}" />
@@ -1046,8 +1046,8 @@
                 <tbody *ngIf="check_in_filtered_list.length > 0 && activeSchedules.length > 0">
                   <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
-                    <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                      <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
+                    <td class="chkWth" *ngIf="showSelectAll()">
+                      <input [checked]="chkAppointments[i]" type="checkbox"
                         class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                     </td>
                     <td class="parent-selection parent-title td-one">

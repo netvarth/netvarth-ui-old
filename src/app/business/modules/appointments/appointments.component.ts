@@ -1678,7 +1678,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.chkAppointments = {};
     if (this.chkSelectAppointments) {
       for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
-        this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
+        if (this.check_in_filtered_list[aIndex].providerConsumer) {
+          this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
+        }
       }
     } else {
       this.apptSingleSelection = false;
@@ -2580,6 +2582,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       const schIds = this.selQIds.toString();
       const ids = schIds.replace(/,/g, '-');
       this.getSlotBYScheduleandDate(ids, today);
+    }
+  }
+  showSelectAll() {
+    if (this.check_in_filtered_list.length > 1) {
+      const filterArray = this.check_in_filtered_list.filter(appt => appt.consumer);
+      if (filterArray.length > 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
     }
   }
 }
