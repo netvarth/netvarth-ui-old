@@ -37,11 +37,11 @@
               <div class="table-outer q-itm">
     <div class="pad-10 drugdetailslist" >
       <h5 class="heading3b"> Files uploaded</h5>
-      <table class="table " (change)="somethingChanged()">
+      <table class="table " >
         <thead>
           <tr>
             <th>
-              File name
+              File 
             </th>
             <th>
               status
@@ -55,9 +55,21 @@
         </thead>
         <tbody>
           <tr *ngFor="let file of selectedMessage.files; let i = index;">
-            <td data-title="File name" >
+            <td data-title="File" *ngIf="file.type == '.pdf'|| file.type == 'application/pdf'">
               {{file.name}}
             </td>
+            <td data-title="File" *ngIf="file.type == '.png'|| file.type =='image/png'|| file.type == '.jpg' ||file.type == '.PNG'|| file.type == '.jpeg' ||file.type =='image/jpeg'" >
+              <img  [src]="selectedMessage.base64[0]" *ngIf="selectedMessage.base64[0]" style="width: 25px; height:25px;" class="img-responsive pointer-cursor"(click)="openImageModalRow(image_list_popup[0])">
+              <img alt="" src="{{file.url}}"  *ngIf="!selectedMessage.base64[0]" id="prescription-image1" style="width: 25px; height:25px;"  class="img-responsive pointer-cursor" (click)="openImageModalRow(image_list_popup[0])">
+            </td>
+            <!-- <td data-title="File" *ngIf="file.type == '.jpg'">
+              <img  [src]="selectedMessage.base64[0]" *ngIf="selectedMessage.base64[0]" style="width: 25px; height:25px;" class="img-responsive pointer-cursor"(click)="openImageModalRow(image_list_popup[0])">
+              <img alt="" src="{{file.url}}"  *ngIf="!selectedMessage.base64[0]" id="prescription-image1" style="width: 25px; height:25px;"  class="img-responsive pointer-cursor" (click)="openImageModalRow(image_list_popup[0])">
+            </td>
+            <td data-title="File" *ngIf="file.type == '.jpeg'||'image/jpeg'" >
+              <img  [src]="selectedMessage.base64[0]" *ngIf="selectedMessage.base64[0]" style="width: 25px; height:25px;" class="img-responsive pointer-cursor"(click)="openImageModalRow(image_list_popup[0])">
+              <img alt="" src="{{file.url}}"  *ngIf="!selectedMessage.base64[0]" id="prescription-image1" style="width: 25px; height:25px;"  class="img-responsive pointer-cursor" (click)="openImageModalRow(image_list_popup[0])">
+            </td> -->
             <td data-title="status">
               {{upload_status}}
             </td>
@@ -94,6 +106,10 @@
           (click)="saveImages()">
           Save Prescription</button>
       </div>
+      <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
+        [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+        [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
      </div></div></div></div>
     </div>
    

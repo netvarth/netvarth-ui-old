@@ -87,7 +87,7 @@ export class UploadSignatureComponent implements OnInit {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-       if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+       if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
           this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
         } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
           this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });

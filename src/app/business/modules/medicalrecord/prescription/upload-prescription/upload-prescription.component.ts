@@ -8,6 +8,9 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { ImagesviewComponent } from '../imagesview/imagesview.component';
+import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
+
 
 @Component({
   selector: 'app-upload-prescription',
@@ -49,6 +52,24 @@ export class UploadPrescriptionComponent implements OnInit {
   navigationExtras: NavigationExtras;
   removeprescriptiondialogRef;
   imagesviewdialogRef;
+  image_list_popup: Image[];
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
@@ -94,9 +115,16 @@ export class UploadPrescriptionComponent implements OnInit {
       .subscribe((data) => {
         this.uploadImages = data;
         console.log(data);
+        this.image_list_popup = [];
         for (const pic of this.uploadImages) {
-          const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true ,'url':pic.url};
+          const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true , 'url': pic.url , 'type': pic.type};
           this.selectedMessage.files.push(imgdet);
+          const imgobj = new Image(0,
+            { // modal
+              img: imgdet.url,
+              description: ''
+            });
+          this.image_list_popup.push(imgobj);
         }
         console.log(this.selectedMessage.files);
       },
@@ -105,6 +133,18 @@ export class UploadPrescriptionComponent implements OnInit {
         });
 
   }
+  openImageModalRow(image: Image) {
+    console.log(image);
+    console.log(this.image_list_popup[0]);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+  onButtonBeforeHook() {
+  }
+  onButtonAfterHook() { }
 
   filesSelected(event) {
     const input = event.target.files;
@@ -116,9 +156,18 @@ export class UploadPrescriptionComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedMessage.files.push(file);
+          console.log(this.selectedMessage.files);
           const reader = new FileReader();
           reader.onload = (e) => {
             this.selectedMessage.base64.push(e.target['result']);
+            console.log(this.selectedMessage.base64[0]);
+            this.image_list_popup = [];
+            const imgobj = new Image(0,
+              { // modal
+                img: this.selectedMessage.base64[0],
+                description: ''
+              });
+            this.image_list_popup.push(imgobj);
           };
           reader.readAsDataURL(file);
           this.showSave = true;
@@ -132,44 +181,42 @@ export class UploadPrescriptionComponent implements OnInit {
     return imgsize;
   }
 
-  // showimgPopup(file,index) {
-  //   console.log(index);
-  //   console.log(file);
-  //   if (file.view) {
-  //     file.title = 'Uploaded Prescription';
-  //     this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
-  //       width: '50%',
-  //       panelClass: ['popup-class', 'commonpopupmainclass'],
-  //       disableClose: true,
-  //       data: file,
-  //     });
-  //     this.imagesviewdialogRef.afterClosed().subscribe(result => {
-  //       if (result) {
-  //         console.log(result);
-  //       }
-  //     });
-  //   } else {
-  //     console.log("in else");
-  //     const fileselected = { url: '', title: '' } ;
-  //     //fileselected.url 
-  //    // const blob = this.sharedfunctionObj.b64toBlobforSign() ;
-  //    fileselected.url = this.selectedMessage.base64[0];
-  //     fileselected.title = 'Upload Prescription';
-  //     console.log(fileselected);
-  //     this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
-  //       width: '50%',
-  //       panelClass: ['popup-class', 'commonpopupmainclass'],
-  //       disableClose: true,
-  //       data: fileselected,
-  //     });
-  //     this.imagesviewdialogRef.afterClosed().subscribe(result => {
-  //       if (result) {
-  //         console.log(result);
-  //       }
-  //     });
-  //   }
-    
-  // }
+  showimgPopup(file) {
+    console.log(file);
+    if (file.view) {
+      file.title = 'Uploaded Prescription';
+      this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: file,
+      });
+      this.imagesviewdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result);
+        }
+      });
+    } else {
+      console.log("in else");
+      const fileselected = { url: '', title: '' } ;
+      //fileselected.url 
+     // const blob = this.sharedfunctionObj.b64toBlobforSign() ;
+     fileselected.url = this.selectedMessage.base64[0];
+      fileselected.title = 'Upload Prescription';
+      console.log(fileselected);
+      this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: fileselected,
+      });
+      this.imagesviewdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result);
+        }
+      });
+    }
+  }
 
  
 
