@@ -17,6 +17,7 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
+import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 // import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonType, ButtonsStrategy } from 'angular-modal-gallery';
 
 @Component({
@@ -195,7 +196,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     private activaterouterobj: ActivatedRoute,
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
-    public router: Router,
+    public router: Router, public dateformat: DateFormatPipe,
     private searchdetailserviceobj: SearchDetailServices,
     private dialog: MatDialog) {
     this.onResize();
