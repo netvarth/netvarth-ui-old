@@ -6,6 +6,19 @@
         {{showCheckinButtonCaption()}} For
     </div>
     <div class="col-sm-12 col-xs-12 col-md-12">
+        <div class="service-icon pull-left"
+        *ngIf="service_det.serviceType == 'virtualService'">
+        <i class="fa phon-icon"
+            *ngIf="service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+        <i class="fa meet-icon"
+            *ngIf="service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+        <i class="fa zoom-icon"
+            *ngIf="service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+        <i class="fa wtsapaud-icon"
+            *ngIf="service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'WhatsApp' && service_det.virtualServiceType === 'audioService'"></i>
+        <i class="fa wtsapvid-icon"
+            *ngIf="service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'WhatsApp' && service_det.virtualServiceType === 'videoService'"></i>
+        </div>
         <h6 class="card-title service bookingFor">
             {{service_det.name}}
         </h6>
