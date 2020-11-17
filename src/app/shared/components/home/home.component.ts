@@ -310,5 +310,8 @@ export class HomeComponent implements OnInit {
   // knowApptStatus () {
   //   this.routerobj.navigate(['appt/status/new']);
   // }
+  gotoBusiness() {
+    this.routerobj.navigate(['/business']);
+  }
 }
 
