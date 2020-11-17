@@ -151,10 +151,9 @@
             </div>
           </div>
         </div>
-        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-        <div class="" *ngIf="!loading">
           <mat-tab-group class="checkinlist" (selectedTabChange)="tabChange($event)" [selectedIndex]="time_type - 1">
             <mat-tab label="Today ({{today_waitlist_count}})">
+              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive" *ngIf="!loading">
                 <div>
                   <aside class="filterSidebar" *ngIf="filter_sidebar">
@@ -902,6 +901,7 @@
               </div>
             </mat-tab>
             <mat-tab label="Future ({{future_waitlist_count}})">
+              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <div *ngIf="!loading">
                 <div class="pad-10 pull-left check-status">
                   <a class="mgn-rt-10" [class.selectedStatus]="statusAction=='new'" (click)="statusClick('new')">
@@ -1212,6 +1212,7 @@
               </div>
             </mat-tab>
             <mat-tab label="History ({{history_waitlist_count}})">
+              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <div *ngIf="!loading">
                 <div class="pad-10 act-icons pull-right">
                   <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar"
@@ -1584,7 +1585,6 @@
               </div>
             </mat-tab>
           </mat-tab-group>
-        </div>
       </div>
     </div>
   </div>
