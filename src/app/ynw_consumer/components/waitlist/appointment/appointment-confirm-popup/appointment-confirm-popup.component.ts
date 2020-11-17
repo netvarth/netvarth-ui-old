@@ -46,6 +46,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
 
         public dialogRef: MatDialogRef<AppointmentConfirmPopupComponent>) {
             this.service_det = data.service_details;
+            console.log(this.service_det)
             this.waitlist_for = data.waitlist_for;
             this.userPhone = data.userPhone;
             this.post_Data = data.post_Data;
@@ -123,11 +124,13 @@ export class AppointmentConfirmPopupComponent implements OnInit {
                     }
                 };
                 if (this.service_det.isPrePayment) {
-                    this.dialogRef.close();
                     this.router.navigate(['consumer', 'appointment', 'payment', this.trackUuid], navigationExtras);
-                } else {
                     this.dialogRef.close();
+
+                } else {
                     this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                    this.dialogRef.close();
+
                 }
             },
                 error => {

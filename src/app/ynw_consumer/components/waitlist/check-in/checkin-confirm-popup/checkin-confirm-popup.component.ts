@@ -54,6 +54,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
             this.isFuturedate = data.isFuturedate;
             this.eMail = data.eMail;
             this.settingsjson = data.settingsjson
+            console.log(data.currentPhone)
 
     }
     ngOnInit() {
@@ -125,8 +126,9 @@ export class CheckinConfirmPopupComponent implements OnInit {
                     }
                 };
                 if (this.service_det.isPrePayment) {
-                    this.dialogRef.close();
                     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
+                    this.dialogRef.close();
+
                 } else {
                     let multiple;
                     if (uuidList.length > 1) {
@@ -134,8 +136,9 @@ export class CheckinConfirmPopupComponent implements OnInit {
                     } else {
                         multiple = false;
                     }
-                    this.dialogRef.close();
                     this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: uuidList, multiple: multiple } });
+                    this.dialogRef.close();
+
                 }
             },
                 error => {
