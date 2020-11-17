@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -16,6 +16,11 @@ export class ManualSignatureComponent implements OnInit {
     'minWidth': 5,
     'canvasWidth': 500,
     'canvasHeight': 300
+  };
+  smallsignaturePadOptions: Object = {
+    'minWidth': 5,
+    'canvasWidth': 250,
+    'canvasHeight': 150
   };
   display_PatientId: any;
   today = new Date();
@@ -52,6 +57,8 @@ export class ManualSignatureComponent implements OnInit {
   bookingType: any;
   patientId: any;
   sign = true;
+  screenWidth;
+  small_device_display = false;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
@@ -70,6 +77,15 @@ export class ManualSignatureComponent implements OnInit {
       }
     });
 
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 780) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
   }
 
   ngOnInit() {
