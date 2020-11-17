@@ -2094,7 +2094,9 @@ export class ConsumerCheckinComponent implements OnInit {
                 sel_queue_personaahead : this.sel_queue_personaahead,
                 isFuturedate : this.isFuturedate,
                 eMail : this.userData.userProfile.email,
-                settingsjson : this.settingsjson
+                settingsjson : this.settingsjson,
+                selectedQsTime : this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'],
+                selectedQeTime : this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime']
             }
         });
         checkinconfirmdialogRef.afterClosed().subscribe(result => {

@@ -33,7 +33,8 @@ export class CheckinConfirmPopupComponent implements OnInit {
     settingsjson: any = [];
     consumerNote = '';
     api_error = null;
-
+    selectedQsTime;
+    selectedQeTime;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -53,8 +54,11 @@ export class CheckinConfirmPopupComponent implements OnInit {
             this.sel_queue_personaahead = data.sel_queue_personaahead;
             this.isFuturedate = data.isFuturedate;
             this.eMail = data.eMail;
-            this.settingsjson = data.settingsjson
+            this.settingsjson = data.settingsjson;
             console.log(data.currentPhone)
+            this.selectedQsTime = data.selectedQsTime;
+            console.log(this.selectedQsTime)
+            this.selectedQeTime = data.selectedQeTime;
 
     }
     ngOnInit() {
