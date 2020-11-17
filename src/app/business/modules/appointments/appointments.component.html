@@ -536,7 +536,7 @@
                       [class.pointer-cursor]="apptByTimeSlot[appt.time]">
                       <ng-container *ngIf="apptByTimeSlot[appt.time] && selected_type === 'all'">
                         <td class="chkWth" *ngIf="showSelectAll()">
-                          <input [checked]="chkAppointments[i]"
+                          <input [checked]="chkAppointments[i]" *ngIf="appt.providerConsumer"
                             type="checkbox" class="ckbx pull-left" (click)="stopprop($event)"
                             (change)="chkAptHistoryClicked(i, apptByTimeSlot[appt.time][0])" />
                         </td>
@@ -730,7 +730,7 @@
                     <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <td class="chkWth" *ngIf="showSelectAll()">
-                        <input [checked]="chkAppointments[i]" type="checkbox"
+                        <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
                           class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                       </td>
                       <td class="parent-selection parent-title td-one">
@@ -1047,7 +1047,7 @@
                   <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="showSelectAll()">
-                      <input [checked]="chkAppointments[i]" type="checkbox"
+                      <input [checked]="chkAppointments[i]" type="checkbox" *ngIf="appt.providerConsumer"
                         class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                     </td>
                     <td class="parent-selection parent-title td-one">
