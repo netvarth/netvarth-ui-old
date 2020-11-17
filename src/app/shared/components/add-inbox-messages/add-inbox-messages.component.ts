@@ -107,10 +107,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
-    console.log('Inside add Inbox');
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.createForm();
-    if (this.source === 'provider-waitlist') {
+    if (this.source === 'provider-waitlist' || this.source === 'customer-list') {
       this.getSMSCredits();
     }
   }
