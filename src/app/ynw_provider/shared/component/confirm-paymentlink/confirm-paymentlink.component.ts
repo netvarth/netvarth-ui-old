@@ -156,9 +156,13 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
         this.smsCredits = data;
-        if (this.smsCredits < 5) {
+        if (this.smsCredits < 5 && this.smsCredits > 0) {
           this.is_smsLow = true;
           this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.getLicenseCorpSettings();
+        } else if (this.smsCredits === 0) {
+          this.is_smsLow = true;
+          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
           this.getLicenseCorpSettings();
         } else {
           this.is_smsLow = false;

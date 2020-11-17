@@ -1541,6 +1541,9 @@ export const Messages = {
   'VERY_GOOD_CAP': ' Very Good',
 
   'SEND_MESSAGE': 'The [customer] does not have a mobile number/email',
-  'WAITINGLINE': 'Waiting In Line'
+  'WAITINGLINE': 'Waiting In Line',
+
+  // SMS credits warning
+  'NO_SMS_CREDIT': 'Sorry you dont have any SMS credits, Get it from'
 };
 
