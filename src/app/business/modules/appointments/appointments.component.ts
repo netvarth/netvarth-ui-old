@@ -1560,34 +1560,32 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time.time;
       }
-      // let deptId;
-      // let userId;
-      // let serviceId;
-      // const qfilter = this.activeSchedules.filter(q => q.id === time);
-      // if (qfilter && qfilter[0].services && qfilter[0].services.length > 0) {
-      //   serviceId = qfilter[0].services[0].id;
-      // }
-      // if (qfilter && qfilter[0].provider) {
-      //   userId = qfilter[0].provider.id;
-      //   const filteredDept = this.users.filter(user => user.id === userId);
-      //   if (filteredDept[0] && filteredDept[0].deptId) {
-      //     deptId = filteredDept[0].deptId;
-      //   }
-      // } else {
-      //   userId = '0';
-      //   const filteredService = this.service_list.filter(service => service.id === serviceId);
-      //   if (filteredService[0] && filteredService[0].department) {
-      //     deptId = filteredService[0].department;
-      //   }
-      // }
+      let deptId;
+      let userId;
+      let serviceId;
+      const qfilter = this.activeSchedules.filter(q => q.id === time.scheduleId);
+      if (qfilter && qfilter[0].services && qfilter[0].services.length > 0) {
+        serviceId = qfilter[0].services[0].id;
+      }
+      if (qfilter && qfilter[0].provider) {
+        userId = qfilter[0].provider.id;
+        const filteredDept = this.users.filter(user => user.id === userId);
+        if (filteredDept[0] && filteredDept[0].deptId) {
+          deptId = filteredDept[0].deptId;
+        }
+      } else {
+        userId = '0';
+        const filteredService = this.service_list.filter(service => service.id === serviceId);
+        if (filteredService[0] && filteredService[0].department) {
+          deptId = filteredService[0].department;
+        }
+      }
       // let date;
       // if (this.time_type === 2) {
       // date = this.filter.future_appt_date;
       // }
       this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
-        { queryParams: { timeslot: slot, checkinType: type } });
-      // this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'],
-      //   { queryParams: { timeslot: slot, scheduleId: time.time, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId, date: date } });
+        { queryParams: { timeslot: slot, scheduleId: time.scheduleId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId } });
     }
   }
   searchCustomer() {
@@ -2561,6 +2559,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           for (let j = 0; j < data[i].availableSlots.length; j++) {
             if (this.apptByTimeSlot[data[i].availableSlots[j].time] || (data[i].availableSlots[j].active && data[i].availableSlots[j].noOfAvailbleSlots !== '0')) {
               if (this.scheduleSlots.indexOf(data[i].availableSlots[j]) === -1) {
+                data[i].availableSlots[j]['scheduleId'] = data[i].scheduleId;
                 this.scheduleSlots.push(data[i].availableSlots[j]);
               }
             }
