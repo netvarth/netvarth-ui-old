@@ -34,7 +34,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
     customer_data;
     consumerNote;
     api_error = null;
-
+    appTimeSlot;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -56,6 +56,8 @@ export class AppointmentConfirmPopupComponent implements OnInit {
             this.eMail = data.eMail;
             this.customer_data = data.customer_data;
             this.consumerNote = data.post_Data.consumerNote;
+            this.appTimeSlot = data.appTimeSlot;
+            console.log(this.appTimeSlot)
     }
     ngOnInit() {
     }
@@ -166,5 +168,9 @@ export class AppointmentConfirmPopupComponent implements OnInit {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
                 }
             );
+    }
+    getSingleTime(slot) {
+        const slots = slot.split('-');
+        return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
     }
 }
