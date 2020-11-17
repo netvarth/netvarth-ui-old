@@ -1917,8 +1917,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                         sel_queue_personaahead : this.sel_queue_personaahead,
                         isFuturedate : this.isFuturedate,
                         eMail : this.userData.userProfile.email,
-                        customer_data : this.customer_data
-                        // selected_queue_sTime : this.queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime']
+                        customer_data : this.customer_data,
+                        appTimeSlot : this.apptTime['time']
                     }
                 });
                 checkinconfirmdialogRef.afterClosed().subscribe(result => {
