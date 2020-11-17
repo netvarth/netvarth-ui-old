@@ -4,7 +4,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 // import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 import { projectConstants } from '../../../../../app.component';
 
@@ -31,6 +31,10 @@ export class AppointmentConfirmPopupComponent implements OnInit {
         caption: []
     };
     settingsjson: any = [];
+    customer_data;
+    consumerNote;
+    api_error = null;
+
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -41,17 +45,16 @@ export class AppointmentConfirmPopupComponent implements OnInit {
         public dateformat: DateFormatPipe,
 
         public dialogRef: MatDialogRef<AppointmentConfirmPopupComponent>) {
-            console.log(data)
             this.service_det = data.service_details;
             this.waitlist_for = data.waitlist_for;
-            console.log(this.waitlist_for[0].firstName)
             this.userPhone = data.userPhone;
             this.post_Data = data.post_Data;
             this.account_id = data.account_id;
             this.sel_queue_personaahead = data.sel_queue_personaahead;
             this.isFuturedate = data.isFuturedate;
             this.eMail = data.eMail;
-            console.log(this.eMail)
+            this.customer_data = data.customer_data;
+            this.consumerNote = data.post_Data.consumerNote;
     }
     ngOnInit() {
     }
@@ -87,7 +90,6 @@ export class AppointmentConfirmPopupComponent implements OnInit {
 
         return caption;
     }
- 
     addCheckInConsumer() {
         // this.api_loading = true;
         this.shared_services.addCustomerAppointment(this.account_id,this.post_Data)
@@ -96,45 +98,70 @@ export class AppointmentConfirmPopupComponent implements OnInit {
                 if (this.waitlist_for.length !== 0) {
                     for (const list of this.waitlist_for) {
                         if (list.id === 0) {
-                            // list['id'] = this.customer_data.id;
+                            list['id'] = this.customer_data.id;
                         }
                     }
                 }
-                // let retUUID;
-                // let prepayAmount;
+                let retUUID;
+                let prepayAmount;
                 Object.keys(retData).forEach(key => {
                     if (key === '_prepaymentAmount') {
-                        // prepayAmount = retData['_prepaymentAmount'];
+                        prepayAmount = retData['_prepaymentAmount'];
                     } else {
-                        // retUUID = retData[key];
+                        retUUID = retData[key];
                         this.trackUuid = retData[key];
                     }
                 });
-                this.dialogRef.close();
-
-                this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
-
-                // if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
-                //     this.consumerNoteAndFileSave(retUUID);
-                // }
-                // const navigationExtras: NavigationExtras = {
-                //     queryParams: {
-                //         account_id: this.account_id,
-                //         type_check: 'appt_prepayment',
-                //         prepayment: prepayAmount
-                //     }
-                // };
-                // if (this.sel_ser_det.isPrePayment) {
-                //     this.router.navigate(['consumer', 'appointment', 'payment', this.trackUuid], navigationExtras);
-                // } else {
-                //     this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
-                // }
+                if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
+                    this.consumerNoteAndFileSave(retUUID);
+                }
+                const navigationExtras: NavigationExtras = {
+                    queryParams: {
+                        account_id: this.account_id,
+                        type_check: 'appt_prepayment',
+                        prepayment: prepayAmount
+                    }
+                };
+                if (this.service_det.isPrePayment) {
+                    this.dialogRef.close();
+                    this.router.navigate(['consumer', 'appointment', 'payment', this.trackUuid], navigationExtras);
+                } else {
+                    this.dialogRef.close();
+                    this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                }
             },
                 error => {
-                    // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+                    this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     // this.api_loading = false;
                     // this.apptdisable = false;
                 });
+    }
+    consumerNoteAndFileSave(uuid) {
+        const dataToSend: FormData = new FormData();
+        if (this.consumerNote === '') {
+            this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
+        }
+        dataToSend.append('message', this.consumerNote);
+        const captions = {};
+        let i = 0;
+        if (this.selectedMessage) {
+            for (const pic of this.selectedMessage.files) {
+                dataToSend.append('attachments', pic, pic['name']);
+                captions[i] = 'caption';
+                i++;
+            }
+        }
+        const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+        dataToSend.append('captions', blobPropdata);
+        this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
+            dataToSend)
+            .subscribe(
+                () => {
+                },
+                error => {
+                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                }
+            );
     }
 }

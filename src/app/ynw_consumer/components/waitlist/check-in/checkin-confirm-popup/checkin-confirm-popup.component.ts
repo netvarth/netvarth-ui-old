@@ -4,7 +4,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 // import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 import { projectConstants } from '../../../../../app.component';
 
@@ -32,6 +32,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
     };
     settingsjson: any = [];
     consumerNote = '';
+    api_error = null;
 
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
@@ -88,63 +89,56 @@ export class CheckinConfirmPopupComponent implements OnInit {
 
         return caption;
     }
+    
     addCheckInConsumer() {
         // this.api_loading = true;
         this.shared_services.addCheckin(this.account_id, this.post_Data)
             .subscribe(data => {
                 const retData = data;
-                // let retUUID;
-                // let prepayAmount;
+                let retUUID;
+                let prepayAmount;
                 let uuidList = [];
-                console.log(this.waitlist_for.length);
                 Object.keys(retData).forEach(key => {
                     if (key === '_prepaymentAmount') {
-                        // prepayAmount = retData['_prepaymentAmount'];
+                        prepayAmount = retData['_prepaymentAmount'];
                     } else {
-                        // retUUID = retData[key];
+                        retUUID = retData[key];
                         this.trackUuid = retData[key];
                         uuidList.push(retData[key]);
                     }
                 });
-                let multiple;
+                if (this.selectedMessage.files.length > 0) {
+                    this.consumerNoteAndFileSave(retUUID);
+                }
+                // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
+                const member = [];
+                for (const memb of this.waitlist_for) {
+                    member.push(memb.firstName + ' ' + memb.lastName);
+                }
+                const navigationExtras: NavigationExtras = {
+                    queryParams: {
+                        account_id: this.account_id,
+                        type_check: 'checkin_prepayment',
+                        members: member,
+                        prepayment: prepayAmount
+                    }
+                };
+                if (this.service_det.isPrePayment) {
+                    this.dialogRef.close();
+                    this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
+                } else {
+                    let multiple;
                     if (uuidList.length > 1) {
                         multiple = true;
                     } else {
                         multiple = false;
                     }
                     this.dialogRef.close();
-
                     this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: uuidList, multiple: multiple } });
-
-                // if (this.selectedMessage.files.length > 0) {
-                //     this.consumerNoteAndFileSave(retUUID);
-                // }
-                // const member = [];
-                // for (const memb of this.waitlist_for) {
-                //     member.push(memb.firstName + ' ' + memb.lastName);
-                // }
-                // const navigationExtras: NavigationExtras = {
-                //     queryParams: {
-                //         account_id: this.account_id,
-                //         type_check: 'checkin_prepayment',
-                //         members: member,
-                //         prepayment: prepayAmount
-                //     }
-                // };
-                // if (this.sel_ser_det.isPrePayment) {
-                //     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
-                // } else {
-                //     let multiple;
-                //     if (uuidList.length > 1) {
-                //         multiple = true;
-                //     } else {
-                //         multiple = false;
-                //     }
-                //     this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: uuidList, multiple: multiple } });
-                // }
+                }
             },
                 error => {
-                    // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+                    this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     // this.api_loading = false;
                 });
