@@ -2392,7 +2392,7 @@ sup {
   }
 }
 
-.content.comn-cls .lbr .card .c-history li.cancelled:before, .content.comn-cls .lbr .card .appthistory .c-history li.Rejected:before {
+.content.comn-cls .lbr .card .c-history li.cancelled:before, .content.comn-cls .lbr .card .appthistory .c-history li.Rejected:before , .content.comn-cls .lbr .card .appthistory .c-history li.Cancelled:before{
   background: #f24949;
 }
 
