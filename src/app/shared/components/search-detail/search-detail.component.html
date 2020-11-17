@@ -666,7 +666,7 @@
                                                     *ngIf="!search_result.fields['estimatedtime_det']['onlineCheckIn']">
                                                     <span class="est-time">Next Available Date</span>
                                                     <span
-                                                        class="time-data">{{search_result.fields['estimatedtime_det']['cdate']}}</span>
+                                                        class="time-data">{{search_result.fields['estimatedtime_det']['cdate'] | date: dateFormat}}</span>
                                                 </div>
                                                 <span class="checkin-btn" (click)="providerDetClicked(search_result)"
                                                     *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && !search_result.fields['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
