@@ -53,7 +53,8 @@ export class CheckinConfirmPopupComponent implements OnInit {
             this.sel_queue_personaahead = data.sel_queue_personaahead;
             this.isFuturedate = data.isFuturedate;
             this.eMail = data.eMail;
-            console.log(this.eMail)
+            this.settingsjson = data.settingsjson
+
     }
     ngOnInit() {
     }
