@@ -1310,7 +1310,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.chkAppointments = {};
     if (this.chkSelectAppointments) {
       for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
-        this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
+        if (this.check_in_filtered_list[aIndex].consumer) {
+          this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
+        }
       }
     } else {
       this.apptSingleSelection = false;
@@ -1489,7 +1491,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showUndo = false;
     this.showRejected = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
-    if (totalAppointmentsSelected === this.check_in_filtered_list.length && totalAppointmentsSelected !== 0) {
+    const filterArray = this.check_in_filtered_list.filter(appt => appt.providerConsumer);
+    if (totalAppointmentsSelected === filterArray.length && totalAppointmentsSelected !== 0) {
       this.chkSelectAppointments = true;
     }
     if (totalAppointmentsSelected === 1) {
@@ -3108,7 +3111,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
   }
-    addCustomerDetails(checkin) {
+  addCustomerDetails(checkin) {
     this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
+  }
+  showSelectAll() {
+    if (this.check_in_filtered_list.length > 1) {
+      const filterArray = this.check_in_filtered_list.filter(appt => appt.consumer);
+      if (filterArray.length > 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 }

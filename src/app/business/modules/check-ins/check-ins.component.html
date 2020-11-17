@@ -483,9 +483,9 @@
                   </a>
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
-                  <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
+                  <thead id="childActionBar" *ngIf="showSelectAll()">
                     <tr>
-                      <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
+                      <th class="chkWth check-table-head" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                           (click)="stopprop($event)" (change)="selectAllAppoinments()"
                           [(ngModel)]="chkSelectAppointments" [ngModelOptions]="{standalone: true}" />
@@ -517,9 +517,10 @@
                   <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0">
                     <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
                       (click)="goCheckinDetail(checkin)">
-                      <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                        <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]" *ngIf="checkin.consumer"
-                          (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
+                      <td class="chkWth" *ngIf="showSelectAll()">
+                        <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
+                          *ngIf="checkin.consumer" (click)="stopprop($event)"
+                          (change)="chkAptHistoryClicked(i, checkin)" />
                       </td>
                       <td class="parent-selection parent-title td-one">
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
@@ -534,10 +535,10 @@
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="gotoCustomerDetails(checkin)"
                           [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
-                          [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
-                          {{checkin.waitlistingFor[0].firstName}}
+                          [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}
-                          <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">&nbsp;&nbsp;Blocked</div></div>
+                          <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
+                        </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -626,11 +627,12 @@
                             &nbsp;Call</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="stopprop($event);addCustomerDetails(checkin)" *ngIf="checkin.waitlistStatus == 'blocked'"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="addCustomerTooltip">
-                        <i class="dashboardadd-customer-icon"></i>
-                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
-                      </a>
+                          (click)="stopprop($event);addCustomerDetails(checkin)"
+                          *ngIf="checkin.waitlistStatus == 'blocked'" [matTooltipClass]="tooltipcls"
+                          [matTooltip]="addCustomerTooltip">
+                          <i class="dashboardadd-customer-icon"></i>
+                          <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
+                        </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
                           (click)="stopprop($event);changeWaitlistStatus(statusAction, 'STARTED', checkin)"
                           *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && (!checkin.virtualService)"
@@ -811,9 +813,9 @@
                 </div>
               </div>
               <table class="table tbl-qboard childDetails singleDash">
-                <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
+                <thead id="childActionBar" *ngIf="showSelectAll()">
                   <tr>
-                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
+                    <th class="chkWth check-table-head" colspan="3">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                         (click)="stopprop($event)" (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments"
                         [ngModelOptions]="{standalone: true}" />
@@ -842,9 +844,10 @@
                 <tbody *ngIf="check_in_filtered_list.length > 0 && activeQs.length > 0">
                   <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
                     (click)="goCheckinDetail(checkin)">
-                    <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
+                    <td class="chkWth" *ngIf="showSelectAll()">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]"
-                        (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
+                        *ngIf="checkin.consumer" (click)="stopprop($event)"
+                        (change)="chkAptHistoryClicked(i, checkin)" />
                     </td>
                     <td class="parent-selection parent-title td-one">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Token'"
@@ -857,9 +860,12 @@
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
                         [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
-                        (click)="gotoCustomerDetails(checkin)">
-                        {{checkin.waitlistingFor[0].firstName}}
-                        {{checkin.waitlistingFor[0].lastName}}</div>
+                        (click)="gotoCustomerDetails(checkin)"
+                        [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
+                        [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
+                        {{checkin.waitlistingFor[0].lastName}}
+                        <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
+                      </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -1169,6 +1175,20 @@
                               {{mode.value}}</mat-checkbox>
                           </li>
                         </div>
+                        <div *ngIf="providerLabels.length > 0">
+                          <label class="filterHeaders">Labels</label>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let lbl of providerLabels">
+                            <mat-checkbox
+                              [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                              (change)="setLabelFilter(lbl, $event)">
+                              {{lbl.displayName}}</mat-checkbox>
+                          </li>
+                        </div>
                         <div class="filterTextinput" *ngIf="time_type == 3">
                           <li class="filterli filterDatepicker">
                             <input type="text" [(ngModel)]="filter.check_in_start_date"
@@ -1214,6 +1234,13 @@
                     </th>
                   </tr>
                 </thead>
+                <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
+                  <tr>
+                    <td colspan="5" class="no-appt">
+                      <p>No history {{(showToken) ? 'tokens' : 'check-ins'}}</p>
+                    </td>
+                  </tr>
+                </tbody>
                 <tbody *ngIf="check_in_filtered_list.length > 0">
                   <tr class="pointer-cursor" *ngFor="let checkin of check_in_filtered_list, let i=index"
                     (click)="goCheckinDetail(checkin)">

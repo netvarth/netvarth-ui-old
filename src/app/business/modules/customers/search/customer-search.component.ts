@@ -224,6 +224,7 @@ export class CustomerSearchComponent implements OnInit {
     appointmentDate;
     checkinType;
     isFrom;
+    emptyFielderror = false;
 
 
 
@@ -625,8 +626,14 @@ export class CustomerSearchComponent implements OnInit {
     }
 
     searchCustomer(form_data, mod?) {
+        this.emptyFielderror = false;
+        if (form_data.search_input === '' || null) {
+            this.emptyFielderror = true;
+            this.searchClicked = false;
+            return;
+        }
+        console.log(form_data);
         this.loading = true;
-
         let mode = 'id';
         if (mod) {
             mode = mod;

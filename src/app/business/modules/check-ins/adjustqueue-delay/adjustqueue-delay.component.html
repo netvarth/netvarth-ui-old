@@ -131,7 +131,8 @@
                     </ngb-timepicker>
                   </div>
                   <div class="form-group inline" *ngIf="queuejson.length > 0">
-                    <mat-checkbox formControlName="send_message">{{send_message_cap}}</mat-checkbox>
+                    <mat-checkbox [disabled]="is_noSMS" formControlName="send_message">{{send_message_cap}}</mat-checkbox>
+                    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
                   </div>
                   <div class="form-group">
                     <ng-container class="example-full-width" *ngIf="amForm.get('send_message').value === true">

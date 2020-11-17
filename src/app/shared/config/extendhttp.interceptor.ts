@@ -2,7 +2,6 @@ import { catchError, switchMap, retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject, throwError, EMPTY } from 'rxjs';
-import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Messages } from '../constants/project-messages';
@@ -39,7 +38,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   forceUpdateCalled = false;
   stopThisRequest = false;
 
-  constructor(private router: Router, private shared_functions: SharedFunctions,
+  constructor(private shared_functions: SharedFunctions,
     public shared_services: SharedServices, private dialog: MatDialog) { }
 
   private _refreshSubject: Subject<any> = new Subject<any>();

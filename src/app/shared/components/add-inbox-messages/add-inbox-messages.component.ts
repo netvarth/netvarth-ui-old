@@ -54,6 +54,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   is_smsLow = false;
   corpSettings: any;
   addondialogRef: any;
+  is_noSMS = false;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -106,10 +107,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
-    console.log('Inside add Inbox');
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.createForm();
-    if (this.source === 'provider-waitlist') {
+    if (this.source === 'provider-waitlist' || this.source === 'customer-list') {
       this.getSMSCredits();
     }
   }
@@ -485,12 +485,18 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
         this.smsCredits = data;
-        if (this.smsCredits < 5) {
+        if (this.smsCredits < 5 && this.smsCredits > 0) {
           this.is_smsLow = true;
           this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
           this.getLicenseCorpSettings();
+        } else if (this.smsCredits === 0) {
+          this.is_smsLow = true;
+          this.is_noSMS = true;
+          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+          this.getLicenseCorpSettings();
         } else {
           this.is_smsLow = false;
+          this.is_noSMS = false;
         }
     });
   }

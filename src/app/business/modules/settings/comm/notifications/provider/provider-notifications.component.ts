@@ -4,6 +4,8 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import { AddproviderAddonComponent } from '../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -123,10 +125,17 @@ export class ProviderNotificationsComponent implements OnInit {
   api_loading = true;
   crumbtitle;
   breadcrmbTitle;
+  smsCredits;
+  is_smsLow = false;
+  smsWarnMsg: string;
+  is_noSMS = false;
+  corpSettings: any;
+  addondialogRef: any;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     public route: ActivatedRoute,
     private shared_functions: SharedFunctions,
+    private dialog: MatDialog,
     public provider_services: ProviderServices) {
     this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
@@ -143,6 +152,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.getGlobalSettingsStatus();
     this.getNotificationList();
+    this.getSMSCredits();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     // console.log(this.crumbtitle);
     if (this.crumbtitle === 'Hospital') {
@@ -1370,5 +1380,50 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   goBack() {
     this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
+  }
+
+  getSMSCredits() {
+    this.provider_services.getSMSCredits().subscribe(data => {
+        this.smsCredits = data;
+        if (this.smsCredits < 5 && this.smsCredits > 0) {
+          this.is_smsLow = true;
+          this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.getLicenseCorpSettings();
+        } else if (this.smsCredits === 0) {
+          this.is_smsLow = true;
+          this.is_noSMS = true;
+          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+          this.getLicenseCorpSettings();
+        } else {
+          this.is_smsLow = false;
+          this.is_noSMS = false;
+        }
+    });
+  }
+  getLicenseCorpSettings() {
+    this.provider_services.getLicenseCorpSettings().subscribe(
+        (data: any) => {
+            this.corpSettings = data;
+        }
+    );
+}
+  gotoSmsAddon() {
+    if (this.corpSettings && this.corpSettings.isCentralised) {
+      this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  } else {
+      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+          width: '50%',
+          data: {
+              type: 'addons'
+          },
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true
+      });
+      this.addondialogRef.afterClosed().subscribe(result => {
+        if (result) {
+         this.getSMSCredits();
+        }
+      });
+  }
   }
 }
