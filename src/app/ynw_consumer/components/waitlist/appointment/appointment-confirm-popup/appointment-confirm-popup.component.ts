@@ -36,6 +36,9 @@ export class AppointmentConfirmPopupComponent implements OnInit {
     api_error = null;
     appTimeSlot;
     prepaymentAmount;
+    changePhno;
+    currentPhone;
+    callingModes;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -58,7 +61,9 @@ export class AppointmentConfirmPopupComponent implements OnInit {
             this.consumerNote = data.post_Data.consumerNote;
             this.appTimeSlot = data.appTimeSlot;
             this.prepaymentAmount = data.prepaymentAmount;
-
+            this.changePhno = data.changePhno;
+            this.currentPhone = data.currentPhone;
+            this.callingModes = data.callingModes;
     }
     ngOnInit() {
     }

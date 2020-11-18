@@ -2100,7 +2100,10 @@ export class ConsumerCheckinComponent implements OnInit {
                 prepaymentAmount : this.prepaymentAmount,
                 sel_queue_servicetime : this.sel_queue_servicetime,
                 calc_mode : this.calc_mode,
-                sel_queue_waitingmins : this.sel_queue_waitingmins
+                sel_queue_waitingmins : this.sel_queue_waitingmins,
+                changePhno : this.changePhno,
+                currentPhone : this.currentPhone,
+                callingModes : this.callingModes
             }
         });
         checkinconfirmdialogRef.afterClosed().subscribe(result => {

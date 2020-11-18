@@ -1919,7 +1919,10 @@ export class ConsumerAppointmentComponent implements OnInit {
                         eMail : this.userData.userProfile.email,
                         customer_data : this.customer_data,
                         appTimeSlot : this.apptTime['time'],
-                        prepaymentAmount : this.prepaymentAmount
+                        prepaymentAmount : this.prepaymentAmount,
+                        changePhno : this.changePhno,
+                        currentPhone : this.currentPhone,
+                        callingModes : this.callingModes
                     }
                 });
                 checkinconfirmdialogRef.afterClosed().subscribe(result => {
