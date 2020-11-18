@@ -63,6 +63,7 @@
               </mat-checkbox>
           </div>
           <div style="color: red;font: italic" *ngIf = "!sms && !email && !pushnotify"> Please tick any of the options</div>
+          <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
       </div>
       <div  class="form-group" *ngIf="showthirdparty">
         We will create a PDF of your prescription and will share Via sms and email.

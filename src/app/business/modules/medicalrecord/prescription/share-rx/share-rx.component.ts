@@ -7,6 +7,8 @@ import { FormMessageDisplayService } from '../../../../../shared/modules/form-me
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { MedicalrecordService } from '../../medicalrecord.service';
+import { Messages } from '../../../../../shared/constants/project-messages';
+import { AddproviderAddonComponent } from '../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 
 
 @Component({
@@ -80,6 +82,12 @@ export class ShareRxComponent implements OnInit {
   thirdpartyphone = '';
   thirdpartyemail = '';
   sharebtnloading = false;
+  smsCredits;
+  is_smsLow = false;
+  smsWarnMsg: string;
+  corpSettings: any;
+  addondialogRef: any;
+  is_noSMS = false;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -88,6 +96,7 @@ export class ShareRxComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private fb: FormBuilder,
     public provider_services: ProviderServices,
+    private provider_servicesobj: ProviderServices,
     private medicalService: MedicalrecordService
   ) {
 
@@ -114,6 +123,7 @@ export class ShareRxComponent implements OnInit {
     if (this.accountType === 'BRANCH') {
       this.getBusinessProfile();
     }
+    this.getSMSCredits();
   }
   createForm() {
     this.sharewith = 0;
@@ -397,6 +407,51 @@ export class ShareRxComponent implements OnInit {
           this.mobile = this.bdata.accountLinkedPhNo;
           console.log(this.mobile);
         });
+  }
+  getSMSCredits() {
+    this.provider_services.getSMSCredits().subscribe(data => {
+        this.smsCredits = data;
+        if (this.smsCredits < 5 && this.smsCredits > 0) {
+          this.is_smsLow = true;
+          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
+          this.getLicenseCorpSettings();
+        } else if (this.smsCredits === 0) {
+          this.is_smsLow = true;
+          this.is_noSMS = true;
+          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+          this.getLicenseCorpSettings();
+        } else {
+          this.is_smsLow = false;
+          this.is_noSMS = false;
+        }
+    });
+  }
+  getLicenseCorpSettings() {
+    this.provider_servicesobj.getLicenseCorpSettings().subscribe(
+        (data: any) => {
+            this.corpSettings = data;
+        }
+    );
+  }
+  gotoSmsAddon() {
+    this.dialogRef.close();
+    if (this.corpSettings && this.corpSettings.isCentralised) {
+      this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  } else {
+      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+          width: '50%',
+          data: {
+              type: 'addons'
+          },
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true
+      });
+      this.addondialogRef.afterClosed().subscribe(result => {
+        if (result) {
+         this.getSMSCredits();
+        }
+      });
+  }
   }
 }
 
