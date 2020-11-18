@@ -126,7 +126,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   carouselOne = {
     nav: false,
     dots: true,
-    loop: true,
+    loop: false,
     rewind: true,
     responsiveClass: true,
     responsive: {
@@ -135,7 +135,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       },
       992: {
         items: 5,
-        center: true,
+        // center: true,
       }
     }
   };
