@@ -98,29 +98,30 @@
       <table class="table ">
         <thead>
           <tr>
-            <th>File name</th>
+            <th>File</th>
             <th>Last modified</th>
             <th>Image size</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let file of uploadlist; let i = index;">
-            <td data-title="File name"  class="pointlist" *ngIf="file.type === '.pdf'">
+            <td data-title="File"  class="pointlist" *ngIf="file.type === '.pdf'">
                 <a [href]="file.url" download><i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;<u
                 style="color: #3c8dbc; ">{{file.originalName}}</u></a>
             </td>
-            <td data-title="File name" (click)="showimgPopup(file)" class="pointlist" *ngIf="file.type === '.png'">
-                <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;<u
-                  style="color: #3c8dbc; ">{{file.originalName}}</u>
+            <td data-title="File"  class="pointlist"*ngIf="file.type == '.png'|| file.type == '.jpg' ||file.type == '.PNG'|| file.type == '.jpeg' ">
+              <img alt="{{file.originalName}}" src="{{file.url}}" id="prescription-image1" style="width: 25px; height:25px;"
+              class=" img-responsive pointer-cursor" (click)="openImageModalRow(image_list_popup[0])">
               </td>
-               <td data-title="File name" (click)="showimgPopup(file)" class="pointlist" *ngIf="file.type === '.jpg'">
-                  <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;<u
-                    style="color: #3c8dbc; ">{{file.originalName}}</u>
+              
+               <!-- <td data-title="File"  class="pointlist" *ngIf="file.type === '.jpg'">
+                <img alt="{{file.originalName}}" src="{{file.url}}" id="prescription-image1" style="width: 25px; height:25px;"
+                class=" img-responsive pointer-cursor" (click)="openImageModalRow(image_list_popup[0])">
                 </td>
-                <td data-title="File name" (click)="showimgPopup(file)" class="pointlist" *ngIf="file.type === '.jpeg'">
-                    <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;<u
-                      style="color: #3c8dbc; ">{{file.originalName}}</u>
-                  </td> 
+                <td data-title="File"  class="pointlist" *ngIf="file.type === '.jpeg'">
+                  <img alt="{{file.originalName}}" src="{{file.url}}" id="prescription-image1" style="width: 25px; height:25px;"
+                  class=" img-responsive pointer-cursor" (click)="openImageModalRow(image_list_popup[0])">
+                  </td>  -->
                  
             <td data-title="Last modified"> 
               {{file.date  | date:dateFormatSp}}
@@ -134,6 +135,10 @@
       <div (click)="updatePaperPrescription()" class="lnk action pointlist normal-sz pad-10" style="color: #3c8dbc;">
         <u>Edit Prescription</u></div>
     </div>
+    <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
+      [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+      [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+      (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
     <div class="mgn-up-10">
       <button type="button" mat-button class="cs-btn bt1" (click)="shareManualRx('uploadrx')">
         Share Prescription</button>

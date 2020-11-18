@@ -140,7 +140,7 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     } else {
       this.pay_link.emailNotification = 'false';
     }
-    if (!form_data.mobile_number && !form_data.emailId) {
+    if (!form_data.mobile_number && !form_data.email_id) {
       this.shared_functions.openSnackBar('Please provide atleast one field', { 'panelClass': 'snackbarerror' });
     } else {
       this.provider_services.Paymentlink(this.pay_link)

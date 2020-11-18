@@ -10,6 +10,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { ImagesviewComponent } from './imagesview/imagesview.component';
 import { projectConstants } from '../..../../../../../app.component';
 import { ShareRxComponent } from './share-rx/share-rx.component';
+import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
 
 @Component({
   selector: 'app-prescription',
@@ -49,6 +50,24 @@ export class PrescriptionComponent implements OnInit {
   sharedialogRef;
   navigations: any;
   provider_user_Id: any;
+  image_list_popup: Image[];
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -165,6 +184,14 @@ export class PrescriptionComponent implements OnInit {
         if (data[0].keyName) {
           this.uploadlist = data;
           console.log(this.uploadlist);
+          this.image_list_popup = [];
+          const imgobj = new Image(0,
+            { // modal
+              img: this.uploadlist[0].url,
+              description: this.uploadlist[0].caption || ''
+            });
+          this.image_list_popup.push(imgobj);
+          console.log(this.image_list_popup.length);
         } else {
           this.drugList = data;
           this.getDigitalSign();
@@ -175,6 +202,18 @@ export class PrescriptionComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
+  openImageModalRow(image: Image) {
+    console.log(image);
+    console.log(this.image_list_popup[0]);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+  onButtonBeforeHook() {
+  }
+  onButtonAfterHook() { }
 
   addDrug() {
     this.addDrugdialogRef = this.dialog.open(AddDrugComponent, {
