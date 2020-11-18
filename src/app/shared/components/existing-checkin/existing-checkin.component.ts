@@ -40,6 +40,7 @@ export class ExistingCheckinComponent implements OnInit {
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   tokenenabled = false;
   batchEnabled = false;
+  settingsjson: any;
 
   constructor(
     public dialogRef: MatDialogRef<ExistingCheckinComponent>,
@@ -55,8 +56,14 @@ export class ExistingCheckinComponent implements OnInit {
   ngOnInit() {
     this.getExistingCheckinsByLocation(this.data.locId);
     this.terminologiesjson = this.data.terminologies;
+    this.settingsjson = this.data.settings;
+    if (this.settingsjson.showTokenId) {
+      this.checkinLabel = 'Token';
+    } else {
+      this.checkinLabel = 'Check-In';
+    }
     this.provider_datastorage.set('terminologies', this.terminologiesjson);
-    this.checkinLabel = this.sharedfunctionObj.firstToUpper(this.terminologiesjson['waitlist']);
+    // this.checkinLabel = this.sharedfunctionObj.firstToUpper(this.terminologiesjson['waitlist']);
     this.cancelledlabel = this.sharedfunctionObj.firstToUpper(this.terminologiesjson['cancelled']);
     this.dialogRef.backdropClick().subscribe(() => {
       this.dialogRef.close(this.changeOccured);
