@@ -38,7 +38,7 @@
         <div class="mgtop40 form-group">
             Send message via
             <div class="coupon-outer">
-                <mat-checkbox [disabled] = "(!phone || phone === 'null')" class="mgright50 example-margin" [(ngModel)]="sms"  [ngModelOptions]="{standalone: true}">
+                <mat-checkbox [disabled] = "(!phone || phone === 'null') || is_noSMS" class="mgright50 example-margin" [(ngModel)]="sms"  [ngModelOptions]="{standalone: true}">
                     SMS
                 </mat-checkbox>
                 <mat-checkbox [disabled]="!consumer_email" class="mgright50 example-margin" [(ngModel)]="email"

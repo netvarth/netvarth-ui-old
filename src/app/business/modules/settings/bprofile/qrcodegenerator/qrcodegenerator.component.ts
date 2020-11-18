@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, On
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { projectConstants } from '../../../../../app.component';
 import {  Meta, Title } from '@angular/platform-browser';
-
+declare let cordova: any;
 @Component({
   selector: 'app-qrcodegenerator',
   templateUrl: './qrcodegenerator.component.html'
@@ -94,21 +94,25 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
   //   showPasscode() {
   //     this.show_passcode = !this.show_passcode;
   //   }
-  printQr(printSectionId) {
+printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
-    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    WindowPrt.document.write('<html><head><title></title>');
-    WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
-    WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
-    WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
-    WindowPrt.document.write(printContent.innerHTML);
-    WindowPrt.document.write('</div>');
-    WindowPrt.document.write('</body></html>');
-    WindowPrt.document.close();
-    WindowPrt.focus();
-    WindowPrt.print();
-    WindowPrt.close();
-  }
+    setTimeout(() => {
+        // const params = [
+        //     'height=' + screen.height,
+        //     'width=' + screen.width,
+        //     'fullscreen=yes'
+        // ].join(',');
+        // const printWindow = window.open('', '', params);
+        let printsection = '<html><head><title></title>';
+        printsection += '</head><body style="margin-top:200px">';
+        printsection += '<div style="text-align:center!important">';
+        printsection += printContent.innerHTML;
+        printsection += '</div>';
+        printsection += '</body></html>';
+        cordova.plugins.printer.print(printsection);
+        // printWindow.print();
+    });
+}
 
   downloadQR() {
 

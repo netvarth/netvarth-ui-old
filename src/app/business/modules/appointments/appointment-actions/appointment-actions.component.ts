@@ -11,6 +11,7 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-customer.component';
 import * as moment from 'moment';
+declare let cordova: any;
 
 @Component({
     selector: 'app-appointment-actions',
@@ -114,12 +115,12 @@ export class AppointmentActionsComponent implements OnInit {
         _this.qrCodegeneration(this.appt);
         setTimeout(() => {
             const printContent = document.getElementById('print-section');
-            const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-            ].join(',');
-            const printWindow = window.open('', '', params);
+            // const params = [
+            //     'height=' + screen.height,
+            //     'width=' + screen.width,
+            //     'fullscreen=yes'
+            // ].join(',');
+            // const printWindow = window.open('', '', params);
             let checkin_html = '';
             checkin_html += '<table style="width:100%;"><thead>';
             checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.appt.appmtDate) + '<br/>';
@@ -144,13 +145,14 @@ export class AppointmentActionsComponent implements OnInit {
             checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
             checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
             checkin_html += '</tbody></table>';
-            printWindow.document.write('<html><head><title></title>');
-            printWindow.document.write('</head><body >');
-            printWindow.document.write(checkin_html);
-            printWindow.document.write('</body></html>');
+            // printWindow.document.write('<html><head><title></title>');
+            // printWindow.document.write('</head><body >');
+            // printWindow.document.write(checkin_html);
+            // printWindow.document.write('</body></html>');
             _this.showQR = false;
-            printWindow.moveTo(0, 0);
-            printWindow.print();
+            // printWindow.moveTo(0, 0);
+            // printWindow.print();
+            cordova.plugins.printer.print(checkin_html);
         });
     }
     getSingleTime(slot) {
@@ -177,6 +179,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     rescheduleActionClicked() {
         this.action = 'reschedule';
+        this.setMinMaxDate();
     }
     changeSlot() {
         this.action = 'slotChange';
@@ -288,9 +291,6 @@ export class AppointmentActionsComponent implements OnInit {
                     displayboards = data;
                     layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
                     this.board_count = layout_list.length;
-                    this.setActions();
-                },
-                error => {
                     this.setActions();
                 });
     }
@@ -666,4 +666,3 @@ export class AppointmentActionsComponent implements OnInit {
                 });
     }
 }
-

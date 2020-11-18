@@ -71,7 +71,7 @@ export class MedicalrecordComponent implements OnInit {
     private datePipe: DateFormatPipe
   ) {
     this.visitdate = this.datePipe.transformToDateWithTime(new Date());
-    this.activated_route.queryParamMap.subscribe(queryParams => {
+    this.activated_route.queryParams.subscribe(queryParams => {
       if (queryParams['calledfrom']) {
         this.medicalService.setCalledFrom(queryParams['calledfrom']);
       }

@@ -80,6 +80,7 @@ export class SignUpComponent implements OnInit {
   actionstarted = false;
   scCode;
   scfound = false;
+  showTermcondition = false;
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -508,14 +509,12 @@ export class SignUpComponent implements OnInit {
               this.shared_functions.doLogout().then(() => {
                 this.shared_functions.setitemonLocalStorage('new_provider', 'true');
                 this.shared_functions.providerLogin(login_data);
-                const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-                this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+                this.shared_functions.setitemonLocalStorage('newProvider', 'true');
               });
             } else {
               this.shared_functions.setitemonLocalStorage('new_provider', 'true');
               this.shared_functions.providerLogin(login_data);
-              const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-              this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+              this.shared_functions.setitemonLocalStorage('newProvider', 'true');
             }
           },
           error => {
@@ -537,9 +536,6 @@ export class SignUpComponent implements OnInit {
             this.shared_functions.consumerLogin(login_data, this.moreParams)
               .then(
                 () => {
-                  const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-                  this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-                  this.shared_functions.setitemonLocalStorage('qrp', post_data.password);
                   this.dialogRef.close('success');
                 },
                 error => {
@@ -632,4 +628,7 @@ export class SignUpComponent implements OnInit {
   // bank(){
   //   this.bank_action = true;
   // }
+  termsClicked() {
+    (this.showTermcondition) ? this.showTermcondition = false : this.showTermcondition = true;
+  }
 }

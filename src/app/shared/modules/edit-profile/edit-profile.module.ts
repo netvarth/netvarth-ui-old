@@ -7,7 +7,6 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { EditProfileComponent } from './edit-profile.component';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
-import { HeaderModule } from '../header/header.module';
 
 @NgModule({
     imports: [
@@ -17,8 +16,7 @@ import { HeaderModule } from '../header/header.module';
         ReactiveFormsModule,
         FormMessageDisplayModule,
         BreadCrumbModule,
-        LoadingSpinnerModule,
-        HeaderModule
+        LoadingSpinnerModule
     ],
     declarations: [
         EditProfileComponent

@@ -824,6 +824,6 @@ export const projectConstantsLocal = {
   REQUIRED_FIELDS_JALDEE_ONLINE: [
     'SPECIALIZATION', 'PROFILE_PIC', 'BUSINESS_NAME', 'BASE_LOCATION', 'LOCATION_SCHEDULE'
   ],
-  PATH: 'https://' + window.location.host + '/'
+  PATH: 'https://www.jaldee.com/'
 
 };

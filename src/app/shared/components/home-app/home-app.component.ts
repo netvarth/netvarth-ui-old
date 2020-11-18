@@ -122,13 +122,16 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     };
     this.api_loading = true;
     // if (this.data.type === 'provider') {
+    post_data.mUniqueId = localStorage.getItem('mUniqueId');
     this.shared_functions.providerLogin(post_data)
       .then(
         () => {
-          // this.dialogRef.close();
-          setTimeout(() => {
-            // this.dialogRef.close();
-          }, projectConstants.TIMEOUT_DELAY_SMALL);
+         // this.dialogRef.close();
+        //  const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+        //  this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+         setTimeout(() => {
+           // this.dialogRef.close();
+         }, projectConstants.TIMEOUT_DELAY_SMALL);
         },
         error => {
           ob.api_error = this.shared_functions.getProjectErrorMesssages(error);

@@ -1,0 +1,70 @@
+.inl-blk {
+    display: inline-block !important;
+}
+
+.pad-20 {
+    padding:20px !important;
+}
+.pad-10 {
+    padding:10px !important;
+}
+.teleservicePopup .mat-form-field {
+    width: 100%;
+}
+.bg-grey {
+    background: #ddd !important;
+}
+textarea {
+    width: 100%;
+    padding:10px !important;
+    font-size:0.8rem !important;
+}
+.mt-icon img{
+    width: 25px;
+    height:30px;
+    padding-bottom: 10px;
+}
+.meet-icon, .zoom-icon {
+    width: 20px !important;
+}
+.ln-hgt-30 {
+    line-height: 30px;
+}
+.box-bg-grey {
+    background: rgb(202 195 195 / 16%);
+}
+.mgn-bt-auto {
+    margin-bottom: auto;
+}
+.fnt-lrge {
+    font-size: 1.4rem;
+}
+.fnt-fon {
+    font-size: x-large;
+    color: rgb(0 0 0);
+}
+.end-meet-red {
+    border: 2px solid rgb(218 82 82);
+    padding: 15px;
+}
+.go-bck-dashbrd {
+    border: 2px solid rgb(0 128 0);
+    padding: 15px;
+}
+.serv-name-border {
+    border: 2px solid rgb(60 141 188);
+}
+.serv-name-color {
+    color: rgb(60 141 188);
+}
+.txt-trans-none{
+    text-transform: none !important;
+}
+.teleservicePopup .meetingdetails .tele_srv_txtarea {
+    height: 180px !important;
+}  
+@media only screen and (max-width: 769px) {
+    .mgn-bt-auto {
+        margin-bottom: 0px !important;
+    }
+  }

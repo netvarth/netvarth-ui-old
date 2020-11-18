@@ -48,6 +48,7 @@ export class CheckinDetailsSendComponent implements OnInit {
   is_smsLow = false;
   corpSettings: any;
   addondialogRef: any;
+  is_noSMS = false;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
@@ -154,7 +155,11 @@ export class CheckinDetailsSendComponent implements OnInit {
               this.provider_services.smsCheckin(this.uuid).subscribe(
               () => {
                   this.dialogRef.close();
+                  if (this.showToken) {
+                    this.shared_functions.openSnackBar('Token details sent successfully');
+                  } else {
                   this.shared_functions.openSnackBar('Check-in details sent successfully');
+                  }
               },
               error => {
                   this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -165,7 +170,11 @@ export class CheckinDetailsSendComponent implements OnInit {
               this.provider_services.emailCheckin(this.uuid).subscribe(
                   () => {
                       this.dialogRef.close();
+                      if (this.showToken) {
+                        this.shared_functions.openSnackBar('Token details mailed successfully');
+                      } else {
                       this.shared_functions.openSnackBar('Check-in details mailed successfully');
+                      }
                   },
                   error => {
                       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -201,12 +210,18 @@ export class CheckinDetailsSendComponent implements OnInit {
     getSMSCredits() {
       this.provider_services.getSMSCredits().subscribe(data => {
           this.smsCredits = data;
-          if (this.smsCredits < 5) {
+          if (this.smsCredits < 5 && this.smsCredits > 0) {
             this.is_smsLow = true;
             this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
             this.getLicenseCorpSettings();
+          } else if (this.smsCredits === 0) {
+            this.is_smsLow = true;
+            this.is_noSMS = true;
+            this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+            this.getLicenseCorpSettings();
           } else {
             this.is_smsLow = false;
+            this.is_noSMS = false;
           }
       });
     }

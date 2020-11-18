@@ -2,7 +2,6 @@ import { catchError, switchMap, retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject, throwError, EMPTY } from 'rxjs';
-import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Messages } from '../constants/project-messages';
@@ -10,15 +9,12 @@ import { SharedServices } from '../services/shared-services';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MaintenanceMsgComponent } from '../components/maintenance-msg/maintenance-msg.component';
-// import { version } from '../constants/version' ;
+import { version } from '../constants/version';
 
 @Injectable()
 export class ExtendHttpInterceptor implements HttpInterceptor {
   no_redirect_path = [
     base_url + 'consumer/login',
-    base_url + 'superadmin/login',
-    base_url + 'support/login',
-    base_url + 'marketing/login',
     base_url + 'provider/login',
     base_url + 'consumer/login/reset/\d{10,12}'
   ];
@@ -42,28 +38,71 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   forceUpdateCalled = false;
   stopThisRequest = false;
 
-  constructor(private router: Router, private shared_functions: SharedFunctions,
+  constructor(private shared_functions: SharedFunctions,
     public shared_services: SharedServices, private dialog: MatDialog) { }
 
   private _refreshSubject: Subject<any> = new Subject<any>();
   private _maintananceSubject: Subject<any> = new Subject<any>();
 
-  private _ifSessionExpiredN() {
+  // private _ifSessionExpiredN() {
+  //   this._refreshSubject.subscribe({
+  //     complete: () => {
+  //       this._refreshSubject = new Subject<any>();
+  //     }
+  //   });
+  //   if (this._refreshSubject.observers.length === 1) {
+  //     this.shared_functions.doLogout().then(
+  //       (refreshSubject: any) => {
+  //         this._refreshSubject.next(refreshSubject);
+  //       }
+  //     );
+  //   }
+  //   return this._refreshSubject;
+  // }
+
+  private _ifSessionExpired() {
     this._refreshSubject.subscribe({
       complete: () => {
         this._refreshSubject = new Subject<any>();
       }
     });
     if (this._refreshSubject.observers.length === 1) {
-      this.shared_functions.doLogout().then(
-        (refreshSubject: any) => {
-          this._refreshSubject.next(refreshSubject);
+      // Hit refresh-token API passing the refresh token stored into the request
+      // to get new access token and refresh token pair
+      // this.sessionService.refreshToken().subscribe(this._refreshSubject);
+      this.shared_functions.removeitemfromSessionStorage('tabId');
+      const ynw_user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+      if (!ynw_user) {
+        window.location.reload();
+      }
+      const phone_number = ynw_user.loginId;
+      const password = this.shared_functions.getitemfromLocalStorage('jld');
+      if (!ynw_user.mUniqueId) {
+        if (localStorage.getItem('mUniqueId')) {
+          ynw_user.mUniqueId = localStorage.getItem('mUniqueId');
+          this.shared_functions.setitemonLocalStorage('ynw-credentials', ynw_user);
         }
-      );
+      }
+      const post_data = {
+        'countryCode': '+91',
+        'loginId': phone_number,
+        'password': password,
+        'mUniqueId': ynw_user.mUniqueId
+      };
+      const activeuser = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
+      // this.shared_functions.doLogout().then(
+      //   (refreshSubject: any) => {
+      //     this._refreshSubject.next(refreshSubject);
+      //   }
+      // );
+      if (activeuser) {
+        this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
+      } else {
+        this.shared_services.ConsumerLogin(post_data).subscribe(this._refreshSubject);
+      }
     }
     return this._refreshSubject;
   }
-
   private _ifMaintenanceOn() {
     this._maintananceSubject.subscribe ({
       complete: () => {
@@ -79,46 +118,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     }
     return this._maintananceSubject;
   }
-  // private _ifSessionExpired() {
-  //   this._refreshSubject.subscribe({
-  //     complete: () => {
-  //       this._refreshSubject = new Subject<any>();
-  //     }
-  //   });
-  //   if (this._refreshSubject.observers.length === 1) {
-  //     // Hit refresh-token API passing the refresh token stored into the request
-  //     // to get new access token and refresh token pair
-  //     // this.sessionService.refreshToken().subscribe(this._refreshSubject);
-  //     this.shared_functions.removeitemfromSessionStorage('tabId');
-  //     const ynw_user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
-  //     if (!ynw_user) {
-  //       window.location.reload();
-  //     }
-  //     const phone_number = ynw_user.loginId;
-  //     // const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
-  //     const enc_pwd = 'U2FsdGVkX1++uus5wpaBf1lGVWOMvpqlEENsT1AA5P4==';
-  //     const password = this.shared_services.get(enc_pwd, projectConstants.KEY);
-  //     const post_data = {
-  //       'countryCode': '+91',
-  //       'loginId': phone_number,
-  //       'password': password,
-  //       'mUniqueId': ynw_user.mUniqueId
-  //     };
-  //     const activeuser = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
-  //     // this.shared_functions.doLogout().then(
-  //     //   (refreshSubject: any) => {
-  //     //     this._refreshSubject.next(refreshSubject);
-  //     //   }
-  //     // );
-  //     if (activeuser) {
-  //       this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
-  //     } else {
-  //       this.shared_services.ConsumerLogin(post_data).subscribe(this._refreshSubject);
-  //     }
-  //   }
-  //   return this._refreshSubject;
-  // }
-
   private _checkSessionExpiryErr(error: HttpErrorResponse): boolean {
     return (
       error.status &&
@@ -150,7 +149,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.shared_functions.logout();
         this.stopThisRequest = false;
+        this.forceUpdateCalled = false;
       }
     });
   }
@@ -167,13 +168,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       return next.handle(this.updateHeader(req, url)).pipe(
         catchError((error, caught) => {
           if (error instanceof HttpErrorResponse) {
-            if (error.status === 301) {
+             if (error.status === 301) {
               if (!this.forceUpdateCalled) {
                 this._forceUpdate();
-                return EMPTY;
-              } else {
-                return throwError(error);
               }
+              return EMPTY;
             } else {
               return throwError(error);
             }
@@ -191,22 +190,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-              // const isprovider = localStorage.getItem('isBusinessOwner') === 'true';
-              //  this.shared_functions.doLogout().then (
-              //    () => {
-              //      this.router.navigate(['/']);
-              //    }
-              //  );
-              // return EMPTY;
-              return this._ifSessionExpiredN().pipe(
+              return this._ifSessionExpired().pipe(
                 switchMap(() => {
-                  // return next.handle(this.updateHeader(req, url));
-                  this.router.navigate(['/']);
-                  return EMPTY;
+                  return next.handle(this.updateHeader(req, url));
                 })
               );
-              // return EMPTY;
-              // return throwError(error);
             } else if (this._checkMaintanance(error)) {
               return this._ifMaintenanceOn().pipe(
                 switchMap(() => {
@@ -226,29 +214,25 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                 })
               );
             } else if (error.status === 0) {
-              // Network Error Handling
-              // return next.handle(this.updateHeader(req, url)).pipe(
-              retry(2),
-                // catchError((errorN: HttpErrorResponse) => {
+                retry(2),
                 this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
-              return EMPTY;
-              // }),
-              // delay(10000);
-              // );
+                return EMPTY;
             } else if (error.status === 404) {
               // return EMPTY;
               return throwError(error);
             } else if (error.status === 401) {
-              this.shared_functions.logout();
-              return EMPTY;
+              const password = this.shared_functions.getitemfromLocalStorage('jld');
+              if (!password) {
+                this.shared_functions.logout();
+                return EMPTY;
+              }
+              // this.shared_functions.logout();
               // return throwError(error);
             } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {
                 this._forceUpdate();
-                return EMPTY;
-              } else {
-                return throwError(error);
               }
+              return EMPTY;
             } else if (error.status === 303) {
               this.shared_functions.setitemonLocalStorage('unClaimAccount', true);
               return throwError(error);
@@ -264,8 +248,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
-    // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
-    // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
+    req = req.clone({ headers: req.headers.append('Hybrid-Version', version.mobile) });
+    req = req.clone({ headers: req.headers.append('Cache-Control', 'no-cache')});
+    if (this.shared_functions.getitemfromSessionStorage('deviceName')) {
+      req = req.clone({ headers: req.headers.append('device-name', this.shared_functions.getitemfromSessionStorage('deviceName')), withCredentials: true });
+    }
     if (this.shared_functions.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {
@@ -296,4 +283,3 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     return check;
   }
 }
-

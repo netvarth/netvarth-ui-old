@@ -201,6 +201,7 @@ export class SharedFunctions {
   public setLoginData(data, post_data, mod) {
     // localStorage.setItem('ynw-user', JSON.stringify(data));
     this.setitemToGroupStorage('ynw-user', data);
+    this.setitemonLocalStorage('jld', post_data['password']);
     localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
     if (mod === 'provider') {
 
@@ -211,11 +212,19 @@ export class SharedFunctions {
 
   public clearLocalstorage() {
     this.removeitemfromLocalStorage('ynw-credentials');
+    const uniqueId = localStorage.getItem('mUniqueId');
+    const devicename = localStorage.getItem('deviceName');
     for (let index = 0; index < localStorage.length; index++) {
       if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
         localStorage.removeItem(localStorage.key(index));
         index = index - 1; // manage index after remove
       }
+    }
+    if (uniqueId) {
+      localStorage.setItem('mUniqueId', uniqueId);
+    }
+    if (devicename) {
+      localStorage.setItem('deviceName', devicename);
     }
   }
   public clearSessionStorage() {
@@ -346,14 +355,14 @@ export class SharedFunctions {
 
   public showlogoicon(logo, moreparams?) {
     if (logo == null || logo === '') {
-      return '../../assets/images/no_image_icon.png';
+      return './assets/images/no_image_icon.png';
     } else {
       return logo;
     }
   }
   public showitemimg(logo, moreparams?) {
     if (logo == null || logo === '') {
-      return 'assets/images/no_image_icon.png';
+      return './assets/images/no_image_icon.png';
     } else {
       return logo;
     }

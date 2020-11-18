@@ -21,6 +21,7 @@ import { interval as observableInterval, Subscription } from 'rxjs';
 import { CheckinActionsComponent } from './checkin-actions/checkin-actions.component';
 import { VoicecallDetailsComponent } from './voicecall-details/voicecall-details.component';
 import Speech from 'speak-tts';
+declare let cordova: any;
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -1309,7 +1310,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.chkAppointments = {};
     if (this.chkSelectAppointments) {
       for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
-        this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
+        if (this.check_in_filtered_list[aIndex].consumer) {
+          this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
+        }
       }
     } else {
       this.apptSingleSelection = false;
@@ -1488,7 +1491,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showUndo = false;
     this.showRejected = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
-    if (totalAppointmentsSelected === this.check_in_filtered_list.length && totalAppointmentsSelected !== 0) {
+    const filterArray = this.check_in_filtered_list.filter(appt => appt.providerConsumer);
+    if (totalAppointmentsSelected === filterArray.length && totalAppointmentsSelected !== 0) {
       this.chkSelectAppointments = true;
     }
     if (totalAppointmentsSelected === 1) {
@@ -2516,12 +2520,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.historyCheckins = data;
-              const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-              ].join(',');
-              const printWindow = window.open('', '', params);
+              // const params = [
+              //   'height=' + screen.height,
+              //   'width=' + screen.width,
+              //   'fullscreen=yes'
+              // ].join(',');
+              // const printWindow = window.open('', '', params);
               let checkin_html = '';
               checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
               checkin_html += '<td style="padding:10px;">Sl.No.</td>';
@@ -2555,16 +2559,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
               checkin_html += '</div>';
-              printWindow.document.write('<html><head><title></title>');
-              printWindow.document.write('</head><body >');
-              printWindow.document.write(checkin_html);
-              printWindow.document.write('</body></html>');
-              printWindow.moveTo(0, 0);
-              printWindow.print();
-              printWindow.document.close();
-              setTimeout(() => {
-                printWindow.close();
-              }, 500);
+              // printWindow.document.write('<html><head><title></title>');
+              // printWindow.document.write('</head><body >');
+              // printWindow.document.write(checkin_html);
+              // printWindow.document.write('</body></html>');
+              // printWindow.moveTo(0, 0);
+              // printWindow.print();
+              // printWindow.document.close();
+              // setTimeout(() => {
+              //   printWindow.close();
+              // }, 500);
+              cordova.plugins.printer.print(checkin_html);
             });
       });
   }
@@ -3106,7 +3111,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
   }
-    addCustomerDetails(checkin) {
+  addCustomerDetails(checkin) {
     this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
+  }
+  showSelectAll() {
+    if (this.check_in_filtered_list.length > 1) {
+      const filterArray = this.check_in_filtered_list.filter(appt => appt.consumer);
+      if (filterArray.length > 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 }

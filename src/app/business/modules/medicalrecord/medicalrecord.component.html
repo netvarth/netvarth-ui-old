@@ -23,17 +23,20 @@
         <span *ngIf="customerDetails.gender">Gender: {{customerDetails.gender | capitalizeFirst}}</span> -->
         <hr>
       </div>
-      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 ">
         <h5 class="heading2b">Add or view medical records</h5>
-        <p><span class="normal-sz">Patient visit date </span>
+        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8"  style="padding-left:0px;padding-right:0px;"><span class="normal-sz">Patient visit date </span>
           <button *ngIf="dateShow">{{visitdate }} &nbsp;</button>
           <button *ngIf="isShowList" (click)="VisitList()">{{visitdate}} &nbsp; <i class="arrow down"></i></button>
-          &nbsp;
-          <span *ngIf="mrId !== 0"  class="div-outline custId-cursor pull-right mr-20" (click)="activitylogs()"><u style="color: blue;">Activity Logs</u></span>
+        </div><div class="col-md-4 col-xs-12 col-sm-12 col-lg-4"  style="padding-left:0px;padding-right:0px;">
+          <span *ngIf="mrId !== 0"  class="custId-cursor  mr-20" (click)="activitylogs()"><u style="color: blue;">Activity Logs</u></span>
           <!-- <span>(Recent visit)</span> -->
-        </p>
-        <hr>
+        </div>
+        <div class="clearfix"></div>
+      <hr>
       </div>
+      
+     
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
         <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12" style="padding-left:0px;padding-right:0px;">
           <label *ngIf="department">Department</label><span *ngIf="department">

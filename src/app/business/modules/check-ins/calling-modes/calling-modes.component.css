@@ -1,0 +1,32 @@
+.inl-blk {
+    display: inline-block !important;
+}
+
+.pad-20 {
+    padding:20px !important;
+}
+.pad-10 {
+    padding:10px !important;
+}
+.teleservicePopup .mat-form-field {
+    width: 100%;
+}
+.bg-grey {
+    background: #ddd !important;
+}
+textarea {
+    width: 100%;
+    padding:10px !important;
+    font-size:0.8rem !important;
+}
+.mt-icon img{
+    width: 25px;
+    height:30px;
+    padding-bottom: 10px;
+}
+.meet-icon, .zoom-icon {
+    width: 20px !important;
+}
+.ln-hgt-30 {
+    line-height: 30px;
+}

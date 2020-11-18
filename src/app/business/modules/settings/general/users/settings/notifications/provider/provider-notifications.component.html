@@ -49,7 +49,7 @@
                 <ul class="notifications">
                   <li>
                     <span class="notification"> via SMS </span>
-                    <span [class.icon-add]="!sms" [class.icon-minus]="sms" (click)="smsAddClicked()"></span>
+                    <span [class.disabled]="is_noSMS" [class.icon-add]="!sms" [class.icon-minus]="sms" (click)="smsAddClicked()"></span>
                     <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
                     <div class="form-group" *ngIf="sms">
                       <div class="input-group mb-3 phadd">
@@ -124,7 +124,7 @@
                 <ul class="notifications">
                   <li>
                     <span class="notification"> via SMS</span>
-                    <span [class.icon-add]="!cancelsms" [class.icon-minus]="cancelsms"
+                    <span [class.disabled]="is_noSMS" [class.icon-add]="!cancelsms" [class.icon-minus]="cancelsms"
                       (click)="cancelledCheckinsmsAddClicked()"></span>
                       <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
                     <div class="form-group" *ngIf="cancelsms">
@@ -210,7 +210,7 @@
                 <ul class="notifications">
                   <li>
                     <span class="notification"> via SMS </span>
-                    <span [class.icon-add]="!smsAppt" [class.icon-minus]="smsAppt" (click)="smsApptAddClicked()"></span>
+                    <span [class.disabled]="is_noSMS" [class.icon-add]="!smsAppt" [class.icon-minus]="smsAppt" (click)="smsApptAddClicked()"></span>
                     <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
                     <div class="form-group" *ngIf="smsAppt">
                       <div class="input-group mb-3 phadd">
@@ -284,7 +284,7 @@
                 <ul class="notifications">
                   <li>
                     <span class="notification"> via SMS</span>
-                    <span [class.icon-add]="!cancelsmsAppt" [class.icon-minus]="cancelsmsAppt"
+                    <span [class.disabled]="is_noSMS" [class.icon-add]="!cancelsmsAppt" [class.icon-minus]="cancelsmsAppt"
                       (click)="cancelledApptsmsAddClicked()"></span>
                       <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
                     <div class="form-group" *ngIf="cancelsmsAppt">

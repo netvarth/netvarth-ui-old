@@ -1,24 +1,19 @@
-<section class="container cons-inbox no-padding-small">
-  <div class="content comn-cls m0 p0">
-    <div class="row">
-      <div class="panel panel-default">
-        <div class="panel-heading top-row ">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-            <app-header *ngIf="shared_functions.checkLogin()"></app-header>
-          </div>
-        </div>
-        <div class="panel-body no-padding">
-          <div class="c-outer m0 p0">
-            <div class="c-body">
-              <div class="card title-gb">
-                <h5 class="mgn-up-10">Inbox <a class="pull-right back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
-              </div>
-              <div class="card p0">
-                <app-inbox-list [messages]="messages" [fromsource]="'inbox'" (reloadApi)="getInboxMessages()"
-                  *ngIf="obtainedMsgs"></app-inbox-list>
-              </div>
-            </div>
-          </div>
+<section>
+  <div class="comn-cls">
+    <div class="container">
+      <div class="row">
+        <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="content comn-cls">
+    <div class="container">
+      <div class="row">
+        <div class="card p0">
+          <app-inbox-list [messages]="messages" [fromsource]="'inbox'" (reloadApi)="getInboxMessages()"
+            *ngIf="obtainedMsgs"></app-inbox-list>
         </div>
       </div>
     </div>

@@ -10,9 +10,9 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { NavigationExtras, Router } from '@angular/router';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ApplyLabelComponent } from '../apply-label/apply-label.component';
+declare let cordova: any;
 import { SharedServices } from '../../../../shared/services/shared-services';
 import * as moment from 'moment';
-
 
 @Component({
     selector: 'app-checkin-actions',
@@ -125,12 +125,12 @@ export class CheckinActionsComponent implements OnInit {
         const bname = bprof.bn;
         setTimeout(() => {
             const printContent = document.getElementById('print-section');
-            const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-            ].join(',');
-            const printWindow = window.open('', '', params);
+            // const params = [
+            //     'height=' + screen.height,
+            //     'width=' + screen.width,
+            //     'fullscreen=yes'
+            // ].join(',');
+            // const printWindow = window.open('', '', params);
             let checkin_html = '';
             checkin_html += '<table style="width:100%;"><thead>';
             checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.checkin.date) + '<br/>';
@@ -153,12 +153,14 @@ export class CheckinActionsComponent implements OnInit {
             checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
             checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
             checkin_html += '</tbody></table>';
-            printWindow.document.write('<html><head><title></title>');
-            printWindow.document.write('</head><body>');
-            printWindow.document.write(checkin_html);
-            printWindow.document.write('</body></html>');
-            printWindow.moveTo(0, 0);
-            printWindow.print();
+            // printWindow.document.write('<html><head><title></title>');
+            // printWindow.document.write('</head><body >');
+            // printWindow.document.write(checkin_html);
+            // printWindow.document.write('</body></html>');
+            this.showQR = false;
+            // printWindow.moveTo(0, 0);
+            // printWindow.print();
+            cordova.plugins.printer.print(checkin_html);
         });
     }
     close() {

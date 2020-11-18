@@ -5,8 +5,6 @@ import { FormMessageDisplayService } from '../../modules/form-message-display/fo
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
-import { projectConstants } from '../../../app.component';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-change-password',
@@ -44,32 +42,29 @@ export class ChangePasswordComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router,
-    private location: Location
+    public router: Router
   ) { }
-  goBack() {
-    this.location.back();
-  }
+
   ngOnInit() {
     this.isBusinessowner = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     if (this.isBusinessowner) {
-      this.spForm = this.fb.group({
-        old_password: ['', Validators.compose(
-          [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-        new_password: ['', Validators.compose(
-          [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-        confirm_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-      });
-    } else {
-      this.spForm = this.fb.group({
-        old_password: ['', Validators.compose(
-          [Validators.required])],
-        new_password: ['', Validators.compose(
-          [Validators.required])],
-        confirm_password: ['', Validators.compose([Validators.required])],
-      });
-    }
+    this.spForm = this.fb.group({
+      old_password: ['', Validators.compose(
+        [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+      new_password: ['', Validators.compose(
+        [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+      confirm_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+    });
+  } else {
+    this.spForm = this.fb.group({
+      old_password: ['', Validators.compose(
+        [Validators.required])],
+      new_password: ['', Validators.compose(
+        [Validators.required])],
+      confirm_password: ['', Validators.compose([Validators.required])],
+    });
+  }
   }
 
   onSubmit(sub_data) {
@@ -86,8 +81,9 @@ export class ChangePasswordComponent implements OnInit {
           () => {
             // this.api_success = Messages.PASSWORD_CHANGED;
             const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
-            const encrypted = this.shared_services.set(sub_data.new_password, projectConstants.KEY);
-            this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+            // const encrypted = this.shared_services.set(sub_data.new_password, projectConstants.KEY);
+            // this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+            this.shared_functions.setitemonLocalStorage('jld', sub_data.new_password);
             // ynw.password = sub_data.new_password; // change the password to the new one in the local storage variable
             this.shared_functions.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
             this.shared_functions.openSnackBar(Messages.PASSWORD_CHANGED);
@@ -112,4 +108,5 @@ export class ChangePasswordComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
   }
+
 }

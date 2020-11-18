@@ -4,6 +4,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 
 @Component({
   selector: 'app-teleservice-share',
@@ -51,10 +54,18 @@ export class TeleServiceShareComponent implements OnInit {
   provider_msgJV: string;
   disableButton = false;
   gooleWaitFor: string;
+  smsCredits;
+  is_smsLow = false;
+  smsWarnMsg: string;
+  corpSettings: any;
+  addondialogRef: any;
+  is_noSMS = false;
 
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
+    private provider_services: ProviderServices,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
@@ -67,6 +78,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.meetingLink = this.data.meetingLink;
     this.consumerName = this.data.consumerName;
     this.internt_cap = this.shared_functions.getProjectMesssages('NET_CNNCT');
+    this.getSMSCredits();
     if (this.data.reminder) {
       this.getReminderData();
       this.providerView = false;
@@ -206,5 +218,51 @@ export class TeleServiceShareComponent implements OnInit {
         }
         );
     }
+  }
+
+  getSMSCredits() {
+    this.provider_services.getSMSCredits().subscribe(data => {
+        this.smsCredits = data;
+        if (this.smsCredits < 5 && this.smsCredits > 0) {
+          this.is_smsLow = true;
+          this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.getLicenseCorpSettings();
+        } else if (this.smsCredits === 0) {
+          this.is_smsLow = true;
+          this.is_noSMS = true;
+          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+          this.getLicenseCorpSettings();
+        } else {
+          this.is_smsLow = false;
+          this.is_noSMS = false;
+        }
+    });
+  }
+  getLicenseCorpSettings() {
+    this.provider_services.getLicenseCorpSettings().subscribe(
+        (data: any) => {
+            this.corpSettings = data;
+        }
+    );
+}
+  gotoSmsAddon() {
+    this.dialogRef.close();
+    if (this.corpSettings && this.corpSettings.isCentralised) {
+      this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  } else {
+      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+          width: '50%',
+          data: {
+              type: 'addons'
+          },
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true
+      });
+      this.addondialogRef.afterClosed().subscribe(result => {
+        if (result) {
+         this.getSMSCredits();
+        }
+      });
+  }
   }
 }

@@ -6,7 +6,6 @@ import { ProviderSettingsComponent } from './provider-settings.component';
 import { ProviderBprofileSearchComponent } from '../provider-bprofile-search/provider-bprofile-search.component';
 import { ProviderWaitlistComponent } from '../provider-waitlist/provider-waitlist.component';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
-// import { CheckInModule } from '../../../shared/modules/check-in/check-in.module';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,7 +34,6 @@ import { JoyrideModule } from 'ngx-joyride';
         CapitalizeFirstPipeModule,
         ProviderSettingsRoutingModule,
         BreadCrumbModule,
-        // CheckInModule,
         RouterModule,
         CommonModule,
         MaterialModule,
@@ -95,4 +93,3 @@ import { JoyrideModule } from 'ngx-joyride';
 })
 
 export class ProviderSettingsModule { }
-
