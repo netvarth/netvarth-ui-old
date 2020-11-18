@@ -530,7 +530,7 @@
                       <tr *ngFor="let appt of scheduleSlots, let i=index"
                         (click)="goCheckinDetail(apptByTimeSlot[appt.time][0])"
                         [class.pointer-cursor]="apptByTimeSlot[appt.time]">
-                        <ng-container *ngIf="apptByTimeSlot[appt.time] && selected_type === 'all'">
+                        <ng-container *ngIf="apptByTimeSlot[appt.time] && appt.scheduleId === apptByTimeSlot[appt.time][0].schedule.id && selected_type === 'all'">
                           <td class="chkWth" *ngIf="showSelectAll()">
                             <input [checked]="chkAppointments[i]" *ngIf="apptByTimeSlot[appt.time][0].providerConsumer"
                               type="checkbox" class="ckbx pull-left" (click)="stopprop($event)"

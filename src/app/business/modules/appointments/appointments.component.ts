@@ -2198,6 +2198,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsByProvider() {
     const qs = [];
+    this.selQIds = [];
     if (this.selectedUser && this.selectedUser.id === 'all') {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
@@ -2554,9 +2555,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.activeSchedules.indexOf(filterSchedule[0]);
   }
   getSlotBYScheduleandDate(scheduleid, date) {
-    this.scheduleSlots = [];
     this.provider_services.getSlotsByScheduleandDate(scheduleid, date).subscribe(
       (data: any) => {
+        this.scheduleSlots = [];
         for (let i = 0; i < data.length; i++) {
           if (data[i].availableSlots) {
             for (let j = 0; j < data[i].availableSlots.length; j++) {
