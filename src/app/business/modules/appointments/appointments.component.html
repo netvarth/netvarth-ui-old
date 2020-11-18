@@ -512,7 +512,7 @@
                       </tr>
                     </thead>
                     <tbody
-                      *ngIf="statusAction != 'new' && !loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
+                      *ngIf="(statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
                       <tr>
                         <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
                           <p *ngIf="statusAction === 'new'">No active appointments</p>
