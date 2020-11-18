@@ -648,10 +648,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     const plen = 4;
     let jIndex = 0;
     this.jsonArrayList[0] = [];
-    console.log(jsonlist);
    for (let i = 0; i < jsonlist.length; i++) {
      this.jsonArrayList[jIndex].push(jsonlist[i]);
-      console.log((i + 1) % plen);
       if ((i + 1) % plen === 0) {
          jIndex++;
          if (i !== (jsonlist.length - 1)) {
@@ -659,7 +657,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
          }
       }
    }
-   console.log(this.jsonArrayList);
   }
 
   // To get searchlabels for 3rd search box

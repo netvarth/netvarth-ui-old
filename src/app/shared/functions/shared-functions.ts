@@ -523,12 +523,25 @@ export class SharedFunctions {
 
   getSearchLabels(selected_domain) {
     const searchLabelsList = [];
+    const domList = {
+      'physiciansSurgeons': 'hospital',
+      'dentists': 'dentalHosp',
+      'alternateMedicinePractitioners': 'alternateMedicineHosp'
+    };
     const ynw_conf = this.getitemfromLocalStorage('ynw-bconf');
     if (ynw_conf.bdata) {
       for (let i = 0; i < ynw_conf.bdata.length; i++) {
         if (ynw_conf.bdata[i].domain === selected_domain) {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
-            searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
+            if (ynw_conf.bdata[i].subDomains[subdom].subDomain) {
+              if (domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]) {
+                console.log(ynw_conf.bdata[i].subDomains[subdom].subDomain);
+                console.log(domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]);
+                searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' (or sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\' sub_sector:\'' + domList[ynw_conf.bdata[i].subDomains[subdom].subDomain] + '\'))&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
+              } else {
+                searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
+              }
+            }
             for (let special = 0; special < ynw_conf.bdata[i].subDomains[subdom].specializations.length; special++) {
               // tslint:disable-next-line: max-line-length
               searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'subSector': ynw_conf.bdata[i].subDomains[subdom].displayName, 'type': 'special' });
@@ -537,7 +550,15 @@ export class SharedFunctions {
         }
         if (selected_domain === 'All') {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
-            searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields' });
+            if (ynw_conf.bdata[i].subDomains[subdom].subDomain) {
+              if (domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]) {
+                console.log(ynw_conf.bdata[i].subDomains[subdom].subDomain);
+                console.log(domList[ynw_conf.bdata[i].subDomains[subdom].subDomain]);
+                searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' (or sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\' sub_sector:\'' + domList[ynw_conf.bdata[i].subDomains[subdom].subDomain] + '\'))&q.parser=structured&return=_all_fields' });
+              } else {
+                searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields' });
+              }
+            }
             for (let special = 0; special < ynw_conf.bdata[i].subDomains[subdom].specializations.length; special++) {
               // tslint:disable-next-line: max-line-length
               searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'subSector': ynw_conf.bdata[i].subDomains[subdom].displayName, 'type': 'special' });
@@ -1138,8 +1159,8 @@ export class SharedFunctions {
   Lbase64Encode(str) {
     let retstr = '';
     if (str !== '' && str !== undefined) {
-      retstr = str.replace('(', '~');
-      retstr = retstr.replace(')', '~~');
+      retstr = str.replace('/(/g', '~');
+      retstr = retstr.replace('/)/g', '~~');
       return retstr;
     } else {
       return str;
@@ -1148,8 +1169,8 @@ export class SharedFunctions {
   Lbase64Decode(str) {
     let retstr = '';
     if (str !== '' && str !== undefined) {
-      retstr = str.replace('~~', ')');
-      retstr = retstr.replace('~', '(');
+      retstr = str.replace('/~~/g', ')');
+      retstr = retstr.replace('/~/g', '(');
       return retstr;
     } else {
       return str;
@@ -1598,12 +1619,10 @@ export class SharedFunctions {
   }
 
   b64toBlob(b64Data) {
-    console.log(b64Data);
     const contentType = 'image/png';
     const sliceSize = 512;
 
     const byteCharacters = atob(b64Data);
-    console.log(byteCharacters);
     const byteArrays = [];
 
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
