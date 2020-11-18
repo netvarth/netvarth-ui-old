@@ -51,7 +51,7 @@
       <div class="mgtop40 form-group"  *ngIf="!showthirdparty">
               We will create a PDF of your prescription and will share Via
           <div class="coupon-outer">
-              <mat-checkbox   [disabled]=" !phone ||  phone === 'null'"  class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+              <mat-checkbox [disabled] = "(!phone || phone === 'null') || is_noSMS"  class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                   SMS
               </mat-checkbox>
               <mat-checkbox  [disabled]=" !email_id"  class="mgright50 example-margin" [(ngModel)]="email"
