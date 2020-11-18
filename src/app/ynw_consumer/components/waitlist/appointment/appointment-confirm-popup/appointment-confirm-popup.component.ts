@@ -35,6 +35,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
     consumerNote;
     api_error = null;
     appTimeSlot;
+    prepaymentAmount;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -46,7 +47,6 @@ export class AppointmentConfirmPopupComponent implements OnInit {
 
         public dialogRef: MatDialogRef<AppointmentConfirmPopupComponent>) {
             this.service_det = data.service_details;
-            console.log(this.service_det)
             this.waitlist_for = data.waitlist_for;
             this.userPhone = data.userPhone;
             this.post_Data = data.post_Data;
@@ -57,7 +57,8 @@ export class AppointmentConfirmPopupComponent implements OnInit {
             this.customer_data = data.customer_data;
             this.consumerNote = data.post_Data.consumerNote;
             this.appTimeSlot = data.appTimeSlot;
-            console.log(this.appTimeSlot)
+            this.prepaymentAmount = data.prepaymentAmount;
+
     }
     ngOnInit() {
     }

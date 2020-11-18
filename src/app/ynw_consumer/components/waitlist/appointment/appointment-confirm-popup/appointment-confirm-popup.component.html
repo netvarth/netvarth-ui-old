@@ -51,12 +51,17 @@
              <span class="mgn-lt-5 phonevallabel">{{eMail}}</span>
              </div>
     </div>
+    <div *ngIf="service_det.isPrePayment" class="mgn-bt-20">
+        This service requires an advance payment of
+        <span class="prepaymin-cls bold"><span class="rupee-font">&#8377;
+        </span>{{prepaymentAmount}}</span>
+    </div>
 </div>
 
 </mat-dialog-content>
 <mat-dialog-actions>
-
-    <button (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Confirm</button>
+    <button *ngIf = "!service_det.isPrePayment"(click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Confirm</button>
+    <button *ngIf = "service_det.isPrePayment" (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Proceed to payment</button>
 </mat-dialog-actions>
 <!-- <div class="ticket">
     <div class="ticket__content">

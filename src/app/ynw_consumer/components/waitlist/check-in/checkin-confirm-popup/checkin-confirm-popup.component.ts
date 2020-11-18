@@ -35,6 +35,10 @@ export class CheckinConfirmPopupComponent implements OnInit {
     api_error = null;
     selectedQsTime;
     selectedQeTime;
+    prepaymentAmount;
+    sel_queue_servicetime;
+    calc_mode;
+    sel_queue_waitingmins;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -59,7 +63,11 @@ export class CheckinConfirmPopupComponent implements OnInit {
             this.selectedQsTime = data.selectedQsTime;
             console.log(this.selectedQsTime)
             this.selectedQeTime = data.selectedQeTime;
-
+            this.prepaymentAmount = data.prepaymentAmount;
+            this.sel_queue_servicetime = data.sel_queue_servicetime;
+            this.calc_mode = data.calc_mode;
+            this.sel_queue_waitingmins = data.sel_queue_waitingmins;
+            console.log(this.calc_mode)
     }
     ngOnInit() {
     }

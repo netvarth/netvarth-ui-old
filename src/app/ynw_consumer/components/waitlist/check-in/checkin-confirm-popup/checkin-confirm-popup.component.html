@@ -2,7 +2,7 @@
     class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content class="ynw-common-form apply-label">
 <div class="form-group col-md-12">
-    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
+    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5">
         {{showCheckinButtonCaption()}} For
     </div>
     <div class="col-sm-12 col-xs-12 col-md-12">
@@ -50,7 +50,13 @@
             <span *ngIf="sel_queue_personaahead <= 0">0 People</span>
             <span *ngIf="sel_queue_personaahead == 1">1<span> Person</span></span>
             <span *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
-            People</span></span>
+            People</span>
+            </span><span *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
+                <span class="color-grey">\</span>
+                <span>{{sel_queue_waitingmins}}</span>
+
+            </span>
+            
         </h6>
         </div>
     </div>
@@ -72,12 +78,18 @@
              <span class="mgn-lt-5 phonevallabel">{{eMail}}</span>
              </div>
     </div>
+    <div *ngIf="service_det.isPrePayment" class="col-sm-12 col-xs-12 col-md-12 mgn-bt-20">
+        This service requires an advance payment of
+        <span class="prepaymin-cls bold"><span class="rupee-font">&#8377;
+        </span>{{prepaymentAmount}}</span>
+    </div>
 </div>
 
 </mat-dialog-content>
 <mat-dialog-actions>
+    <button *ngIf = "!service_det.isPrePayment" (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Confirm</button>
+    <button *ngIf = "service_det.isPrePayment" (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Proceed to payment</button>
 
-    <button (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Confirm</button>
 </mat-dialog-actions>
 <!-- <div class="ticket">
     <div class="ticket__content">
