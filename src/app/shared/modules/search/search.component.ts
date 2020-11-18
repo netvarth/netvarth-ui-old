@@ -1,5 +1,5 @@
 /* tslint:disable:forin */
-import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, ElementRef, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, ElementRef, OnChanges, HostListener } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -123,7 +123,35 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   searchLength = 0;
   showmoreSearch = false;
   @ViewChild('seldomain') seldomain: MatSelect;
-
+  carouselOne = {
+    nav: false,
+    dots: true,
+    loop: true,
+    rewind: true,
+    responsiveClass: true,
+    responsive: {
+      0: {
+        items: 3
+      },
+      992: {
+        items: 5,
+        center: true,
+      }
+    }
+  };
+  popularLength = 0;
+  screenWidth: number;
+  small_device_display: boolean;
+  jsonArrayList: any = [];
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
   constructor(
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
@@ -146,6 +174,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
 
   ngOnInit() {
+    this.onResize();
     this.selected_domain = 'All';
     if (this.passedDomain) {
       this.selected_domain = this.passedDomain;
@@ -580,6 +609,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchdataserviceobj.set(this.searchlabels_data);
       this.handledomainchange(this.selected_domain, 1);
       this.jsonlist = this.searchlabels_data.popularSearchLabels.all.labels;
+      this.setPopularList(this.jsonlist);
       if (this.jsonlist) {
         this.searchLength = this.jsonlist.length;
         for (let i = 0; i < this.jsonlist.length; i++) {
@@ -603,6 +633,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
                 }
               }
             }
+            this.setPopularList(this.jsonlist);
             this.shared_functions.setitemonLocalStorage('popularSearch', this.jsonlist);
             const pdata = { 'ttype': 'popularSearchList', 'target': this.jsonlist };
             this.shared_functions.sendMessage(pdata);
@@ -611,6 +642,24 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           }
         );
     }
+  }
+
+  setPopularList(jsonlist) {
+    const plen = 4;
+    let jIndex = 0;
+    this.jsonArrayList[0] = [];
+    console.log(jsonlist);
+   for (let i = 0; i < jsonlist.length; i++) {
+     this.jsonArrayList[jIndex].push(jsonlist[i]);
+      console.log((i + 1) % plen);
+      if ((i + 1) % plen === 0) {
+         jIndex++;
+         if (i !== (jsonlist.length - 1)) {
+          this.jsonArrayList[jIndex] = [];
+         }
+      }
+   }
+   console.log(this.jsonArrayList);
   }
 
   // To get searchlabels for 3rd search box

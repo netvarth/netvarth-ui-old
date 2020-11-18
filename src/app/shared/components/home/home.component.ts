@@ -95,17 +95,18 @@ export class HomeComponent implements OnInit {
       nav: true
     };
     this.carouselOne = {
-      nav: true,
-      navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-      dots: false,
+      // nav: true,
+      // navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+      dots: true,
       loop: true,
+      autoplay: true,
       responsiveClass: true,
       responsive: {
         0: {
           items: 1
         },
         992: {
-          items: 3,
+          items: 1,
           center: true,
         }
       }
@@ -170,7 +171,7 @@ export class HomeComponent implements OnInit {
     };
   }
   playvideoClicked() {
-    document.getElementById('videowrap').innerHTML = '<iframe width="100%"  src="https://www.youtube-nocookie.com/embed/qF4gLhQW2CE?controls=1&rel=0&autoplay=1" height= "514px" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    document.getElementById('video-box').innerHTML = '<iframe width="100%"  src="https://www.youtube-nocookie.com/embed/qF4gLhQW2CE?controls=1&rel=0&autoplay=1" height= "514px" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
   }
 
   setSystemDate() {
@@ -212,6 +213,9 @@ export class HomeComponent implements OnInit {
           }
         );
     }
+  }
+  domainClicked(type) {
+    this.handle_home_domain_click({'domain' : type});
   }
   handle_home_domain_click(obj) {
     this.keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': '' };
@@ -310,8 +314,5 @@ export class HomeComponent implements OnInit {
   // knowApptStatus () {
   //   this.routerobj.navigate(['appt/status/new']);
   // }
-  gotoBusiness() {
-    this.routerobj.navigate(['/business']);
-  }
 }
 
