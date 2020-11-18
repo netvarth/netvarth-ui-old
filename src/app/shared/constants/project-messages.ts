@@ -1544,6 +1544,7 @@ export const Messages = {
   'WAITINGLINE': 'Waiting In Line',
 
   // SMS credits warning
-  'NO_SMS_CREDIT': 'Sorry you dont have any SMS credits, Get it from'
+  'NO_SMS_CREDIT': 'You dont have enough credits to send SMS.',
+  'LOW_SMS_CREDIT': 'Your SMS credits are running low.'
 };
 
