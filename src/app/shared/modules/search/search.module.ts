@@ -4,11 +4,13 @@ import { SearchMoreoptionsModule } from '../../../shared/modules/search-moreopti
 import { SearchDataStorageService  } from '../../services/search-datastorage.services';
 import { SearchComponent } from './search.component';
 import { SearchPopularMoreoptionsModule } from '../../../shared/modules/search-popular-moreoptions/search-popular-moreoptions.module';
+import { OwlModule } from 'ngx-owl-carousel';
 @NgModule({
     imports: [
       SharedModule,
       SearchMoreoptionsModule,
-      SearchPopularMoreoptionsModule
+      SearchPopularMoreoptionsModule,
+      OwlModule
     ],
     declarations: [SearchComponent],
     exports: [SearchComponent],

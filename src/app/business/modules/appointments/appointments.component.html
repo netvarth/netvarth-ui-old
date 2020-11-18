@@ -512,7 +512,7 @@
                       </tr>
                     </thead>
                     <tbody
-                      *ngIf="statusAction != 'new' && !loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
+                      *ngIf="(statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !loading && (check_in_filtered_list.length == 0 || activeSchedules.length == 0)">
                       <tr>
                         <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
                           <p *ngIf="statusAction === 'new'">No active appointments</p>
@@ -530,9 +530,9 @@
                       <tr *ngFor="let appt of scheduleSlots, let i=index"
                         (click)="goCheckinDetail(apptByTimeSlot[appt.time][0])"
                         [class.pointer-cursor]="apptByTimeSlot[appt.time]">
-                        <ng-container *ngIf="apptByTimeSlot[appt.time] && selected_type === 'all'">
+                        <ng-container *ngIf="apptByTimeSlot[appt.time] && appt.scheduleId === apptByTimeSlot[appt.time][0].schedule.id && selected_type === 'all'">
                           <td class="chkWth" *ngIf="showSelectAll()">
-                            <input [checked]="chkAppointments[i]" *ngIf="apptByTimeSlot[appt.time][0].providerConsumer"
+                            <input [checked]="chkAppointments[i] || apptByTimeSlot[appt.time][0].selected" *ngIf="apptByTimeSlot[appt.time][0].providerConsumer"
                               type="checkbox" class="ckbx pull-left" (click)="stopprop($event)"
                               (change)="chkAptHistoryClicked(i, apptByTimeSlot[appt.time][0])" />
                           </td>

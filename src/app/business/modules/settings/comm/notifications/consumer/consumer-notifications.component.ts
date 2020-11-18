@@ -407,7 +407,7 @@ export class ConsumerNotificationsComponent implements OnInit {
         this.smsCredits = data;
         if (this.smsCredits < 5 && this.smsCredits > 0) {
           this.is_smsLow = true;
-          this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
           this.getLicenseCorpSettings();
         } else if (this.smsCredits === 0) {
           this.is_smsLow = true;

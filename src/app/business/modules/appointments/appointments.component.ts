@@ -1693,11 +1693,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.chkAppointments[index]) {
       this.chkAppointments[index] = true;
       this.appointmentsChecked[index] = appt;
+      appt.selected = true;
     } else {
       this.chkAppointments[index] = false;
       delete this.appointmentsChecked[index];
       this.chkSelectAppointments = false;
       this.selAllSlots = false;
+      appt.selected = false;
     }
     this.setApptSelections();
   }
@@ -2199,6 +2201,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsByProvider() {
     const qs = [];
+    this.selQIds = [];
     if (this.selectedUser && this.selectedUser.id === 'all') {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
@@ -2555,15 +2558,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.activeSchedules.indexOf(filterSchedule[0]);
   }
   getSlotBYScheduleandDate(scheduleid, date) {
-    this.scheduleSlots = [];
     this.provider_services.getSlotsByScheduleandDate(scheduleid, date).subscribe(
       (data: any) => {
+        this.scheduleSlots = [];
         for (let i = 0; i < data.length; i++) {
-          for (let j = 0; j < data[i].availableSlots.length; j++) {
-            if (this.apptByTimeSlot[data[i].availableSlots[j].time] || (data[i].availableSlots[j].active && data[i].availableSlots[j].noOfAvailbleSlots !== '0')) {
-              if (this.scheduleSlots.indexOf(data[i].availableSlots[j]) === -1) {
+          if (data[i].availableSlots) {
+            for (let j = 0; j < data[i].availableSlots.length; j++) {
+              if (this.apptByTimeSlot[data[i].availableSlots[j].time] || (data[i].availableSlots[j].active && data[i].availableSlots[j].noOfAvailbleSlots !== '0')) {
                 data[i].availableSlots[j]['scheduleId'] = data[i].scheduleId;
-                this.scheduleSlots.push(data[i].availableSlots[j]);
+                if (this.scheduleSlots.indexOf(data[i].availableSlots[j]) === -1) {
+                  this.scheduleSlots.push(data[i].availableSlots[j]);
+                }
               }
             }
           }

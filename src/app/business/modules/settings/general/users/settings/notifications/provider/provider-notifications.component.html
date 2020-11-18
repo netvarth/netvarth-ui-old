@@ -50,7 +50,7 @@
                   <li>
                     <span class="notification"> via SMS </span>
                     <span [class.disabled]="is_noSMS" [class.icon-add]="!sms" [class.icon-minus]="sms" (click)="smsAddClicked()"></span>
-                    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
+                    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
                     <div class="form-group" *ngIf="sms">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber"
@@ -126,7 +126,7 @@
                     <span class="notification"> via SMS</span>
                     <span [class.disabled]="is_noSMS" [class.icon-add]="!cancelsms" [class.icon-minus]="cancelsms"
                       (click)="cancelledCheckinsmsAddClicked()"></span>
-                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
+                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
                     <div class="form-group" *ngIf="cancelsms">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber"
@@ -211,7 +211,7 @@
                   <li>
                     <span class="notification"> via SMS </span>
                     <span [class.disabled]="is_noSMS" [class.icon-add]="!smsAppt" [class.icon-minus]="smsAppt" (click)="smsApptAddClicked()"></span>
-                    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
+                    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
                     <div class="form-group" *ngIf="smsAppt">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
@@ -286,7 +286,7 @@
                     <span class="notification"> via SMS</span>
                     <span [class.disabled]="is_noSMS" [class.icon-add]="!cancelsmsAppt" [class.icon-minus]="cancelsmsAppt"
                       (click)="cancelledApptsmsAddClicked()"></span>
-                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">here</a></div>
+                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
                     <div class="form-group" *ngIf="cancelsmsAppt">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"

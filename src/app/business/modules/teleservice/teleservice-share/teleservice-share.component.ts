@@ -60,6 +60,7 @@ export class TeleServiceShareComponent implements OnInit {
   corpSettings: any;
   addondialogRef: any;
   is_noSMS = false;
+  zoomWaitFor: string;
 
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
@@ -110,6 +111,7 @@ export class TeleServiceShareComponent implements OnInit {
       this.videocall_msg = ' , your ' + this.data.app + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + this.data.app + ' call has started.\nWhen it is your turn, click on the following link- ' + this.meetingLink;
       this.waitFor = '\n3. Wait for the video call to start';
       this.gooleWaitFor = '\n2. Wait for the video call to start';
+      this.zoomWaitFor = '\n2. Wait for the video call to start';
       switch (this.data.app) {
         case 'WhatsApp':
           if (this.data.serviceDetail.virtualServiceType === 'videoService') {
@@ -122,7 +124,7 @@ export class TeleServiceShareComponent implements OnInit {
           this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a phone call on +91' + this.meetingLink + '.';
           break;
         case 'Zoom':
-          this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.instalZoom + this.waitFor;
+          this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.instalZoom + this.zoomWaitFor;
           break;
         case 'GoogleMeet':
           this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.signinGoogle + this.gooleWaitFor;
@@ -225,7 +227,7 @@ export class TeleServiceShareComponent implements OnInit {
         this.smsCredits = data;
         if (this.smsCredits < 5 && this.smsCredits > 0) {
           this.is_smsLow = true;
-          this.smsWarnMsg = 'Your SMS credits are low, Please upgrade';
+          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
           this.getLicenseCorpSettings();
         } else if (this.smsCredits === 0) {
           this.is_smsLow = true;

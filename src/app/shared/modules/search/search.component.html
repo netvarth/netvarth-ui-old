@@ -83,8 +83,52 @@
 </ng-container>
 <div class="sa-ps" *ngIf="includedfrom=='home'">
   <div class="col-md-12 no-padding" *ngIf="jsonlist">
-    <div class="">
-      <p class="pop-search"><b style="padding-right: 10px; line-height:40px">Popular Searches: </b>
+    <p class="text-center" >Popular Searches</p>
+    <div class="mgn-up-10">
+    <owl-carousel [options]="carouselOne"
+          [carouselClasses]="['owl-carousel', 'owl-theme']">
+          <div class="item text-center" *ngFor="let iIndex of jsonArrayList" >
+            <div *ngFor="let domain of iIndex" (click)="setKeyword(domain)">
+              <div class="pop-box">
+                <div class="pop-box-cont">
+              <a *ngIf="domain.displayname">{{domain.displayname}}</a>
+              <a *ngIf="domain.autoname">{{domain.autoname}}</a>
+              </div>
+            </div>
+            </div>            
+          </div>
+					<!--<div class="item review-card text-center">
+						 <div class="customer-avatar">
+							<img src="assets/images/home/client.png" alt="client-avatar" />
+						</div>
+						<div class="customer-info">
+							<h4 class="name">John Smith</h4>
+							<h4 class="name">Jaldee Telehealth</h4>
+							<p class="position">&nbsp;</p>
+							 <p class="position">Manager</p>
+						</div>
+						 <div class="ratings">
+							<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
+							<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
+						</div> 
+						<div class="review-text">
+							<p>Consult your doctor from anywhere. Visit <a
+									href="https://business.jaldee.com/">telehealth.jaldee.com</a> to view our doctors
+								and book a video consultation.</p>
+						</div>
+					</div>	-->			
+				</owl-carousel>
+      </div>
+
+    <!-- <ul class="hpul">
+      <li class="hpli" >
+        
+      </li>
+    </ul> -->
+    <!-- <app-popularsearch-moreoptions  (searchpopularmoreclick)="setKeyword($event)"
+          [passedPSearches]="displaykeywordList"></app-popularsearch-moreoptions> -->
+    <!-- <div class=""> -->
+      <!-- <p class="pop-search"><b style="padding-right: 10px; line-height:40px">Popular Searches: </b>
         <span class="pointer-cursor" *ngFor="let kw of jsonlist" (click)="setKeyword(kw)">
           <a *ngIf="kw.show"> {{kw.displayname}} </a>
         </span>
@@ -92,8 +136,8 @@
           *ngIf="searchLength > paginationLimit && !showmoreSearch" (click)="showMoreItems('more')">more...</a>
         <a class="learnmore-pointer" style="padding-left:10px !important;" *ngIf="showmoreSearch"
           (click)="showMoreItems('less')">less...</a>
-      </p>
-    </div>
+      </p> -->
+    <!-- </div> -->
   </div>
 
   <ng-container>
