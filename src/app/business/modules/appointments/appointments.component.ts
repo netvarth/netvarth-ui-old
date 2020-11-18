@@ -1692,11 +1692,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.chkAppointments[index]) {
       this.chkAppointments[index] = true;
       this.appointmentsChecked[index] = appt;
+      appt.selected = true;
     } else {
       this.chkAppointments[index] = false;
       delete this.appointmentsChecked[index];
       this.chkSelectAppointments = false;
       this.selAllSlots = false;
+      appt.selected = false;
     }
     this.setApptSelections();
   }
