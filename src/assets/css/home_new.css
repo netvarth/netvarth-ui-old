@@ -5333,14 +5333,23 @@
 #cons_home_n #apps {
 	background-color: #f1b51c !important;
 }
-@media (max-width:768px) {
 #cons_home_n #apps .center-img img {
-	height:300px !important;
+	height:350px !important;
 }
+@media (max-width:768px) {
+
 #cons_home_n .site-header {
 	margin-bottom: 0 !important;
 }
 }
 #cons_home_n .site-header .site-header--links{
 	flex-direction: row-reverse !important;
+}
+@media(max-width:412px) {
+	#cons_home_n #grey-cta-bar {
+		padding-left: 30px !important;
+	}
+}
+#cons_home_n #apps .center-img img {
+	height:350px !important;
 }
