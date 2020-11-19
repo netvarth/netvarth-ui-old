@@ -149,6 +149,7 @@ export const Messages = {
   'ADD_DELAY_TIME_ERROR': 'Please specify the delay',
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
   'WAITLIST_STATUS_CHANGE': '[waitlist] status changed to [status]',
+  'WAITLISTTOKEN_STATUS_CHANGE': 'Token status changed to [status]',
   'PROVIDER_NOTE_ADD': 'Note added successfully',
   'CONSUMERTOPROVIDER_NOTE_ADD': 'Message has been successfully sent',
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message has been successfully sent',

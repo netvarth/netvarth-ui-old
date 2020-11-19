@@ -327,8 +327,13 @@ export class ProviderSharedFuctions {
               case 'DONE': status_msg = 'completed'; break;
             }
             if (!showMessage) {
-              const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
-              this.shared_functions.openSnackBar(msg);
+              if (waitlist.token) {
+                const msg = this.shared_functions.getProjectMesssages('WAITLISTTOKEN_STATUS_CHANGE').replace('[status]', status_msg);
+                this.shared_functions.openSnackBar(msg);
+              } else {
+                const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
+                this.shared_functions.openSnackBar(msg);
+              }
             }
           },
           error => {
