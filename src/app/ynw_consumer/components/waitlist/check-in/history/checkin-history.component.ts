@@ -109,8 +109,12 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
         data => {
           console.log(data);
           this.apmt_history = data;
+          for (let i = 0; i < this.apmt_history.length; i++) {
+            this.apmt_history[i].date = this.apmt_history[i]['appmtDate'];
+            delete this.apmt_history[i].appmtDate;
+          }
           this.entire_history = this.apmt_history.concat(this.history);
-          console.log(this.entire_history);
+          this.sortCheckins(this.entire_history);
           this.loading = false;
         },
         error => {
@@ -119,6 +123,17 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
       );
   }
 
+  sortCheckins(checkins) {
+    checkins.sort(function (message1, message2) {
+      if (message1.date < message2.date) {
+        return 11;
+      } else if (message1.date > message2.date) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+  }
   // Get checkin history count
   getHistoryCount() {
     this.consumer_services.getHistoryWaitlistCount()
@@ -327,5 +342,5 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
         accencUid: checkin.prescUrl
       }
     });
- }
+  }
 }
