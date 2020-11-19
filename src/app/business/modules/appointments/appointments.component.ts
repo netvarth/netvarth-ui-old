@@ -1687,17 +1687,23 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.activeAppointment = null;
     }
   }
+  chkAptClicked(appt) {
+    const indx = this.check_in_filtered_list.indexOf(appt);
+    this.chkAptHistoryClicked(indx, appt);
+  }
+  chkAppointmentSelection(appt) {
+    const indx = this.check_in_filtered_list.indexOf(appt);
+    return this.chkAppointments[indx];
+  }
   chkAptHistoryClicked(index, appt) {
     if (!this.chkAppointments[index]) {
       this.chkAppointments[index] = true;
       this.appointmentsChecked[index] = appt;
-      appt.selected = true;
     } else {
       this.chkAppointments[index] = false;
       delete this.appointmentsChecked[index];
       this.chkSelectAppointments = false;
       this.selAllSlots = false;
-      appt.selected = false;
     }
     this.setApptSelections();
   }
