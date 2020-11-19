@@ -511,13 +511,13 @@ export class ConsumerAppointmentComponent implements OnInit {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         if (this.type === 'reschedule') {
                             this.callingModes = this.appointment.virtualService['WhatsApp'];
-                           // this.changePhno = true;
-                           if (serv.virtualCallingModes[0].value === this.appointment.phoneNumber) {
-                               this.changePhno = false;
-                           } else {
-                            this.changePhno = true;
-                            this.currentPhone = this.appointment.phoneNumber;
-                           }
+                            // this.changePhno = true;
+                            if (serv.virtualCallingModes[0].value === this.appointment.phoneNumber) {
+                                this.changePhno = false;
+                            } else {
+                                this.changePhno = true;
+                                this.currentPhone = this.appointment.phoneNumber;
+                            }
                         } else {
                             this.callingModes = this.customer_data.primaryPhoneNumber;
                         }
@@ -1869,6 +1869,9 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.edit = true;
             this.changePhno = true;
             this.noPhoneError = true;
+            if (this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
+                this.callingModes = this.selected_phone;
+            }
         }
         if (this.payEmail && this.payEmail.trim() !== '') {
             const stat = this.validateEmail(this.payEmail.trim());
@@ -1903,30 +1906,31 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     showConfirmPopup(post_Data) {
-                // this.dialogRef.close();
-                const checkinconfirmdialogRef = this.dialog.open(AppointmentConfirmPopupComponent, {
-                    width: '50%',
-                    panelClass: ['popup-class', 'commonpopupmainclass'],
-                    disableClose: true,
-                    data: {
-                        service_details : this.sel_ser_det,
-                        waitlist_for : this.waitlist_for,
-                        userPhone : this.userPhone,
-                        post_Data : post_Data,
-                        account_id : this.account_id,
-                        sel_queue_personaahead : this.sel_queue_personaahead,
-                        isFuturedate : this.isFuturedate,
-                        eMail : this.userData.userProfile.email,
-                        customer_data : this.customer_data,
-                        appTimeSlot : this.apptTime['time'],
-                        prepaymentAmount : this.prepaymentAmount,
-                        changePhno : this.changePhno,
-                        currentPhone : this.currentPhone,
-                        callingModes : this.callingModes
-                    }
-                });
-                checkinconfirmdialogRef.afterClosed().subscribe(result => {
-                        this.apptdisable = false
-                });
-            }
+        // this.dialogRef.close();
+        const checkinconfirmdialogRef = this.dialog.open(AppointmentConfirmPopupComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                service_details: this.sel_ser_det,
+                waitlist_for: this.waitlist_for,
+                userPhone: this.userPhone,
+                post_Data: post_Data,
+                account_id: this.account_id,
+                sel_queue_personaahead: this.sel_queue_personaahead,
+                isFuturedate: this.isFuturedate,
+                eMail: this.userData.userProfile.email,
+                customer_data: this.customer_data,
+                appTimeSlot: this.apptTime['time'],
+                prepaymentAmount: this.prepaymentAmount,
+                changePhno: this.changePhno,
+                currentPhone: this.currentPhone,
+                callingModes: this.callingModes,
+                selectedMessage: this.selectedMessage
+            }
+        });
+        checkinconfirmdialogRef.afterClosed().subscribe(result => {
+            this.apptdisable = false
+        });
+    }
 }

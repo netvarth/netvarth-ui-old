@@ -52,30 +52,31 @@ export class CheckinConfirmPopupComponent implements OnInit {
         public dateformat: DateFormatPipe,
 
         public dialogRef: MatDialogRef<CheckinConfirmPopupComponent>) {
-
-            this.service_det = data.service_details;
-            this.waitlist_for = data.waitlist_for;
-            this.userPhone = data.userPhone;
-            this.post_Data = data.post_Data;
-            this.account_id = data.account_id;
-            this.sel_queue_personaahead = data.sel_queue_personaahead;
-            this.isFuturedate = data.isFuturedate;
-            this.eMail = data.eMail;
-            this.settingsjson = data.settingsjson;
-            this.selectedQsTime = data.selectedQsTime;
-            this.selectedQeTime = data.selectedQeTime;
-            this.prepaymentAmount = data.prepaymentAmount;
-            this.sel_queue_servicetime = data.sel_queue_servicetime;
-            this.calc_mode = data.calc_mode;
-            this.sel_queue_waitingmins = data.sel_queue_waitingmins;
-            this.changePhno = data.changePhno;
-            this.currentPhone = data.currentPhone;
-            this.callingModes = data.callingModes;
+        console.log(data);
+        this.service_det = data.service_details;
+        this.waitlist_for = data.waitlist_for;
+        this.userPhone = data.userPhone;
+        this.post_Data = data.post_Data;
+        this.account_id = data.account_id;
+        this.sel_queue_personaahead = data.sel_queue_personaahead;
+        this.isFuturedate = data.isFuturedate;
+        this.eMail = data.eMail;
+        this.settingsjson = data.settingsjson;
+        this.selectedQsTime = data.selectedQsTime;
+        this.selectedQeTime = data.selectedQeTime;
+        this.prepaymentAmount = data.prepaymentAmount;
+        this.sel_queue_servicetime = data.sel_queue_servicetime;
+        this.calc_mode = data.calc_mode;
+        this.sel_queue_waitingmins = data.sel_queue_waitingmins;
+        this.changePhno = data.changePhno;
+        this.currentPhone = data.currentPhone;
+        this.callingModes = data.callingModes;
+        this.selectedMessage = data.selectedMessage;
     }
     ngOnInit() {
     }
-   
-    
+
+
     close() {
         this.dialogRef.close();
     }
@@ -106,7 +107,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
 
         return caption;
     }
-    
+
     addCheckInConsumer() {
         // this.api_loading = true;
         this.shared_services.addCheckin(this.account_id, this.post_Data)
@@ -164,6 +165,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
     }
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
+        this.consumerNote = this.post_Data.consumerNote;
         if (this.consumerNote === '') {
             this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
         }

@@ -577,12 +577,12 @@ export class ConsumerCheckinComponent implements OnInit {
                             if (serv.virtualCallingModes[0].value === this.waitlist.waitlistPhoneNumber) {
                                 this.changePhno = false;
                             } else {
-                             this.changePhno = true;
-                             this.currentPhone = this.waitlist.waitlistPhoneNumber;
+                                this.changePhno = true;
+                                this.currentPhone = this.waitlist.waitlistPhoneNumber;
                             }
-                           } else {
+                        } else {
                             this.callingModes = this.customer_data.primaryPhoneNumber;
-                           }
+                        }
                     }
                 }
                 break;
@@ -1669,7 +1669,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
                         // this.currentPhone = this.userData.userProfile.primaryMobileNo || '';
-                         this.consumerPhoneNo = this.userPhone;
+                        this.consumerPhoneNo = this.userPhone;
                     }
                     if (this.userEmail) {
                         this.emailExist = true;
@@ -2039,6 +2039,9 @@ export class ConsumerCheckinComponent implements OnInit {
             this.edit = true;
             this.changePhno = true;
             this.noPhoneError = true;
+            if (this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
+                this.callingModes = this.selected_phone;
+            }
         }
         if (this.payEmail && this.payEmail.trim() !== '') {
             const stat = this.validateEmail(this.payEmail.trim());
@@ -2086,24 +2089,25 @@ export class ConsumerCheckinComponent implements OnInit {
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
             data: {
-                service_details : this.sel_ser_det,
-                waitlist_for : this.waitlist_for,
-                userPhone : this.userPhone,
-                post_Data : post_Data,
-                account_id : this.account_id,
-                sel_queue_personaahead : this.sel_queue_personaahead,
-                isFuturedate : this.isFuturedate,
-                eMail : this.userData.userProfile.email,
-                settingsjson : this.settingsjson,
-                selectedQsTime : this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'],
-                selectedQeTime : this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'],
-                prepaymentAmount : this.prepaymentAmount,
-                sel_queue_servicetime : this.sel_queue_servicetime,
-                calc_mode : this.calc_mode,
-                sel_queue_waitingmins : this.sel_queue_waitingmins,
-                changePhno : this.changePhno,
-                currentPhone : this.currentPhone,
-                callingModes : this.callingModes
+                service_details: this.sel_ser_det,
+                waitlist_for: this.waitlist_for,
+                userPhone: this.userPhone,
+                post_Data: post_Data,
+                account_id: this.account_id,
+                sel_queue_personaahead: this.sel_queue_personaahead,
+                isFuturedate: this.isFuturedate,
+                eMail: this.userData.userProfile.email,
+                settingsjson: this.settingsjson,
+                selectedQsTime: this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'],
+                selectedQeTime: this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'],
+                prepaymentAmount: this.prepaymentAmount,
+                sel_queue_servicetime: this.sel_queue_servicetime,
+                calc_mode: this.calc_mode,
+                sel_queue_waitingmins: this.sel_queue_waitingmins,
+                changePhno: this.changePhno,
+                currentPhone: this.currentPhone,
+                callingModes: this.callingModes,
+                selectedMessage: this.selectedMessage
             }
         });
         checkinconfirmdialogRef.afterClosed().subscribe(result => {

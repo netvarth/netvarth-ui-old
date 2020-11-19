@@ -547,8 +547,7 @@
                               (click)="stopprop($event);gotoCustomerDetails(apptByTimeSlot[appt.time][0])"
                               *ngIf="apptByTimeSlot[appt.time][0].appmtFor[0].firstName || apptByTimeSlot[appt.time][0].appmtFor[0].lastName"
                               [class.pointer-cursor]="apptByTimeSlot[appt.time][0].apptStatus!=='blocked'"
-                              [class.pointer-auto]="apptByTimeSlot[appt.time][0].apptStatus=='blocked'">
-                              {{apptByTimeSlot[appt.time][0].appmtFor[0].firstName}}
+                              [class.pointer-auto]="apptByTimeSlot[appt.time][0].apptStatus=='blocked'">{{apptByTimeSlot[appt.time][0].appmtFor[0].firstName}}
                               {{apptByTimeSlot[appt.time][0].appmtFor[0].lastName}}
                               <div class="block-hint" *ngIf="apptByTimeSlot[appt.time][0].apptStatus==='blocked'">Blocked</div>
                             </div>
@@ -710,7 +709,7 @@
                           </td>
                         </ng-container>
                         <ng-container *ngIf="!apptByTimeSlot[appt.time] || (apptByTimeSlot[appt.time] && appt.scheduleId != apptByTimeSlot[appt.time][0].schedule.id)">
-                          <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
+                          <td class="chkWth" *ngIf="showSelectAll()">
                           </td>
                           <td class="parent-selection parent-title td-one">
                             <div class="pull-left mgn-lt-5 date">
