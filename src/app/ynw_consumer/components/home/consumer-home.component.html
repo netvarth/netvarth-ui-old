@@ -232,8 +232,8 @@
                                                     <div class="disp-grid">
                                                         <span class="est-wait-time">Est Wait Time</span>
                                                         <span>
-                                                            {{booking.appxWaitingTime}}
-                                                            <span class="minutes">minutes</span>
+                                                            {{getTimeToDisplay(booking.appxWaitingTime)}}
+                                                           
                                                         </span>
                                                     </div>
                                                 </span>
@@ -258,7 +258,7 @@
                                             </h4>
                                             <span class="est-wait-time"
                                                 *ngIf="!booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Est
-                                                Wait Time : {{booking.appxWaitingTime}} min</span>
+                                                Wait Time : {{getTimeToDisplay(booking.appxWaitingTime)}} </span>
 
                                             <span class="est-wait-time"
                                                 *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Starts
@@ -579,8 +579,7 @@
                                                         <div class="disp-grid">
                                                             <span class="est-wait-time">Est Wait Time</span>
                                                             <span>
-                                                                {{booking.appxWaitingTime}}
-                                                                <span class="minutes">minutes</span>
+                                                                {{getTimeToDisplay(booking.appxWaitingTime)}}
                                                             </span>
                                                         </div>
                                                     </span>
@@ -605,7 +604,7 @@
                                                 </h4>
                                                 <span class="est-wait-time"
                                                     *ngIf="!booking.serviceTime && ( booking.appxWaitingTime >= 0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Est
-                                                    Wait Time : {{booking.appxWaitingTime}} min</span>
+                                                    Wait Time : {{getTimeToDisplay(booking.appxWaitingTime)}} </span>
 
                                                 <span class="est-wait-time"
                                                     *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">Starts

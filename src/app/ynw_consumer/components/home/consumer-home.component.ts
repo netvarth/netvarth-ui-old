@@ -1797,6 +1797,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
 
   }
+  getTimeToDisplay(min) {
+    return this.shared_functions.convertMinutesToHourMinute(min);
+  }
   viewprescription(checkin) {
     this.viewrxdialogRef = this.dialog.open(ViewRxComponent, {
       width: '50%',
