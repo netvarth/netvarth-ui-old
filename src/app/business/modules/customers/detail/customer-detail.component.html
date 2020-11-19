@@ -250,7 +250,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                             <tr class="pointer-cursor cellhover" *ngFor="let visit of todayvisitDetails"
                                                 (click)="gotoCustomerDetail(visit, 1)">
                                                 <ng-container *ngIf="visit.waitlist">
-                                                    <td class="consumer-dash"> <i *ngIf="!visit.waitlist.showToken"
+                                                    <td class="consumer-dash consumer-appthistory"> <i *ngIf="!visit.waitlist.showToken"
                                                             class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                         <i *ngIf="visit.waitlist.showToken" class="fa token-icon"
                                                             [matTooltip]="'Token'"></i></td>
@@ -303,7 +303,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                     </td>
                                                 </ng-container>
                                                 <ng-container *ngIf="visit.appointmnet">
-                                                    <td class="consumer-dash"> <i class="fa appt-icon"
+                                                    <td class="consumer-dash consumer-appthistory"> <i class="fa appt-icon"
                                                             [matTooltip]="'Appointment'"></i> </td>
                                                     <td>{{visit.appointmnet.appmtDate | date: dateFormat}}
                                                         <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
@@ -368,7 +368,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                             <tr class="pointer-cursor cellhover" *ngFor="let visit of futurevisitDetails"
                                                 (click)="gotoCustomerDetail(visit, 2)">
                                                 <ng-container *ngIf="visit.waitlist">
-                                                    <td class="consumer-dash"> <i *ngIf="!visit.waitlist.showToken"
+                                                    <td class="consumer-dash consumer-appthistory"> <i *ngIf="!visit.waitlist.showToken"
                                                             class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                         <i *ngIf="visit.waitlist.showToken" class="fa token-icon"
                                                             [matTooltip]="'Token'"></i></td>
@@ -411,7 +411,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                     </td>
                                                 </ng-container>
                                                 <ng-container *ngIf="visit.appointmnet">
-                                                    <td class="consumer-dash"> <i class="fa appt-icon"
+                                                    <td class="consumer-dash consumer-appthistory"> <i class="fa appt-icon"
                                                             [matTooltip]="'Appointment'"></i> </td>
                                                     <td>{{visit.appointmnet.appmtDate | date: dateFormat}}
                                                         <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
@@ -466,7 +466,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         <tr class="pointer-cursor cellhover" *ngFor="let visit of historyvisitDetails"
                                             (click)="gotoCustomerDetail(visit, 3)">
                                             <ng-container *ngIf="visit.waitlist">
-                                                <td class="consumer-dash"> <i *ngIf="!visit.waitlist.showToken"
+                                                <td class="consumer-dash consumer-appthistory"> <i *ngIf="!visit.waitlist.showToken"
                                                         class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
                                                     <i *ngIf="visit.waitlist.showToken" class="fa token-icon"
                                                         [matTooltip]="'Token'"></i></td>
@@ -519,7 +519,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                 </td>
                                             </ng-container>
                                             <ng-container *ngIf="visit.appointmnet">
-                                                <td class="consumer-dash"> <i class="fa appt-icon"
+                                                <td class="consumer-dash consumer-appthistory"> <i class="fa appt-icon"
                                                         [matTooltip]="'Appointment'"></i> </td>
                                                 <td>{{visit.appointmnet.appmtDate | date: dateFormat}}
                                                     <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
