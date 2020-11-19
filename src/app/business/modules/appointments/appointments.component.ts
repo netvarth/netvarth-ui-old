@@ -789,7 +789,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
       }
       this.selQIds = this.activeSchedules[this.findCurrentActiveQueue(this.activeSchedules)];
-      console.log(this.selQIds);
       if (this.time_type === 1) {
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
       }
@@ -1532,6 +1531,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     this.labelSelection();
+    this.filter_sidebar = false;
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all') {
@@ -2050,7 +2050,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];
                   Object.keys(this.historyCheckins[i].label).forEach(key => {
-                    labels.push(this.historyCheckins[i].label[key]);
+                    labels.push(this.getDisplayname(key));
                   });
                   checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
                 }
@@ -2200,7 +2200,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsByProvider() {
     const qs = [];
-    this.selQIds = [];
     if (this.selectedUser && this.selectedUser.id === 'all') {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
@@ -2220,7 +2219,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       const selQids = [];
       if (qids.length > 0) {
-        if (this.selQIds && this.selQIds.length > 0) {
+        if (qids.length > this.selQIds.length) {
           for (const id of this.selQIds) {
             const qArr = qids.filter(qid => qid === id);
             if (qArr.length > 0) {

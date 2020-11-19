@@ -709,7 +709,7 @@
                             </span>
                           </td>
                         </ng-container>
-                        <ng-container *ngIf="!apptByTimeSlot[appt.time]">
+                        <ng-container *ngIf="!apptByTimeSlot[appt.time] || (apptByTimeSlot[appt.time] && appt.scheduleId != apptByTimeSlot[appt.time][0].schedule.id)">
                           <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                           </td>
                           <td class="parent-selection parent-title td-one">

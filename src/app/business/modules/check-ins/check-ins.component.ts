@@ -2544,7 +2544,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];
                   Object.keys(this.historyCheckins[i].label).forEach(key => {
-                    labels.push(this.historyCheckins[i].label[key]);
+                    labels.push(this.getDisplayname(key));
                   });
                   checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
                 }
