@@ -10285,7 +10285,7 @@ p.bus-name {margin-bottom: 0 !important; margin-top:5px !important}
         border: none; 
       } 
 span.active{
-    color:green;
+    color:#0cef15;;
 }
 span.inactive{
     color:red;

@@ -18,6 +18,7 @@ export class GalleryComponent implements OnInit, OnChanges {
     @Input() images;
     @Input() status;
     @Input() source;
+    @Input() page;
     activeHeader;
     image_list: any = [];
     image_list_popup: Image[];

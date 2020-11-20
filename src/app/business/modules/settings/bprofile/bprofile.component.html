@@ -1,231 +1,267 @@
-<!-- <section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)"
-    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
 <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
-      <!-- <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
-        <span class="fa fa-chevron-left">&nbsp;Back</span>
-      </button>&nbsp;&nbsp;&nbsp;  -->
-      <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      My Account
-      <!-- <button type="button" style="float: right;" class="btn default profile-back" (click)="redirecToHelp()">
-        Help
-      </button> -->
+      <span class="fa fa-arrow-left pointer-cursor"
+        (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;My Account
       <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
     </h5>
   </div>
 </section>
-<section>
+<section class="yourProfile">
+
+  <!--New Revamp  -->
   <div class="content w-manager settings comn-cls lic-page">
     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
     <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small" *ngIf="!loading">
       <div class="w-dta">
         <div class="row">
           <div class="copy one col-xs-12 col-sm-12 no-padding">
-            <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12">
-
-
+            <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
               <div class="card p0">
+                <div class="pubs card w-dta active bprof">
+                  <!-- Cover Photo and Profile Pic -->
+                  <div class="coverFotoBorder">
+                    <!-- <span class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
+                      <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;Edit Cover
+                        Photo</span>
+                    </span> -->
+                    <div class="cd-t">
+                      <div class="basic-i">
+                        <div class="bi-l mgn-center mgn-up-20" *ngIf="blogo">
+                          <div class="pro-pic" [class.yes]="profimg_exists">
+                            <div class="pro-pic-img">
+                              <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
+                              <div class="camera-outline custId-cursor" (click)="changeProPic()" style="overflow: visible !important;">
+                                <i class="fa propic-cam-icon" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
+                  <!-- Progress Bar -->
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20" >
+                    <div class="warning" *ngIf="normal_basicinfo_show==1">
+                      <app-innerloading-spinner spinnerParams="loadingParams">
+                      </app-innerloading-spinner>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding"
+                      *ngIf="normal_basicinfo_show!=1">
+                      <div class="progress col-md-12 col-sm-12 col-xs-12 mt-2 no-padding" style="height:16px;">
+                        <div class="progress-bar progress-bar-animated active" role="progressbar"
+                          [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
+                          aria-valuemax="100">{{getBusinessProfileWeightageText()}}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- About You -->
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-10 abt-you-box">
+                    <div class="pad-10"><span class="sub-heads">About You</span><span
+                        class="edit-txt custId-cursor" (click)="gotoAboutMe()" *ngIf="aboutmefilled">manage</span></div>
+                        <div class="no-dta" *ngIf="!aboutmefilled">
+                          <span class="cs-btn bt3" (click)="gotoAboutMe()">Fill your profile</span>
+                        </div>
+                    <div class="busns-name">
+                      {{bProfile.businessName}}
+                    </div>
+                    <div class="bus-desc pad-10">
+                      {{bProfile.businessDesc}}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Old Part-->
+  <div class="content w-manager settings comn-cls lic-page">
+    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+    <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small" *ngIf="!loading">
+      <div class="w-dta">
+        <div class="row">
+          <div class="copy one col-xs-12 col-sm-12 no-padding">
+            <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+              <div class="card p0">
                 <div class="pubs card w-dta bprof">
-                  <!-- <div class="warning" *ngIf="businessProfile_show==1">
-                        <app-innerloading-spinner spinnerParams="loadingParams">
-                        </app-innerloading-spinner>
-                      </div> -->
-                  <div class="ctrl" *ngIf="showIncompleteButton">
-                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
-                      <!-- <h3 class="bus-prof-head">Business Profile</h3> -->
-                      <h6 hidden class="bus-prof-strength">Profile Strength-
-                        <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
-                      </h6>
-
-                      <div style="line-height: 25px;">
-                        <span>Your Business Profile is Incomplete&nbsp;&nbsp;</span>
-                        <button (click)="scroll(basicInfoSection)" type="button"
-                          [className]="' btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="ctrl" *ngIf="!showIncompleteButton">
-                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
-                      <h6 style="margin-top: 0 !important;" *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">
-                        Profile Strength-
-                        <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
-                      </h6>
-
-                      <div class="warning" *ngIf="normal_basicinfo_show==1">
-                        <app-innerloading-spinner spinnerParams="loadingParams">
-                        </app-innerloading-spinner>
-                      </div>
-                      <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding"
-                        *ngIf="normal_basicinfo_show!=1">
-                        <div class="progress col-md-4 col-sm-12 col-xs-12 mt-2 no-padding" style="height:12px;">
-                          <div class="progress-bar progress-bar-animated active" role="progressbar"
-                            [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <div class="col-md-5 col-sm-12 col-xs-12 no-padding-small">
-                          <button (click)="scroll(basicInfoSection)" type="button"
-                            [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                  <br>
-                  <div *ngIf="!showIncompleteButton">
+                  <div *ngIf="showIncompleteButton" class="incomplete-msg">
                     <div>
-                      <h6>Here is your QR code and Link</h6>
-                      <div class="head-level-settings col-md-12 col-sm-12 col-xs-12 no-padding">
-                        <div class="col-md-7 col-sm-12 col-xs-12 no-padding">
-                          <span class="inactive" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </span>
-                          <span class="active" *ngIf="onlinepresence_status">By scanning this code your
-                            {{customer_label}}s can see you online</span></div>
-                        <div class="col-md-5 col-sm-12 col-xs-12 no-padding bus-bprof-strength">
-                          <button (click)="reDirectToJaldeeOnline()" type="button" class="wght-btn btn btn-info"
-                            *ngIf="!onlinepresence_status">Enable Jaldee Online</button>
-                          <button (click)="reDirectToJaldeeOnline()" type="button" class="wght-btn btn btn-info"
-                            *ngIf="onlinepresence_status">Manage Jaldee Online</button>
-                        </div>
-                      </div>
+                      Please fill your profile to activate your Jaldee Link and QR Code
+                    </div>
+                  </div>
+                  <div [class.all_disabled]="showIncompleteButton">
+                    <div>
+                      <h6>Here is your QR code and Link
+                        <sup><span class="inactive" *ngIf="!onlinepresence_status">Inactive</span>
+                          <span class="active" *ngIf="onlinepresence_status">Active</span></sup>
+                        <span class="edit-txt custId-cursor"
+                          (click)="reDirectToJaldeeOnline()">{{onlinepresence_status? 'manage' : 'enable'}}</span></h6>
                       <div class="clearfix"></div>
                       <div class="bus-prof-qr-sec">
                         <div class="mgn-up-10">
+                          <!-- If there is NO Custom ID -->
                           <div *ngIf="!bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10 disp-flex">
-                              <div>
-                                <ngx-qrcode [elementType]="elementType" [value]="qr_value">
+                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                              <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
+                                <ngx-qrcode #accQR [elementType]="elementType" [value]="qr_value">
                                 </ngx-qrcode>
                               </div>
-                              <div class="trackSlide bprof-icons">
-                                <i class="fa fa-share-alt custId-cursor"
-                                  (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"></i>
+                              <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12">
+                                <div class="mgn-up-10">
+                                  {{wndw_path}}{{bProfile.accEncUid}}
+                                </div>
+                                <div class="disp-flex mgn-up-10">
+                                  <div class="trackSlide bprof-icons share-ico">
+                                    <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email']"
+                                      [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [size]="-4">
+                                    </share-buttons>
+                                  </div>
+                                  <!-- <div class="dwnld-bdr custId-cursor">
+                                    <i class="fa fa-cloud-download dwnld-icon" (click)="downloadQR()"></i>
+                                  </div> -->
+                                </div>
                               </div>
-                              <!-- <div class="trackSlide bprof-icons"><i
-                                  class="fa fa-cogs teli-wtsap-a fa-lg  custId-cursor"
-                                  (click)="reDirectToJaldeeOnline()"></i></div> -->
-                            </div>
-                            <a class="custid jld-link mgn-up-10 custId-cursor"
-                              href="{{wndw_path}}{{bProfile.accEncUid}}" target="blank">
-                            </a>
-                            <div>
-                              {{wndw_path}}{{bProfile.accEncUid}}
                             </div>
                           </div>
+
+                          <!-- If there is Custom ID -->
                           <div *ngIf="bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10 disp-flex">
-                              <div>
-                                <ngx-qrcode [elementType]="elementType" [value]="qr_value">
+                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                              <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
+                                <ngx-qrcode #custQR [elementType]="elementType" [value]="qr_value">
                                 </ngx-qrcode>
                               </div>
-                              <div class="trackSlide bprof-icons">
-                                <i class="fa fa-share-alt custId-cursor"
-                                  (click)="qrCodegeneraterOnlineID(bProfile.customId)"></i>
+                              <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12">
+                                <div class="mgn-up-10">
+                                  {{wndw_path}}{{bProfile.customId}}
+                                </div>
+                                <div class="disp-flex mgn-up-10">
+                                  <div class="trackSlide bprof-icons share-ico">
+                                    <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email']"
+                                      [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [size]="-4">
+                                    </share-buttons>
+                                  </div>
+                                  <!-- <div class="dwnld-bdr custId-cursor">
+                                   <a [href]="href" (click)="downloadQR()" download>
+                                    <i class="fa fa-cloud-download dwnld-icon"></i>
+                                   </a> 
+                                  </div> -->
+                                </div>
                               </div>
-                              <!-- <div class="trackSlide bprof-icons"><i
-                                  class="fa fa-cogs teli-wtsap-a fa-lg  custId-cursor"
-                                  (click)="reDirectToJaldeeOnline()"></i></div> -->
                             </div>
-                            <a class="custid jld-link mgn-up-10 custId-cursor" href="{{wndw_path}}{{bProfile.customId}}"
-                              target="blank">
-                              {{wndw_path}}{{bProfile.customId}}
-                            </a>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="pubs card w-dta bprof" *ngIf="!showIncompleteButton">
-                </div>
               </div>
               <div class="card p0 w-dta active" #basicInfoSection>
-                <mat-accordion>
-                  <mat-expansion-panel [expanded]="true">
-                    <mat-expansion-panel-header class="min100">
-                      <mat-panel-title class="block-level">
-                        {{profile_summary_cap}}
-                        <i *ngIf="reqFields.name || reqFields.location  ||reqFields.specilization"
-                          class="req-flds-cap">*required fields missing</i>
-                        <p class="form-level-settings">{{frm_profile_name_cap}}
-                          <a class="learnmore-pointer" id="customer-help"
-                            (click)="learnmore_clicked('basic-information', $event)">Learn More
-                          </a>
-                        </p>
-                      </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <!-- About me -->
-                    <div class="cd-b">
-                      <div class="div-outline custId-cursor"
-                        [ngClass]="{'div-grn-outline':aboutmefilled,'div-red-outline':!aboutmefilled }"
-                        (click)="gotoAboutMe()">
-                        <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
-                          aria-hidden="true"></i>
-                        <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
-                          aria-hidden="true"></i>
-                        <i class="fa person-icon"></i> &nbsp;&nbsp;
-                        <span class="fontstyl">About Me</span>
+                <div class="mgn-bt-20">
+
+                  <!-- Location -->
+                  <div class="cd-b" (click)="editLocation()">
+                    <div class="div-outline custId-cursor"
+                      [ngClass]="{'div-grn-outline':locationFilled,'div-red-outline':!locationFilled }">
+                      <i *ngIf="locationFilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                      <i *ngIf="!locationFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
+                        aria-hidden="true"></i>
+                      <i class="fa locat-icon"></i> &nbsp;&nbsp;
+                      <span class="fontstyl">Location</span>
+                    </div>
+                  </div>
+                  <!-- Specialization -->
+                  <div class="cd-b" (click)="  gotoSpecializations()">
+                    <div class="div-outline custId-cursor"
+                      [ngClass]="{'div-grn-outline':specializeFilled,'div-red-outline':!specializeFilled }">
+                      <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
+                        aria-hidden="true"></i>
+                      <i *ngIf="!specializeFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
+                        aria-hidden="true"></i>
+                      <i class="fa certify-icon"></i> &nbsp;&nbsp;
+                      <span class="fontstyl">Specializations</span>
+                    </div>
+                  </div>
+                  <!-- Languages Known -->
+                  <div class="cd-b" (click)="gotoLanguages()">
+                    <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':languageFilled}">
+                      <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                      <i class="fa lang-icon"></i> &nbsp;&nbsp;
+                      <span class="fontstyl">Languages Known</span>
+                    </div>
+                  </div>
+
+                  <!-- Contact Information -->
+                  <div class="cd-b">
+                    <div class="div-outline custId-cursor"
+                      [ngClass]="{'div-grn-outline':(contactInfoPhFilled && contactInfoMailFilled)}"
+                      (click)="gotoPrivacy()">
+                      <i *ngIf="(contactInfoPhFilled && contactInfoMailFilled)"
+                        class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                      <i class="fa contct-icon"></i> &nbsp;&nbsp;
+                      <span class="fontstyl">Contact Information</span>
+                    </div>
+                  </div>
+                  <!-- Gallery View Grid -->
+                  <div class="cd-b">
+                    <div class="sub-heads mgn-bt-20">Gallery
+                      <span class="edit-txt custId-cursor" (click)="editImageGallery()">add more</span>
+                    </div>
+                    <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list" [source]="'gallery'" [page]="'bProfile'">
+                    </app-jaldee-gallery>
+                  </div>
+                  <!-- Social media -->
+                  <div class="cd-b">
+                    <div class="sub-heads mgn-bt-20">
+                      Social Media <span class="edit-txt custId-cursor" (click)="handleSocialmedia()">add more</span>
+                    </div>
+                    <div>
+                      <div class="no-dta" *ngIf="normal_socialmedia_show==1">
+                        <app-innerloading-spinner spinnerParams="loadingParams">
+                        </app-innerloading-spinner>
+                      </div>
+                      <div class="no-dta" *ngIf="normal_socialmedia_show==2">
+                        <p>{{no_social_media}}</p>
+                        <span class="cs-btn bt3" (click)="handleSocialmedia()">{{add_it_cap}}</span>
+                      </div>
+                      <div class="cd-t sc-t" *ngIf="normal_socialmedia_show==3">
+                        <div class="sblinks">
+                          <ul class="sbl">
+                            <li *ngFor="let social of social_arr;let i = index"
+                              [class]="getSocialdet(social.Sockey, 'iconClass')">
+                              <span class="mbt">
+                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button type="button" (click)="editSocialmedia(social.Sockey)" mat-menu-item>
+                                    <i class="icon-edit"></i>
+                                    <span>{{edit_cap}}</span>
+                                  </button>
+                                  <button type="button" (click)="deleteSocialmedia(social.Sockey)" mat-menu-item>
+                                    <i class="icon-delete"></i>
+                                    <span>{{delete_btn}}</span>
+                                  </button>
+                                </mat-menu>
+                              </span>
+                              <a rel="noopener" [href]="social.Socurl"
+                                target="_blank">{{getSocialdet(social.Sockey,'displayName')}} </a>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                    <!-- Location -->
-                    <div class="cd-b" (click)="editLocation()">
-                      <div class="div-outline custId-cursor"
-                        [ngClass]="{'div-grn-outline':locationFilled,'div-red-outline':!locationFilled }">
-                        <i *ngIf="locationFilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
-                          aria-hidden="true"></i>
-                        <i *ngIf="!locationFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
-                          aria-hidden="true"></i>
-                        <i class="fa locat-icon"></i> &nbsp;&nbsp;
-                        <span class="fontstyl">Location</span>
-                      </div>
-                    </div>
-                    <!-- Specialization -->
-                    <div class="cd-b" (click)="  gotoSpecializations()">
-                      <div class="div-outline custId-cursor"
-                        [ngClass]="{'div-grn-outline':specializeFilled,'div-red-outline':!specializeFilled }">
-                        <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
-                          aria-hidden="true"></i>
-                        <i *ngIf="!specializeFilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right"
-                          aria-hidden="true"></i>
-                        <i class="fa certify-icon"></i> &nbsp;&nbsp;
-                        <span class="fontstyl">Specializations</span>
-                      </div>
-                    </div>
-                    <!-- Languages Known -->
-                    <div class="cd-b" (click)="gotoLanguages()">
-                      <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':languageFilled}">
-                        <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
-                          aria-hidden="true"></i>
-                        <i class="fa lang-icon"></i> &nbsp;&nbsp;
-                        <span class="fontstyl">Languages Known</span>
-                      </div>
-                    </div>
-                    <!-- Gallery Media -->
-                    <div class="cd-b">
-                      <div class="div-outline custId-cursor"
-                        [ngClass]="{'div-grn-outline':(galryFilled && mediaFilled)}" (click)="gotoMedia()">
-                        <i *ngIf="(galryFilled && mediaFilled)" class="fa fa-check-circle fa-lg fa-grn fl-right"
-                          aria-hidden="true"></i>
-                        <i class="fa galry-icon"></i> &nbsp;&nbsp;
-                        <span class="fontstyl">Gallery and Social Media</span>
-                      </div>
-                    </div>
-                    <!-- Contact Information -->
-                    <div class="cd-b">
-                      <div class="div-outline custId-cursor"
-                        [ngClass]="{'div-grn-outline':(contactInfoPhFilled && contactInfoMailFilled)}"
-                        (click)="gotoPrivacy()">
-                        <i *ngIf="(contactInfoPhFilled && contactInfoMailFilled)"
-                          class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
-                        <i class="fa contct-icon"></i> &nbsp;&nbsp;
-                        <span class="fontstyl">Contact Information</span>
-                      </div>
-                    </div>
-                  </mat-expansion-panel>
-                </mat-accordion>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

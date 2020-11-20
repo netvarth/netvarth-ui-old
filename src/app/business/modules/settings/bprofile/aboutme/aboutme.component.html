@@ -23,14 +23,14 @@
             <div class="col-a col-b pl0 col-md-8 col-lg-6 col-sm-12 col-xl-12">
               <div class="card p0">
                 <div class="pubs card w-dta active bprof">
-                  <div class="cd-t">
+                  
+                  <!-- <div class="cd-t">
                     <div class="basic-i">
                       <div class="bi-l" *ngIf="blogo">
                         <div class="pro-pic" [class.yes]="profimg_exists">
                           <div class="pro-pic-img">
                             <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
                           </div>
-                          <!-- <input #logofile type="file" accept="/*;capture=camera" style="display:none;" (change)="imageSelect(logofile,$event)"> -->
                           <div class="add">
                             <span (click)="changeProPic()">{{add_cap}}
                               <br /> {{profile_pic_cap}}
@@ -39,12 +39,12 @@
                           <div class="change">
                             <span class="change-pic" (click)="changeProPic()">{{change_cap}}
                               <br /> {{pic_cap}}</span>
-                            <!--<span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>-->
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
+
                   <div class="">
                     <form *ngIf="aboutmeForm" [formGroup]="aboutmeForm" novalidate
                       (ngSubmit)="aboutmeForm.valid && onSubmit(aboutmeForm.value)" (keyup)="resetApiErrors()"

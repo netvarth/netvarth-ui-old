@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../../app.component';
@@ -17,15 +17,19 @@ import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
+import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
+import { GalleryImportComponent } from '../../../../shared/modules/gallery/import/gallery-import.component';
+import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 
 @Component({
   selector: 'app-bprofile',
   templateUrl: './bprofile.component.html',
-  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss']
+  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss', './bprofile.component.css']
 })
 
 
-export class BProfileComponent implements OnInit,  AfterViewChecked {
+export class BProfileComponent implements OnInit, AfterViewChecked {
+  @Output() action = new EventEmitter<any>();
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   listmyprofile_status: boolean;
   onlinepresence_status_str: string;
@@ -365,6 +369,10 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
   mediaFilled = false;
   contactInfoPhFilled = false;
   contactInfoMailFilled = false;
+  galleryDialog: any;
+  shareLink: any;
+  href;
+  img_list: string;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -391,7 +399,6 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
   }
 
 
-
   ngOnInit() {
 
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
@@ -410,7 +417,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
     this.getGalleryImages();
-
+    this.getProviderLogo();
 
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -505,7 +512,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
       this.showIncompleteButton = true;
-      return businessProfileWeightageText;
+      return weightage + '%';
 
     }
     if (weightage > 25 && weightage < 50) {
@@ -519,7 +526,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
       this.showIncompleteButton = true;
       return businessProfileWeightageText;
     } else if
-    (weightage >= 50 && weightage < 75) {
+      (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
       this.weightageClass = 'info';
@@ -586,7 +593,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
   }
 
 
-    getJaldeeIntegrationSettings() {
+  getJaldeeIntegrationSettings() {
     this.provider_services.getJaldeeIntegrationSettings().subscribe(
       (data: any) => {
         this.onlinepresence_status = data.onlinePresence;
@@ -614,10 +621,29 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
       .then(
         data => {
           this.bProfile = data;
+          // social media setting
+          this.normal_socialmedia_show = 2;
+          this.social_arr = [];
+          if (this.bProfile.socialMedia) {
+            if (this.bProfile.socialMedia.length > 0) {
+              this.normal_socialmedia_show = 3;
+              for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
+                if (this.bProfile.socialMedia[i].resource !== '') {
+                  this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
+                }
+              }
+            }
+          }
+          if (this.social_arr.length < this.orgsocial_list.length) {
+            this.showaddsocialmedia = true;
+          }
+
           if (this.bProfile.customId) {
             this.generateQR(this.bProfile.customId);
+            this.shareLink = this.wndw_path + this.bProfile.customId;
           } else {
             this.generateQR(this.bProfile.accEncUid);
+            this.shareLink = this.wndw_path + this.bProfile.accEncUid;
           }
           if (this.bProfile.businessName && this.bProfile.businessDesc) {
             this.domainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfDomain();
@@ -830,7 +856,7 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
     this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
   }
 
-   gotoJaldeeIntegration() {
+  gotoJaldeeIntegration() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
   }
   gotoMedia() {
@@ -1239,5 +1265,143 @@ export class BProfileComponent implements OnInit,  AfterViewChecked {
 
   generateQR(id) {
     this.qr_value = projectConstants.PATH + id;
+  }
+
+  // Getting Provider Profile Pic
+  getProviderLogo() {
+    this.provider_services.getProviderLogo()
+      .subscribe(
+        data => {
+          this.blogo = data;
+          const cnow = new Date();
+          const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+          this.cacheavoider = dd;
+          if (this.blogo[0]) {
+            this.logoExist = true;
+          } else {
+            this.logoExist = false;
+          }
+          this.provider_datastorage.updateProfilePicWeightage(this.logoExist);
+        },
+        () => {
+
+        }
+      );
+  }
+
+  // display logo
+  showimg() {
+    let logourl = '';
+    this.profimg_exists = false;
+    if (this.item_pic.base64) {
+      this.profimg_exists = true;
+
+      return this.item_pic.base64;
+    } else {
+      if (this.blogo[0]) {
+        this.profimg_exists = true;
+        logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
+      }
+      return this.sharedfunctionobj.showlogoicon(logourl);
+    }
+  }
+
+  // Change pro pic
+  changeProPic() {
+    this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: { 'userdata': this.bProfile }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      this.getProviderLogo();
+    });
+  }
+
+  // Social Media
+  handleSocialmedia(key?) {
+    this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        bprofile: this.bProfile,
+        editkey: key || ''
+      }
+    });
+    this.socialdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result === 'reloadlist') {
+          this.getBusinessProfile();
+        }
+      }
+    });
+  }
+
+  getSocialdet(key, field) {
+    const retdet = this.orgsocial_list.filter(
+      soc => soc.key === key);
+    const returndet = retdet[0][field];
+    return returndet;
+  }
+
+  editSocialmedia(key) {
+    this.handleSocialmedia(key);
+  }
+  deleteSocialmedia(sockey) {
+    const post_data: any = [];
+    for (let i = 0; i < this.social_arr.length; i++) {
+      if (this.social_arr[i].Sockey !== sockey) {
+        post_data.push({ 'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl });
+      }
+    }
+    const submit_data = {
+      'socialMedia': post_data
+    };
+    this.provider_services.updateSocialMediaLinks(submit_data)
+      .subscribe(
+        () => {
+          this.getBusinessProfile();
+        },
+        () => {
+
+        }
+      );
+
+  }
+
+  // Add/edit image gallery
+  editImageGallery() {
+    // if (!this.service_data.id) { return false; }
+    this.galleryDialog = this.dialog.open(GalleryImportComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        type: 'edit',
+        source_id: 'gallery'
+      }
+    });
+    this.galleryDialog.componentInstance.performUpload.subscribe(
+      (imagelist_input) => {
+        const input = {
+          'type': 'add',
+          'value': imagelist_input
+        };
+         this.action.emit(input);
+      });
+    this.galleryDialog.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        // this.getGalleryImages();
+      }
+    });
+  }
+
+  // dwnld QR
+  downloadQR() {
+    console.log('img');
+    // this.href = this.qrcode.src;
   }
 }
