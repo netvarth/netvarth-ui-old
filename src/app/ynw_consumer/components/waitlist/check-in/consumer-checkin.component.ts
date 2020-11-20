@@ -1557,6 +1557,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     reader.readAsDataURL(file);
                 }
             }
+            this.action = 'attachment';
         }
     }
 

@@ -333,13 +333,24 @@
                                                             <span
                                                                 *ngIf="sel_ser_det.consumerNoteMandatory && type != 'reschedule'">*</span></a>
                                                     </mat-chip>
-                                                    <mat-chip (click)="gotoAttachments()"><a
+                                                    <!-- <mat-chip (click)="gotoAttachments()"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-paperclip mgn-rt-5"
                                                                 aria-hidden="true"></i>Upload Files<span
                                                                 *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
-                                                        </a></mat-chip>
-                                                </mat-chip-list>
+                                                        </a></mat-chip> -->
+                                               
+                                                        <mat-chip><a class="lnk action pointer-cursor" (click)="imagefile1.click()"><input
+                                                            #imagefile1 type="file" accept="/*;capture=camera"
+                                                            style="display:none;" multiple (change)="filesSelected($event)"><i
+                                                            class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
+                                                        File<span
+                                                        *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
+                                                    </a></mat-chip>
+                                               
+                                               
+                                               
+                                                    </mat-chip-list>
                                             </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                 <!-- <div *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1"

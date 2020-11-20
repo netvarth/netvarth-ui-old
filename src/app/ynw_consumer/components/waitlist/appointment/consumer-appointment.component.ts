@@ -1394,6 +1394,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     reader.readAsDataURL(file);
                 }
             }
+            this.action = 'attachment';
         }
     }
 
