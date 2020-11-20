@@ -98,7 +98,6 @@ export class DonationsComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getServiceList();
-        this.getDonationsList(true);
         this.getLocationList();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
@@ -308,9 +307,9 @@ export class DonationsComponent implements OnInit {
         if (this.services.length > 0) {
             api_filter['service-eq'] = this.services.toString();
         }
-        // if (this.selected_location ) {
-        //     api_filter['location-eq'] = this.selected_location.id;
-        // }
+        if (this.selected_location && this.selected_location.id) {
+            api_filter['location-eq'] = this.selected_location.id;
+        }
 
         return api_filter;
     }
@@ -368,6 +367,7 @@ export class DonationsComponent implements OnInit {
                       self.locations.push(loc);
                     }
                   }
+                  self.onChangeLocationSelect(self.locations[0]);
                   const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
                   if (cookie_location_id === '') {
                     if (self.locations[0]) {
@@ -420,8 +420,8 @@ export class DonationsComponent implements OnInit {
         this.filter_sidebar = false;
         this.show_loc = !this.show_loc;
     }
-    // onChangeLocationSelect(location) {
-    //     this.selected_location = location;
-    // this.getDonationsList(true);
-    // }
+    onChangeLocationSelect(location) {
+        this.selected_location = location;
+    this.getDonationsList();
+    }
 }
