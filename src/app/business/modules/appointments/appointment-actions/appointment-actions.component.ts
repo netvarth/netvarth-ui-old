@@ -275,7 +275,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
             .then(
                 result => {
-                    this.dialogRef.close();
+                    this.dialogRef.close('reload');
                 }
             );
     }
@@ -361,7 +361,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     deleteLabel(label, checkinId) {
         this.provider_services.deleteLabelfromAppointment(checkinId, label).subscribe(data => {
-            this.dialogRef.close();
+            this.dialogRef.close('reload');
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -401,7 +401,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     addLabel() {
         this.provider_services.addLabeltoAppointment(this.appt.uid, this.labelMap).subscribe(data => {
-            this.dialogRef.close();
+            this.dialogRef.close('reload');
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -445,7 +445,7 @@ export class AppointmentActionsComponent implements OnInit {
         const status = (this.appt.callingStatus) ? 'Disable' : 'Enable';
         this.provider_services.setApptCallStatus(this.appt.uid, status).subscribe(
             () => {
-                this.dialogRef.close();
+                this.dialogRef.close('reload');
             });
     }
     showCallingModes(modes) {
@@ -483,7 +483,7 @@ export class AppointmentActionsComponent implements OnInit {
             .subscribe(
                 () => {
                     this.shared_functions.openSnackBar('Appointment rescheduled to ' + this.apptDate);
-                    this.dialogRef.close();
+                    this.dialogRef.close('reload');
                 },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -658,7 +658,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.deleteAppointmentBlock(this.appt.uid)
             .subscribe(
                 () => {
-                    this.dialogRef.close();
+                    this.dialogRef.close('reload');
                     this.router.navigate(['provider', 'appointments']);
                 },
                 error => {

@@ -517,8 +517,20 @@ export class ProviderCheckinComponent implements OnInit {
                             }
                             _this.shared_services.getServicesByLocationId(_this.sel_loc).subscribe(
                                 (services: any) => {
-                                    _this.servicesjson = services;
-                                    _this.serviceslist = services;
+                                    // _this.servicesjson = services;
+                                    // _this.serviceslist = services;
+                                    if (!_this.customer_data.phoneNo) {
+                                        _this.servicesjson = [];
+                                        for (let i = 0; i < services.length; i++) {
+                                            if (services[i].serviceType !== 'virtualService') {
+                                                _this.servicesjson.push(services[i]);
+                                                _this.serviceslist.push(services[i]);
+                                            }
+                                        }
+                                    } else {
+                                        _this.servicesjson = services;
+                                        _this.serviceslist = services;
+                                    }
                                     // this.sel_ser_det = [];
                                     if (_this.servicesjson.length > 0) {
                                         //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
@@ -908,7 +920,7 @@ export class ProviderCheckinComponent implements OnInit {
                     // }
                     this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
                 }
-                    this.saveCheckin();
+                this.saveCheckin();
             } else {
                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 // this.api_error = error;
