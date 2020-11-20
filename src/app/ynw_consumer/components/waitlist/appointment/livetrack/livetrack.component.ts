@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { ConfirmBoxComponent } from '../../../../shared/component/confirm-box/confirm-box.component';
 
 @Component({
     selector: 'app-consumer-livetrack',
@@ -33,7 +35,10 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
     payment_popup: any;
     firstTimeClick = true;
     state;
+    enableDisabletrackdialogRef;
     constructor(public router: Router,
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private dialog: MatDialog,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
         private shared_services: SharedServices) {
@@ -242,6 +247,22 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
         });
     }
     locationEnableDisable(event) {
+        let stat = '';
+        if (event.checked) {
+            stat = 'enable';
+        } else {
+            stat = 'disable';
+        }
+        this.enableDisabletrackdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              'message': 'Do you really want to ' + stat + ' livetrack?'
+            }
+          });
+          this.enableDisabletrackdialogRef.afterClosed().subscribe(result => {
+            if (result) {
         if (event.checked) {
             this.getCurrentLocation().then(
                 (lat_long: any) => {
@@ -271,8 +292,12 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
             );
         } else {
             this.shareLoc = false;
-            this.updateLiveTrackInfo(); 
+            this.updateLiveTrackInfo();
         }
+    } else {
+        this.shareLoc = !this.shareLoc;
+    }
+  });
     }
     onCancel(){
         this.router.navigate(['consumer']);

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { ConfirmBoxComponent } from '../../../../shared/component/confirm-box/confirm-box.component';
 
 @Component({
     selector: 'app-consumer-livetrack',
@@ -34,6 +36,8 @@ export class ConsumerLiveTrackComponent implements OnInit {
     firstTimeClick = true;
     state;
     constructor(public router: Router,
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private dialog: MatDialog,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
         private shared_services: SharedServices) {
@@ -59,6 +63,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
     breadcrumbs;
     breadcrumb_moreoptions: any = [];
     activeWt: any;
+    enableDisabletrackdialogRef;
 
     ngOnInit() {
         this.breadcrumbs = [
@@ -242,39 +247,59 @@ export class ConsumerLiveTrackComponent implements OnInit {
         });
     }
     locationEnableDisable(event) {
+        let stat = '';
         if (event.checked) {
-            this.getCurrentLocation().then(
-                (lat_long: any) => {
-                    this.lat_lng = lat_long;
-                    if (!this.firstTimeClick) { 
-                        this.updateLiveTrackInfo().then(
-                            (liveTInfo) => {
-                                this.track_loading = false;
-                                this.liveTrackMessage = this.shared_functions.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
-                            }
-                        );
-                    } else {
-                        this.saveLiveTrackInfo().then(
-                            (liveTInfo) => {
-                                this.track_loading = false;
-                                this.firstTimeClick = false;
-                                this.liveTrackMessage = this.shared_functions.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
-                            }
-                        );
-                    }
-                }, (error) => {
-                    this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
-                    this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
-                    this.shareLoc = false;
-                    this.track_loading = false;
-                }
-            );
+            stat = 'enable';
         } else {
-            this.shareLoc = false;
-            this.updateLiveTrackInfo();
+            stat = 'disable';
         }
+        this.enableDisabletrackdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              'message': 'Do you really want to ' + stat + ' livetrack?'
+            }
+          });
+          this.enableDisabletrackdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                if (event.checked) {
+                    this.getCurrentLocation().then(
+                        (lat_long: any) => {
+                            this.lat_lng = lat_long;
+                            if (!this.firstTimeClick) {
+                                this.updateLiveTrackInfo().then(
+                                    (liveTInfo) => {
+                                        this.track_loading = false;
+                                        this.liveTrackMessage = this.shared_functions.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
+                                    }
+                                );
+                            } else {
+                                this.saveLiveTrackInfo().then(
+                                    (liveTInfo) => {
+                                        this.track_loading = false;
+                                        this.firstTimeClick = false;
+                                        this.liveTrackMessage = this.shared_functions.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
+                                    }
+                                );
+                            }
+                        }, (error) => {
+                            this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+                            this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+                            this.shareLoc = false;
+                            this.track_loading = false;
+                        }
+                    );
+                } else {
+                    this.shareLoc = false;
+                    this.updateLiveTrackInfo();
+                }
+            } else {
+                this.shareLoc = !this.shareLoc;
+            }
+          });
     }
-    onCancel(){
+    onCancel() {
         this.router.navigate(['consumer']);
     }
     notifyEvent(event) {
