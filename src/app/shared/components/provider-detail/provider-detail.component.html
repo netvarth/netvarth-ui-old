@@ -265,7 +265,7 @@
                         <a class="lnk"><span class="ch-title"
                                 (click)="showExistingCheckin(loc.id, loc.place, i)">{{you_have_cap}}
                                 <span class="count">{{loc.checkins.length}}
-                                    {{getTerminologyTerm('waitlist')}}</span>
+                                    booking(s)</span>
                                 {{at_this_loc_cap}}</span></a>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding loc-card"
@@ -286,7 +286,7 @@
                                                 *ngIf="loc.checkins && loc.checkins.length>0"
                                                 (click)="showExistingCheckin(loc.id, loc.place, i)">{{you_have_cap}}
                                                 <span class="count">{{loc.checkins.length}}
-                                                    {{getTerminologyTerm('waitlist')}}</span>
+                                                    booking(s)</span>
                                                 {{at_this_loc_cap}}</span></a>
                                     </div>
                                 </div>
