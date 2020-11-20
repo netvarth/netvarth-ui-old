@@ -26,9 +26,10 @@
               <ul class="dropdown-menu">
                 <li>
                   <ul class="menu">
-                    <li *ngFor="let location of locations" 
+                    <li *ngFor="let location of locations"
                       [ngClass]="{'active': (location.place == selected_location.place)}">
                       <a class="pointer-cursor">
+                       <!-- <a class="pointer-cursor" (click)="onChangeLocationSelect(location)"> -->
                         <h4 *ngIf="location.place.length>='27'">
                           {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
                         <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>

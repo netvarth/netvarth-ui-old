@@ -308,6 +308,9 @@ export class DonationsComponent implements OnInit {
         if (this.services.length > 0) {
             api_filter['service-eq'] = this.services.toString();
         }
+        // if (this.selected_location ) {
+        //     api_filter['location-eq'] = this.selected_location.id;
+        // }
 
         return api_filter;
     }
@@ -417,4 +420,8 @@ export class DonationsComponent implements OnInit {
         this.filter_sidebar = false;
         this.show_loc = !this.show_loc;
     }
+    // onChangeLocationSelect(location) {
+    //     this.selected_location = location;
+    // this.getDonationsList(true);
+    // }
 }
