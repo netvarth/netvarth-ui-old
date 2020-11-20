@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">CONFIRM YOUR APPOINTMENT<button mat-dialog-close class="modal_close" tabindex="-1"><i
+<h1 class="mat-dialog-title">Confirm Your Appointment<button mat-dialog-close class="modal_close" tabindex="-1"><i
     class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content class="ynw-common-form apply-label">
 <div class="form-group col-md-12">
@@ -81,7 +81,7 @@
             <!-- <i class="fa fa-mobile "></i>
             <span class="mgn-lt-10 phonevallabel">{{userPhone}}</span> -->
         </div>
-        <div class="">
+        <div class="" *ngIf="eMail != ''">
              <i class="fa fa-envelope-o "></i>
              <span class="mgn-lt-5 phonevallabel">{{eMail}}</span>
              </div>

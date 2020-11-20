@@ -1919,7 +1919,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 account_id: this.account_id,
                 sel_queue_personaahead: this.sel_queue_personaahead,
                 isFuturedate: this.isFuturedate,
-                eMail: this.userData.userProfile.email,
+                eMail: this.userData.userProfile.email || '',
                 customer_data: this.customer_data,
                 appTimeSlot: this.apptTime['time'],
                 prepaymentAmount: this.prepaymentAmount,
