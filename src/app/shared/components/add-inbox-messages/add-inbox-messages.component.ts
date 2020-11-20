@@ -169,6 +169,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     } else {
       if (this.typeOfMsg === 'multiple') {
         if (this.data.source === 'customer-list') {
+          if (!this.sms && !this.email && !this.pushnotify) {
+            this.api_error = 'share message via options are not selected';
+            return;
+          } else {
           const post_data = {
             medium: {
               email: this.email,
@@ -190,7 +194,12 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 this.disableButton = false;
               }
             );
+          }
         } else {
+          if (!this.sms && !this.email && !this.pushnotify) {
+            this.api_error = 'share message via options are not selected';
+            return;
+          } else {
           const post_data = {
             medium: {
               email: this.email,
@@ -228,7 +237,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         }
-
+        }
       } else {
         if (this.data.source === 'customer-list') {
           const post_data = {
