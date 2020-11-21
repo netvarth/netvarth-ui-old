@@ -2084,6 +2084,11 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     showConfirmPopup(post_Data) {
+        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == ''){
+            
+            this.sharedFunctionobj.openSnackBar('Please provide your notes here', { 'panelClass': 'snackbarerror' });
+            this.checkinenable = false
+        } else {
         // this.dialogRef.close();
         const checkinconfirmdialogRef = this.dialog.open(CheckinConfirmPopupComponent, {
             width: '50%',
@@ -2116,4 +2121,5 @@ export class ConsumerCheckinComponent implements OnInit {
             }
         });
     }
+}
 }

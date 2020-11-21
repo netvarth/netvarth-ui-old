@@ -359,7 +359,7 @@
                                                 {{selected_coupons.toString()}}</div>
                                             <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
                                                 <mat-chip-list class="btns">
-                                                    <mat-chip (click)="handleSideScreen('note')"><a
+                                                    <mat-chip [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory && type != 'waitlistreschedule'" (click)="handleSideScreen('note')"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-file-text-o mgn-rt-5"
                                                                 aria-hidden="true"></i>
