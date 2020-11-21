@@ -23,12 +23,13 @@
     font-size: 1.4rem;
     color: #337ab7;
     text-align: center;
+    font-weight: 600;
 }
 .yourProfile .pad-10 {
     padding:10px;
 }
 .yourProfile .bus-desc {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-align: center;
 }
 .yourProfile .abt-you-box {
