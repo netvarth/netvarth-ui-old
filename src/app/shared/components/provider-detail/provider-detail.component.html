@@ -193,7 +193,15 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10">
+                                <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10"
+                                *ngIf="(locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none') || 
+                                (locationjson[0].open24hours && locationjson[0].open24hours==1) || locationjson[0]?.locationVirtualFields?.traumacentre=='true' || 
+                                locationjson[0]?.locationVirtualFields?.docambulance=='true' || locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' || 
+                                locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' || 
+                                locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
+                                locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' || 
+                                locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true' || locationjson[0]?.locationVirtualFields?.firstaid=='true'
+                                || locationjson[0]?.locationVirtualFields?.deliveryoptions=='true'">
                                     <div class="question-header">Amenities</div>
                                     <div class="question-value1">
                                         <ul class="details badges no-padding">

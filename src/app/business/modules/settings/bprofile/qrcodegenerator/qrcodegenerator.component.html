@@ -22,7 +22,7 @@
                   <button (click)="closeOnlineQR()">close</button> -->
       </div>
       <div class="jld-link-pad">
-       <div>Jaldee Link - <span class="jld-lnk-font custId-cursor" ><a href="{{wpath}}{{accuid}}" target="blank">{{wpath}}{{accuid}}</a></span></div>
+       <div>Jaldee Link - <span class="jld-lnk-font" ><span>{{wpath}}{{accuid}}</span></span></div>
        <br>
        <div style="padding-right: 20%;">
            Jaldee Provider ID - <span class="jld-lnk-font" >{{accuid}}</span>
@@ -33,7 +33,7 @@
         <i class="fa fa-copy custId-cursor  font-lrge " style="font-size:40px;"
         (click)="copyInputMessage(accuid)" [matTooltip]="'Copy link'"></i> -->
         <share-buttons [theme]="'circles-dark'" 
-        [include]="['facebook','whatsapp','email']"
+        [include]="['facebook','whatsapp','email','copy']"
         [url]="shareLink"
         [autoSetMeta]="true"
         [image]="qrCodePath"
