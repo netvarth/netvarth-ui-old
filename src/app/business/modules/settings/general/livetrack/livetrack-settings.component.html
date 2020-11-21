@@ -23,9 +23,9 @@
                             </mat-slide-toggle>
                              &nbsp;{{livetrack_statusstr}}
                              <div class="form-level-settings">
-                                    <p class="settings_info" *ngIf="livetrack_status">{{custs_name |capitalizeFirst}}<strong> can</strong> share when they will arrive.
+                                    <p class="settings_info" *ngIf="livetrack_status">Know when your {{custs_name |capitalizeFirst}} reach you.
                                         </p>
-                                        <p class="settings_info" *ngIf="!livetrack_status">{{custs_name |capitalizeFirst }}<strong> cannot</strong> share when they will arrive.
+                                        <p class="settings_info" *ngIf="!livetrack_status">Know when your {{custs_name |capitalizeFirst}} reach you.
                                         </p> 
                                  <a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('livetracking', $event)">Learn
