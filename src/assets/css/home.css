@@ -501,7 +501,7 @@ section#features {
 }
 
 .no-js .owl-carousel, .owl-carousel.owl-loaded {
-  display: block !important;
+  display: block;
 }
 
 .owl-carousel .owl-stage-outer {

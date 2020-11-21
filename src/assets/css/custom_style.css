@@ -13067,3 +13067,6 @@ hr {
   padding: 10px !important;
   font-size: 1rem !important;
 }
+.checkins-owl .owl-carousel {
+  display: flex !important;
+}
