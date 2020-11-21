@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../../app.component';
@@ -20,6 +20,7 @@ import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.comp
 import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { GalleryImportComponent } from '../../../../shared/modules/gallery/import/gallery-import.component';
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
+import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 
 @Component({
   selector: 'app-bprofile',
@@ -28,7 +29,7 @@ import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 })
 
 
-export class BProfileComponent implements OnInit, AfterViewChecked {
+export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   @Output() action = new EventEmitter<any>();
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   listmyprofile_status: boolean;
@@ -332,6 +333,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
   licence_warn = false;
   adword_loading = true;
   subscription: Subscription;
+  gallerySubscription: Subscription;
   bprofile_btn_text = 'Complete Your Profile';
   profile_status_str = '';
   jaldee_online_status_str = '';
@@ -378,7 +380,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
-    private fb: FormBuilder,
+    private fb: FormBuilder, private galleryService: GalleryService,
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -398,7 +400,14 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
     // });
   }
 
-
+  ngOnDestroy() {
+    if (this.gallerySubscription) {
+      this.gallerySubscription.unsubscribe();
+    }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit() {
 
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
@@ -442,11 +451,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
       this.businessProfile_show = 1;
       this.businessweightageArray = result;
       // console.log(JSON.stringify(this.businessweightageArray));
-
       if (this.businessweightageArray.length !== 0) {
         this.weightageValue = this.calculateWeightage(result);
-
-
         // if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
         //   if(this.mandatoryfieldArray.length!==0){
         //     this.changeJaldeeOnlineStatus(this.checkMandatoryFieldsAlsoFilled());
@@ -461,14 +467,38 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
         this.weightageValue = 0;
         this.businessProfile_show = -1;
       }
-
-
     });
 
+    this.gallerySubscription = this.galleryService.getMessage().subscribe(input => {
+      if (input.ttype === 'image-upload') {
+        this.provider_services.uploadGalleryImages(input.value)
+          .subscribe(
+            () => {
+              this.shared_functions.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
+              this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+              this.getGalleryImages();
+            },
+            error => {
+              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+            }
+          );
+      } else if (input.ttype === 'delete-image') {
+        this.deleteImage(input.value);
+      }
+    });
+  }
 
+  deleteImage(file) {
+    this.provider_services.deleteProviderGalleryImage(file)
+      .subscribe(
+        () => {
+          this.getGalleryImages();
+        },
+        () => {
 
-
-
+        }
+      );
   }
   checkMandatoryFieldsAlsoFilled() {
     return this.businessweightageArray.includes(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
@@ -481,12 +511,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
 
   }
 
-
   ngAfterViewChecked() {
     this.changeDetectorRef.detectChanges();
   }
-
-
 
   calculateWeightage(data) {
     let total = 0;
@@ -562,8 +589,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
 
   }
 
-
-
   getAdwordDisplayName(name) {
     return name.split(projectConstants.ADWORDSPLIT).join(' ');
   }
@@ -592,7 +617,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
         });
   }
 
-
   getJaldeeIntegrationSettings() {
     this.provider_services.getJaldeeIntegrationSettings().subscribe(
       (data: any) => {
@@ -603,9 +627,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
       }
     );
   }
-
-
-
 
   getBusinessProfile() {
     this.aboutmefilled = false;
@@ -697,13 +718,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
                   }
 
                 });
-
-
-
             });
           this.provider_datastorage.set('bProfile', this.bProfile);
-
-
           const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
@@ -715,7 +731,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
           } else {
             this.normal_profile_active = 2;
           }
-
           if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
             const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
             // calling function which saves the business related details to show in the header
@@ -723,7 +738,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
               || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.sharedfunctionobj.sendMessage(pdata);
-
           }
           // check whether normal search section can be displayed
           this.normal_search_display = this.bProfile.enableSearch;
@@ -734,14 +748,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
           } else {
             this.normal_basicinfo_show = 2;
           }
-
-
-
-
-
-
-
-
           // check whether domain fields exists
           const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
           this.provider_datastorage.setBusinessProfileWeightage(this.bProfile);
@@ -773,8 +779,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
       );
   }
 
-
-
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -800,7 +804,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
   reDirectToJaldeeOnline() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldeeonline']);
   }
-
 
   editLocation(badge?) {
     if (badge) {
@@ -843,8 +846,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
     }
   }
 
-
-
   performActions(action) {
     if (action === 'learnmore') {
 
@@ -877,11 +878,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
   gotoAboutMe() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'aboutme']);
   }
-
-
-
   // mandatory fields
-
   getDomainVirtualFields() {
     const weightageObjectOfDomain: any = {};
     const checkArray = [];
@@ -908,12 +905,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
                 return;
               }
             });
-
-
           } else {
             mandatorydomain = false;
           }
-
           if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoDomainFields, this.domain_fields)) {
             additionalInfoFilledStatus = true;
           }
@@ -921,13 +915,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
           weightageObjectOfDomain.mandatoryDomainFilledStatus = mandatorydomainFilled;
           weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
           this.provider_datastorage.setWeightageObjectOfDomain(weightageObjectOfDomain);
-
-
-
         }
       );
   }
-
 
   checkMandatoryFieldsInResultSet(domainFields, fieldname) {
     let fullyfilledStatus = true;
@@ -1072,12 +1062,10 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
                 return;
               }
             });
-
           }
           if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoSubDomainFields, this.subdomain_fields)) {
             additionalInfoFilledStatus = true;
           }
-
           weightageObjectOfSubDomain.mandatorySubDomain = mandatorysubdomain;
           weightageObjectOfSubDomain.mandatorySubDomainFilledStatus = mandatorySubDomainFilled;
           weightageObjectOfSubDomain.additionalSubDomainFullyFilled = additionalInfoFilledStatus;
@@ -1095,12 +1083,10 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
               }
             }
           }
-
           this.provider_datastorage.updateMandatoryAndAdditionalFieldWeightage();
         }
       );
   }
-
 
   getdispVal(typ, field) {
     let retfield = '';
@@ -1390,7 +1376,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked {
           'type': 'add',
           'value': imagelist_input
         };
-         this.action.emit(input);
+        console.log(input);
+        this.action.emit(input);
       });
     this.galleryDialog.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
