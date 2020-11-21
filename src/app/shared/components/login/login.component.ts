@@ -198,14 +198,18 @@ export class LoginComponent implements OnInit {
     this.step = 1;
   }
   handleSignup() {
-    if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin' || this.moreParams['source'] === 'business_page')) {
-      this.dialogRef.close('showsignup');
-    } else {
-      this.dialogRef.close('showsignupfromlogin'); // closing the signin window
-    }
-    if (this.data.moreparams && (this.data.moreparams.source === 'businesshome_page')) {
-      this.doSignup();
-    }
+    this.dialogRef.close();
+    this.doSignup();
+    console.log('dhf');
+    console.log(this.moreParams);
+    // if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin' || this.moreParams['source'] === 'business_page')) {
+    //   this.dialogRef.close('showsignup');
+    // } else {
+    //   this.dialogRef.close('showsignupfromlogin'); // closing the signin window
+    // }
+    // if (this.data.moreparams && (this.data.moreparams.source === 'businesshome_page')) {
+    //   this.doSignup();
+    // }
   }
   doSignup() {
     const dialogReflog = this.dialog.open(SignUpComponent, {

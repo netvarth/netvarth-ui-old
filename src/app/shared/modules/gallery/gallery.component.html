@@ -51,7 +51,7 @@
                 </div>
             </li>
         </ul>
-        <span (click)="editImageGallery()" class="addbt" *ngIf="status=='ACTIVE'"></span>
+        <span (click)="editImageGallery()" class="addbt" *ngIf="status=='ACTIVE' && !page"></span>
 
         <ks-modal-gallery [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
             [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook($event)"

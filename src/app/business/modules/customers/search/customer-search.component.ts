@@ -392,7 +392,8 @@ export class CustomerSearchComponent implements OnInit {
         }
     }
     goBack() {
-        this.router.navigate(['provider', 'customers']);
+        // this.router.navigate(['provider', 'customers']);
+        this._location.back();
     }
     createForm() {
         this.searchForm = this.fb.group({

@@ -42,9 +42,14 @@
     font-size: smaller;
   }
   .action-box {
-    width: 120px;
-    height: 80px;
-    margin: 5px;
+    width: 130px;
+    height: 90px;
+    margin: 10px;
+  }
+}
+@media (max-width: 330px) {
+  .action-box {
+    width: 120px !important;
   }
 }
 .action-box-sub {

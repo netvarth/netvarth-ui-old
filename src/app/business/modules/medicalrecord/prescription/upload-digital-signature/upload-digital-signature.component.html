@@ -6,7 +6,8 @@
       {{heading}}
      </h5>
     </div>
-    <div class="card title-gb">
+    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+    <div class="card title-gb" *ngIf="!loading">
 <div class="no-dta" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0" >
     <div >
       <span class="b-link">

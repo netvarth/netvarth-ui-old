@@ -140,12 +140,12 @@ export class CustomerDetailComponent implements OnInit {
             }
             if (qparams.phone) {
                 this.phoneNo = qparams.phone;
-                if (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
+                if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
                     this.getJaldeeIntegrationSettings();
                     this.save_btn = 'Proceed';
                 }
             } else {
-                if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment')) {
+                if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block')) {
                     this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
                     this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
                     this.save_btn = 'Proceed';
@@ -292,11 +292,19 @@ export class CustomerDetailComponent implements OnInit {
                         }
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
                         this.customerErrorMsg1 = 'The system found the record details in Jaldee.com';
-                        this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + ' to create ' + this.source + '?';
+                        if (this.source === 'waitlist-block' || this.source === 'appt-block') {
+                            this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + '?';
+                        } else {
+                            this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + ' to create ' + this.source + '?';
+                        }
                         this.loading = false;
                     } else {
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
-                        this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                        if (this.source === 'waitlist-block' || this.source === 'appt-block') {
+                            this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details';
+                        } else {
+                            this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                        }
                         this.loading = false;
                     }
                 },
@@ -564,7 +572,6 @@ export class CustomerDetailComponent implements OnInit {
                 'id': id
             }],
         };
-        console.log(post_data);
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {
@@ -734,24 +741,24 @@ export class CustomerDetailComponent implements OnInit {
             console.log(visitDetails.waitlist);
             let mrId = 0;
             if (visitDetails.waitlist.mrId) {
-            mrId = visitDetails.waitlist.mrId;
+                mrId = visitDetails.waitlist.mrId;
             }
             const customerDetails = visitDetails.waitlist.waitlistingFor[0];
             const customerId = customerDetails.id;
             const bookingId = visitDetails.waitlist.ynwUuid;
             const bookingType = 'TOKEN';
-            this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ]);
+            this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
         } else if (visitDetails.appointmnet) {
             let mrId = 0;
             if (visitDetails.appointmnet.mrId) {
-            mrId = visitDetails.appointmnet.mrId;
+                mrId = visitDetails.appointmnet.mrId;
             }
             const customerDetails = visitDetails.appointmnet.appmtFor[0];
             const customerId = customerDetails.id;
             const bookingId = visitDetails.appointmnet.uid;
             const bookingType = 'APPT';
-            this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ]);
-         }
+            this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
+        }
     }
     prescription(visitDetails) {
         console.log(visitDetails);
@@ -759,31 +766,31 @@ export class CustomerDetailComponent implements OnInit {
             console.log(visitDetails.waitlist);
             let mrId = 0;
             if (visitDetails.waitlist.mrId) {
-              mrId = visitDetails.waitlist.mrId;
+                mrId = visitDetails.waitlist.mrId;
             }
             const customerDetails = visitDetails.waitlist.waitlistingFor[0];
             const customerId = customerDetails.id;
             const bookingId = visitDetails.waitlist.ynwUuid;
             const bookingType = 'TOKEN';
-            this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription' ]);
-          } else if (visitDetails.appointmnet) {
+            this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription']);
+        } else if (visitDetails.appointmnet) {
             let mrId = 0;
             if (visitDetails.appointmnet.mrId) {
-              mrId = visitDetails.appointmnet.mrId;
+                mrId = visitDetails.appointmnet.mrId;
             }
             const customerDetails = visitDetails.appointmnet.appmtFor[0];
             const customerId = customerDetails.id;
             const bookingId = visitDetails.appointmnet.uid;
-             const bookingType = 'APPT';
-             this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription']);
-          }
+            const bookingType = 'APPT';
+            this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription']);
+        }
 
     }
     gotoCustomerDetail(visit, time_type) {
         if (visit.waitlist) {
-            this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid], {queryParams: {timetype: time_type}});
+            this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid], { queryParams: { timetype: time_type } });
         } else {
-            this.router.navigate(['provider', 'appointments', visit.appointmnet.uid], {queryParams: {timetype: time_type}});
+            this.router.navigate(['provider', 'appointments', visit.appointmnet.uid], { queryParams: { timetype: time_type } });
         }
     }
     goBack() {
@@ -901,4 +908,3 @@ export class CustomerDetailComponent implements OnInit {
         this.showMoreHistory = !this.showMoreHistory;
     }
 }
-

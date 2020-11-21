@@ -25,8 +25,11 @@
                                             <div class="col-md-6 col-lg-6 col-xs-7 col-sm-6 no-padding"> Appointment
                                                 slot: {{getSingleTime(slotTime)}}</div>
                                         </div>
-                                        <div class="mgn-up-10"> Find an existing {{customer_label}} and create
+                                        <div class="mgn-up-10" *ngIf="source !== 'appt-block'"> Find an existing
+                                            {{customer_label}} and create
                                             appointment</div>
+                                        <div class="mgn-up-10" *ngIf="source === 'appt-block'"> Find an existing
+                                            {{customer_label}}</div>
                                         <div class="disp-flex">
                                             <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
                                                 <mat-form-field>
@@ -43,8 +46,11 @@
                                             <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
                                                 <!-- <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
                                         searchCustomer(searchForm.value,selectedMode)"></i> -->
-                                                <button class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
+                                                <button *ngIf="!showBlockHint" class="create_new_button cs-btn bt3"
+                                                    (click)="searchForm.valid &&
                                         searchCustomer(searchForm.value)">Find</button>
+                                                <button *ngIf="showBlockHint" class="create_new_button cs-btn bt3"
+                                                    (click)="confirmApptBlock()">Confirm</button>
                                             </div>
                                         </div>
                                     </div>
@@ -58,13 +64,16 @@
                                 Don't have a mobile number? <a class="more_less" (click)="createNew('new')"> Click
                                     here.</a>
                             </div> -->
-                            <div class="create_new mgn-bt-20 font-9">
+                            <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
                                 <div class="or-style">OR</div>
-                                <a class="underline" (click)="createNew()">
+                                <a class="underline" (click)="createNew()" *ngIf="source !== 'appt-block'">
                                     Create a new {{customer_label}} and appointment
                                 </a>
+                                <a class="underline" (click)="createNew()" *ngIf="source === 'appt-block'">
+                                    Create a new {{customer_label}}
+                                </a>
                             </div>
-                            <div class="create_new mgn-bt-20 font-9">
+                            <div class="create_new mgn-bt-20 font-9" *ngIf="source !== 'appt-block'">
                                 <div class="or-style">OR</div>
                                 <span>
                                     Choose the third party listing site/app through which the {{customer_label}} came.
@@ -133,7 +142,8 @@
                                     <div *ngIf="thirdParty !== ''">
                                         {{customer_label | capitalizeFirst}} from
                                         {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}
-                                        <a class="customer-action-btn pointer-cursor" (click)="createNew('fill')">Fill the
+                                        <a class="customer-action-btn pointer-cursor" (click)="createNew('fill')">Fill
+                                            the
                                             {{customer_label}}
                                             details </a>
                                     </div>
@@ -287,7 +297,8 @@
                                             <div class="pickerouter">
                                                 <mat-datepicker-toggle matSuffix [for]="picker">
                                                 </mat-datepicker-toggle>
-                                                <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                                                <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                                                </mat-datepicker>
                                                 <input class="form-control" type="text" matInput
                                                     [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
                                                     [value]="ddate" (dateChange)="handleFutureDateChange($event)">
@@ -407,7 +418,8 @@
                             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
                         </div>
                         <div class="col-md-12 mgn-up-20" *ngIf="consumerNote">
-                            <a class="notes pointer-cursor" (click)="toggleNotes()">{{sel_ser_det.consumerNoteTitle}}</a>
+                            <a class="notes pointer-cursor"
+                                (click)="toggleNotes()">{{sel_ser_det.consumerNoteTitle}}</a>
                         </div>
                         <ng-container *ngIf="consumerNote && notes" class="notes">
                             <div class="row col-md-12" style="display: flex;">
@@ -498,13 +510,14 @@
                                                                 <mat-radio-button *ngIf="memb.firstName"
                                                                     (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                                                     [value]="memb.id" [checked]="isChecked(memb.id)">
-                                                                    {{memb.firstName | capitalizeFirst}} {{(memb.lastName) ? memb.lastName : ''}}
+                                                                    {{memb.firstName | capitalizeFirst}}
+                                                                    {{(memb.lastName) ? memb.lastName : ''}}
                                                                 </mat-radio-button>
-                                                                <mat-radio-button  *ngIf="!memb.firstName"
-                                                                (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
-                                                                [value]="memb.id" [checked]="isChecked(memb.id)">
-                                                                Patient Id:{{memb.id}}
-                                                            </mat-radio-button>
+                                                                <mat-radio-button *ngIf="!memb.firstName"
+                                                                    (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
+                                                                    [value]="memb.id" [checked]="isChecked(memb.id)">
+                                                                    Patient Id:{{memb.id}}
+                                                                </mat-radio-button>
                                                             </li>
                                                         </mat-radio-group>
                                                     </ng-container>
@@ -605,8 +618,7 @@
                         </div>
                         <div class="col-md-12 mgn-up-20 " *ngIf="!showAction">
                             <mat-chip-list class="btns" *ngIf="thirdParty === ''">
-                                <mat-chip class="pro-action"
-                                    (click)="handleSideScreen('members')"><a>Add / Change
+                                <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add / Change
                                         Member </a>
                                 </mat-chip>
                                 <mat-chip class="pro-action" (click)="handleSideScreen('note')">

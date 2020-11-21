@@ -1,0 +1,214 @@
+<section class="container no-padding-small cust-book-details">
+    <div class="content p0 comn-cls checkin-details">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading top-row ">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                        <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                    </div>
+                </div>
+                <div class="panel-body no-padding">
+                    <div class="c-outer m0">
+                        <div class="c-body booking-content col-md-12 col-xs-12 col-sm-12 no-padding">
+                            <!-- graphics -->
+                            <div class="graphics-div">
+                                <span>
+                                    <img class="myjaldee-bg" _ngcontent-ywv-c30=""
+                                        src="assets/images/myjaldee/Group92.png" style="width: 400px;">
+                                </span>
+                            </div>
+
+                            <!-- Title with back option -->
+                            <div class="card title-gb">
+                                <h5 class="mgn-up-10 index-head">{{titlename}} <a class="pull-left mgn-rt-20 back-btn"
+                                        (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
+                            </div>
+                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+                                <div class="card" *ngIf="!api_loading">
+                                    <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                                </div>
+                                <div class="card" *ngIf="api_loading">
+
+                                    <!-- Header -->
+                                    <div class="mgn-bt-20 temp-style index-head">
+                                        <div class="pad-10">
+                                            <h3 class="custId-cursor head-color disp-flex"
+                                                (click)="providerDetail(waitlist.providerAccount)">
+                                                {{waitlist.providerAccount.businessName | capitalizeFirst}} 
+                                                &nbsp;<div *ngIf="checkIfFav(waitlist.providerAccount.id)" class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.providerAccount, $event)"></div>
+                                                <div *ngIf="!checkIfFav(waitlist.providerAccount.id)" class="icon-favourite"
+                                                (click)="addFavProvider(waitlist.providerAccount.id, $event)"></div>
+                                            </h3>
+                                            <a class="loc-cls" [href]="waitlist.queue.location.googleMapUrl"
+                                            target="_blank">
+                                                <i class="fa fa-map-marker"></i>
+                                                {{waitlist.queue.location.place | capitalizeFirst}} 
+                                            </a>
+                                            <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
+                                                <span>{{provider_label | capitalizeFirst}} : </span>
+                                                <span>
+                                                    {{waitlist.provider.firstName | capitalizeFirst}}
+                                                    {{waitlist.provider.lastName | capitalizeFirst}}
+                                                </span>
+                                            </div>
+                                            <div class="mgn-up-10">
+                                                <i *ngIf="waitlist.service.serviceType === 'virtualService'"
+                                                    [class]=iconClass></i>
+                                                <span class="serv-name">
+                                                    {{waitlist.service.name | capitalizeFirst}} <span
+                                                        *ngIf="waitlist.service.deptName">({{waitlist.service.deptName}})
+                                                        <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')" class="joinMeeting" href="{{waitlist.service.virtualCallingModes[0].value}}" target="blank">Join Meeting</a>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Content -->
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6">
+                                            <div class="each-item">
+                                                <span class="item-head">Booking for</span>
+                                                <span
+                                                    class="item-label-val">{{waitlist.waitlistingFor[0].firstName | capitalizeFirst}}
+                                                    {{waitlist.waitlistingFor[0].lastName | capitalizeFirst}}</span>
+                                            </div>
+                                            <div class="each-item">
+                                                <span class="item-head">Booking No</span>
+                                                <span class="item-label-val">{{waitlist.checkinEncId}}</span>
+                                            </div>
+                                            <div class="each-item" *ngIf="waitlist.waitlistPhoneNumber">
+                                                <span class="item-head">Phone No</span>
+                                                <span class="item-label-val">{{waitlist.waitlistPhoneNumber}}</span>
+                                            </div>
+                                            <div class="each-item" *ngIf="waitlist.amountPaid">
+                                                <span class="item-head">Amount Paid</span>
+                                                <span class="item-label-val price rupee-font">
+                                                    &#8377;{{waitlist.amountPaid}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6 txt-align-center">
+                                            <span class="item-head chk-stats">Check your status <i
+                                                    class="fa fa-hand-o-down"></i></span>
+                                            <div class="mgn-up-10">
+                                                <ngx-qrcode id="print-section" [elementType]="elementType"
+                                                    [value]="qr_value">
+                                                </ngx-qrcode>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Status and Date, Queue -->
+                                    <div class="mgn-bt-20 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-bar">
+                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
+                                            <span class="status-label">STATUS</span>
+                                            <span>
+                                                <!-- <div *ngIf="waitlist.waitlistStatus == 'checkedIn'"
+                                                    class="item-label-val">Checked-in</div>
+                                                <div *ngIf="waitlist.waitlistStatus == 'done'"
+                                                    class="item-label-val whtsap-ic">
+                                                    Completed</div>
+                                                <div [ngClass]="{'red': waitlist.waitlistStatus == 'cancelled'}"
+                                                    *ngIf="(waitlist.waitlistStatus !== 'checkedIn' && waitlist.waitlistStatus !== 'done')"
+                                                    class="item-label-val">{{waitlist.waitlistStatus}}
+                                                </div> -->
+                                                <div class="item-label-val">
+                                                    {{check_in_statuses[waitlist.waitlistStatus | capitalizeFirst]}}
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item">
+                                            <span class="status-label">DATE & TIME-WINDOW</span>
+                                            <span class="item-label-val">{{waitlist.date | date:dateFormatSp}}</span>
+                                            <span class="item-label-val">{{waitlist.queue.queueStartTime}} -
+                                                {{waitlist.queue.queueEndTime}}</span>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center">
+                                            <span class="status-label"
+                                                *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
+                                                <!-- virtual time today -->
+                                            <span class="status-label"
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">ESTIMATED
+                                                TIME</span>
+                                                <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">
+                                                    {{waitlist.appxWaitingTime}} min
+                                                </span>
+                                                <!-- virtual time future -->
+                                                <span class="status-label"
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">STARTS AT</span>
+                                                <span class="item-label-val" *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">
+                                                    {{waitlist.serviceTime}}
+                                                </span>
+
+                                            <span class="status-label"
+                                                *ngIf="waitlist.token && !(waitlist.appxWaitingTime>=0)">TOKEN NO</span>
+                                            <span class="item-label-val"
+                                                *ngIf="waitlist.token">{{waitlist.token}}</span>
+                                            <span class="est-tok-time" *ngIf="waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !== 'done' && !waitlist.serviceTime">
+                                                  Est Wait Time: {{waitlist.appxWaitingTime}} min
+                                                </span>
+                                            <span class="est-tok-time"
+                                                *ngIf="waitlist.serviceTime && ( waitlist.appxWaitingTime >=0 && waitlist.token && (waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !=='done'))">Starts
+                                                at : {{waitlist.serviceTime}}</span> 
+                                        </div>
+                                        <div *ngIf="waitlist.batchName"
+                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item">
+                                            <span class="status-label">BATCH</span>
+                                            <span class="item-label-val">{{waitlist.batchName}}</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Show more -->
+                                    <div class="more_view">
+                                        <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a
+                                                class="fl-left">View more</a></span>
+                                        <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a
+                                                class="fl-left">View less</a></span>
+                                        <span class="opt-actions" (click)="gotoActions(waitlist)"><a>Actions</a></span>
+                                    </div>
+
+                                    <!-- Instructions,messages,notes -->
+                                    <div class="more_view" *ngIf="view_more" class="mgn-up-30">
+                                        <mat-tab-group animationDuration="10ms">
+                                            <mat-tab label="Instructions">
+                                                <span *ngIf="waitlist.service && waitlist.service.postInfoEnabled">
+                                                    <h6> {{waitlist.service.postInfoTitle}} </h6>
+                                                    <span [innerHTML]="waitlist.service.postInfoText">
+                                                    </span>
+                                                </span>
+                                                <span *ngIf="waitlist.service && !waitlist.service.postInfoEnabled">No
+                                                    Instructions</span>
+                                            </mat-tab>
+                                            <mat-tab label="Messages">
+                                                <app-inbox-list [messages]="communication_history"
+                                                    [fromsource]="'consumer-waitlist'"
+                                                    (reloadApi)="getCommunicationHistory()"></app-inbox-list>
+                                            </mat-tab>
+                                            <mat-tab label="{{cust_notes_cap | capitalizeFirst}}">
+                                                <span
+                                                    *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">{{waitlist.consumerNote}}</span>
+                                                <span
+                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">{{no_cus_notes_cap}}</span>
+                                            </mat-tab>
+
+                                            <!-- <mat-tab label="{{titlename}} History">
+                                                <span *ngIf="wthistory.length > 0">
+                                                    <ul *ngFor="let stat of wthistory" class="histry-font mgn-up-10">
+                                                        <li>
+                                                            {{stat.waitlistStatus}} 
+                                                        </li>
+                                                    </ul>
+                                                </span>
+                                                <span *ngIf="wthistory.length == 0">No History</span>
+                                            </mat-tab> -->
+                                        </mat-tab-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

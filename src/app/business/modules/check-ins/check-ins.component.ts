@@ -2239,8 +2239,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     //     source: source
     //   }
     // };
-    // this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
-    this.router.navigate(['provider', 'customers', 'add']);
+    this.router.navigate(['provider', 'customers', 'find']);
+    // this.router.navigate(['provider', 'customers', 'add']);
   }
   showAdjustDelay() {
     if (this.queues.length === 0) {
@@ -2545,7 +2545,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];
                   Object.keys(this.historyCheckins[i].label).forEach(key => {
-                    labels.push(this.historyCheckins[i].label[key]);
+                    labels.push(this.getDisplayname(key));
                   });
                   checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
                 }
@@ -3026,10 +3026,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
-      this.chkSelectAppointments = false;
-      this.chkStartedSelectAppointments = false;
-      this.getLabel();
-      this.loadApiSwitch('');
+      if (data === 'reload') {
+        this.chkSelectAppointments = false;
+        this.chkStartedSelectAppointments = false;
+        this.getLabel();
+        this.loadApiSwitch('');
+      }
     });
   }
   statusClick(status) {
@@ -3112,7 +3114,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   addCustomerDetails(checkin) {
-    this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
+    // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
+    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
   }
   showSelectAll() {
     if (this.check_in_filtered_list.length > 1) {

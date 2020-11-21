@@ -320,7 +320,7 @@ export class CheckinActionsComponent implements OnInit {
                     } else {
                         this.shared_functions.openSnackBar('Check-in rescheduled to ' + this.checkin_date, this.sel_queue_timecaption);
                     }
-                    this.dialogRef.close();
+                    this.dialogRef.close('reload');
                 },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -433,7 +433,7 @@ export class CheckinActionsComponent implements OnInit {
         this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
             .then(
                 result => {
-                    this.dialogRef.close();
+                    this.dialogRef.close('reload');
                 }
             );
     }
@@ -517,7 +517,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     deleteLabel(label, checkinId) {
         this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
-            this.dialogRef.close();
+            this.dialogRef.close('reload');
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -557,7 +557,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     addLabel() {
         this.provider_services.addLabeltoCheckin(this.checkin.ynwUuid, this.labelMap).subscribe(data => {
-            this.dialogRef.close();
+            this.dialogRef.close('reload');
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -591,7 +591,7 @@ export class CheckinActionsComponent implements OnInit {
         this.action = 'label';
     }
     gotoLabel() {
-        this.router.navigate(['provider', 'settings', 'general', 'labels'], {queryParams: {source : 'checkin'}});
+        this.router.navigate(['provider', 'settings', 'general', 'labels'], { queryParams: { source: 'checkin' } });
         this.dialogRef.close();
     }
     goBack() {
@@ -601,7 +601,7 @@ export class CheckinActionsComponent implements OnInit {
         const status = (this.checkin.callingStatus) ? 'Disable' : 'Enable';
         this.provider_services.setCallStatus(this.checkin.ynwUuid, status).subscribe(
             () => {
-                this.dialogRef.close();
+                this.dialogRef.close('reload');
             });
     }
     showCallingModes(modes) {
@@ -649,34 +649,34 @@ export class CheckinActionsComponent implements OnInit {
     }
     medicalRecord() {
 
-      this.dialogRef.close();
+        this.dialogRef.close();
 
-      let mrId = 0;
-      if (this.checkin.mrId) {
-        mrId = this.checkin.mrId;
-      }
+        let mrId = 0;
+        if (this.checkin.mrId) {
+            mrId = this.checkin.mrId;
+        }
 
-      const customerDetails = this.checkin.waitlistingFor[0];
-      const customerId = customerDetails.id;
-      const bookingId = this.checkin.ynwUuid;
-       const bookingType = 'TOKEN';
-       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId ], { queryParams: { 'calledfrom': 'waitlist' } });
+        const customerDetails = this.checkin.waitlistingFor[0];
+        const customerId = customerDetails.id;
+        const bookingId = this.checkin.ynwUuid;
+        const bookingType = 'TOKEN';
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId], { queryParams: { 'calledfrom': 'waitlist' } });
 
 
     }
     prescription() {
-      this.dialogRef.close();
+        this.dialogRef.close();
 
-      let mrId = 0;
-      if (this.checkin.mrId) {
-        mrId = this.checkin.mrId;
-      }
+        let mrId = 0;
+        if (this.checkin.mrId) {
+            mrId = this.checkin.mrId;
+        }
 
-      const customerDetails = this.checkin.waitlistingFor[0];
-      const customerId = customerDetails.id;
-      const bookingId = this.checkin.ynwUuid;
-       const bookingType = 'TOKEN';
-       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription'], { queryParams: { 'calledfrom': 'waitlist' } });
+        const customerDetails = this.checkin.waitlistingFor[0];
+        const customerId = customerDetails.id;
+        const bookingId = this.checkin.ynwUuid;
+        const bookingType = 'TOKEN';
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'], { queryParams: { 'calledfrom': 'waitlist' } });
     }
     gotoCustomerDetails() {
         this.dialogRef.close();
@@ -693,7 +693,7 @@ export class CheckinActionsComponent implements OnInit {
         this.provider_services.deleteWaitlistBlock(this.checkin.ynwUuid)
             .subscribe(
                 () => {
-                    this.dialogRef.close();
+                    this.dialogRef.close('reload');
                     this.router.navigate(['provider', 'check-ins']);
                 },
                 error => {

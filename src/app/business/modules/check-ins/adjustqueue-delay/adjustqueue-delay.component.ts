@@ -40,7 +40,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   checkedin_cnt = 0;
   tot_checkin_count = 0;
   customer_label = '';
-  frm_adjust_del_cap =  Messages.FRM_LEVEL_ADJ_DELAY_MSG_CNGE;
+  frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG_CNGE;
   disableButton = false;
   instantQueue;
   breadcrumbs;
@@ -328,7 +328,8 @@ export class AdjustqueueDelayComponent implements OnInit {
             if (this.servicesjson.length > 0) {
               this.sel_ser = this.servicesjson[0].id;
               this.setServiceDetails(this.sel_ser);
-              this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+              // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+              this.getQs();
             } else {
               this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
             }
@@ -342,6 +343,7 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.queuejson = [];
     this.servicesjson = this.serviceslist;
     const newserviceArray = [];
+    this.selected_user = user;
     if (user.id && user.id !== 0) {
       for (let i = 0; i < this.servicesjson.length; i++) {
         if (this.servicesjson[i].provider && user.id === this.servicesjson[i].provider.id) {
@@ -359,7 +361,8 @@ export class AdjustqueueDelayComponent implements OnInit {
     if (this.servicesjson.length > 0) {
       this.sel_ser = this.servicesjson[0].id;
       this.setServiceDetails(this.sel_ser);
-      this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+      // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+      this.getQs();
     } else {
       this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
     }
@@ -375,7 +378,8 @@ export class AdjustqueueDelayComponent implements OnInit {
         if (this.servicesjson.length > 0) {
           this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
           this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
-          this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+          // this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+          this.getQs();
         }
         // this.api_loading1 = false;
       },
@@ -527,6 +531,30 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
 
   }
+  getQs() {
+    let filter = {};
+    filter = { 'queueState-eq': 'ENABLED' };
+    if (this.selected_user) {
+      if (this.selected_user.id !== 0) {
+        filter = { 'provider-eq': this.selected_user.id };
+      } else {
+        filter = { 'scope-eq': 'account' };
+      }
+    }
+    this.provider_services.getProviderQueues(filter)
+      .subscribe(
+        (data) => {
+          this.queuejson = data;
+          console.log(this.queuejson);
+          if (this.queuejson.length === 1) {
+            this.getTodayCheckIn(this.queuejson[0].id);
+          }
+          if (this.queuejson.length > 1) {
+            this.amForm.get('queueControl').setValue(this.queuejson[0].id);
+            this.getTodayCheckIn(this.queuejson[0].id);
+          }
+        });
+  }
   getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     this.queuejson = [];
     if (locid && servid) {
@@ -582,46 +610,46 @@ export class AdjustqueueDelayComponent implements OnInit {
 
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
-        this.smsCredits = data;
-        if (this.smsCredits < 5 && this.smsCredits > 0) {
-          this.is_smsLow = true;
-          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else if (this.smsCredits === 0) {
-          this.is_smsLow = true;
-          this.is_noSMS = true;
-          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else {
-          this.is_smsLow = false;
-          this.is_noSMS = false;
-        }
+      this.smsCredits = data;
+      if (this.smsCredits < 5 && this.smsCredits > 0) {
+        this.is_smsLow = true;
+        this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else if (this.smsCredits === 0) {
+        this.is_smsLow = true;
+        this.is_noSMS = true;
+        this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else {
+        this.is_smsLow = false;
+        this.is_noSMS = false;
+      }
     });
   }
   getLicenseCorpSettings() {
     this.provider_services.getLicenseCorpSettings().subscribe(
-        (data: any) => {
-            this.corpSettings = data;
-        }
+      (data: any) => {
+        this.corpSettings = data;
+      }
     );
-}
+  }
   gotoSmsAddon() {
     if (this.corpSettings && this.corpSettings.isCentralised) {
       this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-  } else {
+    } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-          width: '50%',
-          data: {
-              type: 'addons'
-          },
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true
+        width: '50%',
+        data: {
+          type: 'addons'
+        },
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result) {
-         this.getSMSCredits();
+          this.getSMSCredits();
         }
       });
-  }
+    }
   }
 }

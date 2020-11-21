@@ -111,7 +111,7 @@ export class CheckinDetailsSendComponent implements OnInit {
         // this.spfname = this.data.qdata.provider.firstName;
         // this.splname = this.data.qdata.provider.lastName;
     } else {
-        this.consumer_fname = this.data.qdata.appmtFor[0].userName;
+        this.consumer_fname = this.data.qdata.appmtFor[0].firstName + ' ' + this.data.qdata.appmtFor[0].lastName;
         if (this.data.qdata.consumer && this.data.qdata.consumer.userProfile && this.data.qdata.consumer.userProfile.emailVerified) {
           this.consumer_email = this.data.qdata.consumer.userProfile.emailVerified;
         }

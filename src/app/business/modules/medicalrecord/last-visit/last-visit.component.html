@@ -44,8 +44,8 @@
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="rx">
-        <mat-header-cell *matHeaderCellDef class="visit-rx-cl"> <b>Prescription</b></mat-header-cell>
-        <mat-cell *matCellDef="let visit"> <i style="text-align:center"
+        <mat-header-cell *matHeaderCellDef class="visit-rx-cl" style="margin-left: 20px;"> <b>Prescription</b></mat-header-cell>
+        <mat-cell *matCellDef="let visit" style="margin-left: 20px;"> <i style="text-align:center"
             [ngClass]="isRxCreated(visit) == true ? 'mr-rx-green-icon-customer':'mr-rx-icon-customer '"></i></mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>

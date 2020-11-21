@@ -18,8 +18,11 @@
               <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()">
                 <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 sc-frm">
                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                    <div class="mgn-up-10"> Find an existing {{customer_label}} and create {{(showtoken? 'token' :
+                    <div class="mgn-up-10" *ngIf="source !== 'waitlist-block'"> Find an existing {{customer_label}} and
+                      create {{(showtoken? 'token' :
                       'check-in')}}</div>
+                    <div class="mgn-up-10" *ngIf="source === 'waitlist-block'"> Find an existing {{customer_label}}
+                    </div>
                     <div class="disp-flex">
                       <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
                         <mat-form-field>
@@ -29,22 +32,27 @@
                         </mat-form-field>
                       </div>
                       <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
-                        <button class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
+                        <button *ngIf="!showBlockHint" class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
                     searchCustomer(searchForm.value)">Find</button>
+                        <button *ngIf="showBlockHint" class="create_new_button cs-btn bt3"
+                          (click)="confirmWaitlistBlock()">Confirm</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </form>
               <div class="clearfix"></div>
-              <div class="create_new mgn-bt-20 font-9">
+              <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
                 <div class="or-style">OR</div>
-                <a class="underline" (click)="createNew()"> Create a new {{customer_label}} and
+                <a class="underline" (click)="createNew()" *ngIf="source !== 'waitlist-block'"> Create a new
+                  {{customer_label}} and
                   {{(showtoken) ? 'token' : 'checkin'}} </a>
+                <a class="underline" (click)="createNew()" *ngIf="source === 'waitlist-block'"> Create a new
+                  {{customer_label}} </a>
                 <!-- <button class="create_new_button cs-btn bt3" (click)="createNew()">New
                   {{customer_label}}</button> -->
               </div>
-              <div class="create_new mgn-bt-20 font-9">
+              <div class="create_new mgn-bt-20 font-9" *ngIf="source !== 'waitlist-block'">
                 <div class="or-style">OR</div>
                 <span>
                   Choose the third party listing site/app through which the {{customer_label}} came.
@@ -435,16 +443,16 @@
                           <ng-container *ngIf="!multipleMembers_allowed">
                             <mat-radio-group>
                               <li *ngFor="let memb of familymembers">
-                                <mat-radio-button  *ngIf="memb.firstName"
+                                <mat-radio-button *ngIf="memb.firstName"
                                   (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                   [value]="memb.id" [checked]="isChecked(memb.id)">
                                   {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
                                 </mat-radio-button>
-                                <mat-radio-button  *ngIf="!memb.firstName"
-                                (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
-                                [value]="memb.id" [checked]="isChecked(memb.id)">
-                                Patient Id:{{memb.id}}
-                            </mat-radio-button>
+                                <mat-radio-button *ngIf="!memb.firstName"
+                                  (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
+                                  [value]="memb.id" [checked]="isChecked(memb.id)">
+                                  Patient Id:{{memb.id}}
+                                </mat-radio-button>
                               </li>
                             </mat-radio-group>
                           </ng-container>
@@ -556,7 +564,8 @@
                     Change
                     Member </a>
                 </mat-chip>
-                <mat-chip class="pro-action" (click)="handleSideScreen('note')"><a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
+                <mat-chip class="pro-action" (click)="handleSideScreen('note')">
+                  <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
                     <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
                 </mat-chip>
                 <mat-chip class="pro-action" (click)="imagefile.click()"><a>

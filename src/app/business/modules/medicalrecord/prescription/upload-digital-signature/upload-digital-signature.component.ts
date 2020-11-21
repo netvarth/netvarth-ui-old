@@ -53,6 +53,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   signatureviewdialogRef;
   digitalsignature = {};
   removedsigndialogRef;
+  loading = true;
 
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
@@ -137,6 +138,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     if (this.providerId) {
       this.provider_services.getDigitalSign(this.providerId)
         .subscribe((data: any) => {
+          this.loading = false;
           console.log(data);
           this.digitalSign = true;
                   this.selectedMessage.files.push(JSON.parse(data));
@@ -144,6 +146,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
         },
           error => {
             this.digitalSign = false;
+            this.loading = false;
             // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }

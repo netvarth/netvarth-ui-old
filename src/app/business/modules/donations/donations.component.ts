@@ -98,7 +98,6 @@ export class DonationsComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getServiceList();
-        this.getDonationsList(true);
         this.getLocationList();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
@@ -300,13 +299,16 @@ export class DonationsComponent implements OnInit {
     setFilterForApi() {
         const api_filter = {};
         if (this.filter.first_name !== '') {
-            api_filter['firstName-eq'] = this.filter.first_name;
+            api_filter['donor-eq'] =  'firstName::' + this.filter.first_name;
         }
         if (this.filter.date != null) {
             api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.date);
         }
         if (this.services.length > 0) {
             api_filter['service-eq'] = this.services.toString();
+        }
+        if (this.selected_location && this.selected_location.id) {
+            api_filter['location-eq'] = this.selected_location.id;
         }
 
         return api_filter;
@@ -365,6 +367,7 @@ export class DonationsComponent implements OnInit {
                       self.locations.push(loc);
                     }
                   }
+                  self.onChangeLocationSelect(self.locations[0]);
                   const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
                   if (cookie_location_id === '') {
                     if (self.locations[0]) {
@@ -416,5 +419,9 @@ export class DonationsComponent implements OnInit {
     showFilterLocation() {
         this.filter_sidebar = false;
         this.show_loc = !this.show_loc;
+    }
+    onChangeLocationSelect(location) {
+        this.selected_location = location;
+    this.getDonationsList();
     }
 }

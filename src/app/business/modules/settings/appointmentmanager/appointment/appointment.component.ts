@@ -152,7 +152,6 @@ export class AppointmentComponent implements OnInit {
     selected_phone;
     consumerPhoneNo;
     trackUuid;
-    source: any = [];
     create_new = false;
     form_data = null;
     selectedMessage = {
@@ -217,6 +216,9 @@ export class AppointmentComponent implements OnInit {
     serviceIdParam = '';
     jaldeeId;
     availableDates: any = [];
+    source;
+    uid;
+    showBlockHint = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -227,6 +229,12 @@ export class AppointmentComponent implements OnInit {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
+            if (qparams.source) {
+                this.source = qparams.source;
+            }
+            if (qparams.uid) {
+                this.uid = qparams.uid;
+            }
             if (qparams.checkinType) {
                 this.apptType = qparams.checkinType;
                 if (this.apptType === 'PHONE_IN_APPOINTMENT') {
@@ -255,6 +263,9 @@ export class AppointmentComponent implements OnInit {
             }
             if (qparams.userId) {
                 this.selectUser = JSON.parse(qparams.userId);
+            }
+            if (this.source === 'appt-block') {
+                this.heading = 'Find a ' + this.customer_label;
             }
             if (qparams.ph || qparams.id) {
                 const filter = {};
@@ -348,7 +359,12 @@ export class AppointmentComponent implements OnInit {
             this.qParams['noMobile'] = false;
         }
         this.qParams['checkinType'] = this.apptType;
-        this.qParams['source'] = 'appointment';
+        if (this.source === 'appt-block') {
+            this.qParams['source'] = this.source;
+            this.qParams['uid'] = this.uid;
+        } else {
+            this.qParams['source'] = 'appointment';
+        }
         this.qParams['timeslot'] = this.slotTime;
         this.qParams['scheduleId'] = this.comingSchduleId;
         this.qParams['date'] = this.sel_checkindate;
@@ -436,8 +452,13 @@ export class AppointmentComponent implements OnInit {
                         }
                         this.jaldeeId = this.customer_data.jaldeeId;
                         this.consumerPhoneNo = this.customer_data.phoneNo;
-                        this.getFamilyMembers();
-                        this.initAppointment();
+                        if (this.source === 'appt-block') {
+                            this.showBlockHint = true;
+                            this.heading = 'Confirm your appointment';
+                        } else {
+                            this.getFamilyMembers();
+                            this.initAppointment();
+                        }
                     }
                 },
                 error => {
@@ -445,7 +466,25 @@ export class AppointmentComponent implements OnInit {
                 }
             );
     }
-
+    confirmApptBlock() {
+        const post_data = {
+            'uid': this.uid,
+            'consumer': {
+                'id': this.customer_data.id
+            },
+            'appmtFor': [{
+                'id': this.customer_data.id,
+            }],
+        };
+        this.provider_services.confirmAppointmentBlock(post_data)
+            .subscribe(
+                data => {
+                    this.router.navigate(['provider', 'appointments']);
+                },
+                error => {
+                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+    }
     getGlobalSettings() {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
