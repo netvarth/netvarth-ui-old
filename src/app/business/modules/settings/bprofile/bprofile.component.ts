@@ -21,6 +21,7 @@ import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_prov
 import { GalleryImportComponent } from '../../../../shared/modules/gallery/import/gallery-import.component';
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-bprofile',
@@ -173,18 +174,19 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   progress_loading_url = false;
   profile_incomplete_cap = Messages.PROFILE_INCOMPLETE_CAP;
   loading = true;
+  imageUrl: string;
   // jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
   // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
-  // private qrCodeParent: ElementRef;
   notedialogRef: any;
-  // @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
-  //   if (content1) { // initially setter gets called with undefined
-  //     this.qrCodeParent = content1;
-  //   }
-  // }
+  private qrCodeParent: ElementRef;
+  @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
+    if (content1) { // initially setter gets called with undefined
+      this.qrCodeParent = content1;
+    }
+  }
   // private qrCodeCustId: ElementRef;
   // @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
   //   if (content2) { // initially setter gets called with undefined
@@ -381,7 +383,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     private sharedfunctionobj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
     private fb: FormBuilder, private galleryService: GalleryService,
-    private dialog: MatDialog,
+    private dialog: MatDialog, private angular_meta: Meta,
     public shared_functions: SharedFunctions,
     private routerobj: Router,
     public fed_service: FormMessageDisplayService,
@@ -661,9 +663,11 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
 
           if (this.bProfile.customId) {
             this.generateQR(this.bProfile.customId);
+            this.qrCodegenerateOnlineID(this.bProfile.customId);
             this.shareLink = this.wndw_path + this.bProfile.customId;
           } else {
             this.generateQR(this.bProfile.accEncUid);
+            this.qrCodegenerateOnlineID(this.bProfile.accEncUid);
             this.shareLink = this.wndw_path + this.bProfile.accEncUid;
           }
           if (this.bProfile.businessName && this.bProfile.businessDesc) {
@@ -1376,7 +1380,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           'type': 'add',
           'value': imagelist_input
         };
-        console.log(input);
         this.action.emit(input);
       });
     this.galleryDialog.afterClosed().subscribe(result => {
@@ -1387,8 +1390,20 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   // dwnld QR
-  downloadQR() {
-    console.log('img');
-    // this.href = this.qrcode.src;
+  qrCodegenerateOnlineID(valuetogenerate) {
+    this.imageUrl = this.wndw_path + 'assets/images/logo.png';
+    this.qr_value = projectConstants.PATH + valuetogenerate;
+    this.qr_code_oId = true;
+    this.changeDetectorRef.detectChanges();
+    setTimeout(() => {
+      this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+      this.angular_meta.addTags([
+        { property: 'og:title', content: this.bProfile.businessName },
+        { property: 'og:image', content: this.imageUrl },
+        { property: 'og:type', content: 'link' },
+        { property: 'og:description', content: this.bProfile.businessDesc },
+
+      ]);
+    }, 50);
   }
 }

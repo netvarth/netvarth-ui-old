@@ -31,7 +31,8 @@
                           <div class="pro-pic" [class.yes]="profimg_exists">
                             <div class="pro-pic-img">
                               <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
-                              <div class="camera-outline custId-cursor" (click)="changeProPic()" style="overflow: visible !important;">
+                              <div class="camera-outline custId-cursor" (click)="changeProPic()"
+                                style="overflow: visible !important;">
                                 <i class="fa propic-cam-icon" aria-hidden="true"></i>
                               </div>
                             </div>
@@ -42,7 +43,7 @@
                   </div>
 
                   <!-- Progress Bar -->
-                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20" >
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
                     <div class="warning" *ngIf="normal_basicinfo_show==1">
                       <app-innerloading-spinner spinnerParams="loadingParams">
                       </app-innerloading-spinner>
@@ -59,11 +60,11 @@
 
                   <!-- About You -->
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-10 abt-you-box">
-                    <div class="pad-10"><span class="sub-heads">About You</span><span
-                        class="edit-txt custId-cursor" (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
-                        <div class="no-dta" *ngIf="!aboutmefilled">
-                          <span class="cs-btn bt3" (click)="gotoAboutMe()">Fill your profile</span>
-                        </div>
+                    <div class="pad-10"><span class="sub-heads">About You</span><span class="edit-txt custId-cursor"
+                        (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
+                    <div class="no-dta" *ngIf="!aboutmefilled">
+                      <span class="cs-btn bt3" (click)="gotoAboutMe()">Fill your profile</span>
+                    </div>
                     <div class="busns-name">
                       {{bProfile.businessName}}
                     </div>
@@ -112,7 +113,8 @@
                           <div *ngIf="!bProfile.customId">
                             <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12">
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                <ngx-qrcode #accQR [elementType]="elementType" [value]="qr_value" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" class="custId-cursor">
+                                <ngx-qrcode #accQR [elementType]="elementType" [value]="qr_value"
+                                  (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" class="custId-cursor">
                                 </ngx-qrcode>
                               </div>
                               <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12">
@@ -125,9 +127,11 @@
                                       [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [size]="-4">
                                     </share-buttons>
                                   </div>
-                                  <!-- <div class="dwnld-bdr custId-cursor">
-                                    <i class="fa fa-cloud-download dwnld-icon" (click)="downloadQR()"></i>
-                                  </div> -->
+                                  <div class="dwnld-bdr custId-cursor">
+                                    <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                                      <i class="fa fa-cloud-download dwnld-icon"></i>
+                                    </a>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -135,9 +139,11 @@
 
                           <!-- If there is Custom ID -->
                           <div *ngIf="bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12"
+                              #qrCodeOnlineId>
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                <ngx-qrcode #custQR [elementType]="elementType" [value]="qr_value" (click)="qrCodegeneraterOnlineID(bProfile.customId)" class="custId-cursor">
+                                <ngx-qrcode #custQR [elementType]="elementType" [value]="qr_value"
+                                  (click)="qrCodegeneraterOnlineID(bProfile.customId)" class="custId-cursor">
                                 </ngx-qrcode>
                               </div>
                               <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12">
@@ -150,11 +156,11 @@
                                       [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [size]="-4">
                                     </share-buttons>
                                   </div>
-                                  <!-- <div class="dwnld-bdr custId-cursor">
-                                   <a [href]="href" (click)="downloadQR()" download>
-                                    <i class="fa fa-cloud-download dwnld-icon"></i>
-                                   </a> 
-                                  </div> -->
+                                  <div class="dwnld-bdr custId-cursor">
+                                    <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                                      <i class="fa fa-cloud-download dwnld-icon"></i>
+                                    </a>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -217,7 +223,8 @@
                       <div class="sub-heads mgn-bt-20">Gallery
                         <span class="edit-txt custId-cursor" (click)="editImageGallery()">Add more</span>
                       </div>
-                      <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list" [source]="'gallery'" [page]="'bProfile'">
+                      <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list" [source]="'gallery'"
+                        [page]="'bProfile'">
                       </app-jaldee-gallery>
                     </div>
                   </div>
@@ -225,7 +232,8 @@
                   <div class="cd-b">
                     <div class="div-outline">
                       <div class="sub-heads mgn-bt-20">
-                        Social Media <span class="edit-txt custId-cursor" (click)="handleSocialmedia()" *ngIf="normal_socialmedia_show!=2">Add more</span>
+                        Social Media <span class="edit-txt custId-cursor" (click)="handleSocialmedia()"
+                          *ngIf="normal_socialmedia_show!=2">Add more</span>
                       </div>
                       <div>
                         <div class="no-dta" *ngIf="normal_socialmedia_show==1">
