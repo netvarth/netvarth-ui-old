@@ -72,9 +72,8 @@
                                                                 </mat-expansion-panel-header>
                                                                 <div class='paytm-det row ynw-common-form-nm'>
                                                                     <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                        <div class="form-group mobile-field">
+                                                                        <div class="form-group">
                                                                             <mat-form-field>
-                                                                                <div class="input-group">
                                                                                     <input class="form-control"
                                                                                         maxlength="10" matInput
                                                                                         #paymobref
@@ -86,7 +85,6 @@
                                                                                         [disabled]="!ineditMode"
                                                                                         (blur)="paytmBlur()"
                                                                                         tabindex="2">
-                                                                                </div>
                                                                             </mat-form-field>
                                                                             <app-field-error-display
                                                                                 *ngIf="showError['paytmmobile']"
@@ -134,6 +132,8 @@
                                                                             </app-field-error-display>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                                    <div class='paytm-det row ynw-common-form-nm'>
                                                                     <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                         <div class="form-group">
                                                                             <mat-form-field>
