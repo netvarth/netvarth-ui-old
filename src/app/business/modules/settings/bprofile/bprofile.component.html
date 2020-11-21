@@ -31,8 +31,11 @@
                           <div class="pro-pic" [class.yes]="profimg_exists">
                             <div class="pro-pic-img">
                               <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
-                              <div class="camera-outline custId-cursor" (click)="changeProPic()"
+                              <div class="camera-outline custId-cursor" (click)="logofile.click()"
                                 style="overflow: visible !important;">
+                                <input #logofile type="file" accept="image/*"
+                                style="display:none;"
+                                (change)="imageSelect(logofile)">
                                 <i class="fa propic-cam-icon" aria-hidden="true"></i>
                               </div>
                             </div>
