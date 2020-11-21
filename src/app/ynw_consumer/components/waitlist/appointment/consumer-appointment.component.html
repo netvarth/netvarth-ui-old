@@ -183,9 +183,9 @@
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                             *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
                                             <h6 class="card-title serv-time" *ngIf="apptTime">
-                                                <span style="display: block;">
-                                                    {{sel_checkindate | date: dateFormat}}</span><span>{{getSingleTime(apptTime['time'])}}</span>
-
+                                                <span *ngIf="!isFuturedate">Today, </span><span *ngIf="!isFuturedate">{{getSingleTime(apptTime['time'])}}</span>
+                                                <span *ngIf="isFuturedate" style="display: block;">
+                                                        {{sel_checkindate | date: dateFormat}}</span><span *ngIf="isFuturedate">{{getSingleTime(apptTime['time'])}}</span>
                                             </h6>
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"

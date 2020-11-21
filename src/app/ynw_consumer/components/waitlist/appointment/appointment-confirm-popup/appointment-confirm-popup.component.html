@@ -29,8 +29,11 @@
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
         <h6 class="card-title serv-time border-style waitinginLine">
-            <span style="display: block;">
-                {{post_Data.appmtDate | date: dateFormat}}</span><span>{{getSingleTime(appTimeSlot)}}</span>
+            <span *ngIf="!isFuturedate">Today, </span><span *ngIf="!isFuturedate">{{getSingleTime(appTimeSlot)}}</span>
+            <span *ngIf="isFuturedate" style="display: block;">
+                {{post_Data.appmtDate | date: dateFormat}}</span><span *ngIf="isFuturedate">{{getSingleTime(appTimeSlot)}}</span>
+            <!-- <span style="display: block;">
+                {{post_Data.appmtDate | date: dateFormat}}</span><span>{{getSingleTime(appTimeSlot)}}</span> -->
         </h6>
         </div>
     </div>
