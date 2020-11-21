@@ -1907,31 +1907,38 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     showConfirmPopup(post_Data) {
-        // this.dialogRef.close();
-        const checkinconfirmdialogRef = this.dialog.open(AppointmentConfirmPopupComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true,
-            data: {
-                service_details: this.sel_ser_det,
-                waitlist_for: this.waitlist_for,
-                userPhone: this.userPhone,
-                post_Data: post_Data,
-                account_id: this.account_id,
-                sel_queue_personaahead: this.sel_queue_personaahead,
-                isFuturedate: this.isFuturedate,
-                eMail: this.userData.userProfile.email || '',
-                customer_data: this.customer_data,
-                appTimeSlot: this.apptTime['time'],
-                prepaymentAmount: this.prepaymentAmount,
-                changePhno: this.changePhno,
-                currentPhone: this.currentPhone,
-                callingModes: this.callingModes,
-                selectedMessage: this.selectedMessage
-            }
-        });
-        checkinconfirmdialogRef.afterClosed().subscribe(result => {
+        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == ''){
+            
+            this.sharedFunctionobj.openSnackBar('Please provide your notes here', { 'panelClass': 'snackbarerror' });
             this.apptdisable = false
-        });
+        } else {
+            const checkinconfirmdialogRef = this.dialog.open(AppointmentConfirmPopupComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass'],
+                disableClose: true,
+                data: {
+                    service_details: this.sel_ser_det,
+                    waitlist_for: this.waitlist_for,
+                    userPhone: this.userPhone,
+                    post_Data: post_Data,
+                    account_id: this.account_id,
+                    sel_queue_personaahead: this.sel_queue_personaahead,
+                    isFuturedate: this.isFuturedate,
+                    eMail: this.userData.userProfile.email || '',
+                    customer_data: this.customer_data,
+                    appTimeSlot: this.apptTime['time'],
+                    prepaymentAmount: this.prepaymentAmount,
+                    changePhno: this.changePhno,
+                    currentPhone: this.currentPhone,
+                    callingModes: this.callingModes,
+                    selectedMessage: this.selectedMessage
+                }
+            });
+            checkinconfirmdialogRef.afterClosed().subscribe(result => {
+                this.apptdisable = false
+            });
+        }
+        // this.dialogRef.close();
+       
     }
 }
