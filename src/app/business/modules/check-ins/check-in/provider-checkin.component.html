@@ -37,14 +37,14 @@
                 </div>
               </form>
               <div class="clearfix"></div>
-              <div class="create_new mgn-bt-20 font-9">
+              <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
                 <div class="or-style">OR</div>
                 <a class="underline" (click)="createNew()"> Create a new {{customer_label}} and
                   {{(showtoken) ? 'token' : 'checkin'}} </a>
                 <!-- <button class="create_new_button cs-btn bt3" (click)="createNew()">New
                   {{customer_label}}</button> -->
               </div>
-              <div class="create_new mgn-bt-20 font-9">
+              <div class="create_new mgn-bt-20 font-9" *ngIf="source !== 'waitlist-block'">
                 <div class="or-style">OR</div>
                 <span>
                   Choose the third party listing site/app through which the {{customer_label}} came.
@@ -79,6 +79,11 @@
                   </div>
                 </div>
               </div>
+
+              <div *ngIf="showBlockHint">
+                <a (click)="confirmWaitlistBlock()">confirm appt</a>
+                                            </div>
+
             </div>
             <div class="lbr col-sm-12 col-md-4 col-lg-4">
             </div>

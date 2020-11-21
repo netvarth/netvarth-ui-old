@@ -2238,8 +2238,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     //     source: source
     //   }
     // };
-    // this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
-    this.router.navigate(['provider', 'customers', 'add']);
+    this.router.navigate(['provider', 'customers', 'find']);
+    // this.router.navigate(['provider', 'customers', 'add']);
   }
   showAdjustDelay() {
     if (this.queues.length === 0) {
@@ -3112,7 +3112,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   addCustomerDetails(checkin) {
-    this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
+    // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
+    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
   }
   showSelectAll() {
     if (this.check_in_filtered_list.length > 1) {

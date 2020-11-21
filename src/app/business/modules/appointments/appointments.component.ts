@@ -1590,7 +1590,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   searchCustomer() {
-    this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
+    // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
+    this.router.navigate(['provider', 'customers', 'find']);
   }
   /**
    * Labels Section
@@ -2492,7 +2493,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     event.stopPropagation();
   }
   addCustomerDetails(appt) {
-    this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: appt.uid } });
+    // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: appt.uid } });
+    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: appt.uid } });
   }
   selectAllStarted() {
     this.startedAppointmentsChecked = {};
@@ -2565,7 +2567,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getSlotBYScheduleandDate(scheduleid, date) {
     this.provider_services.getSlotsByScheduleandDate(scheduleid, date).subscribe(
       (data: any) => {
-        this.scheduleSlots = [];
         for (let i = 0; i < data.length; i++) {
           if (data[i].availableSlots) {
             for (let j = 0; j < data[i].availableSlots.length; j++) {
@@ -2587,7 +2588,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selected_type = type;
     }
     this.shared_functions.setitemToGroupStorage('selected_type', this.selected_type);
-    if (this.selected_type !== 'booked') {
+    this.scheduleSlots = [];
+    if (this.selected_type !== 'booked' && this.selQIds.length > 0) {
       this.loading = true;
       const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
       const today = moment(server).format('YYYY-MM-DD');

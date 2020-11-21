@@ -457,7 +457,7 @@
               </div>
               <div class="">
                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10"
-                  *ngIf="time_type === 1 && statusAction == 'new'">
+                  *ngIf="time_type === 1 && statusAction == 'new' && activeSchedules.length > 0">
                   <div class="col-md-3 col-xs-5 col-sm-4 no-padding">
                     <mat-select class="selecttype" [(ngModel)]="selected_type">
                       <mat-option [value]="'all'" (click)="handleApptSelectionType('all')">
@@ -491,7 +491,7 @@
                   </a>
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
-                  <thead id="childActionBar" *ngIf="showSelectAll() && selected_type != 'free'">
+                  <thead id="childActionBar" *ngIf="showSelectAll() && selected_type != 'free' && activeSchedules.length > 0">
                     <tr>
                       <th class="chkWth check-table-head" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
@@ -520,6 +520,13 @@
                       </td>
                       <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
                         {{no_service_cap}}
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="scheduleSlots.length === 0 && selected_type === 'free'">
+                    <tr>
+                      <td colspan="5" class="no-appt">
+                        <p>No free slots</p>
                       </td>
                     </tr>
                   </tbody>

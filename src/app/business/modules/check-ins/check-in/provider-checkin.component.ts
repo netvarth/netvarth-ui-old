@@ -151,7 +151,6 @@ export class ProviderCheckinComponent implements OnInit {
     selected_phone;
     consumerPhoneNo;
     trackUuid;
-    source: any = [];
     create_new = false;
     form_data = null;
     selectedMessage = {
@@ -212,6 +211,9 @@ export class ProviderCheckinComponent implements OnInit {
     heading = '';
     jaldeeId;
     availableDates: any = [];
+    showBlockHint = false;
+    uid;
+    source;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -222,6 +224,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
+            if (qparams.source) {
+                this.source = qparams.source;
+            }
+            if (qparams.uid) {
+                this.uid = qparams.uid;
+            }
             if (qparams.checkin_type) {
                 this.checkinType = qparams.checkin_type;
                 if (this.checkinType === 'PHONE_CHECKIN') {
@@ -360,7 +368,12 @@ export class ProviderCheckinComponent implements OnInit {
             this.qParams['noMobile'] = false;
         }
         this.qParams['checkinType'] = this.checkinType;
-        this.qParams['source'] = (this.showtoken) ? 'token' : 'checkin';
+        if (this.source === 'waitlist-block') {
+            this.qParams['source'] = this.source;
+            this.qParams['uid'] = this.uid;
+        } else {
+            this.qParams['source'] = (this.showtoken) ? 'token' : 'checkin';
+        }
         this.qParams['thirdParty'] = this.thirdParty;
         this.qParams['type'] = type;
         const navigationExtras: NavigationExtras = {
@@ -437,8 +450,12 @@ export class ProviderCheckinComponent implements OnInit {
                             this.customer_data = data[0];
                         }
                         this.jaldeeId = this.customer_data.jaldeeId;
+                        if (this.source === 'waitlist-block') {
+                            this.showBlockHint = true;
+                             } else {
                         this.getFamilyMembers();
                         this.initCheckIn();
+                             }
                     }
                 },
                 error => {
@@ -446,7 +463,26 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             );
     }
-
+    confirmWaitlistBlock() {
+        const post_data = {
+            'ynwUuid': this.uid,
+            'consumer': {
+                'id': this.customer_data.id
+            },
+            'waitlistingFor': [{
+                'id': this.customer_data.id
+            }],
+        };
+        console.log(post_data);
+        this.provider_services.confirmWaitlistBlock(post_data)
+            .subscribe(
+                data => {
+                    this.router.navigate(['provider', 'appointments']);
+                },
+                error => {
+                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror'});
+                });
+    }
     initCheckIn(thirdParty?) {
         // if (thirdParty) {
         this.getGlobalSettings();
