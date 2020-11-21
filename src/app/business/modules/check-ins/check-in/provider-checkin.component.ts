@@ -276,6 +276,9 @@ export class ProviderCheckinComponent implements OnInit {
                 ];
                 this.heading = 'Create a Check-in';
             }
+            if (this.source === 'waitlist-block') {
+                this.heading = 'Find a ' + this.customer_label;
+            }
             if (qparams.ph || qparams.id) {
                 const filter = {};
                 if (qparams.ph) {
@@ -452,10 +455,15 @@ export class ProviderCheckinComponent implements OnInit {
                         this.jaldeeId = this.customer_data.jaldeeId;
                         if (this.source === 'waitlist-block') {
                             this.showBlockHint = true;
-                             } else {
-                        this.getFamilyMembers();
-                        this.initCheckIn();
-                             }
+                            if (this.showtoken) {
+                                this.heading = 'Confirm your token';
+                            } else {
+                                this.heading = 'Confirm your check-in';
+                            }
+                        } else {
+                            this.getFamilyMembers();
+                            this.initCheckIn();
+                        }
                     }
                 },
                 error => {
@@ -473,14 +481,13 @@ export class ProviderCheckinComponent implements OnInit {
                 'id': this.customer_data.id
             }],
         };
-        console.log(post_data);
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {
-                    this.router.navigate(['provider', 'appointments']);
+                    this.router.navigate(['provider', 'check-ins']);
                 },
                 error => {
-                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror'});
+                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     initCheckIn(thirdParty?) {

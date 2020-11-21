@@ -2579,7 +2579,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           }
         }
-        this.loading = false;
+        setTimeout(() => {
+          this.loading = false;
+        }, 200);
       }
     );
   }

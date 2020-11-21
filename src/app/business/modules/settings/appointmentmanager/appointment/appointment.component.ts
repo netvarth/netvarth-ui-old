@@ -264,6 +264,9 @@ export class AppointmentComponent implements OnInit {
             if (qparams.userId) {
                 this.selectUser = JSON.parse(qparams.userId);
             }
+            if (this.source === 'appt-block') {
+                this.heading = 'Find a ' + this.customer_label;
+            }
             if (qparams.ph || qparams.id) {
                 const filter = {};
                 if (qparams.ph) {
@@ -356,12 +359,11 @@ export class AppointmentComponent implements OnInit {
             this.qParams['noMobile'] = false;
         }
         this.qParams['checkinType'] = this.apptType;
-        console.log(this.source);
         if (this.source === 'appt-block') {
             this.qParams['source'] = this.source;
             this.qParams['uid'] = this.uid;
         } else {
-        this.qParams['source'] = 'appointment';
+            this.qParams['source'] = 'appointment';
         }
         this.qParams['timeslot'] = this.slotTime;
         this.qParams['scheduleId'] = this.comingSchduleId;
@@ -442,19 +444,17 @@ export class AppointmentComponent implements OnInit {
                         // }
                         this.createNew('create');
                     } else {
-                        console.log(data);
                         if (data.length > 1) {
                             const customer = data.filter(member => !member.parent);
                             this.customer_data = customer[0];
                         } else {
                             this.customer_data = data[0];
                         }
-                        console.log(this.customer_data);
                         this.jaldeeId = this.customer_data.jaldeeId;
                         this.consumerPhoneNo = this.customer_data.phoneNo;
-                        console.log(this.source);
                         if (this.source === 'appt-block') {
-                       this.showBlockHint = true;
+                            this.showBlockHint = true;
+                            this.heading = 'Confirm your appointment';
                         } else {
                             this.getFamilyMembers();
                             this.initAppointment();
@@ -467,8 +467,6 @@ export class AppointmentComponent implements OnInit {
             );
     }
     confirmApptBlock() {
-        console.log(this.customer_data);
-        console.log(this.uid);
         const post_data = {
             'uid': this.uid,
             'consumer': {
@@ -484,7 +482,7 @@ export class AppointmentComponent implements OnInit {
                     this.router.navigate(['provider', 'appointments']);
                 },
                 error => {
-                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror'});
+                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     getGlobalSettings() {
