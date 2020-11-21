@@ -11,7 +11,7 @@
 }
 .yourProfile .edit-txt {
     float: right;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: #00c0ef;
     font-weight: 600;
 }
@@ -29,6 +29,7 @@
 }
 .yourProfile .bus-desc {
     font-size: 0.8rem;
+    text-align: center;
 }
 .yourProfile .abt-you-box {
     /* background: #3c8dbc0d; */
@@ -108,4 +109,7 @@
     margin-top: 60px;
     color: red;
     right: 0px;
+}
+.yourProfile .bar-wdth {
+    width: 50%;
 }

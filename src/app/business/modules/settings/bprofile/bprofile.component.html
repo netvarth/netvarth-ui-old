@@ -49,10 +49,10 @@
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding"
                       *ngIf="normal_basicinfo_show!=1">
-                      <div class="progress col-md-12 col-sm-12 col-xs-12 mt-2 no-padding" style="height:16px;">
+                      <div class="progress bar-wdth mgn-center mt-2 no-padding" style="height:16px;">
                         <div class="progress-bar progress-bar-animated active" role="progressbar"
                           [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
-                          aria-valuemax="100">{{getBusinessProfileWeightageText()}}</div>
+                          aria-valuemax="100" data-toggle="popover">{{getBusinessProfileWeightageText()}}</div>
                       </div>
                     </div>
                   </div>
@@ -60,7 +60,7 @@
                   <!-- About You -->
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-10 abt-you-box">
                     <div class="pad-10"><span class="sub-heads">About You</span><span
-                        class="edit-txt custId-cursor" (click)="gotoAboutMe()" *ngIf="aboutmefilled">manage</span></div>
+                        class="edit-txt custId-cursor" (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
                         <div class="no-dta" *ngIf="!aboutmefilled">
                           <span class="cs-btn bt3" (click)="gotoAboutMe()">Fill your profile</span>
                         </div>
@@ -104,7 +104,7 @@
                         <sup><span class="inactive" *ngIf="!onlinepresence_status">Inactive</span>
                           <span class="active" *ngIf="onlinepresence_status">Active</span></sup>
                         <span class="edit-txt custId-cursor"
-                          (click)="reDirectToJaldeeOnline()">{{onlinepresence_status? 'manage' : 'enable'}}</span></h6>
+                          (click)="reDirectToJaldeeOnline()">{{onlinepresence_status? 'Manage' : 'Enable'}}</span></h6>
                       <div class="clearfix"></div>
                       <div class="bus-prof-qr-sec">
                         <div class="mgn-up-10">
@@ -112,7 +112,7 @@
                           <div *ngIf="!bProfile.customId">
                             <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12">
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                <ngx-qrcode #accQR [elementType]="elementType" [value]="qr_value">
+                                <ngx-qrcode #accQR [elementType]="elementType" [value]="qr_value" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" class="custId-cursor">
                                 </ngx-qrcode>
                               </div>
                               <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12">
@@ -137,7 +137,7 @@
                           <div *ngIf="bProfile.customId">
                             <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12">
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                <ngx-qrcode #custQR [elementType]="elementType" [value]="qr_value">
+                                <ngx-qrcode #custQR [elementType]="elementType" [value]="qr_value" (click)="qrCodegeneraterOnlineID(bProfile.customId)" class="custId-cursor">
                                 </ngx-qrcode>
                               </div>
                               <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12">
@@ -213,50 +213,54 @@
                   </div>
                   <!-- Gallery View Grid -->
                   <div class="cd-b">
-                    <div class="sub-heads mgn-bt-20">Gallery
-                      <span class="edit-txt custId-cursor" (click)="editImageGallery()">add more</span>
+                    <div class="div-outline">
+                      <div class="sub-heads mgn-bt-20">Gallery
+                        <span class="edit-txt custId-cursor" (click)="editImageGallery()">Add more</span>
+                      </div>
+                      <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list" [source]="'gallery'" [page]="'bProfile'">
+                      </app-jaldee-gallery>
                     </div>
-                    <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list" [source]="'gallery'" [page]="'bProfile'">
-                    </app-jaldee-gallery>
                   </div>
                   <!-- Social media -->
                   <div class="cd-b">
-                    <div class="sub-heads mgn-bt-20">
-                      Social Media <span class="edit-txt custId-cursor" (click)="handleSocialmedia()">add more</span>
-                    </div>
-                    <div>
-                      <div class="no-dta" *ngIf="normal_socialmedia_show==1">
-                        <app-innerloading-spinner spinnerParams="loadingParams">
-                        </app-innerloading-spinner>
+                    <div class="div-outline">
+                      <div class="sub-heads mgn-bt-20">
+                        Social Media <span class="edit-txt custId-cursor" (click)="handleSocialmedia()" *ngIf="normal_socialmedia_show!=2">Add more</span>
                       </div>
-                      <div class="no-dta" *ngIf="normal_socialmedia_show==2">
-                        <p>{{no_social_media}}</p>
-                        <span class="cs-btn bt3" (click)="handleSocialmedia()">{{add_it_cap}}</span>
-                      </div>
-                      <div class="cd-t sc-t" *ngIf="normal_socialmedia_show==3">
-                        <div class="sblinks">
-                          <ul class="sbl">
-                            <li *ngFor="let social of social_arr;let i = index"
-                              [class]="getSocialdet(social.Sockey, 'iconClass')">
-                              <span class="mbt">
-                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                  <mat-icon>more_vert</mat-icon>
-                                </button>
-                                <mat-menu #menu="matMenu">
-                                  <button type="button" (click)="editSocialmedia(social.Sockey)" mat-menu-item>
-                                    <i class="icon-edit"></i>
-                                    <span>{{edit_cap}}</span>
+                      <div>
+                        <div class="no-dta" *ngIf="normal_socialmedia_show==1">
+                          <app-innerloading-spinner spinnerParams="loadingParams">
+                          </app-innerloading-spinner>
+                        </div>
+                        <div class="no-dta" *ngIf="normal_socialmedia_show==2">
+                          <p>{{no_social_media}}</p>
+                          <span class="cs-btn bt3" (click)="handleSocialmedia()">{{add_it_cap}}</span>
+                        </div>
+                        <div class="cd-t sc-t" *ngIf="normal_socialmedia_show==3">
+                          <div class="sblinks">
+                            <ul class="sbl">
+                              <li *ngFor="let social of social_arr;let i = index"
+                                [class]="getSocialdet(social.Sockey, 'iconClass')">
+                                <span class="mbt">
+                                  <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_vert</mat-icon>
                                   </button>
-                                  <button type="button" (click)="deleteSocialmedia(social.Sockey)" mat-menu-item>
-                                    <i class="icon-delete"></i>
-                                    <span>{{delete_btn}}</span>
-                                  </button>
-                                </mat-menu>
-                              </span>
-                              <a rel="noopener" [href]="social.Socurl"
-                                target="_blank">{{getSocialdet(social.Sockey,'displayName')}} </a>
-                            </li>
-                          </ul>
+                                  <mat-menu #menu="matMenu">
+                                    <button type="button" (click)="editSocialmedia(social.Sockey)" mat-menu-item>
+                                      <i class="icon-edit"></i>
+                                      <span>{{edit_cap}}</span>
+                                    </button>
+                                    <button type="button" (click)="deleteSocialmedia(social.Sockey)" mat-menu-item>
+                                      <i class="icon-delete"></i>
+                                      <span>{{delete_btn}}</span>
+                                    </button>
+                                  </mat-menu>
+                                </span>
+                                <a rel="noopener" [href]="social.Socurl"
+                                  target="_blank">{{getSocialdet(social.Sockey,'displayName')}} </a>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
