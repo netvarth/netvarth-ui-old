@@ -22,6 +22,7 @@ import { GalleryImportComponent } from '../../../../shared/modules/gallery/impor
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Meta } from '@angular/platform-browser';
+declare let cordova: any;
 
 @Component({
   selector: 'app-bprofile',
@@ -1451,5 +1452,26 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
 
       ]);
     }, 50);
+  }
+  printQr(printSectionId) {
+    const printContent = document.getElementById(printSectionId);
+    setTimeout(() => {
+      const params = [
+        'height=' + screen.height,
+        'width=' + screen.width,
+        'fullscreen=yes'
+      ].join(',');
+      const printWindow = window.open('', '', params);
+      let printsection = '<html><head><title></title>';
+      printsection += '</head><body style="margin-top:200px">';
+      printsection += '<div style="text-align:center!important">';
+      printsection += printContent.innerHTML;
+      printsection += '</div>';
+      printsection += '</body></html>';
+      // cordova.plugins.printer.print(printsection);
+      printWindow.moveTo(0, 0);
+      printWindow.print();
+      printWindow.document.close();
+    });
   }
 }
