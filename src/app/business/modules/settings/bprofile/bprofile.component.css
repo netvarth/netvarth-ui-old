@@ -30,7 +30,7 @@
 }
 .yourProfile .bus-desc {
     font-size: 0.9rem;
-    text-align: center;
+    text-align: justify;
 }
 .yourProfile .abt-you-box {
     /* background: #3c8dbc0d; */

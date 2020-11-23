@@ -44,16 +44,24 @@
 
                   <!-- Progress Bar -->
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
+                    <h6 style="margin-top: 0 !important;" *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">
+                      Profile Strength-
+                      <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
+                    </h6>
                     <div class="warning" *ngIf="normal_basicinfo_show==1">
                       <app-innerloading-spinner spinnerParams="loadingParams">
                       </app-innerloading-spinner>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding"
                       *ngIf="normal_basicinfo_show!=1">
-                      <div class="progress bar-wdth mgn-center mt-2 no-padding" style="height:16px;">
+                      <div class="col-md-6 col-xs-6 col-sm-6 progress bar-wdth  mt-2 no-padding" style="height:16px;">
                         <div class="progress-bar progress-bar-animated active" role="progressbar"
                           [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
-                          aria-valuemax="100" data-toggle="popover">{{getBusinessProfileWeightageText()}}</div>
+                          aria-valuemax="100" data-toggle="popover"></div>
+                      </div>
+                      <div class="col-md-6 col-xs-6 col-sm-6">
+                        <button (click)="scroll(basicInfoSection)" type="button"
+                        [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
                       </div>
                     </div>
                   </div>
@@ -63,7 +71,7 @@
                     <div class="pad-10"><span class="sub-heads">About You</span><span class="edit-txt custId-cursor"
                         (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
                     <div class="no-dta" *ngIf="!aboutmefilled">
-                      <span class="cs-btn bt3" (click)="gotoAboutMe()">Fill your profile</span>
+                      <span class="cs-btn bt3" (click)="gotoAboutMe()">Complete your profile</span>
                     </div>
                     <div class="busns-name">
                       {{bProfile.businessName}}
@@ -78,7 +86,7 @@
                 <div class="pubs card w-dta bprof no-shadow">
                   <div *ngIf="showIncompleteButton" class="incomplete-msg">
                     <div>
-                      Please fill your profile to activate your Jaldee Link and QR Code
+                      Please complete your profile to activate your Jaldee Link and QR Code
                     </div>
                   </div>
                   <div [class.all_disabled]="showIncompleteButton">
@@ -93,7 +101,7 @@
                         <div class="mgn-up-10">
                           <!-- If there is NO Custom ID -->
                           <div *ngIf="!bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding">
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
                                 <ngx-qrcode #accQR [elementType]="elementType" [value]="qr_value"
                                   (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" class="custId-cursor">
@@ -121,7 +129,7 @@
 
                           <!-- If there is Custom ID -->
                           <div *ngIf="bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12"
+                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
                               #qrCodeOnlineId>
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
                                 <ngx-qrcode #custQR [elementType]="elementType" [value]="qr_value"
