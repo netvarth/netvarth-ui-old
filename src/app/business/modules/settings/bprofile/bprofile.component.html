@@ -31,8 +31,11 @@
                           <div class="pro-pic" [class.yes]="profimg_exists">
                             <div class="pro-pic-img">
                               <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
-                              <div class="camera-outline custId-cursor" (click)="changeProPic()"
+                              <div class="camera-outline custId-cursor" (click)="logofile.click()"
                                 style="overflow: visible !important;">
+                                <input #logofile type="file" accept="image/*"
+                                style="display:none;"
+                                (change)="imageSelect(logofile)">
                                 <i class="fa propic-cam-icon" aria-hidden="true"></i>
                               </div>
                             </div>
@@ -114,12 +117,12 @@
                                 <div class="mgn-up-10">
                                   <div class="disp-flex smal-device-wt">
                                     <div class="trackSlide bprof-icons share-ico">
-                                      <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','copy']"
+                                      <share-buttons [theme]="'circles-dark'" [include]="['facebook','email','copy']"
                                         [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [size]="-4">
                                       </share-buttons>
                                     </div>
                                     <div class="dwnld-bdr custId-cursor">
-                                      <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                                      <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('custQR')">
                                         <i class="fa fa-cloud-download dwnld-icon"></i>
                                       </a>
                                     </div>
@@ -145,12 +148,12 @@
                                 <div class="mgn-up-10">
                                   <div class="disp-flex smal-device-wt">
                                     <div class="trackSlide bprof-icons share-ico">
-                                      <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','copy']"
+                                      <share-buttons [theme]="'circles-dark'" [include]="['facebook','email','copy']"
                                         [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [size]="-4">
                                       </share-buttons>
                                     </div>
                                     <div class="dwnld-bdr custId-cursor">
-                                      <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                                      <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('custQR')">
                                         <i class="fa fa-cloud-download dwnld-icon"></i>
                                       </a>
                                     </div>
