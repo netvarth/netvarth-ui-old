@@ -1,0 +1,127 @@
+<h1 class="mat-dialog-title">Confirm Your Appointment<button mat-dialog-close class="modal_close" tabindex="-1"><i
+    class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<mat-dialog-content class="ynw-common-form apply-label">
+<div class="form-group col-md-12">
+    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
+        Appointment For
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-12">
+        <div class="service-icon pull-left"
+        *ngIf="service_det.serviceType == 'virtualService'">
+        <i class="fa phon-icon"
+            *ngIf="service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+        <i class="fa meet-icon"
+            *ngIf="service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+        <i class="fa zoom-icon"
+            *ngIf="service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+        <i class="fa wtsapaud-icon"
+            *ngIf="service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'WhatsApp' && service_det.virtualServiceType === 'audioService'"></i>
+        <i class="fa wtsapvid-icon"
+            *ngIf="service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'WhatsApp' && service_det.virtualServiceType === 'videoService'"></i>
+        </div>
+        <h6 class="card-title service bookingFor">
+           {{service_det.name}}
+        </h6>
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-12">
+        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+            Appointment Time
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+        <h6 class="card-title serv-time border-style waitinginLine">
+            <span *ngIf="!isFuturedate">Today, </span><span *ngIf="!isFuturedate">{{getSingleTime(appTimeSlot)}}</span>
+            <span *ngIf="isFuturedate" style="display: block;">
+                {{post_Data.appmtDate | date: dateFormat}}</span><span *ngIf="isFuturedate">{{getSingleTime(appTimeSlot)}}</span>
+            <!-- <span style="display: block;">
+                {{post_Data.appmtDate | date: dateFormat}}</span><span>{{getSingleTime(appTimeSlot)}}</span> -->
+        </h6>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-10">
+        Booking For
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-12">
+        <h6 class="card-title service bookingFor">
+            {{waitlist_for[0].firstName}}
+            {{waitlist_for[0].lastName}}
+        </h6>
+        <div class="contact-section mgn-up-10">
+            <div class="contact-section">
+                <i class="fa fa-mobile "></i>
+                <i *ngIf="service_det && service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)"
+                    class="fa wtsapaud-icon wtsap-cal"></i>
+                <!-- <span class="mgn-lt-10 phonevallabel">
+                    {{waitlist_for[0].phoneNo}}
+                </span> -->
+                <span class="mgn-lt-10 phonevallabel"
+                    *ngIf="userPhone && !changePhno">{{userPhone}}</span>
+                <span class="mgn-lt-10 phonevallabel"
+                    *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
+                    class="mgn-lt-5 lnk pointer-cursor">
+                    <!-- <i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
+                        (click)="editPhone()"></i> -->
+                </a>
+                <div class="mode-hint mgn-bt-5"
+                    *ngIf="(!changePhno || currentPhone == callingModes) && (service_det && service_det.virtualCallingModes && (service_det.virtualCallingModes[0].callingMode === 'WhatsApp' || service_det.virtualCallingModes[0].callingMode === 'Phone'))">
+                    The provider will contact you in this number
+                </div>
+            </div>
+
+            <div class="contact-section"
+                *ngIf="changePhno && currentPhone != callingModes && service_det && service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                <i class="fa wtsapaud-icon wtsap-cal"></i>
+                <span class="mgn-lt-10 phonevallabel">{{callingModes}}</span><a
+                    class="mgn-lt-5 lnk pointer-cursor">
+                </a>
+                <div class="mode-hint mgn-bt-5">
+                    The provider will contact you in this number
+                </div>
+            </div>
+
+
+            <!-- <i class="fa fa-mobile "></i>
+            <span class="mgn-lt-10 phonevallabel">{{userPhone}}</span> -->
+        </div>
+        <div class="" *ngIf="eMail != ''">
+             <i class="fa fa-envelope-o "></i>
+             <span class="mgn-lt-5 phonevallabel">{{eMail}}</span>
+             </div>
+        <div class="" *ngIf="eMail == '' && action !== 'addEmail'">
+            <a class="lnk pointer-cursor action" (click)="addConsumeremail()">Add Email</a>
+        </div>
+        <div *ngIf="action == 'addEmail'" class="form-group mgn-up-5">
+            <input class="" id="email"
+                placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
+                autocomplete="off" (keyup)="showConfrmEmail($event)"
+                onpaste="return false;" oncopy="return false"
+                oncut="return false" ondrag="return false"
+                ondrop="return false">
+                <span><button *ngIf="action == 'addEmail'" class="btn bt3 btn-default mgn-lt-5" (click)="addEmail()"
+                    type="button">Add</button></span>
+        </div>
+        <app-field-error-display class="red" [displayError]="true"
+            *ngIf="emailerror != null" errorMsg={{emailerror}}>
+        </app-field-error-display>
+        
+    </div>
+    <div *ngIf="service_det.isPrePayment" class="mgn-bt-20">
+        This service requires an advance payment of
+        <span class="prepaymin-cls bold"><span class="rupee-font">&#8377;
+        </span>{{prepaymentAmount}}</span>
+    </div>
+</div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button *ngIf = "!service_det.isPrePayment"(click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Confirm</button>
+    <button *ngIf = "service_det.isPrePayment" (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Proceed to payment</button>
+</mat-dialog-actions>
+<!-- <div class="ticket">
+    <div class="ticket__content">
+      <p class="ticket__text"></p>
+    </div>
+  </div> -->
+
+
+<!-- <app-field-error-display [displayError]="true" *ngIf="api_error['error']" errorMsg="{{api_error['error']}}">
+</app-field-error-display> -->

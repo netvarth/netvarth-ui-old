@@ -30,7 +30,7 @@
 }
 .yourProfile .bus-desc {
     font-size: 0.9rem;
-    text-align: center;
+    text-align: justify;
 }
 .yourProfile .abt-you-box {
     /* background: #3c8dbc0d; */
@@ -118,3 +118,16 @@
 .yourProfile .no-shadow {
     box-shadow: none !important;
 }
+
+@media (min-width: 360px) and (max-width: 770px) {
+  .smal-device-wt {
+        margin-left: auto !important;
+        margin-right: auto !important; 
+        inline-size: fit-content;
+    }
+}
+@media screen and (max-width: 770px) {
+    .yourProfile .prof-url {
+        text-align: center !important;
+    }
+  }
