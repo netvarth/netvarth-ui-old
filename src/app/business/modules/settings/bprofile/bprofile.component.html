@@ -84,12 +84,12 @@
 
                 <!-- QR code -->
                 <div class="pubs card w-dta bprof no-shadow">
-                  <div *ngIf="showIncompleteButton" class="incomplete-msg">
+                  <div *ngIf="showIncompleteButton && (reqFields.name || reqFields.location  ||reqFields.specialization)" class="incomplete-msg">
                     <div>
                       Please complete your profile to activate your Jaldee Link and QR Code
                     </div>
                   </div>
-                  <div [class.all_disabled]="showIncompleteButton">
+                  <div [class.all_disabled]="showIncompleteButton && (reqFields.name || reqFields.location  ||reqFields.specialization)">
                     <div>
                       <h6 class="sub-heads">Here is your QR code and Link
                         <sup><span class="inactive" *ngIf="!onlinepresence_status">Inactive</span>
