@@ -16,8 +16,8 @@
     font-weight: 600;
 }
 .yourProfile .sub-heads {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
 }
 .yourProfile .busns-name {
     font-size: 1.4rem;
@@ -34,7 +34,7 @@
 }
 .yourProfile .abt-you-box {
     /* background: #3c8dbc0d; */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5) !important;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.5) !important; */
 }
 .yourProfile share-button button {
     font-size: 12px !important;
@@ -114,4 +114,7 @@
 }
 .yourProfile .bar-wdth {
     width: 50%;
+}
+.yourProfile .no-shadow {
+    box-shadow: none !important;
 }
