@@ -28,7 +28,7 @@
   cursor: pointer;
   padding: 7px !important;
   border-radius: 20px !important;
-  font-size: 1.2rem !important;
+  font-size: 1.1rem !important;
   font-weight: 500;
 }
 .border-tp {
@@ -38,4 +38,7 @@
   .c-checkin-new .check-new-group {
     min-height: 200px;
   }
+}
+.checkin-btn-bp span {
+  font-size: 1.1rem !important;
 }
