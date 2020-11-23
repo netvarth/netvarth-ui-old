@@ -39,6 +39,17 @@ export class AppointmentConfirmPopupComponent implements OnInit {
     changePhno;
     currentPhone;
     callingModes;
+    action;
+    payEmail;
+    payEmail1;
+    emailerror = null;
+    email1error = null;
+    userData: any = [];
+    userEmail;
+    emailExist = false;
+    confrmshow = false;
+    noEmailError = false;
+
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -67,6 +78,8 @@ export class AppointmentConfirmPopupComponent implements OnInit {
         this.selectedMessage = data.selectedMessage;
     }
     ngOnInit() {
+        this.getProfile();
+
     }
 
 
@@ -180,5 +193,68 @@ export class AppointmentConfirmPopupComponent implements OnInit {
     getSingleTime(slot) {
         const slots = slot.split('-');
         return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+    }
+    addConsumeremail(){
+        this.action = 'addEmail'
+    }
+    addEmail() {
+        if (this.payEmail && this.payEmail.trim() !== '') {
+            const stat = this.validateEmail(this.payEmail.trim());
+            if (!stat) {
+                this.emailerror = 'Please enter a valid email.';
+                this.noEmailError = false;
+            } else {
+                const post_data = {
+                    'id': this.userData.userProfile.id || null,
+                    'firstName': this.userData.userProfile.firstName || null,
+                    'lastName': this.userData.userProfile.lastName || null,
+                    'dob': this.userData.userProfile.dob || null,
+                    'gender': this.userData.userProfile.gender || null,
+                    'email': this.payEmail.trim() || ''
+                };
+                const passtyp = 'consumer';
+                this.shared_services.updateProfile(post_data, passtyp)
+                    .subscribe(
+                        () => {
+                            this.getProfile();
+                            this.noEmailError = true;
+                        },
+                        error => {
+                            this.api_error = error.error;
+                            this.noEmailError = false;
+                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+            }
+        }
+    }
+    validateEmail(mail) {
+        const emailField = mail;
+        const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (reg.test(emailField) === false) {
+            return false;
+        }
+        return true;
+    }
+    getProfile() {
+        this.sharedFunctionobj.getProfile()
+            .then(
+                data => {
+                    this.userData = data;
+                    if (this.userData.userProfile !== undefined) {
+                        this.userEmail = this.userData.userProfile.email || '';
+                        this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                        // this.currentPhone = this.userPhone;
+                    }
+                    if (this.userEmail) {
+                        this.emailExist = true;
+                    } else {
+                        this.emailExist = false;
+                    }
+                });
+    }
+    showConfrmEmail(event) {
+        if (event.key !== 'Enter') {
+            this.confrmshow = true;
+        }
     }
 }

@@ -110,6 +110,23 @@
              <i class="fa fa-envelope-o "></i>
              <span class="mgn-lt-5 phonevallabel">{{eMail}}</span>
              </div>
+        <div class="" *ngIf="eMail == '' && action !== 'addEmail'">
+                <a class="lnk pointer-cursor action" (click)="addConsumeremail()">Add Email</a>
+        </div>
+        <div *ngIf="action == 'addEmail'" class="form-group mgn-up-5">
+            <input class="" id="email"
+            placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
+            autocomplete="off" (keyup)="showConfrmEmail($event)"
+            onpaste="return false;" oncopy="return false"
+            oncut="return false" ondrag="return false"
+            ondrop="return false">
+            <span><button *ngIf="action == 'addEmail'" class="btn bt3 btn-default mgn-lt-5" (click)="addEmail()"
+                type="button">Add</button></span>
+        </div>
+        <app-field-error-display class="red" [displayError]="true"
+            *ngIf="emailerror != null" errorMsg={{emailerror}}>
+        </app-field-error-display>
+        
     </div>
     <div *ngIf="service_det.isPrePayment" class="col-sm-12 col-xs-12 col-md-12 mgn-bt-20">
         This service requires an advance payment of
