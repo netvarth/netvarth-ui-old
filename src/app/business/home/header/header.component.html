@@ -27,6 +27,16 @@
         <li *ngIf="!iswiz">
           <a (click)="helpClicked()">
             <i class="fa contact-help-icon"></i>
+            <div joyrideStep="step4" title="Reach Out To Us" [stepContent]="text4"></div>
+            <ng-template #text4>
+              <div>
+                We offer free support and we are always ready to help.<br>
+                <br>
+                Call us at- <span style="color: white;"><b>888-012-5000</b></span><br>
+                Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
+
+              </div>
+            </ng-template>
           </a>
         </li>
         
