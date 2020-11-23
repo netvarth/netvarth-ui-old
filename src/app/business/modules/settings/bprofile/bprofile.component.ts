@@ -1456,12 +1456,12 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
     setTimeout(() => {
-      const params = [
-        'height=' + screen.height,
-        'width=' + screen.width,
-        'fullscreen=yes'
-      ].join(',');
-      const printWindow = window.open('', '', params);
+      // const params = [
+      //   'height=' + screen.height,
+      //   'width=' + screen.width,
+      //   'fullscreen=yes'
+      // ].join(',');
+      // const printWindow = window.open('', '', params);
       let printsection = '<html><head><title></title>';
       printsection += '</head><body style="margin-top:200px">';
       printsection += '<div style="text-align:center!important">';
@@ -1469,9 +1469,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       printsection += '</div>';
       printsection += '</body></html>';
       cordova.plugins.printer.print(printsection);
-      printWindow.moveTo(0, 0);
-      printWindow.print();
-      printWindow.document.close();
+      // printWindow.moveTo(0, 0);
+      // printWindow.print();
+      // printWindow.document.close();
     });
   }
 }

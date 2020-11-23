@@ -106,7 +106,7 @@
                           <div *ngIf="!bProfile.customId">
                             <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding">
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                <ngx-qrcode #accQR [elementType]="elementType" [value]="qr_value"
+                                <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value"
                                   (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" class="custId-cursor">
                                 </ngx-qrcode>
                               </div>
@@ -122,7 +122,7 @@
                                       </share-buttons>
                                     </div>
                                     <div class="dwnld-bdr custId-cursor">
-                                      <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('custQR')">
+                                      <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('print-section')">
                                         <i class="fa fa-cloud-download dwnld-icon"></i>
                                       </a>
                                     </div>
@@ -137,7 +137,7 @@
                             <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
                               #qrCodeOnlineId>
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                <ngx-qrcode #custQR [elementType]="elementType" [value]="qr_value"
+                                <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value"
                                   (click)="qrCodegeneraterOnlineID(bProfile.customId)" class="custId-cursor">
                                 </ngx-qrcode>
                               </div>
@@ -153,7 +153,7 @@
                                       </share-buttons>
                                     </div>
                                     <div class="dwnld-bdr custId-cursor">
-                                      <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('custQR')">
+                                      <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('print-section')">
                                         <i class="fa fa-cloud-download dwnld-icon"></i>
                                       </a>
                                     </div>
