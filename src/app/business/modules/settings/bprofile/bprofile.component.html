@@ -67,7 +67,7 @@
                   </div>
 
                   <!-- About You -->
-                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-10 abt-you-box">
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-10 abt-you-box" #basicInfoSection>
                     <div class="pad-10"><span class="sub-heads">About You</span><span class="edit-txt custId-cursor"
                         (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
                     <div class="no-dta" *ngIf="!aboutmefilled">
@@ -179,7 +179,7 @@
         <div class="row">
           <div class="copy one col-xs-12 col-sm-12 no-padding">
             <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-              <div class="card p0 w-dta active" #basicInfoSection>
+              <div class="card p0 w-dta active">
                 <div class="mgn-bt-20">
 
                   <!-- Location -->
