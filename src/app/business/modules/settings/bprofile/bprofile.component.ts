@@ -1475,3 +1475,4 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     });
   }
 }
+
