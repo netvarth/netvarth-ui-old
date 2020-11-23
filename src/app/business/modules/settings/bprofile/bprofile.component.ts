@@ -1468,7 +1468,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       printsection += printContent.innerHTML;
       printsection += '</div>';
       printsection += '</body></html>';
-      // cordova.plugins.printer.print(printsection);
+      cordova.plugins.printer.print(printsection);
       printWindow.moveTo(0, 0);
       printWindow.print();
       printWindow.document.close();
