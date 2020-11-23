@@ -77,26 +77,8 @@
                   </div>
                 </div>
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- Old Part-->
-  <div class="content w-manager settings comn-cls lic-page">
-    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-    <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small" *ngIf="!loading">
-      <div class="w-dta">
-        <div class="row">
-          <div class="copy one col-xs-12 col-sm-12 no-padding">
-            <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-              <div class="card p0">
-                <div class="pubs card w-dta bprof">
+                <!-- QR code -->
+                <div class="pubs card w-dta bprof no-shadow">
                   <div *ngIf="showIncompleteButton" class="incomplete-msg">
                     <div>
                       Please fill your profile to activate your Jaldee Link and QR Code
@@ -104,7 +86,7 @@
                   </div>
                   <div [class.all_disabled]="showIncompleteButton">
                     <div>
-                      <h6>Here is your QR code and Link
+                      <h6 class="sub-heads">Here is your QR code and Link
                         <sup><span class="inactive" *ngIf="!onlinepresence_status">Inactive</span>
                           <span class="active" *ngIf="onlinepresence_status">Active</span></sup>
                         <span class="edit-txt custId-cursor"
@@ -173,7 +155,25 @@
                     </div>
                   </div>
                 </div>
+
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Old Part-->
+  <div class="content w-manager settings comn-cls lic-page">
+    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+    <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small" *ngIf="!loading">
+      <div class="w-dta">
+        <div class="row">
+          <div class="copy one col-xs-12 col-sm-12 no-padding">
+            <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
               <div class="card p0 w-dta active" #basicInfoSection>
                 <div class="mgn-bt-20">
 
@@ -656,4 +656,4 @@
     </div>
     <div class="clearfix"></div>
   </div>
-</section>
+</section> 

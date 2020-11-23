@@ -342,8 +342,8 @@
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <span class="checkin-label mgn-rt-10"
-                            *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                          <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
+                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -580,8 +580,8 @@
                           </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                             class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                            <span class="checkin-label mgn-rt-10"
-                              *ngFor="let label of apptByTimeSlot[appt.time][0].label | keyvalue">{{getDisplayname(label.key)}}</span>
+                            <span class="mgn-rt-10" *ngFor="let label of apptByTimeSlot[appt.time][0].label | keyvalue"
+                            [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                           </div>
                         </td>
                         <td class="td-three">
@@ -773,8 +773,8 @@
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <span class="checkin-label mgn-rt-10"
-                            *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                          <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
+                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -1088,8 +1088,8 @@
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <span class="checkin-label mgn-rt-10"
-                          *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                        <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
+                        [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                       </div>
                     </td>
                     <td class="td-three">
@@ -1445,8 +1445,8 @@
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <span class="checkin-label mgn-rt-10"
-                          *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                        <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
+                        [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                       </div>
                     </td>
                     <td class="td-three">

@@ -36,13 +36,13 @@
                     </tbody>
                     <tbody *ngFor="let service of service_list | orderBy: order">
                         <tr class="grid-pad" [class.grid-disabled]="service.status=='INACTIVE'" *ngIf="!api_loading">
-                            <td class="serv-name">
+                            <td class="serv-name no-padding-small">
                                 <div class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
                                     (click)="goServiceDetail(service)">
                                     {{service.name | capitalizeFirst}}
                                 </div>
                             </td>
-                            <td>
+                            <td class="no-padding-small">
                                 <span
                                     *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'"
                                     class="link"> <i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i></span>
@@ -64,14 +64,14 @@
                                         *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"></i>
                                 </span>
                             </td>
-                            <td>
+                            <td class="no-padding-small">
                                 <span *ngIf="service.provider" class="setings">{{service.provider.firstName}}</span>
                                 <!-- <span *ngIf="!service.provider" class="setings">Global Service</span> -->
                             </td>
-                            <td class="pad-right-30">
+                            <td class="pad-right-30 no-padding-small">
                                 {{service.deptName | capitalizeFirst}}
                             </td>
-                            <td>
+                            <td class="no-padding-small" style="width: 30px;">
                                 <div class="copy">
                                     <span class="mbt" style="top: -18px;">
                                         <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">

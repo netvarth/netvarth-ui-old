@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TeleServiceConfirmBoxComponent } from './teleservice-confirm-box/teleservice-confirm-box.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { TeleServiceShareComponent } from './teleservice-share/teleservice-share.component';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class TeleServiceComponent implements OnInit {
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public shared_services: SharedServices,
-        private router: Router,
+        private router: Router, public _location: Location,
         private dialog: MatDialog,
         private provider_shared_functions: ProviderSharedFuctions,
     ) {
@@ -169,26 +170,26 @@ export class TeleServiceComponent implements OnInit {
     // Back btn navigation
     redirecToPreviousPage() {
         // if (this.step === 1) {
-        //     this._location.back();
+            this._location.back();
         // }
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                servStatus: this.servStarted
-            }
-        };
-        if (this.waiting_type === 'checkin') {
-            if (this.servStarted) {
-                this.router.navigate(['provider', 'check-ins'], navigationExtras);
-            } else {
-                this.router.navigate(['provider', 'check-ins']);
-            }
-        } else {
-            if (this.servStarted) {
-                this.router.navigate(['provider', 'appointments'], navigationExtras);
-            } else {
-                this.router.navigate(['provider', 'appointments']);
-            }
-        }
+        // const navigationExtras: NavigationExtras = {
+        //     queryParams: {
+        //         servStatus: this.servStarted
+        //     }
+        // };
+        // if (this.waiting_type === 'checkin') {
+        //     if (this.servStarted) {
+        //         this.router.navigate(['provider', 'check-ins'], navigationExtras);
+        //     } else {
+        //         this.router.navigate(['provider', 'check-ins']);
+        //     }
+        // } else {
+        //     if (this.servStarted) {
+        //         this.router.navigate(['provider', 'appointments'], navigationExtras);
+        //     } else {
+        //         this.router.navigate(['provider', 'appointments']);
+        //     }
+        // }
     }
 
     // Asking to start the meeting
