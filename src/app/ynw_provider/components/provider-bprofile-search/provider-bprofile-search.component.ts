@@ -460,10 +460,10 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
               Object.keys(this.bProfile['domainVirtualFields']).length === 0) {
               this.normal_domainfield_show = 2;
             }
-            const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+            // const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
             // calling function which saves the business related details to show in the header
             this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-              || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
+              || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', '');
 
             const pdata = { 'ttype': 'updateuserdetails' };
             this.sharedfunctionobj.sendMessage(pdata);
@@ -1082,10 +1082,10 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           } else {
             logo = '';
           }
-          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+          // const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           // calling function which saves the business related details to show in the header
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-            || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', logo);
+            || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', logo);
 
           const pdata = { 'ttype': 'updateuserdetails' };
           this.sharedfunctionobj.sendMessage(pdata);
@@ -1107,9 +1107,9 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           const today = new Date();
           const tday = today.toString().replace(/\s/g, '');
           const blogo = this.blogo[0].url + '?' + tday;
-          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+          // const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-            || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
+            || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', blogo || '');
 
           const pdata = { 'ttype': 'updateuserdetails' };
           this.sharedfunctionobj.sendMessage(pdata);
@@ -1131,9 +1131,9 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         // calling function which saves the business related details to show in the header
         this.blogo = [];
         this.profimg_exists = false;
-        const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+        // const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
         this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-          || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '', true);
+          || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', '', true);
 
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedfunctionobj.sendMessage(pdata);

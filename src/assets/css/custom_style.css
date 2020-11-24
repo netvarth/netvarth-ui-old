@@ -13063,3 +13063,6 @@ hr {
 .checkins-owl .owl-carousel {
   display: flex !important;
 }
+.confirmpopup {
+  width: 450px !important;
+}
