@@ -541,7 +541,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
       this.showIncompleteButton = true;
-      return weightage + '%';
+      return businessProfileWeightageText;
 
     }
     if (weightage > 25 && weightage < 50) {
