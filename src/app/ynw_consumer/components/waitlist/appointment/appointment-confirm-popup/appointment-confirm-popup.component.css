@@ -1211,7 +1211,79 @@
     color: #334b99 !important;
     font-weight: 700 !important;
   }
-  
+  .emaillinebreak{
+    line-break: a;
+
+  }
+  .subHead{
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+  }
+  .textcenter {
+    text-align: center;
+  }
+  .pad-20 {
+    padding: 20px !important;
+  }
+  .heading1 {
+    font-size: 1.25rem !important;
+    font-weight: 500;
+  }
+  .apptFor {
+    font-size: 1rem !important;
+  }
+  .popup-title{
+    font-size: 1.3rem !important;
+  }
+  .coupon {
+    border: 5px dotted #bbb; 
+    border-radius: 15px; 
+    margin: 0 auto;
+    max-width: 600px;
+  }
+  .containerAppt {
+    padding: 2px 16px;
+    background-color: #f1f1f1;
+  }
+
+  /* .coupon {
+    position: relative;
+    width: 400px;
+    height: 75px;
+    background-image: 
+      radial-gradient(circle at 1px 8px, transparent 6px, #ff9e6d 6px, #ff9e6d 0px), 
+      radial-gradient(circle at 199px 8px, transparent 6px, #ff9e6d 6px, #ff9e6d 0px);
+    background-size: 200px 18px;
+    background-position: 0 0, 200px 0;
+    background-repeat-x: no-repeat;
+    font-size: 60px;
+    color: #fff;
+    font-weight: bold;
+    line-height: 160px;
+    padding-left: 60px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  .coupon::before {
+    position: absolute;
+    content: "";
+    left: 240px;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    border-left: 1px dashed #fff;
+  }
+  .coupon::after {
+    position: absolute;
+    content: "";
+    font-size: 26px;
+    width: 30px;
+    top: 50%;
+    right: 2%;
+    transform: translate(-50%, -50%);
+    line-height: 40px;
+    letter-spacing: 5px;
+  } */
   /* Ticket*/
   .ticket {
       position: relative;

@@ -1211,7 +1211,25 @@ height: 150px !important;
   color: #334b99 !important;
   font-weight: 700 !important;
 }
-
+.textcenter {
+  text-align: center;
+}
+.apptFor {
+  font-size: 1rem !important;
+}
+.popup-title{
+  font-size: 1.3rem !important;
+}
+.coupon {
+  border: 5px dotted #bbb; 
+  border-radius: 15px; 
+  margin: 0 auto;
+  max-width: 600px;
+}
+.containerAppt {
+  padding: 2px 16px;
+  background-color: #f1f1f1;
+}
 /* Ticket*/
 .ticket {
     position: relative;
