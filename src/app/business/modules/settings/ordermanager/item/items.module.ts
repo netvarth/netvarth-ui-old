@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ItemsComponent } from './items.component';
-//import { ItemDetailsComponent } from './details/item-details.component';
+import { ItemDetailsComponent } from './details/item-details.component';
 import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,7 +13,8 @@ import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
     declarations: [
-        ItemsComponent
+        ItemsComponent,
+        ItemDetailsComponent
     ],
     imports: [
         ItemsRoutingModule,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import {  Router, NavigationExtras } from '@angular/router';
+import {  ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { projectConstants } from '../../../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -74,66 +74,67 @@ export class ItemDetailsComponent implements OnInit {
     taxDetails: any = [];
     itemname: any;
     itemcaption = 'Add Item';
+    showPromotionalPrice = false;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
-       // private activated_route: ActivatedRoute,
+        private activated_route: ActivatedRoute,
         private router: Router,
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService) {
-        // this.activated_route.params.subscribe(
-        //     (params) => {
-        //         this.item_id = params.id;
-        //         this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-        //         if (this.item_id) {
-        //             if (this.item_id === 'add') {
-        //                 const breadcrumbs = [];
-        //                 this.breadcrumbs_init.map((e) => {
-        //                     breadcrumbs.push(e);
-        //                 });
-        //                 breadcrumbs.push({
-        //                     title: 'Add'
-        //                 });
-        //                 this.breadcrumbs = breadcrumbs;
-        //                 this.action = 'add';
-        //                 this.createForm();
-        //             } else {
-        //                 this.activated_route.queryParams.subscribe(
-        //                     (qParams) => {
-        //                         this.action = qParams.action;
-        //                         this.getItem(this.item_id).then(
-        //                             (item) => {
-        //                                 this.item = item;
-        //                                 this.itemname = this.item.displayName;
-        //                                 if (this.action === 'edit') {
-        //                                     const breadcrumbs = [];
-        //                                     this.breadcrumbs_init.map((e) => {
-        //                                         breadcrumbs.push(e);
-        //                                     });
-        //                                     breadcrumbs.push({
-        //                                         title: this.itemname
-        //                                     });
-        //                                     this.breadcrumbs = breadcrumbs;
-        //                                     this.createForm();
-        //                                 } else if (this.action === 'view') {
-        //                                     this.itemcaption = 'Item Details';
-        //                                     const breadcrumbs = [];
-        //                                     this.breadcrumbs_init.map((e) => {
-        //                                         breadcrumbs.push(e);
-        //                                     });
-        //                                     breadcrumbs.push({
-        //                                         title: this.itemname
-        //                                     });
-        //                                     this.breadcrumbs = breadcrumbs;
-        //                                 }
-        //                             }
-        //                         );
-        //                     }
-        //                 );
-        //             }
-        //             this.api_loading = false;
-        //         }
-        //     }
-        // );
+        this.activated_route.params.subscribe(
+            (params) => {
+                this.item_id = params.id;
+                this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+                if (this.item_id) {
+                    if (this.item_id === 'add') {
+                        const breadcrumbs = [];
+                        this.breadcrumbs_init.map((e) => {
+                            breadcrumbs.push(e);
+                        });
+                        breadcrumbs.push({
+                            title: 'Add'
+                        });
+                        this.breadcrumbs = breadcrumbs;
+                        this.action = 'add';
+                        this.createForm();
+                    } else {
+                        this.activated_route.queryParams.subscribe(
+                            (qParams) => {
+                                this.action = qParams.action;
+                                this.getItem(this.item_id).then(
+                                    (item) => {
+                                        this.item = item;
+                                        this.itemname = this.item.displayName;
+                                        if (this.action === 'edit') {
+                                            const breadcrumbs = [];
+                                            this.breadcrumbs_init.map((e) => {
+                                                breadcrumbs.push(e);
+                                            });
+                                            breadcrumbs.push({
+                                                title: this.itemname
+                                            });
+                                            this.breadcrumbs = breadcrumbs;
+                                            this.createForm();
+                                        } else if (this.action === 'view') {
+                                            this.itemcaption = 'Item Details';
+                                            const breadcrumbs = [];
+                                            this.breadcrumbs_init.map((e) => {
+                                                breadcrumbs.push(e);
+                                            });
+                                            breadcrumbs.push({
+                                                title: this.itemname
+                                            });
+                                            this.breadcrumbs = breadcrumbs;
+                                        }
+                                    }
+                                );
+                            }
+                        );
+                    }
+                    this.api_loading = false;
+                }
+            }
+        );
     }
     ngOnInit() {
        // this.getTaxpercentage();
@@ -153,7 +154,7 @@ export class ItemDetailsComponent implements OnInit {
         });
     }
     goBack() {
-        this.router.navigate(['provider', 'settings', 'pos',
+        this.router.navigate(['provider', 'settings', 'ordermanager',
             'items']);
         this.api_loading = false;
     }
@@ -161,19 +162,21 @@ export class ItemDetailsComponent implements OnInit {
         if (this.action === 'add') {
             this.amForm = this.fb.group({
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 taxable: [false, Validators.compose([Validators.required])],
-                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
+                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPrice: ['', Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
             });
         } else {
             // this.itemcaption = 'Item Details';
             this.amForm = this.fb.group({
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 taxable: [false, Validators.compose([Validators.required])],
-                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
+                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPrice: ['', Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
             });
         }
         if (this.action === 'edit') {
@@ -192,16 +195,19 @@ export class ItemDetailsComponent implements OnInit {
         this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
     }
     updateForm() {
+        console.log(this.item);
         if (this.item.taxable === true) {
             // taxable = '1';
             this.holdtaxable = true;
         }
         this.amForm.setValue({
             'displayName': this.item.displayName || null,
-            'shortDesc': this.item.shortDesc || null,
+            'itemName': this.item.itemName || null,
             'displayDesc': this.item.displayDesc || null,
             'price': this.item.price || null,
-            'taxable': this.holdtaxable
+            'taxable': this.holdtaxable,
+            'showPromotionalPrice': this.item.showPromotionalPrice,
+            'promotionalPrice': this.item.promotionalPrice || null
         });
     }
     handleTaxablechange() {
@@ -224,11 +230,18 @@ export class ItemDetailsComponent implements OnInit {
         }
     }
     onCancel() {
-        this.router.navigate(['provider', 'settings', 'pos',
+        this.router.navigate(['provider', 'settings', 'ordermanager',
             'items']);
         this.api_loading = false;
     }
     onSubmit(form_data) {
+        if (this.showPromotionalPrice && !form_data.promotionalPrice) {
+            this.api_error = 'Please enter promotional price';
+            return;
+        }
+        if (!this.showPromotionalPrice) {
+            form_data.promotionalPrice = '';
+        }
         const iprice = parseFloat(form_data.price);
         if (!iprice || iprice === 0) {
             this.api_error = 'Please enter valid price';
@@ -238,22 +251,33 @@ export class ItemDetailsComponent implements OnInit {
             this.api_error = 'Price should not be a negative value';
             return;
         }
+        if (form_data.promotionalPrice) {
+            const proprice = parseFloat(form_data.price);
+            if (proprice < 0) {
+                this.api_error = 'Price should not be a negative value';
+                return;
+            }
+        }
         if (this.action === 'add') {
             const post_itemdata = {
                 'displayName': form_data.displayName,
-                'shortDesc': form_data.shortDesc,
+                'itemName': form_data.itemName,
                 'displayDesc': form_data.displayDesc,
                 'taxable': form_data.taxable,
-                'price': form_data.price
+                'price': form_data.price,
+                'showPromotionalPrice': this.showPromotionalPrice,
+                'promotionalPrice': form_data.promotionalPrice
             };
             this.addItem(post_itemdata);
         } else if (this.action === 'edit') {
             const post_itemdata = {
                 'displayName': form_data.displayName,
-                'shortDesc': form_data.shortDesc,
+                'itemName': form_data.itemName,
                 'displayDesc': form_data.displayDesc,
                 'taxable': form_data.taxable,
-                'price': form_data.price
+                'price': form_data.price,
+                'showPromotionalPrice': this.showPromotionalPrice,
+                'promotionalPrice': form_data.promotionalPrice
             };
             this.editItem(post_itemdata);
         }
@@ -267,7 +291,7 @@ export class ItemDetailsComponent implements OnInit {
                 () => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
                     this.api_loading = false;
-                    this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                    this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -286,7 +310,7 @@ export class ItemDetailsComponent implements OnInit {
                 () => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED'));
                     this.api_loading = false;
-                    this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                    this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });

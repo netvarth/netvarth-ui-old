@@ -64,7 +64,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
         this.domain = user.sector;
         this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
 
-       // this.getitems();
+        this.getitems();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     }
@@ -151,7 +151,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'view' }
         };
-        this.router.navigate(['provider', 'settings', 'pos', 'items', id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'ordermanager', 'items', id], navigationExtras);
     }
 
     doRemoveItem(item) {
@@ -190,7 +190,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
     }
     redirecToJaldeeBilling() {
-        this.routerobj.navigate(['provider', 'settings' , 'pos']);
+        this.routerobj.navigate(['provider', 'settings' , 'ordermanager']);
     }
     redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->items']);
