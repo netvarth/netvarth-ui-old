@@ -1,6 +1,6 @@
 <h1 class="mat-dialog-title popup-title">Your {{showCheckinButtonCaption()}} Details<button mat-dialog-close class="modal_close" tabindex="-1"><i
     class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-<mat-dialog-content class="ynw-common-form apply-label">
+<mat-dialog-content class="ynw-common-form apply-label confirmcontent">
 <div class="form-group col-md-12 no-padding">
     <div class="col-md-12 col-xs-12 col-sm-12 lnk no-padding apptFor">
         {{showCheckinButtonCaption()}} For
@@ -40,23 +40,12 @@
             </span>
         </h6>
         </div> -->
-        <div class="col-md126 col-xs-12 col-sm-12 no-padding lnk mgn-up-5 apptFor">
-            Waiting in line
+        <!-- <div class="col-md126 col-xs-12 col-sm-12 no-padding lnk mgn-up-5 apptFor">
+           
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-        <h6 class="card-title serv-time border-style waitinginLine">
-            <span *ngIf="sel_queue_personaahead <= 0">0 People</span>
-            <span *ngIf="sel_queue_personaahead == 1">1<span> Person</span></span>
-            <span *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
-            People</span>
-            </span><span *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
-                <span class="color-grey">\</span>
-                <span>{{sel_queue_waitingmins}}</span>
-
-            </span>
-            
-        </h6>
-        </div>
+        
+        </div> -->
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding apptFor">
         Booking For
@@ -135,7 +124,7 @@
 <div class = "clearfix"></div>
 <div class="coupon mgn-up-15">
     <div class="containerAppt textcenter" style="background-color:white">
-        <h5><b>Date/Time</b></h5> 
+        <h5 class="mgn-up-10 no-mgn-bt"><b>Date/Time</b></h5> 
         <h6 class="card-title serv-time border-style waitinginLine">
             <span *ngIf="!isFuturedate">Today, </span>
             <span *ngIf="!isFuturedate">
@@ -148,6 +137,19 @@
                 {{selectedQsTime}} - {{selectedQeTime}}
                 <!-- {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}} -->
             </span>
+        </h6>
+        <h5 class="mgn-up-15 no-mgn-bt"><b> Waiting in line</b></h5>
+        <h6 class="card-title serv-time border-style waitinginLine">
+            <span *ngIf="sel_queue_personaahead <= 0">0 People</span>
+            <span *ngIf="sel_queue_personaahead == 1">1<span> Person</span></span>
+            <span *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
+            People</span>
+            </span><span *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
+                <span class="color-grey">\</span>
+                <span>{{sel_queue_waitingmins}}</span>
+
+            </span>
+            
         </h6>
     </div>
 </div>

@@ -13073,3 +13073,6 @@ hr {
 .confirmpopup {
   width: 450px !important;
 }
+.confirmcontent {
+  max-height: 75vh !important;
+}
