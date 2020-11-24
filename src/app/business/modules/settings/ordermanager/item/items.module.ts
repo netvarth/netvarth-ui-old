@@ -10,6 +10,7 @@ import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.mod
 import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { OrderModule } from 'ngx-order-pipe';
+import { ModalGalleryModule } from 'angular-modal-gallery';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { OrderModule } from 'ngx-order-pipe';
         LoadingSpinnerModule,
         FormMessageDisplayModule,
         ReactiveFormsModule,
-        OrderModule
+        OrderModule,
+        ModalGalleryModule
     ],
     exports: [ItemsComponent]
 })
