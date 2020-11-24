@@ -388,6 +388,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.selectedMode = type;
     }
     findCustomer(form_data, event) {
+        this.showBlockHint = false;
         if (event.key === 'Enter') {
             this.searchCustomer(form_data);
         }

@@ -193,9 +193,9 @@ export class ProPicPopupComponent implements OnInit {
                     const today = new Date();
                     const tday = today.toString().replace(/\s/g, '');
                     const blogo = this.blogo[0].url + '?' + tday;
-                    const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+                    // const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
                     this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-                        || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
+                        || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', blogo || '');
                     const pdata = { 'ttype': 'updateuserdetails' };
                     this.provider_datastorage.updateProfilePicWeightage(true);
                     this.sharedfunctionobj.sendMessage(pdata);

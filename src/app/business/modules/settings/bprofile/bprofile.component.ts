@@ -736,10 +736,10 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.normal_profile_active = 2;
           }
           if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
-            const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+            // const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
             // calling function which saves the business related details to show in the header
             this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-              || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
+              || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.sharedfunctionobj.sendMessage(pdata);
           }
