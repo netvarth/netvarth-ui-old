@@ -88,14 +88,16 @@ export class OrdermanagerComponent implements OnInit {
     }
   }
   gotoStoredetails() {
-    if (this.nodiscountError) {
-      this.router.navigate(['provider', 'settings', 'pos', 'discount']);
-    } else {
-      this.shared_functions.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
-    }
+    this.routerobj.navigate(['provider', 'settings', 'ordermanager' , 'storedetails']);
+    // if (this.nodiscountError) {
+    //   this.router.navigate(['provider', 'settings', 'pos', 'discount']);
+    // } else {
+    //   this.shared_functions.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
+    // }
   }
   gotoCatalogs() {
-    this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
+    this.routerobj.navigate(['provider', 'settings', 'ordermanager' , 'catalogs']);
+    // this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
   }
   handle_posStatus(event) {
     const value = (event.checked) ? true : false;
