@@ -1230,6 +1230,9 @@ height: 150px !important;
   padding: 2px 16px;
   background-color: #f1f1f1;
 }
+.no-mgn-bt {
+margin-bottom: 0px !important;
+}
 /* Ticket*/
 .ticket {
     position: relative;
