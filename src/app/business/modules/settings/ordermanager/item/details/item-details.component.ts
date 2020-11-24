@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import {  Router, NavigationExtras } from '@angular/router';
 import { projectConstants } from '../../../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -76,7 +76,7 @@ export class ItemDetailsComponent implements OnInit {
     itemcaption = 'Add Item';
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
-        private activated_route: ActivatedRoute,
+       // private activated_route: ActivatedRoute,
         private router: Router,
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService) {
