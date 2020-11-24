@@ -210,6 +210,7 @@ export class TeleServiceComponent implements OnInit {
         });
         this.startTeledialogRef.afterClosed().subscribe(result => {
             if (result) {
+                alert('Agreed on confirm btn');
                 if (result === 'started') {
                     if (this.waiting_type === 'checkin') {
                         if (this.data.waitlistStatus !== 'started') {
@@ -253,6 +254,7 @@ export class TeleServiceComponent implements OnInit {
 
     // changing status to start/complete
     changeWaitlistStatus(qdata, action) {
+        alert('change status');
         qdata.disableStartbtn = true;
         if (this.waiting_type === 'checkin') {
             this.provider_shared_functions.changeWaitlistStatus(this, qdata, action);
