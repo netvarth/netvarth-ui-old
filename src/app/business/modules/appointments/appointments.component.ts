@@ -2565,6 +2565,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getSlotBYScheduleandDate(scheduleid, date) {
     this.provider_services.getSlotsByScheduleandDate(scheduleid, date).subscribe(
       (data: any) => {
+        this.scheduleSlots = [];
         for (let i = 0; i < data.length; i++) {
           if (data[i].availableSlots) {
             for (let j = 0; j < data[i].availableSlots.length; j++) {
