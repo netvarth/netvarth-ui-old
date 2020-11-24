@@ -319,9 +319,9 @@ export class ItemDetailsComponent implements OnInit {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'edit' }
         };
-        this.router.navigate(['provider', 'settings', 'pos', 'items', item.itemId], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'ordermanager', 'items', item.itemId], navigationExtras);
     }
-    redirecToJaldeeBilling() {
-        this.router.navigate(['provider', 'settings', 'pos' , 'items']);
+    redirecToJaldeeOrdermanager() {
+        this.router.navigate(['provider', 'settings', 'ordermanager' , 'items']);
     }
 }
