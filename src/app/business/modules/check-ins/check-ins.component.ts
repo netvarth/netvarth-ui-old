@@ -2457,7 +2457,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (checkin.token) {
       tokenNo = checkin.token;
     }
-    this.speech.setLanguage('hi-IN');
+    this.speech.setLanguage('en-IN');
     // Speech.setVoice(voice);
     this.speech.speak({
       text: 'Token Number ' + tokenNo + checkin.waitlistingFor[0].firstName + ' ' + checkin.waitlistingFor[0].lastName,
