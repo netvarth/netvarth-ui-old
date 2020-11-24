@@ -31,9 +31,6 @@
   font-size: 1.1rem !important;
   font-weight: 500;
 }
-.checkin-btn-bp span {
-  font-size: 1.1rem !important;
-}
 .border-tp {
   border-top: 1px solid #ccc !important;
 } 
@@ -41,4 +38,33 @@
   .c-checkin-new .check-new-group {
     min-height: 200px;
   }
+}
+.checkin-btn-bp {
+  height: 40px;
+  width: 90%;
+  max-width: 310px;
+  overflow: hidden;
+  text-align: center;
+  box-sizing: border-box;
+  color: white;
+  transition: all .3s ease;
+  cursor: pointer;
+  padding: 7px !important;
+  background: #334b99 !important;
+  border-radius: 20px !important;
+  font-size: 1.1rem !important;
+  font-weight: 500;
+}
+.c-checkin-new .card-title.service {
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+  line-height: 40px !important;
+  color: #7a7a7a !important;
+  line-height:normal !important;
+}
+.c-checkin-new .card-title.serv-time {
+  line-height: 40px!important;
+  font-size: 1.75rem!important;
+  color: #334b99!important;
+  font-weight: 700!important;
 }
