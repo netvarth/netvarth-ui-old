@@ -3111,7 +3111,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   addCustomerDetails(checkin) {
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
-    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
+    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid, showtoken: this.showToken } });
   }
   showSelectAll() {
     if (this.check_in_filtered_list.length > 1) {

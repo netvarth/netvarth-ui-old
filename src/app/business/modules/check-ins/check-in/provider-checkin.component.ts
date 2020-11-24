@@ -457,9 +457,9 @@ export class ProviderCheckinComponent implements OnInit {
                         if (this.source === 'waitlist-block') {
                             this.showBlockHint = true;
                             if (this.showtoken) {
-                                this.heading = 'Confirm your token';
+                                this.heading = 'Confirm your Token';
                             } else {
-                                this.heading = 'Confirm your check-in';
+                                this.heading = 'Confirm your Check-in';
                             }
                         } else {
                             this.getFamilyMembers();
