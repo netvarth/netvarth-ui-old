@@ -429,6 +429,82 @@
                       </div>
                   </div>
               </div>
+
+ <!--Jaldee OrderManager-->
+ <div class="col-md-6 col-lg-4 col-12 no-padding-small">
+    <!-- Widget: user widget style 1 -->
+    <div class="box box-widget widget-user-2">
+        <div class="widget-user-header bg-blue">
+            <h4 (click)="redirecTo('ordermanager')" class="pointer-cursor"
+                [matTooltipClass]="tooltipcls" [matTooltip]="ordermanagertooltip">
+                Jaldee Order Manager
+                <i class="fa fa-gears fl-right lnk"></i>
+                <!-- <div>
+                    <div joyrideStep="step3" [stepContent]="text3" title="Jaldee Appointment Manager">
+                    </div>
+                    <ng-template #text3>
+                        <div>
+                            Use the Jaldee appointment manager to set up your appointment system.<br>
+                            <br>
+                            Features of the Jaldee Appointment Manager:<br>
+                            <br>
+                            <span style="color: white;">*</span> Specify the time when you want to offer services. Customers can select these time slots and book appointments.<br>
+                            <br>
+                            <span style="color: white;">*</span> Jaldee will send reminders to customers so they don't miss their appointments<br>
+                            <br>
+                            <span style="color: white;">***</span> PLEASE NOTE: Unlike the Virtual Queue Sytem, the appointment system does not send out alerts for information like up-to-date waiting time and service delays.<span style="color: white;">***</span>
+                        </div>
+                    </ng-template>
+                </div> -->
+            </h4>
+        </div>
+        <div class="box-footer no-padding">
+            <ul class="nav nav-stacked set-block-3">
+                <li class="form-level-settings">
+                    <a><strong>Appointment booking </strong>system . <strong>Take appointments .
+                        </strong><strong>Set time slots</strong> for your consultations .</a>
+                </li>
+                <li (click)="redirecTo('ordermanager')">
+                    <a class="pointer-cursor">
+                        <span class="lnk setings">Appointment Manager
+                            <span class="pull-right">
+                                {{createappointment_statusstr}} </span></span>
+                        <p class="settings_info" *ngIf="createappointment_status">
+                            {{custs_name|capitalizeFirst}}<strong> can</strong> take appointments for
+                            your services.</p>
+                        <p class="settings_info" *ngIf="!createappointment_status">
+                            {{custs_name|capitalizeFirst}}<strong> cannot</strong> take appointments for
+                            your services.
+                        </p>
+                    </a>
+                </li>
+               
+                <li (click)="redirecTo('appservices')">
+                    <a class="pointer-cursor">
+                        <span class="lnk setings">{{services_cap}}
+                            <span class="pull-right badge bg-blue">{{service_count}}</span>
+                        </span>
+                        <p class="settings_info">Eg: {{services_hint}}.</p>
+                    </a>
+                </li>
+                <li (click)="redirecTo('schedules')">
+                    <a class="pointer-cursor">
+                        <span class="lnk setings">{{schedules_cap}}
+                            <span class="pull-right badge bg-blue">{{schedules_count}}</span>
+                        </span>
+                        <p *ngIf="schedules_count == 0" class="req-flds-cap">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Schedules are
+                            not created</p>
+                        <p class="settings_info">Set when you want to accept bookings.</p>
+                    </a>
+                </li>
+               
+
+            </ul>
+        </div>
+    </div>
+</div>
+
               <!-- General -->
               <div class="col-md-6 col-lg-4 col-12  no-padding-small box-hght">
                   <!-- Widget: user widget style 1 -->

@@ -236,6 +236,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   services_hint = '';
   bprofileLoaded = false;
   showIncompleteButton = true;
+  ordermanagertooltip = 'Ordermanager';
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -943,6 +944,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         break;
       case 'donationmanager':
         this.routerobj.navigate(['provider', 'settings', 'donationmanager']);
+        break;
+        case 'ordermanager':
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
+        break;
     }
   }
   getLocationCount() {
