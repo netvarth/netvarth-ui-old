@@ -945,9 +945,15 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       case 'donationmanager':
         this.routerobj.navigate(['provider', 'settings', 'donationmanager']);
         break;
-        case 'ordermanager':
+      case 'ordermanager':
         this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
-        break;
+      break;
+      case 'catalogs':
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager' , 'catalogs']);
+      break;
+      case 'storedetails':
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager' , 'storedetails']);
+      break;
     }
   }
   getLocationCount() {
