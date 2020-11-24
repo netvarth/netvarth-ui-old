@@ -1,5 +1,5 @@
 const versionString = {
-    'desktop' : '1.6.9',
+    'desktop' : '1.6.10',
     'mobile': 'androidpro-1.6.4',
     'updateUrl': 'https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldeebusiness'
     // 'mobile': 'iospro-1.6.4',
