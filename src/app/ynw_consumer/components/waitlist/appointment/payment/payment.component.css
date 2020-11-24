@@ -68,3 +68,15 @@
   color: #334b99!important;
   font-weight: 700!important;
 }
+.wtsapaud-icon, .wtsapvid-icon, .zoom-icon {
+  width: 40px !important;
+}
+.ser-icon .zoom-icon {
+  top: 6px;
+}
+.ser-icon .meet-icon {
+  width: 20px;
+}
+.ser-icon .wtsapaud-icon {
+  top: 8px !important;
+}

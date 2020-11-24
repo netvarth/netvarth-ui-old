@@ -42,3 +42,15 @@
 .checkin-btn-bp span {
   font-size: 1.1rem !important;
 }
+.wtsapaud-icon, .wtsapvid-icon, .zoom-icon {
+  width: 40px !important;
+}
+.ser-icon .zoom-icon {
+  top: 6px !important;
+}
+.ser-icon .meet-icon {
+  width: 20px !important;
+}
+.ser-icon .wtsapaud-icon {
+  top: 8px !important;
+}
