@@ -466,14 +466,14 @@
                 </li>
                 <li (click)="redirecTo('ordermanager')">
                     <a class="pointer-cursor">
-                        <span class="lnk setings">Appointment Manager
+                        <span class="lnk setings">Order Manager
                             <span class="pull-right">
                                 {{createappointment_statusstr}} </span></span>
                         <p class="settings_info" *ngIf="createappointment_status">
-                            {{custs_name|capitalizeFirst}}<strong> can</strong> take appointments for
+                            {{custs_name|capitalizeFirst}}<strong> can</strong> take orders for
                             your services.</p>
                         <p class="settings_info" *ngIf="!createappointment_status">
-                            {{custs_name|capitalizeFirst}}<strong> cannot</strong> take appointments for
+                            {{custs_name|capitalizeFirst}}<strong> cannot</strong> take orders for
                             your services.
                         </p>
                     </a>
@@ -481,7 +481,7 @@
                
                 <li (click)="redirecTo('appservices')">
                     <a class="pointer-cursor">
-                        <span class="lnk setings">{{services_cap}}
+                        <span class="lnk setings">Store detail
                             <span class="pull-right badge bg-blue">{{service_count}}</span>
                         </span>
                         <p class="settings_info">Eg: {{services_hint}}.</p>
@@ -489,13 +489,21 @@
                 </li>
                 <li (click)="redirecTo('schedules')">
                     <a class="pointer-cursor">
-                        <span class="lnk setings">{{schedules_cap}}
+                        <span class="lnk setings">Order catalogs
                             <span class="pull-right badge bg-blue">{{schedules_count}}</span>
                         </span>
                         <p *ngIf="schedules_count == 0" class="req-flds-cap">
                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Schedules are
                             not created</p>
                         <p class="settings_info">Set when you want to accept bookings.</p>
+                    </a>
+                </li>
+                <li (click)="redirecTo('appservices')">
+                    <a class="pointer-cursor">
+                        <span class="lnk setings">Items
+                            <span class="pull-right badge bg-blue">{{service_count}}</span>
+                        </span>
+                        <p class="settings_info">Eg: {{services_hint}}.</p>
                     </a>
                 </li>
                
