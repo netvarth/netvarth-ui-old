@@ -22,6 +22,7 @@ import { GalleryImportComponent } from '../../../../shared/modules/gallery/impor
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Meta } from '@angular/platform-browser';
+declare let cordova: any;
 
 @Component({
   selector: 'app-bprofile',
@@ -1308,7 +1309,53 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.getProviderLogo();
     });
   }
-
+  imageSelect(input) {
+    this.success_error = null;
+    this.error_list = [];
+    if (input.files && input.files[0]) {
+      for (const file of input.files) {
+        this.success_error = this.shared_functions.imageValidation(file);
+        if (this.success_error === true) {
+          const reader = new FileReader();
+          this.item_pic.files = input.files[0];
+          this.selitem_pic = input.files[0];
+          const fileobj = input.files[0];
+          reader.onload = (e) => {
+            this.item_pic.base64 = e.target['result'];
+          };
+          reader.readAsDataURL(fileobj);
+          if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+            // generating the data to be submitted to change the logo
+            const submit_data: FormData = new FormData();
+            submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+            const propertiesDet = {
+              'caption': 'Logo'
+            };
+            const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+            submit_data.append('properties', blobPropdata);
+            this.uploadLogo(submit_data);
+          }
+        } else {
+          this.error_list.push(this.success_error);
+          if (this.error_list[0].type) {
+            this.error_msg = 'Selected image type not supported';
+          } else if (this.error_list[0].size) {
+            this.error_msg = 'Please upload images with size less than 5mb';
+          }
+          // this.error_msg = 'Please upload images with size < 5mb';
+          this.shared_functions.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+        }
+      }
+    }
+  }
+  uploadLogo(passdata) {
+    this.provider_services.uploadLogo(passdata)
+      .subscribe(
+        data => {
+          this.provider_datastorage.updateProfilePicWeightage(true);
+          //   this.data.logoExist  = true;
+        });
+  }
   // Social Media
   handleSocialmedia(key?) {
     this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
@@ -1406,8 +1453,29 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       ]);
     }, 50);
   }
-
-  editCoverFoto(event) {
+   editCoverFoto(event) {
     console.log(event);
   }
+  printQr(printSectionId) {
+    const printContent = document.getElementById(printSectionId);
+    setTimeout(() => {
+      // const params = [
+      //   'height=' + screen.height,
+      //   'width=' + screen.width,
+      //   'fullscreen=yes'
+      // ].join(',');
+      // const printWindow = window.open('', '', params);
+      let printsection = '<html><head><title></title>';
+      printsection += '</head><body style="margin-top:200px">';
+      printsection += '<div style="text-align:center!important">';
+      printsection += printContent.innerHTML;
+      printsection += '</div>';
+      printsection += '</body></html>';
+      cordova.plugins.printer.print(printsection);
+      // printWindow.moveTo(0, 0);
+      // printWindow.print();
+      // printWindow.document.close();
+    });
+  }
 }
+

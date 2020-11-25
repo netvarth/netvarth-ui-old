@@ -57,7 +57,6 @@
 
   }
   function onDeviceReady() {
-    window.open = cordova.InAppBrowser.open;
     localStorage.setItem('deviceName', device.name);
     if (typeof FCMPlugin != 'undefined') {
       FCMPlugin.getToken(function (token) {
