@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
+import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { projectConstants } from '../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
