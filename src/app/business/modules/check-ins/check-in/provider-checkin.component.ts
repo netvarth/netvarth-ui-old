@@ -374,6 +374,7 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.source === 'waitlist-block') {
             this.qParams['source'] = this.source;
             this.qParams['uid'] = this.uid;
+            this.qParams['showtoken'] = this.showtoken;
         } else {
             this.qParams['source'] = (this.showtoken) ? 'token' : 'checkin';
         }
