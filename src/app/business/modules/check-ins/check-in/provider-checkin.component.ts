@@ -563,7 +563,7 @@ export class ProviderCheckinComponent implements OnInit {
                                 (services: any) => {
                                     // _this.servicesjson = services;
                                     // _this.serviceslist = services;
-                                    if (!_this.customer_data.phoneNo) {
+                                    if (_this.thirdParty === '' && !_this.customer_data.phoneNo && !_this.customer_data.email) {
                                         _this.servicesjson = [];
                                         for (let i = 0; i < services.length; i++) {
                                             if (services[i].serviceType !== 'virtualService') {
@@ -1538,7 +1538,7 @@ export class ProviderCheckinComponent implements OnInit {
                                     }
                                 }
                             }
-                            if (!this.customer_data.phoneNo) {
+                            if (this.thirdParty === '' && !this.customer_data.phoneNo && !this.customer_data.email) {
                                 this.servicesjson = [];
                                 for (let i = 0; i < newserviceArray.length; i++) {
                                     if (newserviceArray[i].serviceType !== 'virtualService') {
@@ -1632,7 +1632,7 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             }
         }
-        if (!this.customer_data.phoneNo) {
+        if (this.thirdParty === '' && !this.customer_data.phoneNo && !this.customer_data.email) {
             this.servicesjson = [];
             for (let i = 0; i < newserviceArray.length; i++) {
                 if (newserviceArray[i].serviceType !== 'virtualService') {

@@ -343,7 +343,7 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
-                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                            [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -491,7 +491,8 @@
                   </a>
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
-                  <thead id="childActionBar" *ngIf="showSelectAll() && selected_type != 'free' && activeSchedules.length > 0">
+                  <thead id="childActionBar"
+                    *ngIf="showSelectAll() && selected_type != 'free' && activeSchedules.length > 0">
                     <tr>
                       <th class="chkWth check-table-head" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
@@ -581,7 +582,7 @@
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                             class="col-md-12 col-xs-12 col-sm-12 no-padding">
                             <span class="mgn-rt-10" *ngFor="let label of apptByTimeSlot[appt.time][0].label | keyvalue"
-                            [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                              [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                           </div>
                         </td>
                         <td class="td-three">
@@ -774,7 +775,7 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
-                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                            [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -1089,7 +1090,7 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
-                        [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                       </div>
                     </td>
                     <td class="td-three">
@@ -1180,6 +1181,12 @@
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                           *ngIf="!small_device_display">
                           {{done_cap}}</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="addCustomerTooltip">
+                        <i class="dashboardadd-customer-icon"></i>
+                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor act-btn single-action" *ngIf="!small_device_display"
                         (click)="stopprop($event);showCheckinActions(statusAction, appt)" [matTooltipClass]="tooltipcls"
@@ -1446,7 +1453,7 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
-                        [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                       </div>
                     </td>
                     <td class="td-three">

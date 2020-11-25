@@ -455,7 +455,7 @@ export class AppointmentComponent implements OnInit {
                         this.consumerPhoneNo = this.customer_data.phoneNo;
                         if (this.source === 'appt-block') {
                             this.showBlockHint = true;
-                            this.heading = 'Confirm your appointment';
+                            this.heading = 'Confirm your Appointment';
                         } else {
                             this.getFamilyMembers();
                             this.initAppointment();
@@ -1480,7 +1480,7 @@ export class AppointmentComponent implements OnInit {
                                     }
                                 }
                             }
-                            if (!this.customer_data.phoneNo) {
+                            if (this.thirdParty === '' && !this.customer_data.phoneNo && !this.customer_data.email) {
                                 this.servicesjson = [];
                                 for (let i = 0; i < newserviceArray.length; i++) {
                                     if (newserviceArray[i].serviceType !== 'virtualService') {
@@ -1559,7 +1559,7 @@ export class AppointmentComponent implements OnInit {
                 }
             }
         }
-        if (!this.customer_data.phoneNo) {
+        if (this.thirdParty === '' && !this.customer_data.phoneNo && !this.customer_data.email) {
             this.servicesjson = [];
             for (let i = 0; i < newserviceArray.length; i++) {
                 if (newserviceArray[i].serviceType !== 'virtualService') {
