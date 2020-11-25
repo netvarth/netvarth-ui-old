@@ -21,9 +21,12 @@
                 <div class="pubs card w-dta active bprof">
                   <!-- Cover Photo and Profile Pic -->
                   <div class="coverFotoBorder">
-                    <!-- <span class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
+                    <!-- <span (click)="filed.click()" class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
                       <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;Edit Cover
-                        Photo</span>
+                        Photo
+                        <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed
+        (change)="editCoverFoto($event)">
+                      </span>
                     </span> -->
                     <div class="cd-t">
                       <div class="basic-i">
@@ -67,7 +70,7 @@
                   </div>
 
                   <!-- About You -->
-                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-10 abt-you-box" #basicInfoSection>
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding abt-you-box" #basicInfoSection>
                     <div class="pad-10"><span class="sub-heads">About You</span><span class="edit-txt custId-cursor"
                         (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
                     <div class="no-dta" *ngIf="!aboutmefilled">
@@ -83,13 +86,13 @@
                 </div>
 
                 <!-- QR code -->
-                <div class="pubs card w-dta bprof no-shadow">
-                  <div *ngIf="showIncompleteButton && (reqFields.name || reqFields.location  ||reqFields.specialization)" class="incomplete-msg">
+                <div class="pubs card w-dta bprof no-shadow no-padding-up">
+                  <div *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0" class="incomplete-msg">
                     <div>
                       Please complete your profile to activate your Jaldee Link and QR Code
                     </div>
                   </div>
-                  <div [class.all_disabled]="showIncompleteButton && (reqFields.name || reqFields.location  ||reqFields.specialization)">
+                  <div [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0">
                     <div>
                       <h6 class="sub-heads">Here is your QR code and Link
                         <sup><span class="inactive" *ngIf="!onlinepresence_status">Inactive</span>
@@ -298,7 +301,7 @@
                 <div class="row">
                   <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
                     <div class="card p0 w-dta active add-extra">
-                      <mat-accordion>
+                      <mat-accordion class="mgn-up-5">
                         <mat-expansion-panel [expanded]="true">
                           <mat-expansion-panel-header class="min90">
                             <mat-panel-title class="block-level">

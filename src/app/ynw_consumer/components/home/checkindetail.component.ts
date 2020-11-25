@@ -273,4 +273,7 @@ export class CheckinDetailComponent implements OnInit {
         }
       );
   }
+  getTimeToDisplay(min) {
+    return this.shared_functions.convertMinutesToHourMinute(min);
+  }
 }

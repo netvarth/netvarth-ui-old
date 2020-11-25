@@ -1406,4 +1406,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       ]);
     }, 50);
   }
+
+  editCoverFoto(event) {
+    console.log(event);
+  }
 }
