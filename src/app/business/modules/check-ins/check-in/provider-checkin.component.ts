@@ -214,6 +214,8 @@ export class ProviderCheckinComponent implements OnInit {
     showBlockHint = false;
     uid;
     source;
+    virtualServicemode;
+    virtualServicenumber;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -229,6 +231,12 @@ export class ProviderCheckinComponent implements OnInit {
             }
             if (qparams.uid) {
                 this.uid = qparams.uid;
+            }
+            if (qparams.virtualServicemode) {
+                this.virtualServicemode = qparams.virtualServicemode;
+            }
+            if (qparams.uid) {
+                this.virtualServicenumber = qparams.virtualServicenumber;
             }
             if (qparams.checkin_type) {
                 this.checkinType = qparams.checkin_type;
@@ -375,6 +383,10 @@ export class ProviderCheckinComponent implements OnInit {
             this.qParams['source'] = this.source;
             this.qParams['uid'] = this.uid;
             this.qParams['showtoken'] = this.showtoken;
+            if (this.virtualServicemode && this.virtualServicenumber) {
+                this.qParams['virtualServicemode'] = this.virtualServicemode;
+                this.qParams['virtualServicenumber'] = this.virtualServicenumber;
+            }
         } else {
             this.qParams['source'] = (this.showtoken) ? 'token' : 'checkin';
         }

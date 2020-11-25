@@ -114,6 +114,8 @@ export class CustomerDetailComponent implements OnInit {
     customernotes = '';
     subdomain;
     showToken;
+    virtualServicemode;
+    virtualServicenumber;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -139,6 +141,12 @@ export class CustomerDetailComponent implements OnInit {
             }
             if (qparams.type) {
                 this.type = qparams.type;
+            }
+            if (qparams.virtualServicemode) {
+                this.virtualServicemode = qparams.virtualServicemode;
+            }
+            if (qparams.virtualServicenumber) {
+                this.virtualServicenumber = qparams.virtualServicenumber;
             }
             if (qparams.phone) {
                 this.phoneNo = qparams.phone;
@@ -578,6 +586,11 @@ export class CustomerDetailComponent implements OnInit {
                 'id': id,
             }],
         };
+        if (this.virtualServicemode && this.virtualServicenumber) {
+            const virtualArray = {};
+            virtualArray[this.virtualServicemode] = this.virtualServicenumber;
+            post_data['virtualService'] = virtualArray;
+        }
         this.provider_services.confirmAppointmentBlock(post_data)
             .subscribe(
                 data => {
@@ -594,6 +607,11 @@ export class CustomerDetailComponent implements OnInit {
                 'id': id
             }],
         };
+        if (this.virtualServicemode && this.virtualServicenumber) {
+            const virtualArray = {};
+            virtualArray[this.virtualServicemode] = this.virtualServicenumber;
+            post_data['virtualService'] = virtualArray;
+        }
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {
