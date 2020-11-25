@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { WaitlistServicesRoutingModule } from './waitlist-services.routing.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModalGalleryModule } from 'angular-modal-gallery';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { MaterialModule } from '../../../../../shared/modules/common/material.module';
@@ -29,7 +29,7 @@ import { OrderModule } from 'ngx-order-pipe';
         MatSlideToggleModule,
         FormsModule,
         ReactiveFormsModule,
-        ModalGalleryModule,
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         GalleryModule,
         ServiceModule,
         PagerModule,

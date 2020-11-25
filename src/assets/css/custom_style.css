@@ -13066,3 +13066,11 @@ hr {
 .confirmpopup {
   width: 450px !important;
 }
+.ks-modal-gallery-backdrop {
+  background: #000 !important;;
+  opacity: 0.85 !important;;
+}
+
+.ks-modal-gallery-panel {
+  z-index: 90000 !important;
+}

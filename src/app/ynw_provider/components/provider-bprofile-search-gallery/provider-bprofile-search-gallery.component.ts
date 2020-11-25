@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Image } from 'angular-modal-gallery';
+import { Image } from '@ks89/angular-modal-gallery';
 import { Observable } from 'rxjs';
 
 @Component({

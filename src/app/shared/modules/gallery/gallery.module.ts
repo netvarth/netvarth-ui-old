@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ModalGalleryModule } from 'angular-modal-gallery';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { GalleryComponent } from './gallery.component';
 import { GalleryImportComponent } from './import/gallery-import.component';
 import { GalleryService } from './galery-service';

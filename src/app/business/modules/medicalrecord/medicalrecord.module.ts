@@ -29,7 +29,7 @@ import { ActivityLogComponent } from './activity-log/activity-log.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { ManualSignatureComponent } from './prescription/upload-digital-signature/manualsignature/manual-signature.component';
 import { UploadSignatureComponent } from './prescription/upload-digital-signature/uploadsignature/upload-signature.component';
-import { ModalGalleryModule } from 'angular-modal-gallery';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 // import { SignaturePadModule } from '@ng-plus/signature-pad';
 
 

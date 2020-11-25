@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import {
   AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy
-} from 'angular-modal-gallery';
+} from '@ks89/angular-modal-gallery';
 import { ProviderBprofileSearchPrimaryComponent } from '../provider-bprofile-search-primary/provider-bprofile-search-primary.component';
 import { AddProviderWaitlistLocationsComponent } from '../add-provider-waitlist-locations/add-provider-waitlist-locations.component';
 import { AddProviderBprofilePrivacysettingsComponent } from '../provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
@@ -701,7 +701,8 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     // if (event.button.type === ButtonType.DELETE) {
     if (event.button.type === ButtonType.DELETE) {
       // remove the current image and reassign all other to the array of images
-      const knamearr = event.image.modal.img.split('/');
+      let name = event.image.modal.img.toString();
+      const knamearr = name.split('/');
       const kname = knamearr[(knamearr.length - 1)];
       const file = {
         id: event.image.id,

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Inject, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { Messages } from '../../../../../../../shared/constants/project-messages';
-import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
+import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { projectConstants } from '../../../../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
@@ -13,7 +13,7 @@ import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-prima
 import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout } from 'angular-modal-gallery';
+import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout } from '@ks89/angular-modal-gallery';
 import { ProviderSharedFuctions } from '../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { QuestionService } from '../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderUserBprofileSearchDynamicComponent } from './additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';

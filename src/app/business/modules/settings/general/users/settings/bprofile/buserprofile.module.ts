@@ -6,7 +6,7 @@ import { LoadingSpinnerModule } from '../../../../../../../ynw_provider/componen
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../../../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../../../../../shared/pipes/capitalize.module';
-import { ModalGalleryModule } from 'angular-modal-gallery';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { MediaComponent } from './media/media.component';
 import { LanguagesComponent } from './languages/languages.component';

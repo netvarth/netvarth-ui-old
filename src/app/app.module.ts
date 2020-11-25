@@ -11,7 +11,7 @@ import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { ModalGalleryModule } from 'angular-modal-gallery';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
 import { HeaderModule } from './shared/modules/header/header.module';
@@ -106,7 +106,7 @@ export function init_app(globalService: GlobalService) {
     SharedModule,
     RatingStarModule,
     HeaderModule,
-    ModalGalleryModule.forRoot(),
+    ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     Nl2BrPipeModule,
     MaintenanceModule,
     ScrollbarModule,

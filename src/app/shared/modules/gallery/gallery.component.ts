@@ -1,5 +1,5 @@
 import { OnInit, Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
-import { ButtonEvent, Image, ButtonType, ButtonsStrategy, ButtonsConfig, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig } from 'angular-modal-gallery';
+import { ButtonEvent, Image, ButtonType, ButtonsStrategy, ButtonsConfig, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig } from '@ks89/angular-modal-gallery';
 import { MatDialog } from '@angular/material/dialog';
 import { GalleryImportComponent } from './import/gallery-import.component';
 import { Subscription } from 'rxjs';
@@ -120,7 +120,7 @@ export class GalleryComponent implements OnInit, OnChanges {
         // if (event.button.type === ButtonType.DELETE) {
         if (event.button.type === ButtonType.DELETE) {
             // remove the current image and reassign all other to the array of images
-            const knamearr = event.image.modal.img.split('/');
+            const knamearr = event.image.modal.img.toString().split('/');
             const kname = knamearr[(knamearr.length - 1)];
             const file = {
                 id: event.image.id,
