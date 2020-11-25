@@ -75,19 +75,23 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                 </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20"
                                 *ngIf="searchClicked && foundCustomer">
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"  *ngIf="customer_data.jaldeeId">
+                                    <div><b>{{customer_label | capitalizeFirst}} Id:</b></div>
+                                    <div>{{customer_data.jaldeeId}}</div> 
+                                </div>
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.firstName || customer_data.lastName">
                                     <div><b>Name:</b></div>
                                     <div>{{customer_data.firstName}} {{customer_data.lastName}}</div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"  *ngIf="customer_data[0].email">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"  *ngIf="customer_data.email">
                                     <div><b>Email:</b></div>
                                     <div>{{customer_data.email}}</div> 
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data[0].phoneNo">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.phoneNo">
                                     <div><b>PhoneNo:</b></div>
                                     <div>{{customer_data.phoneNo}}</div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data[0].dob">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.dob">
                                     <div *ngIf="customer_data.dob"><b>DOB</b></div>
                                     <div>{{customer_data.dob}}</div>
                                 </div>
@@ -212,7 +216,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
 
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20"
                                 *ngIf="searchClicked && foundCustomer">
-                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"  *ngIf="customer_data.jaldeeId">
+                                    <div><b>{{customer_label | capitalizeFirst}} Id:</b></div>
+                                    <div>{{customer_data.jaldeeId}}</div> 
+                                </div>
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.firstName || customer_data.lastName">
                                     <div><b>Name:</b></div>
                                     <div>{{customer_data.firstName}} {{customer_data.lastName}}</div>
                                 </div>

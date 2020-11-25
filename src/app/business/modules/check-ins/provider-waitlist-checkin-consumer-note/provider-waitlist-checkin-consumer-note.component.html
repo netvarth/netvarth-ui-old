@@ -33,8 +33,7 @@
     <p>Appointment Time : {{getSingleTime(checkin.appmtTime)}}
     </p>
   </div>
-  <div class="prov-wtlst-note-border">
-   {{checkin.consumerNote | nl2br | capitalizeFirst}}
+  <div class="prov-wtlst-note-border" [innerHTML]="checkin.consumerNote | nl2br">
   </div>
 </mat-dialog-content>
 <!-- <mat-dialog-actions>

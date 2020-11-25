@@ -361,7 +361,7 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="mgn-rt-10" *ngFor="let label of checkin.label | keyvalue"
-                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                            [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -535,7 +535,8 @@
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="gotoCustomerDetails(checkin)"
                           [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
-                          [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
+                          [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
+                          {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}
                           <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                         </div>
@@ -569,7 +570,7 @@
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="mgn-rt-10" *ngFor="let label of checkin.label | keyvalue"
-                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                            [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -896,7 +897,7 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="mgn-rt-10" *ngFor="let label of checkin.label | keyvalue"
-                        [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                       </div>
                     </td>
                     <td class="td-three">
@@ -976,6 +977,13 @@
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                           *ngIf="!small_device_display">
                           {{done_cap}}</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        (click)="stopprop($event);addCustomerDetails(checkin)"
+                        *ngIf="checkin.waitlistStatus == 'blocked'" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="addCustomerTooltip">
+                        <i class="dashboardadd-customer-icon"></i>
+                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor act-btn single-action" *ngIf="!small_device_display"
                         (click)="stopprop($event);showCheckinActions(statusAction, checkin)"
@@ -1291,7 +1299,7 @@
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="mgn-rt-10" *ngFor="let label of checkin.label | keyvalue"
-                        [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                       </div>
                     </td>
                     <td class="td-three">

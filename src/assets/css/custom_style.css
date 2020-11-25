@@ -12028,6 +12028,13 @@ img.busN-logo {
   width: 25px;
 }
 
+.annualpopup .jaldee-icon {
+  content: url(../images/home/logo-icon.png);
+  top: 10px;
+  position: relative;
+  width: 35px;
+}
+
 .comma-list {
   list-style: none;
   padding: 0px;
@@ -13066,11 +13073,6 @@ hr {
 .confirmpopup {
   width: 450px !important;
 }
-.ks-modal-gallery-backdrop {
-  background: #000 !important;;
-  opacity: 0.85 !important;;
-}
-
-.ks-modal-gallery-panel {
-  z-index: 90000 !important;
+.confirmcontent {
+  max-height: 75vh !important;
 }
