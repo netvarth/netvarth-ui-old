@@ -67,7 +67,7 @@
                                     <!-- Content -->
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6">
-                                            <div class="each-item">
+                                            <div class="each-item" *ngIf="waitlist.waitlistingFor[0].firstName">
                                                 <span class="item-head">Booking for</span>
                                                 <span
                                                     class="item-label-val">{{waitlist.waitlistingFor[0].firstName | capitalizeFirst}}

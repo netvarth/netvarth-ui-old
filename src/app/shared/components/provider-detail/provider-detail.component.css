@@ -916,3 +916,23 @@ ul.details.badges li {
   background: rgba(0, 0, 0, 0.04);
   padding: 10px 0 3px 10px !important;
 }
+
+/* Social media icon colors */
+.bus-page .socialmedia li i.fb:before {
+  color: #627aac;
+}
+.bus-page .socialmedia li i.tw:before {
+  color: #5eb0fb;
+}
+.bus-page .socialmedia li i.lkd:before {
+  color: #02a2c2;
+}
+.bus-page .socialmedia li i.ytb:before {
+  color: #ef452f !important;
+}
+.bus-page .socialmedia li i.gpl:before {
+  color: #ef452f;
+}
+.bus-page .socialmedia li i.pntr:before {
+  color: #ef452f;
+}

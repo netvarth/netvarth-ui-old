@@ -104,7 +104,7 @@
                                                 <!-- for
                                                 <span>{{booking.appmtFor[0].userName}}</span> -->
                                             </span>
-                                            <div class="userName">
+                                            <div class="userName" *ngIf="booking.appmtFor[0].firstName">
                                                 <i class="fa fa-user for"></i>
                                                 {{booking.appmtFor[0].firstName}}
                                                 {{booking.appmtFor[0].lastName}}
@@ -292,7 +292,7 @@
                                             </span>
                                             <span class="servName">{{booking.service.name | capitalizeFirst}}
                                             </span>
-                                            <div class="userName">
+                                            <div class="userName" *ngIf="booking.waitlistingFor[0].firstName">
                                                 <i class="fa fa-user for"></i>
                                                 {{booking.waitlistingFor[0].firstName}}
                                                 {{booking.waitlistingFor[0].lastName}}
@@ -451,7 +451,7 @@
                                                     <!-- for
                                                     <span>{{booking.appmtFor[0].userName}}</span> -->
                                                 </span>
-                                                <div class="userName">
+                                                <div class="userName" *ngIf="booking.appmtFor[0].firstName">
                                                     <i class="fa fa-user for"></i>
                                                     {{booking.appmtFor[0].firstName}}
                                                 {{booking.appmtFor[0].lastName}}
@@ -640,7 +640,7 @@
                                                 </span>
                                                 <span class="servName">{{booking.service.name | capitalizeFirst}}
                                                 </span>
-                                                <div class="userName">
+                                                <div class="userName" *ngIf="booking.waitlistingFor[0].firstName">
                                                     <i class="fa fa-user for"></i>
                                                     {{booking.waitlistingFor[0].firstName}}
                                                     {{booking.waitlistingFor[0].lastName}}
@@ -806,7 +806,7 @@
                                             </span>
                                             <span class="servName">{{booking.service.name | capitalizeFirst}}
                                             </span>
-                                            <div class="userName">
+                                            <div class="userName" *ngIf="booking.appmtFor[0].firstName">
                                                 <i class="fa fa-user for"></i>
                                                 {{booking.appmtFor[0].firstName}}
                                                 {{booking.appmtFor[0].lastName}}
@@ -926,7 +926,7 @@
                                             </span>
                                             <span class="servName">{{booking.service.name | capitalizeFirst}}
                                             </span>
-                                            <div class="userName">
+                                            <div class="userName" *ngIf="booking.waitlistingFor[0].firstName">
                                                 <i class="fa fa-user for"></i>
                                                 {{booking.waitlistingFor[0].firstName}}
                                                 {{booking.waitlistingFor[0].lastName}}
@@ -1066,7 +1066,7 @@
                                                 </span>
                                                 <span class="servName">{{booking.service.name | capitalizeFirst}}
                                                 </span>
-                                                <div class="userName">
+                                                <div class="userName" *ngIf="booking.appmtFor[0].firstName">
                                                     <i class="fa fa-user for"></i>
                                                     {{booking.appmtFor[0].firstName}}
                                                 {{booking.appmtFor[0].lastName}}
@@ -1188,7 +1188,7 @@
                                                 </span>
                                                 <span class="servName">{{booking.service.name | capitalizeFirst}}
                                                 </span>
-                                                <div class="userName">
+                                                <div class="userName" *ngIf="booking.waitlistingFor[0].firstName">
                                                     <i class="fa fa-user for"></i>
                                                     {{booking.waitlistingFor[0].firstName}}
                                                     {{booking.waitlistingFor[0].lastName}}
