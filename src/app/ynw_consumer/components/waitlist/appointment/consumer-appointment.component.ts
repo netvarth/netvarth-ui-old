@@ -1914,7 +1914,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         } else {
             const checkinconfirmdialogRef = this.dialog.open(AppointmentConfirmPopupComponent, {
                 width: '50%',
-                panelClass: ['popup-class', 'commonpopupmainclass'],
+                panelClass: ['popup-class', 'commonpopupmainclass','confirmpopup'],
                 disableClose: true,
                 data: {
                     service_details: this.sel_ser_det,

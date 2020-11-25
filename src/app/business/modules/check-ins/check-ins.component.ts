@@ -2456,7 +2456,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (checkin.token) {
       tokenNo = checkin.token;
     }
-    this.speech.setLanguage('hi-IN');
+    this.speech.setLanguage('en-IN');
     // Speech.setVoice(voice);
     this.speech.speak({
       text: 'Token Number ' + tokenNo + checkin.waitlistingFor[0].firstName + ' ' + checkin.waitlistingFor[0].lastName,
@@ -3111,7 +3111,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   addCustomerDetails(checkin) {
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
-    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
+    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid, showtoken: this.showToken } });
   }
   showSelectAll() {
     if (this.check_in_filtered_list.length > 1) {

@@ -388,6 +388,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.selectedMode = type;
     }
     findCustomer(form_data, event) {
+        this.showBlockHint = false;
         if (event.key === 'Enter') {
             this.searchCustomer(form_data);
         }
@@ -456,9 +457,9 @@ export class ProviderCheckinComponent implements OnInit {
                         if (this.source === 'waitlist-block') {
                             this.showBlockHint = true;
                             if (this.showtoken) {
-                                this.heading = 'Confirm your token';
+                                this.heading = 'Confirm your Token';
                             } else {
-                                this.heading = 'Confirm your check-in';
+                                this.heading = 'Confirm your Check-in';
                             }
                         } else {
                             this.getFamilyMembers();
@@ -562,7 +563,7 @@ export class ProviderCheckinComponent implements OnInit {
                                 (services: any) => {
                                     // _this.servicesjson = services;
                                     // _this.serviceslist = services;
-                                    if (!_this.customer_data.phoneNo) {
+                                    if (_this.thirdParty === '' && !_this.customer_data.phoneNo && !_this.customer_data.email) {
                                         _this.servicesjson = [];
                                         for (let i = 0; i < services.length; i++) {
                                             if (services[i].serviceType !== 'virtualService') {
@@ -1537,7 +1538,7 @@ export class ProviderCheckinComponent implements OnInit {
                                     }
                                 }
                             }
-                            if (!this.customer_data.phoneNo) {
+                            if (this.thirdParty === '' && !this.customer_data.phoneNo && !this.customer_data.email) {
                                 this.servicesjson = [];
                                 for (let i = 0; i < newserviceArray.length; i++) {
                                     if (newserviceArray[i].serviceType !== 'virtualService') {
@@ -1631,7 +1632,7 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             }
         }
-        if (!this.customer_data.phoneNo) {
+        if (this.thirdParty === '' && !this.customer_data.phoneNo && !this.customer_data.email) {
             this.servicesjson = [];
             for (let i = 0; i < newserviceArray.length; i++) {
                 if (newserviceArray[i].serviceType !== 'virtualService') {
