@@ -361,7 +361,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  <mat-slide-toggle class="example-margin" formControlName="livetrack">
  </mat-slide-toggle>
  </div> -->
-      <div class="mgn-bt-20">
+      <div *ngIf = "bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">
         <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
           style="font-size: 1.1rem;">
           Payment Info</a>
