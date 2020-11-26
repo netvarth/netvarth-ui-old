@@ -19,7 +19,7 @@ import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
-import * as itemjson from  '../../../../assets/json/item.json';
+import * as itemjson  from  '../../../../assets/json/item.json';
 
 @Component({
   selector: 'app-provider-detail',
@@ -2162,5 +2162,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.price = this.price + item.price;
       this.order_count = this.order_count + 1;
     }
+  }
+  checkout() {
+    this.router.navigate(['consumer', 'order', 'checkout']);
   }
 }

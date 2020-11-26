@@ -32,7 +32,9 @@ const routes: Routes = [
       { path: 'myfav', component: MyfavouritesComponent, canActivate: [AuthGuardLogin] },
       { path: 'appointment', loadChildren: () => import('../ynw_consumer/components/waitlist/appointment/consumer-appointment.module').then(m => m.ConsumerAppointmentModule) },
       { path: 'donations', loadChildren: () => import('./components/donations/consumer-donation.module').then(m => m.ConsumerDonationModule) },
-      { path: 'payments', loadChildren: () => import('../ynw_consumer/components/payments/payments.module').then(m => m.ConsumerPaymentsModule) }
+      { path: 'payments', loadChildren: () => import('../ynw_consumer/components/payments/payments.module').then(m => m.ConsumerPaymentsModule) },
+      { path: 'order', loadChildren: () => import('../ynw_consumer/components/order/order.module').then(m => m.ConsumerOrderModule) }
+
 
     ]
   }

@@ -973,7 +973,7 @@
 
                 </ng-container>
               <div  class="shopping-cart-footer" *ngIf="order_count>0">
-               <div>Your Order ({{ order_count }}) <span>SubTotal :Rs {{ price }}&nbsp;</span><button class="btn btn-primary">Checkout</button></div>
+               <div>Your Order ({{ order_count }}) <span>SubTotal :Rs {{ price }}&nbsp;</span><button class="btn btn-primary" (click)="checkout();">Checkout</button></div>
               </div> </div>
             </div>
         </div>
