@@ -30,6 +30,7 @@ export class CustomersListComponent implements OnInit {
   open_filter = false;
   filter = {
     first_name: '',
+    jaldeeid: '',
     last_name: '',
     date: null,
     mobile: '',
@@ -70,6 +71,7 @@ export class CustomersListComponent implements OnInit {
   showToken = false;
   filters: any = {
     'first_name': false,
+    'jaldeeid': false,
     'last_name': false,
     'date': false,
     'mobile': false,
@@ -202,7 +204,7 @@ export class CustomersListComponent implements OnInit {
   }
   doSearch() {
     this.getCustomersList();
-    if (this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email || this.labelFilterData !== '') {
+    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -214,12 +216,14 @@ export class CustomersListComponent implements OnInit {
     this.selectedLabels = [];
     this.filters = {
       'first_name': false,
+      'jaldeeid': false,
       'last_name': false,
       'date': false,
       'mobile': false,
       'email': false
     };
     this.filter = {
+      jaldeeid: '',
       first_name: '',
       last_name: '',
       date: null,
@@ -241,6 +245,9 @@ export class CustomersListComponent implements OnInit {
     const api_filter = {};
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
+    }
+    if (this.filter.jaldeeid !== '') {
+      api_filter['jaldeeId-eq'] = this.filter.jaldeeid;
     }
     if (this.filter.last_name !== '') {
       api_filter['lastName-eq'] = this.filter.last_name;
@@ -317,7 +324,6 @@ export class CustomersListComponent implements OnInit {
         }
       }
     }
-    console.log(this.selectedcustomersformsg);
     if (this.selectedcustomersformsg.length === this.customers.length) {
       this.allCustomerSelected = true;
       this.selectAllcustomers();
@@ -415,7 +421,6 @@ export class CustomersListComponent implements OnInit {
     event.stopPropagation();
   }
   showLabelPopup() {
-    console.log(this.selectedcustomersformsg);
     const notedialogRef = this.dialog.open(CustomerActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

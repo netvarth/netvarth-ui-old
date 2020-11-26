@@ -58,6 +58,12 @@
             <ul class="sidebar-menu">
               <div class="filterTextinput">
                 <li class="filterli">
+                  <input type="text" #jaldeeid (blur)="doSearch()" (keyup)="focusInput($event,lName)"
+                    class="filterTextbox" [(ngModel)]="filter.jaldeeid" placeholder="{{customer_label | capitalizeFirst}} id">
+                </li>
+              </div>
+              <div class="filterTextinput">
+                <li class="filterli">
                   <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,lName)"
                     class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
                 </li>
@@ -112,10 +118,11 @@
                     (click)="stopprop($event)" (change)="selectcustomers(i)" />
                   <span *ngIf="customer.jaldeeId" class="pad-rt-5 mgn-lt-10"><b>{{customer_label | capitalizeFirst}}
                       Id:</b> {{customer.jaldeeId}}</span>
-                    <div class="mgn-lt-15">
-                      <span *ngFor="let label of customer.label | keyvalue"
+                  <div class="mgn-lt-15">
+                    <span *ngFor="let label of customer.label | keyvalue"
                       [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
-                    </div></td>
+                  </div>
+                </td>
                 <td class="one">
                   <div class="bold pull-left mgn-lt-10">
                     {{customer.firstName}} {{customer.lastName}}</div>

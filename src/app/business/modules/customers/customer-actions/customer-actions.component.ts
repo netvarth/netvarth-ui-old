@@ -30,7 +30,6 @@ export class CustomerActionsComponent implements OnInit {
         if (this.data.type && this.data.type === 'label') {
             this.action = 'label';
         }
-        console.log(this.customerDetails);
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.subdomain = user.subSector;
@@ -123,8 +122,7 @@ export class CustomerActionsComponent implements OnInit {
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe((data: any) => {
             this.providerLabels = data.filter(label => label.status === 'ENABLED');
-        this.loading = false;
-        console.log(this.customerDetails.length);
+            this.loading = false;
             if (this.customerDetails.length === 1) {
                 this.labelSelection();
             }
@@ -192,21 +190,17 @@ export class CustomerActionsComponent implements OnInit {
     }
     labelSelection() {
         const values = [];
-        console.log(this.customerDetails[0].label);
         if (this.customerDetails[0].label) {
-          Object.keys(this.customerDetails[0].label).forEach(key => {
-values.push(key);
-          });
-          console.log(values);
-          console.log(this.providerLabels);
-          for (let i = 0; i < this.providerLabels.length; i++) {
-              for (let k = 0; k < values.length; k++) {
-                if (this.providerLabels[i].label === values[k]) {
-                  this.providerLabels[i].selected = true;
+            Object.keys(this.customerDetails[0].label).forEach(key => {
+                values.push(key);
+            });
+            for (let i = 0; i < this.providerLabels.length; i++) {
+                for (let k = 0; k < values.length; k++) {
+                    if (this.providerLabels[i].label === values[k]) {
+                        this.providerLabels[i].selected = true;
+                    }
                 }
-              }
-          }
-          console.log(this.providerLabels);
+            }
         }
     }
 }
