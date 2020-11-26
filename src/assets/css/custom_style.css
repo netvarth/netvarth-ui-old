@@ -13076,3 +13076,6 @@ hr {
 .confirmcontent {
   max-height: 75vh !important;
 }
+.customers .nav .label-icon {
+  width: 20px !important;
+}
