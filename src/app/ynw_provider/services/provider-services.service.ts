@@ -1668,5 +1668,9 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/' + ids + '/date/' + date;
       return this.servicemeta.httpGet(url);
    }
+   uploadItemImages(id, data) {
+      const url = 'provider/items/' + id + '/image';
+      return this.servicemeta.httpPost(url, data);
+   }
 }
 

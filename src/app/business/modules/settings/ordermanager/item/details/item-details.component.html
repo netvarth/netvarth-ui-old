@@ -18,10 +18,12 @@
                 <div class="card p0" *ngIf="!api_loading">
                     <div class="copy locd">
                             <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                                    <div class="cr1">
                                     <div class="no-dta" *ngIf="!image_list_popup || image_list_popup.length == 0">
                                             <p>{{havent_added_cap}} {{photo_cap}} </p>
                                             <span class="cs-btn bt3" >
-                                                    <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">{{add_now_cap}}</span>
+                                                    <a class="pointer-cursor"  (click)="imagefile.click()"><input multiple #imagefile type="file"
+                                                        accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)">{{add_now_cap}}</a></span>
                                         </div> 
                                         <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
                                                 <ul class="ph-gal">
@@ -70,12 +72,16 @@
                                                         </div>
                                                     </li>
                                                 </ul>
-                                                <!-- <span (click)="editImageGallery()" class="addbt" ></span> -->
+                                                <span  class="addbt" >
+                                                        <a class="pointer-cursor"  (click)="imagefile.click()"><input multiple #imagefile type="file"
+                                                            accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)"></a>
+                                                </span>
                                         
                                                 <ks-modal-gallery [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
                                                     [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
                                                     (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                                             </div>  
+                                            </div>
                             
                             </div>
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
@@ -92,24 +98,55 @@
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'itemName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'itemName',
                                 {
-                                  'required' : 'Please enter the short description',
-                                  'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
+                                  'required' : 'Please enter the item name',
+                                  'maxlength' : 'Item name can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field>
-                                        <input matInput type="text" class="form-control" id="displayName"
-                                            placeholder="Display Name *" formControlName="displayName"
+                                        <input matInput type="text" class="form-control" id="itemCode"
+                                            placeholder="Item Code *" formControlName="itemCode"
                                             autocomplete="off">
                                     </mat-form-field>
                                     <app-field-error-display
-                                        [displayError]="fed_service.isFieldValid(amForm,'displayName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayName',
+                                        [displayError]="fed_service.isFieldValid(amForm,'itemCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'itemCode',
                                 {
-                                  'required' : 'Please enter item name',
-                                  'maxlength' : 'Name can contain only ' + maxChars + ' characters'
+                                  'required' : 'Please enter item code',
+                                  'maxlength' : 'Item code can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
+                                </div>
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="shortDec"
+                                            placeholder="Short Description*" formControlName="shortDec"
+                                            autocomplete="off">
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'shortDec')" [errorMsgs]="fed_service.getErrorMessage(amForm,'shortDec',
+                                {
+                                  'required' : 'Please enter short description',
+                                  'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
+                                })">
+                                    </app-field-error-display>
+                                </div>
+                                 <div class="form-group">
+                                    <mat-form-field>
+                                        <textarea matInput class="form-control" id="displayDesc"
+                                            placeholder="{{detailed_dec_cap}} " formControlName="displayDesc"
+                                            (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+                                            maxlength="500"></textarea>
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'displayDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
+                                {
+                                  'required' : 'Please enter detailed description.',
+                                  'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
+                                })">
+                                    </app-field-error-display>
+                                    <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
+                                        characters remaining</span>
                                 </div>
 
                                 <div class="form-group">
@@ -154,23 +191,7 @@
                                 
 
                                 
-                                <div class="form-group">
-                                    <mat-form-field>
-                                        <textarea matInput class="form-control" id="displayDesc"
-                                            placeholder="{{detailed_dec_cap}} " formControlName="displayDesc"
-                                            (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
-                                            maxlength="500"></textarea>
-                                    </mat-form-field>
-                                    <app-field-error-display
-                                        [displayError]="fed_service.isFieldValid(amForm,'displayDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
-                                {
-                                  'required' : 'Please enter detailed description.',
-                                  'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
-                                })">
-                                    </app-field-error-display>
-                                    <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
-                                        characters remaining</span>
-                                </div>
+                               
 
                                
 

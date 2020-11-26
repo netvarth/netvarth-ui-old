@@ -195,8 +195,9 @@ export class ItemDetailsComponent implements OnInit {
     createForm() {
         if (this.action === 'add') {
             this.amForm = this.fb.group({
-                displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                itemCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 taxable: [false, Validators.compose([Validators.required])],
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
@@ -205,8 +206,9 @@ export class ItemDetailsComponent implements OnInit {
         } else {
             // this.itemcaption = 'Item Details';
             this.amForm = this.fb.group({
-                displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                itemCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 taxable: [false, Validators.compose([Validators.required])],
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
@@ -235,8 +237,9 @@ export class ItemDetailsComponent implements OnInit {
             this.holdtaxable = true;
         }
         this.amForm.setValue({
-            'displayName': this.item.displayName || null,
+            'itemCode': this.item.itemCode || null,
             'itemName': this.item.itemName || null,
+            'shortDec': this.item.shortDec || null,
             'displayDesc': this.item.displayDesc || null,
             'price': this.item.price || null,
             'taxable': this.holdtaxable,
@@ -294,8 +297,9 @@ export class ItemDetailsComponent implements OnInit {
         }
         if (this.action === 'add') {
             const post_itemdata = {
-                'displayName': form_data.displayName,
+                'itemCode': form_data.itemCode,
                 'itemName': form_data.itemName,
+                'shortDec': form_data.shortDec,
                 'displayDesc': form_data.displayDesc,
                 'taxable': form_data.taxable,
                 'price': form_data.price,
@@ -305,8 +309,9 @@ export class ItemDetailsComponent implements OnInit {
             this.addItem(post_itemdata);
         } else if (this.action === 'edit') {
             const post_itemdata = {
-                'displayName': form_data.displayName,
+                'itemCode': form_data.itemCode,
                 'itemName': form_data.itemName,
+                'shortDec': form_data.shortDec,
                 'displayDesc': form_data.displayDesc,
                 'taxable': form_data.taxable,
                 'price': form_data.price,
@@ -382,6 +387,31 @@ export class ItemDetailsComponent implements OnInit {
     redirecToJaldeeOrdermanager() {
         this.router.navigate(['provider', 'settings', 'ordermanager' , 'items']);
     }
+    saveImages(id) {
+        const submit_data: FormData = new FormData();
+        const propertiesDetob = {};
+        let i = 0;
+        for (const pic of this.selectedMessage.files) {
+          console.log(pic);
+          submit_data.append('files', pic, pic['name']);
+          const properties = {
+            'caption': this.selectedMessage.caption[i] || ''
+          };
+          propertiesDetob[i] = properties;
+          i++;
+        }
+        const propertiesDet = {
+          'propertiesMap': propertiesDetob
+        };
+        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+        submit_data.append('properties', blobPropdata);
+        this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
+        this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
+         },
+        error => {
+          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+    }
 
     openImageModalRow(image: Image) {
         console.log(image);
@@ -397,6 +427,7 @@ export class ItemDetailsComponent implements OnInit {
       onButtonAfterHook() { }
 
       imageSelect(event) {
+          console.log('sel');
         const input = event.target.files;
         if (input) {
           for (const file of input) {
@@ -426,7 +457,6 @@ export class ItemDetailsComponent implements OnInit {
       }
 
       deleteTempImage(img, index) {
-    
         this.removeimgdialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -448,10 +478,9 @@ export class ItemDetailsComponent implements OnInit {
             } else {
               this.selectedMessage.files.splice(index, 1);
               this.selectedMessage.base64.splice(index, 1);
+              this.image_list_popup.splice(index, 1);
             }
           }
         });
-    
-       
       }
 }

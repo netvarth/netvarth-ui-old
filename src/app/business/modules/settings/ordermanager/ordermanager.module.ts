@@ -37,7 +37,7 @@ import { StoreDetailsComponent } from './store-details/store-details.component';
   declarations: [
     OrdermanagerComponent,
     CatalogComponent,
-    StoreDetailsComponent
+    StoreDetailsComponent,
   ],
   entryComponents: [
      // AddProviderNonworkingdaysComponent

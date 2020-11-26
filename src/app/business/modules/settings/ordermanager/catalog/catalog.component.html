@@ -1,1 +1,159 @@
-<p>catalog works!</p>
+<!--  
+<section class="">
+        <div class="card title-gb">
+            <h5 class="mgn-up-10"> 
+               
+                <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeeOrdermanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                 {{itemcaption}}
+            </h5>
+        </div>
+    </section>
+    <section>
+        <div class="content loc-list">
+            <div class="col-md-12 no-padding-small">
+                <div class="row">
+                    <div class="card p0" *ngIf="api_loading">
+                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                    </div>
+                    <div class="card p0" *ngIf="!api_loading">
+                        <div class="copy locd">
+                              
+                            <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                                <form  [formGroup]="amForm" novalidate
+                                    (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+                                    class="ynw-common-form-nm">
+    
+                                    <div class="form-group">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="catalogName"
+                                                placeholder="Catalog Name " formControlName="catalogName"
+                                                autocomplete="off" maxlength="50">
+                                        </mat-form-field>
+                                        <app-field-error-display
+                                            [displayError]="fed_service.isFieldValid(amForm,'catalogName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'catalogName',
+                                    {
+                                      'required' : 'Please enter the short description',
+                                      'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
+                                    })">
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="form-group">
+                                            <mat-form-field>
+                                                <textarea matInput class="form-control" id="catalogDesc"
+                                                    placeholder="Enter catalog description " formControlName="catalogDesc"
+                                                    (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+                                                    maxlength="500"></textarea>
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(amForm,'catalogDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'catalogDesc',
+                                        {
+                                          'required' : 'Please enter detailed description.',
+                                          'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
+                                        })">
+                                            </app-field-error-display>
+                                            <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
+                                                characters remaining</span>
+                                        </div>
+                                      
+                                            <div class="form-group">
+                                                    <label>Show contact information
+                                                            <mat-slide-toggle [(ngModel)]="contactInfo" >
+                                                            </mat-slide-toggle>&nbsp;
+                                                        </label>
+                                            </div>
+
+                                    <div class="form-group">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="contactName"
+                                                placeholder="Contact person name  *" formControlName="contactName"
+                                                autocomplete="off">
+                                        </mat-form-field>
+                                        <app-field-error-display
+                                            [displayError]="fed_service.isFieldValid(amForm,'contactName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'contactName',
+                                    {
+                                      'required' : 'Please enter item name',
+                                      'maxlength' : 'Name can contain only ' + maxChars + ' characters'
+                                    })">
+                                        </app-field-error-display>
+                                    </div>
+    
+                                    <div class="form-group">
+                                        <mat-form-field>
+                                                <input type="text" (keypress)="isNumeric($event)" matInput
+                                                class="form-control text-width" id="contactnumber"
+                                                placeholder="Contact person phone#" formControlName="contactnumber"
+                                                autocomplete="off" maxlength="10">
+                                            
+                                        </mat-form-field>
+                                        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'contactnumber')"
+                                            errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'contactnumber',
+                                    {
+                                      'required' : 'Please enter the price.',
+                                      'pattern' : 'Please enter valid price',
+                                      'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
+                                    })">
+                                        </app-field-error-display>
+                                    </div>
+    
+                                    <div class="form-group">
+                                            <mat-checkbox   [(ngModel)]="showPromotionalPrice" [ngModelOptions]="{standalone: true}">
+                                                Show promotional price
+                                            </mat-checkbox>
+                                    </div>
+                                    <div class="form-group" *ngIf="showPromotionalPrice">
+                                        <mat-form-field>
+                                            <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                                                (keyup)="isvalid($event)" class="form-control number-ip-sm"
+                                                formControlName="promotionalPrice" id="promotionalPrice"
+                                                placeholder="Promotional Price ({{rupee_symbol}}) *" autocomplete="off">
+                                        </mat-form-field>
+                                        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'promotionalPrice')"
+                                            errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'promotionalPrice',
+                                    {
+                                      
+                                      'pattern' : 'Please enter valid price',
+                                      'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
+                                    })">
+                                        </app-field-error-display>
+                                    </div>
+    
+                                    
+    
+                                    
+                                    
+    
+                                   
+    
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="taxable">{{taxable_cap}} </label>
+                                        <mat-slide-toggle formControlName="taxable" (change)="handleTaxablechange()"
+                                            [checked]="holdtaxable">
+                                        </mat-slide-toggle>
+                                        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'taxable')"
+                                            errorMsg="Please select taxable">
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding" style="display: inline-flex;">
+                                        <button (click)="onCancel()" type="button"
+                                            class="cs-btn bt2">{{cancel_btn_cap}}</button>
+                                        &nbsp;
+                                        <button type="submit" class="cs-btn bt1" mat-button
+                                            [disabled]="!amForm.valid || disableButton">{{save_btn_cap}}</button>
+                                      
+                                    </div>
+                                </form>
+                                <app-field-error-display class="itemerror"[displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+                                </app-field-error-display>
+                                <app-form-success-display [displayMsg]="true" *ngIf="api_success"
+                                    successMsg="{{api_success}}">
+                                </app-form-success-display>
+                                
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>  -->
