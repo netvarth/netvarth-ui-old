@@ -50,6 +50,8 @@ import { ActionPopupComponent } from './components/home/action-popup/action-popu
 import { ViewRxComponent } from './components/home/view-rx/view-rx.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { OrderComponent } from './components/order/order.component';
+
 
 @NgModule({
   imports: [
@@ -93,7 +95,9 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
     MeetingDetailsComponent,
     MyfavouritesComponent,
     ActionPopupComponent,
-    ViewRxComponent
+    ViewRxComponent,
+    OrderComponent,
+
   ],
   exports: [ConfirmBoxComponent],
   schemas: [
