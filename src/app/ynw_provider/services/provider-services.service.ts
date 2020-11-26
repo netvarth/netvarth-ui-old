@@ -1673,7 +1673,7 @@ export class ProviderServices {
       return this.servicemeta.httpPost(url, data);
    }
    deleteLabelFromCustomer(id, label) {
-      const url = 'provider/customers/' + id + '/' + label;
+      const url = 'provider/customers/' + id + '/label/' + label;
       return this.servicemeta.httpDelete(url);
    }
 }
