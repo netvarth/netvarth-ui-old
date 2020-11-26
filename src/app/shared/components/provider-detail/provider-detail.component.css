@@ -357,7 +357,7 @@ ul.bus-actions-horiz li {
   margin-left: 0 !important;
 }
 
-/* 
+/*
 .location-accord ul.badges li {
   margin-right: 10px !important;
   font-size: 1.5rem !important;
@@ -384,7 +384,7 @@ ul.details.badges li {
   }
   .bus-title-content h3 {
     text-align: center;
-    margin-bottom: 0px !important; 
+    margin-bottom: 0px !important;
   }
   .single-loc {
     text-align: center;
@@ -915,4 +915,14 @@ ul.details.badges li {
 .serv-head {
   background: rgba(0, 0, 0, 0.04);
   padding: 10px 0 3px 10px !important;
+}
+.shopping-cart-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: lightgray;
+  color: black;
+  font-weight:bold;
+  text-align: center;
 }

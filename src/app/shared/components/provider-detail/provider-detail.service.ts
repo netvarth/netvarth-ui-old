@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ServiceMeta } from '../../services/service-meta';
 @Injectable()
 export class ProviderDetailService {
+
   constructor(
     private servicemetaobj: ServiceMeta) { }
   getapproxWaitingtime(id) {
@@ -68,4 +69,5 @@ export class ProviderDetailService {
     const path = 'provider/appointment/schedule/nextAvailableSchedule/' + str;
     return this.servicemetaobj.httpGet(path);
   }
+
 }

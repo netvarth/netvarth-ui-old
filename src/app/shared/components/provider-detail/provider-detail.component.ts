@@ -227,6 +227,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   extra_img_count: number;
   catlog: any;
   catalogItem: any;
+  order_count: number;
+  price: number;
+  orderList: any = [];
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -383,7 +386,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.catalogItem = this.catlog.default.catalogItem;
     console.log(this.catlog.default);
     console.log(this.catalogItem);
- 
+
    }
   ngOnDestroy() {
     if (this.commdialogRef) {
@@ -2144,5 +2147,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       return JSON.parse(user.profilePicture)['url'];
     }
     return 'assets/images/img-null.svg';
+  }
+
+  //OrderItem add to cart
+  addToCart(Item) {
+    this.orderList.push(Item);
+    this.getTotalItemAndPrice();
+
+  }
+  getTotalItemAndPrice() {
+  this.price = 0;
+  this.order_count = 0;
+    for (const item of this.orderList) {
+      this.price = this.price + item.price;
+      this.order_count = this.order_count + 1;
+    }
   }
 }

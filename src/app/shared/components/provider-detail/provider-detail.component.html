@@ -194,12 +194,12 @@
                                     </div>
                                 </div>
                                 <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10"
-                                *ngIf="(locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none') || 
-                                (locationjson[0].open24hours && locationjson[0].open24hours==1) || locationjson[0]?.locationVirtualFields?.traumacentre=='true' || 
-                                locationjson[0]?.locationVirtualFields?.docambulance=='true' || locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' || 
-                                locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' || 
+                                *ngIf="(locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none') ||
+                                (locationjson[0].open24hours && locationjson[0].open24hours==1) || locationjson[0]?.locationVirtualFields?.traumacentre=='true' ||
+                                locationjson[0]?.locationVirtualFields?.docambulance=='true' || locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                                locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' ||
                                 locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
-                                locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' || 
+                                locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' ||
                                 locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true' || locationjson[0]?.locationVirtualFields?.firstaid=='true'
                                 || locationjson[0]?.locationVirtualFields?.deliveryoptions=='true'">
                                     <div class="question-header">Amenities</div>
@@ -220,10 +220,10 @@
                                                     [matTooltip]="'Ambulance Services'"><span
                                                         class="icon-ambulance"></span>
                                                 </li>
-                                                <li [matTooltip]="'Emergency Services'" *ngIf="locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' || 
-                                    locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' || 
+                                                <li [matTooltip]="'Emergency Services'" *ngIf="locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                                    locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' ||
                                     locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
-                                    locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' || 
+                                    locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' ||
                                     locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true'">
                                                     <span class="icon-emergency"></span></li>
                                                 <li *ngIf="locationjson[0]?.locationVirtualFields?.firstaid=='true'"
@@ -305,7 +305,7 @@
                     <div class="clearfix"></div>
                     <!-- Departments True-->
                     <div class="serv-head col-md-12 col-xs-12 col-sm-12" [class.mgn-bt-10]="!showDepartments">
-                        <h5 class="mgn-bt-5"> Services and Consultations 
+                        <h5 class="mgn-bt-5"> Services and Consultations
                         </h5>
                         <h6 class="question-header">Book online now for your convenience.
                         </h6>
@@ -673,7 +673,7 @@
                                                                     <ng-container class="bottom-actions-root"
                                                                         *ngIf="service.serviceAvailability">
                                                                         <ng-container class="checkin-est"
-                                                                            *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">                                                                            
+                                                                            *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
                                                                             <p class="price mgn-bt-0"
                                                                                 *ngIf="!service.serviceAvailability['serviceTime']">
                                                                                 Est Wait Time</p>
@@ -912,7 +912,7 @@
                                                 <p class="price mgn-up-5-m mgn-bt-5">
                                                     to
                                                 </p>
-                                                <p class="title-style mgn-up-5-m mgn-bt-5">    
+                                                <p class="title-style mgn-up-5-m mgn-bt-5">
                                                     <span
                                                         class="rupee-font">{{service.maxDonationAmount| currency:'&#8377;'}}</span>
                                                 </p>
@@ -934,16 +934,16 @@
                     </ng-container>
                 </div>
 
-              <!-- displa items -->
-                <div>  
+              <!-- display items -->
+                <div>
                  <ng-container
                     *ngIf="onlinePresence && catalogItem.length >= 1">
-                    <div class="bus-item" *ngFor="let service of catalogItem">
+                    <div class="bus-item" *ngFor="let item of catalogItem">
                         <div class="card card-item-n no-padding">
                             <div class="card-item-title">
                                 <a class="pointer-cursor"
-                                    (click)="showServiceDetail(service, businessjson.businessName)"><b>
-                                        {{service.itemName | capitalizeFirst | limitTo: [35, '...']}}
+                                    (click)="showServiceDetail(item, businessjson.businessName)"><b>
+                                        {{item.itemName | capitalizeFirst | limitTo: [35, '...']}}
                                     </b> </a>
 
                             </div>
@@ -951,10 +951,10 @@
                                 <div class="card-item-content-info">
                                     <div class="card-item-content-action">
                                         <div class="" style="padding-bottom: 10px">
-                                          
+
                                             <p class="title-style mgn-bt-5 mgn-up-5">
                                                 <span
-                                                    class="rupee-font">{{service.price| currency:'&#8377;'}}</span>
+                                                    class="rupee-font">{{item.price| currency:'&#8377;'}}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -962,7 +962,7 @@
                                 <div class="card-item-content-action">
                                     <div class="" style="padding-bottom: 10px">
                                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                            <div class="checkin-btn-bp donate-btn-bp">
+                                            <div class="checkin-btn-bp donate-btn-bp" (click)="addToCart(item);">
                                                 Add to cart</div>
                                         </div>
                                     </div>
@@ -970,8 +970,11 @@
                             </div>
                         </div>
                     </div>
-                    
-                </ng-container> </div>
+
+                </ng-container>
+              <div  class="shopping-cart-footer" *ngIf="order_count>0">
+               <div>Your Order ({{ order_count }}) <span>SubTotal :Rs {{ price }}&nbsp;</span><button class="btn btn-primary">Checkout</button></div>
+              </div> </div>
             </div>
         </div>
     </div>
