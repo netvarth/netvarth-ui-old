@@ -11,6 +11,8 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-customer.component';
 import * as moment from 'moment';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { SharedServices } from '../../../../shared/services/shared-services';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -68,10 +70,12 @@ export class AppointmentActionsComponent implements OnInit {
     showmrrx = false;
     pastDate;
     subdomain;
+    availableDates: any = [];
+    accountid;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
-        private provider_shared_functions: ProviderSharedFuctions,
+        private provider_shared_functions: ProviderSharedFuctions, public shared_services: SharedServices,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
         this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     }
@@ -102,6 +106,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.sel_schedule_id = this.appt.schedule.id;
         this.servId = this.appt.service.id;
         this.locId = this.appt.location.id;
+        this.accountid = this.appt.providerAccount.id;
     }
     printAppt() {
         this.dialogRef.close();
@@ -182,6 +187,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.action = 'slotChange';
         this.selectedTime = '';
         this.getAppointmentSlots();
+        this.getSchedulesbyLocationandServiceIdavailability(this.locId, this.servId, this.accountid);
     }
     goBacktoApptDtls() {
         this.action = 'reschedule';
@@ -579,6 +585,7 @@ export class AppointmentActionsComponent implements OnInit {
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
         this.getAppointmentSlots();
+        this.getSchedulesbyLocationandServiceIdavailability(this.locId, this.servId, this.accountid);
     }
     disableButn() {
         if ((moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedTime === this.holdselectedTime) || this.selectedTime === '') {
@@ -664,6 +671,20 @@ export class AppointmentActionsComponent implements OnInit {
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+    }
+    getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
+        const _this = this;
+        _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
+            .subscribe((data: any) => {
+                const availables = data.filter(obj => obj.availableSlots);
+                const availDates = availables.map(function (a) { return a.date; });
+                _this.availableDates = availDates.filter(function (elem, index, self) {
+                    return index === self.indexOf(elem);
+                });
+            });
+    }
+    dateClass(date: Date): MatCalendarCellCssClasses {
+        return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
 }
 
