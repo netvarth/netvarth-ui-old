@@ -1428,8 +1428,8 @@
     (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
   <div class="clearfix"></div>
   <div class="scroll-to-top-appt" [ngClass]="{'show-scrollTop': windowScrolled}">
-    <button>
-      <i (click)="scrollToTop()" class="fa fa-chevron-up"></i>
+    <button (click)="scrollToTop()">
+      <i class="fa fa-chevron-up"></i>
     </button>
   </div>
 </section>
