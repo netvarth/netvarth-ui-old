@@ -17,7 +17,7 @@
                 </div>
                 <div class="card p0" *ngIf="!api_loading">
                     <div class="copy locd">
-                            <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                            <div class="lbr col-sm-12 col-md-4 col-lg-5">
                                     <div class="cr1">
                                     <div class="no-dta" *ngIf="!image_list_popup || image_list_popup.length == 0">
                                             <p>{{havent_added_cap}} {{photo_cap}} </p>
@@ -84,7 +84,7 @@
                                             </div>
                             
                             </div>
-                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                        <div class="lbl col-sm-12 col-md-8 col-lg-7">
                             <form *ngIf="action=='add' || action === 'edit' && amForm" [formGroup]="amForm" novalidate
                                 (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                                 class="ynw-common-form-nm">
@@ -92,7 +92,7 @@
                                 <div class="form-group">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" id="itemName"
-                                            placeholder="Item Name " formControlName="itemName"
+                                            placeholder="Item Name *" formControlName="itemName"
                                             autocomplete="off" maxlength="50">
                                     </mat-form-field>
                                     <app-field-error-display
@@ -100,6 +100,20 @@
                                 {
                                   'required' : 'Please enter the item name',
                                   'maxlength' : 'Item name can contain only ' + maxChars + ' characters'
+                                })">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="displayName"
+                                            placeholder="Display Name *" formControlName="displayName"
+                                            autocomplete="off" maxlength="50">
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'displayName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayName',
+                                {
+                                  'required' : 'Please enter the display name',
+                                  'maxlength' : 'Display name can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
                                 </div>
@@ -120,7 +134,7 @@
                                 <div class="form-group">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" id="shortDec"
-                                            placeholder="Short Description*" formControlName="shortDec"
+                                            placeholder="Short Description" formControlName="shortDec"
                                             autocomplete="off">
                                     </mat-form-field>
                                     <app-field-error-display
@@ -148,6 +162,23 @@
                                     <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
                                         characters remaining</span>
                                 </div>
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <textarea matInput class="form-control" id="note"
+                                            placeholder="Note " formControlName="note"
+                                            (keyup)="setnoteCharCount()" (focus)="setnoteFocus()" (blur)="lostnoteFocus()"
+                                            maxlength="500"></textarea>
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'note')" [errorMsgs]="fed_service.getErrorMessage(amForm,'note',
+                                {
+                                  'required' : 'Please enter note.',
+                                  'maxlength' : 'Note can contain only ' + maxCharslong + ' characters'
+                                })">
+                                    </app-field-error-display>
+                                    <span class="max-char-length" *ngIf="isnotefocused">You have {{notechar_count}}
+                                        characters remaining</span>
+                                </div>
 
                                 <div class="form-group">
                                     <mat-form-field>
@@ -172,11 +203,20 @@
                                         </mat-checkbox>
                                 </div>
                                 <div class="form-group" *ngIf="showPromotionalPrice">
+                                        <label class="col-form-label" for="PromotionalPricetype">Promotional Pricetype</label>
+                                        <mat-radio-group formControlName="promotionalPriceType">
+                                          <mat-radio-button (click)="handleTypechange('FIXED')" value="FIXED">Fixed</mat-radio-button>&nbsp;&nbsp;
+                                          <mat-radio-button (click)="handleTypechange('PCT')" value="PCT">Percentage</mat-radio-button>
+                                        </mat-radio-group>
+                                 </div>
+                                <div class="form-group" *ngIf="showPromotionalPrice">
                                     <mat-form-field>
+                                            <span matPrefix *ngIf="curtype == 'FIXED'" class='rupee'> ₹ &nbsp;</span>
+                                            <span matPrefix *ngIf="curtype == 'PCT'" class='rupee'> % &nbsp;</span>
                                         <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
                                             (keyup)="isvalid($event)" class="form-control number-ip-sm"
                                             formControlName="promotionalPrice" id="promotionalPrice"
-                                            placeholder="Promotional Price ({{rupee_symbol}}) *" autocomplete="off">
+                                            [placeholder]="valueCaption" autocomplete="off">
                                     </mat-form-field>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'promotionalPrice')"
                                         errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'promotionalPrice',
@@ -187,12 +227,22 @@
                                 })">
                                     </app-field-error-display>
                                 </div>
-
-                                
-
-                                
-                               
-
+                                <div class="form-group" *ngIf="showPromotionalPrice">
+                                        <label class="col-form-label" for="PromotionalPricelabel">Promotional Label</label>
+                                        <mat-radio-group formControlName="promotionallabel">
+                                          <mat-radio-button (click)="handleLabelchange('Sale')" value="Sale">Sale</mat-radio-button>&nbsp;&nbsp;
+                                          <mat-radio-button (click)="handleLabelchange('Clearence')" value="Clearence">Clearence</mat-radio-button>&nbsp;&nbsp;
+                                          <mat-radio-button (click)="handleLabelchange('Other')" value="Other">Other</mat-radio-button>
+                                        </mat-radio-group>
+                                 </div>
+                                 <div class="form-group" *ngIf="showPromotionalPrice && showCustomlabel">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="customlabel"
+                                                placeholder="Custom Label " formControlName="customlabel"
+                                                autocomplete="off">
+                                        </mat-form-field>
+                                       
+                                    </div>
                                
 
                                 <div class="form-group">
@@ -204,9 +254,17 @@
                                         errorMsg="Please select taxable">
                                     </app-field-error-display>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="showOnLandingpage">Visibility in landing page</label>
+                                    <mat-slide-toggle formControlName="showOnLandingpage">
+                                    </mat-slide-toggle>
+                                    
+                                </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding" style="display: inline-flex;">
-                                    <button (click)="onCancel()" type="button"
-                                        class="cs-btn bt2">{{cancel_btn_cap}}</button>
+                                    <!-- <button (click)="onCancel()" type="button"
+                                        class="cs-btn bt2">{{cancel_btn_cap}}</button> -->
+                                        <button type="button" *ngIf="action=='add'" (click)="onSubmit(amForm.value,'saveadd')" class="cs-btn bt1" mat-button
+                                        [disabled]="!amForm.valid || disableButton">save && add another</button>
                                     &nbsp;
                                     <button type="submit" class="cs-btn bt1" mat-button
                                         [disabled]="!amForm.valid || disableButton">{{save_btn_cap}}</button>
