@@ -13079,3 +13079,8 @@ hr {
 .customers .nav .label-icon {
   width: 20px !important;
 }
+.amountSaved {
+  text-align: left;
+    color: limegreen;
+    font-weight: 700;
+}
