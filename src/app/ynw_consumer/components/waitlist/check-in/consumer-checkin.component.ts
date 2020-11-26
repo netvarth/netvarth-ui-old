@@ -2071,6 +2071,10 @@ export class ConsumerCheckinComponent implements OnInit {
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             }
+        } else if(this.userEmail && this.payEmail.trim() == '') {
+            this.emailerror = 'Please enter a valid email.';
+            this.noEmailError = false;
+
         }
         if (this.noPhoneError && this.noEmailError && this.noCallingError) {
             this.action = '';
