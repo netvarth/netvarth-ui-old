@@ -1,0 +1,226 @@
+{
+  "id": 31,
+  "catalogName": "Lunch",
+  "catalogDesc": "tasty food",
+  "catalogSchedule": {
+    "recurringType": "Weekly",
+    "repeatIntervals": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "startDate": "2020-11-20",
+    "terminator": {
+      "endDate": "2022-01-01",
+      "noOfOccurance": 0
+    },
+    "timeSlots": [
+      {
+        "sTime": "09:00 AM",
+        "eTime": "08:00 PM"
+      }
+    ]
+  },
+  "catalogStatus": "INACTIVE",
+  "orderType": "SHOPPINGCART",
+  "pickUp": {
+    "orderPickUp": true,
+    "pickUpSchedule": {
+      "recurringType": "Weekly",
+      "repeatIntervals": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "startDate": "2020-11-20",
+      "terminator": {
+        "endDate": "2022-01-01",
+        "noOfOccurance": 0
+      },
+      "timeSlots": [
+        {
+          "sTime": "09:00 AM",
+          "eTime": "08:00 PM"
+        }
+      ]
+    },
+    "pickUpOtpVerification": true,
+    "pickUpScheduledAllowed": true,
+    "pickUpAsapAllowed": true
+  },
+  "homeDelivery": {
+    "homeDelivery": true,
+    "deliverySchedule": {
+      "recurringType": "Weekly",
+      "repeatIntervals": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "startDate": "2020-11-20",
+      "terminator": {
+        "endDate": "2022-01-01",
+        "noOfOccurance": 0
+      },
+      "timeSlots": [
+        {
+          "sTime": "09:00 AM",
+          "eTime": "08:00 PM"
+        }
+      ]
+    },
+    "deliveryOtpVerification": true,
+    "deliveryRadius": 5,
+    "scheduledHomeDeliveryAllowed": true,
+    "asapHomeDeliveryAllowed": true
+  },
+  "showPrice": true,
+  "paymentType": "FIXED",
+  "advanceAmount": 0,
+  "showContactInfo": true,
+  "howFar": 3,
+  "howSoon": 2,
+  "preInfo": {
+    "preInfoEnabled": true,
+    "preInfoTitle": "nothing",
+    "preInfoText": "more"
+  },
+  "postInfo": {
+    "postInfoEnabled": true,
+    "postInfoTitle": "nothing",
+    "postInfoText": "less"
+  },
+  "orderStatuses": [
+    "Accepted",
+    "Rejected",
+    "Preparing",
+    "onTheWay",
+    "Delivered"
+  ],
+  "location": {
+    "id": 1,
+    "place": "chalakudy",
+    "address": "we",
+    "longitude": "77.5945627",
+    "lattitude": "12.9715987",
+    "googleMapUrl": "https://www.google.com/maps/place/12.9715987,77.5945627/@12.9715987,77.5945627,15z",
+    "status": "ACTIVE",
+    "parkingType": "none",
+    "open24hours": false
+  },
+  "catalogItem": [
+    {
+      "itemId": 12,
+      "displayName": "Book",
+      "shortDesc": "Book-tragedy ",
+      "itemDesc": "tragedy ",
+      "price": 100.0,
+      "taxable": false,
+      "status": "ACTIVE",
+      "adhoc": false,
+      "itemName": "Hamlet",
+      "itemNameInLocal": "Hamlet-William Shakespeare",
+      "isShowOnLandingpage": false,
+      "isStockAvailable": false,
+      "promotionalPriceType": "FIXED",
+      "promotionalPrice": 100.0,
+      "notes": [{
+        "note": "Book-tragedy Hamlet-William Shakespeare",
+        "noteBy": "anirudhan chakochan",
+        "date": "2020-11-18"
+      }],
+      "itemImages": [{
+        "keyName": "1606273732586.png",
+        "prefix": "item/3",
+        "url": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/1606273732586.png",
+        "thumbUrl": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/thumbnail/1606273732586.png",
+        "type": ".png",
+        "imageSize": 0,
+        "displayImage": true
+      }],
+    
+      "promotionalPrcnt": 0.0,
+      "showPromotionalPrice": true
+    },
+    {
+      "itemId": 12,
+      "displayName": "Book",
+      "shortDesc": "Book-tragedy ",
+      "itemDesc": "tragedy ",
+      "price": 100.0,
+      "taxable": false,
+      "status": "ACTIVE",
+      "adhoc": false,
+      "itemName": "Hamlet",
+      "itemNameInLocal": "Hamlet-William Shakespeare",
+      "isShowOnLandingpage": false,
+      "isStockAvailable": false,
+      "promotionalPriceType": "FIXED",
+      "promotionalPrice": 100.0,
+      "notes": [{
+        "note": "Book-tragedy Hamlet-William Shakespeare",
+        "noteBy": "anirudhan chakochan",
+        "date": "2020-11-18"
+      }],
+      "itemImages": [{
+        "keyName": "1606273732586.png",
+        "prefix": "item/3",
+        "url": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/1606273732586.png",
+        "thumbUrl": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/thumbnail/1606273732586.png",
+        "type": ".png",
+        "imageSize": 0,
+        "displayImage": true
+      }],
+    
+      "promotionalPrcnt": 0.0,
+      "showPromotionalPrice": true
+    },
+    {
+      "itemId": 12,
+      "displayName": "Book",
+      "shortDesc": "Book-tragedy ",
+      "itemDesc": "tragedy ",
+      "price": 100.0,
+      "taxable": false,
+      "status": "ACTIVE",
+      "adhoc": false,
+      "itemName": "Hamlet",
+      "itemNameInLocal": "Hamlet-William Shakespeare",
+      "isShowOnLandingpage": false,
+      "isStockAvailable": false,
+      "promotionalPriceType": "FIXED",
+      "promotionalPrice": 100.0,
+      "notes": [{
+        "note": "Book-tragedy Hamlet-William Shakespeare",
+        "noteBy": "anirudhan chakochan",
+        "date": "2020-11-18"
+      }],
+      "itemImages": [{
+        "keyName": "1606273732586.png",
+        "prefix": "item/3",
+        "url": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/1606273732586.png",
+        "thumbUrl": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/thumbnail/1606273732586.png",
+        "type": ".png",
+        "imageSize": 0,
+        "displayImage": true
+      }],
+    
+      "promotionalPrcnt": 0.0,
+      "showPromotionalPrice": true
+    }   
+  ],
+  "minNumberItem": 100,
+  "maxNumberItem": 100
+}

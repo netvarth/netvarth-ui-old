@@ -19,6 +19,7 @@ import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
+import * as itemjson from  '../../../../assets/json/item.json';
 
 @Component({
   selector: 'app-provider-detail',
@@ -224,6 +225,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   // gallerydisabledArr = [];
   onlinePresence = false;
   extra_img_count: number;
+  catlog: any;
+  catalogItem: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -373,7 +376,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           );
         }
       });
+     this.catlogArry();
   }
+  catlogArry() {
+    this.catlog = itemjson;
+    this.catalogItem = this.catlog.default.catalogItem;
+    console.log(this.catlog.default);
+    console.log(this.catalogItem);
+ 
+   }
   ngOnDestroy() {
     if (this.commdialogRef) {
       this.commdialogRef.close();

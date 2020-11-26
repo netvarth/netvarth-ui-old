@@ -933,6 +933,45 @@
                         </div>
                     </ng-container>
                 </div>
+
+              <!-- displa items -->
+                <div>  
+                 <ng-container
+                    *ngIf="onlinePresence && catalogItem.length >= 1">
+                    <div class="bus-item" *ngFor="let service of catalogItem">
+                        <div class="card card-item-n no-padding">
+                            <div class="card-item-title">
+                                <a class="pointer-cursor"
+                                    (click)="showServiceDetail(service, businessjson.businessName)"><b>
+                                        {{service.itemName | capitalizeFirst | limitTo: [35, '...']}}
+                                    </b> </a>
+
+                            </div>
+                            <div class="card-item-content">
+                                <div class="card-item-content-info">
+                                    <div class="card-item-content-action">
+                                        <div class="" style="padding-bottom: 10px">
+                                          
+                                            <p class="title-style mgn-bt-5 mgn-up-5">
+                                                <span
+                                                    class="rupee-font">{{service.price| currency:'&#8377;'}}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-item-content-action">
+                                    <div class="" style="padding-bottom: 10px">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                            <div class="checkin-btn-bp donate-btn-bp">
+                                                Add to cart</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </ng-container> </div>
             </div>
         </div>
     </div>
