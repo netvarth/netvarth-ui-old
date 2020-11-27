@@ -24,27 +24,35 @@
                         <div class="list border">
 
 
-
+                          <div class="list-content" style="text-align: left;"
+                          *ngFor="let item of catalogItem; let i = index">
+                            
                      <div class="copy one">
                         <div class="col-a col-b cd-b">
                            <div class="mgn-up-10">      
                             <div class="div-outline custId-cursor">
-                          <div class="list-content" style="text-align: left;"
-                          *ngFor="let item of catalogItem; let i = index">
-                            <div class="c-row one">
+                                <div class="c-row one">
+                         
                               <div class="name cart-flex"> {{item.itemName}}</div> 
                               <div class="quantity">{{item.itemId}}</div>
-                              <div class="price">{{item.price}}</div>              
+                              <div class="price">{{item.price}}</div>  
+                              <div style="padding-left: 30px;">
+                                  <button >
+                                      <i style="float: right;" class="fa fa-window-close"></i>
+                                    </button> 
+                              </div>   
+                                         
                             </div>     
                           </div>
-                          <div class="shopcart-cancel">
-                            <button >
-                              <i style="float: right;" class="fa fa-window-close"></i>
-                            </button>                           
-                          </div>                         
+                                                
                         </div>
                       </div>
                     </div>
+                    <!-- <div class="shopcart-cancel">
+                        <button >
+                          <i style="float: right;" class="fa fa-window-close"></i>
+                        </button>                           
+                      </div> -->
                   </div>
                 
             
@@ -57,12 +65,27 @@
                      
                       </div>
                       <div>
-                        <p>Home delivery</p>
-                        <p>Store pick up</p>
-                         <!-- <mat-radio-group >
-                            <mat-radio-button value="1">Option 1</mat-radio-button>
-                             <mat-radio-button value="2">Option 2</mat-radio-button>
-                        </mat-radio-group> -->
+                        <p>Choose delivery type</p>
+                        <!-- <mat-radio-group >
+                            <mat-radio-button value="1">Home delivery </mat-radio-button>
+                           <mat-radio-button value="2">Store pick up</mat-radio-button>
+                          </mat-radio-group> -->
+                           <mat-radio-group>
+                              <mat-radio-button
+                                  class="mgn-lt-5 mgn-bt-5"
+                                  [value]="'conventional'"  >
+                                  Home delivery
+                              </mat-radio-button> <br>
+                              <mat-radio-button
+                                  class="mgn-lt-5   mgn-rt-10"
+                                  [value]="'manual'" >
+                                  Store pick up
+                              </mat-radio-button>
+                          
+                        
+
+
+                        </mat-radio-group>
                       
                        </div>
                       <div class="copy one">

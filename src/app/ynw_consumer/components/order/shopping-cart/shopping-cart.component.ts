@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as itemjson from  '../../../../../assets/json/item.json';
+import * as itemjson from '../../../../../assets/json/item.json';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -12,7 +12,7 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit()  {
+  ngOnInit() {
     this.catlogArry();
   }
   catlogArry() {
@@ -21,5 +21,5 @@ export class ShoppingCartComponent implements OnInit {
     console.log(this.catlog.default);
     console.log(this.catalogItem);
 
-   }
+  }
 }
