@@ -1436,11 +1436,12 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.provider_services.getCoverFoto().subscribe(
       data => {
         if (data) {
+          console.log(data);
           this.imageToShow = '';
           this.clogo = data;
           this.cover_url = data[0].url;
-        //  this.imageToShow = this.cover_url;
-          this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
+          this.imageToShow = this.cover_url;
+       //   this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
         }
       });
   }
@@ -1449,10 +1450,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     const del_pic = this.clogo[0].keyName;
     this.provider_services.deleteCoverFoto(del_pic).subscribe(
       data => {
-        if (data) {
           this.getCoverPhoto();
           this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
-        }
       });
   }
 
