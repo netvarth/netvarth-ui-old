@@ -800,10 +800,12 @@
 																	<td class="price rupee-font">{{refund_value |
 													currency:'&#8377;'}}</td>
 																</tr>
-																<tr class="amountSaved" *ngIf="bill_data.totalAmountSaved >= 0">
+																<tr class="amountSaved" *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
 																	<td class="price rupee-font">{{customer_label}} will save {{bill_data.totalAmountSaved | currency:'&#8377;'}}</td>
 																</tr>
-
+																<tr class="amountSaved" *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
+																	<td class="price rupee-font">{{customer_label}} have saved {{bill_data.totalAmountSaved | currency:'&#8377;'}}</td>
+																</tr>
 															</tbody>
 														</table>
 													</div>
