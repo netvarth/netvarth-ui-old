@@ -1002,7 +1002,7 @@
 												</div>
 											</ng-container>
 											<div>
-												<p class = "hint"*ngIf = "bill_data.billViewStatus == 'Notshow'">
+												<p class = "hint"*ngIf = "bill_data.billViewStatus == 'Notshow' && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer">
 													*Click on Pay By Jaldee App to send the updated bill to your {{customer_label}}.
 												</p>
 											</div>
