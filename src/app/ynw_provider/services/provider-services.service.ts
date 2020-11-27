@@ -1668,5 +1668,13 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/' + ids + '/date/' + date;
       return this.servicemeta.httpGet(url);
    }
+   addLabeltoCustomer(data) {
+      const url = 'provider/customers/label';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteLabelFromCustomer(id, label) {
+      const url = 'provider/customers/' + id + '/label/' + label;
+      return this.servicemeta.httpDelete(url);
+   }
 }
 

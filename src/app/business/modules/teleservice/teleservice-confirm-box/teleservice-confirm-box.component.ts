@@ -11,9 +11,16 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class TeleServiceConfirmBoxComponent implements OnInit {
   callingModes;
   iconClass: string;
+<<<<<<< HEAD
   starting_url: any;
+=======
+  serviceMode ;
+>>>>>>> refs/remotes/origin/1.6.x
   constructor(public dialogRef: MatDialogRef<TeleServiceConfirmBoxComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.serviceMode = data.serviceDetail.virtualServiceType;
+      console.log(this.serviceMode)
+     }
 
   ngOnInit() {
     this.callingModes = this.data.app;

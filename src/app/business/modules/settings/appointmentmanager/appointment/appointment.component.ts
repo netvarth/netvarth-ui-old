@@ -489,6 +489,11 @@ export class AppointmentComponent implements OnInit {
                 'id': this.customer_data.id,
             }],
         };
+        if (this.virtualServicemode && this.virtualServicenumber) {
+            const virtualArray = {};
+            virtualArray[this.virtualServicemode] = this.virtualServicenumber;
+            post_data['virtualService'] = virtualArray;
+        }
         this.provider_services.confirmAppointmentBlock(post_data)
             .subscribe(
                 data => {

@@ -2742,7 +2742,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   scrollToTop() {
-    this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scroll({ 
+      top: 0, 
+      left: 0, 
+      behavior: 'smooth' 
+    });
   }
   getVirtualMode(virtualService) {
     // Object.keys(virtualService)[0];

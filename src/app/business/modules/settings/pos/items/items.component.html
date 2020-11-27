@@ -14,6 +14,18 @@
 </section>
 <section>
     <div class="content comn-cls">
+
+        <div class="col-md-12 no-padding">
+            <ul class="nav jd-custom-nav chkn-dash">
+                    <li *ngIf="item_list.length>0" class="dropdown notifications-menu pull-right">
+                            <a (click)="addItem()"
+                                    class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                    <span><i class="fa fa-plus"></i>{{add_item_cap}}</span>
+                            </a>
+                    </li>
+            </ul>
+        </div>
+
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card">
@@ -33,7 +45,7 @@
                                                 <th>{{price_cap}}</th>
                                                 <th>{{taxable_cap}}</th>
                                                 <th>Status</th>
-                                                <th>  <span class="addbt" (click)="addItem()"></span></th>
+                                                <!-- <th>  <span class="addbt" (click)="addItem()"></span></th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -95,7 +107,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <span class="addbt d-block d-md-none" (click)="addItem()"></span>
+                                    <!-- <span class="addbt d-block d-md-none" (click)="addItem()"></span> -->
                                 </div>
                             </div>
                         </div>

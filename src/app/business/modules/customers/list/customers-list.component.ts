@@ -10,6 +10,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 import { VoicecallDetailsSendComponent } from '../../appointments/voicecall-details-send/voicecall-details-send.component';
+import { CustomerActionsComponent } from '../customer-actions/customer-actions.component';
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html'
@@ -29,6 +30,7 @@ export class CustomersListComponent implements OnInit {
   open_filter = false;
   filter = {
     first_name: '',
+    jaldeeid: '',
     last_name: '',
     date: null,
     mobile: '',
@@ -69,6 +71,7 @@ export class CustomersListComponent implements OnInit {
   showToken = false;
   filters: any = {
     'first_name': false,
+    'jaldeeid': false,
     'last_name': false,
     'date': false,
     'mobile': false,
@@ -76,7 +79,7 @@ export class CustomersListComponent implements OnInit {
   };
   customerselection = 0;
   customerSelected: any = [];
-  selectedcustomersformsg: any[];
+  selectedcustomersformsg: any = [];
   showcustomer: any = [];
   customer: any = [];
   providerLabels: any;
@@ -88,7 +91,10 @@ export class CustomersListComponent implements OnInit {
   customerDetails: any;
   voicedialogRef: any;
   subdomain;
-  order = 'jaldeeId';
+  allCustomerSelected = false;
+  selectedLabels: any = [];
+  labelFilterData = '';
+  allLabels: any = [];
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -114,6 +120,7 @@ export class CustomersListComponent implements OnInit {
     this.domain = user.sector;
     this.subdomain = user.subSector;
     this.getCustomersList(true);
+    this.getLabel();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
   }
@@ -140,6 +147,7 @@ export class CustomersListComponent implements OnInit {
     this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
   }
   getCustomersList(from_oninit = true) {
+    this.resetList();
     let filter = this.setFilterForApi();
     this.getCustomersListCount(filter)
       .then(
@@ -196,21 +204,26 @@ export class CustomersListComponent implements OnInit {
   }
   doSearch() {
     this.getCustomersList();
-    if (this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email) {
+    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
   }
+
   resetFilter() {
+    this.labelFilterData = '';
+    this.selectedLabels = [];
     this.filters = {
       'first_name': false,
+      'jaldeeid': false,
       'last_name': false,
       'date': false,
       'mobile': false,
       'email': false
     };
     this.filter = {
+      jaldeeid: '',
       first_name: '',
       last_name: '',
       date: null,
@@ -233,6 +246,9 @@ export class CustomersListComponent implements OnInit {
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
+    if (this.filter.jaldeeid !== '') {
+      api_filter['jaldeeId-eq'] = this.filter.jaldeeid;
+    }
     if (this.filter.last_name !== '') {
       api_filter['lastName-eq'] = this.filter.last_name;
     }
@@ -250,6 +266,9 @@ export class CustomersListComponent implements OnInit {
       } else {
         this.filter.mobile = '';
       }
+    }
+    if (this.labelFilterData !== '') {
+      api_filter['label-eq'] = this.labelFilterData;
     }
     return api_filter;
   }
@@ -275,7 +294,7 @@ export class CustomersListComponent implements OnInit {
     this.filter_sidebar = false;
   }
 
-  selectcustomers(index, detail) {
+  selectcustomers(index) {
     this.hide_msgicon = false;
     this.selectedcustomersformsg = [];
     this.selectedcustomersforcall = [];
@@ -304,6 +323,12 @@ export class CustomersListComponent implements OnInit {
           this.selectedcustomersforcall.push(this.customers[i]);
         }
       }
+    }
+    if (this.selectedcustomersformsg.length === this.customers.length) {
+      this.allCustomerSelected = true;
+      this.selectAllcustomers();
+    } else {
+      this.allCustomerSelected = false;
     }
   }
   CustomersInboxMessage() {
@@ -390,9 +415,73 @@ export class CustomersListComponent implements OnInit {
     const bookingType = 'FOLLOWUP';
     const bookingId = 0;
 
-    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'],{ queryParams: { 'calledfrom': 'patient' } });
+    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'], { queryParams: { 'calledfrom': 'patient' } });
   }
   stopprop(event) {
     event.stopPropagation();
   }
+  showLabelPopup() {
+    const notedialogRef = this.dialog.open(CustomerActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        customer: this.selectedcustomersformsg,
+        type: 'label'
+      }
+    });
+    notedialogRef.afterClosed().subscribe(result => {
+      this.getCustomersList();
+    });
+  }
+  selectAll() {
+    this.allCustomerSelected = !this.allCustomerSelected;
+    this.selectAllcustomers();
+  }
+  selectAllcustomers() {
+    this.selectedcustomersformsg = [];
+    this.customerSelected = [];
+    if (this.allCustomerSelected) {
+      for (let i = 0; i < this.customers.length; i++) {
+        if (this.selectedcustomersformsg.indexOf(this.customers[i]) === -1) {
+          this.customerSelected[i] = true;
+          this.selectedcustomersformsg.push(this.customers[i]);
+        }
+      }
+    }
+  }
+
+  setLabelFilter(label, event) {
+    const value = event.checked;
+    if (this.selectedLabels[label.label]) {
+      this.selectedLabels = [];
+      this.labelFilterData = '';
+    } else {
+      this.selectedLabels = [];
+      this.selectedLabels[label.label] = [];
+      this.selectedLabels[label.label] = value;
+      this.labelFilterData = label.label + '::' + value;
+    }
+    this.doSearch();
+  }
+  getLabel() {
+    this.providerLabels = [];
+    this.provider_services.getLabelList().subscribe((data: any) => {
+      this.allLabels = data;
+      this.providerLabels = data.filter(label => label.status === 'ENABLED');
+    });
+  }
+  resetList() {
+    this.selectedcustomersformsg = [];
+    this.customerSelected = [];
+    this.allCustomerSelected = false;
+  }
+  getDisplayname(label) {
+    for (let i = 0; i < this.allLabels.length; i++) {
+      if (this.allLabels[i].label === label) {
+        return this.allLabels[i].displayName;
+      }
+    }
+  }
 }
+
