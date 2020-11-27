@@ -221,6 +221,7 @@ export class AppointmentComponent implements OnInit {
     showBlockHint = false;
     virtualServicemode;
     virtualServicenumber;
+    emptyFielderror = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -404,80 +405,85 @@ export class AppointmentComponent implements OnInit {
         }
     }
     searchCustomer(form_data) {
-        this.qParams = {};
-        let mode = 'id';
-        this.form_data = null;
-        this.create_new = false;
-        let post_data = {};
-        const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
-        const isEmail = emailPattern.test(form_data.search_input);
-        if (isEmail) {
-            mode = 'email';
+        this.emptyFielderror = false;
+        if (form_data && form_data.search_input === '') {
+            this.emptyFielderror = true;
         } else {
-            const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-            const isNumber = phonepattern.test(form_data.search_input);
-            const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-            const isCount10 = phonecntpattern.test(form_data.search_input);
-            if (isNumber && isCount10) {
-                mode = 'phone';
+            this.qParams = {};
+            let mode = 'id';
+            this.form_data = null;
+            this.create_new = false;
+            let post_data = {};
+            const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+            const isEmail = emailPattern.test(form_data.search_input);
+            if (isEmail) {
+                mode = 'email';
             } else {
-                mode = 'id';
-            }
-        }
-        this.qParams['source'] = 'appointment';
-        switch (mode) {
-            case 'phone':
-                post_data = {
-                    'phoneNo-eq': form_data.search_input
-                };
-                this.qParams['phone'] = form_data.search_input;
-                break;
-            case 'email':
-                this.qParams['email'] = form_data.search_input;
-                post_data = {
-                    'email-eq': form_data.search_input
-                };
-                break;
-            case 'id':
-                post_data = {
-                    'jaldeeId-eq': form_data.search_input
-                };
-                break;
-        }
-        this.provider_services.getCustomer(post_data)
-            .subscribe(
-                (data: any) => {
-                    if (data.length === 0) {
-                        // if (mode === 'phone') {
-                        //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
-                        //     this.getJaldeeCustomer(filter);
-                        // } else {
-                        //     this.form_data = data;
-                        //     this.create_new = true;
-                        // }
-                        this.createNew('create');
-                    } else {
-                        if (data.length > 1) {
-                            const customer = data.filter(member => !member.parent);
-                            this.customer_data = customer[0];
-                        } else {
-                            this.customer_data = data[0];
-                        }
-                        this.jaldeeId = this.customer_data.jaldeeId;
-                        this.consumerPhoneNo = this.customer_data.phoneNo;
-                        if (this.source === 'appt-block') {
-                            this.showBlockHint = true;
-                            this.heading = 'Confirm your Appointment';
-                        } else {
-                            this.getFamilyMembers();
-                            this.initAppointment();
-                        }
-                    }
-                },
-                error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+                const isNumber = phonepattern.test(form_data.search_input);
+                const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+                const isCount10 = phonecntpattern.test(form_data.search_input);
+                if (isNumber && isCount10) {
+                    mode = 'phone';
+                } else {
+                    mode = 'id';
                 }
-            );
+            }
+            this.qParams['source'] = 'appointment';
+            switch (mode) {
+                case 'phone':
+                    post_data = {
+                        'phoneNo-eq': form_data.search_input
+                    };
+                    this.qParams['phone'] = form_data.search_input;
+                    break;
+                case 'email':
+                    this.qParams['email'] = form_data.search_input;
+                    post_data = {
+                        'email-eq': form_data.search_input
+                    };
+                    break;
+                case 'id':
+                    post_data = {
+                        'jaldeeId-eq': form_data.search_input
+                    };
+                    break;
+            }
+            this.provider_services.getCustomer(post_data)
+                .subscribe(
+                    (data: any) => {
+                        if (data.length === 0) {
+                            // if (mode === 'phone') {
+                            //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
+                            //     this.getJaldeeCustomer(filter);
+                            // } else {
+                            //     this.form_data = data;
+                            //     this.create_new = true;
+                            // }
+                            this.createNew('create');
+                        } else {
+                            if (data.length > 1) {
+                                const customer = data.filter(member => !member.parent);
+                                this.customer_data = customer[0];
+                            } else {
+                                this.customer_data = data[0];
+                            }
+                            this.jaldeeId = this.customer_data.jaldeeId;
+                            this.consumerPhoneNo = this.customer_data.phoneNo;
+                            if (this.source === 'appt-block') {
+                                this.showBlockHint = true;
+                                this.heading = 'Confirm your Appointment';
+                            } else {
+                                this.getFamilyMembers();
+                                this.initAppointment();
+                            }
+                        }
+                    },
+                    error => {
+                        this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                    }
+                );
+        }
     }
     confirmApptBlock() {
         const post_data = {

@@ -30,10 +30,12 @@
                             type="text" class="form-control" formControlName="search_input"
                             (keypress)="findCustomer(searchForm.value, $event)" autocomplete="off">
                         </mat-form-field>
-                        <span  *ngIf="emptyFielderror" class="sts-msg error">Please enter the {{customer_label | capitalizeFirst}} Phone# or ID or Email</span>
+                        <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
+                          {{customer_label | capitalizeFirst}} Phone# or ID or Email</span>
                       </div>
                       <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
-                        <button *ngIf="!showBlockHint" class="create_new_button cs-btn bt3" (click)="searchCustomer(searchForm.value)">Find</button>
+                        <button *ngIf="!showBlockHint" class="create_new_button cs-btn bt3"
+                          (click)="searchCustomer(searchForm.value)">Find</button>
                         <button *ngIf="showBlockHint" class="create_new_button cs-btn bt3"
                           (click)="confirmWaitlistBlock()">Confirm</button>
                       </div>
