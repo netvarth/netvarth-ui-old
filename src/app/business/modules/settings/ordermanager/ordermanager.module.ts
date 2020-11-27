@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { OrdermanagerComponent } from './ordermanager.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { StoreDetailsComponent } from './store-details/store-details.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 
@@ -32,7 +33,8 @@ import { StoreDetailsComponent } from './store-details/store-details.component';
       SalesChannelModule,
       Nl2BrPipeModule,
       OwlModule,
-      CapitalizeFirstPipeModule
+      CapitalizeFirstPipeModule,
+      CKEditorModule
   ],
   declarations: [
     OrdermanagerComponent,
