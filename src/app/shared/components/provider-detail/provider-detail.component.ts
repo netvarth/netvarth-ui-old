@@ -2164,6 +2164,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   checkout() {
-    this.router.navigate(['consumer', 'order', 'checkout']);
+    this.router.navigate(['consumer', 'order', 'cart']);
   }
 }
