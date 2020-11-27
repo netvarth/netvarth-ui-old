@@ -12,7 +12,7 @@ import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
-import { ModalGalleryModule } from 'angular-modal-gallery';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { ProviderWaitlistOnlineCheckinModule } from '../provider-waitlist-online-checkin/provider-waitlist-online-checkin.module';
 import { ProviderWaitlistLocationsModule } from '../provider-waitlist-locations/provider-waitlist-locations.module';

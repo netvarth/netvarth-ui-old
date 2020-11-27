@@ -148,7 +148,7 @@
                             </ul>
                         </div>
                     </div>
-                    <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
+                    <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0"
                         [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
                         [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
                         (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
@@ -304,7 +304,13 @@
                     </div>
                     <div class="clearfix"></div>
                     <!-- Departments True-->
-                    <div class="serv-head col-md-12 col-xs-12 col-sm-12" [class.mgn-bt-10]="!showDepartments">
+                    <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-10" *ngIf="!showDepartments && (loc['apptservices'].length > 0 || loc['wlservices'].length > 0)">
+                        <h5 class="mgn-bt-5"> Services and Consultations 
+                        </h5>
+                        <h6 class="question-header">Book online now for your convenience.
+                        </h6>
+                    </div>
+                    <div class="serv-head col-md-12 col-xs-12 col-sm-12" *ngIf="showDepartments">
                         <h5 class="mgn-bt-5"> Services and Consultations 
                         </h5>
                         <h6 class="question-header">Book online now for your convenience.
