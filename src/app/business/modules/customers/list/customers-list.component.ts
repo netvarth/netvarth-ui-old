@@ -434,6 +434,7 @@ export class CustomersListComponent implements OnInit {
       }
     });
     notedialogRef.afterClosed().subscribe(result => {
+      this.getLabel();
       this.getCustomersList();
     });
   }
