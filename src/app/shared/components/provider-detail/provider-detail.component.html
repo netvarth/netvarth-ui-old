@@ -938,7 +938,7 @@
                 <div>
                  <ng-container
                     *ngIf="onlinePresence && catalogItem.length >= 1">
-                    <div class="bus-item" *ngFor="let item of catalogItem">
+                    <div class="bus-item" *ngFor="let item of catalogItem;let i=index;">
                         <div class="card card-item-n no-padding">
                             <div class="card-item-title">
                                 <a class="pointer-cursor"
@@ -962,9 +962,10 @@
                                 <div class="card-item-content-action">
                                     <div class="" style="padding-bottom: 10px">
                                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                            <div class="checkin-btn-bp donate-btn-bp" (click)="addToCart(item);">
-                                                Add to cart</div>
-                                        </div>
+                                            <button (click)="increment(item)">+</button>
+                                                             <span>{{setItemQty(item)}}</span>
+                                            <button (click)="decrement(item)">-</button>
+                                       </div>
                                     </div>
                                 </div>
                             </div>

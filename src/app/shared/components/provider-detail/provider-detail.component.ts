@@ -19,7 +19,8 @@ import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
-import * as itemjson  from  '../../../../assets/json/item.json';
+import * as itemjson from '../../../../assets/json/item.json';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-provider-detail',
@@ -230,6 +231,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   order_count: number;
   price: number;
   orderList: any = [];
+  count$: Observable<number>;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -239,8 +241,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private searchdetailserviceobj: SearchDetailServices,
     public router: Router,
-    private locationobj: Location
+    private locationobj: Location,
+
   ) {
+
     this.getDomainList();
     // this.domainList = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -379,7 +383,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           );
         }
       });
-     this.catlogArry();
+    this.catlogArry();
   }
   catlogArry() {
     this.catlog = itemjson;
@@ -387,7 +391,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     console.log(this.catlog.default);
     console.log(this.catalogItem);
 
-   }
+  }
   ngOnDestroy() {
     if (this.commdialogRef) {
       this.commdialogRef.close();
@@ -2153,11 +2157,23 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   addToCart(Item) {
     this.orderList.push(Item);
     this.getTotalItemAndPrice();
+    this.setItemQty(Item);
 
   }
+  removeFromCart(Item) {
+    console.log(this.orderList);
+    for (const i in this.orderList) {
+      if (this.orderList[i] === Item) {
+        this.orderList.splice(i, 1);
+        break;
+      }
+    }
+    this.getTotalItemAndPrice();
+    this.setItemQty(Item);
+  }
   getTotalItemAndPrice() {
-  this.price = 0;
-  this.order_count = 0;
+    this.price = 0;
+    this.order_count = 0;
     for (const item of this.orderList) {
       this.price = this.price + item.price;
       this.order_count = this.order_count + 1;
@@ -2165,5 +2181,19 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   checkout() {
     this.router.navigate(['consumer', 'order', 'cart']);
+  }
+  increment(item) {
+    this.addToCart(item);
+  }
+
+  decrement(item) {
+    this.removeFromCart(item);
+  }
+  setItemQty(item) {
+    return this.orderList.filter(i => i === item).length;
+  }
+
+  reset() {
+
   }
 }
