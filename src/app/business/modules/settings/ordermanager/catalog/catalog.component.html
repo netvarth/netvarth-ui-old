@@ -1,10 +1,10 @@
-<!--  
+  
 <section class="">
         <div class="card title-gb">
             <h5 class="mgn-up-10"> 
                
                 <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeeOrdermanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                 {{itemcaption}}
+                 Catalog creation
             </h5>
         </div>
     </section>
@@ -18,9 +18,9 @@
                     <div class="card p0" *ngIf="!api_loading">
                         <div class="copy locd">
                               
-                            <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                            <div class="lbl col-sm-12 col-md-8 col-lg-7">
                                 <form  [formGroup]="amForm" novalidate
-                                    (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+                                    (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()" *ngIf="!showInfo"
                                     class="ynw-common-form-nm">
     
                                     <div class="form-group">
@@ -37,6 +37,42 @@
                                     })">
                                         </app-field-error-display>
                                     </div>
+
+                                    <div class="form-group row" >
+                                            <div class="col-md-3 col-sm-3 col-xs-4 no-padding-small">
+                                                <mat-form-field>
+                                                    <input matInput [matDatepicker]="picker"
+                                                        (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
+                                                        formControlName="startdate" readonly>
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-5">
+                                                <mat-form-field>
+                                                    <input matInput [matDatepicker]="picker1"
+                                                        (dateChange)="compareDate($event.value,1)" placeholder="End Date"
+                                                        formControlName="enddate" readonly>
+                                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker1></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                    <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="catalogshortDesc"
+                                                    placeholder="Enter catalog short description  " formControlName="catalogshortDesc"
+                                                    autocomplete="off" maxlength="50">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(amForm,'catalogshortDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'catalogshortDesc',
+                                        {
+                                          'required' : 'Please enter the short description',
+                                          'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
+                                        })">
+                                            </app-field-error-display>
+                                        </div>
                                     <div class="form-group">
                                             <mat-form-field>
                                                 <textarea matInput class="form-control" id="catalogDesc"
@@ -54,15 +90,32 @@
                                             <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
                                                 characters remaining</span>
                                         </div>
+
+                                        <div class="form-group">
+                                                <label class="col-form-label" for="PromotionalPricetype">Order type</label>
+                                                <mat-radio-group formControlName="orderType">
+                                                  <mat-radio-button  value="SHOPPINGCART">Shopping cart</mat-radio-button>&nbsp;&nbsp;
+                                                  <mat-radio-button  value="SHOPPINGLIST">Shopping list</mat-radio-button>
+                                                </mat-radio-group>
+                                         </div>
+                                         <div class="mgn-up-10 mgn-bt-10 box-style col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                Show personalized information about this service
+                                                <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
+                                                  Click here</span>
+                                                <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
+                                                  <i class="fa fa-check"></i>
+                                                  <a (click)="showInfoSection()"> Instructions Added</a>
+                                                </div>
+                                              </div>
                                       
-                                            <div class="form-group">
+                                            <!-- <div class="form-group">
                                                     <label>Show contact information
                                                             <mat-slide-toggle [(ngModel)]="contactInfo" >
                                                             </mat-slide-toggle>&nbsp;
                                                         </label>
-                                            </div>
+                                            </div> -->
 
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <mat-form-field>
                                             <input matInput type="text" class="form-control" id="contactName"
                                                 placeholder="Contact person name  *" formControlName="contactName"
@@ -94,28 +147,8 @@
                                     })">
                                         </app-field-error-display>
                                     </div>
-    
-                                    <div class="form-group">
-                                            <mat-checkbox   [(ngModel)]="showPromotionalPrice" [ngModelOptions]="{standalone: true}">
-                                                Show promotional price
-                                            </mat-checkbox>
-                                    </div>
-                                    <div class="form-group" *ngIf="showPromotionalPrice">
-                                        <mat-form-field>
-                                            <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
-                                                (keyup)="isvalid($event)" class="form-control number-ip-sm"
-                                                formControlName="promotionalPrice" id="promotionalPrice"
-                                                placeholder="Promotional Price ({{rupee_symbol}}) *" autocomplete="off">
-                                        </mat-form-field>
-                                        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'promotionalPrice')"
-                                            errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'promotionalPrice',
-                                    {
-                                      
-                                      'pattern' : 'Please enter valid price',
-                                      'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
-                                    })">
-                                        </app-field-error-display>
-                                    </div>
+     -->
+                                    
     
                                     
     
@@ -124,15 +157,7 @@
     
                                    
     
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="taxable">{{taxable_cap}} </label>
-                                        <mat-slide-toggle formControlName="taxable" (change)="handleTaxablechange()"
-                                            [checked]="holdtaxable">
-                                        </mat-slide-toggle>
-                                        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'taxable')"
-                                            errorMsg="Please select taxable">
-                                        </app-field-error-display>
-                                    </div>
+                                    
                                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding" style="display: inline-flex;">
                                         <button (click)="onCancel()" type="button"
                                             class="cs-btn bt2">{{cancel_btn_cap}}</button>
@@ -142,6 +167,58 @@
                                       
                                     </div>
                                 </form>
+                                <div class="ynw-common-form-nm pre-post" *ngIf="showInfo">
+                                        <div class="mgn-bt-20 mgn-up-20">
+                                          <div class="form-group preinfo">
+                                            <label class="col-form-label">Show personalized information about this service in the booking
+                                              window&nbsp;&nbsp;</label>
+                                            <mat-slide-toggle class="example-margin" [(ngModel)]="preInfoEnabled">
+                                            </mat-slide-toggle>
+                                          </div>
+                                          <div class="form-level-settings">These instructions will be seen by your {{customer_label}}s while choosing the
+                                            service.</div>
+                                          <div class="form-group pre-post-info" *ngIf="preInfoEnabled">
+                                            <mat-form-field>
+                                              <input matInput type="text" placeholder="Title *" autocomplete="off" [(ngModel)]="preInfoTitle"
+                                                [ngModelOptions]="{standalone: true}" maxlength="20">
+                                            </mat-form-field>
+                                            Enter the text your {{customer_label}}s will see
+                                            <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
+                                              <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="preInfoText"
+                                                [ngModelOptions]="{standalone: true}">
+                                              </ckeditor>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="mgn-bt-20 mgn-up-20">
+                                          <div class="form-group postinfo">
+                                            <label class="col-form-label">Show personalized messages to your {{customer_label}}s upon successful booking
+                                              confirmation&nbsp;&nbsp;</label>
+                                            <mat-slide-toggle class="example-margin" [(ngModel)]="postInfoEnabled">
+                                            </mat-slide-toggle>
+                                          </div>
+                                          <div class="form-level-settings">These instructions will be seen by your {{customer_label}}s after confirmation of
+                                            the service.</div>
+                                          <div class="form-group pre-post-info" *ngIf="postInfoEnabled">
+                                            <mat-form-field>
+                                              <input matInput type="text" placeholder="Title *" autocomplete="off" [(ngModel)]="postInfoTitle"
+                                                [ngModelOptions]="{standalone: true}" maxlength="20">
+                                            </mat-form-field>
+                                            Enter the text your {{customer_label}}s will see
+                                            <div class="glbl-seting-editor mgn-bt-20 mgn-up-20">
+                                              <ckeditor id="editor" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="postInfoText"
+                                                [ngModelOptions]="{standalone: true}">
+                                              </ckeditor>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv no-padding">
+                                          <button class="cs-btn bt2 savemember" (click)="cancelChanges()">Cancel</button>&nbsp;&nbsp;
+                                          <button mat-button class="cs-btn bt1 savemember" (click)="showInfoSection()">Save</button>
+                                        </div>
+                                      </div>
                                 <app-field-error-display class="itemerror"[displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
                                 </app-field-error-display>
                                 <app-form-success-display [displayMsg]="true" *ngIf="api_success"
@@ -150,10 +227,11 @@
                                 
 
                             </div>
+                            <div class="lbr col-sm-12 col-md-4 col-lg-5"></div>
                             
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>  -->
+    </section> 
