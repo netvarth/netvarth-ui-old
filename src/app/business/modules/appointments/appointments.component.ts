@@ -12,7 +12,7 @@ import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/p
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
-import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
+import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { AppointmentActionsComponent } from './appointment-actions/appointment-actions.component';
 import { VoicecallDetailsSendComponent } from './voicecall-details-send/voicecall-details-send.component';

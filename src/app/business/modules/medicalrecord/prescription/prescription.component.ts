@@ -10,7 +10,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { ImagesviewComponent } from './imagesview/imagesview.component';
 import { projectConstants } from '../..../../../../../app.component';
 import { ShareRxComponent } from './share-rx/share-rx.component';
-import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
+import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'app-prescription',

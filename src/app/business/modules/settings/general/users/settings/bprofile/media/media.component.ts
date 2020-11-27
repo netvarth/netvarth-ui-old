@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../../../app.component';
-import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout} from 'angular-modal-gallery';
+import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout} from '@ks89/angular-modal-gallery';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';

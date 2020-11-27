@@ -5,7 +5,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import {
   AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy
-} from 'angular-modal-gallery';
+} from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'app-service-detail',
