@@ -15,7 +15,7 @@
             <div *ngIf="includedfrom !='phome'" class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
             </div>
-            <div *ngIf="includedfrom =='phome'" class="pull-right">
+            <!-- <div *ngIf="includedfrom =='phome'" class="pull-right">
                 <span class="visible-xs visible-sm hamburg">
                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                         <i class="fa fa-bars"></i>
@@ -33,7 +33,7 @@
                     <li class="navli" (click)="gotocontactus()">Contact us</li>
 
                 </ul>
-            </div>
+            </div> -->
             <div class="tc1 col-md-3 col-xs-7 no-padding-small ml-auto"
                 *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
                 <div class="topsignouter" [matTooltipClass]="tooltipcls" [matTooltip]="custsignTooltip"><button
