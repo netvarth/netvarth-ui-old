@@ -1326,7 +1326,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       if (result) {
         setTimeout(() => {
           this.getCoverPhoto();
-      }, projectConstantsLocal.TIMEOUT_DELAY);
+      }, 5000);
       } else {
         this.getProviderLogo();
       }
