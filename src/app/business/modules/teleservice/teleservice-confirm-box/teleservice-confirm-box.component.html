@@ -2,13 +2,14 @@
   <!-- <i *ngIf="data.app" [class]=iconClass></i> -->
 
   &nbsp;{{data.message}}
-
+  <span *ngIf="serviceMode == 'videoService'">video consultation ?</span>
+  <span *ngIf="serviceMode == 'audioService'">audio consultation ?</span>
 </h1>
 <div mat-dialog-content class="pt-0">
   <ol class="info-lst" *ngIf="data.readymsg">
     <li><span class="teleservice">By clicking <b>"Yes I am ready"</b></span></li>
     <li>- Your {{data.custmerLabel}} will receive an alert and  {{data.app}} will be launched</li>
-    <li>- You will be asked to admit the {{data.custmerLabel}}</li>
+    <!-- <li>- You will be asked to admit the {{data.custmerLabel}}</li> -->
   </ol>
   <!-- <ul  class="info-lst serviceadd-info" *ngIf="data.endmsg">
     <li class="pointlist">We will be sending a notification to {{data.custmerLabel}} that the meeting has ended</li>
