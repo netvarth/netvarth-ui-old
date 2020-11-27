@@ -11,12 +11,9 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-customer.component';
 import * as moment from 'moment';
-<<<<<<< HEAD
-declare let cordova: any;
-=======
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { SharedServices } from '../../../../shared/services/shared-services';
->>>>>>> refs/remotes/origin/1.6.x
+declare let cordova: any;
 
 @Component({
     selector: 'app-appointment-actions',
@@ -187,7 +184,6 @@ export class AppointmentActionsComponent implements OnInit {
     }
     rescheduleActionClicked() {
         this.action = 'reschedule';
-        this.setMinMaxDate();
     }
     changeSlot() {
         this.action = 'slotChange';
@@ -300,6 +296,9 @@ export class AppointmentActionsComponent implements OnInit {
                     displayboards = data;
                     layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
                     this.board_count = layout_list.length;
+                    this.setActions();
+                },
+                error => {
                     this.setActions();
                 });
     }
@@ -675,9 +674,6 @@ export class AppointmentActionsComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
-<<<<<<< HEAD
-}
-=======
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
@@ -694,4 +690,3 @@ export class AppointmentActionsComponent implements OnInit {
     }
 }
 
->>>>>>> refs/remotes/origin/1.6.x
