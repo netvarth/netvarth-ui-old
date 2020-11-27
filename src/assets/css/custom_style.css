@@ -13070,3 +13070,34 @@ hr {
 .checkins-owl .owl-carousel {
   display: flex !important;
 }
+.addorderitem{
+  margin: 0 auto;
+  width: 200px;
+  height: 200px;
+  border: 1px solid gainsboro;
+  border-radius: 10px;
+  box-shadow: 5px 5px gainsboro;
+  cursor: pointer;
+}
+.addorderitemp1{
+  margin-top: 35px;
+  margin-left: 45px;
+  
+}
+.addorderitemp2{
+  margin-left: 65px;
+}
+.addmoreorderitem{
+  width: 80px;
+  height: 80px;
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+  box-shadow: 2px 1px gainsboro;
+  cursor: pointer;
+}
+.addmoreorderitem label{
+  margin-left: 2px;
+}
+.addmoreorderitemp1{
+  margin-left: 20px;
+}

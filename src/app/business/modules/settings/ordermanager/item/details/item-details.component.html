@@ -20,10 +20,17 @@
                             <div class="lbr col-sm-12 col-md-4 col-lg-5">
                                     <div class="cr1">
                                     <div class="no-dta" *ngIf="!image_list_popup || image_list_popup.length == 0">
-                                            <p>{{havent_added_cap}} {{photo_cap}} </p>
-                                            <span class="cs-btn bt3" >
-                                                    <a class="pointer-cursor"  (click)="imagefile.click()"><input multiple #imagefile type="file"
-                                                        accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)">{{add_now_cap}}</a></span>
+                                            <!-- <p>{{havent_added_cap}} {{photo_cap}} </p> -->
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="addorderitem" (click)="imagefile.click()">
+                                                <p class="addorderitemp1"><a class="pointer-cursor"  ><input multiple #imagefile type="file"
+                                                    accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)">Add item image
+                                                    </a></p>
+                                                    <p class="addorderitemp2"> <img style="width: 65%;" src="assets/images/add.svg" /></p>
+                                                </div>
+                                            </div>
+                                           
+                                                    
                                         </div> 
                                         <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
                                                 <ul class="ph-gal">
@@ -72,10 +79,11 @@
                                                         </div>
                                                     </li>
                                                 </ul>
-                                                <span  class="addbt" >
-                                                        <a class="pointer-cursor"  (click)="imagefile.click()"><input multiple #imagefile type="file"
-                                                            accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)"></a>
-                                                </span>
+                                                <div class="addmoreorderitem"  (click)="imagefile.click()">
+                                                        <label class="pointer-cursor" ><input multiple #imagefile type="file"
+                                                            accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)">Add more</label>
+                                                            <p class="addmoreorderitemp1">   <img style="width: 65%;" src="assets/images/add.svg" /></p>
+                                                        </div>
                                         
                                                 <ks-modal-gallery [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
                                                     [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
