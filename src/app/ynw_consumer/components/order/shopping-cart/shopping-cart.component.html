@@ -29,84 +29,42 @@
                         <div class="col-a col-b cd-b">
                            <div class="mgn-up-10">      
                             <div class="div-outline custId-cursor">
-
-                          <div class="list-content">
+                          <div class="list-content" style="text-align: left;"
+                          *ngFor="let item of catalogItem; let i = index">
                             <div class="c-row one">
-                              <div class="name">shiva reddy</div> 
-                              <div class="quantity">qty 2</div>
-                              <div class="price">456</div>                      
-                            </div>                       
+                              <div class="name cart-flex"> {{item.itemName}}</div> 
+                              <div class="quantity">{{item.itemId}}</div>
+                              <div class="price">{{item.price}}</div>              
+                            </div>     
                           </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                  <div class="copy one">
-                      <div class="col-a col-b cd-b">
-                         <div class="mgn-up-10">      
-                          <div class="div-outline custId-cursor">
-
-                        <div class="list-content">
-                          <div class="c-row one">
-                            <div class="name">shiva reddy</div> 
-                            <div class="quantity">qty 2</div>
-                            <div class="price">456</div>                      
-                          </div>                       
+                          <div class="shopcart-cancel">
+                            <button >
+                              <i style="float: right;" class="fa fa-window-close"></i>
+                            </button>                           
+                          </div>                         
                         </div>
                       </div>
-
                     </div>
                   </div>
-                </div>
-                <div class="copy one">
-                    <div class="col-a col-b cd-b">
-                       <div class="mgn-up-10">      
-                        <div class="div-outline custId-cursor">
-
-                      <div class="list-content">
-                        <div class="c-row one">
-                          <div class="name">shiva reddy</div> 
-                          <div class="quantity">qty 2</div>
-                          <div class="price">456</div>                      
-                        </div>                       
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-                          <!-- <div class="more"
-                            *ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' || 
-                          (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
-                            <button mat-icon-button [matMenuTriggerFor]="menu">
-                              <mat-icon>more_vert</mat-icon>
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item   (click)="serviceDiscCoupSec(i)"
-                                *ngIf="itemdiscounts.length > 0">
-                                <span>{{applydiscount_cap}}</span>
-                              </button>
-                              <button mat-menu-item
-                                (click)="adjustService(service.serviceName, service.quantity)">
-                                <span>{{changeqty_cap}}</span>
-                              </button>
-                              <button mat-menu-item
-                                (click)="removeService(service.serviceId, service.quantity)">
-                                <span>{{removeservice_cap}}</span>
-                              </button>
-                            </mat-menu>
-                          </div> -->
+                
+            
+                      
+              
+                       
                         
 
                         </div>
                      
                       </div>
                       <div>
+                        <p>Home delivery</p>
+                        <p>Store pick up</p>
+                         <!-- <mat-radio-group >
+                            <mat-radio-button value="1">Option 1</mat-radio-button>
+                             <mat-radio-button value="2">Option 2</mat-radio-button>
+                        </mat-radio-group> -->
                       
-                        <p>Radio button 1</p>
-                        <p>Radio button 2</p>
-                                </div>
+                       </div>
                       <div class="copy one">
                           <div class="col-a col-b cd-b">
                              <div class="mgn-up-10">      
