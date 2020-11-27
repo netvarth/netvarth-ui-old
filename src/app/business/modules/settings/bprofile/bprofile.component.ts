@@ -1311,15 +1311,25 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   // Change pro pic
-  changeProPic() {
+  changeProPic(image) {
+    console.log(image);
     this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
-      data: { 'userdata': this.bProfile }
+      data: {
+        'userdata': this.bProfile,
+        img_type : image
+     }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
-      this.getProviderLogo();
+      if (result) {
+        setTimeout(() => {
+          this.getCoverPhoto();
+      }, projectConstantsLocal.TIMEOUT_DELAY);
+      } else {
+        this.getProviderLogo();
+      }
     });
   }
 
@@ -1421,66 +1431,15 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     }, 50);
   }
 
-  editCoverFoto(event) {
-    this.coverfile = event.path[0].files[0];
-    console.log(this.coverfile);
-    this.success_error1 = null;
-    if (this.coverfile) {
-      this.success_error1 = this.sharedfunctionobj.imageValidation(this.coverfile);
-      if (this.success_error1 === true) {
-        const reader1 = new FileReader();
-        this.item_pic1.files = this.coverfile;
-        this.selitem_pic1 = this.coverfile;
-        const fileobj1 = this.coverfile;
-        reader1.onload = (e) => {
-          this.item_pic1.base64 = e.target['result'];
-        };
-        reader1.readAsDataURL(fileobj1);
-        if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
-          // generating the data to be submitted to change the logo
-          const submit_data1: FormData = new FormData();
-          submit_data1.append('files', this.selitem_pic1, this.selitem_pic1['name']);
-          const propertiesDet1 = {
-            'caption': 'Logo'
-          };
-          const blobPropdata1 = new Blob([JSON.stringify(propertiesDet1)], { type: 'application/json' });
-          submit_data1.append('properties', blobPropdata1);
-          this.uploadCoverPic(submit_data1);
-        }
-      } else {
-        this.error_list.push(this.success_error1);
-        if (this.error_list[0].type) {
-          this.error_msg = 'Selected image type not supported';
-        } else if (this.error_list[0].size) {
-          this.error_msg = 'Please upload images with size less than 15mb';
-        }
-        // this.error_msg = 'Please upload images with size < 5mb';
-        this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
-      }
-    }
-
-  }
-  uploadCoverPic(passdata) {
-    this.provider_services.uploadCoverFoto(passdata).subscribe(
-      data => {
-        console.log(data);
-        if (data) {
-          if (data) {
-            this.getCoverPhoto();
-            this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelClass': 'snackbarnormal' });
-          }
-        }
-      });
-  }
   getCoverPhoto() {
     this.cover_url = '';
     this.provider_services.getCoverFoto().subscribe(
       data => {
-        console.log(data);
         if (data) {
           this.imageToShow = '';
           this.clogo = data;
           this.cover_url = data[0].url;
+        //  this.imageToShow = this.cover_url;
           this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
         }
       });

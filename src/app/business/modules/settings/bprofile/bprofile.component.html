@@ -32,13 +32,12 @@
                       <span class="fa propic-cam-icon mgn-top-m3"></span>
                     </span>
                     <mat-menu #menu="matMenu">
-                      <button (click)="filed.click()" mat-menu-item>
+                      <button mat-menu-item (click)="changeProPic('cover')">
                         <i class="fa fa-upload"></i>
                         Upload Photo
-                        <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed
-                        (change)="editCoverFoto($event)">
+                        <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed>
                       </button>
-                      <button mat-menu-item (click)="deleteCover()">
+                      <button *ngIf="cover_url" mat-menu-item (click)="deleteCover()">
                         <i class="fa fa-trash"></i>
                         Remove Photo</button>
                     </mat-menu>
@@ -46,11 +45,11 @@
                   <!-- Profile pic -->
                   <div class="cd-t pro-pic-div">
                     <div class="basic-i">
-                      <div class="bi-l mgn-center mgn-up-20" *ngIf="blogo">
+                      <div class="bi-l mgn-center mgn-up-100" *ngIf="blogo">
                         <div class="pro-pic pro-pic-bdr" [class.yes]="profimg_exists">
                           <div class="pro-pic-img">
                             <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
-                            <div class="camera-outline custId-cursor" (click)="changeProPic()"
+                            <div class="camera-outline custId-cursor" (click)="changeProPic('propic')"
                               style="overflow: visible !important;">
                               <i class="fa propic-cam-icon" aria-hidden="true"></i>
                             </div>
@@ -61,7 +60,7 @@
                   </div>
 
                   <!-- Progress Bar -->
-                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-40">
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-50">
                     <h6 style="margin-top: 0 !important;" *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">
                       Profile Strength-
                       <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>

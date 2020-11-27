@@ -5,7 +5,7 @@
     width:100%;
     background: #3f51b50d;
     border-radius: 5px;
-    height: 220px;
+    height: 290px;
 }
 .yourProfile .mgn-center {
     margin-left: auto !important;
@@ -63,7 +63,7 @@
     background: rgb(228 230 235);
     box-sizing: border-box;
     right: 30px;
-    margin-top: 170px;
+    margin-top: 230px;
     height: 35px;
     color: black;
 }
@@ -75,7 +75,7 @@
     padding-left: 6px;
     background: rgb(228 230 235);
     right: 30px;
-    margin-top: 170px;
+    margin-top: 230px;
     height: 35px;
 }
 .yourProfile .edit-cover-small .propic-cam-icon {
@@ -121,6 +121,10 @@
     }
     .yourProfile .pro-pic-bdr {
         margin-top: 60px !important;
+    }
+    .yourProfile .cover-bg {
+        background-position: center !important;
+        background-size: 100% 220px;
     }
 }
 .yourProfile .all_disabled {
@@ -168,13 +172,13 @@
     padding-top: 0 !important;
 }
 .yourProfile .cover-bg {
-    background-size: cover;
-    /* background-repeat: round; */
+    background-size: 100% 290px;
+    background-repeat: no-repeat;
 }
 @media screen and (max-width: 330px) {
-    .yourProfile .cover-bg {
+    /* .yourProfile .cover-bg {
         background-size: cover !important;
-    }
+    } */
 }
 .yourProfile .pro-pic-bdr {
     border: 4px solid white;
@@ -189,4 +193,7 @@
     .yourProfile .coverFotoBorder .edit-cover {
         display: none !important;
     }
+}
+.yourProfile .mgn-up-100 {
+    margin-top: 100px !important;
 }

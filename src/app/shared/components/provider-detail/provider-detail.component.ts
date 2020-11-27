@@ -224,6 +224,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   // gallerydisabledArr = [];
   onlinePresence = false;
   extra_img_count: number;
+  bgCover: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -447,6 +448,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
+            console.log(this.businessjson);
+            if (this.businessjson.cover) {
+              this.bgCover = this.businessjson.cover.url;
+            }
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
             if (this.account_Type === 'BRANCH') {
