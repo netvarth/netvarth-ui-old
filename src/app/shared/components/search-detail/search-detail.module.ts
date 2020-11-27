@@ -30,7 +30,7 @@ import { TruncateModule } from '../../pipes/limitTo.module';
         CapitalizeFirstPipeModule,
         PagerModule,
         FooterModule,
-        ModalGalleryModule.forRoot(),
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         Nl2BrPipeModule,
         ConsumerCheckinHistoryListModule,
         SearchDetailRoutingModule,
