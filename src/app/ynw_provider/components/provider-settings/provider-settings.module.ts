@@ -42,7 +42,7 @@ import { JoyrideModule } from 'ngx-joyride';
         FormsModule,
         LoadingSpinnerModule,
         Nl2BrPipeModule,
-        ModalGalleryModule.forRoot(),
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         ReactiveFormsModule,
         FormMessageDisplayModule,
         ProviderWaitlistOnlineCheckinModule,
