@@ -147,6 +147,7 @@ export class CustomersListComponent implements OnInit {
     this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
   }
   getCustomersList(from_oninit = true) {
+    this.apiloading = true;
     this.resetList();
     let filter = this.setFilterForApi();
     this.getCustomersListCount(filter)
@@ -158,10 +159,12 @@ export class CustomersListComponent implements OnInit {
             .subscribe(
               data => {
                 this.customers = data;
+                this.apiloading = false;
                 this.loadComplete = true;
               },
               error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.apiloading = false;
                 this.loadComplete = true;
               }
             );
@@ -431,6 +434,7 @@ export class CustomersListComponent implements OnInit {
       }
     });
     notedialogRef.afterClosed().subscribe(result => {
+      this.getLabel();
       this.getCustomersList();
     });
   }

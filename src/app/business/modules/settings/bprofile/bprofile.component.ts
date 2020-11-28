@@ -87,9 +87,14 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     files: [],
     base64: null
   };
+  item_pic1 = {
+    files: [],
+    base64: null
+  };
   profimg_exists = false;
   success_error = null;
   selitem_pic = '';
+  selitem_pic1 = '';
   image_remaining_cnt = 0;
 
   // languages
@@ -183,6 +188,13 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
   notedialogRef: any;
   private qrCodeParent: ElementRef;
+  show_cover_options = false;
+  coverfile: any;
+  success_error1: any;
+  imageToShow: string | ArrayBuffer;
+  cover_url: string;
+  clogo: ArrayBuffer;
+  cvrimg_exists = false;
   @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
@@ -430,6 +442,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.getJaldeeIntegrationSettings();
     this.getGalleryImages();
     this.getProviderLogo();
+    this.getCoverPhoto();
 
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -1286,7 +1299,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
-
+      console.log(this.item_pic);
+      console.log(this.item_pic.base64);
       return this.item_pic.base64;
     } else {
       if (this.blogo[0]) {
@@ -1298,15 +1312,25 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   // Change pro pic
-  changeProPic() {
+  changeProPic(image) {
+    console.log(image);
     this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
-      data: { 'userdata': this.bProfile }
+      data: {
+        'userdata': this.bProfile,
+        img_type : image
+     }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
-      this.getProviderLogo();
+      if (result) {
+        setTimeout(() => {
+          this.getCoverPhoto();
+      }, 5000);
+      } else {
+        this.getProviderLogo();
+      }
     });
   }
   imageSelect(input) {
@@ -1453,9 +1477,27 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       ]);
     }, 50);
   }
+<<<<<<< HEAD
    editCoverFoto(event) {
     console.log(event);
+=======
+
+  getCoverPhoto() {
+    this.cover_url = '';
+    this.provider_services.getCoverFoto().subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          this.imageToShow = '';
+          this.clogo = data;
+          this.cover_url = data[0].url;
+          this.imageToShow = this.cover_url;
+       //   this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
+        }
+      });
+>>>>>>> refs/remotes/origin/1.6.x
   }
+<<<<<<< HEAD
   printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
     setTimeout(() => {
@@ -1477,5 +1519,18 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       // printWindow.document.close();
     });
   }
+=======
+
+  deleteCover() {
+    const del_pic = this.clogo[0].keyName;
+    this.provider_services.deleteCoverFoto(del_pic).subscribe(
+      data => {
+          this.getCoverPhoto();
+          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
+      });
+  }
+
+
+>>>>>>> refs/remotes/origin/1.6.x
 }
 

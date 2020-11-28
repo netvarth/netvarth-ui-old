@@ -29,7 +29,7 @@ import { OrderModule } from 'ngx-order-pipe';
         MatSlideToggleModule,
         FormsModule,
         ReactiveFormsModule,
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+        ModalGalleryModule,
         GalleryModule,
         ServiceModule,
         PagerModule,

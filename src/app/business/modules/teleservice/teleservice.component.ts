@@ -114,7 +114,6 @@ export class TeleServiceComponent implements OnInit {
                         this.servStarted = false;
                     }
                     this.callingModes = this.data.service.virtualCallingModes[0].callingMode;
-                    console.log(this.callingModes)
                     this.serv_type = this.data.service.virtualServiceType;
                     if (this.data.provider) {
                         this.busnes_name = this.data.provider.firstName + ' ' + this.data.provider.lastName;
@@ -200,7 +199,7 @@ export class TeleServiceComponent implements OnInit {
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                message: 'Are you ready to start',
+                message: 'Are you ready to start ?',
                 serviceDetail: this.servDetails,
                 consumerName: this.consumer_fname,
                 custmerLabel: this.customer_label,
@@ -327,7 +326,7 @@ export class TeleServiceComponent implements OnInit {
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                message: 'Have you completed the',
+                message: 'Have you completed the service?',
                 serviceDetail: this.servDetails,
                 consumerName: this.consumer_fname,
                 custmerLabel: this.customer_label,

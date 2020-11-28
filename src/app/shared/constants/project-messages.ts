@@ -99,6 +99,8 @@ export const Messages = {
   'BPROFILE_PRIVACY_EMAIL_INVALID': 'Please enter a valid email id',
   'BPROFILE_SOCIAL_URL_VALID': 'Please enter a valid URL',
   'BPROFILE_LOCNAME_BLANK': 'Please enter the location name',
+  'BPROFILE_COVER_ADD': 'Cover photo added successfully',
+  'BPROFILE_COVER_DEL': 'Cover photo deleted',
   // 'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
   'BPROFILE_LANGUAGE_SAVED': 'Languages saved successfully',
   'BPROFILE_SPECIALIZATION_SAVED': 'Specializations saved successfully',
@@ -163,7 +165,7 @@ export const Messages = {
   'TELE_NOT_SUPPORTED': 'is not supported on this device.',
   'SENDING_MEET_DETAILS': 'Send the meeting details to your phone or tablet where',
   'IS_AVAILABLE': 'is available to you',
-  'PHONE_OR_TAB': 'Send meeting instructions to your phone/tablet where',
+  'PHONE_OR_TAB': 'instructions to your phone/tablet where',
   'IS_INSTALD': 'is available',
   'SEND_REMINDER': 'Send a reminder that the service will begin in',
   // Teleservice reminder and meeting details

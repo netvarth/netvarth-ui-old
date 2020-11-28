@@ -44,7 +44,7 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
         NgxQRCodeModule,
         CustomerModule,
         MedicalrecordModule,
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],
     declarations: [
         AppointmentsComponent,

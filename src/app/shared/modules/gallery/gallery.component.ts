@@ -120,7 +120,8 @@ export class GalleryComponent implements OnInit, OnChanges {
         // if (event.button.type === ButtonType.DELETE) {
         if (event.button.type === ButtonType.DELETE) {
             // remove the current image and reassign all other to the array of images
-            const knamearr = event.image.modal.img.toString().split('/');
+            let name = event.image.modal.img.toString();
+            const knamearr = name.split('/');
             const kname = knamearr[(knamearr.length - 1)];
             const file = {
                 id: event.image.id,

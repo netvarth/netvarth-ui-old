@@ -19,14 +19,14 @@
             <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
               <div class="card p0">
                 <div class="pubs card w-dta active bprof">
-                  <!-- Cover Photo and Profile Pic -->
-                  <div class="coverFotoBorder">
-                    <!-- <span (click)="filed.click()" class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
+                  <!-- Cover Photo -->
+                  <div class="coverFotoBorder cover-bg" [ngStyle]="{ 'background-image': 'url(' + imageToShow + ')'}">
+                    <!--Camera icon(cover) For large device -->
+                    <span mat-button [matMenuTriggerFor]="menu" class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
                       <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;Edit Cover
                         Photo
-                        <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed
-        (change)="editCoverFoto($event)">
                       </span>
+<<<<<<< HEAD
                     </span> -->
                     <div class="cd-t">
                       <div class="basic-i">
@@ -41,6 +41,34 @@
                                 (change)="imageSelect(logofile)">
                                 <i class="fa propic-cam-icon" aria-hidden="true"></i>
                               </div>
+=======
+                    </span>
+                    <!-- Camera icon(cover) for small device -->
+                    <span mat-button [matMenuTriggerFor]="menu" class="edit-txt custId-cursor pad-10 edit-cover-small">
+                      <span class="fa propic-cam-icon mgn-top-m3"></span>
+                    </span>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="changeProPic('cover')">
+                        <i class="fa fa-upload"></i>
+                        Upload Photo
+                        <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed>
+                      </button>
+                      <button *ngIf="cover_url" mat-menu-item (click)="deleteCover()">
+                        <i class="fa fa-trash"></i>
+                        Remove Photo</button>
+                    </mat-menu>
+                  </div>
+                  <!-- Profile pic -->
+                  <div class="cd-t pro-pic-div">
+                    <div class="basic-i">
+                      <div class="bi-l mgn-center mgn-up-100" *ngIf="blogo">
+                        <div class="pro-pic pro-pic-bdr" [class.yes]="profimg_exists">
+                          <div class="pro-pic-img">
+                            <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
+                            <div class="camera-outline custId-cursor" (click)="changeProPic('propic')"
+                              style="overflow: visible !important;">
+                              <i class="fa propic-cam-icon" aria-hidden="true"></i>
+>>>>>>> refs/remotes/origin/1.6.x
                             </div>
                           </div>
                         </div>
@@ -49,7 +77,7 @@
                   </div>
 
                   <!-- Progress Bar -->
-                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-50">
                     <h6 style="margin-top: 0 !important;" *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">
                       Profile Strength-
                       <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
@@ -65,7 +93,7 @@
                           [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
                           aria-valuemax="100" data-toggle="popover"></div>
                       </div>
-                      <div class="col-md-6 col-xs-6 col-sm-6">
+                      <div class="col-md-6 col-xs-6 col-sm-6 mgn-up-5">
                         <button (click)="scroll(basicInfoSection)" type="button"
                         [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
                       </div>
@@ -74,7 +102,7 @@
 
                   <!-- About You -->
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding abt-you-box" #basicInfoSection>
-                    <div class="pad-10"><span class="sub-heads">About You</span><span class="edit-txt custId-cursor"
+                    <div class="pad-10"><span class="sub-heads">About Us</span><span class="edit-txt custId-cursor"
                         (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
                     <div class="no-dta" *ngIf="!aboutmefilled">
                       <span class="cs-btn bt3" (click)="gotoAboutMe()">Complete your profile</span>

@@ -32,7 +32,7 @@ import { SelectionService } from '../../../../shared/services/selectionService';
         MatSlideToggleModule,
         FormsModule,
         ReactiveFormsModule,
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+        ModalGalleryModule,
         GalleryModule,
         // ProviderWaitlistLocationsModule,
         ProviderWaitlistOnlineCheckinModule,

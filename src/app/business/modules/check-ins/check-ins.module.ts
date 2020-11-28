@@ -60,7 +60,7 @@ import { MatTabsModule } from '@angular/material/tabs';
         NgxQRCodeModule,
         CustomerModule,
         MedicalrecordModule,
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],
     declarations: [
         CheckInsComponent,

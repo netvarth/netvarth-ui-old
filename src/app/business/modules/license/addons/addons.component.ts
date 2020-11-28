@@ -95,7 +95,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
             width: '50%',
             data: {
             },
-            panelClass: ['popup-class', 'commonpopupmainclass'],
+            panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
             disableClose: true
         });
         this.addonhistorydialogRef.afterClosed().subscribe(() => {

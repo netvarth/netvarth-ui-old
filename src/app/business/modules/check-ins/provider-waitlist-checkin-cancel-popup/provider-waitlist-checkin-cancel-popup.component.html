@@ -27,8 +27,8 @@
       <mat-checkbox formControlName="send_message">{{send_message_cap}} {{rep_username}}</mat-checkbox>
     </div>
     <div class="form-group" *ngIf="amForm.get('send_message').value || cancel_reason_key == 'other'">
+      <label class="col-form-label" *ngIf="cancel_reason_key == 'other'">{{messgae_cap}}</label>
       <mat-form-field>
-        <label class="col-form-label" *ngIf="cancel_reason_key == 'other'">{{messgae_cap}}</label>
         <textarea matInput class="form-control" id="message" placeholder="Message" formControlName="message">
           </textarea>
       </mat-form-field>

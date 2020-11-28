@@ -12,6 +12,10 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+<<<<<<< HEAD
+=======
+import { SearchModule } from './shared/modules/search/search.module';
+>>>>>>> refs/remotes/origin/1.6.x
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
 import { HeaderModule } from './shared/modules/header/header.module';
@@ -106,7 +110,13 @@ export function init_app(globalService: GlobalService) {
     SharedModule,
     RatingStarModule,
     HeaderModule,
+<<<<<<< HEAD
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+=======
+    // CheckInModule,
+    ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+    ConsumerCheckinHistoryListModule,
+>>>>>>> refs/remotes/origin/1.6.x
     Nl2BrPipeModule,
     MaintenanceModule,
     ScrollbarModule,

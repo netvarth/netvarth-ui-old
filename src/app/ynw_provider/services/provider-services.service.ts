@@ -1676,5 +1676,16 @@ export class ProviderServices {
       const url = 'provider/customers/' + id + '/label/' + label;
       return this.servicemeta.httpDelete(url);
    }
+   uploadCoverFoto(data) {
+      return this.servicemeta.httpPost('provider/coverPicture', data);
+   }
+   getCoverFoto() {
+      const url = 'provider/cover';
+      return this.servicemeta.httpGet(url);
+   }
+   deleteCoverFoto(name) {
+      const path = 'provider/coverPicture/' + name;
+      return this.servicemeta.httpDelete(path);
+   }
 }
 

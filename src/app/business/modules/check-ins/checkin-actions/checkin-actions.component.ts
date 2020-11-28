@@ -188,12 +188,14 @@ export class CheckinActionsComponent implements OnInit {
     }
 
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+        this.loading = true;
         this.queuejson = [];
         this.queueQryExecuted = false;
         if (locid && servid) {
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
+                    this.loading = false;
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
