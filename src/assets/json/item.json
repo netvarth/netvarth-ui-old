@@ -122,7 +122,7 @@
   },
   "catalogItem": [
     {
-      "itemId": 12,
+      "itemId": 11,
       "displayName": "Book",
       "shortDesc": "Book-tragedy ",
       "itemDesc": "tragedy ",
@@ -188,7 +188,7 @@
       "showPromotionalPrice": true
     },
     {
-      "itemId": 12,
+      "itemId": 13,
       "displayName": "Book",
       "shortDesc": "Book-tragedy ",
       "itemDesc": "tragedy ",

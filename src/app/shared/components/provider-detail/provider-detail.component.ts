@@ -2157,7 +2157,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   addToCart(Item) {
     this.orderList.push(Item);
     this.getTotalItemAndPrice();
-    this.setItemQty(Item);
+    this.getItemQty(Item);
 
   }
   removeFromCart(Item) {
@@ -2169,7 +2169,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     }
     this.getTotalItemAndPrice();
-    this.setItemQty(Item);
+    this.getItemQty(Item);
   }
   getTotalItemAndPrice() {
     this.price = 0;
@@ -2180,6 +2180,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   checkout() {
+    localStorage.setItem('order', JSON.stringify(this.orderList));
     this.router.navigate(['consumer', 'order', 'cart']);
   }
   increment(item) {
@@ -2189,8 +2190,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   decrement(item) {
     this.removeFromCart(item);
   }
-  setItemQty(item) {
-    return this.orderList.filter(i => i === item).length;
+  getItemQty(item) {
+    return this.orderList.filter(i => i.itemId === item.itemId).length;
   }
 
   reset() {

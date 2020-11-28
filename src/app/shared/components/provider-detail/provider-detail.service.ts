@@ -3,6 +3,7 @@ import { ServiceMeta } from '../../services/service-meta';
 @Injectable()
 export class ProviderDetailService {
 
+  orderListArray: any[] = ['apple','orange'];
   constructor(
     private servicemetaobj: ServiceMeta) { }
   getapproxWaitingtime(id) {
@@ -70,4 +71,13 @@ export class ProviderDetailService {
     return this.servicemetaobj.httpGet(path);
   }
 
+  setOrder(order) {
+    this.orderListArray = ['mango,pineapple'];
+    console.log(this.orderListArray);
+
+  }
+  getOrder() {
+    console.log(this.orderListArray);
+  return this.orderListArray;
+}
 }
