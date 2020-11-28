@@ -11,11 +11,13 @@ import { ConsumerOrderRoutingModule } from './order.routing.module';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { AddAddressComponent } from './checkout/add-address/add-address.component';
 
 @NgModule({
     declarations: [
         ShoppingCartComponent,
-        CheckoutComponent
+        CheckoutComponent,
+        AddAddressComponent
 
     ],
     imports: [
@@ -28,6 +30,10 @@ import { CheckoutComponent } from './checkout/checkout.component';
         HeaderModule,
         MaterialModule
     ],
+    entryComponents: [
+      AddAddressComponent
+
+      ],
     exports: [
 
     ]
