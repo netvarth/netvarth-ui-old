@@ -1477,12 +1477,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       ]);
     }, 50);
   }
-<<<<<<< HEAD
-   editCoverFoto(event) {
-    console.log(event);
-=======
-
-  getCoverPhoto() {
+   getCoverPhoto() {
     this.cover_url = '';
     this.provider_services.getCoverFoto().subscribe(
       data => {
@@ -1495,9 +1490,16 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
        //   this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
         }
       });
->>>>>>> refs/remotes/origin/1.6.x
   }
-<<<<<<< HEAD
+
+  deleteCover() {
+    const del_pic = this.clogo[0].keyName;
+    this.provider_services.deleteCoverFoto(del_pic).subscribe(
+      data => {
+          this.getCoverPhoto();
+          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
+      });
+  }
   printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
     setTimeout(() => {
@@ -1519,18 +1521,5 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       // printWindow.document.close();
     });
   }
-=======
-
-  deleteCover() {
-    const del_pic = this.clogo[0].keyName;
-    this.provider_services.deleteCoverFoto(del_pic).subscribe(
-      data => {
-          this.getCoverPhoto();
-          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
-      });
-  }
-
-
->>>>>>> refs/remotes/origin/1.6.x
 }
 

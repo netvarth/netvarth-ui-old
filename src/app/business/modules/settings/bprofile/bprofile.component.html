@@ -26,22 +26,6 @@
                       <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;Edit Cover
                         Photo
                       </span>
-<<<<<<< HEAD
-                    </span> -->
-                    <div class="cd-t">
-                      <div class="basic-i">
-                        <div class="bi-l mgn-center mgn-up-20" *ngIf="blogo">
-                          <div class="pro-pic" [class.yes]="profimg_exists">
-                            <div class="pro-pic-img">
-                              <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
-                              <div class="camera-outline custId-cursor" (click)="logofile.click()"
-                                style="overflow: visible !important;">
-                                <input #logofile type="file" accept="image/*"
-                                style="display:none;"
-                                (change)="imageSelect(logofile)">
-                                <i class="fa propic-cam-icon" aria-hidden="true"></i>
-                              </div>
-=======
                     </span>
                     <!-- Camera icon(cover) for small device -->
                     <span mat-button [matMenuTriggerFor]="menu" class="edit-txt custId-cursor pad-10 edit-cover-small">
@@ -68,7 +52,6 @@
                             <div class="camera-outline custId-cursor" (click)="changeProPic('propic')"
                               style="overflow: visible !important;">
                               <i class="fa propic-cam-icon" aria-hidden="true"></i>
->>>>>>> refs/remotes/origin/1.6.x
                             </div>
                           </div>
                         </div>
