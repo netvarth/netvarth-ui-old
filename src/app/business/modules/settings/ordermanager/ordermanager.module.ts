@@ -13,9 +13,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { FormsModule } from '@angular/forms';
 import { OrdermanagerComponent } from './ordermanager.component';
-import { CatalogComponent } from './catalog/catalog.component';
 import { StoreDetailsComponent } from './store-details/store-details.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 
@@ -34,11 +32,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
       Nl2BrPipeModule,
       OwlModule,
       CapitalizeFirstPipeModule,
-      CKEditorModule
+      
   ],
   declarations: [
     OrdermanagerComponent,
-    CatalogComponent,
     StoreDetailsComponent,
   ],
   entryComponents: [

@@ -1,0 +1,39 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"> 
+            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeecatalogcreation()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            select items
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> </h5>
+    </div>
+  </section>
+  <section >
+<div>
+    <ng-container *ngIf="catalogItem.length > 0">
+       <div class="bus-item" *ngFor="let item of catalogItem;let i=index;">
+           <div class="card card-item-n no-padding" (click)="selectItem(item,i)" [class.itemselected]="catalogItem[i].selected">
+               <div class="card-item-title">
+                   <a class="pointer-cursor"><b>
+                           {{item.displayName | capitalizeFirst | limitTo: [35, '...']}}
+                       </b> </a>
+
+               </div>
+               <div class="card-item-content">
+                   <div class="card-item-content-info">
+                       <div class="card-item-content-action">
+                           <div class="" style="padding-bottom: 10px">
+                               <p class="title-style mgn-bt-5 mgn-up-5">
+                                   <span
+                                       class="rupee-font">{{item.price| currency:'&#8377;'}}</span>
+                               </p>
+                           </div>
+                       </div>
+                   </div>
+                   
+               </div>
+           </div>
+       </div>
+
+   </ng-container>
+  </div>
+  <div>Your selected ({{selecteditems.length}}) items</div>
+</section>
