@@ -10,10 +10,12 @@ import { HeaderModule } from '../../../shared/modules/header/header.module';
 import { ConsumerOrderRoutingModule } from './order.routing.module';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { MaterialModule } from '../../../shared/modules/common/material.module';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
     declarations: [
-        ShoppingCartComponent
+        ShoppingCartComponent,
+        CheckoutComponent
 
     ],
     imports: [

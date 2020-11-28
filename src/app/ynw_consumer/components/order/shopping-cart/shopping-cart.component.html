@@ -7,6 +7,9 @@
   <div class="col-md-12 no-padding-small">
     <div class="panel panel-default">
         <div class="panel-heading top-row ">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                    <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
+                </div>
           </div>
       <div class="panel-body no-padding">
         <div class="c-outer m0">
@@ -134,9 +137,9 @@
                 </div>
               </div>
 
+              <h2 class="textcenter"><button class="pay" (click)="cart()"><h6 style="padding-top: 10px;">Go To Cart</h6></button></h2>
 
-
-                    </div>
+                              </div>
                   </div>
 
 

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -14,7 +16,9 @@ export class ShoppingCartComponent implements OnInit {
   catlog: any;
   catalogItem: any;
 
-  constructor( ) { }
+  constructor(
+    public router: Router,
+    public sharedFunctionobj: SharedFunctions) { }
 
   ngOnInit() {
 console.log('inisde');
@@ -67,5 +71,8 @@ console.log('inisde');
     this.orders = [...new Map(this.orderList.map(Item => [Item['itemId'], Item])).values()];
     console.log(this.orders);
 
+  }
+  cart() {
+    this.router.navigate(['consumer', 'order', 'checkout']);
   }
 }

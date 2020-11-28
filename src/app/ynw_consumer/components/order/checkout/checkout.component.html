@@ -1,1 +1,244 @@
-<p>checkout works!</p>
+<!-- <p>checkout works!</p> -->
+
+
+<section class="container no-padding cons-donate no-padding-small">
+        <div class="content p0 loc-list p-checkin ynw-common-form-nm">
+            <div class="panel panel-default">
+                <div class="panel-heading top-row">
+                     
+                                <!-- <a class="pull-left back-btn mgn-up-5"><i class="fa fa-arrow-left"></i></a> -->
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                                        <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
+                                    </div>
+                            <!-- </div> -->
+                </div>
+                <div class="panel-body no-padding">
+                    <div class="c-outer m0">
+                        <div class="c-body">
+                            <div class="card title-gb m0">
+                                <h5 class="mgn-up-10">
+                                  <a class="back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+                                  <span class=" mgn-lt-10 amount">Continue shopping</span> 
+                                </h5>
+                            </div>
+                         
+
+                          <div class="col-md-12 no-padding-small">
+                             
+
+                            <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">   
+                                                   
+                                <div class="list-content" style="text-align: left;">        
+                                           <div class="copy one">
+                                              <div class="col-a col-b cd-b">
+                                                 <div class="mgn-up-10">      
+                                                  <div class="div-outline custId-cursor">
+                                                      <div class="c-row one">
+                                                    <div class="name cart-flex"> <b> Account</b>                      </div> 
+                                                    <div class="quantity">You're signed as krishnadas ps</div>
+                                                    <div class="price"> +91 9745355216</div>           
+                                                  </div>     
+                                                </div>                         
+                                              </div>
+                                            </div>
+                                          </div>
+                                 </div>
+
+                                 <div class="list-content" style="text-align: left;">        
+                                        <div class="copy one">
+                                           <div class="col-a col-b cd-b">
+                                              <div class="mgn-up-10">      
+                                               <div class="div-outline custId-cursor">
+                                                   <div class="c-row one">
+                                                 <div class="name cart-flex"> <b>Delivery options</b></div> 
+                                                 <div class="quantity">
+                                                        Items will be delivered to your home
+                                                 </div>
+                                                 <!-- <div class="price"> Add new address</div>            -->
+                                               </div>     
+                                             </div>                         
+                                           </div>
+                                         </div>
+                                       </div>
+                              </div>
+
+                                 <div class="list-content" style="text-align: left;">        
+                                        <div class="copy one">
+                                           <div class="col-a col-b cd-b">
+                                              <div class="mgn-up-10">      
+                                               <div class="div-outline custId-cursor">
+                                                   <div class="c-row one">
+                                                 <div class="name cart-flex"><b>  Delivery options </b> </div> 
+
+
+                                                 <div class="mgn-bt-10">
+                                                        <div class="div-outline custId-cursor">
+                                                         
+                                                              <button type="button" mat-button style="float: right;"
+                                                                class="cs-btn bt1 pull-right"> edit </button>
+                                                            <p>    Krishnadas                                                          
+                                                                  Pozhangodath house
+                                                                 Manakullankara po
+                                                                  kodakkra,KODAKARA,
+                                                                 KERALA 680684,India
+                                                                    Add delivery instructions</p>
+                                                          
+                                                          <div class="clearfix"></div>
+                                                        </div>              
+                                                      </div>
+
+
+                                                 <div class="mgn-bt-10">
+                                                        <div class="div-outline custId-cursor">
+                                                         
+                                                              <button type="button" mat-button style="float: right;"
+                                                                class="cs-btn bt1 pull-right"> edit </button>
+                                                            <p>    Krishnadas                                                          
+                                                                  Pozhangodath house
+                                                                 Manakullankara po
+                                                                  kodakkra,KODAKARA,
+                                                                 KERALA 680684,India
+                                                                    Add delivery instructions</p>
+                                                          
+                                                          <div class="clearfix"></div>
+                                                        </div>              
+                                                      </div>
+
+                                                 <div class="quantity"> <U>Add new address </U></div>
+                                                 <!-- <div class="price"> +91 9745355216</div>            -->
+                                               </div>     
+                                             </div>                         
+                                           </div>
+                                         </div>
+                                       </div>
+                              </div>
+
+                           
+
+
+
+                                </div>
+
+                                    <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
+                                            <div class="card">
+                                                <div class="bill-section">
+                                                    <div class="bill-section-content">
+                                                      <div class="bill-wrapper ">
+                                                        <div style="text-align: center;">
+                                                            Order summary
+                                                        </div>
+                                                      
+                                                        <div class="bill-content">
+                                                          <div class="section-three">
+                                                            <div class="bill-breakup">
+                                                              <div class="list border">
+                                      
+                                      
+                                                                <div class="list-content" style="text-align: left;"
+                                                                *ngFor="let item of catalogItem; let i = index">
+                                                                  
+                                                           <div class="copy one">
+                                                              <div class="col-a col-b cd-b">
+                                                                 <div class="mgn-up-10">      
+                                                                  <div class="div-outline custId-cursor">
+                                                                      <div class="c-row one">
+                                                               
+                                                                    <div class="name cart-flex"> {{item.itemName}}</div> 
+                                                                    <div class="quantity">{{item.itemId}}</div>
+                                                                    <div class="price">{{item.price}}</div>  
+                                                                    <div style="padding-left: 30px;">
+                                                                        <button >
+                                                                            <i style="float: right;" class="fa fa-window-close"></i>
+                                                                          </button> 
+                                                                    </div>   
+                                                                               
+                                                                  </div>     
+                                                                </div>
+                                                                                      
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                          <!-- <div class="shopcart-cancel">
+                                                              <button >
+                                                                <i style="float: right;" class="fa fa-window-close"></i>
+                                                              </button>                           
+                                                            </div> -->
+                                                        </div>
+                                                      
+                                                  
+                                                            
+                                                    
+                                                             
+                                                              
+                                      
+                                                              </div>
+                                                           
+                                                            </div>
+                                                
+                                                            <div class="copy one">
+                                                                <div class="col-a col-b cd-b">
+                                                                   <div class="mgn-up-10">      
+                                                                    <div class="div-outline custId-cursor">
+                                                            <div class="amount-table">
+                                                              <div class="amt-content">
+                                                                <table class="amt-content">
+                                                                  <tbody>
+                                                                    
+                                                                    <tr>
+                                                                      <td >Item Total: </td>
+                                                                      <td style="text-align: end;" class="price rupee-font">
+                                                                 500
+                                                                      </td>
+                                                                    </tr>
+                                                                   
+                                                                   
+                                                                 
+                                                                 
+                                                                 
+                                                                    <tr>
+                                                                      <td >Taxes and Charges: </td>
+                                                                      <td style="text-align: end;" class="price  rupee-font"> 100</td>
+                                                                    </tr>
+                                                                   
+                                                                    <tr >
+                                                                      <td >TO PAY:</td>
+                                                                      <td style="text-align: end;" class="price rupee-font">600</td>
+                                                                    </tr>
+                                                                 
+                                      
+                                      
+                                                                  </tbody>
+                                                                </table>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                      
+                                                  
+                                                          
+                                                          </div>
+                                                        </div>
+                                      
+                                                      
+                                      
+                                      
+                                                      
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                             </div>
+                                    </div>
+
+                            </div>
+
+
+                        
+                        </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+    </section>
