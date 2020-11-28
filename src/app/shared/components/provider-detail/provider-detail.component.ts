@@ -1382,7 +1382,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   redirectToHistory() {
     if (this.sharedFunctionobj.checkLogin()) {
-      this.routerobj.navigate(['consumer', 'checkin', 'history']);
+      this.routerobj.navigate(['consumer', 'checkin', 'history'], {queryParams: { accountId: this.businessjson.id}});
     } else { // show consumer login
       const passParam = { callback: 'history' };
       this.doLogin('consumer', passParam);
