@@ -21,18 +21,22 @@ export class ShoppingCartComponent implements OnInit {
     public sharedFunctionobj: SharedFunctions) { }
 
   ngOnInit() {
-console.log('inisde');
-   this.orderList = JSON.parse(localStorage.getItem('order'));
-   console.log(this.orderList);
-   this.orders =[...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
-   console.log(this.orders);
+    console.log('inisde');
+    this.orderList = JSON.parse(localStorage.getItem('order'));
+    console.log(this.orderList);
+    this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
+    console.log(this.orders);
   }
   getItemQty(item) {
-    return this.orderList.filter(i => i.itemId === item.itemId).length;
+    const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
+    if (qty === 0) {
+      this.removeItemFromCart(item);
+    }
+    return qty;
   }
   getItemPrice(item) {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
-    return  item.price * qty;
+    return item.price * qty;
   }
   increment(item) {
     this.addToCart(item);

@@ -421,6 +421,21 @@ ul.details.badges li {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
+.bus-item .card.card-order-item-n {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+  transition: 0.3s;
+  border-radius: 5px;
+  width: 150px !important;
+  height: 200px;
+  margin: auto;
+  padding: 0px !important;
+  border: 1px solid #106e76 !important;
+}
+
+.bus-item .card.card-order-item-n {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
 
 .bus-item .card-item-content {
   margin-top: 0px !important;
@@ -477,6 +492,8 @@ ul.details.badges li {
   width: 70px !important;
   border: 1px solid #106e76 !important;
 }
+
+
 
 .bus-item .card.card-item-n .card-item-title a {
   /* height: 100%; */

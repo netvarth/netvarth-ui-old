@@ -789,50 +789,42 @@
 
         <!-- display items -->
 
-        <div class="card" style="width: 18rem;">
-            <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
         <div>
           <ng-container *ngIf="onlinePresence && catalogItem.length >= 1">
             <div class="bus-item" *ngFor="let item of catalogItem;let i=index;">
-              <div class="card card-item-n no-padding">
+              <div class="card card-order-item-n no-padding">
 
-                  <div class="card-body">
+
                       <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" >
 
                 <div class="card-item-content">
-                    <div class="card-item-title">
-                        <a class="pointer-cursor" (click)="showServiceDetail(item, businessjson.businessName)">
-                          <b>
-                            {{item.itemName | capitalizeFirst | limitTo: [35, '...']}}
-                          </b>
-                        </a>
 
-                      </div>
                   <div class="card-item-content-info">
+                      <div class="card-item-title">
+                          <a class="pointer-cursor" (click)="showServiceDetail(item, businessjson.businessName)">
+                            <b>
+                              {{item.itemName | capitalizeFirst | limitTo: [35, '...']}}
+                            </b>
+                          </a>
+
+                        </div>
                     <div class="card-item-content-action">
                       <div class="" style="padding-bottom: 10px">
 
                         <p class="title-style mgn-bt-5 mgn-up-5">
                           <span class="rupee-font">{{item.price| currency:'&#8377;'}}</span>
                         </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-item-content-action">
-                    <div class="" style="padding-bottom: 10px">
-                      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-                        <button class="m10" (click)="decrement(item)">-</button>
-                        <span>{{getItemQty(item)}}</span>
-                        <button class="m10" (click)="increment(item)">+</button>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                          <button class="m2" (click)="decrement(item)">-</button>
+                          <span>{{getItemQty(item)}}</span>
+                          <button class="m2" (click)="increment(item)">+</button>
 
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+
+
               </div>
             </div>
             </div>
