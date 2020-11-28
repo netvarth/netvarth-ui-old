@@ -1320,20 +1320,20 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       disableClose: true,
       data: {
         'userdata': this.bProfile,
-        img_type : image
-     }
+        img_type: image
+      }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
       if (result) {
         setTimeout(() => {
           this.getCoverPhoto();
-      }, 5000);
+        }, 5000);
       } else {
         this.getProviderLogo();
       }
     });
   }
-  imageSelect(input) {
+  imageSelect(input, type) {
     this.success_error = null;
     this.error_list = [];
     if (input.files && input.files[0]) {
@@ -1341,13 +1341,24 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.success_error = this.shared_functions.imageValidation(file);
         if (this.success_error === true) {
           const reader = new FileReader();
-          this.item_pic.files = input.files[0];
-          this.selitem_pic = input.files[0];
-          const fileobj = input.files[0];
-          reader.onload = (e) => {
-            this.item_pic.base64 = e.target['result'];
-          };
-          reader.readAsDataURL(fileobj);
+
+          if (type === 'cover') {
+            this.item_pic1.files = input.files[0];
+            this.selitem_pic = input.files[0];
+            const fileobj = input.files[0];
+            reader.onload = (e) => {
+              this.item_pic1.base64 = e.target['result'];
+            };
+            reader.readAsDataURL(fileobj);
+          } else {
+            this.item_pic.files = input.files[0];
+            this.selitem_pic = input.files[0];
+            const fileobj = input.files[0];
+            reader.onload = (e) => {
+              this.item_pic.base64 = e.target['result'];
+            };
+            reader.readAsDataURL(fileobj);
+          }
           if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
             // generating the data to be submitted to change the logo
             const submit_data: FormData = new FormData();
@@ -1357,7 +1368,11 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
             };
             const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
             submit_data.append('properties', blobPropdata);
-            this.uploadLogo(submit_data);
+            if (type === 'cover') {
+              this.uploadCoverPic(submit_data);
+            } else {
+              this.uploadLogo(submit_data);
+            }
           }
         } else {
           this.error_list.push(this.success_error);
@@ -1377,8 +1392,18 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       .subscribe(
         data => {
           this.provider_datastorage.updateProfilePicWeightage(true);
+          this.shared_functions.openSnackBar('Profile image uploaded successfully', { 'panelclass': 'snackbarerror' });
           //   this.data.logoExist  = true;
         });
+  }
+  uploadCoverPic(passdata) {
+    this.provider_services.uploadCoverFoto(passdata).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelclass': 'snackbarerror' });
+        }
+      });
   }
   // Social Media
   handleSocialmedia(key?) {
@@ -1477,7 +1502,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       ]);
     }, 50);
   }
-   getCoverPhoto() {
+  getCoverPhoto() {
     this.cover_url = '';
     this.provider_services.getCoverFoto().subscribe(
       data => {
@@ -1487,7 +1512,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.clogo = data;
           this.cover_url = data[0].url;
           this.imageToShow = this.cover_url;
-       //   this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
+          //   this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
         }
       });
   }
@@ -1496,8 +1521,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     const del_pic = this.clogo[0].keyName;
     this.provider_services.deleteCoverFoto(del_pic).subscribe(
       data => {
-          this.getCoverPhoto();
-          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
+        this.getCoverPhoto();
+        this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
       });
   }
   printQr(printSectionId) {

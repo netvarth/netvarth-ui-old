@@ -22,7 +22,8 @@
                   <!-- Cover Photo -->
                   <div class="coverFotoBorder cover-bg" [ngStyle]="{ 'background-image': 'url(' + imageToShow + ')'}">
                     <!--Camera icon(cover) For large device -->
-                    <span mat-button [matMenuTriggerFor]="menu" class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
+                    <span mat-button [matMenuTriggerFor]="menu"
+                      class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
                       <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;Edit Cover
                         Photo
                       </span>
@@ -32,7 +33,9 @@
                       <span class="fa propic-cam-icon mgn-top-m3"></span>
                     </span>
                     <mat-menu #menu="matMenu">
-                      <button mat-menu-item (click)="changeProPic('cover')">
+                      <input #coverlogofile type="file" accept="image/*" style="display:none;"
+                        (change)="imageSelect(coverlogofile,'cover')">
+                      <button mat-menu-item (click)="coverlogofile.click()">
                         <i class="fa fa-upload"></i>
                         Upload Photo
                         <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed>
@@ -49,7 +52,9 @@
                         <div class="pro-pic pro-pic-bdr" [class.yes]="profimg_exists">
                           <div class="pro-pic-img">
                             <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
-                            <div class="camera-outline custId-cursor" (click)="changeProPic('propic')"
+                            <input #logofile type="file" accept="image/*" style="display:none;"
+                              (change)="imageSelect(logofile,'blogo')">
+                            <div class="camera-outline custId-cursor" (click)="logofile.click()"
                               style="overflow: visible !important;">
                               <i class="fa propic-cam-icon" aria-hidden="true"></i>
                             </div>
@@ -78,7 +83,7 @@
                       </div>
                       <div class="col-md-6 col-xs-6 col-sm-6 mgn-up-5">
                         <button (click)="scroll(basicInfoSection)" type="button"
-                        [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
+                          [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
                       </div>
                     </div>
                   </div>
@@ -101,12 +106,15 @@
 
                 <!-- QR code -->
                 <div class="pubs card w-dta bprof no-shadow no-padding-up">
-                  <div *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0" class="incomplete-msg">
+                  <div
+                    *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0"
+                    class="incomplete-msg">
                     <div>
                       Please complete your profile to activate your Jaldee Link and QR Code
                     </div>
                   </div>
-                  <div [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0">
+                  <div
+                    [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0">
                     <div>
                       <h6 class="sub-heads">Here is your QR code and Link
                         <sup><span class="inactive" *ngIf="!onlinepresence_status">Inactive</span>
@@ -118,7 +126,8 @@
                         <div class="mgn-up-10">
                           <!-- If there is NO Custom ID -->
                           <div *ngIf="!bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" #qrCodeOnlineId>
+                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
+                              #qrCodeOnlineId>
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
                                 <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value"
                                   (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" class="custId-cursor">
@@ -132,7 +141,8 @@
                                   <div class="disp-flex smal-device-wt">
                                     <div class="trackSlide bprof-icons share-ico">
                                       <share-buttons [theme]="'circles-dark'" [include]="['facebook','email','copy']"
-                                        [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4" [autoSetMeta]="false">
+                                        [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [showText]="true"
+                                        [size]="-4" [autoSetMeta]="false">
                                       </share-buttons>
                                     </div>
                                     <div class="dwnld-bdr custId-cursor">
@@ -163,7 +173,8 @@
                                   <div class="disp-flex smal-device-wt">
                                     <div class="trackSlide bprof-icons share-ico">
                                       <share-buttons [theme]="'circles-dark'" [include]="['facebook','email','copy']"
-                                        [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4">
+                                        [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [showText]="true"
+                                        [size]="-4">
                                       </share-buttons>
                                     </div>
                                     <div class="dwnld-bdr custId-cursor">
@@ -682,4 +693,4 @@
     </div>
     <div class="clearfix"></div>
   </div>
-</section> 
+</section>
