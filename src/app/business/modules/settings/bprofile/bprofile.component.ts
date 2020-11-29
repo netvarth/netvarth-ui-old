@@ -194,6 +194,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   cover_url: string;
   clogo: ArrayBuffer;
   cvrimg_exists = false;
+  cacheavoider_cover: string;
   @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
@@ -1326,7 +1327,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       if (result) {
         setTimeout(() => {
           this.getCoverPhoto();
-      }, 5000);
+      }, 2000);
       } else {
         this.getProviderLogo();
       }
@@ -1437,11 +1438,15 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       data => {
         if (data) {
           console.log(data);
+          const cnow = new Date();
+          const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+          this.cacheavoider_cover = dd;
           this.imageToShow = '';
           this.clogo = data;
-          this.cover_url = data[0].url;
-          this.imageToShow = this.cover_url;
-       //   this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
+          // this.cover_url = data[0].url;
+          this.cover_url = (data[0].url) ? data[0].url + '?' + this.cacheavoider_cover : '';
+        //  this.imageToShow = this.cover_url;
+          this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
         }
       });
   }
