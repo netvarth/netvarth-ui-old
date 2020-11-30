@@ -1321,18 +1321,14 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       disableClose: true,
       data: {
         'userdata': this.bProfile,
-        img_type: image
-      }
+        img_type : image
+     }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
       if (result) {
         setTimeout(() => {
           this.getCoverPhoto();
-<<<<<<< HEAD
-        }, 5000);
-=======
-      }, 2000);
->>>>>>> refs/remotes/origin/1.6.x
+         }, 2000);
       } else {
         this.getProviderLogo();
       }
@@ -1507,6 +1503,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       ]);
     }, 50);
   }
+
   getCoverPhoto() {
     this.cover_url = '';
     this.provider_services.getCoverFoto().subscribe(
@@ -1518,16 +1515,10 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.cacheavoider_cover = dd;
           this.imageToShow = '';
           this.clogo = data;
-<<<<<<< HEAD
-          this.cover_url = data[0].url;
-          this.imageToShow = this.cover_url;
-          //   this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
-=======
-          // this.cover_url = data[0].url;
+           // this.cover_url = data[0].url;
           this.cover_url = (data[0].url) ? data[0].url + '?' + this.cacheavoider_cover : '';
         //  this.imageToShow = this.cover_url;
           this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
->>>>>>> refs/remotes/origin/1.6.x
         }
       });
   }
