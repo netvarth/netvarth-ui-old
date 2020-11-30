@@ -951,3 +951,6 @@ ul.details.badges li {
     margin-top: -110px !important;
   }
 }
+.bus-page .cvr-dp-bdr {
+  border: 5px solid #ffffff !important;
+}

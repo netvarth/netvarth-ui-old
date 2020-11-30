@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
                             <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
-                                class="img-circle img-responsive pointer-cursor"
+                                class="img-circle img-responsive pointer-cursor" [ngClass]="{'cvr-dp-bdr': bgCover}"
                                 (click)="galleryExists && openImageModalRow(image_list_popup[0])">
                         </div>
                         <div class="gal col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="galleryenabledArr.length > 0">

@@ -935,3 +935,21 @@ ul.details.badges li {
 .bus-page .socialmedia li i.pntr:before {
   color: #ef452f;
 }
+
+/* cover foto */
+.bus-page .cvr-ht {
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: 100% 300px;
+}
+.bus-page .cvr-dp-mgn {
+  margin-top: -80px;
+}
+@media (min-width: 992px) {
+  .bus-page .cvr-dp-mgn {
+    margin-top: -110px !important;
+  }
+}
+.bus-page .cvr-dp-bdr {
+  border: 5px solid #ffffff !important;
+}

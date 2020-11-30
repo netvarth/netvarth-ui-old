@@ -225,6 +225,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   onlinePresence = false;
   imgLength;
   extra_img_count: number;
+  bgCover: any;
   // cSource  = 'qr';
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -450,6 +451,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.pageFound = true;
               this.socialMedialist = [];
               this.businessjson = res;
+              if (this.businessjson.cover) {
+                this.bgCover = this.businessjson.cover.url;
+              }
               this.branch_id = this.businessjson.branchId;
               this.account_Type = this.businessjson.accountType;
               if (this.account_Type === 'BRANCH') {

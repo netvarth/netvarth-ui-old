@@ -448,7 +448,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
-            console.log(this.businessjson);
             if (this.businessjson.cover) {
               this.bgCover = this.businessjson.cover.url;
             }
