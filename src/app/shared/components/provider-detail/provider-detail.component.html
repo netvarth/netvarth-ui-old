@@ -14,13 +14,13 @@
                 </div>
                 <div class="panel-body">
                     <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3">
-                                            <div class="badge-smalldv  visible-xs">
-                        <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
-                            src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                    <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
-                            src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
-                    <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
-                            src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                        <div class="badge-smalldv  visible-xs">
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
+                                    class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
+                                    class="img_sizenew" src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
+                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
+                                    class="img_sizenew" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
                             <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
@@ -96,23 +96,25 @@
                                 </div>
                             </div>
                             <div class="col-sm-3 visible-sm">
-                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
-                                    src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
-                                    src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
-                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
-                                    src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
+                                        class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
+                                        class="img_sizenew" src="./assets/images/BasicPlsOrg.png"
+                                        alt="Basic Plus"></span>
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
+                                        class="img_sizenew" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                             </div>
                         </div>
                         <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 no-padding">
                             <div class="verify hidden-xs hidden-sm">
-                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
-                                    src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
-                                    src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
-                            <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
-                                    src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
-                                </div>
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
+                                        class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
+                                        class="img_sizenew" src="./assets/images/BasicPlsOrg.png"
+                                        alt="Basic Plus"></span>
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
+                                        class="img_sizenew" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                            </div>
                             <ul class="bus-actions mgn-up-10 no-padding" *ngIf="settings_exists && business_exists">
                                 <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
@@ -195,8 +197,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10"
-                                *ngIf="(locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none') || 
+                                <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10" *ngIf="(locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none') || 
                                 (locationjson[0].open24hours && locationjson[0].open24hours==1) || locationjson[0]?.locationVirtualFields?.traumacentre=='true' || 
                                 locationjson[0]?.locationVirtualFields?.docambulance=='true' || locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' || 
                                 locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' || 
@@ -306,14 +307,9 @@
                     </div>
                     <div class="clearfix"></div>
                     <!-- Departments True-->
-                    <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-10" *ngIf="!showDepartments && (loc['apptservices'].length > 0 || loc['wlservices'].length > 0)">
-                        <h5 class="mgn-bt-5"> Services and Consultations 
-                        </h5>
-                        <h6 class="question-header">Book online now for your convenience.
-                        </h6>
-                    </div>
-                    <div class="serv-head col-md-12 col-xs-12 col-sm-12" *ngIf="showDepartments">
-                        <h5 class="mgn-bt-5"> Services and Consultations 
+                    <div class="serv-head col-md-12 col-xs-12 col-sm-12" [class.mgn-bt-10]="!showDepartments"
+                        *ngIf="(showDepartments && deptUsers.length == 0) || (!showDepartments && (loc['apptservices'].length > 0 || loc['wlservices'].length > 0))">
+                        <h5 class="mgn-bt-5"> Services and Consultations
                         </h5>
                         <h6 class="question-header">Book online now for your convenience.
                         </h6>
@@ -681,7 +677,7 @@
                                                                     <ng-container class="bottom-actions-root"
                                                                         *ngIf="service.serviceAvailability">
                                                                         <ng-container class="checkin-est"
-                                                                            *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">                                                                            
+                                                                            *ngIf="service.serviceAvailability['calculationMode']!='NoCalc'">
                                                                             <p class="price mgn-bt-0"
                                                                                 *ngIf="!service.serviceAvailability['serviceTime']">
                                                                                 Est Wait Time</p>
@@ -920,7 +916,7 @@
                                                 <p class="price mgn-up-5-m mgn-bt-5">
                                                     to
                                                 </p>
-                                                <p class="title-style mgn-up-5-m mgn-bt-5">    
+                                                <p class="title-style mgn-up-5-m mgn-bt-5">
                                                     <span
                                                         class="rupee-font">{{service.maxDonationAmount| currency:'&#8377;'}}</span>
                                                 </p>
