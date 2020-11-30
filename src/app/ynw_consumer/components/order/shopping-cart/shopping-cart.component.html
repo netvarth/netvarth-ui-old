@@ -3,148 +3,149 @@
 
 
 <section class="container no-padding cons-donate no-padding-small">
-<div class="content  p0 loc-list p-checkin ynw-common-form-nm">
-  <div class="col-md-12 no-padding-small">
-    <div class="panel panel-default">
-        <div class="panel-heading top-row ">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                    <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
-                </div>
-          </div>
-      <div class="panel-body no-padding">
-        <div class="c-outer m0">
-          <div class="col-a pl0 col-md-12 col-lg-8 col-xl-8 col-xs-12">
-            <div class="bill-section">
-              <div class="bill-section-content">
-                <div class="bill-wrapper ">
-                  <div style="text-align: center;">
-                   Your Cart !!
+  <div class="content  p0 loc-list p-checkin ynw-common-form-nm">
+    <div class="col-md-12 no-padding-small">
+      <div class="panel panel-default">
+          <div class="panel-heading top-row ">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                      <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
                   </div>
-
-                  <div class="bill-content">
-                    <div class="section-three">
-                      <div class="bill-breakup">
-                        <div class="list border">
-
-
-                          <div class="list-content" style="text-align: left;"
-                          *ngFor="let item of orders; let i = index">
-
-                     <div class="copy one">
-                        <div class="col-a col-b cd-b">
-                           <div class="mgn-up-10">
-                            <div class="div-outline custId-cursor">
-                                <div class="c-row one">
-
-                              <div class="name cart-flex"> {{item.itemName}}</div>
-                              <button class="m10" (click)="decrement(item)">-</button>
-                              <span class="quantity">{{getItemQty(item)}}</span>
-                              <button class="m10" (click)="increment(item)">+</button>
-                              <span>{{getItemPrice(item)}}</span>
-                              <div style="padding-left: 30px;">
-                                  <button  (click)="removeItemFromCart(item)">
-                                      <i style="float: right;" class="fa fa-window-close"></i>
-                                    </button>
-                              </div>
-
-                            </div>
-                          </div>
-
-                        </div>
-                      </div>
+            </div>
+        <div class="panel-body no-padding">
+          <div class="c-outer m0">
+            <div class="col-a pl0 col-md-12 col-lg-8 col-xl-8 col-xs-12">
+              <div class="bill-section">
+                <div class="bill-section-content">
+                  <div class="bill-wrapper ">
+                    <div style="text-align: center;">
+                     Your Cart !!
                     </div>
-                    <!-- <div class="shopcart-cancel">
-                        <button >
-                          <i style="float: right;" class="fa fa-window-close"></i>
-                        </button>
-                      </div> -->
-                  </div>
+
+                    <div class="bill-content">
+                      <div class="section-three">
+                        <div class="bill-breakup">
+                          <div class="list border">
 
 
+                            <div class="list-content" style="text-align: left;"
+                            *ngFor="let item of orders; let i = index">
 
-
-
-
-
-                        </div>
-
-                      </div>
-                      <div>
-                        <p>Choose delivery type</p>
-                        <!-- <mat-radio-group >
-                            <mat-radio-button value="1">Home delivery </mat-radio-button>
-                           <mat-radio-button value="2">Store pick up</mat-radio-button>
-                          </mat-radio-group> -->
-                           <mat-radio-group>
-                              <mat-radio-button
-                                  class="mgn-lt-5 mgn-bt-5"
-                                  [value]="'conventional'"  >
-                                  Home delivery
-                              </mat-radio-button> <br>
-                              <mat-radio-button
-                                  class="mgn-lt-5   mgn-rt-10"
-                                  [value]="'manual'" >
-                                  Store pick up
-                              </mat-radio-button>
-
-
-
-
-                        </mat-radio-group>
-
-                       </div>
-                      <div class="copy one">
+                       <div class="copy one">
                           <div class="col-a col-b cd-b">
                              <div class="mgn-up-10">
                               <div class="div-outline custId-cursor">
-                      <div class="amount-table">
-                        <div class="amt-content">
-                          <table class="amt-content">
-                            <tbody>
+                                  <div class="c-row one">
+
+                                <div class="name cart-flex"> {{item.itemName}}</div>
+                                <button (click)="decrement(item)">-</button>
+                                <span class="quantity">{{getItemQty(item)}}</span>
+                                <button (click)="increment(item)">+</button>
+                                <span>{{getItemPrice(item)}}</span>
+                                <div style="padding-left: 30px;">
+                                    <button  (click)="removeItemFromCart(item)">
+                                        <i style="float: right;" class="fa fa-window-close"></i>
+                                      </button>
+                                </div>
+
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="shopcart-cancel">
+                          <button >
+                            <i style="float: right;" class="fa fa-window-close"></i>
+                          </button>
+                        </div> -->
+                    </div>
+
+
+
+
+
+
+
+                          </div>
+
+                        </div>
+                        <div>
+                          <p>Choose delivery type</p>
+                          <!-- <mat-radio-group >
+                              <mat-radio-button value="1">Home delivery </mat-radio-button>
+                             <mat-radio-button value="2">Store pick up</mat-radio-button>
+                            </mat-radio-group> -->
+                             <mat-radio-group>
+                                <mat-radio-button
+                                    class="mgn-lt-5 mgn-bt-5"
+                                    [value]="'conventional'"  >
+                                    Home delivery
+                                </mat-radio-button> <br>
+                                <mat-radio-button
+                                    class="mgn-lt-5   mgn-rt-10"
+                                    [value]="'manual'" >
+                                    Store pick up
+                                </mat-radio-button>
+
+
+
+
+                          </mat-radio-group>
+
+                         </div>
+                        <div class="copy one">
+                            <div class="col-a col-b cd-b">
+                               <div class="mgn-up-10">
+                                <div class="div-outline custId-cursor">
+                        <div class="amount-table">
+                          <div class="amt-content">
+                            <table class="amt-content">
+                              <tbody>
+                                  <tr>
+                                      <td><u> Apply Promcode </u> </td>
+
+                                    </tr>
                                 <tr>
-                                    <td><u> Apply Promcode </u> </td>
-
-                                  </tr>
-                              <tr>
-                                <td >Item Total</td>
-                                <td style="text-align: end;" class="price rupee-font">
-                                {{this.price}}
-                                </td>
-                              </tr>
+                                  <td >Item Total</td>
+                                  <td style="text-align: end;" class="price rupee-font">
+                                  {{this.price}}
+                                  </td>
+                                </tr>
 
 
 
 
-                              <tr>
-                                <td >Delivery charge </td>
-                                <td style="text-align: end;" class="price  rupee-font"> 100</td>
-                              </tr>
+                                <tr>
+                                  <td >Delivery charge </td>
+                                  <td style="text-align: end;" class="price  rupee-font"> 100</td>
+                                </tr>
 
-                              <tr >
-                                <td >Subtotal</td>
-                                <td style="text-align: end;" class="price rupee-font">500</td>
-                              </tr>
+                                <tr >
+                                  <td >Subtotal</td>
+                                  <td style="text-align: end;" class="price rupee-font">500</td>
+                                </tr>
 
 
 
-                            </tbody>
-                          </table>
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <h2 class="textcenter"><button class="pay" (click)="cart()"><h6 style="padding-top: 10px;">Go To Cart</h6></button></h2>
+                <h2 class="textcenter"><button class="pay" (click)="cart()"><h6 style="padding-top: 10px;">Go To Cart</h6></button></h2>
 
-                              </div>
+                                </div>
+                    </div>
+
+
+
+
+
                   </div>
-
-
-
-
-
                 </div>
               </div>
             </div>
@@ -152,10 +153,9 @@
         </div>
       </div>
     </div>
+    <div class="clearfix"></div>
   </div>
-  <div class="clearfix"></div>
-</div>
-</section>
+  </section>
 
 
 
@@ -173,102 +173,102 @@
 
 
 
-<!--
-<section class="container no-padding cons-donate no-padding-small">
-    <div class="content p0 loc-list p-checkin ynw-common-form-nm">
-        <div class="panel panel-default">
-            <div class="panel-heading top-row ">
-            </div>
-            <div class="panel-body no-padding">
-                <div class="c-outer m0">
-                    <div class="c-body">
-                        <h6 style="text-align: center;"> Your Cart</h6>
-                     <div class="col-md-12 no-padding">
-                            <div class="card p0 ">
-                                 <div class="lbl col-sm-9 col-md-9 col-lg-9 col-xs-9 col-sm-9">
-                                            <div class="copy one">
-                                                  <div class="col-a col-b cd-b">
-                                                    <div class="mgn-up-10">
+  <!--
+  <section class="container no-padding cons-donate no-padding-small">
+      <div class="content p0 loc-list p-checkin ynw-common-form-nm">
+          <div class="panel panel-default">
+              <div class="panel-heading top-row ">
+              </div>
+              <div class="panel-body no-padding">
+                  <div class="c-outer m0">
+                      <div class="c-body">
+                          <h6 style="text-align: center;"> Your Cart</h6>
+                       <div class="col-md-12 no-padding">
+                              <div class="card p0 ">
+                                   <div class="lbl col-sm-9 col-md-9 col-lg-9 col-xs-9 col-sm-9">
+                                              <div class="copy one">
+                                                    <div class="col-a col-b cd-b">
+                                                      <div class="mgn-up-10">
 
-                                                        <div class="div-outline custId-cursor">
-                                                                <div class=" col-md-3 col-lg-3 col-12">
-                                                                         phone
-                                                                </div>
-                                                                <div class=" col-md-3 col-lg-3 col-12">
-                                                                         80
+                                                          <div class="div-outline custId-cursor">
+                                                                  <div class=" col-md-3 col-lg-3 col-12">
+                                                                           phone
+                                                                  </div>
+                                                                  <div class=" col-md-3 col-lg-3 col-12">
+                                                                           80
+                                                                   </div>
+                                                                  <div class=" col-md-3 col-lg-3 col-12">
+                                                                            100
                                                                  </div>
-                                                                <div class=" col-md-3 col-lg-3 col-12">
-                                                                          100
-                                                               </div>
-                                                                  <i style="float: right;" class="fa fa-window-close"></i>
-                                                          <div class="clearfix"></div>
-                                                        </div>
+                                                                    <i style="float: right;" class="fa fa-window-close"></i>
+                                                            <div class="clearfix"></div>
+                                                          </div>
 
+                                                      </div>
                                                     </div>
                                                   </div>
-                                                </div>
 
 
-                                    </div>
-                                    <div class=" col-sm-9 col-md-9 col-lg-9 col-xs-9 col-sm-9">
-                                            <div class="copy one">
-                                                  <div class="col-a col-b cd-b">
-                                                    <div class="mgn-up-10">
+                                      </div>
+                                      <div class=" col-sm-9 col-md-9 col-lg-9 col-xs-9 col-sm-9">
+                                              <div class="copy one">
+                                                    <div class="col-a col-b cd-b">
+                                                      <div class="mgn-up-10">
 
-                                                        <div class="div-outline custId-cursor">
-                                                                <div class=" col-md-3 col-lg-3 col-12">
-                                                                         phone
-                                                                </div>
-                                                                <div class=" col-md-3 col-lg-3 col-12">
-                                                                         80
+                                                          <div class="div-outline custId-cursor">
+                                                                  <div class=" col-md-3 col-lg-3 col-12">
+                                                                           phone
+                                                                  </div>
+                                                                  <div class=" col-md-3 col-lg-3 col-12">
+                                                                           80
+                                                                   </div>
+                                                                  <div class=" col-md-3 col-lg-3 col-12">
+                                                                            100
                                                                  </div>
-                                                                <div class=" col-md-3 col-lg-3 col-12">
-                                                                          100
-                                                               </div>
-                                                                  <i style="float: right;" class="fa fa-window-close"></i>
-                                                          <div class="clearfix"></div>
-                                                        </div>
+                                                                    <i style="float: right;" class="fa fa-window-close"></i>
+                                                            <div class="clearfix"></div>
+                                                          </div>
 
+                                                      </div>
                                                     </div>
                                                   </div>
-                                                </div>
 
 
-                                    </div>
-                                    <div class=" col-sm-9 col-md-9 col-lg-9 col-xs-9 col-sm-9">
-                                            <div class="copy one">
-                                                  <div class="col-a col-b cd-b">
-                                                    <div class="p0 w-dta active no-padding mgn-up-10">
+                                      </div>
+                                      <div class=" col-sm-9 col-md-9 col-lg-9 col-xs-9 col-sm-9">
+                                              <div class="copy one">
+                                                    <div class="col-a col-b cd-b">
+                                                      <div class="p0 w-dta active no-padding mgn-up-10">
 
-                                                        <div class="div-outline custId-cursor">
-                                                                <div class=" col-md-3 col-lg-3 col-12">
-                                                                         phone
-                                                                </div>
-                                                                <div class=" col-md-3 col-lg-3 col-12">
-                                                                         80
+                                                          <div class="div-outline custId-cursor">
+                                                                  <div class=" col-md-3 col-lg-3 col-12">
+                                                                           phone
+                                                                  </div>
+                                                                  <div class=" col-md-3 col-lg-3 col-12">
+                                                                           80
+                                                                   </div>
+                                                                  <div class=" col-md-3 col-lg-3 col-12">
+                                                                            100
                                                                  </div>
-                                                                <div class=" col-md-3 col-lg-3 col-12">
-                                                                          100
-                                                               </div>
-                                                                  <i style="float: right;" class="fa fa-window-close"></i>
-                                                          <div class="clearfix"></div>
-                                                        </div>
+                                                                    <i style="float: right;" class="fa fa-window-close"></i>
+                                                            <div class="clearfix"></div>
+                                                          </div>
 
+                                                      </div>
                                                     </div>
                                                   </div>
-                                                </div>
 
 
-                                    </div>
+                                      </div>
 
 
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
 
-            </div>
-        </div>
-    </div>
-</section> -->
+              </div>
+          </div>
+      </div>
+  </section> -->
