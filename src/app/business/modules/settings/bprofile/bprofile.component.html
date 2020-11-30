@@ -22,9 +22,14 @@
                   <!-- Cover Photo -->
                   <div class="coverFotoBorder cover-bg" [ngStyle]="{ 'background-image': 'url(' + imageToShow + ')'}">
                     <!--Camera icon(cover) For large device -->
+<<<<<<< HEAD
                     <span mat-button [matMenuTriggerFor]="menu"
                       class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
                       <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;Edit Cover
+=======
+                    <span mat-button [matMenuTriggerFor]="menu" class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
+                      <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;{{imageToShow ? 'Edit' : 'Upload'}} Cover
+>>>>>>> refs/remotes/origin/1.6.x
                         Photo
                       </span>
                     </span>
