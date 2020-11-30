@@ -137,7 +137,7 @@
                                                         </div>
                                                     </div>
                                                     <div *ngIf="sel_ser_det.preInfoEnabled">
-                                                        <div class="lnk">{{sel_ser_det.preInfoTitle}}</div>
+                                                        <a class="lnk" (click)="showPreInfo()">{{sel_ser_det.preInfoTitle}}</a>
                                                         <!-- <div class="preinfo-text mgn-up-5">
                                                             <span [innerHTML]="sel_ser_det.preInfoText"></span>
                                                         </div>
