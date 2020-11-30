@@ -1,13 +1,16 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10"> 
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeecatalogcreation()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeecatalogcreation()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
             select items
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> </h5>
     </div>
   </section>
   <section >
-<div>
+        <div  *ngIf="api_loading">
+                <app-common-innerloading-spinner></app-common-innerloading-spinner>
+            </div>
+<div *ngIf="!api_loading">
     <ng-container *ngIf="catalogItem.length > 0">
        <div class="bus-item" *ngFor="let item of catalogItem;let i=index;">
            <div class="card card-item-n no-padding" (click)="selectItem(item,i)" [class.itemselected]="catalogItem[i].selected">
@@ -34,6 +37,9 @@
        </div>
 
    </ng-container>
+   <div>{{selectedCount}} items are selected</div>
+   <div> <button type="button"  (click)="selectedItems()" [disabled]="selectedCount === 0" class="cs-btn bt1" mat-button>ok</button>
+</div>
   </div>
-  <div>Your selected ({{selecteditems.length}}) items</div>
+  
 </section>

@@ -63,10 +63,10 @@ export class CatalogComponent implements OnInit, OnDestroy {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-
         this.getitems();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+        this.sharedfunctionObj.removeitemfromLocalStorage('selecteditems');
     }
     // tslint:disable-next-line: use-lifecycle-interface
     ngOnDestroy() {

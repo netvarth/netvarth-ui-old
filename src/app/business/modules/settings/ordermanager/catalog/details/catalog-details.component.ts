@@ -98,6 +98,7 @@ export class CatalogdetailComponent implements OnInit {
     tempPreInfoTitle = '';
     tempPostInfoTitle = '';
     public Editor = DecoupledEditor;
+    seletedCatalogItems = [];
 
   constructor(private provider_services: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
@@ -111,6 +112,8 @@ export class CatalogdetailComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.api_loading = false;
+    this.seletedCatalogItems = this.sharedfunctionObj.getitemfromLocalStorage('selecteditems');
+    console.log(this.seletedCatalogItems);
   }
   addItemstoCart() {
     this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs' , 'add', 'items']);

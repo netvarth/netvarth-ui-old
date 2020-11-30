@@ -109,9 +109,16 @@
                                               </div>
 
                                               <div class="mgn-up-10 box-style col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <h4>Add items to your cart</h4>
-                                                <span class="cs-btn bt3" (click)="addItemstoCart()" >
-                                                  Add items</span>
+                                                <div  *ngIf="!seletedCatalogItems">
+                                                    <h4>Add items to your cart</h4>
+                                                    <span class="cs-btn bt3" (click)="addItemstoCart()" >
+                                                      Add items</span>
+                                                </div>
+                                                
+                                                  <div *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">
+                                                      <h4>{{seletedCatalogItems.length}} items are selected</h4>
+                                                      <span class="cs-btn bt3" (click)="addItemstoCart()" > Edit items</span>
+                                                  </div>
                                               </div>
                                       
                                             <!-- <div class="form-group">
