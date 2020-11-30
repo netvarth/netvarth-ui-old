@@ -1402,7 +1402,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       data => {
         console.log(data);
         if (data) {
-          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelclass': 'snackbarerror' });
+          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelclass': 'snackbarerror' }); 
+            this.getCoverPhoto();
         }
       });
   }

@@ -22,14 +22,8 @@
                   <!-- Cover Photo -->
                   <div class="coverFotoBorder cover-bg" [ngStyle]="{ 'background-image': 'url(' + imageToShow + ')'}">
                     <!--Camera icon(cover) For large device -->
-<<<<<<< HEAD
-                    <span mat-button [matMenuTriggerFor]="menu"
-                      class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
-                      <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;Edit Cover
-=======
                     <span mat-button [matMenuTriggerFor]="menu" class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
                       <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;{{imageToShow ? 'Edit' : 'Upload'}} Cover
->>>>>>> refs/remotes/origin/1.6.x
                         Photo
                       </span>
                     </span>
@@ -88,7 +82,7 @@
                       </div>
                       <div class="col-md-6 col-xs-6 col-sm-6 mgn-up-5">
                         <button (click)="scroll(basicInfoSection)" type="button"
-                          [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
+                        [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
                       </div>
                     </div>
                   </div>
@@ -111,15 +105,12 @@
 
                 <!-- QR code -->
                 <div class="pubs card w-dta bprof no-shadow no-padding-up">
-                  <div
-                    *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0"
-                    class="incomplete-msg">
+                  <div *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0" class="incomplete-msg">
                     <div>
                       Please complete your profile to activate your Jaldee Link and QR Code
                     </div>
                   </div>
-                  <div
-                    [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0">
+                  <div [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0">
                     <div>
                       <h6 class="sub-heads">Here is your QR code and Link
                         <sup><span class="inactive" *ngIf="!onlinepresence_status">Inactive</span>
@@ -131,8 +122,7 @@
                         <div class="mgn-up-10">
                           <!-- If there is NO Custom ID -->
                           <div *ngIf="!bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
-                              #qrCodeOnlineId>
+                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" #qrCodeOnlineId>
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
                                 <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value"
                                   (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" class="custId-cursor">
