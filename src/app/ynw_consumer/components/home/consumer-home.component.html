@@ -85,7 +85,8 @@
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                             <span class="doctrnme" *ngIf="booking.provider">
-                                                Provider : {{booking.provider.businessName}}<br>
+                                                Provider : {{booking.provider.firstName}}
+                                                {{booking.provider.lastName}}<br>
                                             </span>
                                             <span>
                                                 <i class="fa phon-icon"
@@ -430,7 +431,8 @@
                                                 </h4>
                                                 <span class="doctrnme" *ngIf="booking.provider">
                                                     Provider :
-                                                    {{booking.provider.businessName}}<br>
+                                                    {{booking.provider.firstName}}
+                                                {{booking.provider.lastName}}<br>
                                                 </span>
                                                 <span>
                                                     <i class="fa phon-icon"
@@ -785,7 +787,8 @@
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                             <span class="doctrnme" *ngIf="booking.provider">
-                                                Provider : {{booking.provider.businessName}}<br>
+                                                Provider : {{booking.provider.firstName}}
+                                                {{booking.provider.lastName}}<br>
                                             </span>
                                             <span>
                                                 <i class="fa phon-icon"
@@ -1043,7 +1046,8 @@
                                                 </h4>
                                                 <span class="doctrnme" *ngIf="booking.provider">
                                                     Provider :
-                                                    {{booking.provider.businessName}}<br>
+                                                    {{booking.provider.firstName}}
+                                                    {{booking.provider.lastName}}<br>
                                                 </span>
                                                 <span>
                                                     <i class="fa phon-icon"
