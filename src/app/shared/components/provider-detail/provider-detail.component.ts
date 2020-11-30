@@ -2160,7 +2160,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   //OrderItem add to cart
   addToCart(Item) {
-    alert(JSON.stringify(Item));
+
     this.orderList.push(Item);
 
 
@@ -2196,7 +2196,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['consumer', 'order', 'item-details']);
   }
   increment(item) {
-    alert('incremet');
+
     this.addToCart(item);
   }
 
