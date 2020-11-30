@@ -103,7 +103,7 @@
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifycheknPushphonenumber" minlength="0" maxlength="10">
-                        <div class="input-group-append">
+                        <div class="input-group-append" *ngIf="accountType==='BRANCH'">
                           <button class="btn bt3 btn-default" (click)="addcheknPushPh()" type="button">Add</button>
                         </div>
                       </div>
@@ -187,7 +187,7 @@
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifycheknCancelPushphonenumber" minlength="0" maxlength="10">
-                        <div class="input-group-append">
+                        <div class="input-group-append" *ngIf="accountType==='BRANCH'">
                           <button class="btn bt3 btn-default" (click)="addcheknCancelPushPh()" type="button">Add</button>
                         </div>
                       </div>
@@ -271,7 +271,7 @@
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifyapptPushphonenumber" minlength="0" maxlength="10">
-                        <div class="input-group-append">
+                        <div class="input-group-append" *ngIf="accountType==='BRANCH'">
                           <button class="btn bt3 btn-default" (click)="addapptPushPh()" type="button">Add</button>
                         </div>
                       </div>
@@ -348,7 +348,7 @@
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifyapptcancelPushphonenumber" minlength="0" maxlength="10">
-                        <div class="input-group-append">
+                        <div class="input-group-append" *ngIf="accountType==='BRANCH'">
                           <button class="btn bt3 btn-default" (click)="addapptcancelPushPh()" type="button">Add</button>
                         </div>
                       </div>
@@ -435,7 +435,7 @@
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifypushDonatephonenumber" minlength="0" maxlength="10">
-                        <div class="input-group-append">
+                        <div class="input-group-append" *ngIf="accountType==='BRANCH'">
                           <button class="btn bt3 btn-default" (click)="addpushDonatePh()" type="button">Add</button>
                         </div>
                       </div>
@@ -581,7 +581,7 @@
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifypushSystemphonenumber" minlength="0" maxlength="10">
-                        <div class="input-group-append">
+                        <div class="input-group-append" *ngIf="accountType==='BRANCH'">
                           <button class="btn bt3 btn-default" (click)="addpushSystemPh()" type="button">Add</button>
                         </div>
                       </div>

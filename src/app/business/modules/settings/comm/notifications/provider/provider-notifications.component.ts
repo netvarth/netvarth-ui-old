@@ -131,6 +131,7 @@ export class ProviderNotificationsComponent implements OnInit {
   is_noSMS = false;
   corpSettings: any;
   addondialogRef: any;
+  accountType;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     public route: ActivatedRoute,
@@ -148,6 +149,7 @@ export class ProviderNotificationsComponent implements OnInit {
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.accountType = user.accountType;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.getGlobalSettingsStatus();
