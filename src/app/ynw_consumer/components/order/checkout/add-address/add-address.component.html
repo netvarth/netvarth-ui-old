@@ -1,107 +1,101 @@
-
-
-
-<form  class="drugdetail">
-    <h1 class="mat-dialog-title"> Enter new adress
-      <button #queue mat-dialog-close class="modal_close" tabindex="-1">
-        <i class="fa fa-window-close" aria-hidden="true"></i>
-      </button>
-    </h1>
+  <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="drugdetail">
+            <h1 class="mat-dialog-title">Enter new adress
+              <button #queue mat-dialog-close class="modal_close" tabindex="-1" (click)="close()">
+                <i class="fa fa-window-close" aria-hidden="true"></i>
+              </button>
+            </h1>
     <mat-dialog-content>
 
     <div class="lbl col-sm-6 col-md-6 col-lg-6 col-xl-6">   
-            <div class="copy one">
-                    <div class="col-a col-b cd-b">
-                       <div class="mgn-up-10">      
-                        <div class="div-outline  address">
-                            <div class="c-row one">
-                       
-                          <div class="price"> Phone number </div>           
-                        </div>     
-                      </div>                         
-                    </div>
-                  </div>
-                </div>    
-                <div class="copy one">
-                        <div class="col-a col-b cd-b">
-                           <div class="mgn-up-10">      
-                            <div class="div-outline  address">
-                                <div class="c-row one">
-                             <div class="price"> First name</div>           
-                            </div>     
-                          </div>                         
-                        </div>
-                      </div>
-                    </div> 
-                    <div class="copy one">
-                            <div class="col-a col-b cd-b">
-                               <div class="mgn-up-10">      
-                                <div class="div-outline  address">
-                                    <div class="c-row one">
-                                 <div class="price"> last  name</div>           
-                                </div>     
-                              </div>                         
-                            </div>
-                          </div>
-                        </div>      
-                        <div class="copy one">
-                                <div class="col-a col-b cd-b">
-                                   <div class="mgn-up-10">      
-                                    <div class="div-outline address">
-                                        <div class="c-row one">
-                                     <div class="price"> Email</div>           
-                                    </div>     
-                                  </div>                         
-                                </div>
-                              </div>
-                            </div>                
+
+
+                                      <div class="form-group">
+                                        
+                                          <input matInput type="text" class="form-control"  placeholder="Phone number" formControlName="pnone_number">
+                                      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'pnone_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'pnone_number',
+                                      {
+                                        'required' : 'Mobile number is required',
+                                        'minlength' : 'Enter a 10 digit mobile number',
+                                        'maxlength' : 'Enter a 10 digit mobile number',
+                                        'pattern' : 'Only numbers are allowed'
+                                      })">
+                                       </app-field-error-display>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <input matInput type="text" class="form-control"  placeholder="First name" formControlName="first_name">
+                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
+                                    {
+                                      'required' : 'First name is required',
+                                      'pattern' : 'Only alphabets are allowed'
+                                    })">
+                                     </app-field-error-display>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                      <input matInput type="text" class="form-control"    placeholder="Last name" formControlName="last_name">
+                                  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+                                  {
+                                    'required' : 'First name is required',
+                                    'pattern' : 'Only alphabets are allowed'
+                                  })">
+                                   </app-field-error-display>
+                                  </div>
+                                  <div class="form-group">
+                                    <input matInput type="text" class="form-control"    placeholder="Email(user@xyz.com)" formControlName="email_id">
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email_id',
+                                {
+                                  'required' : 'Email is required',
+                                  'pattern' : 'Please enter valid email'
+                                })">
+                                 </app-field-error-display>
+                                </div> 
+                   
+                                       
     </div> 
-    <div class="lbr col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small">
-            <div class="copy one">
-                    <div class="col-a col-b cd-b">
-                       <div class="mgn-up-10">      
-                        <div class="div-outline  address ">
-                            <div class="c-row one">
+    <div class="lbr col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small">     
+        <div class="form-group">
+                                        
+            <input matInput type="text" class="form-control"  placeholder="Address" formControlName="pnone_number">
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'pnone_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'pnone_number',
+        {
+          'required' : 'Mobile number is required',
+          'minlength' : 'Enter a 10 digit mobile number',
+          'maxlength' : 'Enter a 10 digit mobile number',
+          'pattern' : 'Only numbers are allowed'
+        })">
+         </app-field-error-display>
+        </div>
+
+        <div class="form-group">
+          <input matInput type="text" class="form-control"  placeholder="City" formControlName="first_name">
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
+      {
+        'required' : 'First name is required',
+        'pattern' : 'Only alphabets are allowed'
+      })">
+       </app-field-error-display>
+      </div>
+      
+      <div class="form-group">
+        <input matInput type="text" class="form-control"    placeholder="Postal Code /ZIP" formControlName="last_name">
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+    {
+      'required' : 'First name is required',
+      'pattern' : 'Only alphabets are allowed'
+    })">
+     </app-field-error-display>
+    </div>
+    <div class="form-group">
+      <input matInput type="text" class="form-control"    placeholder="landmark" formControlName="email_id">
+  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email_id',
+  {
+    'required' : 'Email is required',
+    'pattern' : 'Please enter valid email'
+  })">
+   </app-field-error-display>
+  </div>  
                        
-                          <div class="price">Address </div>           
-                        </div>     
-                      </div>                         
-                    </div>
-                  </div>
-                </div>    
-                <div class="copy one">
-                        <div class="col-a col-b cd-b">
-                           <div class="mgn-up-10">      
-                            <div class="div-outline  address">
-                                <div class="c-row one">
-                             <div class="price"> City </div>           
-                            </div>     
-                          </div>                         
-                        </div>
-                      </div>
-                    </div> 
-                    <div class="copy one">
-                            <div class="col-a col-b cd-b">
-                               <div class="mgn-up-10">      
-                                <div class="div-outline address">
-                                    <div class="c-row one">
-                                 <div class="price"> Postal code/zip </div>           
-                                </div>     
-                              </div>                         
-                            </div>
-                          </div>
-                        </div>      
-                        <div class="copy one">
-                                <div class="col-a col-b cd-b">
-                                   <div class="mgn-up-10">      
-                                    <div class="div-outline address">
-                                        <div class="c-row one">
-                                     <div class="price"> land mark </div>           
-                                    </div>     
-                                  </div>                         
-                                </div>
-                              </div>
-                            </div>                           
         </div>
   
     </mat-dialog-content>
@@ -114,6 +108,10 @@
     
     </mat-dialog-actions>
   </form>
+  <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+
   
   
 
