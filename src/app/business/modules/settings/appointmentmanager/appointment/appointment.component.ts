@@ -274,7 +274,8 @@ export class AppointmentComponent implements OnInit {
                 this.selectUser = JSON.parse(qparams.userId);
             }
             if (this.source === 'appt-block') {
-                this.heading = 'Find a ' + this.customer_label;
+                // this.heading = 'Find a ' + this.customer_label;
+                this.heading = 'Create a ' + this.customer_label;
             }
             if (qparams.ph || qparams.id) {
                 const filter = {};

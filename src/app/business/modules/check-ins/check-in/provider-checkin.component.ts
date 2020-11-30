@@ -286,7 +286,8 @@ export class ProviderCheckinComponent implements OnInit {
                 this.heading = 'Create a Check-in';
             }
             if (this.source === 'waitlist-block') {
-                this.heading = 'Find a ' + this.customer_label;
+                // this.heading = 'Find a ' + this.customer_label;
+                this.heading = 'Create a ' + this.customer_label;
             }
             if (qparams.ph || qparams.id) {
                 const filter = {};
