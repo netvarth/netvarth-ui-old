@@ -12174,7 +12174,7 @@ img.busN-logo {
 }
 
 .label-icon {
-  content: url(../images/dashboard-icons/Label-01.svg);
+  content: url(../images/dashboard-icons/label2-01.svg);
   width: 40px;
 }
 
@@ -13093,4 +13093,23 @@ hr {
   margin-top: 5px;
   font-size: smaller;
   margin-left: 5px;
+}
+.contact-details table {
+  width: 100%;
+}
+.contact-details .actions {
+  font-size: 1.2rem
+}
+.contact-details {
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin: 10px;
+}
+@media (min-width:460px) {
+  .contact-details .action-head {
+    width: 50px;
+  }
+}
+.contact-details table th {
+  padding-bottom: 5px;
 }

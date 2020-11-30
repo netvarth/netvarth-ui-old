@@ -98,7 +98,7 @@
                   </li>
                   <li>
                     <span class="notification">App notification</span>
-                    <span [class.icon-add]="!cheknPushph" [class.icon-minus]="cheknPushph" (click)="cheknPushAddClicked()"></span>
+                    <span *ngIf="accountType==='BRANCH'" [class.icon-add]="!cheknPushph" [class.icon-minus]="cheknPushph" (click)="cheknPushAddClicked()"></span>
                     <div class="form-group" *ngIf="cheknPushph">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
@@ -182,7 +182,7 @@
                   </li> -->
                   <li>
                     <span class="notification">App notification</span>
-                    <span [class.icon-add]="!cheknCancelPushph" [class.icon-minus]="cheknCancelPushph" (click)="cheknCancelPushAddClicked()"></span>
+                    <span *ngIf="accountType==='BRANCH'" [class.icon-add]="!cheknCancelPushph" [class.icon-minus]="cheknCancelPushph" (click)="cheknCancelPushAddClicked()"></span>
                     <div class="form-group" *ngIf="cheknCancelPushph">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
@@ -266,7 +266,7 @@
                   </li> -->
                   <li>
                     <span class="notification">App notification</span>
-                    <span [class.icon-add]="!apptPushph" [class.icon-minus]="apptPushph" (click)="apptPushAddClicked()"></span>
+                    <span *ngIf="accountType==='BRANCH'" [class.icon-add]="!apptPushph" [class.icon-minus]="apptPushph" (click)="apptPushAddClicked()"></span>
                     <div class="form-group" *ngIf="apptPushph">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
@@ -343,7 +343,7 @@
                   </li> -->
                   <li>
                     <span class="notification">App notification</span>
-                    <span [class.icon-add]="!apptcancelPushph" [class.icon-minus]="apptcancelPushph" (click)="apptcancelPushAddClicked()"></span>
+                    <span *ngIf="accountType==='BRANCH'" [class.icon-add]="!apptcancelPushph" [class.icon-minus]="apptcancelPushph" (click)="apptcancelPushAddClicked()"></span>
                     <div class="form-group" *ngIf="apptcancelPushph">
                       <div class="input-group mb-3 phadd">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
@@ -429,7 +429,7 @@
                   </li> -->
                   <li>
                     <span class="notification"> App notification </span>
-                    <span [class.icon-add]="!pushAppDonate" [class.icon-minus]="pushAppDonate"
+                    <span *ngIf="accountType==='BRANCH'" [class.icon-add]="!pushAppDonate" [class.icon-minus]="pushAppDonate"
                       (click)="pushAppDonateAddClicked()"></span>
                     <div class="form-group" *ngIf="pushAppDonate">
                       <div class="input-group mb-3 phadd">
@@ -575,7 +575,7 @@
 
                   <li>
                     <span class="notification"> App notification </span>
-                    <span [class.icon-add]="!pushSystem" [class.icon-minus]="pushSystem"
+                    <span *ngIf="accountType==='BRANCH'" [class.icon-add]="!pushSystem" [class.icon-minus]="pushSystem"
                       (click)="pushSystemAddClicked()"></span>
                     <div class="form-group" *ngIf="pushSystem">
                       <div class="input-group mb-3 phadd">
