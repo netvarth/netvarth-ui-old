@@ -12,7 +12,7 @@
       <div class="card p0 w-dta ">
         <div class="col-md-12 no-padding">
           <ul class="nav cust-dash jd-custom-nav">
-            <li class="pad-10 pull-left" *ngIf="customers.length>0">
+            <li class="pad-10 pull-left" *ngIf="customers.length>1">
               <span class="bold" data-toggle="control-sidebar">
                 <input [checked]="allCustomerSelected" type="checkbox" class="ckbx pull-left" (change)="selectAll()" />
                 <span class="statuslink " [matTooltip]="'Select all'">
