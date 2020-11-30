@@ -199,7 +199,7 @@ export class TeleServiceComponent implements OnInit {
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                message: 'Are you ready to start ?',
+                message: 'Are you ready to start',
                 serviceDetail: this.servDetails,
                 consumerName: this.consumer_fname,
                 custmerLabel: this.customer_label,
@@ -326,7 +326,7 @@ export class TeleServiceComponent implements OnInit {
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                message: 'Have you completed the service?',
+                message: 'Have you completed the',
                 serviceDetail: this.servDetails,
                 consumerName: this.consumer_fname,
                 custmerLabel: this.customer_label,
