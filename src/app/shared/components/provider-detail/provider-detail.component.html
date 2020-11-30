@@ -792,7 +792,7 @@
         <div>
           <ng-container *ngIf="onlinePresence && catalogItem.length >= 1">
             <div class="bus-item" *ngFor="let item of catalogItem;let i=index;">
-              <div class="card card-order-item-n no-padding">
+             <div class="card card-order-item-n no-padding" >
 
 
                       <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" >
@@ -801,7 +801,7 @@
 
                   <div class="card-item-content-info">
                       <div class="card-item-title">
-                          <a class="pointer-cursor" (click)="showServiceDetail(item, businessjson.businessName)">
+                          <a class="pointer-cursor" (click)="itemDetails(item)">
                             <b>
                               {{item.itemName | capitalizeFirst | limitTo: [35, '...']}}
                             </b>
@@ -826,7 +826,8 @@
 
 
               </div>
-            </div>
+              </div>
+
             </div>
 
           </ng-container>

@@ -1,1 +1,40 @@
-<p>item-details works!</p>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="thumbnail">
+        <a href="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" target="_blank">
+          <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" alt="Lights" style="width:100%">
+          <div class="caption">
+            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-12">
+     <p>Home Delivery Accepted</p>
+
+      </div>
+      <div class="col-md-12">
+        <p>{{currentItem.displayName}}</p>
+        <p>{{currentItem.shortDesc}}</p>
+
+         </div>
+         <div class="" style="padding-bottom: 10px">
+
+          <p class="title-style mgn-bt-5 mgn-up-5">
+            <span class="rupee-font">{{currentItem.price}}</span>
+          </p>
+          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+            <button class="m2" (click)="decrement()">-</button>
+            <span>{{getItemQty()}}</span>
+            <button class="m2" (click)="increment()">+</button>
+
+          </div>
+        </div>
+    </div>
+
+  </div>
+</div>

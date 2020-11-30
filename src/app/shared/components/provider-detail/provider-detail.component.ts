@@ -231,6 +231,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   order_count: number;
   price: number;
   orderList: any = [];
+  counter = 0;
   count$: Observable<number>;
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -244,6 +245,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     private locationobj: Location,
 
   ) {
+
+    if (JSON.parse(localStorage.getItem('order')) !== null) {
+      this.orderList = JSON.parse(localStorage.getItem('order'));
+    }
 
     this.getDomainList();
     // this.domainList = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
@@ -2155,7 +2160,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   //OrderItem add to cart
   addToCart(Item) {
+    alert(JSON.stringify(Item));
     this.orderList.push(Item);
+
+
     this.getTotalItemAndPrice();
     this.getItemQty(Item);
 
@@ -2183,7 +2191,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     localStorage.setItem('order', JSON.stringify(this.orderList));
     this.router.navigate(['consumer', 'order', 'cart']);
   }
+  itemDetails(item) {
+    localStorage.setItem('order', JSON.stringify(this.orderList));
+    this.router.navigate(['consumer', 'order', 'item-details']);
+  }
   increment(item) {
+    alert('incremet');
     this.addToCart(item);
   }
 
@@ -2191,7 +2204,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.removeFromCart(item);
   }
   getItemQty(item) {
-    return this.orderList.filter(i => i.itemId === item.itemId).length;
+    console.log(this.counter++);
+    console.log(this.orderList);
+    let qty = 0;
+    if (this.orderList !== null && this.orderList.filter(i => i.itemId === item.itemId)) {
+      qty = this.orderList.filter(i => i.itemId === item.itemId).length;
+    }
+    return qty;
   }
 
   reset() {
