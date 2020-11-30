@@ -40,8 +40,9 @@
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
                                                             <i *ngIf="his_wait.token" class="fa token-icon"></i>
                                                             <i *ngIf="!his_wait.token" class="fa chckn-icon"></i>
-                                                        </div> <span>&nbsp;{{his_wait.date | date: dateFormat }},<br>
-                                                            {{his_wait.queue.queueStartTime}} -
+                                                        </div>
+                                                        <span>&nbsp;{{his_wait.date | date: dateFormat }},<br>&nbsp;{{his_wait.queue.queueStartTime}}
+                                                            -
                                                             {{his_wait.queue.queueEndTime}}</span>
                                                     </div>
                                                 </td>
@@ -100,22 +101,20 @@
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #appMenu="matMenu">
-                                                        <button mat-menu-item  
-                                                            (click)="addWaitlistMessage(his_wait)">
+                                                        <button mat-menu-item   (click)="addWaitlistMessage(his_wait)">
                                                             <i class="fa chat-icon"></i>
                                                             {{send_message_cap}}</button>
 
-                                                        <button mat-menu-item
-                                                          *ngIf="his_wait.billStatus"
-                                                          (click)="getWaitlistBill(his_wait)">
+                                                        <button mat-menu-item *ngIf="his_wait.billStatus"
+                                                            (click)="getWaitlistBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
                                                             Bill</button>
-                                                    <button class="custId-cursor" mat-menu-item   
-                                                             *ngIf = "his_wait.prescShared"                                                  
+                                                        <button class="custId-cursor" mat-menu-item
+                                                            *ngIf="his_wait.prescShared"
                                                             (click)="viewprescription(his_wait)">
-                                                            <i class="mr-rx-icon-customer"></i>view prescription</button>
-                                                            <button mat-menu-item
-                                                            *ngIf="his_wait.waitlistStatus == 'done'"
+                                                            <i class="mr-rx-icon-customer"></i>view
+                                                            prescription</button>
+                                                        <button mat-menu-item *ngIf="his_wait.waitlistStatus == 'done'"
                                                             [class.rated]="isRated(his_wait)"
                                                             (click)="rateService(his_wait)">
                                                             Rate Your
@@ -170,27 +169,25 @@
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #appMenu="matMenu">
-                                                        <button mat-menu-item  
-                                                            (click)="addApptMessage(his_wait)">
+                                                        <button mat-menu-item   (click)="addApptMessage(his_wait)">
                                                             <i class="fa chat-icon"></i>
                                                             {{send_message_cap}}</button>
 
-                                                        <button mat-menu-item
-                                                          *ngIf="his_wait.billStatus"
-                                                          (click)="getApptBill(his_wait)">
+                                                        <button mat-menu-item *ngIf="his_wait.billStatus"
+                                                            (click)="getApptBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
                                                             <!-- *ngIf="booking.prescShared" -->
                                                             Bill</button>
-                                                    <button class="custId-cursor" mat-menu-item   
-                                                             *ngIf = "his_wait.prescShared"                                                  
+                                                        <button class="custId-cursor" mat-menu-item
+                                                            *ngIf="his_wait.prescShared"
                                                             (click)="viewprescription(his_wait)">
-                                                            <i class="mr-rx-icon-customer"></i>view prescription</button>
-                                                            <button mat-menu-item
-                                                          *ngIf="his_wait.apptStatus == 'Completed'"
-                                                          [class.rated]="isRated(his_wait)"
-                                                          (click)="rateApptService(his_wait)">
-                                                          Rate Your
-                                                          Visit</button>
+                                                            <i class="mr-rx-icon-customer"></i>view
+                                                            prescription</button>
+                                                        <button mat-menu-item *ngIf="his_wait.apptStatus == 'Completed'"
+                                                            [class.rated]="isRated(his_wait)"
+                                                            (click)="rateApptService(his_wait)">
+                                                            Rate Your
+                                                            Visit</button>
                                                     </mat-menu>
                                                     <!-- <ul class="controls">
                                                         <li><span class="message"

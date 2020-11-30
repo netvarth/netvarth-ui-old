@@ -12102,7 +12102,7 @@ img.busN-logo {
 }
 
 .pad-10 {
-  padding: 10px;
+  padding: 10px !important;
 }
 
 .inpro .inprogress {
