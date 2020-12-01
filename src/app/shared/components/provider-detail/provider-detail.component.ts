@@ -2173,7 +2173,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   removeFromCart(Item) {
     console.log(this.orderList);
     for (const i in this.orderList) {
-      if (this.orderList[i] === Item) {
+      if (this.orderList[i].itemId === Item.itemId) {
         this.orderList.splice(i, 1);
         break;
       }
