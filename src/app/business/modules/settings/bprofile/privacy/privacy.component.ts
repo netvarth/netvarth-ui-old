@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { projectConstants } from '../../../../../app.component';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -43,6 +43,8 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         }
     ];
     breadcrumb_moreoptions: any = [];
+    small_device_display = false;
+    screenWidth;
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
@@ -61,6 +63,19 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         if (this.privacydialogRef) {
             this.privacydialogRef.close();
         }
+    }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+      this.screenWidth = window.innerWidth;
+      if (this.screenWidth <= 767) {
+      } else {
+        this.small_device_display = false;
+      }
+      if (this.screenWidth <= 1040) {
+        this.small_device_display = true;
+      } else {
+        this.small_device_display = false;
+      }
     }
     // updating the phone number and email ids
     UpdatePrimaryFields(pdata) {
@@ -110,8 +125,9 @@ export class PrivacyComponent implements OnInit, OnDestroy {
                                 this.phonearr.push(
                                     {
                                         'label': this.bProfile.phoneNumbers[i].label,
-                                        'number': this.bProfile.phoneNumbers[i].instance,
-                                        'permission': this.bProfile.phoneNumbers[i].permission
+                                        'instance': this.bProfile.phoneNumbers[i].instance,
+                                        'permission': this.bProfile.phoneNumbers[i].permission,
+                                        'resource': 'Phoneno'
                                     }
                                 );
                             }
@@ -122,8 +138,9 @@ export class PrivacyComponent implements OnInit, OnDestroy {
                                 this.emailarr.push(
                                     {
                                         'label': this.bProfile.emails[i].label,
-                                        'emailid': this.bProfile.emails[i].instance,
-                                        'permission': this.bProfile.emails[i].permission
+                                        'instance': this.bProfile.emails[i].instance,
+                                        'permission': this.bProfile.emails[i].permission,
+                                        'resource': 'Email'
                                     }
                                 );
                             }
@@ -140,7 +157,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
                     temparr.push({
                         'label': this.phonearr[i].label,
                         'resource': 'Phoneno',
-                        'instance': this.phonearr[i].number,
+                        'instance': this.phonearr[i].instance,
                         'permission': this.phonearr[i].permission
                     });
                 }
@@ -154,7 +171,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
                     temparr.push({
                         'label': this.emailarr[i].label,
                         'resource': 'Email',
-                        'instance': this.emailarr[i].emailid,
+                        'instance': this.emailarr[i].instance,
                         'permission': this.emailarr[i].permission
                     });
                 }
@@ -184,10 +201,10 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         let msg = '';
         if (mod === 'phone') {
             msg = Messages.BPROFILE_PRIVACY_PHONE_DELETE;
-            msg = msg.replace('[DATA]', this.phonearr[indx].number);
+            msg = msg.replace('[DATA]', this.phonearr[indx].instance);
         } else if (mod === 'email') {
             msg = Messages.BPROFILE_PRIVACY_EMAIL_DELETE;
-            msg = msg.replace('[DATA]', this.emailarr[indx].emailid);
+            msg = msg.replace('[DATA]', this.emailarr[indx].instance);
         }
         const dialogRef = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
@@ -218,5 +235,58 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     backPage() {
         this.routerobj.navigate(['provider', 'settings', 'bprofile']);
         // this._location.back();
+    }
+    getEmailorPhoneStatus(emailorPhone) {
+        if (emailorPhone.permission === 'all') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    changeEmailorPhonestatus(emailorPhone, event) {
+        let permission;
+        if (event.checked) {
+            permission = 'all';
+        } else {
+            permission = 'self';
+        }
+        const email_json = [];
+
+        let post_itemdata = {};
+        console.log(emailorPhone);
+        if (emailorPhone.resource === 'Email') {
+            for (const email of this.emailarr) {
+                if (email.instance !== emailorPhone.instance) {
+                email_json.push({
+                    'label': email.label,
+                    'resource': emailorPhone.resource,
+                    'instance': email.instance,
+                    'permission': email.permission
+                });
+            }
+            }
+            post_itemdata = { 'emails': email_json };
+            console.log(post_itemdata);
+        } else {
+            for (const phone of this.phonearr) {
+                if (phone.instance !== emailorPhone.instance) {
+                email_json.push({
+                    'label': phone.label,
+                    'resource': emailorPhone.resource,
+                    'instance': phone.instance,
+                    'permission': phone.permission
+                });
+            }
+            }
+            post_itemdata = { 'phoneNumbers': email_json };
+            console.log(post_itemdata);
+        }
+        email_json.push({
+            'label': emailorPhone.label,
+            'resource': emailorPhone.resource,
+            'instance': emailorPhone.instance,
+            'permission': permission
+        });
+        this.UpdatePrimaryFields(post_itemdata);
     }
 }

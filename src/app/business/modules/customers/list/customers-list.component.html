@@ -28,19 +28,19 @@
             </li>
             <li class="dropdown notifications-menu"
               *ngIf="selectedcustomersformsg && selectedcustomersformsg.length>0 && !hide_msgicon">
-              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
-                <span class="statuslink " [matTooltip]="'Send Message'">
-                  <i class="fa fa-comments-o" (click)="CustomersInboxMessage()"></i> </span>
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor pad-10" data-toggle="control-sidebar">
+                <span class="" [matTooltip]="'Send Message'">
+                  <i class="fa fa-comments-o" (click)="CustomersInboxMessage()" style="font-size: 1.1rem"></i> </span>
               </a>
             </li>
             <li class="dropdown notifications-menu" *ngIf="selectedcustomersformsg && selectedcustomersformsg.length>0">
-              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
-                <span class="statuslink " [matTooltip]="'Label'">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor pad-10" data-toggle="control-sidebar">
+                <span class="" [matTooltip]="'Label'">
                   <i class="label-icon" (click)="showLabelPopup()"></i> </span>
               </a>
             </li>
             <li class="dropdown notifications-menu">
-              <a (click)="searchCustomer()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
+              <a (click)="searchCustomer()" class="dropdown-toggle navbar-item-color bold pointer-cursor pad-10"
                 data-toggle="dropdown">
                 <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
               </a>

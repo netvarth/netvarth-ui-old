@@ -212,6 +212,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   provider_label: any;
   mobilenumber: any;
   jaldeeConsumer: any;
+  showRefundSection = false;
+  amounttoRefund = '';
+  selectedPayment;
+  refundedAmount;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -277,47 +281,47 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-    .subscribe(data => {
-      this.settings = data;
-      this.showToken = this.settings.showTokenId;
-      if (this.source) {
-        this.breadcrumbs = [
-          {
-            title: 'Appointments',
-            url: '/provider/appointments'
-          },
-          {
-            title: 'Bill'
-          }
-        ];
-        this.getApptDetails();
-      } else {
-        if (this.showToken) {
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        if (this.source) {
           this.breadcrumbs = [
             {
-              title: 'Tokens',
-              url: '/provider/check-ins'
+              title: 'Appointments',
+              url: '/provider/appointments'
             },
             {
               title: 'Bill'
             }
           ];
-          this.getCheckinDetails();
+          this.getApptDetails();
         } else {
-          this.breadcrumbs = [
-            {
-              title: 'Check-ins',
-              url: '/provider/check-ins'
-            },
-            {
-              title: 'Bill'
-            }
-          ];
-          this.getCheckinDetails();
+          if (this.showToken) {
+            this.breadcrumbs = [
+              {
+                title: 'Tokens',
+                url: '/provider/check-ins'
+              },
+              {
+                title: 'Bill'
+              }
+            ];
+            this.getCheckinDetails();
+          } else {
+            this.breadcrumbs = [
+              {
+                title: 'Check-ins',
+                url: '/provider/check-ins'
+              },
+              {
+                title: 'Bill'
+              }
+            ];
+            this.getCheckinDetails();
+          }
         }
-      }
       }, () => {
-    });
+      });
   }
   gotoPrev() {
     this.locationobj.back();
@@ -373,7 +377,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.checkin = data;
           this.jaldeeConsumer = this.checkin.consumer.jaldeeConsumer !== 0 ? true : false;
           this.mobilenumber = this.checkin.waitlistPhoneNumber,
-          this.emailId = this.checkin.waitlistingFor[0].email;
+            this.emailId = this.checkin.waitlistingFor[0].email;
           this.getWaitlistBill();
           this.getPrePaymentDetails()
             .then(
@@ -615,6 +619,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.pre_payment_log = data;
+            this.refundedAmount = 0;
+            for (let i = 0; i < this.pre_payment_log.length; i++) {
+              if (this.pre_payment_log[i].refundDetails.length > 0) {
+                for (const payment of this.pre_payment_log[i].refundDetails) {
+                  this.refundedAmount = this.refundedAmount + payment.amount;
+                }
+              }
+            }
             resolve();
           },
           error => {
@@ -919,7 +931,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       data['itemId'] = itemId;
       data['quantity'] = this.curSelItm.qty;
       if (this.actiontype !== 'adjustItem') {
-      data['price'] = this.curSelItm.price;
+        data['price'] = this.curSelItm.price;
       }
       if (this.curSelItm.qty === 0) {
         action = 'removeItem';
@@ -1175,7 +1187,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const discount = {};
     discount['id'] = this.selOrderDiscount.id;
     if (this.selOrderDiscount.discType === 'OnDemand') {
-     // const len = this.discAmount.split('.').length;
+      // const len = this.discAmount.split('.').length;
       // if (len > 2) {
       //   this.sharedfunctionObj.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
       // } else {
@@ -1345,8 +1357,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       disableClose: true,
       data: {
         emailId: this.emailId,
-        mobilenumber : this.mobilenumber,
-        uuid : this.uuid
+        mobilenumber: this.mobilenumber,
+        uuid: this.uuid
       }
     });
   }
@@ -1584,6 +1596,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '</table>';
       bill_html += '	</td></tr>';
     }
+    if (this.refundedAmount > 0) {
+      bill_html += '	<tr><td>';
+      bill_html += '<table width="100%"';
+      bill_html += '	style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
+      bill_html += '	<tr style="font-weight: bold;"> ';
+      bill_html += '<td width="70%" style="text-align:right">Amount refunded</td>';
+      bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.refundedAmount).toFixed(2) + '</td>';
+      bill_html += '	</tr>                                                                           ';
+      bill_html += '</table>';
+      bill_html += '	</td></tr>';
+    }
     bill_html += '</table>';
     cordova.plugins.printer.print(bill_html);
     // printWindow.document.write('<html><head><title></title>');
@@ -1615,6 +1638,57 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.showBillNotes = true;
     } else {
       this.showBillNotes = false;
+    }
+  }
+  refundPayment(mode) {
+    if (this.amounttoRefund) {
+      const postData = {
+        'refundAmount': this.amounttoRefund,
+        'refundBy': mode,
+        'paymentRefId': this.selectedPayment.paymentRefId
+      };
+      if (mode === 'online') {
+        postData['paymentId'] = this.selectedPayment.transactionId;
+      }
+      let status = 0;
+      const canceldialogRef = this.dialog.open(ConfirmPaymentBoxComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'Proceed with payment ?',
+          'heading': 'Confirm',
+          'type': 'yes/no'
+        }
+      });
+      canceldialogRef.afterClosed().subscribe(result => {
+        status = result;
+        if (status === 1) {
+          this.provider_services.paymentRefund(postData)
+            .subscribe(
+              () => {
+                this.getPrePaymentDetails();
+                this.showRefundSection = false;
+                this.amounttoRefund = '';
+              },
+              error => {
+                this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+            );
+        }
+      });
+    } else {
+      this.sharedfunctionObj.openSnackBar('Please enter the refund amount', { 'panelClass': 'snackbarerror' });
+    }
+  }
+  showRefund(payment?) {
+    if (payment) {
+      this.selectedPayment = payment;
+      this.amounttoRefund = payment.refundableAmount;
+      this.showRefundSection = true;
+    } else {
+      this.selectedPayment = [];
+      this.showRefundSection = false;
     }
   }
 }

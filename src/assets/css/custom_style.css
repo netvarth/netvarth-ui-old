@@ -12102,7 +12102,7 @@ img.busN-logo {
 }
 
 .pad-10 {
-  padding: 10px;
+  padding: 10px !important;
 }
 
 .inpro .inprogress {
@@ -13110,6 +13110,26 @@ hr {
     width: 50px;
   }
 }
+@media (max-width:400px) {
+  .contact-details .mat-icon-button {
+    width: 10px !important;
+  }
+  .contact-details {
+    padding: 10px !important;
+    margin: 5px !important;
+  }
+  .contact-details .mat-slide-toggle-bar {
+    width: 25px !important;
+    height: 10px !important;
+  }
+  .contact-details .mat-slide-toggle-thumb {
+    height: 15px !important;
+    width: 15px !important;
+  }
+}
 .contact-details table th {
   padding-bottom: 5px;
+}
+.fa-instagram, .fa-globe {
+  font-size: 1.25rem;
 }

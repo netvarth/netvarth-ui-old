@@ -434,7 +434,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_enabled_msg = Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
-    this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
     this.profile_enabled_msg = Messages.PROFILE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.profile_disabled_msg = Messages.PROFILE_DISABLED_MSG.replace('[customer]', this.customer_label);
 

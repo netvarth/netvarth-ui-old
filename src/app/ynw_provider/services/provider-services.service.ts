@@ -1687,5 +1687,8 @@ export class ProviderServices {
       const path = 'provider/coverPicture/' + name;
       return this.servicemeta.httpDelete(path);
    }
+   paymentRefund(data) {
+      return this.servicemeta.httpPost('provider/payment/refund', data);
+   }
 }
 
