@@ -13130,3 +13130,6 @@ hr {
 .contact-details table th {
   padding-bottom: 5px;
 }
+.fa-instagram, .fa-globe {
+  font-size: 1.25rem;
+}
