@@ -228,6 +228,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     { pk: 'NotPaid', value: 'Not Paid' },
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
     { pk: 'FullyPaid', value: 'Fully Paid' },
+    { pk: 'PartiallyRefunded', value: 'Partially Refunded' },
+    { pk: 'FullyRefunded', value: 'Fully Refunded' },
     { pk: 'Refund', value: 'Refund' }
   ];
   appointmentModes = [
@@ -2170,10 +2172,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   scrollToTop() {
     // this.apptSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    window.scroll({ 
-      top: 0, 
-      left: 0, 
-      behavior: 'smooth' 
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
     });
   }
   getVirtualMode(virtualService) {

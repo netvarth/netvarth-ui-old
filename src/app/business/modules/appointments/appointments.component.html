@@ -384,6 +384,10 @@
                                   class="text">{{partially_paid_cap}}</span></span>
                               <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
                                   class="text">{{paid_cap}}</span></span>
+                              <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyRefunded'"><span
+                                  class="text">Partially Refunded</span></span>
+                              <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyRefunded'"><span
+                                  class="text">Refunded</span></span>
                               <span class="paid-f icon-btn" style="color: red;"
                                 *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                             </ng-container>
@@ -631,6 +635,12 @@
                                 <span class="paid-f icon-btn"
                                   *ngIf="apptByTimeSlot[appt.time][0].paymentStatus == 'FullyPaid'"><span
                                     class="text">{{paid_cap}}</span></span>
+                                <span class="paid-h icon-btn"
+                                  *ngIf="apptByTimeSlot[appt.time][0].paymentStatus == 'PartiallyRefunded'"><span
+                                    class="text">Partially Refunded</span></span>
+                                <span class="paid-f icon-btn"
+                                  *ngIf="apptByTimeSlot[appt.time][0].paymentStatus == 'FullyRefunded'"><span
+                                    class="text">Refunded</span></span>
                                 <span class="paid-f icon-btn" style="color: red;"
                                   *ngIf="apptByTimeSlot[appt.time][0].paymentStatus == 'Refund'"><span
                                     class="text">Refund</span></span>
@@ -816,6 +826,10 @@
                                   class="text">{{partially_paid_cap}}</span></span>
                               <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
                                   class="text">{{paid_cap}}</span></span>
+                              <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyRefunded'"><span
+                                  class="text">Partially Refunded</span></span>
+                              <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyRefunded'"><span
+                                  class="text">Refunded</span></span>
                               <span class="paid-f icon-btn" style="color: red;"
                                 *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                             </ng-container>
@@ -1131,6 +1145,10 @@
                                 class="text">{{partially_paid_cap}}</span></span>
                             <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
                                 class="text">{{paid_cap}}</span></span>
+                            <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyRefunded'"><span
+                                class="text">Partially Refunded</span></span>
+                            <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyRefunded'"><span
+                                class="text">Refunded</span></span>
                             <span class="paid-f icon-btn" style="color: red;"
                               *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                           </ng-container>
@@ -1497,6 +1515,10 @@
                                 class="text">{{partially_paid_cap}}</span></span>
                             <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
                                 class="text">{{paid_cap}}</span></span>
+                            <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyRefunded'"><span
+                                class="text">Partially Refunded</span></span>
+                            <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyRefunded'"><span
+                                class="text">Refunded</span></span>
                             <span class="paid-f icon-btn" style="color: red;"
                               *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                           </ng-container>

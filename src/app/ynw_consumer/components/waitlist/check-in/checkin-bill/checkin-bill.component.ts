@@ -106,6 +106,7 @@ export class ConsumerCheckinBillComponent implements OnInit {
     razorpay_order_id: any;
     razorpay_payment_id: any;
     razorpayDetails: any = [];
+    refundedAmount;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -173,11 +174,11 @@ export class ConsumerCheckinBillComponent implements OnInit {
                     this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;
                     this.razorpay_payment_id = this.razorpayDetails.razorpay_payment_id;
                     this.cdRef.detectChanges();
-              }
+                }
 
             });
     }
-    goBack () {
+    goBack() {
         this.location.back();
     }
     ngOnInit() {
@@ -281,6 +282,14 @@ export class ConsumerCheckinBillComponent implements OnInit {
             .subscribe(
                 data => {
                     this.pre_payment_log = data;
+                    this.refundedAmount = 0;
+                    for (let i = 0; i < this.pre_payment_log.length; i++) {
+                        if (this.pre_payment_log[i].refundDetails.length > 0) {
+                            for (const payment of this.pre_payment_log[i].refundDetails) {
+                                this.refundedAmount = this.refundedAmount + payment.amount;
+                            }
+                        }
+                    }
                 },
                 () => {
 
@@ -332,17 +341,17 @@ export class ConsumerCheckinBillComponent implements OnInit {
             this.sharedServices.consumerPayment(this.pay_data)
                 .subscribe(
                     (data: any) => {
-                            this.origin = 'consumer';
-                            this.pGateway = data.paymentGateway;
-                            if (this.pGateway === 'RAZORPAY') {
-                              this.paywithRazorpay(data);
-                            } else {
-                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                        setTimeout(() => {
-                            this.document.getElementById('payuform').submit();
-                        }, 2000);
-                    }
+                        this.origin = 'consumer';
+                        this.pGateway = data.paymentGateway;
+                        if (this.pGateway === 'RAZORPAY') {
+                            this.paywithRazorpay(data);
+                        } else {
+                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+                            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                            setTimeout(() => {
+                                this.document.getElementById('payuform').submit();
+                            }, 2000);
+                        }
                     },
                     error => {
                         this.resetApiError();
@@ -352,17 +361,17 @@ export class ConsumerCheckinBillComponent implements OnInit {
         }
     }
     paywithRazorpay(data: any) {
-       this.prefillmodel.name = data.consumerName;
-       this.prefillmodel.email = data.ConsumerEmail;
-       this.prefillmodel.contact = data.consumerPhoneumber;
-       this.razorModel = new Razorpaymodel(this.prefillmodel);
-       this.razorModel.key = data.razorpayId;
-       this.razorModel.amount = data.amount;
-       this.razorModel.order_id = data.orderId;
-       this.razorModel.name = data.providerName;
-       this.razorModel.description = data.description;
-    //    this.razorModel.image = data.jaldeeLogo;
-       this.razorpayService.payWithRazor(this.razorModel , this.origin , this.checkIn_type);
+        this.prefillmodel.name = data.consumerName;
+        this.prefillmodel.email = data.ConsumerEmail;
+        this.prefillmodel.contact = data.consumerPhoneumber;
+        this.razorModel = new Razorpaymodel(this.prefillmodel);
+        this.razorModel.key = data.razorpayId;
+        this.razorModel.amount = data.amount;
+        this.razorModel.order_id = data.orderId;
+        this.razorModel.name = data.providerName;
+        this.razorModel.description = data.description;
+        //    this.razorModel.image = data.jaldeeLogo;
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
     }
     paytmPayment() {
         this.pay_data.uuid = this.uuid;
@@ -629,6 +638,17 @@ export class ConsumerCheckinBillComponent implements OnInit {
             bill_html += '	<tr style="font-weight: bold;"> ';
             bill_html += '<td width="70%" style="text-align:right">Refundable Amount</td>';
             bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.refund_value).toFixed(2) + '</td>';
+            bill_html += '	</tr>                                                                           ';
+            bill_html += '</table>';
+            bill_html += '	</td></tr>';
+        }
+        if (this.refundedAmount > 0) {
+            bill_html += '	<tr><td>';
+            bill_html += '<table width="100%"';
+            bill_html += '	style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
+            bill_html += '	<tr style="font-weight: bold;"> ';
+            bill_html += '<td width="70%" style="text-align:right">Amount refunded</td>';
+            bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.refundedAmount).toFixed(2) + '</td>';
             bill_html += '	</tr>                                                                           ';
             bill_html += '</table>';
             bill_html += '	</td></tr>';

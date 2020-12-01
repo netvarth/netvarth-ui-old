@@ -730,7 +730,7 @@ export const Messages = {
   // App-ynw_provider-components-add-provider-note
   'ADD_PROVIDER_NOTE_CAP': 'Add Private Note',
   'PROVIDER_NOTE_CAP': 'Private Note',
-  'NOTE_PLACEHOLDER': 'Type notes for your reference only',
+  'NOTE_PLACEHOLDER': 'Enter notes for your own reference',
 
   // App-ynw_provider-components-add-provider-location
   'AMENITIES_CAP': 'Amenities',

@@ -399,6 +399,10 @@
                                   class="text">{{partially_paid_cap}}</span></span>
                               <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                                   class="text">{{paid_cap}}</span></span>
+                              <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyRefunded'"><span
+                                  class="text">Partially Refunded</span></span>
+                              <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyRefunded'"><span
+                                  class="text">Refunded</span></span>
                               <span class="paid-f icon-btn" style="color: red;"
                                 *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                             </ng-container>
@@ -608,6 +612,10 @@
                                   class="text">{{partially_paid_cap}}</span></span>
                               <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                                   class="text">{{paid_cap}}</span></span>
+                              <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyRefunded'"><span
+                                  class="text">Partially Refunded</span></span>
+                              <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyRefunded'"><span
+                                  class="text">Refunded</span></span>
                               <span class="paid-f icon-btn" style="color: red;"
                                 *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                             </ng-container>
@@ -935,6 +943,10 @@
                                 class="text">{{partially_paid_cap}}</span></span>
                             <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                                 class="text">{{paid_cap}}</span></span>
+                            <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyRefunded'"><span
+                                class="text">Partially Refunded</span></span>
+                            <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyRefunded'"><span
+                                class="text">Refunded</span></span>
                             <span class="paid-f icon-btn" style="color: red;"
                               *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                           </ng-container>
@@ -1342,6 +1354,10 @@
                                 class="text">{{partially_paid_cap}}</span></span>
                             <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                                 class="text">{{paid_cap}}</span></span>
+                            <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyRefunded'"><span
+                                class="text">Partially Refunded</span></span>
+                            <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyRefunded'"><span
+                                class="text">Refunded</span></span>
                             <span class="paid-f icon-btn" style="color: red;"
                               *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                           </ng-container>
