@@ -13100,3 +13100,8 @@ hr {
 .addmoreorderitemp1{
   margin-left: 20px;
 }
+.orderitemcrete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element{
+  border: 2px solid gainsboro !important;
+    border-radius: 20px !important;
+    height: 50px !important;
+}

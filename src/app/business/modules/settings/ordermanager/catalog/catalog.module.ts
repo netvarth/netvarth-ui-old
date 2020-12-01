@@ -15,6 +15,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { AddItemsComponent } from './additems/additems.component';
 import { TruncateModule } from '../../../../../shared/pipes/limitTo.module';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
+import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitaliz
         ModalGalleryModule,
         CKEditorModule,
         TruncateModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        NgbTimepickerModule
     ],
     exports: [CatalogComponent]
 })
