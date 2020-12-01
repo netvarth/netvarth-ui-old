@@ -54,7 +54,7 @@
                                             <td>
                                                 <mat-slide-toggle [checked]="getEmailorPhoneStatus(phone)"
                                                 (change)="changeEmailorPhonestatus(phone, $event)"></mat-slide-toggle>
-                                                {{show_privacyText(phone.permission)}}</td>
+                                                &nbsp;{{show_privacyText(phone.permission)}}</td>
                                             <td class="actions" *ngIf="!small_device_display">
                                                 <i class="fa fa-trash pad-rt-10 pointer-cursor" aria-hidden="true"
                                                     (click)="deletePrivacysettingsConfirm('phone', i)"></i>
@@ -67,10 +67,12 @@
                                                   </button>
                                                   <mat-menu #menu="matMenu">
                                                     <button type="button" (click)="handlePrivacysettings('phone', i)" mat-menu-item>
-                                                      <span><i class="fa fa-pencil-square-o"></i> Edit</span>
+                                                        <i class="fa fa-pencil-square-o"></i>
+                                                        <span> Edit</span>
                                                     </button>
                                                     <button type="button" (click)="deletePrivacysettingsConfirm('phone', i)" mat-menu-item>
-                                                        <span><i class="fa fa-trash"></i> Delete</span>
+                                                        <i class="fa fa-trash"></i> 
+                                                        <span>Delete</span>
                                                       </button>
                                                   </mat-menu>
                                                 
@@ -168,7 +170,7 @@
                                             <td>
                                                 <mat-slide-toggle [checked]="getEmailorPhoneStatus(email)"
                                                 (change)="changeEmailorPhonestatus(email, $event)"></mat-slide-toggle>
-                                                {{show_privacyText(email.permission)}}</td>
+                                                &nbsp;{{show_privacyText(email.permission)}}</td>
                                             <td class="actions" *ngIf="!small_device_display">
                                                 <i class="fa fa-trash pad-rt-10 pointer-cursor" aria-hidden="true"
                                                     (click)="deletePrivacysettingsConfirm('email', i)"></i>
@@ -181,11 +183,12 @@
                                                   </button>
                                                   <mat-menu #menu="matMenu">
                                                     <button type="button" (click)="handlePrivacysettings('email', i)" mat-menu-item>
-                                                      <span>
-                                                        <i class="fa fa-pencil-square-o"></i> Edit</span>
+                                                        <i class="fa fa-pencil-square-o"></i>
+                                                        <span> Edit</span>
                                                     </button>
                                                     <button type="button" (click)="deletePrivacysettingsConfirm('email', i)" mat-menu-item>
-                                                        <span><i class="fa fa-trash"></i> Delete</span>
+                                                        <i class="fa fa-trash"></i>
+                                                        <span> Delete</span>
                                                       </button>
                                                   </mat-menu>
                                                 
