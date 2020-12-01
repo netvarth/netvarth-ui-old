@@ -65,6 +65,8 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
                 retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
             } else if (mod === 'time') {
                 retval = dtsarr[1] + ' ' + dtsarr[2];
+                const slots = retval.split('-');
+                retval = this.shared_functions.convert24HourtoAmPm(slots[0]);
             }
             return retval;
         } else {
