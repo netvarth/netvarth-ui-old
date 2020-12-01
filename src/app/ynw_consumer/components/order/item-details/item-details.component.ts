@@ -31,7 +31,7 @@ export class ItemDetailsComponent implements OnInit {
   increment() {
     this.addToCart();
   }
-  goBack(){
+  goBack() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.location.back();
   }
