@@ -246,9 +246,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   ) {
 
-    if (JSON.parse(localStorage.getItem('order')) !== null) {
-      this.orderList = JSON.parse(localStorage.getItem('order'));
-    }
 
     this.getDomainList();
     // this.domainList = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
@@ -389,375 +386,380 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
       });
     this.catlogArry();
+
   }
   catlogArry() {
     this.catlog = itemjson;
     this.catalogItem = this.catlog.default.catalogItem;
-    console.log(this.catlog.default);
-    console.log(this.catalogItem);
+    if (this.sharedFunctionobj.getitemfromLocalStorage('order') !== null) {
+      this.orderList = this.sharedFunctionobj.getitemfromLocalStorage('order');
+    }
+    this.getTotalItemAndPrice();
 
-  }
-  ngOnDestroy() {
-    if (this.commdialogRef) {
-      this.commdialogRef.close();
-    }
-    if (this.remdialogRef) {
-      this.remdialogRef.close();
-    }
-    if (this.servicedialogRef) {
-      this.servicedialogRef.close();
-    }
-    if (this.checkindialogRef) {
-      this.checkindialogRef.close();
-    }
-    if (this.extChecindialogRef) {
-      this.extChecindialogRef.close();
-    }
-  }
 
-  getSocialdet(key, field) {
-    const retdet = this.orgsocial_list.filter(
-      soc => soc.key === key);
-    const returndet = retdet[0][field];
-    return returndet;
-  }
-  setSystemDate() {
-    this.shared_services.getSystemDate()
-      .subscribe(
-        res => {
-          this.server_date = res;
-          this.sharedFunctionobj.setitemonLocalStorage('sysdate', res);
-        });
-  }
-  gets3curl() {
-    this.retval = this.sharedFunctionobj.getS3Url('provider')
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('settings', true);
-          this.getbusinessprofiledetails_json('terminologies', true);
-          // this.getbusinessprofiledetails_json('coupon', true);
-          // this.getbusinessprofiledetails_json('jaldeediscount', true);
-          if (this.userId) {
-            this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
-          } else {
-            this.getbusinessprofiledetails_json('businessProfile', true);
-            this.getbusinessprofiledetails_json('virtualFields', true);
-            this.getbusinessprofiledetails_json('services', true);
-            this.getbusinessprofiledetails_json('apptServices', true);
-            this.getbusinessprofiledetails_json('donationServices', true);
-          }
-        },
-        error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
-        }
-      );
-  }
-  // gets the various json files based on the value of "section" parameter
-  // Some of functions copied to Consumer Home also.
-  getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    this.showServices = false;
-    let UTCstring = null;
-    if (modDateReq) {
-      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+
     }
-    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
-        switch (section) {
-          case 'businessProfile': {
-            this.onlinePresence = res['onlinePresence'];
-            this.api_loading = false;
-            this.pageFound = true;
-            this.socialMedialist = [];
-            this.businessjson = res;
-            this.branch_id = this.businessjson.branchId;
-            this.account_Type = this.businessjson.accountType;
-            if (this.account_Type === 'BRANCH') {
-              this.getbusinessprofiledetails_json('departmentProviders', true);
-            }
-            this.business_exists = true;
-            this.provider_bussiness_id = this.businessjson.id;
-            if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
-              if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-                this.bLogo = this.businessjson.logo.url + '?' + new Date();
-              }
+    ngOnDestroy() {
+      if (this.commdialogRef) {
+        this.commdialogRef.close();
+      }
+      if (this.remdialogRef) {
+        this.remdialogRef.close();
+      }
+      if (this.servicedialogRef) {
+        this.servicedialogRef.close();
+      }
+      if (this.checkindialogRef) {
+        this.checkindialogRef.close();
+      }
+      if (this.extChecindialogRef) {
+        this.extChecindialogRef.close();
+      }
+    }
+
+    getSocialdet(key, field) {
+      const retdet = this.orgsocial_list.filter(
+        soc => soc.key === key);
+      const returndet = retdet[0][field];
+      return returndet;
+    }
+    setSystemDate() {
+      this.shared_services.getSystemDate()
+        .subscribe(
+          res => {
+            this.server_date = res;
+            this.sharedFunctionobj.setitemonLocalStorage('sysdate', res);
+          });
+    }
+    gets3curl() {
+      this.retval = this.sharedFunctionobj.getS3Url('provider')
+        .then(
+          res => {
+            this.s3url = res;
+            this.getbusinessprofiledetails_json('settings', true);
+            this.getbusinessprofiledetails_json('terminologies', true);
+            // this.getbusinessprofiledetails_json('coupon', true);
+            // this.getbusinessprofiledetails_json('jaldeediscount', true);
+            if (this.userId) {
+              this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
             } else {
-              // this.bLogo = '';
-              this.bLogo = '../../../assets/images/img-null.svg';
+              this.getbusinessprofiledetails_json('businessProfile', true);
+              this.getbusinessprofiledetails_json('virtualFields', true);
+              this.getbusinessprofiledetails_json('services', true);
+              this.getbusinessprofiledetails_json('apptServices', true);
+              this.getbusinessprofiledetails_json('donationServices', true);
             }
-            this.specializationslist = [];
-            this.specializationslist_more = [];
-            if (this.businessjson.specialization) {
-              // this.specializationslist = this.businessjson.specialization;
+          },
+          error => {
+            this.sharedFunctionobj.apiErrorAutoHide(this, error);
+          }
+        );
+    }
+    // gets the various json files based on the value of "section" parameter
+    // Some of functions copied to Consumer Home also.
+    getbusinessprofiledetails_json(section, modDateReq: boolean) {
+      this.showServices = false;
+      let UTCstring = null;
+      if (modDateReq) {
+        UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+      }
+      this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+        .subscribe(res => {
+          switch (section) {
+            case 'businessProfile': {
+              this.onlinePresence = res['onlinePresence'];
+              this.api_loading = false;
+              this.pageFound = true;
+              this.socialMedialist = [];
+              this.businessjson = res;
+              this.branch_id = this.businessjson.branchId;
+              this.account_Type = this.businessjson.accountType;
+              if (this.account_Type === 'BRANCH') {
+                this.getbusinessprofiledetails_json('departmentProviders', true);
+              }
+              this.business_exists = true;
+              this.provider_bussiness_id = this.businessjson.id;
+              if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
+                if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
+                  this.bLogo = this.businessjson.logo.url + '?' + new Date();
+                }
+              } else {
+                // this.bLogo = '';
+                this.bLogo = '../../../assets/images/img-null.svg';
+              }
+              this.specializationslist = [];
+              this.specializationslist_more = [];
+              if (this.businessjson.specialization) {
+                // this.specializationslist = this.businessjson.specialization;
 
-              for (let i = 0; i < this.businessjson.specialization.length; i++) {
-                if (i <= 2 && this.businessjson.specialization[i] !== 'Not Applicable') {
-                  this.specializationslist.push(this.businessjson.specialization[i]);
-                } else if (this.businessjson.specialization[i] !== 'Not Applicable') {
-                  this.specializationslist_more.push(this.businessjson.specialization[i]);
+                for (let i = 0; i < this.businessjson.specialization.length; i++) {
+                  if (i <= 2 && this.businessjson.specialization[i] !== 'Not Applicable') {
+                    this.specializationslist.push(this.businessjson.specialization[i]);
+                  } else if (this.businessjson.specialization[i] !== 'Not Applicable') {
+                    this.specializationslist_more.push(this.businessjson.specialization[i]);
+                  }
                 }
               }
-            }
-            if (this.businessjson.socialMedia) {
-              this.socialMedialist = this.businessjson.socialMedia;
-            }
-            if (this.businessjson.emails) {
-              this.emaillist = this.businessjson.emails;
-            }
-            if (this.businessjson.phoneNumbers) {
-              this.phonelist = this.businessjson.phoneNumbers;
-            }
-            this.getbusinessprofiledetails_json('gallery', true);
-            if (this.userType === 'consumer') {
-              this.getFavProviders();
-            }
-            const holdbName = this.businessjson.businessDesc || '';
-            const maxCnt = 250;
-            if (holdbName.length > maxCnt) {
-              this.bNameStart = holdbName.substr(0, maxCnt);
-              this.bNameEnd = holdbName.substr(maxCnt, holdbName.length);
-            } else {
-              this.bNameStart = holdbName;
-            }
-            this.ratingenabledCnt = this.businessjson.avgRating || 0;
-            if (this.ratingenabledCnt > 0) {
-              this.ratingenabledCnt = this.sharedFunctionobj.ratingRounding(this.ratingenabledCnt);
-            }
-            const ratingenabledInt = parseInt(this.ratingenabledCnt.toString(), 10);
-            if (ratingenabledInt < this.ratingenabledCnt) {
-              this.ratingenabledHalf = true;
-              this.ratingenabledCnt = ratingenabledInt;
-              this.ratingdisabledCnt = 5 - (ratingenabledInt + 1);
-            } else {
-              this.ratingdisabledCnt = 5 - ratingenabledInt;
-            }
-            this.ratingenabledArr = [];
-            this.ratingdisabledArr = [];
-            for (let i = 0; i < this.ratingenabledCnt; i++) {
-              this.ratingenabledArr.push(i);
-            }
-            for (let i = 0; i < this.ratingdisabledCnt; i++) {
-              this.ratingdisabledArr.push(i);
-            }
-            this.getbusinessprofiledetails_json('location', true);
-            break;
-          }
-          case 'services': {
-            this.servicesjson = res;
-            if (this.servicesjson[0] && this.servicesjson[0].hasOwnProperty('departmentName')) {
-              this.showDepartments = true;
+              if (this.businessjson.socialMedia) {
+                this.socialMedialist = this.businessjson.socialMedia;
+              }
+              if (this.businessjson.emails) {
+                this.emaillist = this.businessjson.emails;
+              }
+              if (this.businessjson.phoneNumbers) {
+                this.phonelist = this.businessjson.phoneNumbers;
+              }
+              this.getbusinessprofiledetails_json('gallery', true);
+              if (this.userType === 'consumer') {
+                this.getFavProviders();
+              }
+              const holdbName = this.businessjson.businessDesc || '';
+              const maxCnt = 250;
+              if (holdbName.length > maxCnt) {
+                this.bNameStart = holdbName.substr(0, maxCnt);
+                this.bNameEnd = holdbName.substr(maxCnt, holdbName.length);
+              } else {
+                this.bNameStart = holdbName;
+              }
+              this.ratingenabledCnt = this.businessjson.avgRating || 0;
+              if (this.ratingenabledCnt > 0) {
+                this.ratingenabledCnt = this.sharedFunctionobj.ratingRounding(this.ratingenabledCnt);
+              }
+              const ratingenabledInt = parseInt(this.ratingenabledCnt.toString(), 10);
+              if (ratingenabledInt < this.ratingenabledCnt) {
+                this.ratingenabledHalf = true;
+                this.ratingenabledCnt = ratingenabledInt;
+                this.ratingdisabledCnt = 5 - (ratingenabledInt + 1);
+              } else {
+                this.ratingdisabledCnt = 5 - ratingenabledInt;
+              }
+              this.ratingenabledArr = [];
+              this.ratingdisabledArr = [];
+              for (let i = 0; i < this.ratingenabledCnt; i++) {
+                this.ratingenabledArr.push(i);
+              }
+              for (let i = 0; i < this.ratingdisabledCnt; i++) {
+                this.ratingdisabledArr.push(i);
+              }
+              this.getbusinessprofiledetails_json('location', true);
               break;
             }
-            break;
-          }
-          case 'apptServices': {
-            this.apptServicesjson = res;
-            setTimeout(() => {
-              // merge two arrays without duplicates
-              if (this.servicesjson && this.servicesjson.length > 0) {
-                const ids = new Set(this.apptServicesjson.map(d => d.id));
-                const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
-                this.apptServicesjson = merged;
+            case 'services': {
+              this.servicesjson = res;
+              if (this.servicesjson[0] && this.servicesjson[0].hasOwnProperty('departmentName')) {
+                this.showDepartments = true;
+                break;
               }
-              for (let i = 0; i < this.apptServicesjson.length; i++) {
-                if (i < 3) {
-                  this.apptfirstArray.push(this.apptServicesjson[i]);
+              break;
+            }
+            case 'apptServices': {
+              this.apptServicesjson = res;
+              setTimeout(() => {
+                // merge two arrays without duplicates
+                if (this.servicesjson && this.servicesjson.length > 0) {
+                  const ids = new Set(this.apptServicesjson.map(d => d.id));
+                  const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+                  this.apptServicesjson = merged;
+                }
+                for (let i = 0; i < this.apptServicesjson.length; i++) {
+                  if (i < 3) {
+                    this.apptfirstArray.push(this.apptServicesjson[i]);
+                  }
+                }
+                this.apptTempArray = this.apptfirstArray;
+              });
+              break;
+            }
+            case 'gallery': {
+              this.galleryenabledArr = []; // For showing gallery
+              this.image_list_popup = [];
+              this.tempgalleryjson = res;
+              if (this.tempgalleryjson.length > 5) {
+                this.extra_img_count = this.tempgalleryjson.length - 5;
+              }
+              let indx = 0;
+              if (this.bLogo !== '../../../assets/images/img-null.svg') {
+                this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+                indx = 1;
+                // this.galleryenabledArr.push(0);
+              }
+              // for (let i = 0; i < this.galleryjson.length; i++) {
+              //   this.galleryenabledArr.push(i);
+              // }
+              for (let i = 0; i < this.tempgalleryjson.length; i++) {
+                this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
+                // if (this.galleryenabledArr.length < 5) {
+                //   this.galleryenabledArr.push(i + indx);
+                // }
+              }
+              // const count = 5 - this.galleryenabledArr.length;
+              // if (count > 0) {
+              //   for (let ind = 0; ind < count; ind++) {
+              //     this.gallerydisabledArr.push(ind);
+              //   }
+              // }
+              // this.gallery_exists = true;
+              if (this.galleryjson.length > 0) {
+                this.galleryExists = true;
+                for (let i = 0; i < this.galleryjson.length; i++) {
+                  const imgobj = new Image(
+                    i,
+                    { // modal
+                      img: this.galleryjson[i].url,
+                      description: this.galleryjson[i].caption || ''
+                    });
+                  this.image_list_popup.push(imgobj);
                 }
               }
-              this.apptTempArray = this.apptfirstArray;
-            });
-            break;
-          }
-          case 'gallery': {
-            this.galleryenabledArr = []; // For showing gallery
-            this.image_list_popup = [];
-            this.tempgalleryjson = res;
-            if (this.tempgalleryjson.length > 5) {
-              this.extra_img_count = this.tempgalleryjson.length - 5;
-            }
-            let indx = 0;
-            if (this.bLogo !== '../../../assets/images/img-null.svg') {
-              this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
-              indx = 1;
-              // this.galleryenabledArr.push(0);
-            }
-            // for (let i = 0; i < this.galleryjson.length; i++) {
-            //   this.galleryenabledArr.push(i);
-            // }
-            for (let i = 0; i < this.tempgalleryjson.length; i++) {
-              this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
-              // if (this.galleryenabledArr.length < 5) {
-              //   this.galleryenabledArr.push(i + indx);
-              // }
-            }
-            // const count = 5 - this.galleryenabledArr.length;
-            // if (count > 0) {
-            //   for (let ind = 0; ind < count; ind++) {
-            //     this.gallerydisabledArr.push(ind);
-            //   }
-            // }
-            // this.gallery_exists = true;
-            if (this.galleryjson.length > 0) {
-              this.galleryExists = true;
-              for (let i = 0; i < this.galleryjson.length; i++) {
-                const imgobj = new Image(
-                  i,
-                  { // modal
-                    img: this.galleryjson[i].url,
-                    description: this.galleryjson[i].caption || ''
-                  });
-                this.image_list_popup.push(imgobj);
+              const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
+              for (let i = 0; i < imgLength; i++) {
+                this.galleryenabledArr.push(i);
               }
+              break;
             }
-            const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
-            for (let i = 0; i < imgLength; i++) {
-              this.galleryenabledArr.push(i);
-            }
-            break;
-          }
-          case 'settings': {
-            this.settingsjson = res;
-            this.showToken = this.settingsjson.showTokenId;
-            this.settings_exists = true;
-            this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
-            this.maxsize = this.settingsjson.maxPartySize;
-            if (this.maxsize === undefined) {
-              this.maxsize = 1;
-            }
-            this.showDepartments = this.settingsjson.filterByDept;
-            break;
-          }
-          case 'location': {
-            this.locationjson = res;
-            this.location_exists = true;
-            let schedule_arr: any = [];
-            const locarr = [];
-            const wait_locarr = [];
-            const appt_locarr = [];
-            for (let i = 0; i < this.locationjson.length; i++) {
-              const addres = this.locationjson[i].address;
-              const place = this.locationjson[i].place;
-              if (addres && addres.includes(place)) {
-                this.locationjson['isPlaceisSame'] = true;
-              } else {
-                this.locationjson['isPlaceisSame'] = false;
+            case 'settings': {
+              this.settingsjson = res;
+              this.showToken = this.settingsjson.showTokenId;
+              this.settings_exists = true;
+              this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+              this.maxsize = this.settingsjson.maxPartySize;
+              if (this.maxsize === undefined) {
+                this.maxsize = 1;
               }
-              schedule_arr = [];
-              if (this.locationjson[i].bSchedule) {
-                if (this.locationjson[i].bSchedule.timespec) {
-                  if (this.locationjson[i].bSchedule.timespec.length > 0) {
-                    schedule_arr = [];
-                    // extracting the schedule intervals
-                    for (let j = 0; j < this.locationjson[i].bSchedule.timespec.length; j++) {
-                      for (let k = 0; k < this.locationjson[i].bSchedule.timespec[j].repeatIntervals.length; k++) {
-                        // pushing the schedule details to the respective array to show it in the page
-                        schedule_arr.push({
-                          day: this.locationjson[i].bSchedule.timespec[j].repeatIntervals[k],
-                          sTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].sTime,
-                          eTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].eTime,
-                          recurrtype: this.locationjson[i].bSchedule.timespec[j].recurringType
-                        });
+              this.showDepartments = this.settingsjson.filterByDept;
+              break;
+            }
+            case 'location': {
+              this.locationjson = res;
+              this.location_exists = true;
+              let schedule_arr: any = [];
+              const locarr = [];
+              const wait_locarr = [];
+              const appt_locarr = [];
+              for (let i = 0; i < this.locationjson.length; i++) {
+                const addres = this.locationjson[i].address;
+                const place = this.locationjson[i].place;
+                if (addres && addres.includes(place)) {
+                  this.locationjson['isPlaceisSame'] = true;
+                } else {
+                  this.locationjson['isPlaceisSame'] = false;
+                }
+                schedule_arr = [];
+                if (this.locationjson[i].bSchedule) {
+                  if (this.locationjson[i].bSchedule.timespec) {
+                    if (this.locationjson[i].bSchedule.timespec.length > 0) {
+                      schedule_arr = [];
+                      // extracting the schedule intervals
+                      for (let j = 0; j < this.locationjson[i].bSchedule.timespec.length; j++) {
+                        for (let k = 0; k < this.locationjson[i].bSchedule.timespec[j].repeatIntervals.length; k++) {
+                          // pushing the schedule details to the respective array to show it in the page
+                          schedule_arr.push({
+                            day: this.locationjson[i].bSchedule.timespec[j].repeatIntervals[k],
+                            sTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].sTime,
+                            eTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].eTime,
+                            recurrtype: this.locationjson[i].bSchedule.timespec[j].recurringType
+                          });
+                        }
                       }
                     }
                   }
                 }
+                let display_schedule = [];
+                display_schedule = this.sharedFunctionobj.arrageScheduleforDisplay(schedule_arr);
+                this.locationjson[i]['display_schedule'] = display_schedule;
+                this.locationjson[i]['services'] = [];
+                this.getServiceByLocationid(this.locationjson[i].id, i);
+                this.getApptServiceByLocationid(this.locationjson[i].id, i);
+                this.locationjson[i]['checkins'] = [];
+                if (this.userType === 'consumer') {
+                  this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
+                }
+                locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
+                if (this.businessjson.id && this.userId) {
+                  appt_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
+                  wait_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
+                  // appt_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
+                  // wait_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
+                }
               }
-              let display_schedule = [];
-              display_schedule = this.sharedFunctionobj.arrageScheduleforDisplay(schedule_arr);
-              this.locationjson[i]['display_schedule'] = display_schedule;
-              this.locationjson[i]['services'] = [];
-              this.getServiceByLocationid(this.locationjson[i].id, i);
-              this.getApptServiceByLocationid(this.locationjson[i].id, i);
-              this.locationjson[i]['checkins'] = [];
-              if (this.userType === 'consumer') {
-                this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
+              if (this.userId) {
+                this.getUserWaitingTime(wait_locarr);
+                this.getUserApptTime(appt_locarr);
+              } else {
+                this.getWaitingTime(locarr);
+                this.getApptTime(locarr);
               }
-              locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
-              if (this.businessjson.id && this.userId) {
-                appt_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
-                wait_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
-                // appt_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
-                // wait_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
+              this.api_loading = false;
+              break;
+            }
+            case 'terminologies': {
+              this.terminologiesjson = res;
+              break;
+            }
+            case 'coupon': {
+              this.s3CouponList = res;
+              this.firstChckinCuponCunt(this.s3CouponList);
+              break;
+            }
+            case 'virtualFields': {
+              this.virtualfieldsjson = res;
+              this.virtualfieldsCombinedjson = [];
+              this.virtualfieldsDomainjson = [];
+              this.virtualfieldsSubdomainjson = [];
+              if (this.virtualfieldsjson.domain) {
+                this.virtualfieldsDomainjson = this.sortVfields(this.virtualfieldsjson.domain);
+              }
+              if (this.virtualfieldsjson.subdomain) {
+                this.virtualfieldsSubdomainjson = this.sortVfields(this.virtualfieldsjson.subdomain);
+              }
+              if (this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
+                this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson.concat(this.virtualfieldsDomainjson);
+              } else if (this.virtualfieldsSubdomainjson.length && !this.virtualfieldsDomainjson.length) {
+                this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson;
+              } else if (!this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
+                this.virtualfieldsCombinedjson = this.virtualfieldsDomainjson;
+              }
+              if (this.virtualfieldsCombinedjson.length > 0) {
+                this.showVirtualfieldsSection = true;
+              }
+              break;
+            }
+            case 'donationServices': {
+              this.donationServicesjson = res;
+              break;
+            }
+            case 'departmentProviders': {
+              this.deptUsers = res;
+              break;
+            }
+            case 'jaldeediscount':
+              this.jaldeediscountJson = res;
+              this.jdnlength = Object.keys(this.jaldeediscountJson).length;
+          }
+        },
+          (error) => {
+            if (section === 'businessProfile') {
+              this.routerobj.navigate(['/not-found']);
+            }
+            if (section === 'gallery') {
+              this.galleryjson = [];
+              if (this.bLogo !== '../../../assets/images/img-null.svg') {
+                this.galleryExists = true;
+                this.image_list_popup = [];
+                this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+                const imgobj = new Image(0,
+                  { // modal
+                    img: this.galleryjson[0].url,
+                    description: this.galleryjson[0].caption || ''
+                  });
+                this.image_list_popup.push(imgobj);
+              } else {
+                this.bLogo = '../../../assets/images/img-null.svg';
               }
             }
-            if (this.userId) {
-              this.getUserWaitingTime(wait_locarr);
-              this.getUserApptTime(appt_locarr);
-            } else {
-              this.getWaitingTime(locarr);
-              this.getApptTime(locarr);
-            }
-            this.api_loading = false;
-            break;
           }
-          case 'terminologies': {
-            this.terminologiesjson = res;
-            break;
-          }
-          case 'coupon': {
-            this.s3CouponList = res;
-            this.firstChckinCuponCunt(this.s3CouponList);
-            break;
-          }
-          case 'virtualFields': {
-            this.virtualfieldsjson = res;
-            this.virtualfieldsCombinedjson = [];
-            this.virtualfieldsDomainjson = [];
-            this.virtualfieldsSubdomainjson = [];
-            if (this.virtualfieldsjson.domain) {
-              this.virtualfieldsDomainjson = this.sortVfields(this.virtualfieldsjson.domain);
-            }
-            if (this.virtualfieldsjson.subdomain) {
-              this.virtualfieldsSubdomainjson = this.sortVfields(this.virtualfieldsjson.subdomain);
-            }
-            if (this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
-              this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson.concat(this.virtualfieldsDomainjson);
-            } else if (this.virtualfieldsSubdomainjson.length && !this.virtualfieldsDomainjson.length) {
-              this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson;
-            } else if (!this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
-              this.virtualfieldsCombinedjson = this.virtualfieldsDomainjson;
-            }
-            if (this.virtualfieldsCombinedjson.length > 0) {
-              this.showVirtualfieldsSection = true;
-            }
-            break;
-          }
-          case 'donationServices': {
-            this.donationServicesjson = res;
-            break;
-          }
-          case 'departmentProviders': {
-            this.deptUsers = res;
-            break;
-          }
-          case 'jaldeediscount':
-            this.jaldeediscountJson = res;
-            this.jdnlength = Object.keys(this.jaldeediscountJson).length;
-        }
-      },
-        (error) => {
-          if (section === 'businessProfile') {
-            this.routerobj.navigate(['/not-found']);
-          }
-          if (section === 'gallery') {
-            this.galleryjson = [];
-            if (this.bLogo !== '../../../assets/images/img-null.svg') {
-              this.galleryExists = true;
-              this.image_list_popup = [];
-              this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
-              const imgobj = new Image(0,
-                { // modal
-                  img: this.galleryjson[0].url,
-                  description: this.galleryjson[0].caption || ''
-                });
-              this.image_list_popup.push(imgobj);
-            } else {
-              this.bLogo = '../../../assets/images/img-null.svg';
-            }
-          }
-        }
-      );
-  }
+        );
+    }
   private getUserWaitingTime(provids_locid) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
@@ -2188,11 +2190,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   checkout() {
-    localStorage.setItem('order', JSON.stringify(this.orderList));
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.router.navigate(['consumer', 'order', 'cart']);
   }
   itemDetails(item) {
-    localStorage.setItem('order', JSON.stringify(this.orderList));
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.router.navigate(['consumer', 'order', 'item-details']);
   }
   increment(item) {

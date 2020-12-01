@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
@@ -8,7 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
   styleUrls: ['./shopping-cart.component.css']
 
 })
-export class ShoppingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit,OnDestroy {
   order_count: number;
   price: number;
   orders: any[];
@@ -21,11 +21,13 @@ export class ShoppingCartComponent implements OnInit {
     public sharedFunctionobj: SharedFunctions) { }
 
   ngOnInit() {
-    console.log('inisde');
+
     this.orderList = JSON.parse(localStorage.getItem('order'));
-    console.log(this.orderList);
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
-    console.log(this.orders);
+
+  }
+  ngOnDestroy() {
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
   }
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
@@ -77,6 +79,7 @@ export class ShoppingCartComponent implements OnInit {
 
   }
   cart() {
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.router.navigate(['consumer', 'order', 'checkout']);
   }
 }

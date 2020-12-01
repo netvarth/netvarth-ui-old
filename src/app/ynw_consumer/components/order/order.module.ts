@@ -12,12 +12,14 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AddAddressComponent } from './checkout/add-address/add-address.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
 
 @NgModule({
     declarations: [
         ShoppingCartComponent,
         CheckoutComponent,
-        AddAddressComponent
+        AddAddressComponent,
+        ItemDetailsComponent
 
     ],
     imports: [

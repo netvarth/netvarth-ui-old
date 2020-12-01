@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as itemdetails from '../../../../../assets/json/item-details.json';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-item-details',
@@ -12,16 +14,14 @@ export class ItemDetailsComponent implements OnInit {
   itemId: any;
   currentItem: any;
   orderList: any;
-  constructor() { }
+  constructor(   public sharedFunctionobj: SharedFunctions,
+    private location: Location ,) { }
 
   ngOnInit() {
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.itemDetailsJSON = itemdetails;
-    console.log(JSON.stringify(this.itemDetailsJSON));
     this.currentItem = this.itemDetailsJSON.default.item;
 
-    console.log(this.currentItem);
-    console.log(JSON.stringify(this.currentItem));
 
   }
   getItemQty() {
@@ -30,6 +30,10 @@ export class ItemDetailsComponent implements OnInit {
   }
   increment() {
     this.addToCart();
+  }
+  goBack(){
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.location.back();
   }
 
   decrement() {
