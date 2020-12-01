@@ -1,6 +1,6 @@
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
+        <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeecatalogcreation()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
             select items
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> </h5>
@@ -31,15 +31,15 @@
                            </div>
                        </div>
                    </div>
-                   
+
                </div>
            </div>
        </div>
 
    </ng-container>
-   <div>{{selectedCount}} items are selected</div>
+   <div>{{selecteditems.length}} items are selected</div>
    <div> <button type="button"  (click)="selectedItems()" [disabled]="selectedCount === 0" class="cs-btn bt1" mat-button>ok</button>
 </div>
   </div>
-  
+
 </section>
