@@ -36,11 +36,16 @@ export class CheckoutComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
+        type: 'Add'
+        // type: 'edit',
 
       }
     });
     // this.addressdialogRef.afterClosed().subscribe(result => {
     // });
+  }
+  updateAddress() {
+
   }
   goBack() {
     this.location.back();
