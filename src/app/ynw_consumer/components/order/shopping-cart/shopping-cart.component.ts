@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -18,6 +19,7 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
 
   constructor(
     public router: Router,
+    private location: Location,
     public sharedFunctionobj: SharedFunctions) { }
 
   ngOnInit() {
@@ -81,5 +83,9 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
   cart() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.router.navigate(['consumer', 'order', 'checkout']);
+  }
+  goBack() {
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.location.back();
   }
 }

@@ -15,7 +15,7 @@ export class ItemDetailsComponent implements OnInit {
   currentItem: any;
   orderList: any;
   constructor(   public sharedFunctionobj: SharedFunctions,
-    private location: Location ,) { }
+    private location: Location ) { }
 
   ngOnInit() {
     this.orderList = JSON.parse(localStorage.getItem('order'));
