@@ -56,42 +56,38 @@
     <div class="lbr col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small">     
         <div class="form-group">
                                         
-            <input matInput type="text" class="form-control"  placeholder="Address" formControlName="pnone_number">
-        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'pnone_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'pnone_number',
+            <input matInput type="text" class="form-control"  placeholder="Address" formControlName="address">
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'address')" [errorMsgs]="fed_service.getErrorMessage(amForm,'address',
         {
-          'required' : 'Mobile number is required',
-          'minlength' : 'Enter a 10 digit mobile number',
-          'maxlength' : 'Enter a 10 digit mobile number',
-          'pattern' : 'Only numbers are allowed'
+          'required' : 'Please enter address'
         })">
          </app-field-error-display>
         </div>
 
         <div class="form-group">
-          <input matInput type="text" class="form-control"  placeholder="City" formControlName="first_name">
-      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
+          <input matInput type="text" class="form-control"  placeholder="City" formControlName="city">
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
       {
-        'required' : 'First name is required',
+        'required' : 'Please enter city name',
         'pattern' : 'Only alphabets are allowed'
       })">
        </app-field-error-display>
       </div>
       
       <div class="form-group">
-        <input matInput type="text" class="form-control"    placeholder="Postal Code /ZIP" formControlName="last_name">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+        <input matInput type="text" class="form-control"    placeholder="Postal Code /ZIP" formControlName="postal_code">
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postal_code')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postal_code',
     {
-      'required' : 'First name is required',
-      'pattern' : 'Only alphabets are allowed'
+      'required' : 'Please enter Postal Code ',
+      'pattern' : 'Only numbers are allowed'
     })">
      </app-field-error-display>
     </div>
     <div class="form-group">
-      <input matInput type="text" class="form-control"    placeholder="landmark" formControlName="email_id">
-  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email_id',
+      <input matInput type="text" class="form-control"    placeholder="landmark" formControlName="landmark">
+  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landmark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landmark',
   {
-    'required' : 'Email is required',
-    'pattern' : 'Please enter valid email'
+    'required' : 'Please enter landmark'
   })">
    </app-field-error-display>
   </div>  

@@ -39,6 +39,11 @@ export class AddAddressComponent implements OnInit {
         last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         email_id:  ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
 
+        address:  ['', Validators.compose([ Validators.required ])],
+        city:  ['', Validators.compose([ Validators.required,  Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+        postal_code:  ['', Validators.compose([ Validators.required,  Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+        landmark:  ['', Validators.compose([ Validators.required ])],
+
     });
 
 
@@ -52,6 +57,7 @@ close() {
     this.dialogRef.close();
 }
 onSubmit(form_data) {
+  console.log(form_data);
   
   this.dialogRef.close();
 
