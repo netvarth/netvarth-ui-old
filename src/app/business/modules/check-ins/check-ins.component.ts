@@ -374,9 +374,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     { pk: 'NotPaid', value: 'Not Paid' },
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
     { pk: 'FullyPaid', value: 'Fully Paid' },
-    { pk: 'PartiallyRefunded', value: 'Partially Refunded' },
-    { pk: 'FullyRefunded', value: 'Fully Refunded' },
-    { pk: 'Refund', value: 'Refund' }
+    // { pk: 'PartiallyRefunded', value: 'Partially Refunded' },
+    // { pk: 'FullyRefunded', value: 'Fully Refunded' },
+    // { pk: 'Refund', value: 'Refund' }
   ];
   waitlistModes = [
     { mode: 'WALK_IN_CHECKIN', value: 'Walk in Check-in' },

@@ -150,7 +150,7 @@ export class CustomerDetailComponent implements OnInit {
             }
             if (qparams.phone) {
                 this.phoneNo = qparams.phone;
-                if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
+                if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist') {
                     this.getJaldeeIntegrationSettings();
                     this.save_btn = 'Proceed';
                 }
@@ -312,7 +312,7 @@ export class CustomerDetailComponent implements OnInit {
                         }
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
                         this.customerErrorMsg1 = 'The system found the record details in Jaldee.com';
-                        if (this.source === 'waitlist-block' || this.source === 'appt-block') {
+                        if (this.source === 'waitlist-block' || this.source === 'appt-block' || this.source === 'clist') {
                             this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + '?';
                         } else {
                             this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + ' to create ' + this.source + '?';
@@ -320,7 +320,7 @@ export class CustomerDetailComponent implements OnInit {
                         this.loading = false;
                     } else {
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
-                        if (this.source === 'waitlist-block' || this.source === 'appt-block') {
+                        if (this.source === 'waitlist-block' || this.source === 'appt-block' || this.source === 'clist') {
                             this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details';
                         } else {
                             this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;

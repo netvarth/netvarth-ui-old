@@ -462,7 +462,7 @@ export class CustomerSearchComponent implements OnInit {
         if (form_data.dob != null) {
             const date = new Date(form_data.dob);
             date_format = moment(date).format(projectConstants.POST_DATE_FORMAT);
-          }
+        }
         this.disableButton = true;
         // if (this.action === 'add') {
         const post_data = {
@@ -687,17 +687,25 @@ export class CustomerSearchComponent implements OnInit {
                 (data: any) => {
                     this.loading = false;
                     if (data.length === 0) {
-                        this.form_data = data;
-                        if (mode === 'phone') {
-                            this.amForm.get('mobile_number').setValue(form_data.search_input);
-                        }
-                        if (mode === 'email') {
-                            this.amForm.get('email_id').setValue(form_data.search_input);
-                        }
-                        if (mode === 'id' && this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-                            this.amForm.get('customer_id').setValue(form_data.search_input);
-                        }
+                        // this.form_data = data;
+                        // if (mode === 'phone') {
+                        //     this.amForm.get('mobile_number').setValue(form_data.search_input);
+                        // }
+                        // if (mode === 'email') {
+                        //     this.amForm.get('email_id').setValue(form_data.search_input);
+                        // }
+                        // if (mode === 'id' && this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+                        //     this.amForm.get('customer_id').setValue(form_data.search_input);
+                        // }
 
+                        if (mode === 'phone') {
+                            this.qParams['phone'] = form_data.search_input;
+                        }
+                        this.qParams['source'] = 'clist';
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: this.qParams
+                        };
+                        this.router.navigate(['/provider/customers/add'], navigationExtras);
                         this.create_new = true;
                         this.searchClicked = true;
                     } else {
