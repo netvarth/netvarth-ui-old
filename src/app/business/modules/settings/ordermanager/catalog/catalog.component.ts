@@ -21,7 +21,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     delete_btn = Messages.DELETE_BTN;
     add_item_cap = Messages.ADD_ITEM_CAP;
     item_enable_btn = Messages.ITEM_ENABLE_CAP;
-    item_list: any = [];
+    catalog_list: any = [];
     query_executed = false;
     emptyMsg = '';
     domain;
@@ -92,7 +92,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     getitems() {
         this.provider_servicesobj.getProviderItems()
             .subscribe(data => {
-                this.item_list = data;
+                this.catalog_list = data;
                 this.query_executed = true;
             });
     }
@@ -106,15 +106,15 @@ export class CatalogComponent implements OnInit, OnDestroy {
     addCatalog() {
         this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add']);
     }
-    editItem(item) {
+    editItem(catalog) {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'edit' }
         };
-        this.router.navigate(['provider', 'settings', 'ordermanager', 'items', item.itemId], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', catalog.id], navigationExtras);
     }
-    dochangeStatus(item) {
-        if (item.status === 'ACTIVE') {
-            this.provider_servicesobj.disableItem(item.itemId).subscribe(
+    dochangeStatus(catalog) {
+        if (catalog.catalogStatus === 'ACTIVE') {
+            this.provider_servicesobj.disableItem(catalog.id).subscribe(
                 () => {
                     this.getitems();
                 },
@@ -123,7 +123,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 }
             );
         } else {
-            this.provider_servicesobj.enableItem(item.itemId).subscribe(
+            this.provider_servicesobj.enableItem(catalog.id).subscribe(
                 () => {
                     this.getitems();
                 },
@@ -133,8 +133,8 @@ export class CatalogComponent implements OnInit, OnDestroy {
             );
         }
     }
-    changeStatus(itemid) {
-        this.provider_servicesobj.enableItem(itemid)
+    changeStatus(catalogid) {
+        this.provider_servicesobj.enableItem(catalogid)
             .subscribe(
                 () => {
                     this.getitems();
@@ -152,11 +152,11 @@ export class CatalogComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'view' }
         };
-        this.router.navigate(['provider', 'settings', 'ordermanager', 'items', id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', id], navigationExtras);
     }
 
-    doRemoveItem(item) {
-        const id = item.itemId;
+    doRemoveItem(catalog) {
+        const id = catalog.id;
         if (!id) {
             return false;
         }
@@ -165,7 +165,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                'message': this.sharedfunctionObj.getProjectMesssages('ITEM_DELETE').replace('[name]', item.displayName)
+                'message': this.sharedfunctionObj.getProjectMesssages('ITEM_DELETE').replace('[name]', catalog.catalogName)
             }
         });
         this.removeitemdialogRef.afterClosed().subscribe(result => {

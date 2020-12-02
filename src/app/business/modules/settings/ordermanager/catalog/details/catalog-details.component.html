@@ -163,18 +163,18 @@
                                                     <h4>Payment Information</h4>
                                                     <div class="form-group">
                                                     <label>Show item prices &nbsp;
-                                                      <mat-slide-toggle [(ngModel)]="itemPriceInfo"  [ngModelOptions]="{standalone: true}">
+                                                      <mat-slide-toggle formControlName="itemPriceInfo"  >
                                                       </mat-slide-toggle>
                                                   </label>
                                                 </div>
                                                   <div class="form-group">
                                                       <label>Advance payment &nbsp;
-                                                    <mat-checkbox   [(ngModel)]="advancePaymentStatus" [ngModelOptions]="{standalone: true}">
+                                                    <mat-checkbox   formControlName="advancePaymentStatus" (change)="handleadvancePayment($event)">
                                                     </mat-checkbox></label>
-                                                    <div  *ngIf="advancePaymentStatus">
+                                                    <div  *ngIf="advancePaymentStat">
                                                         <mat-form-field>
                                                             <input matInput type="text" class="form-control number-ip-sm" id="advancePayment"
-                                                                placeholder="Advance Amount " [(ngModel)]="advancePayment" [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Advance Amount " formControlName="advancePayment" 
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                        
@@ -183,13 +183,13 @@
 
                                             <div class="form-group">
                                                 <label>Cancelation policy &nbsp;
-                                                    <mat-slide-toggle [(ngModel)]="cancelationPolicyStatus" [disabled]="true" [ngModelOptions]="{standalone: true}">
+                                                    <mat-slide-toggle formControlName="cancelationPolicyStatus" [disabled]="true" >
                                                       </mat-slide-toggle></label><br>
                                                       <label class="link underline" (click)="addcancelpolicy()">Add cancelation policy</label>
                                                       <div  *ngIf="showpolicy">
                                                           <mat-form-field>
                                                               <textarea matInput class="form-control" id="cancelationPolicy"
-                                                                  placeholder="Enter cancelation policy " [(ngModel)]="cancelationPolicy" [ngModelOptions]="{standalone: true}"
+                                                                  placeholder="Enter cancelation policy " formControlName="cancelationPolicy" 
                                                                   ></textarea>
                                                           </mat-form-field>
                                                       </div>
@@ -238,7 +238,126 @@
                                                               </mat-form-field>
                                                           </div>
                                                       </div>
+
+
+                                                      <div class="form-group schedulesub_outer">
+                                                        <div class="startendtime" style="display: flex">
+                                                            <div class="starttimediv" style="flex-grow: 1">
+                                                                <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
+                                                                <ngb-timepicker formControlName="qstarttimestore" meridian="true" #sch_start_timestore
+                                                                    (ngModelChange)="changestoretime('start',$event)"></ngb-timepicker>
+                                                                <app-field-error-display
+                                                                    [displayError]="fed_service.isFieldValid(amForm,'qstarttimestore')"
+                                                                    errorMsg="Please enter the start time">
+                                                                </app-field-error-display>
+                                                            </div>
+                                                            <div class="endtimediv">
+                                                                <label class="labelstyle" for="changeHourStep">{{end_time_cap}}</label>
+                                                                <ngb-timepicker formControlName="qendtimestore" meridian="true" #sch_end_timestore
+                                                                    (ngModelChange)="changestoretime('end',$event)"></ngb-timepicker>
+                                                                <app-field-error-display
+                                                                    [displayError]="fed_service.isFieldValid(amForm,'qendtimestore')"
+                                                                    errorMsg="Please enter the end time">
+                                                                </app-field-error-display>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                      <label>Pick up Otp verification </label>
+                                                        <mat-slide-toggle formControlName="storeotpverify"  >
+                                                        </mat-slide-toggle>
+                                                    
+                                                  </div>
                                                   
+                                              </div>
+
+                                              <div class="mgn-up-10 box-style col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div>  
+                                                  <label>Home Delivery </label> &nbsp;
+                                                      <mat-slide-toggle formControlName="homedelivery" >
+                                                      </mat-slide-toggle>
+                                                    </div>
+
+                                                    <div class="schselectall">
+                                                      <i class="fa fa-square-o"  *ngIf="!Selallhomedelivery" (click)="handleselectallhomedelivery()">
+                                                          {{select_All}}</i>
+                                                      <i class="fa fa-check-square-o"  *ngIf="Selallhomedelivery" (click)="handleselectnonehomedelivery()">
+                                                          {{select_All}}</i>
+                                                  </div>
+                                                  <section class="schedule-section leftselectAll start-endtime-wrap">
+                                                      <div *ngFor="let wday of weekdays; index as i">
+                                                          <mat-checkbox class="example-margin" *ngIf="i>0"  formControlName="homedeliverydays" (change)="handleDaychecboxhomedelivery(i)"
+                                                              [checked]="check_existsinArrayhomedelivery(selday_arrhomedelivery,i) >= 0">{{wday}}</mat-checkbox>
+                                                      </div>
+                                                  </section>
+
+                                                  <div class="form-group row" >
+                                                    <div class="col-md-3 col-sm-3 col-xs-4 no-padding-small">
+                                                        <mat-form-field>
+                                                            <input matInput [matDatepicker]="picker4"
+                                                                (dateChange)="compareDatehome($event.value,0)" placeholder="Start Date"
+                                                                formControlName="startdatehome" readonly>
+                                                            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker4></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-5">
+                                                        <mat-form-field>
+                                                            <input matInput [matDatepicker]="picker5"
+                                                                (dateChange)="compareDatehome($event.value,1)" placeholder="End Date"
+                                                                formControlName="enddatehome" readonly>
+                                                            <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker5></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group schedulesub_outer">
+                                                  <div class="startendtime" style="display: flex">
+                                                      <div class="starttimediv" style="flex-grow: 1">
+                                                          <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
+                                                          <ngb-timepicker formControlName="qstarttimehome" meridian="true" #sch_start_timehome
+                                                              (ngModelChange)="changehometime('start',$event)"></ngb-timepicker>
+                                                          <app-field-error-display
+                                                              [displayError]="fed_service.isFieldValid(amForm,'qstarttimehome')"
+                                                              errorMsg="Please enter the start time">
+                                                          </app-field-error-display>
+                                                      </div>
+                                                      <div class="endtimediv">
+                                                          <label class="labelstyle" for="changeHourStep">{{end_time_cap}}</label>
+                                                          <ngb-timepicker formControlName="qendtimehome" meridian="true" #sch_end_timehome
+                                                              (ngModelChange)="changehometime('end',$event)"></ngb-timepicker>
+                                                          <app-field-error-display
+                                                              [displayError]="fed_service.isFieldValid(amForm,'qendtimehome')"
+                                                              errorMsg="Please enter the end time">
+                                                          </app-field-error-display>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="form-group">
+                                                <label>Home Delivery Otp verification </label>
+                                                  <mat-slide-toggle formControlName="homeotpverify"  >
+                                                  </mat-slide-toggle>
+                                              
+                                            </div>
+
+                                            <div class="form-group">
+                                              <mat-form-field>
+                                                  <input matInput type="text" class="form-control" id="deliverykms"
+                                                      placeholder="Delivery range in Kms" formControlName="deliverykms"
+                                                      autocomplete="off" maxlength="50">
+                                              </mat-form-field>
+                                              
+                                          </div>
+                                          <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="deliverycharge"
+                                                    placeholder="Delivery charge" formControlName="deliverycharge"
+                                                    autocomplete="off" maxlength="50">
+                                            </mat-form-field>
+                                            
+                                        </div>
+
                                               </div>
     
                                     
