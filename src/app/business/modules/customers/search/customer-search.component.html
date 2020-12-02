@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                 <div class="mgn-bt-20" *ngIf="searchClicked && !foundCustomer">
                                     <span>Sorry, We were not able to find the record in our {{customer_label}}s
                                         list. Fill the following to create a new {{customer_label}}.</span>
@@ -77,12 +77,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
             'pattern' : 'Only numbers are allowed'
           })">
                                             </app-field-error-display>
-                                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                        <div class="mgn-bt-20" *ngIf="searchClicked && !foundCustomer">
-                                            <span>Sorry, We were not able to find the record in our {{customer_label}}s
-                                                list, Please fill the following to create a {{customer_label}}.</span>
-                                        </div>
-                                    </div> -->
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20"
                                             *ngIf="searchClicked && foundCustomer">
@@ -237,10 +231,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                     </form>
 
 
-                                    <!-- <button class="create_new_button cs-btn bt3" (click)="createNew()">{{create_cap}}
-                                        {{customer_label}}</button> -->
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20"
                                 *ngIf="searchClicked && foundCustomer">
