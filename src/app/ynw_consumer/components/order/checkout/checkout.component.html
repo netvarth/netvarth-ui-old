@@ -167,13 +167,13 @@
                                                                     <div class="div-outline custId-cursor">
                                                             <div class="amount-table">
                                                               <div class="amt-content">
-                                                                <table class="amt-content">
+                                                                <table class="amt-content" *ngFor="let item of orders; let i = index">
                                                                   <tbody>
                                                                     
-                                                                    <tr>
+                                                                    <tr >
                                                                       <td >Item Total: </td>
                                                                       <td style="text-align: end;" class="price rupee-font">
-                                                                 500
+                                                                        {{getItemPrice(item)}}
                                                                       </td>
                                                                     </tr>
                                                                    
@@ -183,12 +183,12 @@
                                                                  
                                                                     <tr>
                                                                       <td >Taxes and Charges: </td>
-                                                                      <td style="text-align: end;" class="price  rupee-font"> 100</td>
+                                                                      <td style="text-align: end;" class="price  rupee-font">  {{getItemCharges(item)}}</td>
                                                                     </tr>
                                                                    
                                                                     <tr >
                                                                       <td >TO PAY:</td>
-                                                                      <td style="text-align: end;" class="price rupee-font">600</td>
+                                                                      <td style="text-align: end;" class="price rupee-font">{{getItemPay(item)}}</td>
                                                                     </tr>
                                                                  
                                       

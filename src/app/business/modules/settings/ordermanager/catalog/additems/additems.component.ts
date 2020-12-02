@@ -85,6 +85,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
 
         this.api_loading = false;
         if (this.seletedCatalogItems !== null) {
+          this.selectedCount = this.seletedCatalogItems.length;
           this.catalogItem.map(item => {
             if (this.seletedCatalogItems.includes(item.itemId)) {
               item.selected = true;
@@ -114,23 +115,23 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     if (this.catalogItem[index].selected === undefined || this.catalogItem[index].selected === false) {
       this.catalogItem[index].selected = true;
       this.selectedCount++;
-        this.selecteditems.push(item);
+       //this.seletedCatalogItems.push(item);
     } else {
       this.catalogItem[index].selected = false;
       this.selectedCount--;
-       this.selecteditems.splice(index, 1);
+      //this.seletedCatalogItems.splice(index, 1);
     }
-    console.log(this.selecteditems);
+    console.log(this.seletedCatalogItems);
   }
   selectedItems() {
-    this.selecteditems = [];
+    this.seletedCatalogItems = [];
     for (let ia = 0; ia < this.catalogItem.length; ia++) {
       if (this.catalogItem[ia].selected === true) {
-        this.selecteditems.push(this.catalogItem[ia].itemId);
+        this.seletedCatalogItems.push(this.catalogItem[ia].itemId);
       }
     }
-    console.log(this.selecteditems);
-    this.shared_functions.setitemonLocalStorage('selecteditems', this.selecteditems);
+    console.log(this.seletedCatalogItems);
+    this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
     this.location.back();
 
     // this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add']);

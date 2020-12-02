@@ -7,7 +7,7 @@ import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-privacy-detail',
   templateUrl: './privacy-detail.component.html',
@@ -78,6 +78,7 @@ export class PrivacyDetailComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
+    private _location: Location,
     private router: Router,
     public shared_functions: SharedFunctions
   ) {
@@ -336,7 +337,7 @@ export class PrivacyDetailComponent implements OnInit {
     return rettxt;
   }
   backPage() {
-    this.router.navigate(['provider', 'settings', 'bprofile', 'privacy']);
-    // this._location.back();
+    // this.router.navigate(['provider', 'settings', 'bprofile', 'privacy']);
+    this._location.back();
   }
 }

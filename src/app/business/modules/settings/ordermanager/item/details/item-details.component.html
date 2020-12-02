@@ -17,7 +17,7 @@
                 </div>
                 <div class="card p0" *ngIf="!api_loading">
                     <div class="copy locd">
-                            <div class="lbr col-sm-12 col-md-4 col-lg-5">
+                            <div class="lbl col-sm-12 col-md-4 col-lg-5">
                                     <div class="cr1">
                                     <div class="no-dta" *ngIf="!image_list_popup || image_list_popup.length == 0">
                                             <!-- <p>{{havent_added_cap}} {{photo_cap}} </p> -->
@@ -94,7 +94,7 @@
                         <div class="lbl col-sm-12 col-md-8 col-lg-7">
                             <form *ngIf="action=='add' || action === 'edit' && amForm" [formGroup]="amForm" novalidate
                                 (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
-                                class="ynw-common-form-nm">
+                                class="ynw-common-form-nm orderitemcrete">
 
                                 <div class="form-group">
                                     <mat-form-field>
