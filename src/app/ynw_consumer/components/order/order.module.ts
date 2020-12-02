@@ -13,6 +13,7 @@ import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AddAddressComponent } from './checkout/add-address/add-address.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
+import { OwlModule } from 'ngx-owl-carousel';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
         CapitalizeFirstPipeModule,
         LoadingSpinnerModule,
         HeaderModule,
-        MaterialModule
+        MaterialModule,
+        OwlModule
     ],
     entryComponents: [
       AddAddressComponent

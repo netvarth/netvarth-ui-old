@@ -10,17 +10,39 @@ import { Location } from '@angular/common';
 })
 export class ItemDetailsComponent implements OnInit {
 
+  itemImages: any;
+  customOptions: any;
   itemDetailsJSON: any;
   itemId: any;
   currentItem: any;
   orderList: any;
+
   constructor(   public sharedFunctionobj: SharedFunctions,
     private location: Location ) { }
 
   ngOnInit() {
+
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.itemDetailsJSON = itemdetails;
     this.currentItem = this.itemDetailsJSON.default.item;
+    this.itemImages = this.currentItem.itemImages;
+    this.customOptions = {
+      // nav: true,
+      // navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+      dots: true,
+      loop: true,
+      autoplay: true,
+      responsiveClass: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        992: {
+          items: 1,
+          center: true,
+        }
+      }
+    };
 
 
   }

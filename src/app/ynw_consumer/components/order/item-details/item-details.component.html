@@ -25,19 +25,23 @@
 
               <div class="row">
                 <div class="col-md-6">
-                  <div class="thumbnail">
-                    <a href="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)"
-                      target="_blank">
-                      <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)"
-                        alt="Lights" style="width:100%">
-                      <div class="caption">
-                        <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                    <owl-carousel
+                    [options]="{items: 1, dots: true, navigation: false}"
+                    [items]="itemImages"
+                    [carouselClasses]="['owl-theme', 'row', 'sliding']">
+                    <div class="item" *ngFor="let image of itemImages;let i = index">
+                        <div class="thumbnail-image">
+                           <img [src]="image.url"/>
+                         </div>
                       </div>
-                    </a>
-                  </div>
+                    </owl-carousel>
+
+                  <!--/main slider carousel-->
+              </div>
+
                 </div>
                 <div class="col-md-6">
-                  <div class="col-md-12"> 
+                  <div class="col-md-12">
                     <p style="font-size: large;"> Home Delivery Accepted</p>
 
                   </div>
@@ -50,13 +54,13 @@
                       </p>
                   </div>
                   <!-- <div class="col-md-12">
-                  
+
                   </div> -->
                    <div class="col-md-12  mr-area">
                       <p>Instrucations</p>
                       <textarea name="paragraph_text" maxlength="500" cols="10" rows="2"></textarea>
                    </div>
-                 
+
                     <div  class="col-md-12">
                       <p>Quantity:</p>
                       <button class="m2" (click)="decrement()">-</button>
@@ -65,7 +69,7 @@
                       <button class="pay" ><h6 style="padding-top: 10px;">ADD TO CART</h6></button>
 
                     </div>
-                  
+
                 </div>
 
               </div>
@@ -75,5 +79,5 @@
       </div>
       <div class="clearfix"></div>
     </div>
-  </div>
+
 </section>
