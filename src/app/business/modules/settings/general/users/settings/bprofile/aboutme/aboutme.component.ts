@@ -688,14 +688,15 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
   }
-  changeProPic() {
+  changeProPic(image) {
     this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         'userId': this.userId,
-        'userdata': this.user_arr
+        'userdata': this.user_arr,
+        img_type : image
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
