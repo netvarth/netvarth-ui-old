@@ -79,7 +79,6 @@ import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.compon
         UpdateEmailComponent,
         InboxListComponent,
         HelpPopUpComponent,
-
     ],
     imports: [
         BusinessRoutingModule,
