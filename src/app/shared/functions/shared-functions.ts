@@ -684,7 +684,7 @@ export class SharedFunctions {
   confirmSearchChangeStatusOfUser(ob, stat) {
     let msg = '';
     if (stat) {
-      msg = 'If you " Turn off" Jaldee Online, You will not be visible online in Jaldee.com.';
+      msg = 'If you " Turn off" Jaldee Online, You will not be visible online on Jaldee.com.';
 
       // msg = 'If you "Turn off" public search, Your profile will not be visible online at Jaldee.com.';
       // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
@@ -713,7 +713,7 @@ export class SharedFunctions {
   confirmOPSearchChangeStatus(ob, stat) {
     let msg = '';
     if (stat) {
-      msg = 'If you " Turn off" Jaldee Online, You will not be visible online in Jaldee.com.';
+      msg = 'If you " Turn off" Jaldee Online, You will not be visible online on Jaldee.com.';
       // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
     } else {
       msg = '"Turn On" Jaldee Online?';
