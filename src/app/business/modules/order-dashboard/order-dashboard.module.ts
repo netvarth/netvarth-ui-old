@@ -14,6 +14,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     CommonModule,
     OrderDashboardRoutingModule,
     MatTabsModule
+  ],
+  exports: [
+    OrderDashboardComponent
   ]
 })
 export class OrderDashboardModule { }
