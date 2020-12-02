@@ -13133,3 +13133,7 @@ hr {
 .fa-instagram, .fa-globe {
   font-size: 1.25rem;
 }
+.bizyglobe {
+  content: url(../images/BG_icon_sqr.jpg);  
+  /* width: 20px; */
+}
