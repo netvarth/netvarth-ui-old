@@ -253,7 +253,7 @@ export const projectConstantsLocal = {
     { key: 'linkedin', iconClass: 'fa fa-linkedin lkd', iconImg: 'linkedin.png', displayName: 'LinkedIn' },
     { key: 'pinterest', iconClass: 'fa fa-pinterest-square pntr', iconImg: 'pinterest.png', displayName: 'Pinterest' },
     { key: 'instagram', iconClass: 'fa fa-instagram', iconImg: 'instagram.png', displayName: 'Instagram' },
-    { key: 'BizyGlobe', iconClass: 'bizyglobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
+    { key: 'bizyGlobe', iconClass: 'BizyGlobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
     { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' }
   ],
   PRIVACY_PERMISSIONS: {
