@@ -1620,7 +1620,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       no_filter = true;
     }
     if (this.filter.waitlist_status === 'all') {
-      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed,unrevertable';
     }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistTodayCount(Mfilter)
@@ -1647,7 +1647,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // no_filter = true;
     }
     if (this.filter.waitlist_status === 'all') {
-      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed,unrevertable';
     }
     return new Promise((resolve) => {
       this.provider_services.getWaitlistFutureCount(Mfilter)
@@ -1675,7 +1675,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // no_filter = true;
     }
     if (this.filter.waitlist_status === 'all') {
-      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed,unrevertable';
     }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
@@ -1945,7 +1945,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.filter.waitlist_status === 'all') {
-      api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+      api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed,unrevertable';
     }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
