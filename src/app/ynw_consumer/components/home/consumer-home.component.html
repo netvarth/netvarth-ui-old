@@ -1352,14 +1352,14 @@
                                 <th colspan="6">TODAY</th>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr *ngFor="let oder of orders" (click)="showBookingDetails(oder)">
                                     <td>
                                         <h4 class="disp-flex">
                                             <div class="circle-tokens">
                                                 <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                             </div>
                                             <span class="mgn-up-10">
-                                                Order :<br> #o-hmp-a
+                                                Order :<br> #{{oder.orderNumber}}
                                             </span>
                                         </h4>
                                     </td>
@@ -1367,20 +1367,21 @@
                                         <h4>Order For</h4>
                                         <div class="userName">
                                             <i class="fa fa-user for"></i>
-                                            Aneesh MG
+                                            {{oder.orderFor.firstName}}
+                                            {{oder.orderFor.lastName}}
                                         </div>
-                                        <span class="servName">No Of Products : 2
+                                        <span class="servName">No Of Products : {{oder.orderItem.length}}
                                         </span>
                                     </td>
                                     <td>
                                         <h6>
-                                            <span>Accepted</span>
+                                            <span>{{oder.orderStatus | capitalizeFirst}}</span>
                                         </h6>
                                     </td>
                                     <td class="pay-wdth">
                                         <span>
                                             <button class="bt3 cust-btn">Pay
-                                                &#8377;500</button>
+                                                &#8377;{{oder.cartAmount}}</button>
                                         </span>
                                     </td>
                                     <td></td>

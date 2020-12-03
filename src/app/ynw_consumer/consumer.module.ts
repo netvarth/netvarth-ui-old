@@ -51,6 +51,7 @@ import { ViewRxComponent } from './components/home/view-rx/view-rx.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { OrderComponent } from './components/order/order.component';
+import { OrderDetailComponent } from './components/home/order-detail/order-detail.component';
 
 
 @NgModule({
@@ -97,6 +98,7 @@ import { OrderComponent } from './components/order/order.component';
     ActionPopupComponent,
     ViewRxComponent,
     OrderComponent,
+    OrderDetailComponent,
 
   ],
   exports: [ConfirmBoxComponent],
