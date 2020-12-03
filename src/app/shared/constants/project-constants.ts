@@ -827,7 +827,7 @@ export const projectConstantsLocal = {
   ],
   PATH: 'https://' + window.location.host + '/',
   ORDER_STATUSES_FILTER: [
-    { displayName: 'Confirmed', value: 'Accepted' },
+    { displayName: 'Accepted', value: 'Accepted' },
     { displayName: 'Rejected', value: 'Rejected' },
     { displayName: 'Preparing', value: 'Preparing' },
     { displayName: 'On the way', value: 'onTheWay' },

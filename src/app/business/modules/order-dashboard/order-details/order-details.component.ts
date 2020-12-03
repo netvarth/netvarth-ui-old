@@ -78,6 +78,22 @@ export class OrderDetailsComponent implements OnInit {
         'price': 100.22,
         'status': 'FULFILLED',
         'totalPrice': 200.44
+      },
+      {
+        'id': 2,
+        'name': 'Hamlet2',
+        'quantity': 3,
+        'price': 100.00,
+        'status': 'FULFILLED',
+        'totalPrice': 300.00
+      },
+      {
+        'id': 3,
+        'name': 'Hamlet3',
+        'quantity': 5,
+        'price': 10.00,
+        'status': 'FULFILLED',
+        'totalPrice': 50.00
       }
     ],
     'orderStatus': 'Accepted',

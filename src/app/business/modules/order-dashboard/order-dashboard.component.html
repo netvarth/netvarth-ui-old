@@ -36,6 +36,9 @@
                 </mat-option>
               </mat-select>
             </div>
+            <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
+            <span *ngIf="selectedOrders.length > 1" class="main-act-btn" (click)="showActionPopup()"> Actions</span>
+          </div>
             <div class="pull-right mgn-up-5">
               <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
                 <i class="icon-filter-one" (click)="showFilter()">
@@ -73,7 +76,7 @@
                       <div class="filterTextinput">
                         <li class="filterli">
                           <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (blur)="doSearch()"
-                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Booking No">
+                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Order No">
                         </li>
                       </div>
 
@@ -89,7 +92,7 @@
                         </li>
                       </div>
                       <div>
-                        <label class="filterHeaders"> Order Modes</label>
+                        <label class="filterHeaders"> Order Mode</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
@@ -119,9 +122,9 @@
           <div class="card boxshadow-style pointer-cursor no-padding bold" *ngFor="let order of orders;let i=index"
             (click)="gotoDetails(order)">
             <div class="top-sec">
-              <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(i, $event)"
+              <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                 [checked]="orderSelected[i]"></mat-checkbox>
-              <span class="pull-right"> {{order.orderNumber}}
+              <span class="pull-right"> #{{order.orderNumber}}
                 <i *ngIf="order.homeDelivery" class="fa fa-home"></i>
                 <i *ngIf="order.storePickup" class="fa fa-home"></i>
               </span>

@@ -756,6 +756,7 @@ export class OrderDashboardComponent implements OnInit {
   orderStatuses: any = [];
   orderModes: any = [];
   paymentStatuses: any = [];
+  selectedOrders: any = [];
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -784,7 +785,7 @@ export class OrderDashboardComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
       disableClose: true,
       data: {
-
+selectedOrder: this.selectedOrders
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
@@ -821,9 +822,18 @@ export class OrderDashboardComponent implements OnInit {
       this.historyOrdersCount = data;
     });
   }
-  checkOrder(index, event) {
-    console.log(event);
-    this.orderSelected[index] = event.checked;
+  checkOrder(order, index) {
+    if (!this.orderSelected[index]) {
+      this.orderSelected[index] = true;
+      this.selectedOrders.push(order);
+    } else {
+      this.orderSelected[index] = false;
+      const indx = this.selectedOrders.indexOf(order);
+      this.selectedOrders.splice(indx, 1);
+      // delete this.selectedOrders[index];
+    }
+    console.log(this.selectedOrders);
+    console.log(this.orderSelected);
   }
   showFilter() {
     this.showFilterSection = true;
