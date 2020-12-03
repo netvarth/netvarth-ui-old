@@ -1,0 +1,42 @@
+
+.orderlist .card {
+    width: 250px !important;
+    float: left !important;
+    display: table !important;
+    margin: 10px !important;
+    min-height: 150px
+}
+.order-count {
+    font-weight: bold;
+    font-size: 2rem;
+}
+/* .mat-tab-label .mat-tab-label-content {
+    font-size: 1rem !important;
+} */
+.orderlist .card .bottom {
+    /* bottom: 20px;
+    position: absolute;
+    width: 200px; */
+    border-top: 1px solid #ccc;
+    /* padding-top: 5px; */
+}
+.orderlist .head {
+    color: #999999;
+}
+.details {
+    font-size: small;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.count-section .card {
+    max-width: 200px !important;
+}
+.boxshadow-style {
+    box-shadow: 10px 10px 15px 0px #cccccc9c !important;
+    border: 1px solid #ccc !important;
+}
+::ng-deep .custom-frame {
+    & .mat-checkbox-background, .mat-checkbox-frame {
+      border-radius: 70% !important;
+    }
+  }

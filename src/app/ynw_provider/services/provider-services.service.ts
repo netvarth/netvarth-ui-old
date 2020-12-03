@@ -1672,5 +1672,25 @@ export class ProviderServices {
       const url = 'provider/items/' + id + '/image';
       return this.servicemeta.httpPost(url, data);
    }
+   getProviderOrders() {
+      const url = 'provider/orders';
+      return this.servicemeta.httpGet(url);
+   }
+   getProviderOrdersCount() {
+      const url = 'provider/orders/count';
+      return this.servicemeta.httpGet(url);
+   }
+   getProviderOrderById(id) {
+      const url = 'provider/orders/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   getProviderHistoryOrders() {
+      const url = 'provider/orders/history/count';
+      return this.servicemeta.httpGet(url);
+   }
+   getProviderHistoryOrdersCount() {
+      const url = 'provider/orders/history';
+      return this.servicemeta.httpGet(url);
+   }
 }
 

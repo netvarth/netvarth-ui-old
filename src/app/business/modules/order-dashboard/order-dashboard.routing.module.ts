@@ -5,7 +5,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 
 const routes: Routes = [
     { path: '', component: OrderDashboardComponent },
-    { path: 'id', component: OrderDetailsComponent },
+    { path: ':id', component: OrderDetailsComponent },
 ];
 
 @NgModule({
