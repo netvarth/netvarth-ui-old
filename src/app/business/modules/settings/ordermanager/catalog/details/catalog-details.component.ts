@@ -848,17 +848,17 @@ onSubmit(form_data) {
             'cancellationPolicy': form_data.cancelationPolicy
           };
           if (this.action === 'add') {
-           // this.addItem(postdata);
+           this.addCatalog(postdata);
            console.log(postdata);
             } else if (this.action === 'edit') {
-            this.editItem(postdata);
+            this.editCatalog(postdata);
     }
 }
-addItem(post_data) {
+addCatalog(post_data) {
     this.disableButton = true;
     this.resetApiErrors();
     this.api_loading = true;
-    this.provider_services.addItem(post_data)
+    this.provider_services.addCatalog(post_data)
         .subscribe(
             () => {
                 this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
@@ -872,12 +872,12 @@ addItem(post_data) {
             }
         );
 }
-editItem(post_itemdata) {
+editCatalog(post_itemdata) {
     this.disableButton = true;
     this.resetApiErrors();
     this.api_loading = true;
     post_itemdata.itemId = this.catalog.itemId;
-    this.provider_services.editItem(post_itemdata)
+    this.provider_services.editCatalog(post_itemdata)
         .subscribe(
             () => {
                 this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED'));

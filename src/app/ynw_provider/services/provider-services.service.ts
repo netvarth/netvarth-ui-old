@@ -1700,5 +1700,22 @@ export class ProviderServices {
       const url = 'provider/orders/' + uuid + '/' + action;
       return this.servicemeta.httpGet(url);
    }
+   addCatalog(data) {
+      return this.servicemeta.httpPost('provider/catalog', data);
+   }
+   editCatalog(data) {
+      return this.servicemeta.httpPut('provider/catalog', data);
+   }
+   getProviderCatalogs(id?) {
+      if (id) {
+         return this.servicemeta.httpGet('provider/catalog/' + id);
+      } else {
+         return this.servicemeta.httpGet('provider/catalog');
+      }
+   }
+   stateChangeCatalog(id, status) {
+      const url = 'provider/catalog/' + id + '/' + status;
+      return this.servicemeta.httpPut(url);
+   }
 }
 

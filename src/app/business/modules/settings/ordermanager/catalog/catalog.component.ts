@@ -114,7 +114,8 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
     dochangeStatus(catalog) {
         if (catalog.catalogStatus === 'ACTIVE') {
-            this.provider_servicesobj.disableItem(catalog.id).subscribe(
+            const stat = 'InActive';
+            this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getitems();
                 },
@@ -123,7 +124,8 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 }
             );
         } else {
-            this.provider_servicesobj.enableItem(catalog.id).subscribe(
+            const stat = 'Active';
+            this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getitems();
                 },
