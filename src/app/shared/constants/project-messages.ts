@@ -25,7 +25,9 @@ export const Messages = {
   'ITEM_LISTEMPTY': 'No items found',
   'ITEM_IMGREMOVED': 'Image removed successfully',
   'ITEMIMAGE_UPLOADED': 'Image uploaded successfully',
-
+  //Catalog
+  'CATALOG_CREATED': 'Catalog added successfully',
+  'CATALOG_UPDATED': 'Catalog updated successfully',
   // Bill Discount
   'DISCOUNT_CREATED': 'Discount created successfully',
   'DISCOUNT_UPDATED': 'Discount updated successfully',

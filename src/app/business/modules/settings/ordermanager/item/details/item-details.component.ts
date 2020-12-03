@@ -113,6 +113,7 @@ export class ItemDetailsComponent implements OnInit {
           }
         ]
       };
+      itmId;
       data:any;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
@@ -141,6 +142,7 @@ export class ItemDetailsComponent implements OnInit {
                         this.activated_route.queryParams.subscribe(
                             (qParams) => {
                                 this.action = qParams.action;
+                                this.itmId = this.item_id;
                                 this.getItem(this.item_id).then(
                                     (item) => {
                                         this.item = item;
@@ -394,7 +396,10 @@ export class ItemDetailsComponent implements OnInit {
         this.api_loading = true;
         this.provider_services.addItem(post_data)
             .subscribe(
-                () => {
+                (data) => {
+                    if (this.selectedMessage.files.length > 0) {
+                        this.saveImages(data);
+                      }
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
                     this.api_loading = false;
                     if (isFrom === 'saveadd') {
@@ -554,6 +559,9 @@ export class ItemDetailsComponent implements OnInit {
               reader.readAsDataURL(file);
             }
           }
+          if (this.itmId && this.selectedMessage.files.length > 0) {
+            this.saveImages(this.itmId);
+          }
         }
       }
 
@@ -563,13 +571,13 @@ export class ItemDetailsComponent implements OnInit {
           panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
           disableClose: true,
           data: {
-            'message': 'Do you really want to remove the prescription?'
+            'message': 'Do you really want to remove the item image?'
           }
         });
         this.removeimgdialogRef.afterClosed().subscribe(result => {
           if (result) {
             if (img.view && img.view === true) {
-              this.provider_services.deleteUplodedprescription(img.keyName, this.item_id)
+              this.provider_services.deleteUplodeditemImage(img.keyName, this.item_id)
                 .subscribe((data) => {
                   this.selectedMessage.files.splice(index, 1);
                 },

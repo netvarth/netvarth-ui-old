@@ -10,6 +10,8 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { MatDialog } from '@angular/material/dialog';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import * as moment from 'moment';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy , Image , ButtonType} from 'angular-modal-gallery';
+import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-catalogdetail',
@@ -125,6 +127,30 @@ export class CatalogdetailComponent implements OnInit {
   dend_timestore;
   dstart_timehome;
   dend_timehome;
+  cataId;
+  image_list_popup: Image[];
+  selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
 
   constructor(private provider_services: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
@@ -151,6 +177,7 @@ export class CatalogdetailComponent implements OnInit {
                     this.activated_route.queryParams.subscribe(
                         (qParams) => {
                             this.action = qParams.action;
+                            this.cataId = this.catalog_id;
                             this.getItem(this.catalog_id).then(
                                 (catalog) => {
                                     this.catalog = catalog;
@@ -860,8 +887,11 @@ addCatalog(post_data) {
     this.api_loading = true;
     this.provider_services.addCatalog(post_data)
         .subscribe(
-            () => {
-                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
+            (data) => {
+              if (this.selectedMessage.files.length > 0) {
+                this.saveImages(data);
+              }
+                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CATALOG_CREATED'));
                 this.api_loading = false;
                 this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
             },
@@ -880,7 +910,7 @@ editCatalog(post_itemdata) {
     this.provider_services.editCatalog(post_itemdata)
         .subscribe(
             () => {
-                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED'));
+                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CATALOG_UPDATED'));
                 this.api_loading = false;
                 this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
             },
@@ -987,6 +1017,107 @@ public onReady(editor) {
     );
     editor.getData();
 
+}
+
+saveImages(id) {
+  const submit_data: FormData = new FormData();
+  const propertiesDetob = {};
+  let i = 0;
+  for (const pic of this.selectedMessage.files) {
+    console.log(pic);
+    submit_data.append('files', pic, pic['name']);
+    const properties = {
+      'caption': this.selectedMessage.caption[i] || ''
+    };
+    propertiesDetob[i] = properties;
+    i++;
+  }
+  const propertiesDet = {
+    'propertiesMap': propertiesDetob
+  };
+  const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+  submit_data.append('properties', blobPropdata);
+  this.provider_services.uploadCatalogImages(id, submit_data).subscribe((data) => {
+  this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
+   },
+  error => {
+    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+  });
+}
+
+
+openImageModalRow(image: Image) {
+  console.log(image);
+  console.log(this.image_list_popup[0]);
+  const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+  this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+}
+private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+  return image ? images.indexOf(image) : -1;
+}
+onButtonBeforeHook() {
+}
+onButtonAfterHook() { }
+
+imageSelect(event) {
+    console.log('sel');
+  const input = event.target.files;
+  if (input) {
+    for (const file of input) {
+      if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
+        this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+      } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+        this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.selectedMessage.files.push(file);
+        console.log(this.selectedMessage.files);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.selectedMessage.base64.push(e.target['result']);
+          this.image_list_popup = [];
+          for (let i = 0; i < this.selectedMessage.files.length; i++) {
+          const imgobj = new Image(i,
+            { img: this.selectedMessage.base64[i],
+              description: ''
+            });
+          this.image_list_popup.push(imgobj);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+    if (this.cataId && this.selectedMessage.files.length > 0) {
+      this.saveImages(this.cataId);
+    }
+  }
+}
+
+deleteTempImage(img, index) {
+  this.removeimgdialogRef = this.dialog.open(ConfirmBoxComponent, {
+    width: '50%',
+    panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    disableClose: true,
+    data: {
+      'message': 'Do you really want to remove the catalog image?'
+    }
+  });
+  this.removeimgdialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      if (img.view && img.view === true) {
+        this.provider_services.deleteUplodedCatalogImage(img.keyName, this.catalog_id)
+          .subscribe((data) => {
+            this.selectedMessage.files.splice(index, 1);
+          },
+            error => {
+              this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+      } else {
+        this.selectedMessage.files.splice(index, 1);
+        this.selectedMessage.base64.splice(index, 1);
+        this.image_list_popup.splice(index, 1);
+      }
+    }
+  });
 }
 
 }

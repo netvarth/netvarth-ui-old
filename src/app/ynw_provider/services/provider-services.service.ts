@@ -1717,5 +1717,15 @@ export class ProviderServices {
       const url = 'provider/catalog/' + id + '/' + status;
       return this.servicemeta.httpPut(url);
    }
+   deleteUplodeditemImage(name, id) {
+      return this.servicemeta.httpDelete('provider/items/' + id + '/image/' + name);
+   }
+   uploadCatalogImages(id, data) {
+      const url = 'provider/catalog/' + id + '/image';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteUplodedCatalogImage(name, id) {
+      return this.servicemeta.httpDelete('provider/catalog/' + id + '/image/' + name);
+   }
 }
 

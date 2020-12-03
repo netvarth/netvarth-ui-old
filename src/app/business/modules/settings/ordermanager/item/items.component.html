@@ -28,7 +28,7 @@
                 
                     <p class="form-level-settings">{{frm_items_cap}}</p>
                     <div class="center1" *ngIf="item_list.length ==0 && query_executed == true">
-                            <div class="property-card">
+                            <div class="property-card" (click)="addItem()">
                               <a href="#">
                                 <div class="property-image">
                                   <div class="property-image-title"> 
