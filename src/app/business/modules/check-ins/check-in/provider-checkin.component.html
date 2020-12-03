@@ -471,7 +471,9 @@
                                 <mat-radio-button *ngIf="memb.firstName"
                                   (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                   [value]="memb.id" [checked]="isChecked(memb.id)">
-                                  {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
+                                  <!-- {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}} -->
+                                  {{memb.firstName | capitalizeFirst}}
+                                  {{(memb.lastName) ? memb.lastName : ''}}
                                 </mat-radio-button>
                                 <mat-radio-button *ngIf="!memb.firstName"
                                   (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
