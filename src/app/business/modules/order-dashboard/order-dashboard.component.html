@@ -119,7 +119,7 @@
           <div class="card boxshadow-style pointer-cursor no-padding bold" *ngFor="let order of orders;let i=index"
             (click)="gotoDetails(order)">
             <div class="top-sec">
-              <mat-checkbox class="custom-frame" (click)="stopprop($event);" (change)="checkOrder(i, $event)"
+              <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(i, $event)"
                 [checked]="orderSelected[i]"></mat-checkbox>
               <span class="pull-right"> {{order.orderNumber}}
                 <i *ngIf="order.homeDelivery" class="fa fa-home"></i>

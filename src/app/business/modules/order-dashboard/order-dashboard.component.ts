@@ -776,7 +776,7 @@ export class OrderDashboardComponent implements OnInit {
     console.log(event);
   }
   gotoDetails(order) {
-    this.router.navigate(['provider', 'order', order.uid]);
+    this.router.navigate(['provider', 'orders', order.uid]);
   }
   showActionPopup() {
     const actiondialogRef = this.dialog.open(OrderActionsComponent, {
@@ -835,6 +835,7 @@ export class OrderDashboardComponent implements OnInit {
     this.resetFilter();
     this.resetFilterValues();
     this.filterapplied = false;
+    this.doSearch();
   }
   resetFilter() {
     this.filters = {
@@ -874,6 +875,7 @@ export class OrderDashboardComponent implements OnInit {
   }
   handleOrderType(type) {
     this.selected_type = type;
+    this.doSearch();
   }
   resetFilterValues() {
     this.orderStatuses = [];
