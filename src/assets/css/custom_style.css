@@ -13136,3 +13136,7 @@ hr {
 .BizyGlobe {
   background: url(../images/BG_icon_sqr.jpg) no-repeat scroll 0 0/20px 20px !important;
 }
+.bizyGlobe {
+  content: url(../images/BG_icon_sqr.jpg) !important;
+  width: 20px;
+}

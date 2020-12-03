@@ -888,8 +888,8 @@
 																<div class="td one">
 																	<span class="date">{{stringtoDate(payment.paymentOn,
 													'date')}}</span>
-																	<!--	<span class="time">{{stringtoDate(payment.paymentOn,
-													'time')}}</span> -->
+																		<span class="time">{{stringtoDate(payment.paymentOn,
+													'time')}}</span>
 																</div>
 																<div class="td two">
 																	<span class="amt rupee-font">{{payment.amount |
@@ -913,14 +913,14 @@
 																		</span>
 																	</span>
 																</div>
-																<!-- <div class="td three">
+																<div class="td three">
 																	<span class="amt rupee-font"
 																		*ngIf="payment.refundableAmount > 0 && payment.paymentGateway!='PAYTM'">{{payment.refundableAmount |
 													currency:'&#8377; '}}</span>
 																	<button class="cs-btn bt3"
 																		(click)="showRefund(payment)"
 																		*ngIf="payment.refundableAmount > 0 && payment.paymentGateway!='PAYTM'">Refund</button>
-																</div> -->
+																</div>
 															</div>
 															<div class="refunds-table"
 																*ngIf="payment.refundDetails.length">
@@ -1056,10 +1056,10 @@
 												</div>
 												<div>
 													<button type="button" mat-button class="cs-btn bt1 accept"
-														(click)="refundPayment('cash')">{{paybycash_cap}}</button>
+														(click)="refundPayment('cash')">{{paybycash_cap}} and others</button>
 													<button type="button" *ngIf="selectedPayment.paymentMode !== 'Cash'"
 														mat-button class="cs-btn bt1 accept"
-														(click)="refundPayment('online')">{{paybyothers_cap}}</button>
+														(click)="refundPayment('online')">Pay online</button>
 													<button type="button" mat-button class="cs-btn bt2 cancel"
 														(click)="showRefund()">{{cancel_btn_cap}}</button>
 												</div>
