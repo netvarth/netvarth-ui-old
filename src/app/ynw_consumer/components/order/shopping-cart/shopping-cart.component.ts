@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Location } from '@angular/common';
 import * as catalogdetails from '../../../../../assets/json/getcatlog.json';
@@ -42,6 +42,7 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     public sharedFunctionobj: SharedFunctions) { }
 
   ngOnInit() {
+    console.log(this.choose_type);
 
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
@@ -133,7 +134,20 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
   }
   cart() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-    this.router.navigate(['consumer', 'order', 'checkout']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        delivery_type: this.choose_type ,
+        catlog_id: this.currentcatlog.id ,
+        selectedQsTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
+        selectedQeTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
+        order_date: this.sel_checkindate,
+
+      }
+
+  };
+  console.log(navigationExtras);
+    this.router.navigate(['consumer', 'order', 'checkout'] , navigationExtras);
+
   }
   goBack() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
