@@ -15,8 +15,7 @@ export class ReportDataService {
   _customers = this.customerData.asObservable();
   private reportData = new BehaviorSubject<any>({});
   _reports = this.reportData.asObservable();
-
-
+  criteriaInput: any = {};
   constructor() { }
 
   updatedServiceDataSelection(data) {
@@ -39,5 +38,12 @@ export class ReportDataService {
 
   getReport() {
     return JSON.parse(localStorage.getItem('report'));
+  }
+
+  setReportCriteriaInput(data) {
+    this.criteriaInput = data;
+  }
+  getReportCriteriaInput() {
+    return this.criteriaInput;
   }
 }

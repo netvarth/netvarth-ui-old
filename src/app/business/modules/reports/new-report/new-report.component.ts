@@ -518,6 +518,7 @@ export class NewReportComponent implements OnInit {
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
       }
 
     } else if (reportType === 'appointment') {
@@ -576,6 +577,7 @@ export class NewReportComponent implements OnInit {
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
       }
 
     } else if (reportType === 'token') {
@@ -631,6 +633,7 @@ export class NewReportComponent implements OnInit {
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
       }
 
     } else if (reportType === 'donation') {
@@ -669,6 +672,7 @@ export class NewReportComponent implements OnInit {
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
       }
 
     }
