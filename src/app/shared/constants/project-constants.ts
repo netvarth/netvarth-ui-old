@@ -104,6 +104,7 @@ export const projectConstantsLocal = {
   POST_DATE_FORMAT: 'YYYY-MM-DD',
   POST_DATE_FORMAT_WITHTIME: 'YYYY-MM-DD HH:mm a',
   POST_DATE_FORMAT_WITHTIME_A: 'YYYY-MM-DD HH:mm A',
+  DATE_FORMAT_WITH_MONTH: 'd MMM',
   BASE_SCHEDULE: [
     {
       day: 4,
@@ -824,6 +825,17 @@ export const projectConstantsLocal = {
   REQUIRED_FIELDS_JALDEE_ONLINE: [
     'SPECIALIZATION', 'PROFILE_PIC', 'BUSINESS_NAME', 'BASE_LOCATION', 'LOCATION_SCHEDULE'
   ],
-  PATH: 'https://' + window.location.host + '/'
-
+  PATH: 'https://' + window.location.host + '/',
+  ORDER_STATUSES_FILTER: [
+    { displayName: 'Confirmed', value: 'Accepted' },
+    { displayName: 'Rejected', value: 'Rejected' },
+    { displayName: 'Preparing', value: 'Preparing' },
+    { displayName: 'On the way', value: 'onTheWay' },
+    { displayName: 'Delivered', value: 'Delivered' }
+  ],
+  ORDER_MODES: [
+    { value: 'WALK_IN_ORDER', displayName: 'Walk in Order' },
+    { value: 'PHONE_ORDER', displayName: 'Phone in Order' },
+    { value: 'ONLINE_ORDER', displayName: 'Online Order' },
+  ]
 };

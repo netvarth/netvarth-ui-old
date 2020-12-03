@@ -1,6 +1,6 @@
 
 .orderlist .card {
-    width: 250px !important;
+    width: 300px;
     float: left !important;
     display: table !important;
     margin: 10px !important;
@@ -10,26 +10,8 @@
     font-weight: bold;
     font-size: 2rem;
 }
-/* .mat-tab-label .mat-tab-label-content {
-    font-size: 1rem !important;
-} */
-.orderlist .card .bottom {
-    /* bottom: 20px;
-    position: absolute;
-    width: 200px; */
-    border-top: 1px solid #ccc;
-    /* padding-top: 5px; */
-}
-.orderlist .head {
-    color: #999999;
-}
-.details {
-    font-size: small;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
 .count-section .card {
-    max-width: 200px !important;
+    max-width: 400px !important;
 }
 .boxshadow-style {
     box-shadow: 10px 10px 15px 0px #cccccc9c !important;
@@ -39,4 +21,30 @@
     & .mat-checkbox-background, .mat-checkbox-frame {
       border-radius: 70% !important;
     }
-  }
+}
+.act-btn {
+    padding: 2px 10px;
+    border: 1px solid;
+    border-radius: 20px;
+    font-size: .7rem;
+}
+.top-sec span {
+    font-size: x-small;
+}
+.top-sec {
+    padding: 5px 5px 0 5px;
+}
+.main-sec {
+    padding: 0 10px 10px 15px;
+}
+.main-sec .datetime {
+    font-size: 1.2rem;
+}
+@media (max-width:345px) {
+    .orderlist .card {
+        width: 270px !important;
+    }
+}
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: orange !important;
+}

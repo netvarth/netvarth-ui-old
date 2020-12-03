@@ -1692,5 +1692,13 @@ export class ProviderServices {
       const url = 'provider/orders/history';
       return this.servicemeta.httpGet(url);
    }
+   getProviderOrderStates(uuid) {
+      const url = 'provider/orders/states/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
+   changeOrderStatus(uuid, action) {
+      const url = 'provider/orders/' + uuid + '/' + action;
+      return this.servicemeta.httpGet(url);
+   }
 }
 
