@@ -58,6 +58,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
+    console.log(this.orders)
     this.catlogArry();
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -79,6 +80,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   getItemPay(item) {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
     return item.price * qty + item.promotionalPrice;
+  }
+  getItemQty(item) {
+    const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
+    return qty;
   }
   catlogArry() {
     this.catlog = itemjson;
