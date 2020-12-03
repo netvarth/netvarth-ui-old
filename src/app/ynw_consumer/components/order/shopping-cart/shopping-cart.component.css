@@ -13,3 +13,66 @@ flex-basis: 50% !important;
     padding-right: 10px;
 
 }
+.brd-round {
+    border-radius: 20px !important;
+  }
+  .brd-light {
+    border: 1px solid #ccc !important;
+    padding: 3px 10px 3px 10px !important
+  }
+   .lnk {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    /* text-transform: uppercase !important; */
+  }
+   .icon-minus {
+    margin-top: 3px !important;
+    margin-right: 5px !important;
+    font-size: 1.5rem;
+  }
+  .chkindt {
+    font-weight: 600;
+    font-size: 1rem !important;
+    padding-top: 2px;
+    margin-top: 3px !important;
+  }
+   .icon-add {
+    margin-top: 3px !important;
+    margin-left: 5px !important;
+    font-size: 1.5rem;
+  }
+  .caldiv mat-datepicker-toggle button.mat-icon-button {
+    width: 50px !important;
+    height: 50px !important;
+   }
+ .caldiv mat-datepicker-toggle button.mat-icon-button svg{
+    height: 40px;
+    width: 40px;
+   }
+   .caldiv {
+    margin-left: 10px;
+  }
+  .caldiv mat-datepicker-toggle button.mat-icon-button {
+    width: 50px !important;
+    height: 50px !important;
+   }
+  .caldiv mat-datepicker-toggle button.mat-icon-button svg{
+    height: 40px;
+    width: 40px;
+   }
+
+    .slotdiv mat-chip {
+    font-weight: 600;
+    font-size: 1rem !important;
+    background-color: #fff !important;
+    border: 1px solid #ccc !important;
+    border-radius: 20px !important;
+    min-width: 80px !important;
+    padding: 15px !important;
+  }
+   .slotdiv {
+    max-height: 175px !important;
+    margin-top: 0px !important;
+  
+  }
+  
