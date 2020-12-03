@@ -12,8 +12,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         <div class="form-group">
                             <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             <div class="input-group-prepend">
-                                <span class="input-group-text countryCodeSelect" id="">
-                            
+                                <span class="input-group-text countryCodeSelect" id="">                            
                                     <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
                                         <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
                                       </mat-select>
@@ -21,8 +20,9 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     </span>
 
                                 <input class="mgn-lt-15" type="text" formControlName="phonenumber" name="phone" id="phone"
-                                    placeholder="Mobile number" maxlength=10 />
-                                <app-field-error-display
+                                    placeholder="Mobile number" maxlength=10 />                                
+                            </div>
+                            <app-field-error-display
                                     [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
                                 {
                                   'required' : 'Mobile number is required',
@@ -31,7 +31,6 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                   'pattern' : 'Only numbers are allowed'
                                 })">
                                 </app-field-error-display>
-                            </div>
                         </div>
                         <div class="form-group">
                             <label for="Firstname"><i class="zmdi zmdi-email"></i></label>
