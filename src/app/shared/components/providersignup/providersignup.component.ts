@@ -126,6 +126,8 @@ export class ProvidersignupComponent implements OnInit {
   hideOtpSection = true;
   joinClicked = false;
   api_loading = false;
+  countryCodes = projectConstantsLocal.COUNTRY_CODES;
+  selectedCountryCode;
   images = {
     veterinaryPetcare: 'assets/images/home/pet-01.svg',
     finance: 'assets/images/home/bank-01.svg',
@@ -153,6 +155,9 @@ export class ProvidersignupComponent implements OnInit {
   @Inject(DOCUMENT) public document;
 
   ngOnInit() {
+    if (this.countryCodes.length !== 0) {
+      this.selectedCountryCode =this.countryCodes[0].value;
+    }
     this.active_step = 0;
     this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.ynw_credentials = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
@@ -400,7 +405,10 @@ export class ProvidersignupComponent implements OnInit {
     }
   }
   setPassword() {
-    const post_data = { password: this.spForm.get('new_password').value };
+    const post_data = { 
+      countryCode : this.selectedCountryCode,
+      password: this.spForm.get('new_password').value 
+    };
     this.shared_services.ProviderSetPassword(this.otp, post_data)
       .subscribe(
         () => {
@@ -408,7 +416,7 @@ export class ProvidersignupComponent implements OnInit {
           this.actionstarted = false;
           this.providerPwd = post_data.password;
           const login_data = {
-            'countryCode': '+91',
+            'countryCode': this.selectedCountryCode,
             'loginId': this.user_details.userProfile.primaryMobileNo,
             'password': post_data.password
           };
@@ -626,21 +634,21 @@ export class ProvidersignupComponent implements OnInit {
           return;
         } else {
           let userProfile = {
-            countryCode: '+91',
+            countryCode: this.selectedCountryCode,
             primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
             firstName: null,
             lastName: null
           };
           if (this.data.moreOptions.isCreateProv) {
             userProfile = {
-              countryCode: '+91',
+              countryCode: this.selectedCountryCode,
               primaryMobileNo: this.data.moreOptions.dataCreateProv.ph || null, // this.signupForm.get('phonenumber').value || null,
               firstName: this.toCamelCase(this.data.moreOptions.dataCreateProv.fname) || null,
               lastName: this.toCamelCase(this.data.moreOptions.dataCreateProv.lname) || null
             };
           } else {
             userProfile = {
-              countryCode: '+91',
+              countryCode: this.selectedCountryCode,
               primaryMobileNo: this.signupForm.get('phonenumber').value || null,
               // firstName: this.toCamelCase(this.signupForm.get('first_name').value) || null,
               // lastName: this.toCamelCase(this.signupForm.get('last_name').value) || null,

@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
   is_provider = 'true';
   step = 1;
   moreParams = [];
+  countryCodes = projectConstantsLocal.COUNTRY_CODES;
+  selectedCountryCode;
   api_loading = true;
   show_error = false;
   test_provider = null;
@@ -53,6 +55,9 @@ export class LoginComponent implements OnInit {
     this.is_provider = data.is_provider || 'true';
   }
   ngOnInit() {
+    if (this.countryCodes.length !== 0) {
+      this.selectedCountryCode =this.countryCodes[0].value;
+    }
     this.moreParams = this.data.moreparams;
     this.createForm();
     this.api_loading = false;
@@ -128,7 +133,7 @@ export class LoginComponent implements OnInit {
     // }
     const ob = this;
     const post_data = {
-      'countryCode': '+91',
+      'countryCode': this.selectedCountryCode,
       'loginId': loginId,
       'password': data.password,
       'mUniqueId': null

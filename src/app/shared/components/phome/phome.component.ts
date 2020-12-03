@@ -10,6 +10,8 @@ import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scrol
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { projectConstantsLocal } from '../../constants/project-constants';
+
 @Component({
   selector: 'app-phome',
   templateUrl: './phome.component.html'
@@ -36,6 +38,8 @@ export class PhomeComponent implements OnInit {
   activePrice = '';
   showMoreList: any = {};
   windowScrolled: boolean;
+  countryCodes = projectConstantsLocal.COUNTRY_CODES;
+  selectedCountryCode;
   images = {
     special_offers: 'assets/images/special offer-01-01.png',
     jaldee_online: 'assets/images/home/jaldee_online.svg',
@@ -121,6 +125,9 @@ export class PhomeComponent implements OnInit {
     this.step = 1;
   }
   ngOnInit() {
+    if (this.countryCodes.length !== 0) {
+      this.selectedCountryCode =this.countryCodes[0].value;
+    }
     this.carouselOne = {
       dots: false,
       autoplay: true,
@@ -255,7 +262,7 @@ export class PhomeComponent implements OnInit {
     // }
     // const ob = this;
     const post_data = {
-      'countryCode': '+91',
+      'countryCode': this.selectedCountryCode,
       'loginId': loginId,
       'password': data.password,
       'mUniqueId': null

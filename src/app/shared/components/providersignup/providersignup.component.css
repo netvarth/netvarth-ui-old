@@ -1057,3 +1057,9 @@ input[type=checkbox]:not(old):checked + label > span:before {
   .disableCss {
     background: darkgray
 }
+.countryCodeSelect {
+  width: 80px;
+}
+.mgn-lt-15{
+  margin-left: 15px;
+}

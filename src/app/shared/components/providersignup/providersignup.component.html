@@ -11,10 +11,16 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         id="register-form">
                         <div class="form-group">
                             <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <div class="input-group-prepend mob-prefix">
-                                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text countryCodeSelect" id="">
+                            
+                                    <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
+                                        <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
+                                      </mat-select>
+                    
+                                    </span>
 
-                                <input type="text" formControlName="phonenumber" name="phone" id="phone"
+                                <input class="mgn-lt-15" type="text" formControlName="phonenumber" name="phone" id="phone"
                                     placeholder="Mobile number" maxlength=10 />
                                 <app-field-error-display
                                     [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',

@@ -811,7 +811,9 @@ export const projectConstantsLocal = {
     MANDATORY_INFO: { 'name': 'MANDATORY_INFO', 'value': 15 },
     PROFILE_PIC: { 'name': 'PROFILE_PIC', 'value': 5 }
   },
-
+  COUNTRY_CODES: [    
+    { displayName: '+91', value: '+91' }  
+  ],
   WAITLIST_CANCEL_REASON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel', type: 2 },
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },
   { title: 'Blocked', value: 'blocked', reasonkey: 'blockedCancel' },
