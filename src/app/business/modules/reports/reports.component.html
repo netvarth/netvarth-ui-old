@@ -29,6 +29,9 @@
                           <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'appointment'}">Create New Report</a>
                         </div>
                         <table style="width:300px" *ngIf="appt_criteria.length > 0">
+                          <div class="savd-report">Saved Reports
+                            <i class="fa fa-chevron-circle-down"></i>
+                          </div>
                            <tr *ngFor="let apt_cr of appt_criteria">
                             <td>{{apt_cr.reportName}}</td>
                             <td><a (click)="recreateReport(apt_cr)">Generate</a></td>
@@ -61,6 +64,9 @@
                         <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'payment'}">Create New Report</a>
                       </div>
                       <table style="width:300px" *ngIf="payment_criteria.length > 0">
+                        <div class="savd-report">Saved Reports
+                          <i class="fa fa-chevron-circle-down"></i>
+                        </div>
                         <tr *ngFor="let pay_cr of payment_criteria">
                           <td>{{pay_cr.reportName}}</td>
                           <td><a>Generate</a></td>
@@ -93,6 +99,9 @@
                         <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'token'}">Create New Report</a>
                     </div>
                     <table style="width:300px" *ngIf="token_criteria.length > 0">
+                      <div class="savd-report">Saved Reports
+                        <i class="fa fa-chevron-circle-down"></i>
+                      </div>
                       <tr *ngFor="let tkn_cr of token_criteria">
                         <td>{{tkn_cr.reportName}}</td>
                         <td><a>Generate</a></td>
@@ -124,6 +133,9 @@
                       <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'donation'}">Create New Report</a>
                     </div>
                     <table style="width:300px" *ngIf="donation_criteria.length > 0">
+                      <div class="savd-report">Saved Reports
+                        <i class="fa fa-chevron-circle-down"></i>
+                      </div>
                       <tr *ngFor="let don_cr of donation_criteria">
                         <td>{{don_cr.reportName}}</td>
                         <td><a>Generate</a></td>

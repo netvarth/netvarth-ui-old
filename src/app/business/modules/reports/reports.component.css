@@ -8,3 +8,8 @@ table {
     border-spacing: 10px;
     border-collapse: separate;
 }
+.savd-report {
+    color: #3c8dbc;
+    font-weight: 600;
+    width: 100%;
+}
