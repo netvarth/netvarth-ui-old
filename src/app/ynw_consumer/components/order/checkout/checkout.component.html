@@ -34,9 +34,9 @@
                                                  <div class="mgn-up-10">      
                                                   <div class="div-outline custId-cursor">
                                                       <div class="c-row one">
-                                                    <div class="name cart-flex"> <b> Account</b>                      </div> 
-                                                    <div class="quantity">You're signed as krishnadas ps</div>
-                                                    <div class="price"> +91 9745355216</div>           
+                                                    <div class="name cart-flex"> <b> Account</b></div> 
+                                                    <div class="quantity">You're signed as {{customer_data.userName}} </div>
+                                                    <div class="price"> +91 {{customer_data.primaryPhoneNumber}}</div>           
                                                   </div>     
                                                 </div>                         
                                               </div>
@@ -121,7 +121,7 @@
                                       
                                       
                                                                 <div class="list-content" style="text-align: left;"
-                                                                *ngFor="let item of catalogItem; let i = index">
+                                                                *ngFor="let item of orders; let i = index">
                                                                   
                                                            <div class="copy one">
                                                               <div class="col-a col-b cd-b">

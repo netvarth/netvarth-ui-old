@@ -23,6 +23,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   selectedQsTime;
   selectedQeTime;
   order_date;
+  customer_data: any = [];
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -58,6 +59,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
     this.catlogArry();
+    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    if (activeUser) {
+        this.customer_data = activeUser;
+    }
+    console.log(this.customer_data);
   }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
@@ -96,6 +102,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // });
   }
   updateAddress() {
+    this.addressdialogRef = this.dialog.open(AddAddressComponent, {
+      width: '50%',
+      // width: '800px;',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+         type: 'edit',
+
+      }
+    });
 
   }
   goBack() {
