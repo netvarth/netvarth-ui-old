@@ -80,40 +80,37 @@
                         </div>
                         <div>
                           <p>Choose delivery type</p>
-                          <!-- <mat-radio-group >
-                              <mat-radio-button value="1">Home delivery </mat-radio-button>
-                             <mat-radio-button value="2">Store pick up</mat-radio-button>
-                            </mat-radio-group> -->
-                             <mat-radio-group>
-                                <mat-radio-button
-                                    class="mgn-lt-5 mgn-bt-5"
-                                    [value]="'conventional'"  >
-                                    Home delivery
-                                </mat-radio-button> <br>
-                                <mat-radio-button
-                                    class="mgn-lt-5   mgn-rt-10"
-                                    [value]="'manual'" >
-                                    Store pick up
-                                </mat-radio-button>
+                           <mat-radio-group [(ngModel)]="choose_type">
+                              <mat-radio-button  class="mgn-lt-5 mgn-bt-5" [value]="'store'">
+                                  Store pick up
+                              </mat-radio-button>
+                              <mat-radio-button  class="mgn-lt-5   mgn-rt-10" [value]="'home'">
+                                  Home delivery 
+                              </mat-radio-button>&nbsp;
                           </mat-radio-group>
 
                           <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                             Date/Time
-                            <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 pull-right "
+                            <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 change"
                               (click)="changeTime()" >Change
                                 </a></span>
                         </div>
                         <div>
-                            <h6>
-                                <span>Today, </span>
-                                <span > 09:00 AM - 10:00 PM
-                                </span>                       
-
-                           
-                            </h6>
+                            <h4>
+                                <span *ngIf="!isFuturedate">Today, </span>
+                                <span *ngIf="!isFuturedate">
+                                    {{currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime']}}
+                                </span>
+                                <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
+                                </span>
+                                <span *ngIf="isFuturedate">
+                                    {{currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime']}}     
+                                </span>
+                          
+                            </h4>
                         </div>
+                      </div>
 
-                         </div>
                         <div class="copy one">
                             <div class="col-a col-b cd-b">
                                <div class="mgn-up-10">
@@ -189,27 +186,19 @@
                                               (click)="calculateDate(-1)">
                                           </div>
                                      
-                                          <div class="pull-left chkindt"> Wed, 02/12/2020</div>
+                                          <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
                                           <div class="icon-add pull-left" 
                                               (click)="calculateDate(1)"></div>
                                       </div>
   
-                                      <!-- <div class="pickerouter caldiv pull-left mgn-up-20">
-                                          <mat-datepicker-toggle matSuffix [for]="picker">
-                                          </mat-datepicker-toggle>
-                                          <mat-datepicker #picker ></mat-datepicker>
-                                          <input class="" style="visibility: hidden; width:1px" type="text"
-                                              [matDatepicker]="picker">
-  
-                                      </div> -->
   
                                       <div class="pickerouter caldiv pull-left mgn-up-20">
                                       <mat-datepicker-toggle matSuffix [for]="picker">
                                       </mat-datepicker-toggle>
                                       <mat-datepicker #picker ></mat-datepicker>
-                                      <!-- <input class="" style="visibility: hidden; width:1px" type="text"
+                                      <input class="" style="visibility: hidden; width:1px" type="text"
                                           [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
-                                          (dateChange)="handleFutureDateChange($event)"> -->
+                                          (dateChange)="handleFutureDateChange($event)">
   
                                   </div>
   
