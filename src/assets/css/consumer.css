@@ -6505,7 +6505,7 @@
 .consumer-dash .c-checkins .table-outer1 {
     padding:unset !important;
 }
-.consumer-dash .c-checkins .table-outer1  tbody tr:hover {
+.consumer-dash  .booking-dash tbody tr:hover {
     -webkit-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
@@ -6780,4 +6780,29 @@
     content: url(../images/myjaldee/amenities/delivery-man.svg);
     position: relative;
     width: 20px;
+}
+
+/* Order dashboard styles */
+.consumer-dash .bg-logo_blue {
+    background: #183e79fc;
+    color: white !important;
+    text-shadow: 2px 2px #020306;
+}
+.consumer-dash .odr-top-btns {
+    background: #f5c84d !important;
+    border: #f1b616 !important;
+    color: #183e79 !important;
+    text-shadow: 0px 1px #183e79;
+}
+.consumer-dash .order-dash  tbody tr:hover {
+    -webkit-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    background: rgb(0, 0, 0, 0.2) !important;
+}
+.order-dash table thead th {
+    background: rgb(26 64 122 / 37%) !important;
+}
+.consumer-dash .order-dash  tbody tr {
+   cursor: pointer;
 }

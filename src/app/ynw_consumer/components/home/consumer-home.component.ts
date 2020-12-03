@@ -180,6 +180,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   loading = true;
   provider_label: any;
   viewrxdialogRef;
+  today_orders = ['8', '9'];
+  future_orders = ['8', '9'];
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
