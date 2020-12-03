@@ -1,4 +1,9 @@
-<div>
-
+<div *ngIf="orderDetails && orderDetails.orderItem">
+    <div *ngFor="let item of orderDetails.orderItem">
+        <h4>{{item.name}}</h4>
+        quantity - {{item.quantity}}
+        price - {{item.price}}
+        totalPrice - {{item.totalPrice}}
+    </div>
 </div>
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>

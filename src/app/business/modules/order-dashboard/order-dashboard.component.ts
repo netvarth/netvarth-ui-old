@@ -732,8 +732,6 @@ export class OrderDashboardComponent implements OnInit {
     last_name: '',
     phone_number: '',
     patientId: '',
-    schedule: 'all',
-    service: 'all',
     payment_status: 'all',
     orderNumber: '',
     orderStatus: 'all',
@@ -744,8 +742,6 @@ export class OrderDashboardComponent implements OnInit {
     last_name: false,
     phone_number: false,
     patientId: false,
-    schedule: false,
-    service: false,
     payment_status: false,
     orderNumber: false,
     orderStatus: false,
@@ -756,10 +752,10 @@ export class OrderDashboardComponent implements OnInit {
   selected_type = 'homeDelivery';
   orderStatusFilter = projectConstantsLocal.ORDER_STATUSES_FILTER;
   orderModesList = projectConstantsLocal.ORDER_MODES;
-  allOrderStatusSelected = false;
+  paymentStatusList = projectConstantsLocal.PAYMENT_STATUSES;
   orderStatuses: any = [];
-  allOrderModesSelected = false;
   orderModes: any = [];
+  paymentStatuses: any = [];
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -846,8 +842,6 @@ export class OrderDashboardComponent implements OnInit {
       last_name: false,
       phone_number: false,
       patientId: false,
-      service: false,
-      schedule: false,
       orderNumber: false,
       orderStatus: false,
       orderMode: false,
@@ -858,21 +852,20 @@ export class OrderDashboardComponent implements OnInit {
       last_name: '',
       phone_number: '',
       patientId: '',
-      service: 'all',
       payment_status: 'all',
-      schedule: 'all',
       orderNumber: '',
       orderStatus: 'all',
       orderMode: 'all'
     };
   }
   doSearch() {
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.patientId || this.filter.service !== 'all' ||
-      this.filter.payment_status !== 'all' || this.filter.orderNumber || this.filter.orderStatus !== 'all' || this.filter.orderMode !== 'all') {
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.patientId ||
+      this.filter.payment_status !== 'all' || this.filter.orderNumber || this.orderStatuses.length > 0 || this.orderModes.length > 0 || this.paymentStatuses.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
+    this.setFilterForApi();
   }
   keyPressed(event) {
     if (event.keyCode === 13) {
@@ -885,63 +878,65 @@ export class OrderDashboardComponent implements OnInit {
   resetFilterValues() {
     this.orderStatuses = [];
     this.orderModes = [];
-    this.allOrderStatusSelected = false;
-    this.allOrderModesSelected = false;
+    this.paymentStatuses = [];
   }
-  setFilterDataCheckbox(type, value, event) {
-    this.filter[type] = value;
+  setFilterDataCheckbox(type, value) {
     if (type === 'orderStatus') {
-      if (value === 'all') {
-        this.orderStatuses = [];
-        this.allOrderStatusSelected = false;
-        if (event.checked) {
-          for (const status of this.orderStatusFilter) {
-            if (this.orderStatuses.indexOf(status.value) === -1) {
-              this.orderStatuses.push(status.value);
-            }
-          }
-          this.allOrderStatusSelected = true;
-        }
-      } else {
-        this.allOrderStatusSelected = false;
-        const indx = this.orderStatuses.indexOf(value);
-        if (indx === -1) {
-          this.orderStatuses.push(value);
-        } else {
-          this.orderStatuses.splice(indx, 1);
-        }
-      }
-      if (this.orderStatuses.length === this.orderStatusFilter.length) {
-        this.filter['orderStatus'] = 'all';
-        this.allOrderStatusSelected = true;
+      const indx = this.orderStatuses.indexOf(value);
+      this.orderStatuses = [];
+      if (indx === -1) {
+        this.orderStatuses.push(value);
       }
     }
     if (type === 'orderMode') {
-      if (value === 'all') {
-        this.orderModes = [];
-        this.allOrderModesSelected = false;
-        if (event.checked) {
-          for (const status of this.orderStatusFilter) {
-            if (this.orderModes.indexOf(status.value) === -1) {
-              this.orderModes.push(status.value);
-            }
-          }
-          this.allOrderModesSelected = true;
-        }
-      } else {
-        this.allOrderModesSelected = false;
-        const indx = this.orderModes.indexOf(value);
-        if (indx === -1) {
-          this.orderModes.push(value);
-        } else {
-          this.orderModes.splice(indx, 1);
-        }
+      const indx = this.orderModes.indexOf(value);
+      this.orderModes = [];
+      if (indx === -1) {
+        this.orderModes.push(value);
       }
-      if (this.orderModes.length === this.orderStatusFilter.length) {
-        this.filter['orderMode'] = 'all';
-        this.allOrderModesSelected = true;
+    }
+    if (type === 'payment') {
+      const indx = this.paymentStatuses.indexOf(value);
+      this.paymentStatuses = [];
+      if (indx === -1) {
+        this.paymentStatuses.push(value);
       }
     }
     this.doSearch();
+  }
+  setFilterForApi() {
+    const api_filter = {};
+    if (this.selected_type === 'homeDelivery') {
+      api_filter['homeDelivery-eq'] = true;
+    }
+    if (this.selected_type === 'storePickup') {
+      api_filter['homeDelivery-eq'] = true;
+    }
+    if (this.orderStatuses.length > 0) {
+      api_filter['orderStatus-eq'] = this.orderStatuses.toString();
+    }
+    if (this.orderModes.length > 0) {
+      api_filter['orderMode-eq'] = this.orderModes.toString();
+    }
+    if (this.paymentStatuses.length > 0) {
+      api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
+    }
+    if (this.filter.first_name !== '') {
+      api_filter['firstName-eq'] = this.filter.first_name;
+    }
+    if (this.filter.last_name !== '') {
+      api_filter['lastName-eq'] = this.filter.last_name;
+    }
+    if (this.filter.orderNumber !== '') {
+      api_filter['orderNumber-eq'] = this.filter.orderNumber;
+    }
+    if (this.filter.patientId !== '') {
+      api_filter['jaldeeId-eq'] = this.filter.patientId;
+    }
+    if (this.filter.phone_number !== '') {
+      api_filter['phoneNumber-eq'] = this.filter.phone_number;
+    }
+    console.log(api_filter);
+    return api_filter;
   }
 }

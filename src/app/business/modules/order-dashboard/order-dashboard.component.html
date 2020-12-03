@@ -4,7 +4,6 @@
     Welcome back {{businessName}}!
   </div>
   <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
-    <p class="bold">Quick Stats</p>
     <div class="disp-flex count-section">
       <div class="card boxshadow-style mgn-rt-10">
         <div>Total orders</div>
@@ -82,15 +81,10 @@
                         <label class="filterHeaders"> Order Status</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox [checked]="allOrderStatusSelected"
-                            (change)="setFilterDataCheckbox('orderStatus', 'all', $event)">
-                            All</mat-checkbox>
-                        </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                           *ngFor="let status of orderStatusFilter">
                           <mat-checkbox [checked]="orderStatuses.indexOf(status.value) !== -1"
-                            (change)="setFilterDataCheckbox('orderStatus', status.value, $event)">
+                            (change)="setFilterDataCheckbox('orderStatus', status.value)">
                             {{status.displayName}}</mat-checkbox>
                         </li>
                       </div>
@@ -98,15 +92,21 @@
                         <label class="filterHeaders"> Order Modes</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox [checked]="allOrderModesSelected"
-                            (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
-                            All</mat-checkbox>
-                        </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                           *ngFor="let mode of orderModesList">
                           <mat-checkbox [checked]="orderModes.indexOf(mode.value) !== -1"
-                            (change)="setFilterDataCheckbox('orderMode', mode.value, $event)">
+                            (change)="setFilterDataCheckbox('orderMode', mode.value)">
+                            {{mode.displayName}}</mat-checkbox>
+                        </li>
+                      </div>
+                      <div>
+                        <label class="filterHeaders"> Payment Status</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of paymentStatusList">
+                          <mat-checkbox [checked]="paymentStatuses.indexOf(mode.value) !== -1"
+                            (change)="setFilterDataCheckbox('payment', mode.value)">
                             {{mode.displayName}}</mat-checkbox>
                         </li>
                       </div>

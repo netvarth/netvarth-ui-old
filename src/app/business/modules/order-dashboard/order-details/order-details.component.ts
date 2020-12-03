@@ -128,6 +128,7 @@ export class OrderDetailsComponent implements OnInit {
     public providerservice: ProviderServices) {
     this.activaterouter.params.subscribe(param => {
       console.log(param);
+      this.orderDetails = this.orderDetails[0];
       console.log(this.orderDetails);
       this.uid = param.id;
       // this.getOrderDetails(this.uid);

@@ -837,5 +837,11 @@ export const projectConstantsLocal = {
     { value: 'WALK_IN_ORDER', displayName: 'Walk in Order' },
     { value: 'PHONE_ORDER', displayName: 'Phone in Order' },
     { value: 'ONLINE_ORDER', displayName: 'Online Order' },
+  ],
+  PAYMENT_STATUSES: [
+    { value: 'NotPaid', displayName: 'Not Paid' },
+    { value: 'PartiallyPaid', displayName: 'Partially Paid' },
+    { value: 'FullyPaid', displayName: 'Fully Paid' },
+    { value: 'Refund', displayName: 'Refund' }
   ]
 };
