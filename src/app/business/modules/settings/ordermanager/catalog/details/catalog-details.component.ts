@@ -117,7 +117,6 @@ export class CatalogdetailComponent implements OnInit {
   cancelationPolicyStatus = true;
   advancePayment;
   showpolicy = false;
-  cancelationPolicy;
   start_time_cap = Messages.START_TIME_CAP;
   end_time_cap = Messages.END_TIME_CAP;
   dstart_time;
@@ -167,6 +166,7 @@ export class CatalogdetailComponent implements OnInit {
                     );
                 }
                 this.api_loading = false;
+                this.getProviderLocations();
             }
         }
     );
@@ -360,16 +360,119 @@ compareDatehome(dateValue, startOrend) {
 
 updateForm() {
     console.log(this.catalog);
-    
+    const sttime = {
+      hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
+        ['h:mm A']).format('HH'), 10),
+      minute: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
+        ['h:mm A']).format('mm'), 10)
+    };
+    const edtime = {
+      hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].eTime,
+        ['h:mm A']).format('HH'), 10),
+      minute: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].eTime,
+        ['h:mm A']).format('mm'), 10)
+    };
+    this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
+    this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
+    this.selday_arr = [];
+    // extracting the selected days
+    for (let j = 0; j < this.catalog.catalogSchedule.repeatIntervals.length; j++) {
+      // pushing the day details to the respective array to show it in the page
+      this.selday_arr.push(Number(this.catalog.catalogSchedule.repeatIntervals[j]));
+    }
+    if (this.selday_arr.length === 7) {
+      this.Selall = true;
+    } else {
+      this.Selall = false;
+    }
+    const sttimestore = {
+      hour: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].sTime,
+        ['h:mm A']).format('HH'), 10),
+      minute: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].sTime,
+        ['h:mm A']).format('mm'), 10)
+    };
+    const edtimestore = {
+      hour: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].eTime,
+        ['h:mm A']).format('HH'), 10),
+      minute: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].eTime,
+        ['h:mm A']).format('mm'), 10)
+    };
+    this.dstart_timestore = sttimestore; // moment(sttime, ['h:mm A']).format('HH:mm');
+    this.dend_timestore = edtimestore; // moment(edtime, ['h:mm A']).format('HH:mm');
+    this.selday_arrstorepickup = [];
+    // extracting the selected days
+    for (let j = 0; j < this.catalog.pickUp.pickUpSchedule.repeatIntervals.length; j++) {
+      // pushing the day details to the respective array to show it in the page
+      this.selday_arrstorepickup.push(Number(this.catalog.pickUp.pickUpSchedule.repeatIntervals[j]));
+    }
+    if (this.selday_arrstorepickup.length === 7) {
+      this.Selallstorepickup = true;
+    } else {
+      this.Selallstorepickup = false;
+    }
+
+    const sttimehome = {
+      hour: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].sTime,
+        ['h:mm A']).format('HH'), 10),
+      minute: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].sTime,
+        ['h:mm A']).format('mm'), 10)
+    };
+    const edtimehome = {
+      hour: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].eTime,
+        ['h:mm A']).format('HH'), 10),
+      minute: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].eTime,
+        ['h:mm A']).format('mm'), 10)
+    };
+    this.dstart_timehome = sttimehome; // moment(sttime, ['h:mm A']).format('HH:mm');
+    this.dend_timehome = edtimehome; // moment(edtime, ['h:mm A']).format('HH:mm');
+    this.selday_arrhomedelivery = [];
+    // extracting the selected days
+    for (let j = 0; j < this.catalog.homeDelivery.deliverySchedule.repeatIntervals.length; j++) {
+      // pushing the day details to the respective array to show it in the page
+      this.selday_arrhomedelivery.push(Number(this.catalog.homeDelivery.deliverySchedule.repeatIntervals[j]));
+    }
+    if (this.selday_arrhomedelivery.length === 7) {
+      this.Selallhomedelivery = true;
+    } else {
+      this.Selallhomedelivery = false;
+    }
+  
+
+
+
+    let status;
+    if (this.catalog.paymentType === 'FIXED') {
+      status = true;
+    } else {
+      status = false;
+    }
     this.amForm.setValue({
-        'catalogName': this.catalog.catalogName || null,
-        'itemName': this.catalog.itemName || null,
-        'catalogshortDesc': this.catalog.catalogshortDesc || null,
-        'catalogDesc': this.catalog.displayDesc || null,
-        'price': this.catalog.price || null,
-        'taxable': this.holdtaxable,
-        'showPromotionalPrice': this.catalog.showPromotionalPrice,
-        'promotionalPrice': this.catalog.promotionalPrice || null
+        'catalogName': this.catalog.catalogName || '',
+        'catalogshortDesc': this.catalog.catalogshortDesc || '',
+        'catalogDesc': this.catalog.catalogDesc || '',
+          'startdate': this.catalog.catalogSchedule.startDate || '',
+          'enddate': this.catalog.catalogSchedule.terminator.endDate || '',
+          'qstarttime': sttime,
+          'qendtime': edtime,
+            'orderType': this.catalog.orderType,
+            'itemPriceInfo': this.catalog.showPrice,
+            'advancePaymentStatus': status,
+            'advancePayment': this.catalog.advanceAmount || '',
+            'cancelationPolicy': this.catalog.cancellationPolicy,
+            'storepickup': this.catalog.pickUp.orderPickUp,
+            'startdatestore': this.catalog.pickUp.orderPickUp.startDate || '',
+            'enddatestore': this.catalog.pickUp.orderPickUp.terminator.endDate || '',
+            'qstarttimestore': sttimestore,
+            'qendtimestore': edtimestore,
+            'storeotpverify': this.catalog.pickUp.pickUpOtpVerification,
+            'homedelivery': this.catalog.homeDelivery.homeDelivery,
+            'startdatehome': this.catalog.homeDelivery.deliverySchedule.startDate || '',
+            'enddatehome': this.catalog.homeDelivery.deliverySchedule.terminator.endDate || '',
+            'qstarttimehome': sttimehome,
+            'qendtimehome': edtimehome,
+            'homeotpverify': this.catalog.homeDelivery.deliveryOtpVerification || '',
+            'deliverykms': this.catalog.homeDelivery.deliveryRadius || '',
+            'deliverycharge': this.catalog.homeDelivery.deliveryCharge || ''
     });
 }
 
@@ -653,8 +756,13 @@ onSubmit(form_data) {
       enddatehome.setMinutes(this.dend_timehome.minute);
       const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
       const endtime_formathome = moment(curdatehome).format('hh:mm A') || null;
-
-    if (this.action === 'add') {
+      let payAdvance;
+      if (form_data.advancePaymentStatus === 'true') {
+        payAdvance = 'FIXED';
+      } else {
+        payAdvance = 'NONE';
+      }
+   
        
         const postdata = {
             'catalogName': form_data.catalogName,
@@ -693,7 +801,7 @@ onSubmit(form_data) {
                   }
                 ]
               },
-              'pickUpOtpVerification': true,
+              'pickUpOtpVerification': form_data.storeotpverify,
               'pickUpScheduledAllowed': true,
               'pickUpAsapAllowed': false
             },
@@ -714,46 +822,36 @@ onSubmit(form_data) {
                   }
                 ]
               },
-              'deliveryOtpVerification': true,
-              'deliveryRadius': 5,
+              'deliveryOtpVerification': form_data.homeotpverify,
+              'deliveryRadius': form_data.deliverykms,
               'scheduledHomeDeliveryAllowed': true,
               'asapHomeDeliveryAllowed': false,
-              'deliveryCharge': 10
+              'deliveryCharge': form_data.deliverycharge
             },
-            'showPrice': true,
-            'paymentType': 'FIXED',
-            'advanceAmount': this.advancePayment,
+            'showPrice': form_data.itemPriceInfo,
+            'paymentType': payAdvance,
+            'advanceAmount': form_data.advancePayment,
             'preInfo': {
-              'preInfoEnabled': true,
-              'preInfoTitle': 'nothing',
-              'preInfoText': 'more'
+              'preInfoEnabled': this.preInfoEnabled,
+              'preInfoTitle': this.preInfoEnabled ? this.preInfoTitle.trim() : '',
+              'preInfoText': this.preInfoEnabled ? this.preInfoText : ''
             },
             'postInfo': {
-              'postInfoEnabled': true,
-              'postInfoTitle': 'nothing',
-              'postInfoText': 'less'
+              'postInfoEnabled': this.postInfoEnabled,
+              'postInfoTitle': this.postInfoEnabled ? this.postInfoTitle.trim() : '',
+              'postInfoText': this.postInfoEnabled ? this.postInfoText : ''
             },
             'catalogItem': this.seletedCatalogItems,
             'location': {
-              'id': 1
+              'id': this.selected_locationId
             },
-            'cancellationPolicy': 'If cancellation is necessary, we require that you call at least [Time Period] in advance. Appointments are in high demand, and your advanced notice will allow another patient access to that appointment time.'
+            'cancellationPolicy': form_data.cancelationPolicy
           };
-          
-
-        this.addItem(postdata);
-    } else if (this.action === 'edit') {
-        const post_itemdata = {
-            'catalogName': form_data.catalogName,
-            'itemName': form_data.itemName,
-            'catalogshortDesc': form_data.catalogshortDesc,
-            'catalogDesc': form_data.catalogDesc,
-            'taxable': form_data.taxable,
-            'price': form_data.price,
-            'showPromotionalPrice': this.showPromotionalPrice,
-            'promotionalPrice': form_data.promotionalPrice
-        };
-        this.editItem(post_itemdata);
+          if (this.action === 'add') {
+           // this.addItem(postdata);
+           console.log(postdata);
+            } else if (this.action === 'edit') {
+            this.editItem(postdata);
     }
 }
 addItem(post_data) {
