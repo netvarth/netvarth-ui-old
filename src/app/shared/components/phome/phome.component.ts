@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { SignUpComponent } from '../signup/signup.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SharedServices } from '../../services/shared-services';
@@ -70,7 +70,7 @@ export class PhomeComponent implements OnInit {
   };
   phOrem_error = '';
   qParams;
-
+  @ViewChild('mobPrefix') mobPrefix: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
@@ -333,11 +333,19 @@ export class PhomeComponent implements OnInit {
     this.api_error = null;
   }
   handlekeyup(ev) {
+    console.log(ev.target.value);
+      if (/^\d+$/.test(ev.target.value)) {
+        console.log('Contain numbers only');
+        this.mobPrefix.nativeElement.style.display = 'flex';
+        this.mobPrefix.nativeElement.class = 'input-group-prepend mob-prefix';
+        // margin-left: -40px;
+    } else {
+        this.mobPrefix.nativeElement.style.display = 'none';
+    }
     if (ev.keyCode !== 13) {
       this.resetApiErrors();
     }
   }
-
   onChangePassword() {
     this.step = 1;
   }

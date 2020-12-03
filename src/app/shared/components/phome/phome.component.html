@@ -24,66 +24,18 @@
                   <div class="wrap-login100 mgn-bt-30 mgnauto">
                     <div class="login"><strong>Service Provider Login</strong></div>
                     <div class="wrap-input100 validate-input">
-
                       <div class="form-group">
-                        <div class="form-group mob-prefx mobile-field">
-                            <div style="display: flex;">
-                                    <div class="input-group-prepend">
-                                        <span style="width: 65px">
-                                            <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
-                                            <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
-                                          </mat-select>
-                                        </span>
-                                        <!-- <span class="input-group-text" id="">+91</span> -->
-                                        </div>
-                    <mat-form-field>
-                        <input type="text" matInput class="form-control" id="emailId" maxlength="50"
-                                placeholder="Enter your 10 digit mobile number" formControlName="emailId" autocomplete="off"
-                                (keyup)="handlekeyup($event)">
-                                <input *ngIf="heading != 'Service Provider Login'" type="text" matInput class="form-control" id="emailId" maxlength="10"
-                                placeholder="Enter your 10 digit mobile number" formControlName="emailId" autocomplete="off"
-                                (keyup)="handlekeyup($event)">
-                                
-                    </mat-form-field>
-                    </div>
+                        <div class="form-group mob-prefx mobile-field" style="display: flex;">
+                          <!-- <div style="display: flex;"> -->
+                            <div class="input-group-prepend mob-prefix" style="margin-bottom:6px;" #mobPrefix>
+                              <span class="input-group-text" style="margin-top:auto;">+91</span>
+                            </div>
+                            <mat-form-field  style="width: 100%;">
+                              <input type="text" matInput class="form-control" id="emailId" placeholder="Mobile/Email"
+                                formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
+                            </mat-form-field>
+                          <!-- </div> -->
                         </div>
-                            <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId') && show_error"
-                        [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
-                        
-          {
-            'pattern' : phOrem_error
-          })">
-                    </app-field-error-display>
-                    <p  *ngIf="heading == 'Service Provider Login'"class="form-level-settings">*Corporate account holders, sign in with email id/mobile number</p>
-                </div>
-
-
-                      <div class="form-group">
-                        <!-- <div class="form-group mob-prefx mobile-field ">
-                              <div style="display: flex;">
-                                      <div class="input-group-prepend mob-prefix"  style="margin-bottom:6px;" >
-                                          <span class="input-group-text" style="margin-top:auto;" id="">+91</span>
-                                        </div>
-                                     <mat-form-field >
-                           <input type="text"   matInput class="form-control" id="emailId" placeholder="Mobile/Email"
-                            formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
-                           </mat-form-field>
-                              </div>
-                          </div> -->
-                        <mat-form-field>
-                            <span style="width: 65px">
-                              <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
-                                <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
-                              </mat-select>
-                          </span>
-                              <!-- <span class="input-group-text" id="">{{mob_prefix_cap}}</span> -->
-                              <span>
-                                <input type="text" matInput class="form-control" id="emailId" placeholder="Mobile/Email"
-                            formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
-                              </span>
-                          
-                        </mat-form-field>
-
                         <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                           errorMsg="please enter your Mobile/Email">
                         </app-field-error-display>
