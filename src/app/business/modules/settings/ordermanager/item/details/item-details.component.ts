@@ -113,6 +113,7 @@ export class ItemDetailsComponent implements OnInit {
           }
         ]
       };
+      data:any;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -348,6 +349,7 @@ export class ItemDetailsComponent implements OnInit {
                 return;
             }
         }
+      //  this.saveImagesForPostinstructions();
         if (this.action === 'add') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
@@ -487,6 +489,30 @@ export class ItemDetailsComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
     }
+    saveImagesForPostinstructions() {
+        const files = this.selectedMessage.files;
+        const propertiesDetob = {};
+    
+        for (let pic of this.selectedMessage.files) {
+    
+          const properties = {
+            'caption': this.selectedMessage.caption[pic] || '',
+    
+          };
+          propertiesDetob[pic] = properties;
+          pic++;
+        }
+        const propertiesDet = {
+          'propertiesMap': propertiesDetob
+        };
+        const preInstructionGallery = {
+          'files': files,
+          'information': propertiesDet
+        };
+    
+        this.data = preInstructionGallery;
+        console.log(this.data);
+      }
 
     openImageModalRow(image: Image) {
         console.log(image);
