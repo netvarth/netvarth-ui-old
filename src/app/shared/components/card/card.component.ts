@@ -25,6 +25,7 @@ export class CardComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.item.type);
         if (this.item.type === 'waitlist') {
             this.service = this.item.item;
             this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead'];

@@ -132,16 +132,17 @@
                                         </span>
                                     </a>
                                 </li>
+                                <li class="more_less centeralign pull-right" *ngIf="!showMore"><a class="mgn-lt-3 lnk pointer-cursor"
+                                    (click)="showMoreInfo()">More Info</a></li>
+                            <li class="more_less centeralign pull-right" *ngIf="showMore"><a class="mgn-lt-3 lnk pointer-cursor"
+                                    (click)="showMoreInfo()">Less Info</a></li>
                             </ul>
                         </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                             <ul class="bus-actions bus-actions-horiz no-padding">
-                                <li class="centeralign" *ngIf="!showMore"><a class="mgn-lt-3 lnk pointer-cursor"
-                                        (click)="showMoreInfo()">More Info</a></li>
-                                <li class="centeralign" *ngIf="showMore"><a class="mgn-lt-3 lnk pointer-cursor"
-                                        (click)="showMoreInfo()">Less Info</a></li>
+                               
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
 
                     <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0"

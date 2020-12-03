@@ -260,8 +260,9 @@ ul.bus-actions-horiz li {
 
 .question-header {
   color: #999 !important;
-  font-size: 0.8rem !important;
+  /* font-size: 0.8rem !important; */
   font-weight: 500 !important;
+  font-size: 0.9rem !important;
 }
 
 .question-main-outer {
@@ -279,7 +280,8 @@ ul.bus-actions-horiz li {
 .question-value1, .question-valuearr li {
   font-weight: 600 !important;
   color: #3a3030;
-  font-size: 0.8rem;
+  font-size: 0.9rem !important;
+  /* font-size: 0.8rem; */
   /* line-height: 25px; */
 }
 
@@ -943,6 +945,13 @@ ul.details.badges li {
   background-repeat: no-repeat;
   background-size: 100% 300px;
 }
+@media(max-width: 575px) {
+  .bus-page .cvr-ht {
+    height: 225px;
+    background-repeat: no-repeat;
+    background-size: 100% 225px;
+  }
+}
 .bus-page .cvr-dp-mgn {
   margin-top: -80px;
 }
@@ -953,4 +962,72 @@ ul.details.badges li {
 }
 .bus-page .cvr-dp-bdr {
   border: 5px solid #ffffff !important;
+}
+
+.bus-item-N {
+  width: 16.6%;
+  float: left !important;
+  margin-bottom: 10px !important;
+  /* margin-top: 10px !important; */
+}
+@media(max-width: 1200px) {
+  .bus-item-N {
+    width: 20%;
+  }
+}
+@media(max-width: 991px) {
+  .bus-item-N {
+    width: 25%;
+    float: left !important;
+    
+  }
+}
+@media(max-width: 767px) {
+  .bus-item-N {
+    width: 33.3%;
+  }
+}
+@media(max-width: 550px) {
+  .bus-item-N {
+    width: 50%;
+  }
+}
+.sp-head {
+  color: #191d96 !important;
+}
+.pad-top-20 {
+  padding-top: 20px !important;
+}
+
+.locations .bg-col {
+  background-color: #191d96 !important;
+}
+.locations .bg-col h4 a {
+  color: #fff !important;
+}
+
+.locations .loc-chg-action {
+  color:#fff !important;
+}
+.locations .dropdown-menu a {
+  font-size: 1rem !important;
+}
+.locations .dropdown-menu a.active {
+  color: #191d96 !important;
+  font-weight: bold !important;
+}
+
+.module {
+  margin: 0 0 1em 0;
+  overflow: hidden !important;
+}
+
+.line-clamp-1 {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  color:#fff !important;
+}
+ul.bus-actions li.more_less a.lnk {
+  font-size: 1rem !important;
 }

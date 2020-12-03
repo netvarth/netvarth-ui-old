@@ -1265,38 +1265,38 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
-  getServiceByLocationid(locid, passedIndx) {
-    this.locationjson[passedIndx]['wlservices'] = [];
-    this.shared_services.getServicesByLocationId(locid)
-      .subscribe(data => {
-        this.locationjson[passedIndx]['services'] = data;
+  // getServiceByLocationid(locid, passedIndx) {
+  //   this.locationjson[passedIndx]['wlservices'] = [];
+  //   this.shared_services.getServicesByLocationId(locid)
+  //     .subscribe(data => {
+  //       this.locationjson[passedIndx]['services'] = data;
 
-        if (this.showDepartments) {
-          this.locationjson[passedIndx]['wlservices'] = this.sharedFunctionobj.groupBy(data, 'department');
-        } else {
-          this.locationjson[passedIndx]['wlservices'] = data;
-        }
-        console.log(this.locationjson[passedIndx]['wlservices']);
-      },
-        error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
-        });
-  }
-  getApptServiceByLocationid(locid, passedIndx) {
-    this.locationjson[passedIndx]['apptservices'] = [];
-    this.shared_services.getServicesforAppontmntByLocationId(locid)
-      .subscribe(data => {
-        if (this.showDepartments) {
-          this.locationjson[passedIndx]['apptservices'] = this.sharedFunctionobj.groupBy(data, 'department');
-        } else {
-          this.locationjson[passedIndx]['apptservices'] = data;
-        }
-        console.log(this.locationjson[passedIndx]['wlservices']);
-      },
-        error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
-        });
-  }
+  //       if (this.showDepartments) {
+  //         this.locationjson[passedIndx]['wlservices'] = this.sharedFunctionobj.groupBy(data, 'department');
+  //       } else {
+  //         this.locationjson[passedIndx]['wlservices'] = data;
+  //       }
+  //       console.log(this.locationjson[passedIndx]['wlservices']);
+  //     },
+  //       error => {
+  //         this.sharedFunctionobj.apiErrorAutoHide(this, error);
+  //       });
+  // }
+  // getApptServiceByLocationid(locid, passedIndx) {
+  //   this.locationjson[passedIndx]['apptservices'] = [];
+  //   this.shared_services.getServicesforAppontmntByLocationId(locid)
+  //     .subscribe(data => {
+  //       if (this.showDepartments) {
+  //         this.locationjson[passedIndx]['apptservices'] = this.sharedFunctionobj.groupBy(data, 'department');
+  //       } else {
+  //         this.locationjson[passedIndx]['apptservices'] = data;
+  //       }
+  //       console.log(this.locationjson[passedIndx]['wlservices']);
+  //     },
+  //       error => {
+  //         this.sharedFunctionobj.apiErrorAutoHide(this, error);
+  //       });
+  // }
   getServicesByDepartment(dept) {
     this.routerobj.navigate(['searchdetail', this.provider_id, dept.departmentId], { queryParams: { source: 'business' } });
   }
