@@ -11,6 +11,8 @@ import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loa
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { OrderModule } from 'ngx-order-pipe';
 import { ModalGalleryModule } from 'angular-modal-gallery';
+import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
+import { TruncateModule } from '../../../../../shared/pipes/limitTo.module';
 
 @NgModule({
     declarations: [
@@ -28,7 +30,9 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
         FormMessageDisplayModule,
         ReactiveFormsModule,
         OrderModule,
-        ModalGalleryModule
+        ModalGalleryModule,
+        TruncateModule,
+        CapitalizeFirstPipeModule,
     ],
     exports: [ItemsComponent]
 })

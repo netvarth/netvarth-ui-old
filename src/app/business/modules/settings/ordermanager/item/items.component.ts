@@ -10,7 +10,8 @@ import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
     selector: 'app-orderitems',
-    templateUrl: './items.component.html'
+    templateUrl: './items.component.html',
+    styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit, OnDestroy {
     tooltipcls = '';
