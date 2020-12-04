@@ -1307,6 +1307,7 @@
                     </div>
 
 
+
                     <!-- Order Section -->
                     <h2 class="ng-tns-c16-8 bg-logo_blue">
                         <div class="jld-option">
@@ -1334,77 +1335,254 @@
                             </div>
                         </div>
                     </h2>
+                     <!-- If there is no order -->
+                     <!-- <div *ngIf="((total_tdy_order.length == 0 && total_future_order.length == 0) && !loading)"
+                     class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
+                     <p class="locate-customer">No Current Orders available</p>
+                 </div> -->
 
-                    <!-- If there is no order -->
-                    <div *ngIf="((today_orders.length == 0 && future_orders.length == 0) && !loading)"
-                        class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
-                        <p class="locate-customer">No Current Orders available</p>
-                    </div>
+                 <div class="table-outer1 order-dash ng-tns-c16-57" *ngIf="!loading">
+                     <table class="table">
+                         <!-- TODAY'S ORDERS -->
+                         <thead class="header" *ngIf="(total_tdy_order.length != 0)">
+                             <th colspan="6">TODAY</th>
+                         </thead>
+                         <tbody *ngIf="total_tdy_order.length != 0">
+                             <tr *ngFor="let oder of todayOrderslst;" (click)="showBookingDetails(oder)">
+                                 <td>
+                                     <h4 class="disp-flex">
+                                         <div class="circle-tokens">
+                                             <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                         </div>
+                                         <span class="mgn-up-10">
+                                             Order :<br> #{{oder.orderNumber}}
+                                         </span>
+                                     </h4>
+                                 </td>
+                                 <td class="tdisplay-block">
+                                     <h4>Order For</h4>
+                                     <div class="userName">
+                                         <i class="fa fa-user for"></i>
+                                         {{oder.orderFor.firstName}}
+                                         {{oder.orderFor.lastName}}
+                                     </div>
+                                     <span class="servName">No Of Products : {{oder.orderItem.length}}
+                                     </span>
+                                 </td>
+                                 <td>
+                                     <h6>
+                                         <span>{{oder.orderStatus | capitalizeFirst}}</span>
+                                     </h6>
+                                 </td>
+                                 <td class="pay-wdth">
+                                     <span>
+                                         <button class="bt3 cust-btn">Pay
+                                             &#8377;{{oder.cartAmount}}</button>
+                                     </span>
+                                 </td>
+                                 <td></td>
+                                 <td>
+                                     <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                         (click)="stopprop($event)">
+                                         <mat-icon>more_vert</mat-icon>
+                                     </button>
+                                     <mat-menu #appMenu="matMenu">
+                                         <button mat-menu-item>
+                                             <i class="fa cross-icon"></i>
+                                             Cancel</button>
+                                         <button mat-menu-item>
+                                             <i class="fa chat-icon"></i>
+                                             {{send_msg_cap}}
+                                         </button>
+                                         <button mat-menu-item>
+                                             <span>{{rate_visit}}</span>
+                                         </button>
+                                     </mat-menu>
+                                 </td>
+                             </tr>
 
-                    <div class="table-outer1 order-dash ng-tns-c16-57" *ngIf="!loading">
-                        <table class="table">
-                            <!-- TODAY's ORDER -->
-                            <thead class="header" *ngIf="(today_orders.length != 0)">
-                                <th colspan="6">TODAY</th>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let oder of orders" (click)="showBookingDetails(oder)">
-                                    <td>
-                                        <h4 class="disp-flex">
-                                            <div class="circle-tokens">
-                                                <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
-                                            </div>
-                                            <span class="mgn-up-10">
-                                                Order :<br> #{{oder.orderNumber}}
-                                            </span>
-                                        </h4>
-                                    </td>
-                                    <td class="tdisplay-block">
-                                        <h4>Order For</h4>
-                                        <div class="userName">
-                                            <i class="fa fa-user for"></i>
-                                            {{oder.orderFor.firstName}}
-                                            {{oder.orderFor.lastName}}
-                                        </div>
-                                        <span class="servName">No Of Products : {{oder.orderItem.length}}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <h6>
-                                            <span>{{oder.orderStatus | capitalizeFirst}}</span>
-                                        </h6>
-                                    </td>
-                                    <td class="pay-wdth">
-                                        <span>
-                                            <button class="bt3 cust-btn">Pay
-                                                &#8377;{{oder.cartAmount}}</button>
-                                        </span>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                                            (click)="stopprop($event)">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                        <mat-menu #appMenu="matMenu">
-                                            <button mat-menu-item>
-                                                <i class="fa cross-icon"></i>
-                                                Cancel</button>
-                                            <button mat-menu-item>
-                                                <i class="fa chat-icon"></i>
-                                                {{send_msg_cap}}
-                                            </button>
-                                            <button mat-menu-item>
-                                                <span>{{rate_visit}}</span>
-                                            </button>
-                                        </mat-menu>
-                                    </td>
-                                    <!--  -->
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                             <!-- <tr *ngIf="!more_tdyOrdersShow && total_tdy_order.length > 3"
+                                 (click)="showMoreTdyOrders()">
+                                 <td colspan="6"><a>Show more...</a></td>
+                             </tr>
+                             <ng-container *ngIf="more_tdyOrdersShow">
+                                 <tr *ngFor="let oder of todayOrderslst_more;" (click)="showBookingDetails(oder)">
+                                     <td>
+                                         <h4 class="disp-flex">
+                                             <div class="circle-tokens">
+                                                 <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                             </div>
+                                             <span class="mgn-up-10">
+                                                 Order :<br> #{{oder.orderNumber}}
+                                             </span>
+                                         </h4>
+                                     </td>
+                                     <td class="tdisplay-block">
+                                         <h4>Order For</h4>
+                                         <div class="userName">
+                                             <i class="fa fa-user for"></i>
+                                             {{oder.orderFor.firstName}}
+                                             {{oder.orderFor.lastName}}
+                                         </div>
+                                         <span class="servName">No Of Products : {{oder.orderItem.length}}
+                                         </span>
+                                     </td>
+                                     <td>
+                                         <h6>
+                                             <span>{{oder.orderStatus | capitalizeFirst}}</span>
+                                         </h6>
+                                     </td>
+                                     <td class="pay-wdth">
+                                         <span>
+                                             <button class="bt3 cust-btn">Pay
+                                                 &#8377;{{oder.cartAmount}}</button>
+                                         </span>
+                                     </td>
+                                     <td></td>
+                                     <td>
+                                         <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                             (click)="stopprop($event)">
+                                             <mat-icon>more_vert</mat-icon>
+                                         </button>
+                                         <mat-menu #appMenu="matMenu">
+                                             <button mat-menu-item>
+                                                 <i class="fa cross-icon"></i>
+                                                 Cancel</button>
+                                             <button mat-menu-item>
+                                                 <i class="fa chat-icon"></i>
+                                                 {{send_msg_cap}}
+                                             </button>
+                                             <button mat-menu-item>
+                                                 <span>{{rate_visit}}</span>
+                                             </button>
+                                         </mat-menu>
+                                     </td>
+                                 </tr>
+                             </ng-container> -->
 
+                         </tbody>
+
+                         <!-- FUTURE ORDERS -->
+
+                         <!-- <thead class="header" *ngIf="(total_future_order.length != 0)">
+                             <th colspan="6">UPCOMING</th>
+                         </thead>
+                         <tbody *ngIf="total_future_order.length != 0">
+                             <tr *ngFor="let oder of futureOrderslst;" (click)="showBookingDetails(oder)">
+                                 <td>
+                                     <h4 class="disp-flex">
+                                         <div class="circle-tokens">
+                                             <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                         </div>
+                                         <span class="mgn-up-10">
+                                             Order :<br> #{{oder.orderNumber}}
+                                         </span>
+                                     </h4>
+                                 </td>
+                                 <td class="tdisplay-block">
+                                     <h4>Order For</h4>
+                                     <div class="userName">
+                                         <i class="fa fa-user for"></i>
+                                         {{oder.orderFor.firstName}}
+                                         {{oder.orderFor.lastName}}
+                                     </div>
+                                     <span class="servName">No Of Products : {{oder.orderItem.length}}
+                                     </span>
+                                 </td>
+                                 <td>
+                                     <h6>
+                                         <span>{{oder.orderStatus | capitalizeFirst}}</span>
+                                     </h6>
+                                 </td>
+                                 <td class="pay-wdth">
+                                     <span>
+                                         <button class="bt3 cust-btn">Pay
+                                             &#8377;{{oder.cartAmount}}</button>
+                                     </span>
+                                 </td>
+                                 <td></td>
+                                 <td>
+                                     <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                         (click)="stopprop($event)">
+                                         <mat-icon>more_vert</mat-icon>
+                                     </button>
+                                     <mat-menu #appMenu="matMenu">
+                                         <button mat-menu-item>
+                                             <i class="fa cross-icon"></i>
+                                             Cancel</button>
+                                         <button mat-menu-item>
+                                             <i class="fa chat-icon"></i>
+                                             {{send_msg_cap}}
+                                         </button>
+                                         <button mat-menu-item>
+                                             <span>{{rate_visit}}</span>
+                                         </button>
+                                     </mat-menu>
+                                 </td>
+                             </tr>
+                             <tr *ngIf="!more_futrOrdersShow && total_future_order.length > 3"
+                                 (click)="showMoreTdyOrders()">
+                                 <td colspan="6"><a>Show more...</a></td>
+                             </tr>
+                             <ng-container *ngIf="more_futrOrdersShow">
+                                 <tr *ngFor="let oder of futureOrderslst_more;" (click)="showBookingDetails(oder)">
+                                     <td>
+                                         <h4 class="disp-flex">
+                                             <div class="circle-tokens">
+                                                 <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                             </div>
+                                             <span class="mgn-up-10">
+                                                 Order :<br> #{{oder.orderNumber}}
+                                             </span>
+                                         </h4>
+                                     </td>
+                                     <td class="tdisplay-block">
+                                         <h4>Order For</h4>
+                                         <div class="userName">
+                                             <i class="fa fa-user for"></i>
+                                             {{oder.orderFor.firstName}}
+                                             {{oder.orderFor.lastName}}
+                                         </div>
+                                         <span class="servName">No Of Products : {{oder.orderItem.length}}
+                                         </span>
+                                     </td>
+                                     <td>
+                                         <h6>
+                                             <span>{{oder.orderStatus | capitalizeFirst}}</span>
+                                         </h6>
+                                     </td>
+                                     <td class="pay-wdth">
+                                         <span>
+                                             <button class="bt3 cust-btn">Pay
+                                                 &#8377;{{oder.cartAmount}}</button>
+                                         </span>
+                                     </td>
+                                     <td></td>
+                                     <td>
+                                         <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                             (click)="stopprop($event)">
+                                             <mat-icon>more_vert</mat-icon>
+                                         </button>
+                                         <mat-menu #appMenu="matMenu">
+                                             <button mat-menu-item>
+                                                 <i class="fa cross-icon"></i>
+                                                 Cancel</button>
+                                             <button mat-menu-item>
+                                                 <i class="fa chat-icon"></i>
+                                                 {{send_msg_cap}}
+                                             </button>
+                                             <button mat-menu-item>
+                                                 <span>{{rate_visit}}</span>
+                                             </button>
+                                         </mat-menu>
+                                     </td>
+                                 </tr>
+                             </ng-container>
+                         </tbody> -->
+
+                     </table>
+                 </div>
+                   
 
                 </div>
             </div>

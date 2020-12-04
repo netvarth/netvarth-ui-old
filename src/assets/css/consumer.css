@@ -6798,10 +6798,10 @@
     -webkit-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
-    background: rgb(0, 0, 0, 0.2) !important;
+    background: rgb(26 64 122 / 13%) !important;
 }
 .order-dash table thead th {
-    background: rgb(26 64 122 / 37%) !important;
+    background: rgb(26 64 122 / 24%) !important;
 }
 .consumer-dash .order-dash  tbody tr {
    cursor: pointer;

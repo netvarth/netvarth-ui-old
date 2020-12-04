@@ -35,7 +35,7 @@ import { ViewRxComponent } from './view-rx/view-rx.component';
 })
 export class ConsumerHomeComponent implements OnInit, OnDestroy {
   // order
-  orders: any = [
+  dummyData: any = [
     {
       'uid': 'd55a9fd3-56a8-45a2-9997-eb34965c3a3c_or',
       'orderNumber': 'o-hmp-a',
@@ -52,6 +52,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         'email_verified': false,
         'jaldeeConsumer': 70,
         'jaldeeId': '1'
+      },
+      'providerAccount': {
+      'branchId': 0,
+      'businessName': 'Lavanya Hospital',
+      'corpId': 0,
+      'id': 125976,
+      'licensePkgID': 0,
+      'minimumCompleteness': false,
+      'profileId': 0,
+      'uniqueId': 152210,
+      'userSubdomain': 0
       },
       'jaldeeConsumer': {
         'id': 70,
@@ -304,16 +315,26 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   todayBookings: any = [];
   todayBookings_more: any = [];
   more_tdybookingsShow = false;
+  more_tdyOrdersShow = false;
   futureBookings: any = [];
   futureBookings_more: any = [];
   more_futrbookingsShow = false;
+  more_futrOrdersShow = false;
   appointmentslist: any = [];
   tdyDate: string;
   loading = true;
   provider_label: any;
   viewrxdialogRef;
-  today_orders = ['8', '9'];
-  future_orders = ['8', '9'];
+  today_orders;
+  future_orders;
+  tomorrowDate: Date;
+  total_tdy_order: any = [];
+  todayOrderslst: any = [];
+  todayOrderslst_more: any = [];
+  total_future_order: any;
+  futureOrderslst_more: any = [];
+  futureOrderslst: any = [];
+  orders;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -336,7 +357,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   public carouselAppointments;
 
   ngOnInit() {
-    console.log(this.orders);
+    console.log(this.dummyData);
+    this.total_tdy_order = this.dummyData;
+    this.todayOrderslst = this.dummyData;
     this.usr_details = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     this.locationholder = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
@@ -396,12 +419,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
-   // this.getDonations();
     this.getAppointmentToday();
     this.getAppointmentFuture();
-    // this.getWaitlist();
-    //  this.getWaitlistFuture();
-    this.getOrder();
+   // this.getTdyOrder();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
@@ -454,7 +474,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       };
       this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
-    } else {
+    } else if (booking.waitlistStatus) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: booking.ynwUuid,
@@ -462,6 +482,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       };
       this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
+    } else {
+      console.log('this is order');
+      console.log(booking);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          uuid: booking.uid,
+          providerId: booking.providerAccount.id
+        }
+      };
+      this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
     }
   }
 
@@ -1015,26 +1045,26 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.futureBookings = [];
             this.futureBookings_more = [];
             this.appointmentslist = [];
-          //  this.getDonations();
+            //  this.getDonations();
             this.getAppointmentToday();
             this.getAppointmentFuture();
             //  this.getWaitlist();
             //    this.getWaitlistFuture();
             // this.getWaitlist();
           } else if (data === 'reloadlist' && type === 'appointment') {
-          //  this.getApptlist();
-          this.today_totalbookings = [];
-          this.future_totalbookings = [];
-          this.todayBookings = [];
-          this.todayBookings_more = [];
-          this.futureBookings = [];
-          this.futureBookings_more = [];
-          this.appointmentslist = [];
-          // this.getDonations();
-          this.getAppointmentToday();
-          this.getAppointmentFuture();
-        //  this.getWaitlist();
-         // this.getWaitlistFuture();
+            //  this.getApptlist();
+            this.today_totalbookings = [];
+            this.future_totalbookings = [];
+            this.todayBookings = [];
+            this.todayBookings_more = [];
+            this.futureBookings = [];
+            this.futureBookings_more = [];
+            this.appointmentslist = [];
+            // this.getDonations();
+            this.getAppointmentToday();
+            this.getAppointmentFuture();
+            //  this.getWaitlist();
+            // this.getWaitlistFuture();
           }
         },
         error => {
@@ -1284,7 +1314,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       (donations) => {
         this.donations = donations;
         this.loadcomplete.donations = true;
-       // this.getAppointmentToday();
+        // this.getAppointmentToday();
       }
     );
   }
@@ -1821,7 +1851,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   // }
 
   getWaitlistFuture() {
-    const params = {'waitlistStatus-neq': 'failed,prepaymentPending'};
+    const params = { 'waitlistStatus-neq': 'failed,prepaymentPending' };
     this.consumer_services.getWaitlistFuture(params)
       .subscribe(
         data => {
@@ -1945,17 +1975,73 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         accencUid: checkin.prescUrl
       }
     });
- }
+  }
 
-//  Order Functions
-getOrder() {
-    // this.loading = true;
-    // this.providerservices.getProviderOrders().subscribe(data => {
-    //   console.log(data);
-    //   this.orders = data;
-    //   this.loading = false;
-    // });
-}
+  // Order Functions
+
+  getTdyOrder() {
+    this.orders = '';
+    this.total_tdy_order = [];
+    this.todayOrderslst = [];
+    this.todayOrderslst_more = [];
+    this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
+    const params = {
+      'date-eq': this.tDate
+    };
+    this.consumer_services.getConsumerOrders(params).subscribe(data => {
+      this.orders = data; // saving todays orders
+      this.total_tdy_order = this.orders;
+      if (data) {
+        this.getFutureOrder();
+      }
+      // show more
+      for (let i = 0; i < this.total_tdy_order.length; i++) {
+        if (i <= 2) {
+          this.todayOrderslst.push(this.total_tdy_order[i]);
+        } else {
+          this.todayOrderslst_more.push(this.total_tdy_order[i]);
+        }
+      }
+    });
+  }
+  getFutureOrder() {
+    this.future_orders = '';
+    this.total_future_order = [];
+    this.futureOrderslst = [];
+    this.futureOrderslst_more = [];
+    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const serverdate = moment(server).format();
+    const servdate = new Date(serverdate);
+    this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
+    const params = {
+      'date-ge': this.tomorrowDate
+    };
+    this.consumer_services.getConsumerOrders(params).subscribe(data => {
+      this.future_orders = data; // saving future orders
+      this.total_future_order = this.future_orders;
+      // show more
+      for (let i = 0; i < this.total_future_order.length; i++) {
+        if (i <= 2) {
+          this.futureOrderslst.push(this.total_future_order[i]);
+        } else {
+          this.futureOrderslst_more.push(this.total_future_order[i]);
+        }
+      }
+    });
+  }
+
+  showMoreTdyOrders() {
+    this.more_tdyOrdersShow = true;
+  }
+  showlessTdyOrders() {
+    this.more_tdyOrdersShow = false;
+  }
+  showMoreFutOrders() {
+    this.more_futrOrdersShow = true;
+  }
+  showlessFutOrders() {
+    this.more_futrOrdersShow = false;
+  }
 
 
 }

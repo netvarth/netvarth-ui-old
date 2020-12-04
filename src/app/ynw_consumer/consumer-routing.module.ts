@@ -13,6 +13,7 @@ import { ChangeEmailComponent } from '../shared/modules/change-email/change-emai
 import { CheckinDetailComponent } from './components/home/checkindetail.component';
 import { ApptDetailComponent } from './components/home/appointmentdetail.component';
 import { MyfavouritesComponent } from './components/myfavourites/myfavourites.component';
+import { OrderDetailComponent } from './components/home/order-detail/order-detail.component';
 const routes: Routes = [
   {
     path: '', component: ConsumerComponent, children: [
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'inbox', loadChildren: () => import('../shared/modules/inbox/inbox.module').then(m => m.InboxModule) },
       { path: 'checkindetails', component: CheckinDetailComponent, canActivate: [AuthGuardLogin] },
       { path: 'apptdetails', component: ApptDetailComponent, canActivate: [AuthGuardLogin] },
+      { path: 'orderdetails', component: OrderDetailComponent, canActivate: [AuthGuardLogin] },
       { path: 'myfav', component: MyfavouritesComponent, canActivate: [AuthGuardLogin] },
       { path: 'appointment', loadChildren: () => import('../ynw_consumer/components/waitlist/appointment/consumer-appointment.module').then(m => m.ConsumerAppointmentModule) },
       { path: 'donations', loadChildren: () => import('./components/donations/consumer-donation.module').then(m => m.ConsumerDonationModule) },

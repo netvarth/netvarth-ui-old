@@ -833,4 +833,8 @@ export class SharedServices {
     const url = 'health/browser';
     return this.servicemeta.httpPost(url, message);
   }
+  getOrderByConsumerUUID(uuid, accountid) {
+    const url = 'consumer/orders/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
 }
